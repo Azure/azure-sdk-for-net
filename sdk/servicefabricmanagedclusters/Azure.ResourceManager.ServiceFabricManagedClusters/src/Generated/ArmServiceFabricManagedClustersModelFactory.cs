@@ -21,43 +21,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmServiceFabricManagedClustersModelFactory
     {
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="managedIdentities"> List of user assigned identities for the application, each mapped to a friendly name. </param>
-        /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
-        /// <param name="version">
-        /// The version of the application type as defined in the application manifest.
-        /// This name must be the full Arm Resource ID for the referenced application type version.
-        /// </param>
-        /// <param name="parameters"> List of application parameters with overridden values from their default values specified in the application manifest. </param>
-        /// <param name="upgradePolicy"> Describes the policy for a monitored application upgrade. </param>
-        /// <param name="identity"> Describes the managed identities for an Azure resource. </param>
-        /// <returns> A new <see cref="ServiceFabricManagedClusters.ServiceFabricManagedApplicationData"/> instance for mocking. </returns>
-        public static ServiceFabricManagedApplicationData ServiceFabricManagedApplicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<ApplicationUserAssignedIdentityInfo> managedIdentities = default, string provisioningState = default, string version = default, IDictionary<string, string> parameters = default, ApplicationUpgradePolicy upgradePolicy = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ServiceFabricManagedApplicationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                managedIdentities is null && provisioningState is null && version is null && parameters is null && upgradePolicy is null ? default : new ApplicationResourceProperties(
-                    (managedIdentities ?? new ChangeTrackingList<ApplicationUserAssignedIdentityInfo>()).ToList(),
-                    provisioningState,
-                    version,
-                    parameters ?? new ChangeTrackingDictionary<string, string>(),
-                    upgradePolicy,
-                    default),
-                identity,
-                default);
-        }
 
         /// <param name="name"> The friendly name of user assigned identity. </param>
         /// <param name="principalId"> The principal id of user assigned identity. </param>
@@ -1383,9 +1346,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> Describes the managed identities for an Azure resource. </param>
         /// <returns> A new <see cref="ServiceFabricManagedClusters.ServiceFabricManagedApplicationData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ServiceFabricManagedApplicationData ServiceFabricManagedApplicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, IEnumerable<ApplicationUserAssignedIdentityInfo> managedIdentities = default, string provisioningState = default, string version = default, IDictionary<string, string> parameters = default, ApplicationUpgradePolicy upgradePolicy = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
         {
+            managedIdentities ??= new ChangeTrackingList<ApplicationUserAssignedIdentityInfo>();
+            parameters ??= new ChangeTrackingDictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new ServiceFabricManagedApplicationData(
                 id,
                 name,
@@ -1411,7 +1377,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="name"> VM Size name. </param>
         /// <returns> A new <see cref="Models.ServiceFabricManagedUnsupportedVmSize"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ServiceFabricManagedUnsupportedVmSize ServiceFabricManagedUnsupportedVmSize(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, string serviceFabricManagedVmSize = default, string name = default)
+        public static ServiceFabricManagedUnsupportedVmSize ServiceFabricManagedUnsupportedVmSize(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, string serviceFabricManagedVmSize, string name)
         {
             return new ServiceFabricManagedUnsupportedVmSize(
                 id,
@@ -1474,6 +1440,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ServiceFabricManagedClusterData ServiceFabricManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServiceFabricManagedClustersSkuName? skuName, string dnsName, string fqdn, IPAddress ipv4Address, Guid? clusterId, ServiceFabricManagedClusterState? clusterState, IEnumerable<BinaryData> clusterCertificateThumbprints, int? clientConnectionPort, int? httpGatewayConnectionPort, string adminUserName, string adminPassword, IEnumerable<ManagedClusterLoadBalancingRule> loadBalancingRules, bool? isRdpAccessAllowed, IEnumerable<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IEnumerable<ManagedClusterClientCertificate> clients, ManagedClusterAzureActiveDirectory azureActiveDirectory, IEnumerable<ClusterFabricSettingsSection> fabricSettings, ServiceFabricManagedResourceProvisioningState? provisioningState, string clusterCodeVersion, ManagedClusterUpgradeMode? clusterUpgradeMode, ManagedClusterUpgradeCadence? clusterUpgradeCadence, IEnumerable<ManagedClusterAddOnFeature> addOnFeatures, bool? isAutoOSUpgradeEnabled, bool? hasZoneResiliency, int? maxUnusedVersionsToKeep, bool? isIPv6Enabled, string subnetId, IEnumerable<ManagedClusterIPTag> ipTags, IPAddress ipv6Address, bool? isServicePublicIPEnabled, IEnumerable<ManagedClusterSubnet> auxiliarySubnets, IEnumerable<ManagedClusterServiceEndpoint> serviceEndpoints, ZonalUpdateMode? zonalUpdateMode, bool? useCustomVnet, ResourceIdentifier publicIPPrefixId, ResourceIdentifier publicIPv6PrefixId, ResourceIdentifier ddosProtectionPlanId, ManagedClusterUpgradePolicy upgradeDescription, int? httpGatewayTokenAuthConnectionPort, bool? isHttpGatewayExclusiveAuthModeEnabled, ETag? etag)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            clusterCertificateThumbprints ??= new ChangeTrackingList<BinaryData>();
+            loadBalancingRules ??= new ChangeTrackingList<ManagedClusterLoadBalancingRule>();
+            networkSecurityRules ??= new ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule>();
+            clients ??= new ChangeTrackingList<ManagedClusterClientCertificate>();
+            fabricSettings ??= new ChangeTrackingList<ClusterFabricSettingsSection>();
+            addOnFeatures ??= new ChangeTrackingList<ManagedClusterAddOnFeature>();
+            ipTags ??= new ChangeTrackingList<ManagedClusterIPTag>();
+            auxiliarySubnets ??= new ChangeTrackingList<ManagedClusterSubnet>();
+            serviceEndpoints ??= new ChangeTrackingList<ManagedClusterServiceEndpoint>();
+
             return new ServiceFabricManagedClusterData(
                 id,
                 name,
@@ -1592,6 +1569,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ServiceFabricManagedNodeTypeData ServiceFabricManagedNodeTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NodeTypeSku sku, bool? isPrimary, int? vmInstanceCount, int? dataDiskSizeInGB, ServiceFabricManagedDataDiskType? dataDiskType, string dataDiskLetter, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, EndpointRangeDescription applicationPorts, EndpointRangeDescription ephemeralPorts, string vmSize, string vmImagePublisher, string vmImageOffer, string vmImageSku, string vmImageVersion, IEnumerable<NodeTypeVaultSecretGroup> vmSecrets, IEnumerable<NodeTypeVmssExtension> vmExtensions, IEnumerable<ResourceIdentifier> userAssignedIdentities, bool? isStateless, bool? hasMultiplePlacementGroups, IEnumerable<NodeTypeFrontendConfiguration> frontendConfigurations, IEnumerable<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IEnumerable<NodeTypeVmssDataDisk> additionalDataDisks, bool? isEncryptionAtHostEnabled, ServiceFabricManagedResourceProvisioningState? provisioningState, bool? isAcceleratedNetworkingEnabled, bool? useDefaultPublicLoadBalancer, bool? useTempDataDisk, bool? isOverProvisioningEnabled, IEnumerable<string> zones, bool? isSpotVm, string hostGroupId, bool? useEphemeralOSDisk, string spotRestoreTimeout, SpotNodeVmEvictionPolicyType? evictionPolicy, ResourceIdentifier vmImageResourceId, ResourceIdentifier subnetId, IEnumerable<VmSetupAction> vmSetupActions, ServiceFabricManagedClusterSecurityType? securityType, bool? isSecureBootEnabled, bool? isNodePublicIPEnabled, bool? isNodePublicIPv6Enabled, ResourceIdentifier vmSharedGalleryImageId, ResourceIdentifier natGatewayId, IEnumerable<NodeTypeNatConfig> natConfigurations, VmImagePlan vmImagePlan, ResourceIdentifier serviceArtifactReferenceId, ResourceIdentifier dscpConfigurationId, IEnumerable<AdditionalNetworkInterfaceConfiguration> additionalNetworkInterfaceConfigurations, string computerNamePrefix, IDictionary<string, string> tags)
         {
+            placementProperties ??= new ChangeTrackingDictionary<string, string>();
+            capacities ??= new ChangeTrackingDictionary<string, string>();
+            vmSecrets ??= new ChangeTrackingList<NodeTypeVaultSecretGroup>();
+            vmExtensions ??= new ChangeTrackingList<NodeTypeVmssExtension>();
+            userAssignedIdentities ??= new ChangeTrackingList<ResourceIdentifier>();
+            frontendConfigurations ??= new ChangeTrackingList<NodeTypeFrontendConfiguration>();
+            networkSecurityRules ??= new ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule>();
+            additionalDataDisks ??= new ChangeTrackingList<NodeTypeVmssDataDisk>();
+            zones ??= new ChangeTrackingList<string>();
+            vmSetupActions ??= new ChangeTrackingList<VmSetupAction>();
+            natConfigurations ??= new ChangeTrackingList<NodeTypeNatConfig>();
+            additionalNetworkInterfaceConfigurations ??= new ChangeTrackingList<AdditionalNetworkInterfaceConfiguration>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new ServiceFabricManagedNodeTypeData(
                 id,
                 name,

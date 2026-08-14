@@ -638,6 +638,12 @@ namespace Azure.ResourceManager.Search.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchServiceData SearchServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSkuName? skuName, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, Uri endpoint, SearchServiceHostingMode? hostingMode, SearchServiceComputeType? computeType, SearchServicePublicNetworkAccess? publicNetworkAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, IEnumerable<SearchServiceIPRule> ipRules, IEnumerable<SearchDataExfiltrationProtection> dataExfiltrationProtections, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, SearchSemanticSearch? semanticSearch, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, bool? upgradeAvailable, DateTimeOffset? serviceUpgradeOn)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            ipRules ??= new ChangeTrackingList<SearchServiceIPRule>();
+            dataExfiltrationProtections ??= new ChangeTrackingList<SearchDataExfiltrationProtection>();
+            privateEndpointConnections ??= new ChangeTrackingList<SearchPrivateEndpointConnectionData>();
+            sharedPrivateLinkResources ??= new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>();
+
             return new SearchServiceData(
                 id,
                 name,
@@ -700,6 +706,11 @@ namespace Azure.ResourceManager.Search.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchServiceData SearchServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSkuName? skuName, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, SearchServiceHostingMode? hostingMode, SearchServicePublicNetworkAccess? publicNetworkAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, IEnumerable<SearchServiceIPRule> ipRules, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections, SearchSemanticSearch? semanticSearch, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            ipRules ??= new ChangeTrackingList<SearchServiceIPRule>();
+            privateEndpointConnections ??= new ChangeTrackingList<SearchPrivateEndpointConnectionData>();
+            sharedPrivateLinkResources ??= new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>();
+
             return new SearchServiceData(
                 id,
                 name,
@@ -767,6 +778,12 @@ namespace Azure.ResourceManager.Search.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchServicePatch SearchServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSkuName? skuName, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, Uri endpoint, SearchServiceHostingMode? hostingMode, SearchServiceComputeType? computeType, SearchServicePublicNetworkAccess? publicNetworkAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, IEnumerable<SearchServiceIPRule> ipRules, IEnumerable<SearchDataExfiltrationProtection> dataExfiltrationProtections, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, SearchSemanticSearch? semanticSearch, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, bool? upgradeAvailable, DateTimeOffset? serviceUpgradeOn)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            ipRules ??= new ChangeTrackingList<SearchServiceIPRule>();
+            dataExfiltrationProtections ??= new ChangeTrackingList<SearchDataExfiltrationProtection>();
+            privateEndpointConnections ??= new ChangeTrackingList<SearchPrivateEndpointConnectionData>();
+            sharedPrivateLinkResources ??= new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>();
+
             return new SearchServicePatch(
                 id,
                 name,
@@ -829,6 +846,11 @@ namespace Azure.ResourceManager.Search.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchServicePatch SearchServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSkuName? skuName, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, SearchServiceHostingMode? hostingMode, SearchServicePublicNetworkAccess? publicNetworkAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, IEnumerable<SearchServiceIPRule> ipRules, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections, SearchSemanticSearch? semanticSearch, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            ipRules ??= new ChangeTrackingList<SearchServiceIPRule>();
+            privateEndpointConnections ??= new ChangeTrackingList<SearchPrivateEndpointConnectionData>();
+            sharedPrivateLinkResources ??= new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>();
+
             return new SearchServicePatch(
                 id,
                 name,
@@ -895,41 +917,9 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="serviceUpgradedOn"> The date and time the search service was last upgraded. This field will be null until the service gets upgraded for the first time. </param>
         /// <returns> A new <see cref="Search.SearchServiceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SearchServiceData SearchServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SearchServiceSkuName? searchSkuName = default, ManagedServiceIdentity identity = default, int? replicaCount = default, int? partitionCount = default, Uri endpoint = default, SearchServiceHostingMode? hostingMode = default, SearchServiceComputeType? computeType = default, SearchServicePublicInternetAccess? publicInternetAccess = default, SearchServiceStatus? status = default, string statusDetails = default, SearchServiceProvisioningState? provisioningState = default, SearchServiceNetworkRuleSet networkRuleSet = default, IEnumerable<SearchDataExfiltrationProtection> dataExfiltrationProtections = default, SearchEncryptionWithCmk encryptionWithCmk = default, bool? isLocalAuthDisabled = default, SearchAadAuthDataPlaneAuthOptions authOptions = default, SearchSemanticSearch? semanticSearch = default, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections = default, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = default, ETag? eTag = default, SearchServiceUpgradeAvailable? isUpgradeAvailable = default, DateTimeOffset? serviceUpgradedOn = default)
+        public static SearchServiceData SearchServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchServiceSkuName? searchSkuName, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, Uri endpoint, SearchServiceHostingMode? hostingMode, SearchServiceComputeType? computeType, SearchServicePublicInternetAccess? publicInternetAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, SearchServiceNetworkRuleSet networkRuleSet, IEnumerable<SearchDataExfiltrationProtection> dataExfiltrationProtections, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, SearchSemanticSearch? semanticSearch, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, ETag? eTag, SearchServiceUpgradeAvailable? isUpgradeAvailable, DateTimeOffset? serviceUpgradedOn)
         {
-            return new SearchServiceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                replicaCount is null && partitionCount is null && endpoint is null && hostingMode is null && computeType is null && publicInternetAccess is null && status is null && statusDetails is null && provisioningState is null && networkRuleSet is null && dataExfiltrationProtections is null && encryptionWithCmk is null && isLocalAuthDisabled is null && authOptions is null && semanticSearch is null && privateEndpointConnections is null && sharedPrivateLinkResources is null && eTag is null && isUpgradeAvailable is null && serviceUpgradedOn is null ? default : new SearchServiceProperties(
-                    replicaCount,
-                    partitionCount,
-                    endpoint,
-                    hostingMode,
-                    computeType,
-                    publicInternetAccess,
-                    status,
-                    statusDetails,
-                    provisioningState,
-                    networkRuleSet,
-                    (dataExfiltrationProtections ?? new ChangeTrackingList<SearchDataExfiltrationProtection>()).ToList(),
-                    encryptionWithCmk,
-                    isLocalAuthDisabled,
-                    authOptions,
-                    semanticSearch,
-                    default,
-                    (privateEndpointConnections ?? new ChangeTrackingList<SearchPrivateEndpointConnectionData>()).ToList(),
-                    (sharedPrivateLinkResources ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>()).ToList(),
-                    eTag,
-                    isUpgradeAvailable,
-                    serviceUpgradedOn,
-                    default),
-                searchSkuName is null ? default : new SearchSku(searchSkuName, default),
-                identity,
-                default);
+            return SearchServiceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, replicaCount: replicaCount, partitionCount: partitionCount, endpoint: endpoint, hostingMode: hostingMode, computeType: computeType, publicInternetAccess: publicInternetAccess, status: status, statusDetails: statusDetails, provisioningState: provisioningState, networkRuleSet: networkRuleSet, dataExfiltrationProtections: dataExfiltrationProtections, encryptionWithCmk: encryptionWithCmk, isLocalAuthDisabled: isLocalAuthDisabled, authOptions: authOptions, semanticSearch: semanticSearch, knowledgeRetrieval: default, privateEndpointConnections: privateEndpointConnections, sharedPrivateLinkResources: sharedPrivateLinkResources, eTag: eTag, isUpgradeAvailable: isUpgradeAvailable, serviceUpgradedOn: serviceUpgradedOn, searchSkuName: searchSkuName, identity: identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SearchEncryptionWithCmk"/>. </summary>
@@ -937,9 +927,9 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="encryptionComplianceStatus"> Returns the status of search service compliance with respect to non-CMK-encrypted objects. If a service has more than one unencrypted object, and enforcement is enabled, the service is marked as noncompliant. </param>
         /// <returns> A new <see cref="Models.SearchEncryptionWithCmk"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SearchEncryptionWithCmk SearchEncryptionWithCmk(SearchEncryptionWithCmkEnforcement? enforcement = default, SearchEncryptionComplianceStatus? encryptionComplianceStatus = default)
+        public static SearchEncryptionWithCmk SearchEncryptionWithCmk(SearchEncryptionWithCmkEnforcement? enforcement, SearchEncryptionComplianceStatus? encryptionComplianceStatus)
         {
-            return new SearchEncryptionWithCmk(enforcement, encryptionComplianceStatus, default, default);
+            return SearchEncryptionWithCmk(enforcement: enforcement, encryptionComplianceStatus: encryptionComplianceStatus, serviceLevelEncryptionKey: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SearchServicePatch"/>. </summary>
@@ -973,41 +963,9 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="serviceUpgradedOn"> The date and time the search service was last upgraded. This field will be null until the service gets upgraded for the first time. </param>
         /// <returns> A new <see cref="Models.SearchServicePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SearchServicePatch SearchServicePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SearchServiceSkuName? searchSkuName = default, ManagedServiceIdentity identity = default, int? replicaCount = default, int? partitionCount = default, Uri endpoint = default, SearchServiceHostingMode? hostingMode = default, SearchServiceComputeType? computeType = default, SearchServicePublicInternetAccess? publicInternetAccess = default, SearchServiceStatus? status = default, string statusDetails = default, SearchServiceProvisioningState? provisioningState = default, SearchServiceNetworkRuleSet networkRuleSet = default, IEnumerable<SearchDataExfiltrationProtection> dataExfiltrationProtections = default, SearchEncryptionWithCmk encryptionWithCmk = default, bool? isLocalAuthDisabled = default, SearchAadAuthDataPlaneAuthOptions authOptions = default, SearchSemanticSearch? semanticSearch = default, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections = default, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = default, ETag? eTag = default, SearchServiceUpgradeAvailable? isUpgradeAvailable = default, DateTimeOffset? serviceUpgradedOn = default)
+        public static SearchServicePatch SearchServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchServiceSkuName? searchSkuName, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, Uri endpoint, SearchServiceHostingMode? hostingMode, SearchServiceComputeType? computeType, SearchServicePublicInternetAccess? publicInternetAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, SearchServiceNetworkRuleSet networkRuleSet, IEnumerable<SearchDataExfiltrationProtection> dataExfiltrationProtections, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, SearchSemanticSearch? semanticSearch, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, ETag? eTag, SearchServiceUpgradeAvailable? isUpgradeAvailable, DateTimeOffset? serviceUpgradedOn)
         {
-            return new SearchServicePatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                replicaCount is null && partitionCount is null && endpoint is null && hostingMode is null && computeType is null && publicInternetAccess is null && status is null && statusDetails is null && provisioningState is null && networkRuleSet is null && dataExfiltrationProtections is null && encryptionWithCmk is null && isLocalAuthDisabled is null && authOptions is null && semanticSearch is null && privateEndpointConnections is null && sharedPrivateLinkResources is null && eTag is null && isUpgradeAvailable is null && serviceUpgradedOn is null ? default : new SearchServiceProperties(
-                    replicaCount,
-                    partitionCount,
-                    endpoint,
-                    hostingMode,
-                    computeType,
-                    publicInternetAccess,
-                    status,
-                    statusDetails,
-                    provisioningState,
-                    networkRuleSet,
-                    (dataExfiltrationProtections ?? new ChangeTrackingList<SearchDataExfiltrationProtection>()).ToList(),
-                    encryptionWithCmk,
-                    isLocalAuthDisabled,
-                    authOptions,
-                    semanticSearch,
-                    default,
-                    (privateEndpointConnections ?? new ChangeTrackingList<SearchPrivateEndpointConnectionData>()).ToList(),
-                    (sharedPrivateLinkResources ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>()).ToList(),
-                    eTag,
-                    isUpgradeAvailable,
-                    serviceUpgradedOn,
-                    default),
-                searchSkuName is null ? default : new SearchSku(searchSkuName, default),
-                identity,
-                default);
+            return SearchServicePatch(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, replicaCount: replicaCount, partitionCount: partitionCount, endpoint: endpoint, hostingMode: hostingMode, computeType: computeType, publicInternetAccess: publicInternetAccess, status: status, statusDetails: statusDetails, provisioningState: provisioningState, networkRuleSet: networkRuleSet, dataExfiltrationProtections: dataExfiltrationProtections, encryptionWithCmk: encryptionWithCmk, isLocalAuthDisabled: isLocalAuthDisabled, authOptions: authOptions, semanticSearch: semanticSearch, knowledgeRetrieval: default, privateEndpointConnections: privateEndpointConnections, sharedPrivateLinkResources: sharedPrivateLinkResources, eTag: eTag, isUpgradeAvailable: isUpgradeAvailable, serviceUpgradedOn: serviceUpgradedOn, searchSkuName: searchSkuName, identity: identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SearchServiceNameAvailabilityContent"/>. </summary>
@@ -1015,7 +973,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="resourceType"> The type of the resource whose name is to be validated. This value must always be 'searchServices'. </param>
         /// <returns> A new <see cref="Models.SearchServiceNameAvailabilityContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SearchServiceNameAvailabilityContent SearchServiceNameAvailabilityContent(string name = default, SearchServiceResourceType resourceType = default)
+        public static SearchServiceNameAvailabilityContent SearchServiceNameAvailabilityContent(string name, SearchServiceResourceType resourceType)
         {
             return new SearchServiceNameAvailabilityContent(name, default, default);
         }

@@ -1161,8 +1161,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="etag"> Azure resource etag. </param>
         /// <returns> A new <see cref="ServiceFabric.ServiceFabricClusterData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ServiceFabricClusterData ServiceFabricClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<ClusterAddOnFeature> addOnFeatures = default, IEnumerable<ClusterVersionDetails> availableClusterVersions = default, ClusterAadSetting azureActiveDirectory = default, ClusterCertificateDescription certificate = default, ClusterServerCertificateCommonNames certificateCommonNames = default, IEnumerable<ClusterClientCertificateCommonName> clientCertificateCommonNames = default, IEnumerable<ClusterClientCertificateThumbprint> clientCertificateThumbprints = default, string clusterCodeVersion = default, Uri clusterEndpoint = default, Guid? clusterId = default, ServiceFabricClusterState? clusterState = default, DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig = default, bool? isEventStoreServiceEnabled = default, IEnumerable<SettingsSectionDescription> fabricSettings = default, Uri managementEndpoint = default, IEnumerable<ClusterNodeTypeDescription> nodeTypes = default, ServiceFabricProvisioningState? provisioningState = default, ClusterReliabilityLevel? reliabilityLevel = default, ClusterCertificateDescription reverseProxyCertificate = default, ClusterServerCertificateCommonNames reverseProxyCertificateCommonNames = default, ClusterUpgradePolicy upgradeDescription = default, ClusterUpgradeMode? upgradeMode = default, long? maxUnusedVersionsToKeep = default, string vmImage = default, SfZonalUpgradeMode? serviceFabricZonalUpgradeMode = default, VmssZonalUpgradeMode? vmssZonalUpgradeMode = default, bool? isInfrastructureServiceManagerEnabled = default, ClusterUpgradeCadence? upgradeWave = default, DateTimeOffset? upgradePauseStartOn = default, DateTimeOffset? upgradePauseEndOn = default, bool? isWaveUpgradePaused = default, IEnumerable<ClusterNotification> notifications = default, ETag? etag = default)
+        public static ServiceFabricClusterData ServiceFabricClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<ClusterAddOnFeature> addOnFeatures, IEnumerable<ClusterVersionDetails> availableClusterVersions, ClusterAadSetting azureActiveDirectory, ClusterCertificateDescription certificate, ClusterServerCertificateCommonNames certificateCommonNames, IEnumerable<ClusterClientCertificateCommonName> clientCertificateCommonNames, IEnumerable<ClusterClientCertificateThumbprint> clientCertificateThumbprints, string clusterCodeVersion, Uri clusterEndpoint, Guid? clusterId, ServiceFabricClusterState? clusterState, DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig, bool? isEventStoreServiceEnabled, IEnumerable<SettingsSectionDescription> fabricSettings, Uri managementEndpoint, IEnumerable<ClusterNodeTypeDescription> nodeTypes, ServiceFabricProvisioningState? provisioningState, ClusterReliabilityLevel? reliabilityLevel, ClusterCertificateDescription reverseProxyCertificate, ClusterServerCertificateCommonNames reverseProxyCertificateCommonNames, ClusterUpgradePolicy upgradeDescription, ClusterUpgradeMode? upgradeMode, long? maxUnusedVersionsToKeep, string vmImage, SfZonalUpgradeMode? serviceFabricZonalUpgradeMode, VmssZonalUpgradeMode? vmssZonalUpgradeMode, bool? isInfrastructureServiceManagerEnabled, ClusterUpgradeCadence? upgradeWave, DateTimeOffset? upgradePauseStartOn, DateTimeOffset? upgradePauseEndOn, bool? isWaveUpgradePaused, IEnumerable<ClusterNotification> notifications, ETag? etag)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            addOnFeatures ??= new ChangeTrackingList<ClusterAddOnFeature>();
+            availableClusterVersions ??= new ChangeTrackingList<ClusterVersionDetails>();
+            clientCertificateCommonNames ??= new ChangeTrackingList<ClusterClientCertificateCommonName>();
+            clientCertificateThumbprints ??= new ChangeTrackingList<ClusterClientCertificateThumbprint>();
+            fabricSettings ??= new ChangeTrackingList<SettingsSectionDescription>();
+            nodeTypes ??= new ChangeTrackingList<ClusterNodeTypeDescription>();
+            notifications ??= new ChangeTrackingList<ClusterNotification>();
+
             return new ServiceFabricClusterData(
                 id,
                 name,
@@ -1230,8 +1239,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="etag"> Azure resource etag. </param>
         /// <returns> A new <see cref="ServiceFabric.ServiceFabricApplicationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ServiceFabricApplicationData ServiceFabricApplicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, string typeVersion = default, IDictionary<string, string> parameters = default, ApplicationUpgradePolicy upgradePolicy = default, long? minimumNodes = default, long? maximumNodes = default, bool? removeApplicationCapacity = default, IEnumerable<ApplicationMetricDescription> metrics = default, IEnumerable<ApplicationUserAssignedIdentity> managedIdentities = default, string provisioningState = default, string typeName = default, ETag? etag = default)
+        public static ServiceFabricApplicationData ServiceFabricApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string typeVersion, IDictionary<string, string> parameters, ApplicationUpgradePolicy upgradePolicy, long? minimumNodes, long? maximumNodes, bool? removeApplicationCapacity, IEnumerable<ApplicationMetricDescription> metrics, IEnumerable<ApplicationUserAssignedIdentity> managedIdentities, string provisioningState, string typeName, ETag? etag)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            parameters ??= new ChangeTrackingDictionary<string, string>();
+            metrics ??= new ChangeTrackingList<ApplicationMetricDescription>();
+            managedIdentities ??= new ChangeTrackingList<ApplicationUserAssignedIdentity>();
+
             return new ServiceFabricApplicationData(
                 id,
                 name,
@@ -1274,8 +1288,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="etag"> Azure resource etag. </param>
         /// <returns> A new <see cref="Models.ServiceFabricApplicationPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ServiceFabricApplicationPatch ServiceFabricApplicationPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string typeVersion = default, IDictionary<string, string> parameters = default, ApplicationUpgradePolicy upgradePolicy = default, long? minimumNodes = default, long? maximumNodes = default, bool? removeApplicationCapacity = default, IEnumerable<ApplicationMetricDescription> metrics = default, IEnumerable<ApplicationUserAssignedIdentity> managedIdentities = default, ETag? etag = default)
+        public static ServiceFabricApplicationPatch ServiceFabricApplicationPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string typeVersion, IDictionary<string, string> parameters, ApplicationUpgradePolicy upgradePolicy, long? minimumNodes, long? maximumNodes, bool? removeApplicationCapacity, IEnumerable<ApplicationMetricDescription> metrics, IEnumerable<ApplicationUserAssignedIdentity> managedIdentities, ETag? etag)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            parameters ??= new ChangeTrackingDictionary<string, string>();
+            metrics ??= new ChangeTrackingList<ApplicationMetricDescription>();
+            managedIdentities ??= new ChangeTrackingList<ApplicationUserAssignedIdentity>();
+
             return new ServiceFabricApplicationPatch(
                 id,
                 name,

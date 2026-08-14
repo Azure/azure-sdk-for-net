@@ -2209,14 +2209,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new SecurityInsightsIncidentEntitiesResult((entities ?? new ChangeTrackingList<SecurityInsightsEntity>()).ToList(), (metaData ?? new ChangeTrackingList<SecurityInsightsIncidentEntitiesMetadata>()).ToList(), default);
         }
 
-        /// <param name="entityKind"> The kind of the aggregated entity. </param>
-        /// <param name="count"> Total number of aggregations of the given kind in the incident related entities result. </param>
-        /// <returns> A new <see cref="Models.SecurityInsightsIncidentEntitiesMetadata"/> instance for mocking. </returns>
-        public static SecurityInsightsIncidentEntitiesMetadata SecurityInsightsIncidentEntitiesMetadata(SecurityInsightsEntityKind entityKind = default, int count = default)
-        {
-            return new SecurityInsightsIncidentEntitiesMetadata(entityKind, count, default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -6769,7 +6761,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="workflowId"> The name of the logic app's workflow. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsAlertRuleActionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SecurityInsightsAlertRuleActionData SecurityInsightsAlertRuleActionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, ResourceIdentifier logicAppResourceId = default, string workflowId = default)
+        public static SecurityInsightsAlertRuleActionData SecurityInsightsAlertRuleActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, ResourceIdentifier logicAppResourceId, string workflowId)
         {
             return new SecurityInsightsAlertRuleActionData(
                 id,
@@ -6779,28 +6771,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 logicAppResourceId is null && workflowId is null ? default : new ActionResponseProperties(logicAppResourceId, default, workflowId),
                 etag,
                 default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsAlertRuleActionCreateOrUpdateContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="logicAppResourceId"> Logic App Resource Id, /subscriptions/{my-subscription}/resourceGroups/{my-resource-group}/providers/Microsoft.Logic/workflows/{my-workflow-id}. </param>
-        /// <param name="triggerUri"> Logic App Callback URL for this specific workflow. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <returns> A new <see cref="Models.SecurityInsightsAlertRuleActionCreateOrUpdateContent"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SecurityInsightsAlertRuleActionCreateOrUpdateContent SecurityInsightsAlertRuleActionCreateOrUpdateContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier logicAppResourceId = default, Uri triggerUri = default, ETag? etag = default)
-        {
-            return new SecurityInsightsAlertRuleActionCreateOrUpdateContent(
-                id,
-                name,
-                resourceType,
-                systemData,
-                etag,
-                default,
-                logicAppResourceId is null && triggerUri is null ? default : new ActionRequestProperties(logicAppResourceId, default, triggerUri));
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsBookmarkData"/>. </summary>
@@ -6824,8 +6794,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsBookmarkData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SecurityInsightsBookmarkData SecurityInsightsBookmarkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? createdOn = default, SecurityInsightsUserInfo createdBy = default, string displayName = default, IEnumerable<string> labels = default, string notes = default, string query = default, string queryResult = default, DateTimeOffset? updatedOn = default, SecurityInsightsUserInfo updatedBy = default, DateTimeOffset? eventOn = default, DateTimeOffset? queryStartOn = default, DateTimeOffset? queryEndOn = default, SecurityInsightsBookmarkIncidentInfo incidentInfo = default, ETag? etag = default)
+        public static SecurityInsightsBookmarkData SecurityInsightsBookmarkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, SecurityInsightsUserInfo createdBy, string displayName, IEnumerable<string> labels, string notes, string query, string queryResult, DateTimeOffset? updatedOn, SecurityInsightsUserInfo updatedBy, DateTimeOffset? eventOn, DateTimeOffset? queryStartOn, DateTimeOffset? queryEndOn, SecurityInsightsBookmarkIncidentInfo incidentInfo, ETag? etag)
         {
+            labels ??= new ChangeTrackingList<string>();
+
             return new SecurityInsightsBookmarkData(
                 id,
                 name,
@@ -6878,8 +6850,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsIncidentData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SecurityInsightsIncidentData SecurityInsightsIncidentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityInsightsIncidentAdditionalInfo additionalInfo = default, SecurityInsightsIncidentClassification? classification = default, string classificationComment = default, SecurityInsightsIncidentClassificationReason? classificationReason = default, DateTimeOffset? createdOn = default, string description = default, DateTimeOffset? firstActivityOn = default, Uri incidentUri = default, int? incidentNumber = default, IEnumerable<SecurityInsightsIncidentLabel> labels = default, DateTimeOffset? lastActivityOn = default, DateTimeOffset? lastModifiedOn = default, SecurityInsightsIncidentOwnerInfo owner = default, IEnumerable<ResourceIdentifier> relatedAnalyticRuleIds = default, SecurityInsightsIncidentSeverity? severity = default, SecurityInsightsIncidentStatus? status = default, string title = default, ETag? etag = default)
+        public static SecurityInsightsIncidentData SecurityInsightsIncidentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsIncidentAdditionalInfo additionalInfo, SecurityInsightsIncidentClassification? classification, string classificationComment, SecurityInsightsIncidentClassificationReason? classificationReason, DateTimeOffset? createdOn, string description, DateTimeOffset? firstActivityOn, Uri incidentUri, int? incidentNumber, IEnumerable<SecurityInsightsIncidentLabel> labels, DateTimeOffset? lastActivityOn, DateTimeOffset? lastModifiedOn, SecurityInsightsIncidentOwnerInfo owner, IEnumerable<ResourceIdentifier> relatedAnalyticRuleIds, SecurityInsightsIncidentSeverity? severity, SecurityInsightsIncidentStatus? status, string title, ETag? etag)
         {
+            labels ??= new ChangeTrackingList<SecurityInsightsIncidentLabel>();
+            relatedAnalyticRuleIds ??= new ChangeTrackingList<ResourceIdentifier>();
+
             return new SecurityInsightsIncidentData(
                 id,
                 name,
@@ -6925,19 +6900,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="tactics"> The tactics associated with incident. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsIncidentAdditionalInfo"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SecurityInsightsIncidentAdditionalInfo SecurityInsightsIncidentAdditionalInfo(int? alertsCount = default, int? bookmarksCount = default, int? commentsCount = default, IEnumerable<string> alertProductNames = default, IEnumerable<SecurityInsightsAttackTactic> tactics = default)
+        public static SecurityInsightsIncidentAdditionalInfo SecurityInsightsIncidentAdditionalInfo(int? alertsCount, int? bookmarksCount, int? commentsCount, IEnumerable<string> alertProductNames, IEnumerable<SecurityInsightsAttackTactic> tactics)
         {
-            return new SecurityInsightsIncidentAdditionalInfo(
-                alertsCount,
-                bookmarksCount,
-                commentsCount,
-                (alertProductNames ?? new ChangeTrackingList<string>()).ToList(),
-                (tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>()).ToList(),
-                default,
-                default,
-                default,
-                default,
-                default);
+            return SecurityInsightsIncidentAdditionalInfo(alertsCount: alertsCount, bookmarksCount: bookmarksCount, commentsCount: commentsCount, alertProductNames: alertProductNames, tactics: tactics, techniques: default, providerIncidentUri: default, mergedIncidentNumber: default, mergedIncidentUri: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsIncidentCommentData"/>. </summary>
@@ -6952,7 +6917,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsIncidentCommentData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SecurityInsightsIncidentCommentData SecurityInsightsIncidentCommentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, string message = default, SecurityInsightsClientInfo author = default, ETag? etag = default)
+        public static SecurityInsightsIncidentCommentData SecurityInsightsIncidentCommentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string message, SecurityInsightsClientInfo author, ETag? etag)
         {
             return new SecurityInsightsIncidentCommentData(
                 id,
@@ -6968,7 +6933,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="count"> Total number of aggregations of the given kind in the incident related entities result. </param>
         /// <param name="entityKind"> The kind of the aggregated entity. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsIncidentEntitiesMetadata"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static SecurityInsightsIncidentEntitiesMetadata SecurityInsightsIncidentEntitiesMetadata(int count = 0, SecurityInsightsEntityKind entityKind = default)
         {
             return new SecurityInsightsIncidentEntitiesMetadata(entityKind, count, default);
@@ -6992,7 +6956,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsWatchlistItemData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SecurityInsightsWatchlistItemData SecurityInsightsWatchlistItemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string watchlistItemType = default, string watchlistItemId = default, Guid? tenantId = default, bool? isDeleted = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, SecurityInsightsUserInfo createdBy = default, SecurityInsightsUserInfo updatedBy = default, BinaryData itemsKeyValue = default, BinaryData entityMapping = default, ETag? etag = default)
+        public static SecurityInsightsWatchlistItemData SecurityInsightsWatchlistItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string watchlistItemType, string watchlistItemId, Guid? tenantId, bool? isDeleted, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, SecurityInsightsUserInfo createdBy, SecurityInsightsUserInfo updatedBy, BinaryData itemsKeyValue, BinaryData entityMapping, ETag? etag)
         {
             return new SecurityInsightsWatchlistItemData(
                 id,
@@ -7031,8 +6995,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="techniques"> The techniques of the alert rule. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsFusionAlertRule"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SecurityInsightsFusionAlertRule SecurityInsightsFusionAlertRule(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, string alertRuleTemplateName = default, string description = default, string displayName = default, bool? isEnabled = default, DateTimeOffset? lastModifiedOn = default, SecurityInsightsAlertSeverity? severity = default, IEnumerable<SecurityInsightsAttackTactic> tactics = default, IEnumerable<string> techniques = default)
+        public static SecurityInsightsFusionAlertRule SecurityInsightsFusionAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string alertRuleTemplateName, string description, string displayName, bool? isEnabled, DateTimeOffset? lastModifiedOn, SecurityInsightsAlertSeverity? severity, IEnumerable<SecurityInsightsAttackTactic> tactics, IEnumerable<string> techniques)
         {
+            tactics ??= new ChangeTrackingList<SecurityInsightsAttackTactic>();
+            techniques ??= new ChangeTrackingList<string>();
+
             return new SecurityInsightsFusionAlertRule(
                 id,
                 name,
@@ -7073,29 +7040,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="techniques"> The techniques of the alert rule template. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsFusionAlertRuleTemplate"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SecurityInsightsFusionAlertRuleTemplate SecurityInsightsFusionAlertRuleTemplate(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? alertRulesCreatedByTemplateCount = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastUpdatedOn = default, string description = default, string displayName = default, IEnumerable<AlertRuleTemplateDataSource> requiredDataConnectors = default, SecurityInsightsAlertRuleTemplateStatus? status = default, SecurityInsightsAlertSeverity? severity = default, IEnumerable<SecurityInsightsAttackTactic> tactics = default, IEnumerable<string> techniques = default)
+        public static SecurityInsightsFusionAlertRuleTemplate SecurityInsightsFusionAlertRuleTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? alertRulesCreatedByTemplateCount, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string description, string displayName, IEnumerable<AlertRuleTemplateDataSource> requiredDataConnectors, SecurityInsightsAlertRuleTemplateStatus? status, SecurityInsightsAlertSeverity? severity, IEnumerable<SecurityInsightsAttackTactic> tactics, IEnumerable<string> techniques)
         {
-            return new SecurityInsightsFusionAlertRuleTemplate(
-                id,
-                name,
-                resourceType,
-                systemData,
-                default,
-                default,
-                alertRulesCreatedByTemplateCount is null && createdOn is null && lastUpdatedOn is null && description is null && displayName is null && requiredDataConnectors is null && status is null && severity is null && tactics is null && techniques is null ? default : new FusionAlertRuleTemplateProperties(
-                    alertRulesCreatedByTemplateCount,
-                    createdOn,
-                    lastUpdatedOn,
-                    description,
-                    displayName,
-                    (requiredDataConnectors ?? new ChangeTrackingList<AlertRuleTemplateDataSource>()).ToList(),
-                    status,
-                    severity,
-                    (tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>()).ToList(),
-                    (techniques ?? new ChangeTrackingList<string>()).ToList(),
-                    default,
-                    default,
-                    default));
+            return SecurityInsightsFusionAlertRuleTemplate(id: id, name: name, resourceType: resourceType, systemData: systemData, alertRulesCreatedByTemplateCount: alertRulesCreatedByTemplateCount, createdOn: createdOn, lastUpdatedOn: lastUpdatedOn, description: description, displayName: displayName, requiredDataConnectors: requiredDataConnectors, status: status, severity: severity, tactics: tactics, techniques: techniques, subTechniques: default, sourceSettings: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsScheduledAlertRule"/>. </summary>
@@ -7127,8 +7074,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="incidentConfiguration"> The settings of the incidents that created from alerts triggered by this analytics rule. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsScheduledAlertRule"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SecurityInsightsScheduledAlertRule SecurityInsightsScheduledAlertRule(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, string query = default, TimeSpan? queryFrequency = default, TimeSpan? queryPeriod = default, SecurityInsightsAlertSeverity? severity = default, SecurityInsightsAlertRuleTriggerOperator? triggerOperator = default, int? triggerThreshold = default, EventGroupingAggregationKind? eventGroupingAggregationKind = default, IDictionary<string, string> customDetails = default, IEnumerable<SecurityInsightsAlertRuleEntityMapping> entityMappings = default, SecurityInsightsAlertDetailsOverride alertDetailsOverride = default, string alertRuleTemplateName = default, string templateVersion = default, string description = default, string displayName = default, bool? isEnabled = default, DateTimeOffset? lastModifiedOn = default, TimeSpan? suppressionDuration = default, bool? isSuppressionEnabled = default, IEnumerable<SecurityInsightsAttackTactic> tactics = default, IEnumerable<string> techniques = default, SecurityInsightsIncidentConfiguration incidentConfiguration = default)
+        public static SecurityInsightsScheduledAlertRule SecurityInsightsScheduledAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string query, TimeSpan? queryFrequency, TimeSpan? queryPeriod, SecurityInsightsAlertSeverity? severity, SecurityInsightsAlertRuleTriggerOperator? triggerOperator, int? triggerThreshold, EventGroupingAggregationKind? eventGroupingAggregationKind, IDictionary<string, string> customDetails, IEnumerable<SecurityInsightsAlertRuleEntityMapping> entityMappings, SecurityInsightsAlertDetailsOverride alertDetailsOverride, string alertRuleTemplateName, string templateVersion, string description, string displayName, bool? isEnabled, DateTimeOffset? lastModifiedOn, TimeSpan? suppressionDuration, bool? isSuppressionEnabled, IEnumerable<SecurityInsightsAttackTactic> tactics, IEnumerable<string> techniques, SecurityInsightsIncidentConfiguration incidentConfiguration)
         {
+            customDetails ??= new ChangeTrackingDictionary<string, string>();
+            entityMappings ??= new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>();
+            tactics ??= new ChangeTrackingList<SecurityInsightsAttackTactic>();
+            techniques ??= new ChangeTrackingList<string>();
+
             return new SecurityInsightsScheduledAlertRule(
                 id,
                 name,
@@ -7191,39 +7143,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="alertDetailsOverride"> The alert details override settings. </param>
         /// <returns> A new <see cref="Models.ScheduledAlertRuleTemplate"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ScheduledAlertRuleTemplate ScheduledAlertRuleTemplate(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? alertRulesCreatedByTemplateCount = default, DateTimeOffset? createdDateUTC = default, DateTimeOffset? lastUpdatedDateUTC = default, string description = default, string displayName = default, IEnumerable<AlertRuleTemplateDataSource> requiredDataConnectors = default, SecurityInsightsAlertRuleTemplateStatus? status = default, string query = default, TimeSpan? queryFrequency = default, TimeSpan? queryPeriod = default, SecurityInsightsAlertSeverity? severity = default, SecurityInsightsAlertRuleTriggerOperator? triggerOperator = default, int? triggerThreshold = default, IEnumerable<SecurityInsightsAttackTactic> tactics = default, IEnumerable<string> techniques = default, string version = default, EventGroupingAggregationKind? eventGroupingAggregationKind = default, IDictionary<string, string> customDetails = default, IEnumerable<SecurityInsightsAlertRuleEntityMapping> entityMappings = default, SecurityInsightsAlertDetailsOverride alertDetailsOverride = default)
+        public static ScheduledAlertRuleTemplate ScheduledAlertRuleTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? alertRulesCreatedByTemplateCount, DateTimeOffset? createdDateUTC, DateTimeOffset? lastUpdatedDateUTC, string description, string displayName, IEnumerable<AlertRuleTemplateDataSource> requiredDataConnectors, SecurityInsightsAlertRuleTemplateStatus? status, string query, TimeSpan? queryFrequency, TimeSpan? queryPeriod, SecurityInsightsAlertSeverity? severity, SecurityInsightsAlertRuleTriggerOperator? triggerOperator, int? triggerThreshold, IEnumerable<SecurityInsightsAttackTactic> tactics, IEnumerable<string> techniques, string version, EventGroupingAggregationKind? eventGroupingAggregationKind, IDictionary<string, string> customDetails, IEnumerable<SecurityInsightsAlertRuleEntityMapping> entityMappings, SecurityInsightsAlertDetailsOverride alertDetailsOverride)
         {
-            return new ScheduledAlertRuleTemplate(
-                id,
-                name,
-                resourceType,
-                systemData,
-                default,
-                default,
-                alertRulesCreatedByTemplateCount is null && createdDateUTC is null && lastUpdatedDateUTC is null && description is null && displayName is null && requiredDataConnectors is null && status is null && query is null && queryFrequency is null && queryPeriod is null && severity is null && triggerOperator is null && triggerThreshold is null && tactics is null && techniques is null && version is null && eventGroupingAggregationKind is null && customDetails is null && entityMappings is null && alertDetailsOverride is null ? default : new ScheduledAlertRuleTemplateProperties(
-                    alertRulesCreatedByTemplateCount,
-                    createdDateUTC,
-                    lastUpdatedDateUTC,
-                    description,
-                    displayName,
-                    (requiredDataConnectors ?? new ChangeTrackingList<AlertRuleTemplateDataSource>()).ToList(),
-                    status,
-                    query,
-                    queryFrequency,
-                    queryPeriod,
-                    severity,
-                    triggerOperator,
-                    triggerThreshold,
-                    (tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>()).ToList(),
-                    (techniques ?? new ChangeTrackingList<string>()).ToList(),
-                    default,
-                    version,
-                    new EventGroupingSettings(eventGroupingAggregationKind, default),
-                    customDetails ?? new ChangeTrackingDictionary<string, string>(),
-                    (entityMappings ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>()).ToList(),
-                    alertDetailsOverride,
-                    default,
-                    default));
+            return ScheduledAlertRuleTemplate(id: id, name: name, resourceType: resourceType, systemData: systemData, alertRulesCreatedByTemplateCount: alertRulesCreatedByTemplateCount, createdDateUTC: createdDateUTC, lastUpdatedDateUTC: lastUpdatedDateUTC, description: description, displayName: displayName, requiredDataConnectors: requiredDataConnectors, status: status, query: query, queryFrequency: queryFrequency, queryPeriod: queryPeriod, severity: severity, triggerOperator: triggerOperator, triggerThreshold: triggerThreshold, tactics: tactics, techniques: techniques, subTechniques: default, version: version, customDetails: customDetails, entityMappings: entityMappings, alertDetailsOverride: alertDetailsOverride, sentinelEntitiesMappings: default, eventGroupingAggregationKind: eventGroupingAggregationKind);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsIotDeviceEntity"/>. </summary>
@@ -7252,47 +7174,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="protocols"> A list of protocols of the IoTDevice entity. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsIotDeviceEntity"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SecurityInsightsIotDeviceEntity SecurityInsightsIotDeviceEntity(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IReadOnlyDictionary<string, BinaryData> additionalData = default, string friendlyName = default, string deviceId = default, string deviceName = default, string source = default, Guid? iotSecurityAgentId = default, string deviceType = default, string vendor = default, string edgeId = default, string macAddress = default, string model = default, string serialNumber = default, string firmwareVersion = default, string operatingSystem = default, string iotHubEntityId = default, string hostEntityId = default, string ipAddressEntityId = default, IEnumerable<SecurityInsightsThreatIntelligence> threatIntelligence = default, IEnumerable<string> protocols = default)
+        public static SecurityInsightsIotDeviceEntity SecurityInsightsIotDeviceEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string deviceId, string deviceName, string source, Guid? iotSecurityAgentId, string deviceType, string vendor, string edgeId, string macAddress, string model, string serialNumber, string firmwareVersion, string operatingSystem, string iotHubEntityId, string hostEntityId, string ipAddressEntityId, IEnumerable<SecurityInsightsThreatIntelligence> threatIntelligence, IEnumerable<string> protocols)
         {
-            return new SecurityInsightsIotDeviceEntity(
-                id,
-                name,
-                resourceType,
-                systemData,
-                default,
-                default,
-                additionalData is null && friendlyName is null && deviceId is null && deviceName is null && source is null && iotSecurityAgentId is null && deviceType is null && vendor is null && edgeId is null && macAddress is null && model is null && serialNumber is null && firmwareVersion is null && operatingSystem is null && iotHubEntityId is null && hostEntityId is null && ipAddressEntityId is null && threatIntelligence is null && protocols is null ? default : new IoTDeviceEntityProperties(
-                    additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                    friendlyName,
-                    default,
-                    deviceId,
-                    deviceName,
-                    source,
-                    iotSecurityAgentId,
-                    deviceType,
-                    vendor,
-                    edgeId,
-                    macAddress,
-                    model,
-                    serialNumber,
-                    firmwareVersion,
-                    operatingSystem,
-                    iotHubEntityId,
-                    hostEntityId,
-                    ipAddressEntityId,
-                    (threatIntelligence ?? new ChangeTrackingList<SecurityInsightsThreatIntelligence>()).ToList(),
-                    (protocols ?? new ChangeTrackingList<string>()).ToList(),
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default));
+            return SecurityInsightsIotDeviceEntity(id: id, name: name, resourceType: resourceType, systemData: systemData, additionalData: additionalData, friendlyName: friendlyName, deviceId: deviceId, deviceName: deviceName, source: source, iotSecurityAgentId: iotSecurityAgentId, deviceType: deviceType, vendor: vendor, edgeId: edgeId, macAddress: macAddress, model: model, serialNumber: serialNumber, firmwareVersion: firmwareVersion, operatingSystem: operatingSystem, iotHubEntityId: iotHubEntityId, hostEntityId: hostEntityId, ipAddressEntityId: ipAddressEntityId, threatIntelligence: threatIntelligence, protocols: protocols, owners: default, nicEntityIds: default, site: default, zone: default, sensor: default, deviceSubType: default, importance: default, purdueLayer: default, isAuthorized: default, isProgramming: default, isScanner: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsUriEntity"/>. </summary>
@@ -7305,8 +7189,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="uri"> A full URL the entity points to. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsUriEntity"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SecurityInsightsUriEntity SecurityInsightsUriEntity(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IReadOnlyDictionary<string, BinaryData> additionalData = default, string friendlyName = default, Uri uri = default)
+        public static SecurityInsightsUriEntity SecurityInsightsUriEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, Uri uri)
         {
+            additionalData ??= new ChangeTrackingDictionary<string, BinaryData>();
+
             return new SecurityInsightsUriEntity(
                 id,
                 name,
