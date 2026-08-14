@@ -45,6 +45,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             : base(isAsync, mode)
         {
             _serviceVersion = serviceVersion;
+            LegacyExcludedHeaders.Add("x-ms-tokenboundauth");
         }
 
         internal CertificateClient GetClient()
