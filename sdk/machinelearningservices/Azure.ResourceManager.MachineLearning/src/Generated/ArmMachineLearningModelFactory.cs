@@ -604,23 +604,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningDiagnoseResult(code, level, message, default);
         }
 
-        /// <param name="appInsightsInstrumentationKey"> The access key of the workspace app insights. </param>
-        /// <param name="containerRegistryCredentials"></param>
-        /// <param name="notebookAccessKeys"></param>
-        /// <param name="userStorageResourceId"> The arm Id key of the workspace storage. </param>
-        /// <param name="userStorageKey"> The access key of the workspace storage. </param>
-        /// <returns> A new <see cref="Models.MachineLearningWorkspaceGetKeysResult"/> instance for mocking. </returns>
-        public static MachineLearningWorkspaceGetKeysResult MachineLearningWorkspaceGetKeysResult(string appInsightsInstrumentationKey = default, MachineLearningContainerRegistryCredentials containerRegistryCredentials = default, MachineLearningWorkspaceGetNotebookKeysResult notebookAccessKeys = default, string userStorageResourceId = default, string userStorageKey = default)
-        {
-            return new MachineLearningWorkspaceGetKeysResult(
-                appInsightsInstrumentationKey,
-                containerRegistryCredentials,
-                notebookAccessKeys,
-                userStorageResourceId,
-                userStorageKey,
-                default);
-        }
-
         /// <param name="name"></param>
         /// <param name="value"></param>
         /// <returns> A new <see cref="Models.MachineLearningPasswordDetail"/> instance for mocking. </returns>
@@ -635,29 +618,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningWorkspaceGetNotebookKeysResult MachineLearningWorkspaceGetNotebookKeysResult(string primaryAccessKey = default, string secondaryAccessKey = default)
         {
             return new MachineLearningWorkspaceGetNotebookKeysResult(primaryAccessKey, secondaryAccessKey, default);
-        }
-
-        /// <param name="accessToken"></param>
-        /// <param name="expiresIn"></param>
-        /// <param name="hostName"></param>
-        /// <param name="notebookResourceId"></param>
-        /// <param name="publicDns"></param>
-        /// <param name="refreshToken"></param>
-        /// <param name="scope"></param>
-        /// <param name="tokenType"></param>
-        /// <returns> A new <see cref="Models.MachineLearningWorkspaceNotebookAccessTokenResult"/> instance for mocking. </returns>
-        public static MachineLearningWorkspaceNotebookAccessTokenResult MachineLearningWorkspaceNotebookAccessTokenResult(string accessToken = default, int? expiresIn = default, string hostName = default, string notebookResourceId = default, string publicDns = default, string refreshToken = default, string scope = default, string tokenType = default)
-        {
-            return new MachineLearningWorkspaceNotebookAccessTokenResult(
-                accessToken,
-                expiresIn,
-                hostName,
-                notebookResourceId,
-                publicDns,
-                refreshToken,
-                scope,
-                tokenType,
-                default);
         }
 
         /// <param name="userStorageKey"> The access key of the storage. </param>
@@ -1032,18 +992,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static PendingUploadResponseDto PendingUploadResponseDto(BlobReferenceForConsumptionDto blobReferenceForConsumption = default, string pendingUploadId = default, PendingUploadType? pendingUploadType = default)
         {
             return new PendingUploadResponseDto(blobReferenceForConsumption, pendingUploadId, pendingUploadType, default);
-        }
-
-        /// <param name="blobUri">
-        /// Blob URI path for client to upload data.
-        /// Example: https://blob.windows.core.net/Container/Path
-        /// </param>
-        /// <param name="credential"> Credential info to access storage account. </param>
-        /// <param name="storageAccountArmId"> Arm ID of the storage account to use. </param>
-        /// <returns> A new <see cref="Models.BlobReferenceForConsumptionDto"/> instance for mocking. </returns>
-        public static BlobReferenceForConsumptionDto BlobReferenceForConsumptionDto(Uri blobUri = default, PendingUploadCredentialDto credential = default, ResourceIdentifier storageAccountArmId = default)
-        {
-            return new BlobReferenceForConsumptionDto(blobUri, credential, storageAccountArmId, default);
         }
 
         /// <param name="credentialType"> [Required] Credential type used to authentication with storage. </param>
@@ -1640,90 +1588,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new DatasetReference(name, id, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
-        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
-        /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
-        /// <returns> A new <see cref="MachineLearning.MachineLearningBatchEndpointData"/> instance for mocking. </returns>
-        public static MachineLearningBatchEndpointData MachineLearningBatchEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MachineLearningBatchEndpointProperties properties = default, ManagedServiceIdentity identity = default, string kind = default, MachineLearningSku sku = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new MachineLearningBatchEndpointData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                kind,
-                sku,
-                default);
-        }
-
-        /// <param name="authMode"> [Required] The authentication method for invoking the endpoint (data plane operation). Use 'Key' for key-based authentication. Use 'AMLToken' for Azure Machine Learning token-based authentication. Use 'AADToken' for Microsoft Entra token-based authentication. </param>
-        /// <param name="description"> Description of the inference endpoint. </param>
-        /// <param name="keys">
-        /// EndpointAuthKeys to set initially on an Endpoint.
-        /// This property will always be returned as null. AuthKey values must be retrieved using the ListKeys API.
-        /// </param>
-        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
-        /// <param name="scoringUri"> Endpoint URI. </param>
-        /// <param name="swaggerUri"> Endpoint Swagger URI. </param>
-        /// <param name="defaultsDeploymentName">
-        /// Name of the deployment that will be default for the endpoint.
-        /// This deployment will end up getting 100% traffic when the endpoint scoring URL is invoked.
-        /// </param>
-        /// <param name="provisioningState"> Provisioning state for the endpoint. </param>
-        /// <returns> A new <see cref="Models.MachineLearningBatchEndpointProperties"/> instance for mocking. </returns>
-        public static MachineLearningBatchEndpointProperties MachineLearningBatchEndpointProperties(MachineLearningEndpointAuthMode authMode = default, string description = default, MachineLearningEndpointAuthKeys keys = default, IDictionary<string, string> properties = default, Uri scoringUri = default, Uri swaggerUri = default, string defaultsDeploymentName = default, MachineLearningEndpointProvisioningState? provisioningState = default)
-        {
-            properties ??= new ChangeTrackingDictionary<string, string>();
-
-            return new MachineLearningBatchEndpointProperties(
-                authMode,
-                description,
-                keys,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                scoringUri,
-                swaggerUri,
-                default,
-                defaultsDeploymentName is null ? default : new BatchEndpointDefaults(defaultsDeploymentName, default),
-                provisioningState);
-        }
-
-        /// <param name="authMode"> [Required] The authentication method for invoking the endpoint (data plane operation). Use 'Key' for key-based authentication. Use 'AMLToken' for Azure Machine Learning token-based authentication. Use 'AADToken' for Microsoft Entra token-based authentication. </param>
-        /// <param name="description"> Description of the inference endpoint. </param>
-        /// <param name="keys">
-        /// EndpointAuthKeys to set initially on an Endpoint.
-        /// This property will always be returned as null. AuthKey values must be retrieved using the ListKeys API.
-        /// </param>
-        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
-        /// <param name="scoringUri"> Endpoint URI. </param>
-        /// <param name="swaggerUri"> Endpoint Swagger URI. </param>
-        /// <returns> A new <see cref="Models.MachineLearningEndpointProperties"/> instance for mocking. </returns>
-        public static MachineLearningEndpointProperties MachineLearningEndpointProperties(MachineLearningEndpointAuthMode authMode = default, string description = default, MachineLearningEndpointAuthKeys keys = default, IDictionary<string, string> properties = default, Uri scoringUri = default, Uri swaggerUri = default)
-        {
-            properties ??= new ChangeTrackingDictionary<string, string>();
-
-            return new MachineLearningEndpointProperties(
-                authMode,
-                description,
-                keys,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                scoringUri,
-                swaggerUri,
-                default);
-        }
-
         /// <param name="primaryKey"> The primary key. </param>
         /// <param name="secondaryKey"> The secondary key. </param>
         /// <returns> A new <see cref="Models.MachineLearningEndpointAuthKeys"/> instance for mocking. </returns>
@@ -1749,99 +1613,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new MachineLearningResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
-        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
-        /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
-        /// <returns> A new <see cref="MachineLearning.MachineLearningBatchDeploymentData"/> instance for mocking. </returns>
-        public static MachineLearningBatchDeploymentData MachineLearningBatchDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MachineLearningBatchDeploymentProperties properties = default, ManagedServiceIdentity identity = default, string kind = default, MachineLearningSku sku = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new MachineLearningBatchDeploymentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                kind,
-                sku,
-                default);
-        }
-
-        /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
-        /// <param name="description"> Description of the endpoint deployment. </param>
-        /// <param name="environmentId"> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </param>
-        /// <param name="environmentVariables"> Environment variables configuration for the deployment. </param>
-        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
-        /// <param name="compute"> Compute target for batch inference operation. </param>
-        /// <param name="deploymentConfiguration"> Properties relevant to different deployment types. </param>
-        /// <param name="errorThreshold">
-        /// Error threshold, if the error count for the entire input goes above this value,
-        /// the batch inference will be aborted. Range is [-1, int.MaxValue].
-        /// For FileDataset, this value is the count of file failures.
-        /// For TabularDataset, this value is the count of record failures.
-        /// If set to -1 (the lower bound), all failures during batch inference will be ignored.
-        /// </param>
-        /// <param name="loggingLevel">
-        /// Log verbosity for batch inferencing.
-        /// Increasing verbosity order for logging is : Warning, Info and Debug.
-        /// The default value is Info.
-        /// </param>
-        /// <param name="maxConcurrencyPerInstance"> Indicates maximum number of parallelism per instance. </param>
-        /// <param name="miniBatchSize">
-        /// Size of the mini-batch passed to each batch invocation.
-        /// For FileDataset, this is the number of files per mini-batch.
-        /// For TabularDataset, this is the size of the records in bytes, per mini-batch.
-        /// </param>
-        /// <param name="model"> Reference to the model asset for the endpoint deployment. </param>
-        /// <param name="outputAction"> Enum to determine how batch inferencing will handle output. </param>
-        /// <param name="outputFileName"> Customized output file name for append_row output action. </param>
-        /// <param name="provisioningState"> Provisioning state for the endpoint deployment. </param>
-        /// <param name="resources">
-        /// Indicates compute configuration for the job.
-        /// If not provided, will default to the defaults defined in ResourceConfiguration.
-        /// </param>
-        /// <param name="retrySettings">
-        /// Retry Settings for the batch inference operation.
-        /// If not provided, will default to the defaults defined in BatchRetrySettings.
-        /// </param>
-        /// <returns> A new <see cref="Models.MachineLearningBatchDeploymentProperties"/> instance for mocking. </returns>
-        public static MachineLearningBatchDeploymentProperties MachineLearningBatchDeploymentProperties(MachineLearningCodeConfiguration codeConfiguration = default, string description = default, string environmentId = default, IDictionary<string, string> environmentVariables = default, IDictionary<string, string> properties = default, string compute = default, BatchDeploymentConfiguration deploymentConfiguration = default, int? errorThreshold = default, MachineLearningBatchLoggingLevel? loggingLevel = default, int? maxConcurrencyPerInstance = default, long? miniBatchSize = default, MachineLearningAssetReferenceBase model = default, MachineLearningBatchOutputAction? outputAction = default, string outputFileName = default, MachineLearningDeploymentProvisioningState? provisioningState = default, MachineLearningDeploymentResourceConfiguration resources = default, MachineLearningBatchRetrySettings retrySettings = default)
-        {
-            environmentVariables ??= new ChangeTrackingDictionary<string, string>();
-            properties ??= new ChangeTrackingDictionary<string, string>();
-
-            return new MachineLearningBatchDeploymentProperties(
-                codeConfiguration,
-                description,
-                environmentId,
-                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                compute,
-                deploymentConfiguration,
-                errorThreshold,
-                loggingLevel,
-                maxConcurrencyPerInstance,
-                miniBatchSize,
-                model,
-                outputAction,
-                outputFileName,
-                provisioningState,
-                resources,
-                retrySettings);
         }
 
         /// <param name="deploymentConfigurationType"> [Required] The type of the deployment. </param>
@@ -2042,28 +1813,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 default);
         }
 
-        /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="credentials"> [Required] Account credentials. </param>
-        /// <param name="datastoreType"> Enum to determine the datastore contents type. </param>
-        /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
-        /// <returns> A new <see cref="Models.MachineLearningDatastoreProperties"/> instance for mocking. </returns>
-        public static MachineLearningDatastoreProperties MachineLearningDatastoreProperties(string description = default, IDictionary<string, string> properties = default, IDictionary<string, string> tags = default, MachineLearningDatastoreCredentials credentials = default, string datastoreType = default, bool? isDefault = default)
-        {
-            properties ??= new ChangeTrackingDictionary<string, string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new MachineLearningDatastoreProperties(
-                description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                credentials,
-                default,
-                isDefault);
-        }
-
         /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
         /// <returns> A new <see cref="Models.MachineLearningDatastoreCredentials"/> instance for mocking. </returns>
         public static MachineLearningDatastoreCredentials MachineLearningDatastoreCredentials(string credentialsType = default)
@@ -2162,169 +1911,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 resourceUri,
                 secrets,
                 tenantId);
-        }
-
-        /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="credentials"> [Required] Account credentials. </param>
-        /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
-        /// <param name="resourceGroup"> Azure Resource Group name. </param>
-        /// <param name="subscriptionId"> Azure Subscription Id. </param>
-        /// <param name="accountName"> Storage account name. </param>
-        /// <param name="containerName"> Storage account container name. </param>
-        /// <param name="endpoint"> Azure cloud endpoint for the storage account. </param>
-        /// <param name="protocol"> Protocol used to communicate with the storage account. </param>
-        /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
-        /// <returns> A new <see cref="Models.MachineLearningAzureBlobDatastore"/> instance for mocking. </returns>
-        public static MachineLearningAzureBlobDatastore MachineLearningAzureBlobDatastore(string description = default, IDictionary<string, string> properties = default, IDictionary<string, string> tags = default, MachineLearningDatastoreCredentials credentials = default, bool? isDefault = default, string resourceGroup = default, string subscriptionId = default, string accountName = default, string containerName = default, string endpoint = default, string protocol = default, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = default)
-        {
-            properties ??= new ChangeTrackingDictionary<string, string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new MachineLearningAzureBlobDatastore(
-                description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                credentials,
-                default,
-                isDefault,
-                resourceGroup,
-                subscriptionId,
-                accountName,
-                containerName,
-                endpoint,
-                protocol,
-                serviceDataAccessAuthIdentity);
-        }
-
-        /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="credentials"> [Required] Account credentials. </param>
-        /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
-        /// <param name="resourceGroup"> Azure Resource Group name. </param>
-        /// <param name="subscriptionId"> Azure Subscription Id. </param>
-        /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
-        /// <param name="storeName"> [Required] Azure Data Lake store name. </param>
-        /// <returns> A new <see cref="Models.MachineLearningAzureDataLakeGen1Datastore"/> instance for mocking. </returns>
-        public static MachineLearningAzureDataLakeGen1Datastore MachineLearningAzureDataLakeGen1Datastore(string description = default, IDictionary<string, string> properties = default, IDictionary<string, string> tags = default, MachineLearningDatastoreCredentials credentials = default, bool? isDefault = default, string resourceGroup = default, string subscriptionId = default, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = default, string storeName = default)
-        {
-            properties ??= new ChangeTrackingDictionary<string, string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new MachineLearningAzureDataLakeGen1Datastore(
-                description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                credentials,
-                default,
-                isDefault,
-                resourceGroup,
-                subscriptionId,
-                serviceDataAccessAuthIdentity,
-                storeName);
-        }
-
-        /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="credentials"> [Required] Account credentials. </param>
-        /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
-        /// <param name="resourceGroup"> Azure Resource Group name. </param>
-        /// <param name="subscriptionId"> Azure Subscription Id. </param>
-        /// <param name="accountName"> [Required] Storage account name. </param>
-        /// <param name="endpoint"> Azure cloud endpoint for the storage account. </param>
-        /// <param name="filesystem"> [Required] The name of the Data Lake Gen2 filesystem. </param>
-        /// <param name="protocol"> Protocol used to communicate with the storage account. </param>
-        /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
-        /// <returns> A new <see cref="Models.MachineLearningAzureDataLakeGen2Datastore"/> instance for mocking. </returns>
-        public static MachineLearningAzureDataLakeGen2Datastore MachineLearningAzureDataLakeGen2Datastore(string description = default, IDictionary<string, string> properties = default, IDictionary<string, string> tags = default, MachineLearningDatastoreCredentials credentials = default, bool? isDefault = default, string resourceGroup = default, string subscriptionId = default, string accountName = default, string endpoint = default, string filesystem = default, string protocol = default, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = default)
-        {
-            properties ??= new ChangeTrackingDictionary<string, string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new MachineLearningAzureDataLakeGen2Datastore(
-                description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                credentials,
-                default,
-                isDefault,
-                resourceGroup,
-                subscriptionId,
-                accountName,
-                endpoint,
-                filesystem,
-                protocol,
-                serviceDataAccessAuthIdentity);
-        }
-
-        /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="credentials"> [Required] Account credentials. </param>
-        /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
-        /// <param name="resourceGroup"> Azure Resource Group name. </param>
-        /// <param name="subscriptionId"> Azure Subscription Id. </param>
-        /// <param name="accountName"> [Required] Storage account name. </param>
-        /// <param name="endpoint"> Azure cloud endpoint for the storage account. </param>
-        /// <param name="fileShareName"> [Required] The name of the Azure file share that the datastore points to. </param>
-        /// <param name="protocol"> Protocol used to communicate with the storage account. </param>
-        /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
-        /// <returns> A new <see cref="Models.MachineLearningAzureFileDatastore"/> instance for mocking. </returns>
-        public static MachineLearningAzureFileDatastore MachineLearningAzureFileDatastore(string description = default, IDictionary<string, string> properties = default, IDictionary<string, string> tags = default, MachineLearningDatastoreCredentials credentials = default, bool? isDefault = default, string resourceGroup = default, string subscriptionId = default, string accountName = default, string endpoint = default, string fileShareName = default, string protocol = default, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = default)
-        {
-            properties ??= new ChangeTrackingDictionary<string, string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new MachineLearningAzureFileDatastore(
-                description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                credentials,
-                default,
-                isDefault,
-                resourceGroup,
-                subscriptionId,
-                accountName,
-                endpoint,
-                fileShareName,
-                protocol,
-                serviceDataAccessAuthIdentity);
-        }
-
-        /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="credentials"> [Required] Account credentials. </param>
-        /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
-        /// <param name="artifact"> [Required] OneLake artifact backing the datastore. </param>
-        /// <param name="endpoint"> OneLake endpoint to use for the datastore. </param>
-        /// <param name="oneLakeWorkspaceName"> [Required] OneLake workspace name. </param>
-        /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
-        /// <returns> A new <see cref="Models.OneLakeDatastore"/> instance for mocking. </returns>
-        public static OneLakeDatastore OneLakeDatastore(string description = default, IDictionary<string, string> properties = default, IDictionary<string, string> tags = default, MachineLearningDatastoreCredentials credentials = default, bool? isDefault = default, OneLakeArtifact artifact = default, string endpoint = default, string oneLakeWorkspaceName = default, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = default)
-        {
-            properties ??= new ChangeTrackingDictionary<string, string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new OneLakeDatastore(
-                description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                credentials,
-                default,
-                isDefault,
-                artifact,
-                endpoint,
-                oneLakeWorkspaceName,
-                serviceDataAccessAuthIdentity);
         }
 
         /// <param name="artifactName"> [Required] OneLake artifact name. </param>
@@ -2443,37 +2029,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 systemData,
                 properties,
                 default);
-        }
-
-        /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
-        /// <param name="isArchived"> Is the asset archived?. </param>
-        /// <param name="entities"> Specifies list of entities. </param>
-        /// <param name="materializationSettings"> Specifies the materialization settings. </param>
-        /// <param name="provisioningState"> Provisioning state for the featureset version container. </param>
-        /// <param name="specificationPath"> Specifies the spec path. </param>
-        /// <param name="stage"> Specifies the asset stage. </param>
-        /// <returns> A new <see cref="Models.MachineLearningFeatureSetVersionProperties"/> instance for mocking. </returns>
-        public static MachineLearningFeatureSetVersionProperties MachineLearningFeatureSetVersionProperties(string description = default, IDictionary<string, string> properties = default, IDictionary<string, string> tags = default, bool? isAnonymous = default, bool? isArchived = default, IEnumerable<string> entities = default, MaterializationSettings materializationSettings = default, RegistryAssetProvisioningState? provisioningState = default, string specificationPath = default, string stage = default)
-        {
-            properties ??= new ChangeTrackingDictionary<string, string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            entities ??= new ChangeTrackingList<string>();
-
-            return new MachineLearningFeatureSetVersionProperties(
-                description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                isAnonymous,
-                isArchived,
-                (entities ?? new ChangeTrackingList<string>()).ToList(),
-                materializationSettings,
-                provisioningState,
-                specificationPath is null ? default : new FeaturesetSpecification(specificationPath, default),
-                stage);
         }
 
         /// <param name="notification"> Specifies the notification details. </param>
@@ -2711,33 +2266,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 systemData,
                 properties,
                 default);
-        }
-
-        /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
-        /// <param name="isArchived"> Is the asset archived?. </param>
-        /// <param name="indexColumns"> Specifies index columns. </param>
-        /// <param name="provisioningState"> Provisioning state for the featurestore entity version. </param>
-        /// <param name="stage"> Specifies the asset stage. </param>
-        /// <returns> A new <see cref="Models.MachineLearningFeatureStoreEntityVersionProperties"/> instance for mocking. </returns>
-        public static MachineLearningFeatureStoreEntityVersionProperties MachineLearningFeatureStoreEntityVersionProperties(string description = default, IDictionary<string, string> properties = default, IDictionary<string, string> tags = default, bool? isAnonymous = default, bool? isArchived = default, IEnumerable<IndexColumn> indexColumns = default, RegistryAssetProvisioningState? provisioningState = default, string stage = default)
-        {
-            properties ??= new ChangeTrackingDictionary<string, string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            indexColumns ??= new ChangeTrackingList<IndexColumn>();
-
-            return new MachineLearningFeatureStoreEntityVersionProperties(
-                description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                isAnonymous,
-                isArchived,
-                (indexColumns ?? new ChangeTrackingList<IndexColumn>()).ToList(),
-                provisioningState,
-                stage);
         }
 
         /// <param name="columnName"> Specifies the column name. </param>
@@ -3074,15 +2602,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 default);
         }
 
-        /// <param name="capacity"> Gets or sets the Sku Capacity. </param>
-        /// <param name="resourceType"> The resource type name. </param>
-        /// <param name="sku"> Gets or sets the Sku. </param>
-        /// <returns> A new <see cref="Models.MachineLearningSkuDetail"/> instance for mocking. </returns>
-        public static MachineLearningSkuDetail MachineLearningSkuDetail(MachineLearningSkuCapacity capacity = default, string resourceType = default, MachineLearningSkuSetting sku = default)
-        {
-            return new MachineLearningSkuDetail(capacity, resourceType, sku, default);
-        }
-
         /// <param name="minimum"> Gets or sets the minimum. </param>
         /// <param name="maximum"> Gets or sets the maximum. </param>
         /// <param name="default"> Gets or sets the default capacity. </param>
@@ -3118,16 +2637,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 default);
         }
 
-        /// <param name="marketplacePlan"> Marketplace Plan associated with the Marketplace Subscription. </param>
-        /// <param name="marketplaceSubscriptionStatus"> Current status of the Marketplace Subscription. </param>
-        /// <param name="modelId"> [Required] Target Marketplace Model ID to create a Marketplace Subscription for. </param>
-        /// <param name="provisioningState"> Provisioning State of the Marketplace Subscription. </param>
-        /// <returns> A new <see cref="Models.MachineLearningMarketplaceSubscriptionProperties"/> instance for mocking. </returns>
-        public static MachineLearningMarketplaceSubscriptionProperties MachineLearningMarketplaceSubscriptionProperties(MachineLearningMarketplacePlan marketplacePlan = default, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default, string modelId = default, MarketplaceSubscriptionProvisioningState? provisioningState = default)
-        {
-            return new MachineLearningMarketplaceSubscriptionProperties(marketplacePlan, marketplaceSubscriptionStatus, modelId, provisioningState, default);
-        }
-
         /// <param name="publisherId"> The identifying name of the Publisher of the Marketplace Plan. </param>
         /// <param name="offerId"> The identifying name of the Offer of the Marketplace Plan. </param>
         /// <param name="planId"> The identifying name of the Plan of the Marketplace Plan. </param>
@@ -3135,74 +2644,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningMarketplacePlan MachineLearningMarketplacePlan(string publisherId = default, string offerId = default, string planId = default)
         {
             return new MachineLearningMarketplacePlan(offerId, planId, publisherId, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
-        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
-        /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
-        /// <returns> A new <see cref="MachineLearning.MachineLearningOnlineEndpointData"/> instance for mocking. </returns>
-        public static MachineLearningOnlineEndpointData MachineLearningOnlineEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MachineLearningOnlineEndpointProperties properties = default, ManagedServiceIdentity identity = default, string kind = default, MachineLearningSku sku = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new MachineLearningOnlineEndpointData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                kind,
-                sku,
-                default);
-        }
-
-        /// <param name="authMode"> [Required] The authentication method for invoking the endpoint (data plane operation). Use 'Key' for key-based authentication. Use 'AMLToken' for Azure Machine Learning token-based authentication. Use 'AADToken' for Microsoft Entra token-based authentication. </param>
-        /// <param name="description"> Description of the inference endpoint. </param>
-        /// <param name="keys">
-        /// EndpointAuthKeys to set initially on an Endpoint.
-        /// This property will always be returned as null. AuthKey values must be retrieved using the ListKeys API.
-        /// </param>
-        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
-        /// <param name="scoringUri"> Endpoint URI. </param>
-        /// <param name="swaggerUri"> Endpoint Swagger URI. </param>
-        /// <param name="compute">
-        /// ARM resource ID of the compute if it exists.
-        /// optional
-        /// </param>
-        /// <param name="mirrorTraffic"> Percentage of traffic to be mirrored to each deployment without using returned scoring. Traffic values need to sum to utmost 50. </param>
-        /// <param name="provisioningState"> Provisioning state for the endpoint. </param>
-        /// <param name="publicNetworkAccess"> Enum to determine whether PublicNetworkAccess is Enabled or Disabled. </param>
-        /// <param name="traffic"> Percentage of traffic from endpoint to divert to each deployment. Traffic values need to sum to 100. </param>
-        /// <returns> A new <see cref="Models.MachineLearningOnlineEndpointProperties"/> instance for mocking. </returns>
-        public static MachineLearningOnlineEndpointProperties MachineLearningOnlineEndpointProperties(MachineLearningEndpointAuthMode authMode = default, string description = default, MachineLearningEndpointAuthKeys keys = default, IDictionary<string, string> properties = default, Uri scoringUri = default, Uri swaggerUri = default, string compute = default, IDictionary<string, int> mirrorTraffic = default, MachineLearningEndpointProvisioningState? provisioningState = default, MachineLearningPublicNetworkAccessType? publicNetworkAccess = default, IDictionary<string, int> traffic = default)
-        {
-            properties ??= new ChangeTrackingDictionary<string, string>();
-            mirrorTraffic ??= new ChangeTrackingDictionary<string, int>();
-            traffic ??= new ChangeTrackingDictionary<string, int>();
-
-            return new MachineLearningOnlineEndpointProperties(
-                authMode,
-                description,
-                keys,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                scoringUri,
-                swaggerUri,
-                default,
-                compute,
-                mirrorTraffic ?? new ChangeTrackingDictionary<string, int>(),
-                provisioningState,
-                publicNetworkAccess,
-                traffic ?? new ChangeTrackingDictionary<string, int>());
         }
 
         /// <param name="keyType"> [Required] Specification for which type of key to generate. Primary or Secondary. </param>
@@ -3221,35 +2662,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningEndpointAuthToken MachineLearningEndpointAuthToken(string accessToken = default, long? expiryTimeUtc = default, long? refreshAfterTimeUtc = default, string tokenType = default)
         {
             return new MachineLearningEndpointAuthToken(accessToken, expiryTimeUtc, refreshAfterTimeUtc, tokenType, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
-        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
-        /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
-        /// <returns> A new <see cref="MachineLearning.MachineLearningOnlineDeploymentData"/> instance for mocking. </returns>
-        public static MachineLearningOnlineDeploymentData MachineLearningOnlineDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MachineLearningOnlineDeploymentProperties properties = default, ManagedServiceIdentity identity = default, string kind = default, MachineLearningSku sku = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new MachineLearningOnlineDeploymentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                kind,
-                sku,
-                default);
         }
 
         /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
@@ -3535,32 +2947,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 systemData,
                 properties,
                 default);
-        }
-
-        /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="action"> [Required] Specifies the action of the schedule. </param>
-        /// <param name="displayName"> Display name of schedule. </param>
-        /// <param name="isEnabled"> Is the schedule enabled?. </param>
-        /// <param name="provisioningState"> Provisioning state for the schedule. </param>
-        /// <param name="trigger"> [Required] Specifies the trigger details. </param>
-        /// <returns> A new <see cref="Models.MachineLearningScheduleProperties"/> instance for mocking. </returns>
-        public static MachineLearningScheduleProperties MachineLearningScheduleProperties(string description = default, IDictionary<string, string> properties = default, IDictionary<string, string> tags = default, MachineLearningScheduleAction action = default, string displayName = default, bool? isEnabled = default, MachineLearningScheduleProvisioningStatus? provisioningState = default, MachineLearningTriggerBase trigger = default)
-        {
-            properties ??= new ChangeTrackingDictionary<string, string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new MachineLearningScheduleProperties(
-                description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                action,
-                displayName,
-                isEnabled,
-                provisioningState,
-                trigger);
         }
 
         /// <param name="actionType"> [Required] Specifies the action type of the schedule. </param>
@@ -4150,32 +3536,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningUserIdentity MachineLearningUserIdentity()
         {
             return new MachineLearningUserIdentity(default, default);
-        }
-
-        /// <param name="endpoint"> Url for endpoint. </param>
-        /// <param name="errorMessage"> Any error in the service. </param>
-        /// <param name="jobServiceType"> Endpoint type. </param>
-        /// <param name="nodes">
-        /// Nodes that user would like to start the service on.
-        /// If Nodes is not set or set to null, the service will only be started on leader node.
-        /// </param>
-        /// <param name="port"> Port for endpoint. </param>
-        /// <param name="properties"> Additional properties to set on the endpoint. </param>
-        /// <param name="status"> Status of endpoint. </param>
-        /// <returns> A new <see cref="Models.MachineLearningJobService"/> instance for mocking. </returns>
-        public static MachineLearningJobService MachineLearningJobService(string endpoint = default, string errorMessage = default, string jobServiceType = default, JobNodes nodes = default, int? port = default, IDictionary<string, string> properties = default, string status = default)
-        {
-            properties ??= new ChangeTrackingDictionary<string, string>();
-
-            return new MachineLearningJobService(
-                endpoint,
-                errorMessage,
-                jobServiceType,
-                nodes,
-                port,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                status,
-                default);
         }
 
         /// <param name="nodesValueType"> [Required] Type of the Nodes value. </param>
@@ -5797,62 +5157,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new NlpVerticalLimitSettings(maxConcurrentTrials, maxTrials, timeout, default);
         }
 
-        /// <param name="logVerbosity"> Enum for setting log verbosity. </param>
-        /// <param name="targetColumnName">
-        /// Target column name: This is prediction values column.
-        /// Also known as label column name in context of classification tasks.
-        /// </param>
-        /// <param name="trainingData"> [Required] Training data input. </param>
-        /// <param name="featurizationDatasetLanguage"> Dataset language, useful for the text data. </param>
-        /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
-        /// <param name="validationData"> Validation data inputs. </param>
-        /// <param name="primaryMetric">
-        /// Primary metric for Text-Classification-Multilabel task.
-        /// Currently only Accuracy is supported as primary metric, hence user need not set it explicitly.
-        /// </param>
-        /// <returns> A new <see cref="Models.TextClassificationMultilabel"/> instance for mocking. </returns>
-        public static TextClassificationMultilabel TextClassificationMultilabel(MachineLearningLogVerbosity? logVerbosity = default, string targetColumnName = default, MachineLearningTableJobInput trainingData = default, string featurizationDatasetLanguage = default, NlpVerticalLimitSettings limitSettings = default, MachineLearningTableJobInput validationData = default, ClassificationMultilabelPrimaryMetric? primaryMetric = default)
-        {
-            return new TextClassificationMultilabel(
-                logVerbosity,
-                targetColumnName,
-                default,
-                trainingData,
-                default,
-                featurizationDatasetLanguage is null ? default : new NlpVerticalFeaturizationSettings(featurizationDatasetLanguage, default),
-                limitSettings,
-                validationData,
-                primaryMetric);
-        }
-
-        /// <param name="logVerbosity"> Enum for setting log verbosity. </param>
-        /// <param name="targetColumnName">
-        /// Target column name: This is prediction values column.
-        /// Also known as label column name in context of classification tasks.
-        /// </param>
-        /// <param name="trainingData"> [Required] Training data input. </param>
-        /// <param name="featurizationDatasetLanguage"> Dataset language, useful for the text data. </param>
-        /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
-        /// <param name="validationData"> Validation data inputs. </param>
-        /// <param name="primaryMetric">
-        /// Primary metric for Text-NER task.
-        /// Only 'Accuracy' is supported for Text-NER, so user need not set this explicitly.
-        /// </param>
-        /// <returns> A new <see cref="Models.TextNer"/> instance for mocking. </returns>
-        public static TextNer TextNer(MachineLearningLogVerbosity? logVerbosity = default, string targetColumnName = default, MachineLearningTableJobInput trainingData = default, string featurizationDatasetLanguage = default, NlpVerticalLimitSettings limitSettings = default, MachineLearningTableJobInput validationData = default, ClassificationPrimaryMetric? primaryMetric = default)
-        {
-            return new TextNer(
-                logVerbosity,
-                targetColumnName,
-                default,
-                trainingData,
-                default,
-                featurizationDatasetLanguage is null ? default : new NlpVerticalFeaturizationSettings(featurizationDatasetLanguage, default),
-                limitSettings,
-                validationData,
-                primaryMetric);
-        }
-
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -6534,35 +5838,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
-        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
-        /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
-        /// <returns> A new <see cref="MachineLearning.MachineLearningServerlessEndpointData"/> instance for mocking. </returns>
-        public static MachineLearningServerlessEndpointData MachineLearningServerlessEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ServerlessEndpointProperties properties = default, ManagedServiceIdentity identity = default, string kind = default, MachineLearningSku sku = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new MachineLearningServerlessEndpointData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                kind,
-                sku,
-                default);
-        }
-
         /// <param name="authMode"> [Required] Specifies the authentication mode for the Serverless endpoint. </param>
         /// <param name="contentSafety"> Specifies the content safety options. If omitted, the default content safety settings will be configured. </param>
         /// <param name="endpointState"> The current state of the ServerlessEndpoint. </param>
@@ -6590,16 +5865,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static ContentSafety ContentSafety(ContentSafetyLevel? contentSafetyLevel = default, ContentSafetyStatus contentSafetyStatus = default)
         {
             return new ContentSafety(contentSafetyLevel, contentSafetyStatus, default);
-        }
-
-        /// <param name="headers"> Specifies any required headers to target this serverless endpoint. </param>
-        /// <param name="uri"> [Required] The inference uri to target when making requests against the Serverless Endpoint. </param>
-        /// <returns> A new <see cref="Models.ServerlessInferenceEndpoint"/> instance for mocking. </returns>
-        public static ServerlessInferenceEndpoint ServerlessInferenceEndpoint(IReadOnlyDictionary<string, string> headers = default, Uri uri = default)
-        {
-            headers ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ServerlessInferenceEndpoint(headers ?? new ChangeTrackingDictionary<string, string>(), uri, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -6664,33 +5929,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 enabled,
                 name,
                 source,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="sku"> The sku of the workspace. </param>
-        /// <param name="identity"> The identity of the resource. </param>
-        /// <returns> A new <see cref="MachineLearning.MachineLearningComputeData"/> instance for mocking. </returns>
-        public static MachineLearningComputeData MachineLearningComputeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MachineLearningComputeProperties properties = default, MachineLearningSku sku = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new MachineLearningComputeData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                sku,
-                identity,
                 default);
         }
 
@@ -7537,35 +6775,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new EndpointModelSkuRateLimitRulePatternProperties(@method, path, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="identity"></param>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        /// <param name="sku"> Optional. This field is required to be implemented by the RP because AML is supporting more than one tier. </param>
-        /// <returns> A new <see cref="Models.MachineLearningPrivateLinkResource"/> instance for mocking. </returns>
-        public static MachineLearningPrivateLinkResource MachineLearningPrivateLinkResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default, MachineLearningSku sku = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new MachineLearningPrivateLinkResource(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                identity,
-                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new MachineLearningPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default),
-                sku,
-                default);
-        }
-
         /// <param name="includeSpark"></param>
         /// <returns> A new <see cref="Models.ManagedNetworkProvisionContent"/> instance for mocking. </returns>
         public static ManagedNetworkProvisionContent ManagedNetworkProvisionContent(bool? includeSpark = default)
@@ -7586,15 +6795,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static BlobReferenceSasResult BlobReferenceSasResult(GetBlobReferenceForConsumptionDto blobReferenceForConsumption = default)
         {
             return new BlobReferenceSasResult(blobReferenceForConsumption, default);
-        }
-
-        /// <param name="blobUri"> Blob uri, example: https://blob.windows.core.net/Container/Path. </param>
-        /// <param name="credential"> Credential info to access storage account. </param>
-        /// <param name="storageAccountArmId"> The ARM id of the storage account. </param>
-        /// <returns> A new <see cref="Models.GetBlobReferenceForConsumptionDto"/> instance for mocking. </returns>
-        public static GetBlobReferenceForConsumptionDto GetBlobReferenceForConsumptionDto(Uri blobUri = default, DataReferenceCredential credential = default, string storageAccountArmId = default)
-        {
-            return new GetBlobReferenceForConsumptionDto(blobUri, credential, storageAccountArmId, default);
         }
 
         /// <param name="credentialType"> [Required] Credential type used to authentication with storage. </param>
@@ -8809,8 +8009,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="workspaceHubConfig"> WorkspaceHub's configuration object. </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningWorkspaceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningWorkspaceData MachineLearningWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, string kind = default, MachineLearningSku sku = default, string workspaceId = default, string description = default, string friendlyName = default, string keyVault = default, string applicationInsights = default, string containerRegistry = default, string storageAccount = default, Uri discoveryUri = default, MachineLearningProvisioningState? provisioningState = default, MachineLearningEncryptionSetting encryption = default, bool? isHbiWorkspace = default, string serviceProvisionedResourceGroup = default, int? privateLinkCount = default, string imageBuildCompute = default, bool? allowPublicAccessWhenBehindVnet = default, PublicNetworkAccess? publicNetworkAccessType = default, IEnumerable<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections = default, ServerlessComputeSettings serverlessComputeSettings = default, IEnumerable<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources = default, MachineLearningNotebookResourceInfo notebookInfo = default, int? cosmosDbCollectionsThroughput = default, string primaryUserAssignedIdentity = default, Guid? tenantId = default, bool? isStorageHnsEnabled = default, Uri mlFlowTrackingUri = default, bool? isV1LegacyMode = default, ManagedNetworkSettings managedNetwork = default, FeatureStoreSettings featureStoreSettings = default, IEnumerable<string> associatedWorkspaces = default, bool? enableDataIsolation = default, ResourceIdentifier hubResourceId = default, WorkspaceHubConfig workspaceHubConfig = default)
+        public static MachineLearningWorkspaceData MachineLearningWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, MachineLearningSku sku, string workspaceId, string description, string friendlyName, string keyVault, string applicationInsights, string containerRegistry, string storageAccount, Uri discoveryUri, MachineLearningProvisioningState? provisioningState, MachineLearningEncryptionSetting encryption, bool? isHbiWorkspace, string serviceProvisionedResourceGroup, int? privateLinkCount, string imageBuildCompute, bool? allowPublicAccessWhenBehindVnet, PublicNetworkAccess? publicNetworkAccessType, IEnumerable<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections, ServerlessComputeSettings serverlessComputeSettings, IEnumerable<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources, MachineLearningNotebookResourceInfo notebookInfo, int? cosmosDbCollectionsThroughput, string primaryUserAssignedIdentity, Guid? tenantId, bool? isStorageHnsEnabled, Uri mlFlowTrackingUri, bool? isV1LegacyMode, ManagedNetworkSettings managedNetwork, FeatureStoreSettings featureStoreSettings, IEnumerable<string> associatedWorkspaces, bool? enableDataIsolation, ResourceIdentifier hubResourceId, WorkspaceHubConfig workspaceHubConfig)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            privateEndpointConnections ??= new ChangeTrackingList<MachineLearningPrivateEndpointConnectionData>();
+            sharedPrivateLinkResources ??= new ChangeTrackingList<MachineLearningSharedPrivateLinkResource>();
+            associatedWorkspaces ??= new ChangeTrackingList<string>();
+
             return new MachineLearningWorkspaceData(
                 id,
                 name,
@@ -8893,8 +8098,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningPrivateEndpointConnectionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningPrivateEndpointConnectionData MachineLearningPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, MachineLearningSku sku = default, ResourceIdentifier subResourceId = default, MachineLearningPrivateLinkServiceConnectionState connectionState = default, MachineLearningPrivateEndpointConnectionProvisioningState? provisioningState = default)
+        public static MachineLearningPrivateEndpointConnectionData MachineLearningPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MachineLearningSku sku, ResourceIdentifier subResourceId, MachineLearningPrivateLinkServiceConnectionState connectionState, MachineLearningPrivateEndpointConnectionProvisioningState? provisioningState)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new MachineLearningPrivateEndpointConnectionData(
                 id,
                 name,
@@ -8914,9 +8121,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="notebookPreparationError"> The error that occurs when preparing notebook. </param>
         /// <returns> A new <see cref="Models.MachineLearningNotebookResourceInfo"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningNotebookResourceInfo MachineLearningNotebookResourceInfo(string fqdn = default, string resourceId = default, MachineLearningNotebookPreparationError notebookPreparationError = default)
+        public static MachineLearningNotebookResourceInfo MachineLearningNotebookResourceInfo(string fqdn, string resourceId, MachineLearningNotebookPreparationError notebookPreparationError)
         {
-            return new MachineLearningNotebookResourceInfo(fqdn, default, notebookPreparationError, resourceId, default);
+            return MachineLearningNotebookResourceInfo(fqdn: fqdn, isPrivateLinkEnabled: default, notebookPreparationError: notebookPreparationError, resourceId: resourceId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedNetworkSettings"/>. </summary>
@@ -8930,18 +8137,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="status"> Status of the Provisioning for the managed network of a machine learning workspace. </param>
         /// <returns> A new <see cref="Models.ManagedNetworkSettings"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedNetworkSettings ManagedNetworkSettings(IsolationMode? isolationMode = default, string networkId = default, IDictionary<string, MachineLearningOutboundRule> outboundRules = default, ManagedNetworkProvisionStatus status = default)
+        public static ManagedNetworkSettings ManagedNetworkSettings(IsolationMode? isolationMode, string networkId, IDictionary<string, MachineLearningOutboundRule> outboundRules, ManagedNetworkProvisionStatus status)
         {
-            return new ManagedNetworkSettings(
-                default,
-                isolationMode,
-                networkId,
-                outboundRules ?? new ChangeTrackingDictionary<string, MachineLearningOutboundRule>(),
-                status,
-                default,
-                default,
-                default,
-                default);
+            return ManagedNetworkSettings(enableNetworkMonitor: default, isolationMode: isolationMode, networkId: networkId, outboundRules: outboundRules, status: status, firewallSku: default, managedNetworkKind: default, firewallPublicIpAddress: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningWorkspaceGetKeysResult"/>. </summary>
@@ -8951,7 +8149,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="containerRegistryCredentials"></param>
         /// <param name="notebookAccessKeys"></param>
         /// <returns> A new <see cref="Models.MachineLearningWorkspaceGetKeysResult"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MachineLearningWorkspaceGetKeysResult MachineLearningWorkspaceGetKeysResult(string userStorageKey = default, string userStorageResourceId = default, string appInsightsInstrumentationKey = default, MachineLearningContainerRegistryCredentials containerRegistryCredentials = default, MachineLearningWorkspaceGetNotebookKeysResult notebookAccessKeys = default)
         {
             return new MachineLearningWorkspaceGetKeysResult(
@@ -8978,9 +8175,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         ///             The available derived classes include , , , , , , , ,  and .
         /// </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningComputeData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MachineLearningComputeData MachineLearningComputeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, MachineLearningSku sku = default, MachineLearningComputeProperties properties = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new MachineLearningComputeData(
                 id,
                 name,
@@ -9004,7 +8202,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="refreshToken"></param>
         /// <param name="scope"></param>
         /// <returns> A new <see cref="Models.MachineLearningWorkspaceNotebookAccessTokenResult"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MachineLearningWorkspaceNotebookAccessTokenResult MachineLearningWorkspaceNotebookAccessTokenResult(string notebookResourceId = default, string hostName = default, string publicDns = default, string accessToken = default, string tokenType = default, int? expiresIn = default, string refreshToken = default, string scope = default)
         {
             return new MachineLearningWorkspaceNotebookAccessTokenResult(
@@ -9032,9 +8229,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
         /// <returns> A new <see cref="Models.MachineLearningPrivateLinkResource"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MachineLearningPrivateLinkResource MachineLearningPrivateLinkResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, MachineLearningSku sku = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            requiredMembers ??= new ChangeTrackingList<string>();
+            requiredZoneNames ??= new ChangeTrackingList<string>();
+
             return new MachineLearningPrivateLinkResource(
                 id,
                 name,
@@ -9052,7 +8252,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="properties"></param>
         /// <returns> A new <see cref="Models.MachineLearningFqdnEndpoints"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningFqdnEndpoints MachineLearningFqdnEndpoints(MachineLearningFqdnEndpointsProperties properties = default)
+        public static MachineLearningFqdnEndpoints MachineLearningFqdnEndpoints(MachineLearningFqdnEndpointsProperties properties)
         {
             return new MachineLearningFqdnEndpoints(default, default, default);
         }
@@ -9069,7 +8269,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         ///             The available derived classes include .
         /// </param>
         /// <returns> A new <see cref="Models.BlobReferenceForConsumptionDto"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobReferenceForConsumptionDto BlobReferenceForConsumptionDto(Uri blobUri = default, ResourceIdentifier storageAccountArmId = default, PendingUploadCredentialDto credential = default)
         {
             return new BlobReferenceForConsumptionDto(blobUri, credential, storageAccountArmId, default);
@@ -9084,7 +8283,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         ///             The available derived classes include , ,  and .
         /// </param>
         /// <returns> A new <see cref="Models.GetBlobReferenceForConsumptionDto"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static GetBlobReferenceForConsumptionDto GetBlobReferenceForConsumptionDto(Uri blobUri = default, string storageAccountArmId = default, DataReferenceCredential credential = default)
         {
             return new GetBlobReferenceForConsumptionDto(blobUri, credential, storageAccountArmId, default);
@@ -9116,25 +8314,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="stage"> Stage in the environment lifecycle assigned to this environment. </param>
         /// <returns> A new <see cref="Models.MachineLearningEnvironmentVersionProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningEnvironmentVersionProperties MachineLearningEnvironmentVersionProperties(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, bool? isArchived = default, bool? isAnonymous = default, MachineLearningEnvironmentType? environmentType = default, string image = default, string condaFile = default, MachineLearningBuildContext build = default, MachineLearningOperatingSystemType? osType = default, MachineLearningInferenceContainerProperties inferenceConfig = default, AutoRebuildSetting? autoRebuild = default, RegistryAssetProvisioningState? provisioningState = default, string stage = default)
+        public static MachineLearningEnvironmentVersionProperties MachineLearningEnvironmentVersionProperties(string description, IDictionary<string, string> tags, IDictionary<string, string> properties, bool? isArchived, bool? isAnonymous, MachineLearningEnvironmentType? environmentType, string image, string condaFile, MachineLearningBuildContext build, MachineLearningOperatingSystemType? osType, MachineLearningInferenceContainerProperties inferenceConfig, AutoRebuildSetting? autoRebuild, RegistryAssetProvisioningState? provisioningState, string stage)
         {
-            return new MachineLearningEnvironmentVersionProperties(
-                description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                isAnonymous,
-                isArchived,
-                autoRebuild,
-                build,
-                condaFile,
-                environmentType,
-                image,
-                default,
-                inferenceConfig,
-                osType,
-                provisioningState,
-                stage);
+            return MachineLearningEnvironmentVersionProperties(description: description, properties: properties, tags: tags, isAnonymous: isAnonymous, isArchived: isArchived, autoRebuild: autoRebuild, build: build, condaFile: condaFile, environmentType: environmentType, image: image, imageDetails: default, inferenceConfig: inferenceConfig, osType: osType, provisioningState: provisioningState, stage: stage);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningModelVersionProperties"/>. </summary>
@@ -9151,22 +8333,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="stage"> Stage in the model lifecycle assigned to this model. </param>
         /// <returns> A new <see cref="Models.MachineLearningModelVersionProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningModelVersionProperties MachineLearningModelVersionProperties(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, bool? isArchived = default, bool? isAnonymous = default, IDictionary<string, MachineLearningFlavorData> flavors = default, string modelType = default, Uri modelUri = default, string jobName = default, RegistryAssetProvisioningState? provisioningState = default, string stage = default)
+        public static MachineLearningModelVersionProperties MachineLearningModelVersionProperties(string description, IDictionary<string, string> tags, IDictionary<string, string> properties, bool? isArchived, bool? isAnonymous, IDictionary<string, MachineLearningFlavorData> flavors, string modelType, Uri modelUri, string jobName, RegistryAssetProvisioningState? provisioningState, string stage)
         {
-            return new MachineLearningModelVersionProperties(
-                description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                isAnonymous,
-                isArchived,
-                flavors ?? new ChangeTrackingDictionary<string, MachineLearningFlavorData>(),
-                jobName,
-                modelType,
-                modelUri,
-                provisioningState,
-                stage,
-                default);
+            return MachineLearningModelVersionProperties(description: description, properties: properties, tags: tags, isAnonymous: isAnonymous, isArchived: isArchived, flavors: flavors, jobName: jobName, modelType: modelType, modelUri: modelUri, provisioningState: provisioningState, stage: stage, datasets: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearning.MachineLearningBatchEndpointData"/>. </summary>
@@ -9181,9 +8350,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningBatchEndpointData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MachineLearningBatchEndpointData MachineLearningBatchEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MachineLearningBatchEndpointProperties properties = default, string kind = default, ManagedServiceIdentity identity = default, MachineLearningSku sku = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new MachineLearningBatchEndpointData(
                 id,
                 name,
@@ -9211,9 +8381,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="defaultsDeploymentName"> Default values for Batch Endpoint. </param>
         /// <param name="provisioningState"> Provisioning state for the endpoint. </param>
         /// <returns> A new <see cref="Models.MachineLearningBatchEndpointProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MachineLearningBatchEndpointProperties MachineLearningBatchEndpointProperties(string description = default, IDictionary<string, string> properties = default, Uri scoringUri = default, Uri swaggerUri = default, MachineLearningEndpointAuthMode authMode = default, MachineLearningEndpointAuthKeys keys = default, string defaultsDeploymentName = default, MachineLearningEndpointProvisioningState? provisioningState = default)
         {
+            properties ??= new ChangeTrackingDictionary<string, string>();
+
             return new MachineLearningBatchEndpointProperties(
                 authMode,
                 description,
@@ -9237,9 +8408,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         ///             This property will always be returned as null. AuthKey values must be retrieved using the ListKeys API.
         /// </param>
         /// <returns> A new <see cref="Models.MachineLearningEndpointProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MachineLearningEndpointProperties MachineLearningEndpointProperties(string description = default, IDictionary<string, string> properties = default, Uri scoringUri = default, Uri swaggerUri = default, MachineLearningEndpointAuthMode authMode = default, MachineLearningEndpointAuthKeys keys = default)
         {
+            properties ??= new ChangeTrackingDictionary<string, string>();
+
             return new MachineLearningEndpointProperties(
                 authMode,
                 description,
@@ -9262,9 +8434,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningBatchDeploymentData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MachineLearningBatchDeploymentData MachineLearningBatchDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MachineLearningBatchDeploymentProperties properties = default, string kind = default, ManagedServiceIdentity identity = default, MachineLearningSku sku = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new MachineLearningBatchDeploymentData(
                 id,
                 name,
@@ -9322,9 +8495,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="provisioningState"> Provisioning state for the endpoint deployment. </param>
         /// <returns> A new <see cref="Models.MachineLearningBatchDeploymentProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MachineLearningBatchDeploymentProperties MachineLearningBatchDeploymentProperties(string description = default, IDictionary<string, string> properties = default, MachineLearningCodeConfiguration codeConfiguration = default, string environmentId = default, IDictionary<string, string> environmentVariables = default, string compute = default, BatchDeploymentConfiguration deploymentConfiguration = default, int? errorThreshold = default, MachineLearningBatchRetrySettings retrySettings = default, long? miniBatchSize = default, MachineLearningBatchLoggingLevel? loggingLevel = default, MachineLearningAssetReferenceBase model = default, int? maxConcurrencyPerInstance = default, MachineLearningBatchOutputAction? outputAction = default, string outputFileName = default, MachineLearningDeploymentResourceConfiguration resources = default, MachineLearningDeploymentProvisioningState? provisioningState = default)
         {
+            properties ??= new ChangeTrackingDictionary<string, string>();
+            environmentVariables ??= new ChangeTrackingDictionary<string, string>();
+
             return new MachineLearningBatchDeploymentProperties(
                 codeConfiguration,
                 description,
@@ -9358,9 +8533,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         ///             The available derived classes include , , ,  and .
         /// </param>
         /// <returns> A new <see cref="Models.MachineLearningDatastoreProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MachineLearningDatastoreProperties MachineLearningDatastoreProperties(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, string datastoreType = default, bool? isDefault = default, MachineLearningDatastoreCredentials credentials = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            properties ??= new ChangeTrackingDictionary<string, string>();
+
             return new MachineLearningDatastoreProperties(
                 description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
@@ -9383,9 +8560,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="entities"> Specifies list of entities. </param>
         /// <param name="provisioningState"> Provisioning state for the featureset version container. </param>
         /// <returns> A new <see cref="Models.MachineLearningFeatureSetVersionProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MachineLearningFeatureSetVersionProperties MachineLearningFeatureSetVersionProperties(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, bool? isArchived = default, bool? isAnonymous = default, string specificationPath = default, MaterializationSettings materializationSettings = default, string stage = default, IEnumerable<string> entities = default, RegistryAssetProvisioningState? provisioningState = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            properties ??= new ChangeTrackingDictionary<string, string>();
+            entities ??= new ChangeTrackingList<string>();
+
             return new MachineLearningFeatureSetVersionProperties(
                 description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
@@ -9410,9 +8590,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="stage"> Specifies the asset stage. </param>
         /// <param name="provisioningState"> Provisioning state for the featurestore entity version. </param>
         /// <returns> A new <see cref="Models.MachineLearningFeatureStoreEntityVersionProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MachineLearningFeatureStoreEntityVersionProperties MachineLearningFeatureStoreEntityVersionProperties(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, bool? isArchived = default, bool? isAnonymous = default, IEnumerable<IndexColumn> indexColumns = default, string stage = default, RegistryAssetProvisioningState? provisioningState = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            properties ??= new ChangeTrackingDictionary<string, string>();
+            indexColumns ??= new ChangeTrackingList<IndexColumn>();
+
             return new MachineLearningFeatureStoreEntityVersionProperties(
                 description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
@@ -9449,24 +8632,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="notificationSetting"> Notification setting for the job. </param>
         /// <returns> A new <see cref="Models.MachineLearningJobProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningJobProperties MachineLearningJobProperties(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, string jobType = default, string displayName = default, MachineLearningJobStatus? status = default, string experimentName = default, IDictionary<string, MachineLearningJobService> services = default, ResourceIdentifier computeId = default, bool? isArchived = default, MachineLearningIdentityConfiguration identity = default, ResourceIdentifier componentId = default, NotificationSetting notificationSetting = default)
+        public static MachineLearningJobProperties MachineLearningJobProperties(string description, IDictionary<string, string> tags, IDictionary<string, string> properties, string jobType, string displayName, MachineLearningJobStatus? status, string experimentName, IDictionary<string, MachineLearningJobService> services, ResourceIdentifier computeId, bool? isArchived, MachineLearningIdentityConfiguration identity, ResourceIdentifier componentId, NotificationSetting notificationSetting)
         {
-            return new MachineLearningJobProperties(
-                description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                componentId,
-                computeId,
-                displayName,
-                experimentName,
-                identity,
-                isArchived,
-                default,
-                notificationSetting,
-                default,
-                services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
-                status);
+            return MachineLearningJobProperties(description: description, properties: properties, tags: tags, componentId: componentId, computeId: computeId, displayName: displayName, experimentName: experimentName, identity: identity, isArchived: isArchived, jobType: jobType, notificationSetting: notificationSetting, parentJobName: default, services: services, status: status);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningJobService"/>. </summary>
@@ -9483,9 +8651,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         ///             The available derived classes include .
         /// </param>
         /// <returns> A new <see cref="Models.MachineLearningJobService"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MachineLearningJobService MachineLearningJobService(string jobServiceType = default, int? port = default, string endpoint = default, string status = default, string errorMessage = default, IDictionary<string, string> properties = default, JobNodes nodes = default)
         {
+            properties ??= new ChangeTrackingDictionary<string, string>();
+
             return new MachineLearningJobService(
                 endpoint,
                 errorMessage,
@@ -9503,7 +8672,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="marketplaceSubscriptionStatus"> Current status of the Marketplace Subscription. </param>
         /// <param name="provisioningState"> Provisioning State of the Marketplace Subscription. </param>
         /// <returns> A new <see cref="Models.MachineLearningMarketplaceSubscriptionProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MachineLearningMarketplaceSubscriptionProperties MachineLearningMarketplaceSubscriptionProperties(string modelId = default, MachineLearningMarketplacePlan marketplacePlan = default, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default, MarketplaceSubscriptionProvisioningState? provisioningState = default)
         {
             return new MachineLearningMarketplaceSubscriptionProperties(marketplacePlan, marketplaceSubscriptionStatus, modelId, provisioningState, default);
@@ -9521,9 +8689,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningOnlineEndpointData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MachineLearningOnlineEndpointData MachineLearningOnlineEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MachineLearningOnlineEndpointProperties properties = default, string kind = default, ManagedServiceIdentity identity = default, MachineLearningSku sku = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new MachineLearningOnlineEndpointData(
                 id,
                 name,
@@ -9557,9 +8726,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="traffic"> Percentage of traffic from endpoint to divert to each deployment. Traffic values need to sum to 100. </param>
         /// <param name="mirrorTraffic"> Percentage of traffic to be mirrored to each deployment without using returned scoring. Traffic values need to sum to utmost 50. </param>
         /// <returns> A new <see cref="Models.MachineLearningOnlineEndpointProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MachineLearningOnlineEndpointProperties MachineLearningOnlineEndpointProperties(string description = default, IDictionary<string, string> properties = default, Uri scoringUri = default, Uri swaggerUri = default, MachineLearningEndpointAuthMode authMode = default, MachineLearningEndpointAuthKeys keys = default, MachineLearningEndpointProvisioningState? provisioningState = default, string compute = default, MachineLearningPublicNetworkAccessType? publicNetworkAccess = default, IDictionary<string, int> traffic = default, IDictionary<string, int> mirrorTraffic = default)
         {
+            properties ??= new ChangeTrackingDictionary<string, string>();
+            traffic ??= new ChangeTrackingDictionary<string, int>();
+            mirrorTraffic ??= new ChangeTrackingDictionary<string, int>();
+
             return new MachineLearningOnlineEndpointProperties(
                 authMode,
                 description,
@@ -9591,9 +8763,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningOnlineDeploymentData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MachineLearningOnlineDeploymentData MachineLearningOnlineDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MachineLearningOnlineDeploymentProperties properties = default, string kind = default, ManagedServiceIdentity identity = default, MachineLearningSku sku = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new MachineLearningOnlineDeploymentData(
                 id,
                 name,
@@ -9635,28 +8808,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="dataCollector"> The mdc configuration, we disable mdc when it's null. </param>
         /// <returns> A new <see cref="Models.MachineLearningOnlineDeploymentProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningOnlineDeploymentProperties MachineLearningOnlineDeploymentProperties(string description = default, IDictionary<string, string> properties = default, MachineLearningCodeConfiguration codeConfiguration = default, string environmentId = default, IDictionary<string, string> environmentVariables = default, string endpointComputeType = default, MachineLearningOnlineScaleSettings scaleSettings = default, MachineLearningOnlineRequestSettings requestSettings = default, string modelMountPath = default, bool? appInsightsEnabled = default, MachineLearningProbeSettings livenessProbe = default, MachineLearningProbeSettings readinessProbe = default, MachineLearningDeploymentProvisioningState? provisioningState = default, string instanceType = default, string model = default, MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess = default, DataCollector dataCollector = default)
+        public static MachineLearningOnlineDeploymentProperties MachineLearningOnlineDeploymentProperties(string description, IDictionary<string, string> properties, MachineLearningCodeConfiguration codeConfiguration, string environmentId, IDictionary<string, string> environmentVariables, string endpointComputeType, MachineLearningOnlineScaleSettings scaleSettings, MachineLearningOnlineRequestSettings requestSettings, string modelMountPath, bool? appInsightsEnabled, MachineLearningProbeSettings livenessProbe, MachineLearningProbeSettings readinessProbe, MachineLearningDeploymentProvisioningState? provisioningState, string instanceType, string model, MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess, DataCollector dataCollector)
         {
-            return new MachineLearningOnlineDeploymentProperties(
-                codeConfiguration,
-                description,
-                environmentId,
-                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                appInsightsEnabled,
-                dataCollector,
-                egressPublicNetworkAccess,
-                default,
-                instanceType,
-                livenessProbe,
-                model,
-                modelMountPath,
-                provisioningState,
-                readinessProbe,
-                requestSettings,
-                scaleSettings,
-                default);
+            return MachineLearningOnlineDeploymentProperties(codeConfiguration: codeConfiguration, description: description, environmentId: environmentId, environmentVariables: environmentVariables, properties: properties, appInsightsEnabled: appInsightsEnabled, dataCollector: dataCollector, egressPublicNetworkAccess: egressPublicNetworkAccess, endpointComputeType: endpointComputeType, instanceType: instanceType, livenessProbe: livenessProbe, model: model, modelMountPath: modelMountPath, provisioningState: provisioningState, readinessProbe: readinessProbe, requestSettings: requestSettings, scaleSettings: scaleSettings, startupProbe: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningSkuDetail"/>. </summary>
@@ -9664,7 +8818,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="sku"> Gets or sets the Sku. </param>
         /// <param name="capacity"> Gets or sets the Sku Capacity. </param>
         /// <returns> A new <see cref="Models.MachineLearningSkuDetail"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MachineLearningSkuDetail MachineLearningSkuDetail(string resourceType = default, MachineLearningSkuSetting sku = default, MachineLearningSkuCapacity capacity = default)
         {
             return new MachineLearningSkuDetail(capacity, resourceType, sku, default);
@@ -9677,7 +8830,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="refreshOn"> Refresh access token after time (UTC). </param>
         /// <returns> A new <see cref="Models.MachineLearningEndpointAuthToken"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningEndpointAuthToken MachineLearningEndpointAuthToken(string accessToken = default, string tokenType = default, DateTimeOffset? expireOn = default, DateTimeOffset? refreshOn = default)
+        public static MachineLearningEndpointAuthToken MachineLearningEndpointAuthToken(string accessToken, string tokenType, DateTimeOffset? expireOn, DateTimeOffset? refreshOn)
         {
             return new MachineLearningEndpointAuthToken(accessToken, default, default, tokenType, default);
         }
@@ -9700,9 +8853,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="provisioningState"> Provisioning state for the schedule. </param>
         /// <returns> A new <see cref="Models.MachineLearningScheduleProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MachineLearningScheduleProperties MachineLearningScheduleProperties(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, string displayName = default, bool? isEnabled = default, MachineLearningTriggerBase trigger = default, MachineLearningScheduleAction action = default, MachineLearningScheduleProvisioningStatus? provisioningState = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            properties ??= new ChangeTrackingDictionary<string, string>();
+
             return new MachineLearningScheduleProperties(
                 description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
@@ -9727,9 +8882,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningServerlessEndpointData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MachineLearningServerlessEndpointData MachineLearningServerlessEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ServerlessEndpointProperties properties = default, string kind = default, ManagedServiceIdentity identity = default, MachineLearningSku sku = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new MachineLearningServerlessEndpointData(
                 id,
                 name,
@@ -9754,7 +8910,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="contentSafetyStatus"> Specifies the content safety options. If omitted, the default content safety settings will be configured. </param>
         /// <returns> A new <see cref="Models.ServerlessEndpointProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ServerlessEndpointProperties ServerlessEndpointProperties(string modelId = default, ServerlessInferenceEndpointAuthMode authMode = default, ServerlessInferenceEndpoint inferenceEndpoint = default, MachineLearningEndpointProvisioningState? provisioningState = default, ServerlessEndpointState? endpointState = default, string marketplaceSubscriptionId = default, ContentSafetyStatus? contentSafetyStatus = default)
+        public static ServerlessEndpointProperties ServerlessEndpointProperties(string modelId, ServerlessInferenceEndpointAuthMode authMode, ServerlessInferenceEndpoint inferenceEndpoint, MachineLearningEndpointProvisioningState? provisioningState, ServerlessEndpointState? endpointState, string marketplaceSubscriptionId, ContentSafetyStatus? contentSafetyStatus)
         {
             return new ServerlessEndpointProperties(
                 authMode,
@@ -9771,9 +8927,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="uri"> [Required] The inference uri to target when making requests against the Serverless Endpoint. </param>
         /// <param name="headers"> Specifies any required headers to target this serverless endpoint. </param>
         /// <returns> A new <see cref="Models.ServerlessInferenceEndpoint"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ServerlessInferenceEndpoint ServerlessInferenceEndpoint(Uri uri = default, IReadOnlyDictionary<string, string> headers = default)
         {
+            headers ??= new ChangeTrackingDictionary<string, string>();
+
             return new ServerlessInferenceEndpoint(headers ?? new ChangeTrackingDictionary<string, string>(), uri, default);
         }
 
@@ -9799,29 +8956,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="regionDetails"> Details of each region the registry is in. </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningRegistryData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningRegistryData MachineLearningRegistryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, string kind = default, MachineLearningSku sku = default, Uri discoveryUri = default, string intellectualPropertyPublisher = default, ResourceIdentifier managedResourceId = default, Uri mlFlowRegistryUri = default, IEnumerable<RegistryPrivateEndpointConnection> registryPrivateEndpointConnections = default, string publicNetworkAccess = default, IEnumerable<RegistryRegionArmDetails> regionDetails = default)
+        public static MachineLearningRegistryData MachineLearningRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, MachineLearningSku sku, Uri discoveryUri, string intellectualPropertyPublisher, ResourceIdentifier managedResourceId, Uri mlFlowRegistryUri, IEnumerable<RegistryPrivateEndpointConnection> registryPrivateEndpointConnections, string publicNetworkAccess, IEnumerable<RegistryRegionArmDetails> regionDetails)
         {
-            return new MachineLearningRegistryData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                discoveryUri is null && intellectualPropertyPublisher is null && managedResourceId is null && mlFlowRegistryUri is null && registryPrivateEndpointConnections is null && publicNetworkAccess is null && regionDetails is null ? default : new RegistryProperties(
-                    discoveryUri,
-                    intellectualPropertyPublisher,
-                    new ArmResourceId(managedResourceId, default),
-                    default,
-                    mlFlowRegistryUri,
-                    (registryPrivateEndpointConnections ?? new ChangeTrackingList<RegistryPrivateEndpointConnection>()).ToList(),
-                    publicNetworkAccess,
-                    (regionDetails ?? new ChangeTrackingList<RegistryRegionArmDetails>()).ToList(),
-                    default),
-                identity,
-                kind,
-                sku,
-                default);
+            return MachineLearningRegistryData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, discoveryUri: discoveryUri, intellectualPropertyPublisher: intellectualPropertyPublisher, mlFlowRegistryUri: mlFlowRegistryUri, registryPrivateEndpointConnections: registryPrivateEndpointConnections, publicNetworkAccess: publicNetworkAccess, regionDetails: regionDetails, managedResourceId: managedResourceId, managedResourceGroupAssignedIdentities: default, identity: identity, kind: kind, sku: sku);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ImageMetadata"/>. </summary>
@@ -9830,7 +8967,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="isLatestOSImageVersion"> Specifies whether this compute instance is running on the latest operating system image. </param>
         /// <returns> A new <see cref="Models.ImageMetadata"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ImageMetadata ImageMetadata(string currentImageVersion = default, string latestImageVersion = default, bool? isLatestOSImageVersion = default)
+        public static ImageMetadata ImageMetadata(string currentImageVersion, string latestImageVersion, bool? isLatestOSImageVersion)
         {
             return new ImageMetadata(currentImageVersion, latestImageVersion, isLatestOSImageVersion, default, default);
         }
@@ -9847,20 +8984,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="error"> Error of this data mount. </param>
         /// <returns> A new <see cref="Models.MachineLearningComputeInstanceDataMount"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningComputeInstanceDataMount MachineLearningComputeInstanceDataMount(string source = default, MachineLearningSourceType? sourceType = default, string mountName = default, MachineLearningMountAction? mountAction = default, string createdBy = default, string mountPath = default, MachineLearningMountState? mountState = default, DateTimeOffset? mountedOn = default, string error = default)
+        public static MachineLearningComputeInstanceDataMount MachineLearningComputeInstanceDataMount(string source, MachineLearningSourceType? sourceType, string mountName, MachineLearningMountAction? mountAction, string createdBy, string mountPath, MachineLearningMountState? mountState, DateTimeOffset? mountedOn, string error)
         {
-            return new MachineLearningComputeInstanceDataMount(
-                source,
-                sourceType,
-                mountName,
-                mountAction,
-                default,
-                createdBy,
-                mountPath,
-                mountState,
-                mountedOn,
-                error,
-                default);
+            return MachineLearningComputeInstanceDataMount(source: source, sourceType: sourceType, mountName: mountName, mountAction: mountAction, mountMode: default, createdBy: createdBy, mountPath: mountPath, mountState: mountState, mountedOn: mountedOn, error: error);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningPatAuthTypeWorkspaceConnection"/>. </summary>
@@ -9877,8 +9003,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="credentialsPat"></param>
         /// <returns> A new <see cref="Models.MachineLearningPatAuthTypeWorkspaceConnection"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningPatAuthTypeWorkspaceConnection MachineLearningPatAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, DateTimeOffset? expiryOn = default, WorkspaceConnectionGroup? @group = default, bool? isSharedToAll = default, string target = default, IDictionary<string, string> metadata = default, IEnumerable<string> sharedUserList = default, string value = default, MachineLearningValueFormat? valueFormat = default, string credentialsPat = default)
+        public static MachineLearningPatAuthTypeWorkspaceConnection MachineLearningPatAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, DateTimeOffset? expiryOn, WorkspaceConnectionGroup? @group, bool? isSharedToAll, string target, IDictionary<string, string> metadata, IEnumerable<string> sharedUserList, string value, MachineLearningValueFormat? valueFormat, string credentialsPat)
         {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            sharedUserList ??= new ChangeTrackingList<string>();
+
             return new MachineLearningPatAuthTypeWorkspaceConnection(
                 default,
                 category,
@@ -9911,8 +9040,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="credentialsSas"></param>
         /// <returns> A new <see cref="Models.MachineLearningSasAuthTypeWorkspaceConnection"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningSasAuthTypeWorkspaceConnection MachineLearningSasAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, DateTimeOffset? expiryOn = default, WorkspaceConnectionGroup? @group = default, bool? isSharedToAll = default, string target = default, IDictionary<string, string> metadata = default, IEnumerable<string> sharedUserList = default, string value = default, MachineLearningValueFormat? valueFormat = default, string credentialsSas = default)
+        public static MachineLearningSasAuthTypeWorkspaceConnection MachineLearningSasAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, DateTimeOffset? expiryOn, WorkspaceConnectionGroup? @group, bool? isSharedToAll, string target, IDictionary<string, string> metadata, IEnumerable<string> sharedUserList, string value, MachineLearningValueFormat? valueFormat, string credentialsSas)
         {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            sharedUserList ??= new ChangeTrackingList<string>();
+
             return new MachineLearningSasAuthTypeWorkspaceConnection(
                 default,
                 category,
@@ -9945,8 +9077,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="credentials"></param>
         /// <returns> A new <see cref="Models.MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningUsernamePasswordAuthTypeWorkspaceConnection MachineLearningUsernamePasswordAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, DateTimeOffset? expiryOn = default, WorkspaceConnectionGroup? @group = default, bool? isSharedToAll = default, string target = default, IDictionary<string, string> metadata = default, IEnumerable<string> sharedUserList = default, string value = default, MachineLearningValueFormat? valueFormat = default, MachineLearningWorkspaceConnectionUsernamePassword credentials = default)
+        public static MachineLearningUsernamePasswordAuthTypeWorkspaceConnection MachineLearningUsernamePasswordAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, DateTimeOffset? expiryOn, WorkspaceConnectionGroup? @group, bool? isSharedToAll, string target, IDictionary<string, string> metadata, IEnumerable<string> sharedUserList, string value, MachineLearningValueFormat? valueFormat, MachineLearningWorkspaceConnectionUsernamePassword credentials)
         {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            sharedUserList ??= new ChangeTrackingList<string>();
+
             return new MachineLearningUsernamePasswordAuthTypeWorkspaceConnection(
                 default,
                 category,
@@ -9978,8 +9113,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="valueFormat"> format for the workspace connection value. </param>
         /// <returns> A new <see cref="Models.MachineLearningNoneAuthTypeWorkspaceConnection"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningNoneAuthTypeWorkspaceConnection MachineLearningNoneAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, DateTimeOffset? expiryOn = default, WorkspaceConnectionGroup? @group = default, bool? isSharedToAll = default, string target = default, IDictionary<string, string> metadata = default, IEnumerable<string> sharedUserList = default, string value = default, MachineLearningValueFormat? valueFormat = default)
+        public static MachineLearningNoneAuthTypeWorkspaceConnection MachineLearningNoneAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, DateTimeOffset? expiryOn, WorkspaceConnectionGroup? @group, bool? isSharedToAll, string target, IDictionary<string, string> metadata, IEnumerable<string> sharedUserList, string value, MachineLearningValueFormat? valueFormat)
         {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            sharedUserList ??= new ChangeTrackingList<string>();
+
             return new MachineLearningNoneAuthTypeWorkspaceConnection(
                 default,
                 category,
@@ -10011,8 +9149,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="credentials"></param>
         /// <returns> A new <see cref="Models.MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningManagedIdentityAuthTypeWorkspaceConnection MachineLearningManagedIdentityAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, DateTimeOffset? expiryOn = default, WorkspaceConnectionGroup? @group = default, bool? isSharedToAll = default, string target = default, IDictionary<string, string> metadata = default, IEnumerable<string> sharedUserList = default, string value = default, MachineLearningValueFormat? valueFormat = default, MachineLearningWorkspaceConnectionManagedIdentity credentials = default)
+        public static MachineLearningManagedIdentityAuthTypeWorkspaceConnection MachineLearningManagedIdentityAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, DateTimeOffset? expiryOn, WorkspaceConnectionGroup? @group, bool? isSharedToAll, string target, IDictionary<string, string> metadata, IEnumerable<string> sharedUserList, string value, MachineLearningValueFormat? valueFormat, MachineLearningWorkspaceConnectionManagedIdentity credentials)
         {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            sharedUserList ??= new ChangeTrackingList<string>();
+
             return new MachineLearningManagedIdentityAuthTypeWorkspaceConnection(
                 default,
                 category,
@@ -10044,8 +9185,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="valueFormat"> format for the workspace connection value. </param>
         /// <returns> A new <see cref="Models.AadAuthTypeWorkspaceConnectionProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AadAuthTypeWorkspaceConnectionProperties AadAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, DateTimeOffset? expiryOn = default, WorkspaceConnectionGroup? @group = default, bool? isSharedToAll = default, string target = default, IDictionary<string, string> metadata = default, IEnumerable<string> sharedUserList = default, string value = default, MachineLearningValueFormat? valueFormat = default)
+        public static AadAuthTypeWorkspaceConnectionProperties AadAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, DateTimeOffset? expiryOn, WorkspaceConnectionGroup? @group, bool? isSharedToAll, string target, IDictionary<string, string> metadata, IEnumerable<string> sharedUserList, string value, MachineLearningValueFormat? valueFormat)
         {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            sharedUserList ??= new ChangeTrackingList<string>();
+
             return new AadAuthTypeWorkspaceConnectionProperties(
                 default,
                 category,
@@ -10077,8 +9221,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="credentials"></param>
         /// <returns> A new <see cref="Models.AccessKeyAuthTypeWorkspaceConnectionProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AccessKeyAuthTypeWorkspaceConnectionProperties AccessKeyAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, DateTimeOffset? expiryOn = default, WorkspaceConnectionGroup? @group = default, bool? isSharedToAll = default, string target = default, IDictionary<string, string> metadata = default, IEnumerable<string> sharedUserList = default, string value = default, MachineLearningValueFormat? valueFormat = default, WorkspaceConnectionAccessKey credentials = default)
+        public static AccessKeyAuthTypeWorkspaceConnectionProperties AccessKeyAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, DateTimeOffset? expiryOn, WorkspaceConnectionGroup? @group, bool? isSharedToAll, string target, IDictionary<string, string> metadata, IEnumerable<string> sharedUserList, string value, MachineLearningValueFormat? valueFormat, WorkspaceConnectionAccessKey credentials)
         {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            sharedUserList ??= new ChangeTrackingList<string>();
+
             return new AccessKeyAuthTypeWorkspaceConnectionProperties(
                 default,
                 category,
@@ -10111,8 +9258,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="credentialsKey"></param>
         /// <returns> A new <see cref="Models.AccountKeyAuthTypeWorkspaceConnectionProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AccountKeyAuthTypeWorkspaceConnectionProperties AccountKeyAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, DateTimeOffset? expiryOn = default, WorkspaceConnectionGroup? @group = default, bool? isSharedToAll = default, string target = default, IDictionary<string, string> metadata = default, IEnumerable<string> sharedUserList = default, string value = default, MachineLearningValueFormat? valueFormat = default, string credentialsKey = default)
+        public static AccountKeyAuthTypeWorkspaceConnectionProperties AccountKeyAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, DateTimeOffset? expiryOn, WorkspaceConnectionGroup? @group, bool? isSharedToAll, string target, IDictionary<string, string> metadata, IEnumerable<string> sharedUserList, string value, MachineLearningValueFormat? valueFormat, string credentialsKey)
         {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            sharedUserList ??= new ChangeTrackingList<string>();
+
             return new AccountKeyAuthTypeWorkspaceConnectionProperties(
                 default,
                 category,
@@ -10145,8 +9295,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="credentialsKey"> Api key object for workspace connection credential. </param>
         /// <returns> A new <see cref="Models.ApiKeyAuthWorkspaceConnectionProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApiKeyAuthWorkspaceConnectionProperties ApiKeyAuthWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, DateTimeOffset? expiryOn = default, WorkspaceConnectionGroup? @group = default, bool? isSharedToAll = default, string target = default, IDictionary<string, string> metadata = default, IEnumerable<string> sharedUserList = default, string value = default, MachineLearningValueFormat? valueFormat = default, string credentialsKey = default)
+        public static ApiKeyAuthWorkspaceConnectionProperties ApiKeyAuthWorkspaceConnectionProperties(MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, DateTimeOffset? expiryOn, WorkspaceConnectionGroup? @group, bool? isSharedToAll, string target, IDictionary<string, string> metadata, IEnumerable<string> sharedUserList, string value, MachineLearningValueFormat? valueFormat, string credentialsKey)
         {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            sharedUserList ??= new ChangeTrackingList<string>();
+
             return new ApiKeyAuthWorkspaceConnectionProperties(
                 default,
                 category,
@@ -10179,8 +9332,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="credentialsKeys"> Custom Keys credential object. </param>
         /// <returns> A new <see cref="Models.CustomKeysWorkspaceConnectionProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CustomKeysWorkspaceConnectionProperties CustomKeysWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, DateTimeOffset? expiryOn = default, WorkspaceConnectionGroup? @group = default, bool? isSharedToAll = default, string target = default, IDictionary<string, string> metadata = default, IEnumerable<string> sharedUserList = default, string value = default, MachineLearningValueFormat? valueFormat = default, IDictionary<string, string> credentialsKeys = default)
+        public static CustomKeysWorkspaceConnectionProperties CustomKeysWorkspaceConnectionProperties(MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, DateTimeOffset? expiryOn, WorkspaceConnectionGroup? @group, bool? isSharedToAll, string target, IDictionary<string, string> metadata, IEnumerable<string> sharedUserList, string value, MachineLearningValueFormat? valueFormat, IDictionary<string, string> credentialsKeys)
         {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            sharedUserList ??= new ChangeTrackingList<string>();
+            credentialsKeys ??= new ChangeTrackingDictionary<string, string>();
+
             return new CustomKeysWorkspaceConnectionProperties(
                 default,
                 category,
@@ -10216,8 +9373,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <returns> A new <see cref="Models.OAuth2AuthTypeWorkspaceConnectionProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static OAuth2AuthTypeWorkspaceConnectionProperties OAuth2AuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, DateTimeOffset? expiryOn = default, WorkspaceConnectionGroup? @group = default, bool? isSharedToAll = default, string target = default, IDictionary<string, string> metadata = default, IEnumerable<string> sharedUserList = default, string value = default, MachineLearningValueFormat? valueFormat = default, WorkspaceConnectionOAuth2 credentials = default)
+        public static OAuth2AuthTypeWorkspaceConnectionProperties OAuth2AuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, DateTimeOffset? expiryOn, WorkspaceConnectionGroup? @group, bool? isSharedToAll, string target, IDictionary<string, string> metadata, IEnumerable<string> sharedUserList, string value, MachineLearningValueFormat? valueFormat, WorkspaceConnectionOAuth2 credentials)
         {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            sharedUserList ??= new ChangeTrackingList<string>();
+
             return new OAuth2AuthTypeWorkspaceConnectionProperties(
                 default,
                 category,
@@ -10250,8 +9410,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="credentials"></param>
         /// <returns> A new <see cref="Models.ServicePrincipalAuthTypeWorkspaceConnectionProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ServicePrincipalAuthTypeWorkspaceConnectionProperties ServicePrincipalAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, DateTimeOffset? expiryOn = default, WorkspaceConnectionGroup? @group = default, bool? isSharedToAll = default, string target = default, IDictionary<string, string> metadata = default, IEnumerable<string> sharedUserList = default, string value = default, MachineLearningValueFormat? valueFormat = default, WorkspaceConnectionServicePrincipal credentials = default)
+        public static ServicePrincipalAuthTypeWorkspaceConnectionProperties ServicePrincipalAuthTypeWorkspaceConnectionProperties(MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, DateTimeOffset? expiryOn, WorkspaceConnectionGroup? @group, bool? isSharedToAll, string target, IDictionary<string, string> metadata, IEnumerable<string> sharedUserList, string value, MachineLearningValueFormat? valueFormat, WorkspaceConnectionServicePrincipal credentials)
         {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            sharedUserList ??= new ChangeTrackingList<string>();
+
             return new ServicePrincipalAuthTypeWorkspaceConnectionProperties(
                 default,
                 category,
@@ -10310,30 +9473,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="queueJobTier"> Queue settings for the job. </param>
         /// <returns> A new <see cref="Models.AutoMLJob"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AutoMLJob AutoMLJob(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, string displayName = default, MachineLearningJobStatus? status = default, string experimentName = default, IDictionary<string, MachineLearningJobService> services = default, ResourceIdentifier computeId = default, bool? isArchived = default, MachineLearningIdentityConfiguration identity = default, ResourceIdentifier componentId = default, NotificationSetting notificationSetting = default, MachineLearningJobResourceConfiguration resources = default, string environmentId = default, IDictionary<string, string> environmentVariables = default, AutoMLVertical taskDetails = default, IDictionary<string, MachineLearningJobOutput> outputs = default, JobTier? queueJobTier = default)
+        public static AutoMLJob AutoMLJob(string description, IDictionary<string, string> tags, IDictionary<string, string> properties, string displayName, MachineLearningJobStatus? status, string experimentName, IDictionary<string, MachineLearningJobService> services, ResourceIdentifier computeId, bool? isArchived, MachineLearningIdentityConfiguration identity, ResourceIdentifier componentId, NotificationSetting notificationSetting, MachineLearningJobResourceConfiguration resources, string environmentId, IDictionary<string, string> environmentVariables, AutoMLVertical taskDetails, IDictionary<string, MachineLearningJobOutput> outputs, JobTier? queueJobTier)
         {
-            return new AutoMLJob(
-                description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                componentId,
-                computeId,
-                displayName,
-                experimentName,
-                identity,
-                isArchived,
-                default,
-                notificationSetting,
-                default,
-                services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
-                status,
-                environmentId,
-                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
-                outputs ?? new ChangeTrackingDictionary<string, MachineLearningJobOutput>(),
-                queueJobTier is null ? default : new QueueSettings(queueJobTier, default),
-                resources,
-                taskDetails);
+            return AutoMLJob(description: description, properties: properties, tags: tags, componentId: componentId, computeId: computeId, displayName: displayName, experimentName: experimentName, identity: identity, isArchived: isArchived, notificationSetting: notificationSetting, parentJobName: default, services: services, status: status, environmentId: environmentId, environmentVariables: environmentVariables, outputs: outputs, queueJobTier: queueJobTier, resources: resources, taskDetails: taskDetails);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningAzureBlobDatastore"/>. </summary>
@@ -10354,9 +9496,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="subscriptionId"> Azure Subscription Id. </param>
         /// <param name="resourceGroup"> Azure Resource Group name. </param>
         /// <returns> A new <see cref="Models.MachineLearningAzureBlobDatastore"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MachineLearningAzureBlobDatastore MachineLearningAzureBlobDatastore(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, bool? isDefault = default, MachineLearningDatastoreCredentials credentials = default, string accountName = default, string containerName = default, string endpoint = default, string protocol = default, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = default, string subscriptionId = default, string resourceGroup = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            properties ??= new ChangeTrackingDictionary<string, string>();
+
             return new MachineLearningAzureBlobDatastore(
                 description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
@@ -10389,9 +9533,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="subscriptionId"> Azure Subscription Id. </param>
         /// <param name="resourceGroup"> Azure Resource Group name. </param>
         /// <returns> A new <see cref="Models.MachineLearningAzureDataLakeGen1Datastore"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MachineLearningAzureDataLakeGen1Datastore MachineLearningAzureDataLakeGen1Datastore(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, bool? isDefault = default, MachineLearningDatastoreCredentials credentials = default, string storeName = default, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = default, string subscriptionId = default, string resourceGroup = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            properties ??= new ChangeTrackingDictionary<string, string>();
+
             return new MachineLearningAzureDataLakeGen1Datastore(
                 description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
@@ -10424,9 +9570,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="subscriptionId"> Azure Subscription Id. </param>
         /// <param name="resourceGroup"> Azure Resource Group name. </param>
         /// <returns> A new <see cref="Models.MachineLearningAzureDataLakeGen2Datastore"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MachineLearningAzureDataLakeGen2Datastore MachineLearningAzureDataLakeGen2Datastore(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, bool? isDefault = default, MachineLearningDatastoreCredentials credentials = default, string filesystem = default, string accountName = default, string endpoint = default, string protocol = default, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = default, string subscriptionId = default, string resourceGroup = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            properties ??= new ChangeTrackingDictionary<string, string>();
+
             return new MachineLearningAzureDataLakeGen2Datastore(
                 description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
@@ -10462,9 +9610,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="subscriptionId"> Azure Subscription Id. </param>
         /// <param name="resourceGroup"> Azure Resource Group name. </param>
         /// <returns> A new <see cref="Models.MachineLearningAzureFileDatastore"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MachineLearningAzureFileDatastore MachineLearningAzureFileDatastore(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, bool? isDefault = default, MachineLearningDatastoreCredentials credentials = default, string accountName = default, string fileShareName = default, string endpoint = default, string protocol = default, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = default, string subscriptionId = default, string resourceGroup = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            properties ??= new ChangeTrackingDictionary<string, string>();
+
             return new MachineLearningAzureFileDatastore(
                 description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
@@ -10528,35 +9678,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="queueJobTier"> Queue settings for the job. </param>
         /// <returns> A new <see cref="Models.MachineLearningCommandJob"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningCommandJob MachineLearningCommandJob(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, string displayName = default, MachineLearningJobStatus? status = default, string experimentName = default, IDictionary<string, MachineLearningJobService> services = default, ResourceIdentifier computeId = default, bool? isArchived = default, MachineLearningIdentityConfiguration identity = default, ResourceIdentifier componentId = default, NotificationSetting notificationSetting = default, MachineLearningJobResourceConfiguration resources = default, ResourceIdentifier codeId = default, string command = default, ResourceIdentifier environmentId = default, IDictionary<string, MachineLearningJobInput> inputs = default, IDictionary<string, MachineLearningJobOutput> outputs = default, MachineLearningDistributionConfiguration distribution = default, MachineLearningCommandJobLimits limits = default, IDictionary<string, string> environmentVariables = default, BinaryData parameters = default, JobTier? queueJobTier = default)
+        public static MachineLearningCommandJob MachineLearningCommandJob(string description, IDictionary<string, string> tags, IDictionary<string, string> properties, string displayName, MachineLearningJobStatus? status, string experimentName, IDictionary<string, MachineLearningJobService> services, ResourceIdentifier computeId, bool? isArchived, MachineLearningIdentityConfiguration identity, ResourceIdentifier componentId, NotificationSetting notificationSetting, MachineLearningJobResourceConfiguration resources, ResourceIdentifier codeId, string command, ResourceIdentifier environmentId, IDictionary<string, MachineLearningJobInput> inputs, IDictionary<string, MachineLearningJobOutput> outputs, MachineLearningDistributionConfiguration distribution, MachineLearningCommandJobLimits limits, IDictionary<string, string> environmentVariables, BinaryData parameters, JobTier? queueJobTier)
         {
-            return new MachineLearningCommandJob(
-                description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                componentId,
-                computeId,
-                displayName,
-                experimentName,
-                identity,
-                isArchived,
-                default,
-                notificationSetting,
-                default,
-                services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
-                status,
-                codeId,
-                command,
-                distribution,
-                environmentId,
-                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
-                inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
-                limits,
-                outputs ?? new ChangeTrackingDictionary<string, MachineLearningJobOutput>(),
-                parameters,
-                queueJobTier is null ? default : new QueueSettings(queueJobTier, default),
-                resources);
+            return MachineLearningCommandJob(description: description, properties: properties, tags: tags, componentId: componentId, computeId: computeId, displayName: displayName, experimentName: experimentName, identity: identity, isArchived: isArchived, notificationSetting: notificationSetting, parentJobName: default, services: services, status: status, codeId: codeId, command: command, distribution: distribution, environmentId: environmentId, environmentVariables: environmentVariables, inputs: inputs, limits: limits, outputs: outputs, parameters: parameters, queueJobTier: queueJobTier, resources: resources);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningKubernetesOnlineDeployment"/>. </summary>
@@ -10586,29 +9710,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="containerResourceRequirements"> The resource requirements for the container (cpu and memory). </param>
         /// <returns> A new <see cref="Models.MachineLearningKubernetesOnlineDeployment"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningKubernetesOnlineDeployment MachineLearningKubernetesOnlineDeployment(string description = default, IDictionary<string, string> properties = default, MachineLearningCodeConfiguration codeConfiguration = default, string environmentId = default, IDictionary<string, string> environmentVariables = default, MachineLearningOnlineScaleSettings scaleSettings = default, MachineLearningOnlineRequestSettings requestSettings = default, string modelMountPath = default, bool? appInsightsEnabled = default, MachineLearningProbeSettings livenessProbe = default, MachineLearningProbeSettings readinessProbe = default, MachineLearningDeploymentProvisioningState? provisioningState = default, string instanceType = default, string model = default, MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess = default, DataCollector dataCollector = default, MachineLearningContainerResourceRequirements containerResourceRequirements = default)
+        public static MachineLearningKubernetesOnlineDeployment MachineLearningKubernetesOnlineDeployment(string description, IDictionary<string, string> properties, MachineLearningCodeConfiguration codeConfiguration, string environmentId, IDictionary<string, string> environmentVariables, MachineLearningOnlineScaleSettings scaleSettings, MachineLearningOnlineRequestSettings requestSettings, string modelMountPath, bool? appInsightsEnabled, MachineLearningProbeSettings livenessProbe, MachineLearningProbeSettings readinessProbe, MachineLearningDeploymentProvisioningState? provisioningState, string instanceType, string model, MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess, DataCollector dataCollector, MachineLearningContainerResourceRequirements containerResourceRequirements)
         {
-            return new MachineLearningKubernetesOnlineDeployment(
-                codeConfiguration,
-                description,
-                environmentId,
-                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                appInsightsEnabled,
-                dataCollector,
-                egressPublicNetworkAccess,
-                default,
-                instanceType,
-                livenessProbe,
-                model,
-                modelMountPath,
-                provisioningState,
-                readinessProbe,
-                requestSettings,
-                scaleSettings,
-                default,
-                containerResourceRequirements);
+            return MachineLearningKubernetesOnlineDeployment(codeConfiguration: codeConfiguration, description: description, environmentId: environmentId, environmentVariables: environmentVariables, properties: properties, appInsightsEnabled: appInsightsEnabled, dataCollector: dataCollector, egressPublicNetworkAccess: egressPublicNetworkAccess, instanceType: instanceType, livenessProbe: livenessProbe, model: model, modelMountPath: modelMountPath, provisioningState: provisioningState, readinessProbe: readinessProbe, requestSettings: requestSettings, scaleSettings: scaleSettings, startupProbe: default, containerResourceRequirements: containerResourceRequirements);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningManagedOnlineDeployment"/>. </summary>
@@ -10637,28 +9741,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="dataCollector"> The mdc configuration, we disable mdc when it's null. </param>
         /// <returns> A new <see cref="Models.MachineLearningManagedOnlineDeployment"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningManagedOnlineDeployment MachineLearningManagedOnlineDeployment(string description = default, IDictionary<string, string> properties = default, MachineLearningCodeConfiguration codeConfiguration = default, string environmentId = default, IDictionary<string, string> environmentVariables = default, MachineLearningOnlineScaleSettings scaleSettings = default, MachineLearningOnlineRequestSettings requestSettings = default, string modelMountPath = default, bool? appInsightsEnabled = default, MachineLearningProbeSettings livenessProbe = default, MachineLearningProbeSettings readinessProbe = default, MachineLearningDeploymentProvisioningState? provisioningState = default, string instanceType = default, string model = default, MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess = default, DataCollector dataCollector = default)
+        public static MachineLearningManagedOnlineDeployment MachineLearningManagedOnlineDeployment(string description, IDictionary<string, string> properties, MachineLearningCodeConfiguration codeConfiguration, string environmentId, IDictionary<string, string> environmentVariables, MachineLearningOnlineScaleSettings scaleSettings, MachineLearningOnlineRequestSettings requestSettings, string modelMountPath, bool? appInsightsEnabled, MachineLearningProbeSettings livenessProbe, MachineLearningProbeSettings readinessProbe, MachineLearningDeploymentProvisioningState? provisioningState, string instanceType, string model, MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess, DataCollector dataCollector)
         {
-            return new MachineLearningManagedOnlineDeployment(
-                codeConfiguration,
-                description,
-                environmentId,
-                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                appInsightsEnabled,
-                dataCollector,
-                egressPublicNetworkAccess,
-                default,
-                instanceType,
-                livenessProbe,
-                model,
-                modelMountPath,
-                provisioningState,
-                readinessProbe,
-                requestSettings,
-                scaleSettings,
-                default);
+            return MachineLearningManagedOnlineDeployment(codeConfiguration: codeConfiguration, description: description, environmentId: environmentId, environmentVariables: environmentVariables, properties: properties, appInsightsEnabled: appInsightsEnabled, dataCollector: dataCollector, egressPublicNetworkAccess: egressPublicNetworkAccess, instanceType: instanceType, livenessProbe: livenessProbe, model: model, modelMountPath: modelMountPath, provisioningState: provisioningState, readinessProbe: readinessProbe, requestSettings: requestSettings, scaleSettings: scaleSettings, startupProbe: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OneLakeDatastore"/>. </summary>
@@ -10680,9 +9765,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="endpoint"> OneLake endpoint to use for the datastore. </param>
         /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
         /// <returns> A new <see cref="Models.OneLakeDatastore"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static OneLakeDatastore OneLakeDatastore(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, bool? isDefault = default, MachineLearningDatastoreCredentials credentials = default, OneLakeArtifact artifact = default, string oneLakeWorkspaceName = default, string endpoint = default, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            properties ??= new ChangeTrackingDictionary<string, string>();
+
             return new OneLakeDatastore(
                 description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
@@ -10733,29 +9820,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="sourceJobId"> ARM resource ID of source job. </param>
         /// <returns> A new <see cref="Models.MachineLearningPipelineJob"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningPipelineJob MachineLearningPipelineJob(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, string displayName = default, MachineLearningJobStatus? status = default, string experimentName = default, IDictionary<string, MachineLearningJobService> services = default, ResourceIdentifier computeId = default, bool? isArchived = default, MachineLearningIdentityConfiguration identity = default, ResourceIdentifier componentId = default, NotificationSetting notificationSetting = default, BinaryData settings = default, IDictionary<string, BinaryData> jobs = default, IDictionary<string, MachineLearningJobInput> inputs = default, IDictionary<string, MachineLearningJobOutput> outputs = default, ResourceIdentifier sourceJobId = default)
+        public static MachineLearningPipelineJob MachineLearningPipelineJob(string description, IDictionary<string, string> tags, IDictionary<string, string> properties, string displayName, MachineLearningJobStatus? status, string experimentName, IDictionary<string, MachineLearningJobService> services, ResourceIdentifier computeId, bool? isArchived, MachineLearningIdentityConfiguration identity, ResourceIdentifier componentId, NotificationSetting notificationSetting, BinaryData settings, IDictionary<string, BinaryData> jobs, IDictionary<string, MachineLearningJobInput> inputs, IDictionary<string, MachineLearningJobOutput> outputs, ResourceIdentifier sourceJobId)
         {
-            return new MachineLearningPipelineJob(
-                description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                componentId,
-                computeId,
-                displayName,
-                experimentName,
-                identity,
-                isArchived,
-                default,
-                notificationSetting,
-                default,
-                services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
-                status,
-                inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
-                jobs ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                outputs ?? new ChangeTrackingDictionary<string, MachineLearningJobOutput>(),
-                settings,
-                sourceJobId);
+            return MachineLearningPipelineJob(description: description, properties: properties, tags: tags, componentId: componentId, computeId: computeId, displayName: displayName, experimentName: experimentName, identity: identity, isArchived: isArchived, notificationSetting: notificationSetting, parentJobName: default, services: services, status: status, inputs: inputs, jobs: jobs, outputs: outputs, settings: settings, sourceJobId: sourceJobId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SparkJob"/>. </summary>
@@ -10807,38 +9874,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="environmentVariables"> Environment variables included in the job. </param>
         /// <returns> A new <see cref="Models.SparkJob"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SparkJob SparkJob(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, string displayName = default, MachineLearningJobStatus? status = default, string experimentName = default, IDictionary<string, MachineLearningJobService> services = default, ResourceIdentifier computeId = default, bool? isArchived = default, MachineLearningIdentityConfiguration identity = default, ResourceIdentifier componentId = default, NotificationSetting notificationSetting = default, SparkResourceConfiguration resources = default, string args = default, ResourceIdentifier codeId = default, SparkJobEntry entry = default, ResourceIdentifier environmentId = default, IDictionary<string, MachineLearningJobInput> inputs = default, IDictionary<string, MachineLearningJobOutput> outputs = default, IEnumerable<string> pyFiles = default, IEnumerable<string> jars = default, IEnumerable<string> files = default, IEnumerable<string> archives = default, IDictionary<string, string> conf = default, JobTier? queueJobTier = default, IDictionary<string, string> environmentVariables = default)
+        public static SparkJob SparkJob(string description, IDictionary<string, string> tags, IDictionary<string, string> properties, string displayName, MachineLearningJobStatus? status, string experimentName, IDictionary<string, MachineLearningJobService> services, ResourceIdentifier computeId, bool? isArchived, MachineLearningIdentityConfiguration identity, ResourceIdentifier componentId, NotificationSetting notificationSetting, SparkResourceConfiguration resources, string args, ResourceIdentifier codeId, SparkJobEntry entry, ResourceIdentifier environmentId, IDictionary<string, MachineLearningJobInput> inputs, IDictionary<string, MachineLearningJobOutput> outputs, IEnumerable<string> pyFiles, IEnumerable<string> jars, IEnumerable<string> files, IEnumerable<string> archives, IDictionary<string, string> conf, JobTier? queueJobTier, IDictionary<string, string> environmentVariables)
         {
-            return new SparkJob(
-                description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                componentId,
-                computeId,
-                displayName,
-                experimentName,
-                identity,
-                isArchived,
-                default,
-                notificationSetting,
-                default,
-                services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
-                status,
-                (archives ?? new ChangeTrackingList<string>()).ToList(),
-                args,
-                codeId,
-                conf ?? new ChangeTrackingDictionary<string, string>(),
-                entry,
-                environmentId,
-                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
-                (files ?? new ChangeTrackingList<string>()).ToList(),
-                inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
-                (jars ?? new ChangeTrackingList<string>()).ToList(),
-                outputs ?? new ChangeTrackingDictionary<string, MachineLearningJobOutput>(),
-                (pyFiles ?? new ChangeTrackingList<string>()).ToList(),
-                queueJobTier is null ? default : new QueueSettings(queueJobTier, default),
-                resources);
+            return SparkJob(description: description, properties: properties, tags: tags, componentId: componentId, computeId: computeId, displayName: displayName, experimentName: experimentName, identity: identity, isArchived: isArchived, notificationSetting: notificationSetting, parentJobName: default, services: services, status: status, archives: archives, args: args, codeId: codeId, conf: conf, entry: entry, environmentId: environmentId, environmentVariables: environmentVariables, files: files, inputs: inputs, jars: jars, outputs: outputs, pyFiles: pyFiles, queueJobTier: queueJobTier, resources: resources);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningSweepJob"/>. </summary>
@@ -10889,33 +9927,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="queueJobTier"> Queue settings for the job. </param>
         /// <returns> A new <see cref="Models.MachineLearningSweepJob"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningSweepJob MachineLearningSweepJob(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, string displayName = default, MachineLearningJobStatus? status = default, string experimentName = default, IDictionary<string, MachineLearningJobService> services = default, ResourceIdentifier computeId = default, bool? isArchived = default, MachineLearningIdentityConfiguration identity = default, ResourceIdentifier componentId = default, NotificationSetting notificationSetting = default, BinaryData searchSpace = default, SamplingAlgorithm samplingAlgorithm = default, MachineLearningSweepJobLimits limits = default, MachineLearningEarlyTerminationPolicy earlyTermination = default, MachineLearningObjective objective = default, MachineLearningTrialComponent trial = default, IDictionary<string, MachineLearningJobInput> inputs = default, IDictionary<string, MachineLearningJobOutput> outputs = default, JobTier? queueJobTier = default)
+        public static MachineLearningSweepJob MachineLearningSweepJob(string description, IDictionary<string, string> tags, IDictionary<string, string> properties, string displayName, MachineLearningJobStatus? status, string experimentName, IDictionary<string, MachineLearningJobService> services, ResourceIdentifier computeId, bool? isArchived, MachineLearningIdentityConfiguration identity, ResourceIdentifier componentId, NotificationSetting notificationSetting, BinaryData searchSpace, SamplingAlgorithm samplingAlgorithm, MachineLearningSweepJobLimits limits, MachineLearningEarlyTerminationPolicy earlyTermination, MachineLearningObjective objective, MachineLearningTrialComponent trial, IDictionary<string, MachineLearningJobInput> inputs, IDictionary<string, MachineLearningJobOutput> outputs, JobTier? queueJobTier)
         {
-            return new MachineLearningSweepJob(
-                description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                componentId,
-                computeId,
-                displayName,
-                experimentName,
-                identity,
-                isArchived,
-                default,
-                notificationSetting,
-                default,
-                services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
-                status,
-                earlyTermination,
-                inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
-                limits,
-                objective,
-                outputs ?? new ChangeTrackingDictionary<string, MachineLearningJobOutput>(),
-                queueJobTier is null ? default : new QueueSettings(queueJobTier, default),
-                samplingAlgorithm,
-                searchSpace,
-                trial);
+            return MachineLearningSweepJob(description: description, properties: properties, tags: tags, componentId: componentId, computeId: computeId, displayName: displayName, experimentName: experimentName, identity: identity, isArchived: isArchived, notificationSetting: notificationSetting, parentJobName: default, services: services, status: status, earlyTermination: earlyTermination, inputs: inputs, limits: limits, objective: objective, outputs: outputs, queueJobTier: queueJobTier, samplingAlgorithm: samplingAlgorithm, searchSpace: searchSpace, trial: trial);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TextClassificationMultilabel"/>. </summary>
@@ -10933,7 +9947,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="featurizationDatasetLanguage"> Featurization inputs needed for AutoML job. </param>
         /// <param name="validationData"> Validation data inputs. </param>
         /// <returns> A new <see cref="Models.TextClassificationMultilabel"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static TextClassificationMultilabel TextClassificationMultilabel(MachineLearningLogVerbosity? logVerbosity = default, MachineLearningTableJobInput trainingData = default, string targetColumnName = default, ClassificationMultilabelPrimaryMetric? primaryMetric = default, NlpVerticalLimitSettings limitSettings = default, string featurizationDatasetLanguage = default, MachineLearningTableJobInput validationData = default)
         {
             return new TextClassificationMultilabel(
@@ -10963,7 +9976,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="featurizationDatasetLanguage"> Featurization inputs needed for AutoML job. </param>
         /// <param name="validationData"> Validation data inputs. </param>
         /// <returns> A new <see cref="Models.TextNer"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static TextNer TextNer(MachineLearningLogVerbosity? logVerbosity = default, MachineLearningTableJobInput trainingData = default, string targetColumnName = default, ClassificationPrimaryMetric? primaryMetric = default, NlpVerticalLimitSettings limitSettings = default, string featurizationDatasetLanguage = default, MachineLearningTableJobInput validationData = default)
         {
             return new TextNer(

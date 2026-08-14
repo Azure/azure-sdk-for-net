@@ -453,32 +453,9 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="customerManagedKeyEncryption"> The encryption configuration for the cluster. Depends on identity being configured. </param>
         /// <returns> A new <see cref="Models.MongoClusterProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MongoClusterProperties MongoClusterProperties(MongoClusterCreateMode? createMode = default, MongoClusterRestoreContent restoreParameters = default, MongoClusterReplicaContent replicaParameters = default, MongoClusterAdministratorProperties administrator = default, string serverVersion = default, string connectionString = default, MongoClusterProvisioningState? provisioningState = default, MongoClusterStatus? clusterStatus = default, MongoClusterPublicNetworkAccess? publicNetworkAccess = default, HighAvailabilityMode? highAvailabilityTargetMode = default, MongoClusterStorageProperties storage = default, int? shardingShardCount = default, string computeTier = default, string backupEarliestRestoreTime = default, MongoClusterDataApiMode? dataApiMode = default, IEnumerable<MongoClusterPrivateEndpointConnection> privateEndpointConnections = default, IEnumerable<MongoClusterPreviewFeature> previewFeatures = default, MongoClusterReplicationProperties replica = default, string infrastructureVersion = default, IEnumerable<MongoClusterAuthenticationMode> authConfigAllowedModes = default, MongoClusterCmkEncryptionProperties customerManagedKeyEncryption = default)
+        public static MongoClusterProperties MongoClusterProperties(MongoClusterCreateMode? createMode, MongoClusterRestoreContent restoreParameters, MongoClusterReplicaContent replicaParameters, MongoClusterAdministratorProperties administrator, string serverVersion, string connectionString, MongoClusterProvisioningState? provisioningState, MongoClusterStatus? clusterStatus, MongoClusterPublicNetworkAccess? publicNetworkAccess, HighAvailabilityMode? highAvailabilityTargetMode, MongoClusterStorageProperties storage, int? shardingShardCount, string computeTier, string backupEarliestRestoreTime, MongoClusterDataApiMode? dataApiMode, IEnumerable<MongoClusterPrivateEndpointConnection> privateEndpointConnections, IEnumerable<MongoClusterPreviewFeature> previewFeatures, MongoClusterReplicationProperties replica, string infrastructureVersion, IEnumerable<MongoClusterAuthenticationMode> authConfigAllowedModes, MongoClusterCmkEncryptionProperties customerManagedKeyEncryption)
         {
-            return new MongoClusterProperties(
-                createMode,
-                restoreParameters,
-                replicaParameters,
-                administrator,
-                serverVersion,
-                connectionString,
-                provisioningState,
-                clusterStatus,
-                publicNetworkAccess,
-                highAvailabilityTargetMode is null ? default : new HighAvailabilityProperties(highAvailabilityTargetMode, default),
-                storage,
-                shardingShardCount is null ? default : new ShardingProperties(shardingShardCount, default),
-                computeTier is null ? default : new ComputeProperties(computeTier, default),
-                backupEarliestRestoreTime is null ? default : new BackupProperties(backupEarliestRestoreTime, default),
-                dataApiMode is null ? default : new DataApiProperties(dataApiMode, default),
-                (privateEndpointConnections ?? new ChangeTrackingList<MongoClusterPrivateEndpointConnection>()).ToList(),
-                (previewFeatures ?? new ChangeTrackingList<MongoClusterPreviewFeature>()).ToList(),
-                replica,
-                infrastructureVersion,
-                authConfigAllowedModes is null ? default : new AuthConfigProperties((authConfigAllowedModes ?? new ChangeTrackingList<MongoClusterAuthenticationMode>()).ToList(), default),
-                customerManagedKeyEncryption is null ? default : new EncryptionProperties(customerManagedKeyEncryption, default),
-                default,
-                default);
+            return MongoClusterProperties(createMode: createMode, restoreParameters: restoreParameters, replicaParameters: replicaParameters, administrator: administrator, serverVersion: serverVersion, connectionString: connectionString, provisioningState: provisioningState, clusterStatus: clusterStatus, publicNetworkAccess: publicNetworkAccess, highAvailabilityTargetMode: highAvailabilityTargetMode, storage: storage, shardingShardCount: shardingShardCount, computeTier: computeTier, backupEarliestRestoreTime: backupEarliestRestoreTime, dataApiMode: dataApiMode, privateEndpointConnections: privateEndpointConnections, previewFeatures: previewFeatures, replica: replica, infrastructureVersion: infrastructureVersion, authConfigAllowedModes: authConfigAllowedModes, customerManagedKeyEncryption: customerManagedKeyEncryption, networkBypassMode: default);
         }
     }
 }

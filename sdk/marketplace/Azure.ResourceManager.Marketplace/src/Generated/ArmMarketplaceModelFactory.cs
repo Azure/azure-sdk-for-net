@@ -716,6 +716,10 @@ namespace Azure.ResourceManager.Marketplace.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PrivateStoreOfferResult PrivateStoreOfferResult(string uniqueOfferId, string offerDisplayName, string publisherDisplayName, ETag? eTag, Guid? privateStoreId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, IEnumerable<string> specificPlanIdsLimitation, bool? isUpdateSuppressedDueToIdempotence, IReadOnlyDictionary<string, Uri> iconFileUris, IEnumerable<PrivateStorePlan> plans)
         {
+            specificPlanIdsLimitation ??= new ChangeTrackingList<string>();
+            iconFileUris ??= new ChangeTrackingDictionary<string, Uri>();
+            plans ??= new ChangeTrackingList<PrivateStorePlan>();
+
             return new PrivateStoreOfferResult(
                 uniqueOfferId,
                 offerDisplayName,
@@ -743,15 +747,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PrivateStorePlan PrivateStorePlan(string skuId, string planId, string planDisplayName, PrivateStorePlanAccessibility? accessibility, string altStackReference, string stackType)
         {
-            return new PrivateStorePlan(
-                skuId,
-                planId,
-                planDisplayName,
-                accessibility,
-                altStackReference,
-                stackType,
-                default,
-                default);
+            return PrivateStorePlan(skuId: skuId, planId: planId, planDisplayName: planDisplayName, accessibility: accessibility, altStackReference: altStackReference, stackType: stackType, isStopSell: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Marketplace.PrivateStoreOfferData"/>. </summary>
@@ -774,6 +770,10 @@ namespace Azure.ResourceManager.Marketplace.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PrivateStoreOfferData PrivateStoreOfferData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string uniqueOfferId, string offerDisplayName, string publisherDisplayName, ETag? eTag, Guid? privateStoreId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, IEnumerable<string> specificPlanIdsLimitation, bool? isUpdateSuppressedDueToIdempotence, IDictionary<string, Uri> iconFileUris, IEnumerable<PrivateStorePlan> plans)
         {
+            specificPlanIdsLimitation ??= new ChangeTrackingList<string>();
+            iconFileUris ??= new ChangeTrackingDictionary<string, Uri>();
+            plans ??= new ChangeTrackingList<PrivateStorePlan>();
+
             return new PrivateStoreOfferData(
                 id,
                 name,

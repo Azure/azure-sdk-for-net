@@ -39,25 +39,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
-        /// <returns> A new <see cref="Monitor.MonitorPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static MonitorPrivateEndpointConnectionData MonitorPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorPrivateLinkServiceConnectionState connectionState = default, MonitorPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
-        {
-            return new MonitorPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
-                default);
-        }
-
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
@@ -3195,33 +3176,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="eventHubReceivers"> The list of event hub receivers that are part of this action group. </param>
         /// <returns> A new <see cref="Monitor.ActionGroupData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ActionGroupData ActionGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string groupShortName = default, bool? isEnabled = default, IEnumerable<MonitorEmailReceiver> emailReceivers = default, IEnumerable<MonitorSmsReceiver> smsReceivers = default, IEnumerable<MonitorWebhookReceiver> webhookReceivers = default, IEnumerable<MonitorItsmReceiver> itsmReceivers = default, IEnumerable<MonitorAzureAppPushReceiver> azureAppPushReceivers = default, IEnumerable<MonitorAutomationRunbookReceiver> automationRunbookReceivers = default, IEnumerable<MonitorVoiceReceiver> voiceReceivers = default, IEnumerable<MonitorLogicAppReceiver> logicAppReceivers = default, IEnumerable<MonitorAzureFunctionReceiver> azureFunctionReceivers = default, IEnumerable<MonitorArmRoleReceiver> armRoleReceivers = default, IEnumerable<MonitorEventHubReceiver> eventHubReceivers = default)
+        public static ActionGroupData ActionGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string groupShortName, bool? isEnabled, IEnumerable<MonitorEmailReceiver> emailReceivers, IEnumerable<MonitorSmsReceiver> smsReceivers, IEnumerable<MonitorWebhookReceiver> webhookReceivers, IEnumerable<MonitorItsmReceiver> itsmReceivers, IEnumerable<MonitorAzureAppPushReceiver> azureAppPushReceivers, IEnumerable<MonitorAutomationRunbookReceiver> automationRunbookReceivers, IEnumerable<MonitorVoiceReceiver> voiceReceivers, IEnumerable<MonitorLogicAppReceiver> logicAppReceivers, IEnumerable<MonitorAzureFunctionReceiver> azureFunctionReceivers, IEnumerable<MonitorArmRoleReceiver> armRoleReceivers, IEnumerable<MonitorEventHubReceiver> eventHubReceivers)
         {
-            return new ActionGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                groupShortName is null && isEnabled is null && emailReceivers is null && smsReceivers is null && webhookReceivers is null && itsmReceivers is null && azureAppPushReceivers is null && automationRunbookReceivers is null && voiceReceivers is null && logicAppReceivers is null && azureFunctionReceivers is null && armRoleReceivers is null && eventHubReceivers is null ? default : new ActionGroupProperties(
-                    groupShortName,
-                    isEnabled.GetValueOrDefault(),
-                    (emailReceivers ?? new ChangeTrackingList<MonitorEmailReceiver>()).ToList(),
-                    (smsReceivers ?? new ChangeTrackingList<MonitorSmsReceiver>()).ToList(),
-                    (webhookReceivers ?? new ChangeTrackingList<MonitorWebhookReceiver>()).ToList(),
-                    (itsmReceivers ?? new ChangeTrackingList<MonitorItsmReceiver>()).ToList(),
-                    (azureAppPushReceivers ?? new ChangeTrackingList<MonitorAzureAppPushReceiver>()).ToList(),
-                    (automationRunbookReceivers ?? new ChangeTrackingList<MonitorAutomationRunbookReceiver>()).ToList(),
-                    (voiceReceivers ?? new ChangeTrackingList<MonitorVoiceReceiver>()).ToList(),
-                    (logicAppReceivers ?? new ChangeTrackingList<MonitorLogicAppReceiver>()).ToList(),
-                    (azureFunctionReceivers ?? new ChangeTrackingList<MonitorAzureFunctionReceiver>()).ToList(),
-                    (armRoleReceivers ?? new ChangeTrackingList<MonitorArmRoleReceiver>()).ToList(),
-                    (eventHubReceivers ?? new ChangeTrackingList<MonitorEventHubReceiver>()).ToList(),
-                    default,
-                    default),
-                default,
-                default);
+            return ActionGroupData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, groupShortName: groupShortName, isEnabled: isEnabled, emailReceivers: emailReceivers, smsReceivers: smsReceivers, webhookReceivers: webhookReceivers, itsmReceivers: itsmReceivers, azureAppPushReceivers: azureAppPushReceivers, automationRunbookReceivers: automationRunbookReceivers, voiceReceivers: voiceReceivers, logicAppReceivers: logicAppReceivers, azureFunctionReceivers: azureFunctionReceivers, armRoleReceivers: armRoleReceivers, eventHubReceivers: eventHubReceivers, incidentReceivers: default, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NotificationContent"/>. </summary>
@@ -3239,23 +3196,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="eventHubReceivers"> The list of event hub receivers that are part of this action group. </param>
         /// <returns> A new <see cref="Models.NotificationContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NotificationContent NotificationContent(string alertType = default, IEnumerable<MonitorEmailReceiver> emailReceivers = default, IEnumerable<MonitorSmsReceiver> smsReceivers = default, IEnumerable<MonitorWebhookReceiver> webhookReceivers = default, IEnumerable<MonitorItsmReceiver> itsmReceivers = default, IEnumerable<MonitorAzureAppPushReceiver> azureAppPushReceivers = default, IEnumerable<MonitorAutomationRunbookReceiver> automationRunbookReceivers = default, IEnumerable<MonitorVoiceReceiver> voiceReceivers = default, IEnumerable<MonitorLogicAppReceiver> logicAppReceivers = default, IEnumerable<MonitorAzureFunctionReceiver> azureFunctionReceivers = default, IEnumerable<MonitorArmRoleReceiver> armRoleReceivers = default, IEnumerable<MonitorEventHubReceiver> eventHubReceivers = default)
+        public static NotificationContent NotificationContent(string alertType, IEnumerable<MonitorEmailReceiver> emailReceivers, IEnumerable<MonitorSmsReceiver> smsReceivers, IEnumerable<MonitorWebhookReceiver> webhookReceivers, IEnumerable<MonitorItsmReceiver> itsmReceivers, IEnumerable<MonitorAzureAppPushReceiver> azureAppPushReceivers, IEnumerable<MonitorAutomationRunbookReceiver> automationRunbookReceivers, IEnumerable<MonitorVoiceReceiver> voiceReceivers, IEnumerable<MonitorLogicAppReceiver> logicAppReceivers, IEnumerable<MonitorAzureFunctionReceiver> azureFunctionReceivers, IEnumerable<MonitorArmRoleReceiver> armRoleReceivers, IEnumerable<MonitorEventHubReceiver> eventHubReceivers)
         {
-            return new NotificationContent(
-                alertType,
-                (emailReceivers ?? new ChangeTrackingList<MonitorEmailReceiver>()).ToList(),
-                (smsReceivers ?? new ChangeTrackingList<MonitorSmsReceiver>()).ToList(),
-                (webhookReceivers ?? new ChangeTrackingList<MonitorWebhookReceiver>()).ToList(),
-                (itsmReceivers ?? new ChangeTrackingList<MonitorItsmReceiver>()).ToList(),
-                (azureAppPushReceivers ?? new ChangeTrackingList<MonitorAzureAppPushReceiver>()).ToList(),
-                (automationRunbookReceivers ?? new ChangeTrackingList<MonitorAutomationRunbookReceiver>()).ToList(),
-                (voiceReceivers ?? new ChangeTrackingList<MonitorVoiceReceiver>()).ToList(),
-                (logicAppReceivers ?? new ChangeTrackingList<MonitorLogicAppReceiver>()).ToList(),
-                (azureFunctionReceivers ?? new ChangeTrackingList<MonitorAzureFunctionReceiver>()).ToList(),
-                (armRoleReceivers ?? new ChangeTrackingList<MonitorArmRoleReceiver>()).ToList(),
-                (eventHubReceivers ?? new ChangeTrackingList<MonitorEventHubReceiver>()).ToList(),
-                default,
-                default);
+            return NotificationContent(alertType: alertType, emailReceivers: emailReceivers, smsReceivers: smsReceivers, webhookReceivers: webhookReceivers, itsmReceivers: itsmReceivers, azureAppPushReceivers: azureAppPushReceivers, automationRunbookReceivers: automationRunbookReceivers, voiceReceivers: voiceReceivers, logicAppReceivers: logicAppReceivers, azureFunctionReceivers: azureFunctionReceivers, armRoleReceivers: armRoleReceivers, eventHubReceivers: eventHubReceivers, incidentReceivers: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Monitor.MetricAlertData"/>. </summary>
@@ -3284,35 +3227,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="isMigrated"> the value indicating whether this alert rule is migrated. </param>
         /// <returns> A new <see cref="Monitor.MetricAlertData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MetricAlertData MetricAlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, int severity = 0, bool isEnabled = false, IEnumerable<string> scopes = default, TimeSpan evaluationFrequency = default, TimeSpan windowSize = default, ResourceType? targetResourceType = default, AzureLocation? targetResourceRegion = default, MetricAlertCriteria criteria = default, bool? isAutoMitigateEnabled = default, IEnumerable<MetricAlertAction> actions = default, DateTimeOffset? lastUpdatedOn = default, bool? isMigrated = default)
+        public static MetricAlertData MetricAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, int severity, bool isEnabled, IEnumerable<string> scopes, TimeSpan evaluationFrequency, TimeSpan windowSize, ResourceType? targetResourceType, AzureLocation? targetResourceRegion, MetricAlertCriteria criteria, bool? isAutoMitigateEnabled, IEnumerable<MetricAlertAction> actions, DateTimeOffset? lastUpdatedOn, bool? isMigrated)
         {
-            return new MetricAlertData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                description is null && scopes is null && targetResourceType is null && targetResourceRegion is null && criteria is null && isAutoMitigateEnabled is null && actions is null && lastUpdatedOn is null && isMigrated is null ? default : new MetricAlertProperties(
-                    description,
-                    severity,
-                    isEnabled,
-                    (scopes ?? new ChangeTrackingList<string>()).ToList(),
-                    evaluationFrequency,
-                    windowSize,
-                    targetResourceType,
-                    targetResourceRegion,
-                    criteria,
-                    isAutoMitigateEnabled,
-                    default,
-                    (actions ?? new ChangeTrackingList<MetricAlertAction>()).ToList(),
-                    lastUpdatedOn,
-                    isMigrated,
-                    default,
-                    default,
-                    default),
-                default,
-                default);
+            return MetricAlertData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, description: description, severity: severity, isEnabled: isEnabled, scopes: scopes, evaluationFrequency: evaluationFrequency, windowSize: windowSize, targetResourceType: targetResourceType, targetResourceRegion: targetResourceRegion, criteria: criteria, isAutoMitigateEnabled: isAutoMitigateEnabled, resolveConfiguration: default, actions: actions, lastUpdatedOn: lastUpdatedOn, isMigrated: isMigrated, customProperties: default, actionProperties: default, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MetricAlertPatch"/>. </summary>
@@ -3336,26 +3253,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="isMigrated"> the value indicating whether this alert rule is migrated. </param>
         /// <returns> A new <see cref="Models.MetricAlertPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MetricAlertPatch MetricAlertPatch(IDictionary<string, string> tags = default, string description = default, int? severity = default, bool? isEnabled = default, IEnumerable<string> scopes = default, TimeSpan? evaluationFrequency = default, TimeSpan? windowSize = default, ResourceType? targetResourceType = default, AzureLocation? targetResourceRegion = default, MetricAlertCriteria criteria = default, bool? isAutoMitigateEnabled = default, IEnumerable<MetricAlertAction> actions = default, DateTimeOffset? lastUpdatedOn = default, bool? isMigrated = default)
+        public static MetricAlertPatch MetricAlertPatch(IDictionary<string, string> tags, string description, int? severity, bool? isEnabled, IEnumerable<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, ResourceType? targetResourceType, AzureLocation? targetResourceRegion, MetricAlertCriteria criteria, bool? isAutoMitigateEnabled, IEnumerable<MetricAlertAction> actions, DateTimeOffset? lastUpdatedOn, bool? isMigrated)
         {
-            return new MetricAlertPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, description is null && severity is null && isEnabled is null && scopes is null && evaluationFrequency is null && windowSize is null && targetResourceType is null && targetResourceRegion is null && criteria is null && isAutoMitigateEnabled is null && actions is null && lastUpdatedOn is null && isMigrated is null ? default : new MetricAlertPropertiesPatch(
-                description,
-                severity,
-                isEnabled,
-                (scopes ?? new ChangeTrackingList<string>()).ToList(),
-                evaluationFrequency,
-                windowSize,
-                targetResourceType,
-                targetResourceRegion,
-                criteria,
-                isAutoMitigateEnabled,
-                default,
-                (actions ?? new ChangeTrackingList<MetricAlertAction>()).ToList(),
-                lastUpdatedOn,
-                isMigrated,
-                default,
-                default,
-                default), default);
+            return MetricAlertPatch(tags: tags, identity: default, description: description, severity: severity, isEnabled: isEnabled, scopes: scopes, evaluationFrequency: evaluationFrequency, windowSize: windowSize, targetResourceType: targetResourceType, targetResourceRegion: targetResourceRegion, criteria: criteria, isAutoMitigateEnabled: isAutoMitigateEnabled, resolveConfiguration: default, actions: actions, lastUpdatedOn: lastUpdatedOn, isMigrated: isMigrated, customProperties: default, actionProperties: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Monitor.ScheduledQueryRuleData"/>. </summary>
@@ -3387,8 +3287,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="autoMitigate"> The flag that indicates whether the alert should be automatically resolved or not. The default is true. Relevant only for rules of the kind LogAlert. </param>
         /// <returns> A new <see cref="Monitor.ScheduledQueryRuleData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ScheduledQueryRuleData ScheduledQueryRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ScheduledQueryRuleKind? kind = default, ETag? etag = default, string createdWithApiVersion = default, bool? isLegacyLogAnalyticsRule = default, string description = default, string displayName = default, AlertSeverity? severity = default, bool? isEnabled = default, IEnumerable<string> scopes = default, TimeSpan? evaluationFrequency = default, TimeSpan? windowSize = default, TimeSpan? overrideQueryTimeRange = default, IEnumerable<string> targetResourceTypes = default, IEnumerable<ScheduledQueryRuleCondition> criteriaAllOf = default, TimeSpan? muteActionsDuration = default, ScheduledQueryRuleActions actions = default, bool? isWorkspaceAlertsStorageConfigured = default, bool? checkWorkspaceAlertsStorageConfigured = default, bool? skipQueryValidation = default, bool? autoMitigate = default)
+        public static ScheduledQueryRuleData ScheduledQueryRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ScheduledQueryRuleKind? kind, ETag? etag, string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, AlertSeverity? severity, bool? isEnabled, IEnumerable<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, TimeSpan? overrideQueryTimeRange, IEnumerable<string> targetResourceTypes, IEnumerable<ScheduledQueryRuleCondition> criteriaAllOf, TimeSpan? muteActionsDuration, ScheduledQueryRuleActions actions, bool? isWorkspaceAlertsStorageConfigured, bool? checkWorkspaceAlertsStorageConfigured, bool? skipQueryValidation, bool? autoMitigate)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            scopes ??= new ChangeTrackingList<string>();
+            targetResourceTypes ??= new ChangeTrackingList<string>();
+            criteriaAllOf ??= new ChangeTrackingList<ScheduledQueryRuleCondition>();
+
             return new ScheduledQueryRuleData(
                 id,
                 name,
@@ -3445,29 +3350,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="autoMitigate"> The flag that indicates whether the alert should be automatically resolved or not. The default is true. Relevant only for rules of the kind LogAlert. </param>
         /// <returns> A new <see cref="Models.ScheduledQueryRulePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ScheduledQueryRulePatch ScheduledQueryRulePatch(IDictionary<string, string> tags = default, string createdWithApiVersion = default, bool? isLegacyLogAnalyticsRule = default, string description = default, string displayName = default, AlertSeverity? severity = default, bool? isEnabled = default, IEnumerable<string> scopes = default, TimeSpan? evaluationFrequency = default, TimeSpan? windowSize = default, TimeSpan? overrideQueryTimeRange = default, IEnumerable<string> targetResourceTypes = default, IEnumerable<ScheduledQueryRuleCondition> criteriaAllOf = default, TimeSpan? muteActionsDuration = default, ScheduledQueryRuleActions actions = default, bool? isWorkspaceAlertsStorageConfigured = default, bool? checkWorkspaceAlertsStorageConfigured = default, bool? skipQueryValidation = default, bool? autoMitigate = default)
+        public static ScheduledQueryRulePatch ScheduledQueryRulePatch(IDictionary<string, string> tags, string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, AlertSeverity? severity, bool? isEnabled, IEnumerable<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, TimeSpan? overrideQueryTimeRange, IEnumerable<string> targetResourceTypes, IEnumerable<ScheduledQueryRuleCondition> criteriaAllOf, TimeSpan? muteActionsDuration, ScheduledQueryRuleActions actions, bool? isWorkspaceAlertsStorageConfigured, bool? checkWorkspaceAlertsStorageConfigured, bool? skipQueryValidation, bool? autoMitigate)
         {
-            return new ScheduledQueryRulePatch(default, tags ?? new ChangeTrackingDictionary<string, string>(), createdWithApiVersion is null && isLegacyLogAnalyticsRule is null && description is null && displayName is null && severity is null && isEnabled is null && scopes is null && evaluationFrequency is null && windowSize is null && overrideQueryTimeRange is null && targetResourceTypes is null && criteriaAllOf is null && muteActionsDuration is null && actions is null && isWorkspaceAlertsStorageConfigured is null && checkWorkspaceAlertsStorageConfigured is null && skipQueryValidation is null && autoMitigate is null ? default : new ScheduledQueryRuleProperties(
-                createdWithApiVersion,
-                isLegacyLogAnalyticsRule,
-                description,
-                displayName,
-                severity,
-                isEnabled,
-                (scopes ?? new ChangeTrackingList<string>()).ToList(),
-                evaluationFrequency,
-                windowSize,
-                overrideQueryTimeRange,
-                (targetResourceTypes ?? new ChangeTrackingList<string>()).ToList(),
-                new ScheduledQueryRuleCriteria((criteriaAllOf ?? new ChangeTrackingList<ScheduledQueryRuleCondition>()).ToList(), default),
-                muteActionsDuration,
-                actions,
-                isWorkspaceAlertsStorageConfigured,
-                checkWorkspaceAlertsStorageConfigured,
-                skipQueryValidation,
-                autoMitigate,
-                default,
-                default), default);
+            return ScheduledQueryRulePatch(identity: default, tags: tags, createdWithApiVersion: createdWithApiVersion, isLegacyLogAnalyticsRule: isLegacyLogAnalyticsRule, description: description, displayName: displayName, severity: severity, isEnabled: isEnabled, scopes: scopes, evaluationFrequency: evaluationFrequency, windowSize: windowSize, overrideQueryTimeRange: overrideQueryTimeRange, targetResourceTypes: targetResourceTypes, muteActionsDuration: muteActionsDuration, actions: actions, isWorkspaceAlertsStorageConfigured: isWorkspaceAlertsStorageConfigured, checkWorkspaceAlertsStorageConfigured: checkWorkspaceAlertsStorageConfigured, skipQueryValidation: skipQueryValidation, autoMitigate: autoMitigate, resolveConfiguration: default, criteriaAllOf: criteriaAllOf);
         }
 
         /// <summary> Initializes a new instance of <see cref="Monitor.MonitorPrivateLinkScopeData"/>. </summary>
@@ -3482,8 +3367,11 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="accessModeSettings"> Access mode settings. </param>
         /// <returns> A new <see cref="Monitor.MonitorPrivateLinkScopeData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MonitorPrivateLinkScopeData MonitorPrivateLinkScopeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, IEnumerable<MonitorPrivateEndpointConnectionData> privateEndpointConnections = default, MonitorPrivateLinkAccessModeSettings accessModeSettings = default)
+        public static MonitorPrivateLinkScopeData MonitorPrivateLinkScopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, IEnumerable<MonitorPrivateEndpointConnectionData> privateEndpointConnections, MonitorPrivateLinkAccessModeSettings accessModeSettings)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            privateEndpointConnections ??= new ChangeTrackingList<MonitorPrivateEndpointConnectionData>();
+
             return new MonitorPrivateLinkScopeData(
                 id,
                 name,
@@ -3504,7 +3392,6 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="Monitor.MonitorPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MonitorPrivateEndpointConnectionData MonitorPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier privateEndpointId = default, MonitorPrivateLinkServiceConnectionState connectionState = default, MonitorPrivateEndpointConnectionProvisioningState? provisioningState = default)
         {
             return new MonitorPrivateEndpointConnectionData(
@@ -3525,7 +3412,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
         /// <returns> A new <see cref="Monitor.MonitorPrivateLinkScopedResourceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MonitorPrivateLinkScopedResourceData MonitorPrivateLinkScopedResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier linkedResourceId = default, string provisioningState = default)
+        public static MonitorPrivateLinkScopedResourceData MonitorPrivateLinkScopedResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier linkedResourceId, string provisioningState)
         {
             return new MonitorPrivateLinkScopedResourceData(
                 id,
@@ -3550,24 +3437,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="description"> A description of this Activity Log Alert rule. </param>
         /// <returns> A new <see cref="Monitor.ActivityLogAlertData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ActivityLogAlertData ActivityLogAlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<string> scopes = default, IEnumerable<ActivityLogAlertAnyOfOrLeafCondition> conditionAllOf = default, IEnumerable<ActivityLogAlertActionGroup> actionsActionGroups = default, bool? isEnabled = default, string description = default)
+        public static ActivityLogAlertData ActivityLogAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<string> scopes, IEnumerable<ActivityLogAlertAnyOfOrLeafCondition> conditionAllOf, IEnumerable<ActivityLogAlertActionGroup> actionsActionGroups, bool? isEnabled, string description)
         {
-            return new ActivityLogAlertData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                scopes is null && conditionAllOf is null && actionsActionGroups is null && isEnabled is null && description is null ? default : new AlertRuleProperties(
-                    default,
-                    (scopes ?? new ChangeTrackingList<string>()).ToList(),
-                    new AlertRuleAllOfCondition((conditionAllOf ?? new ChangeTrackingList<ActivityLogAlertAnyOfOrLeafCondition>()).ToList(), default),
-                    new ActionList((actionsActionGroups ?? new ChangeTrackingList<ActivityLogAlertActionGroup>()).ToList(), default),
-                    isEnabled,
-                    description,
-                    default),
-                default);
+            return ActivityLogAlertData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, tenantScope: default, scopes: scopes, isEnabled: isEnabled, description: description, conditionAllOf: conditionAllOf, actionsActionGroups: actionsActionGroups);
         }
 
         /// <summary> Initializes a new instance of <see cref="Monitor.DataCollectionEndpointData"/>. </summary>
@@ -3592,8 +3464,11 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="metadata"> Metadata for the resource. This property is READ-ONLY. </param>
         /// <returns> A new <see cref="Monitor.DataCollectionEndpointData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataCollectionEndpointData DataCollectionEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DataCollectionEndpointResourceKind? kind = default, ManagedServiceIdentity identity = default, ETag? etag = default, string description = default, string immutableId = default, string configurationAccessEndpoint = default, string logsIngestionEndpoint = default, string metricsIngestionEndpoint = default, MonitorPublicNetworkAccess? publicNetworkAccess = default, DataCollectionEndpointProvisioningState? provisioningState = default, IEnumerable<DataCollectionRulePrivateLinkScopedResourceInfo> privateLinkScopedResources = default, DataCollectionEndpointFailoverConfiguration failoverConfiguration = default, DataCollectionEndpointMetadata metadata = default)
+        public static DataCollectionEndpointData DataCollectionEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionEndpointResourceKind? kind, ManagedServiceIdentity identity, ETag? etag, string description, string immutableId, string configurationAccessEndpoint, string logsIngestionEndpoint, string metricsIngestionEndpoint, MonitorPublicNetworkAccess? publicNetworkAccess, DataCollectionEndpointProvisioningState? provisioningState, IEnumerable<DataCollectionRulePrivateLinkScopedResourceInfo> privateLinkScopedResources, DataCollectionEndpointFailoverConfiguration failoverConfiguration, DataCollectionEndpointMetadata metadata)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            privateLinkScopedResources ??= new ChangeTrackingList<DataCollectionRulePrivateLinkScopedResourceInfo>();
+
             return new DataCollectionEndpointData(
                 id,
                 name,
@@ -3625,9 +3500,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="provisionedByResourceId"> Resource Id of azure offering managing this resource on-behalf-of customer. </param>
         /// <returns> A new <see cref="Models.DataCollectionEndpointMetadata"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataCollectionEndpointMetadata DataCollectionEndpointMetadata(string provisionedBy = default, string provisionedByResourceId = default)
+        public static DataCollectionEndpointMetadata DataCollectionEndpointMetadata(string provisionedBy, string provisionedByResourceId)
         {
-            return new DataCollectionEndpointMetadata(provisionedBy, provisionedByResourceId, default, default);
+            return DataCollectionEndpointMetadata(provisionedBy: provisionedBy, provisionedByResourceId: provisionedByResourceId, provisionedByImmutableId: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataCollectionRuleRelatedResourceMetadata"/>. </summary>
@@ -3635,9 +3510,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="provisionedByResourceId"> Resource Id of azure offering managing this resource on-behalf-of customer. </param>
         /// <returns> A new <see cref="Models.DataCollectionRuleRelatedResourceMetadata"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataCollectionRuleRelatedResourceMetadata DataCollectionRuleRelatedResourceMetadata(string provisionedBy = default, string provisionedByResourceId = default)
+        public static DataCollectionRuleRelatedResourceMetadata DataCollectionRuleRelatedResourceMetadata(string provisionedBy, string provisionedByResourceId)
         {
-            return new DataCollectionRuleRelatedResourceMetadata(provisionedBy, provisionedByResourceId, default, default);
+            return DataCollectionRuleRelatedResourceMetadata(provisionedBy: provisionedBy, provisionedByResourceId: provisionedByResourceId, provisionedByImmutableId: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Monitor.DataCollectionRuleAssociationData"/>. </summary>
@@ -3653,7 +3528,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="metadata"> Metadata about the resource. </param>
         /// <returns> A new <see cref="Monitor.DataCollectionRuleAssociationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataCollectionRuleAssociationData DataCollectionRuleAssociationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, string description = default, ResourceIdentifier dataCollectionRuleId = default, ResourceIdentifier dataCollectionEndpointId = default, DataCollectionRuleAssociationProvisioningState? provisioningState = default, DataCollectionRuleAssociationMetadata metadata = default)
+        public static DataCollectionRuleAssociationData DataCollectionRuleAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string description, ResourceIdentifier dataCollectionRuleId, ResourceIdentifier dataCollectionEndpointId, DataCollectionRuleAssociationProvisioningState? provisioningState, DataCollectionRuleAssociationMetadata metadata)
         {
             return new DataCollectionRuleAssociationData(
                 id,
@@ -3676,9 +3551,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="provisionedByResourceId"> Resource Id of azure offering managing this resource on-behalf-of customer. </param>
         /// <returns> A new <see cref="Models.DataCollectionRuleAssociationMetadata"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataCollectionRuleAssociationMetadata DataCollectionRuleAssociationMetadata(string provisionedBy = default, string provisionedByResourceId = default)
+        public static DataCollectionRuleAssociationMetadata DataCollectionRuleAssociationMetadata(string provisionedBy, string provisionedByResourceId)
         {
-            return new DataCollectionRuleAssociationMetadata(provisionedBy, provisionedByResourceId, default, default);
+            return DataCollectionRuleAssociationMetadata(provisionedBy: provisionedBy, provisionedByResourceId: provisionedByResourceId, provisionedByImmutableId: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Monitor.DataCollectionRuleData"/>. </summary>
@@ -3705,8 +3580,12 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="provisioningState"> The resource provisioning state. </param>
         /// <returns> A new <see cref="Monitor.DataCollectionRuleData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataCollectionRuleData DataCollectionRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DataCollectionRuleResourceKind? kind = default, ManagedServiceIdentity identity = default, ETag? etag = default, string description = default, string immutableId = default, ResourceIdentifier dataCollectionEndpointId = default, DataCollectionRuleMetadata metadata = default, IDictionary<string, DataStreamDeclaration> streamDeclarations = default, DataCollectionRuleDataSources dataSources = default, DataCollectionRuleDestinations destinations = default, IEnumerable<DataFlow> dataFlows = default, DataCollectionRuleProvisioningState? provisioningState = default)
+        public static DataCollectionRuleData DataCollectionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionRuleResourceKind? kind, ManagedServiceIdentity identity, ETag? etag, string description, string immutableId, ResourceIdentifier dataCollectionEndpointId, DataCollectionRuleMetadata metadata, IDictionary<string, DataStreamDeclaration> streamDeclarations, DataCollectionRuleDataSources dataSources, DataCollectionRuleDestinations destinations, IEnumerable<DataFlow> dataFlows, DataCollectionRuleProvisioningState? provisioningState)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            streamDeclarations ??= new ChangeTrackingDictionary<string, DataStreamDeclaration>();
+            dataFlows ??= new ChangeTrackingList<DataFlow>();
+
             return new DataCollectionRuleData(
                 id,
                 name,
@@ -3742,9 +3621,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="provisionedByResourceId"> Resource Id of azure offering managing this resource on-behalf-of customer. </param>
         /// <returns> A new <see cref="Models.DataCollectionRuleMetadata"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataCollectionRuleMetadata DataCollectionRuleMetadata(string provisionedBy = default, string provisionedByResourceId = default)
+        public static DataCollectionRuleMetadata DataCollectionRuleMetadata(string provisionedBy, string provisionedByResourceId)
         {
-            return new DataCollectionRuleMetadata(provisionedBy, provisionedByResourceId, default, default);
+            return DataCollectionRuleMetadata(provisionedBy: provisionedBy, provisionedByResourceId: provisionedByResourceId, provisionedByImmutableId: default);
         }
     }
 }

@@ -225,30 +225,9 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="recurEvery"> Rate at which a Maintenance window is expected to recur. The rate can be expressed as daily, weekly, or monthly schedules. Daily schedule are formatted as recurEvery: [Frequency as integer]['Day(s)']. If no frequency is provided, the default frequency is 1. Daily schedule examples are recurEvery: Day, recurEvery: 3Days.  Weekly schedule are formatted as recurEvery: [Frequency as integer]['Week(s)'] [Optional comma separated list of weekdays Monday-Sunday]. Weekly schedule examples are recurEvery: 3Weeks, recurEvery: Week Saturday,Sunday. Monthly schedules are formatted as [Frequency as integer]['Month(s)'] [Comma separated list of month days] or [Frequency as integer]['Month(s)'] [Week of Month (First, Second, Third, Fourth, Last)] [Weekday Monday-Sunday]. Monthly schedule examples are recurEvery: Month, recurEvery: 2Months, recurEvery: Month day23,day24, recurEvery: Month Last Sunday, recurEvery: Month Fourth Monday. </param>
         /// <returns> A new <see cref="Maintenance.MaintenanceConfigurationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MaintenanceConfigurationData MaintenanceConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string @namespace = default, IDictionary<string, string> extensionProperties = default, MaintenanceScope? maintenanceScope = default, MaintenanceConfigurationVisibility? visibility = default, DateTimeOffset? startOn = default, DateTimeOffset? expireOn = default, TimeSpan? duration = default, string timeZone = default, string recurEvery = default)
+        public static MaintenanceConfigurationData MaintenanceConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string @namespace, IDictionary<string, string> extensionProperties, MaintenanceScope? maintenanceScope, MaintenanceConfigurationVisibility? visibility, DateTimeOffset? startOn, DateTimeOffset? expireOn, TimeSpan? duration, string timeZone, string recurEvery)
         {
-            return new MaintenanceConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                @namespace is null && extensionProperties is null && maintenanceScope is null && startOn is null && expireOn is null && duration is null && timeZone is null && recurEvery is null && visibility is null ? default : new MaintenanceConfigurationProperties(
-                    @namespace,
-                    extensionProperties ?? new ChangeTrackingDictionary<string, string>(),
-                    maintenanceScope,
-                    new MaintenanceWindow(
-                        startOn,
-                        expireOn,
-                        duration,
-                        timeZone,
-                        recurEvery,
-                        default),
-                    visibility,
-                    default,
-                    default),
-                default);
+            return MaintenanceConfigurationData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, @namespace: @namespace, extensionProperties: extensionProperties, maintenanceScope: maintenanceScope, visibility: visibility, installPatches: default, startOn: startOn, expireOn: expireOn, duration: duration, timeZone: timeZone, recurEvery: recurEvery);
         }
     }
 }
