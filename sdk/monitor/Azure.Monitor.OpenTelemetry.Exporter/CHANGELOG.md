@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 - Log fields are now culture-invariant. ([#61996](https://github.com/Azure/azure-sdk-for-net/pull/61996))
+- Added the `telemetrySuccess` dimension to `Item_Dropped_Count` for request and dependency telemetry.
 
 ### Other Changes
 
