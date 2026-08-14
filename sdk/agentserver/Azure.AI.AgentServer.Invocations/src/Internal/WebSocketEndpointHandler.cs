@@ -177,7 +177,7 @@ internal sealed class WebSocketEndpointHandler
             {
                 EmitHandlerOutcomeDiagnostics(handlerOutcome.Value, sessionId);
             }
-            EmitCloseEventLog(sessionId, closeCode, durationMs, errorCode);
+            TryInvokeLogger(() => EmitCloseEventLog(sessionId, closeCode, durationMs, errorCode));
         }
     }
 
@@ -187,24 +187,35 @@ internal sealed class WebSocketEndpointHandler
     {
         if (outcome.Exception is not null)
         {
-            _logger.LogError(
+            TryInvokeLogger(() => _logger.LogError(
                 outcome.Exception,
                 "WebSocket handler ended with an error for session {SessionId}",
-                sessionId);
+                sessionId));
         }
         if (outcome.CleanupException is not null)
         {
-            _logger.LogError(
+            TryInvokeLogger(() => _logger.LogError(
                 outcome.CleanupException,
                 "WebSocket cleanup callback raised for session {SessionId}",
-                sessionId);
+                sessionId));
         }
         if (outcome.CloseException is not null)
         {
-            _logger.LogError(
+            TryInvokeLogger(() => _logger.LogError(
                 outcome.CloseException,
                 "WebSocket close failed for session {SessionId}",
-                sessionId);
+                sessionId));
+        }
+    }
+
+    private static void TryInvokeLogger(Action log)
+    {
+        try
+        {
+            log();
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
         }
     }
 
