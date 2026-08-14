@@ -26,8 +26,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="AcknowledgeResult"/> from. </param>
         public static explicit operator AcknowledgeResult(Response result)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            using JsonDocument document = JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAcknowledgeResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
