@@ -19,56 +19,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmApplicationInsightsModelFactory
     {
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="kind"> The kind of WebTest that this web test watches. Choices are ping, multistep and standard. </param>
-        /// <param name="syntheticMonitorId"> Unique ID of this WebTest. This is typically the same value as the Name field. </param>
-        /// <param name="webTestName"> User defined name if this WebTest. </param>
-        /// <param name="description"> User defined description for this WebTest. </param>
-        /// <param name="isEnabled"> Is the test actively being monitored. </param>
-        /// <param name="frequencyInSeconds"> Interval in seconds between test runs for this WebTest. Default value is 300. </param>
-        /// <param name="timeoutInSeconds"> Seconds until this WebTest will timeout and fail. Default value is 30. </param>
-        /// <param name="webTestKind"> The kind of web test this is, valid choices are ping, multistep and standard. </param>
-        /// <param name="isRetryEnabled"> Allow for retries should this WebTest fail. </param>
-        /// <param name="locations"> A list of where to physically run the tests from to give global coverage for accessibility of your application. </param>
-        /// <param name="provisioningState"> Current state of this component, whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed. </param>
-        /// <param name="request"> The collection of request properties. </param>
-        /// <param name="validationRules"> The collection of validation rule properties. </param>
-        /// <param name="webTest"> The XML specification of a WebTest to run against an application. </param>
-        /// <returns> A new <see cref="ApplicationInsights.ApplicationInsightsWebTestData"/> instance for mocking. </returns>
-        public static ApplicationInsightsWebTestData ApplicationInsightsWebTestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WebTestKind? kind = default, string syntheticMonitorId = default, string webTestName = default, string description = default, bool? isEnabled = default, int? frequencyInSeconds = default, int? timeoutInSeconds = default, WebTestKind? webTestKind = default, bool? isRetryEnabled = default, IEnumerable<WebTestGeolocation> locations = default, string provisioningState = default, WebTestRequest request = default, WebTestValidationRules validationRules = default, string webTest = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ApplicationInsightsWebTestData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                kind,
-                syntheticMonitorId is null && webTestName is null && description is null && isEnabled is null && frequencyInSeconds is null && timeoutInSeconds is null && webTestKind is null && isRetryEnabled is null && locations is null && webTest is null && provisioningState is null && request is null && validationRules is null ? default : new WebTestProperties(
-                    syntheticMonitorId,
-                    webTestName,
-                    description,
-                    isEnabled,
-                    frequencyInSeconds,
-                    timeoutInSeconds,
-                    webTestKind.GetValueOrDefault(),
-                    isRetryEnabled,
-                    (locations ?? new ChangeTrackingList<WebTestGeolocation>()).ToList(),
-                    new WebTestPropertiesConfiguration(webTest, default),
-                    provisioningState,
-                    request,
-                    validationRules,
-                    default),
-                default);
-        }
 
         /// <param name="location"> Location ID for the WebTest to run from. </param>
         /// <returns> A new <see cref="Models.WebTestGeolocation"/> instance for mocking. </returns>
@@ -933,9 +883,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="request"> The collection of request properties. </param>
         /// <param name="validationRules"> The collection of validation rule properties. </param>
         /// <returns> A new <see cref="ApplicationInsights.ApplicationInsightsWebTestData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ApplicationInsightsWebTestData ApplicationInsightsWebTestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WebTestKind? kind = default, string syntheticMonitorId = default, string webTestName = default, string description = default, bool? isEnabled = default, int? frequencyInSeconds = default, int? timeoutInSeconds = default, WebTestKind? webTestKind = default, bool? isRetryEnabled = default, IEnumerable<WebTestGeolocation> locations = default, string webTest = default, string provisioningState = default, WebTestRequest request = default, WebTestValidationRules validationRules = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            locations ??= new ChangeTrackingList<WebTestGeolocation>();
+
             return new ApplicationInsightsWebTestData(
                 id,
                 name,
@@ -984,8 +936,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="etag"> Resource etag. </param>
         /// <returns> A new <see cref="ApplicationInsights.ApplicationInsightsWorkbookData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApplicationInsightsWorkbookData ApplicationInsightsWorkbookData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string displayName = default, string serializedData = default, string version = default, DateTimeOffset? modifiedOn = default, string category = default, string userId = default, ResourceIdentifier sourceId = default, Uri storageUri = default, string description = default, string revision = default, ManagedServiceIdentity identity = default, WorkbookSharedTypeKind? kind = default, ETag? etag = default)
+        public static ApplicationInsightsWorkbookData ApplicationInsightsWorkbookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string displayName, string serializedData, string version, DateTimeOffset? modifiedOn, string category, string userId, ResourceIdentifier sourceId, Uri storageUri, string description, string revision, ManagedServiceIdentity identity, WorkbookSharedTypeKind? kind, ETag? etag)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new ApplicationInsightsWorkbookData(
                 id,
                 name,
