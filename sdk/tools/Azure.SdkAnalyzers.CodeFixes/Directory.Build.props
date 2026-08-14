@@ -1,10 +1,6 @@
 <Project>
   <PropertyGroup>
-<<<<<<< HEAD
     <IsAnalyzer>true</IsAnalyzer>
-=======
-    <IsAnalzyer>true</IsAnalzyer>
->>>>>>> 157d93f06e3 (Add point-suppression mechanism via DiagnosticSuppressor + analyzer assembly split (#59723))
   </PropertyGroup>
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 </Project>
