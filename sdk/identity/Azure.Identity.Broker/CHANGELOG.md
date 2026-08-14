@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Removed the unused direct dependency on `Microsoft.Identity.Client.KeyAttestation`.
+
 ## 1.8.0-beta.1 (2026-06-09)
 
 ### Features Added
