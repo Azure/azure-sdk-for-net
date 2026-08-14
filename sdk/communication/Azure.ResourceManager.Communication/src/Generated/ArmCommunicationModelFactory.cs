@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Communication;
@@ -18,49 +17,6 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmCommunicationModelFactory
     {
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="hostName"> FQDN of the CommunicationService instance. </param>
-        /// <param name="dataLocation"> The location where the communication service stores its data at rest. </param>
-        /// <param name="notificationHubId"> Resource ID of an Azure Notification Hub linked to this resource. </param>
-        /// <param name="version"> Version of the CommunicationService resource. Probably you need the same or higher version of client SDKs. </param>
-        /// <param name="immutableResourceId"> The immutable resource Id of the communication service. </param>
-        /// <param name="linkedDomains"> List of email Domain resource Ids. </param>
-        /// <param name="publicNetworkAccess"> Allow, disallow, or let network security perimeter configuration control public network access to the protected resource. Value is optional but if passed in, it must be 'Enabled', 'Disabled' or 'SecuredByPerimeter'. </param>
-        /// <param name="isLocalAuthDisabled"> Disable local authentication for the CommunicationService. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Communication.CommunicationServiceResourceData"/> instance for mocking. </returns>
-        public static CommunicationServiceResourceData CommunicationServiceResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CommunicationServicesProvisioningState? provisioningState = default, string hostName = default, string dataLocation = default, ResourceIdentifier notificationHubId = default, string version = default, Guid? immutableResourceId = default, IEnumerable<string> linkedDomains = default, CommunicationPublicNetworkAccess? publicNetworkAccess = default, bool? isLocalAuthDisabled = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CommunicationServiceResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && hostName is null && dataLocation is null && notificationHubId is null && version is null && immutableResourceId is null && linkedDomains is null && publicNetworkAccess is null && isLocalAuthDisabled is null ? default : new CommunicationServiceProperties(
-                    provisioningState,
-                    hostName,
-                    dataLocation,
-                    notificationHubId,
-                    version,
-                    immutableResourceId,
-                    (linkedDomains ?? new ChangeTrackingList<string>()).ToList(),
-                    publicNetworkAccess,
-                    isLocalAuthDisabled,
-                    default),
-                identity,
-                default);
-        }
 
         /// <param name="tags"> Tags of the service which is a list of key value pairs that describe the resource. </param>
         /// <param name="linkedDomains"> List of email Domain resource Ids. </param>
@@ -388,9 +344,11 @@ namespace Azure.ResourceManager.Communication.Models
         /// <param name="publicNetworkAccess"> Allow, disallow, or let network security perimeter configuration control public network access to the protected resource. Value is optional but if passed in, it must be 'Enabled', 'Disabled' or 'SecuredByPerimeter'. </param>
         /// <param name="isLocalAuthDisabled"> Disable local authentication for the CommunicationService. </param>
         /// <returns> A new <see cref="Communication.CommunicationServiceResourceData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static CommunicationServiceResourceData CommunicationServiceResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, CommunicationServicesProvisioningState? provisioningState = default, string hostName = default, string dataLocation = default, ResourceIdentifier notificationHubId = default, string version = default, Guid? immutableResourceId = default, IEnumerable<string> linkedDomains = default, CommunicationPublicNetworkAccess? publicNetworkAccess = default, bool? isLocalAuthDisabled = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            linkedDomains ??= new ChangeTrackingList<string>();
+
             return new CommunicationServiceResourceData(
                 id,
                 name,

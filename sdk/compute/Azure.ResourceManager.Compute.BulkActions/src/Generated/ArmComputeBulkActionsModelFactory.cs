@@ -1924,17 +1924,17 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="resources"> The resources for the request. </param>
         /// <returns> A new <see cref="Models.ExecuteDeallocateContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ExecuteDeallocateContent ExecuteDeallocateContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default)
+        public static ExecuteDeallocateContent ExecuteDeallocateContent(BulkActionExecutionParameterDetail executionParameters, UserRequestResources resources)
         {
-            return new ExecuteDeallocateContent(executionParameters, resources, default, default);
+            return ExecuteDeallocateContent(executionParameters: executionParameters, resources: resources, resourcesWithContext: default);
         }
 
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <returns> A new <see cref="Models.BulkActionExecutionParameterDetail"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BulkActionExecutionParameterDetail BulkActionExecutionParameterDetail(BulkOperationRetryPolicy retryPolicy = default)
+        public static BulkActionExecutionParameterDetail BulkActionExecutionParameterDetail(BulkOperationRetryPolicy retryPolicy)
         {
-            return new BulkActionExecutionParameterDetail(default, retryPolicy, default, default);
+            return BulkActionExecutionParameterDetail(optimizationPreference: default, retryPolicy: retryPolicy, shouldVerifyVmAgentHealth: default);
         }
 
         /// <param name="resourceId"> Unique identifier for the resource involved in the operation, for example Azure resource ID. </param>
@@ -1943,15 +1943,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="operation"> Details of the operation performed on a resource. </param>
         /// <returns> A new <see cref="Models.ComputeBulkOperationResult"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ComputeBulkOperationResult ComputeBulkOperationResult(ResourceIdentifier resourceId = default, string errorCode = default, string errorDetails = default, ComputeBulkOperationDetails operation = default)
+        public static ComputeBulkOperationResult ComputeBulkOperationResult(ResourceIdentifier resourceId, string errorCode, string errorDetails, ComputeBulkOperationDetails operation)
         {
-            return new ComputeBulkOperationResult(
-                resourceId,
-                errorCode,
-                errorDetails,
-                operation,
-                default,
-                default);
+            return ComputeBulkOperationResult(resourceId: resourceId, errorCode: errorCode, errorDetails: errorDetails, operation: operation, virtualMachineInfo: default);
         }
 
         /// <param name="operationId"> Operation identifier for the unique operation. </param>
@@ -1968,41 +1962,27 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <returns> A new <see cref="Models.ComputeBulkOperationDetails"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ComputeBulkOperationDetails ComputeBulkOperationDetails(string operationId = default, ResourceIdentifier resourceId = default, ComputeBulkOperationKind? operationKind = default, Guid? subscriptionId = default, DateTimeOffset? deadlineOn = default, BulkActionDeadlineKind? deadlineKind = default, BulkActionOperationState? state = default, string timeZone = default, ComputeBulkOperationError error = default, ComputeBulkFallbackOperationInfo fallbackOperationInfo = default, DateTimeOffset? completedOn = default, BulkOperationRetryPolicy retryPolicy = default)
+        public static ComputeBulkOperationDetails ComputeBulkOperationDetails(string operationId, ResourceIdentifier resourceId, ComputeBulkOperationKind? operationKind, Guid? subscriptionId, DateTimeOffset? deadlineOn, BulkActionDeadlineKind? deadlineKind, BulkActionOperationState? state, string timeZone, ComputeBulkOperationError error, ComputeBulkFallbackOperationInfo fallbackOperationInfo, DateTimeOffset? completedOn, BulkOperationRetryPolicy retryPolicy)
         {
-            return new ComputeBulkOperationDetails(
-                operationId,
-                resourceId,
-                operationKind,
-                subscriptionId,
-                deadlineOn,
-                deadlineKind,
-                state,
-                timeZone,
-                error,
-                fallbackOperationInfo,
-                completedOn,
-                retryPolicy,
-                default,
-                default);
+            return ComputeBulkOperationDetails(operationId: operationId, resourceId: resourceId, operationKind: operationKind, subscriptionId: subscriptionId, deadlineOn: deadlineOn, deadlineKind: deadlineKind, state: state, timeZone: timeZone, error: error, fallbackOperationInfo: fallbackOperationInfo, completedOn: completedOn, retryPolicy: retryPolicy, resourceContext: default);
         }
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resources"> The resources for the request. </param>
         /// <returns> A new <see cref="Models.ExecuteHibernateContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ExecuteHibernateContent ExecuteHibernateContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default)
+        public static ExecuteHibernateContent ExecuteHibernateContent(BulkActionExecutionParameterDetail executionParameters, UserRequestResources resources)
         {
-            return new ExecuteHibernateContent(executionParameters, resources, default, default);
+            return ExecuteHibernateContent(executionParameters: executionParameters, resources: resources, resourcesWithContext: default);
         }
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resources"> The resources for the request. </param>
         /// <returns> A new <see cref="Models.ExecuteStartContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ExecuteStartContent ExecuteStartContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default)
+        public static ExecuteStartContent ExecuteStartContent(BulkActionExecutionParameterDetail executionParameters, UserRequestResources resources)
         {
-            return new ExecuteStartContent(executionParameters, resources, default, default);
+            return ExecuteStartContent(executionParameters: executionParameters, resources: resources, resourcesWithContext: default);
         }
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
@@ -2010,9 +1990,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="isForceDeletion"> Forced delete resource item. </param>
         /// <returns> A new <see cref="Models.ExecuteDeleteContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ExecuteDeleteContent ExecuteDeleteContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, bool? isForceDeletion = default)
+        public static ExecuteDeleteContent ExecuteDeleteContent(BulkActionExecutionParameterDetail executionParameters, UserRequestResources resources, bool? isForceDeletion)
         {
-            return new ExecuteDeleteContent(executionParameters, resources, default, isForceDeletion, default);
+            return ExecuteDeleteContent(executionParameters: executionParameters, resources: resources, resourcesWithContext: default, isForceDeletion: isForceDeletion);
         }
     }
 }

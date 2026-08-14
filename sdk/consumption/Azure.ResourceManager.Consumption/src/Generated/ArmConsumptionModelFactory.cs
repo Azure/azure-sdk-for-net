@@ -1742,8 +1742,12 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ConsumptionBalanceResult"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ConsumptionBalanceResult ConsumptionBalanceResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string currency = default, decimal? beginningBalance = default, decimal? endingBalance = default, decimal? newPurchases = default, decimal? adjustments = default, decimal? utilized = default, decimal? serviceOverage = default, decimal? chargesBilledSeparately = default, decimal? totalOverage = default, decimal? totalUsage = default, decimal? azureMarketplaceServiceCharges = default, ConsumptionBillingFrequency? billingFrequency = default, bool? isPriceHidden = default, IEnumerable<ConsumptionBalanceNewPurchasesDetail> newPurchasesDetails = default, IEnumerable<ConsumptionBalanceAdjustmentDetail> adjustmentDetails = default, ETag? etag = default, IReadOnlyDictionary<string, string> tags = default)
+        public static ConsumptionBalanceResult ConsumptionBalanceResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string currency, decimal? beginningBalance, decimal? endingBalance, decimal? newPurchases, decimal? adjustments, decimal? utilized, decimal? serviceOverage, decimal? chargesBilledSeparately, decimal? totalOverage, decimal? totalUsage, decimal? azureMarketplaceServiceCharges, ConsumptionBillingFrequency? billingFrequency, bool? isPriceHidden, IEnumerable<ConsumptionBalanceNewPurchasesDetail> newPurchasesDetails, IEnumerable<ConsumptionBalanceAdjustmentDetail> adjustmentDetails, ETag? etag, IReadOnlyDictionary<string, string> tags)
         {
+            newPurchasesDetails ??= new ChangeTrackingList<ConsumptionBalanceNewPurchasesDetail>();
+            adjustmentDetails ??= new ChangeTrackingList<ConsumptionBalanceAdjustmentDetail>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new ConsumptionBalanceResult(
                 id,
                 name,
@@ -1784,20 +1788,9 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="offerId"> Offer Id. </param>
         /// <returns> A new <see cref="Models.PriceSheetProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PriceSheetProperties PriceSheetProperties(ResourceIdentifier billingPeriodId = default, Guid? meterId = default, ConsumptionMeterDetails meterDetails = default, string unitOfMeasure = default, decimal? includedQuantity = default, string partNumber = default, decimal? unitPrice = default, string currencyCode = default, string offerId = default)
+        public static PriceSheetProperties PriceSheetProperties(ResourceIdentifier billingPeriodId, Guid? meterId, ConsumptionMeterDetails meterDetails, string unitOfMeasure, decimal? includedQuantity, string partNumber, decimal? unitPrice, string currencyCode, string offerId)
         {
-            return new PriceSheetProperties(
-                billingPeriodId,
-                meterId,
-                meterDetails,
-                unitOfMeasure,
-                includedQuantity,
-                partNumber,
-                unitPrice,
-                currencyCode,
-                offerId,
-                default,
-                default);
+            return PriceSheetProperties(billingPeriodId: billingPeriodId, meterId: meterId, meterDetails: meterDetails, unitOfMeasure: unitOfMeasure, includedQuantity: includedQuantity, partNumber: partNumber, unitPrice: unitPrice, currencyCode: currencyCode, offerId: offerId, savingsPlan: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionEventSummary"/>. </summary>
@@ -1830,7 +1823,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="Models.ConsumptionEventSummary"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ConsumptionEventSummary ConsumptionEventSummary(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? transactOn = default, string description = default, ConsumptionAmount newCredit = default, ConsumptionAmount adjustments = default, ConsumptionAmount creditExpired = default, ConsumptionAmount charges = default, ConsumptionAmount closedBalance = default, ConsumptionEventType? eventType = default, string invoiceNumber = default, ResourceIdentifier billingProfileId = default, string billingProfileDisplayName = default, ResourceIdentifier lotId = default, string lotSource = default, ConsumptionAmount canceledCredit = default, string creditCurrency = default, string billingCurrency = default, ConsumptionReseller reseller = default, ConsumptionAmountWithExchangeRate creditExpiredInBillingCurrency = default, ConsumptionAmountWithExchangeRate newCreditInBillingCurrency = default, ConsumptionAmountWithExchangeRate adjustmentsInBillingCurrency = default, ConsumptionAmountWithExchangeRate chargesInBillingCurrency = default, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = default, ETag? etag = default)
+        public static ConsumptionEventSummary ConsumptionEventSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? transactOn, string description, ConsumptionAmount newCredit, ConsumptionAmount adjustments, ConsumptionAmount creditExpired, ConsumptionAmount charges, ConsumptionAmount closedBalance, ConsumptionEventType? eventType, string invoiceNumber, ResourceIdentifier billingProfileId, string billingProfileDisplayName, ResourceIdentifier lotId, string lotSource, ConsumptionAmount canceledCredit, string creditCurrency, string billingCurrency, ConsumptionReseller reseller, ConsumptionAmountWithExchangeRate creditExpiredInBillingCurrency, ConsumptionAmountWithExchangeRate newCreditInBillingCurrency, ConsumptionAmountWithExchangeRate adjustmentsInBillingCurrency, ConsumptionAmountWithExchangeRate chargesInBillingCurrency, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency, ETag? etag)
         {
             return new ConsumptionEventSummary(
                 id,
@@ -1890,7 +1883,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="Models.ConsumptionLotSummary"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ConsumptionLotSummary ConsumptionLotSummary(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConsumptionAmount originalAmount = default, ConsumptionAmount closedBalance = default, ConsumptionLotSource? source = default, DateTimeOffset? startOn = default, DateTimeOffset? expireOn = default, string poNumber = default, DateTimeOffset? purchasedOn = default, ConsumptionLotStatus? status = default, string creditCurrency = default, string billingCurrency = default, ConsumptionAmountWithExchangeRate originalAmountInBillingCurrency = default, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = default, ConsumptionReseller reseller = default, ETag? etag = default)
+        public static ConsumptionLotSummary ConsumptionLotSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConsumptionAmount originalAmount, ConsumptionAmount closedBalance, ConsumptionLotSource? source, DateTimeOffset? startOn, DateTimeOffset? expireOn, string poNumber, DateTimeOffset? purchasedOn, ConsumptionLotStatus? status, string creditCurrency, string billingCurrency, ConsumptionAmountWithExchangeRate originalAmountInBillingCurrency, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency, ConsumptionReseller reseller, ETag? etag)
         {
             return new ConsumptionLotSummary(
                 id,
@@ -1939,7 +1932,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="isInvoiced"> Is charge Invoiced. </param>
         /// <returns> A new <see cref="Models.ConsumptionModernChargeSummary"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ConsumptionModernChargeSummary ConsumptionModernChargeSummary(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, string billingPeriodId = default, string usageStart = default, string usageEnd = default, ConsumptionAmount azureCharges = default, ConsumptionAmount chargesBilledSeparately = default, ConsumptionAmount marketplaceCharges = default, string billingAccountId = default, string billingProfileId = default, string invoiceSectionId = default, string customerId = default, bool? isInvoiced = default)
+        public static ConsumptionModernChargeSummary ConsumptionModernChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string billingPeriodId, string usageStart, string usageEnd, ConsumptionAmount azureCharges, ConsumptionAmount chargesBilledSeparately, ConsumptionAmount marketplaceCharges, string billingAccountId, string billingProfileId, string invoiceSectionId, string customerId, bool? isInvoiced)
         {
             return new ConsumptionModernChargeSummary(
                 id,

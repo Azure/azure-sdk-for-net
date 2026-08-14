@@ -1065,23 +1065,9 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="byok"> Specification of the cluster byok. </param>
         /// <returns> A new <see cref="Models.SCClusterSpecEntity"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SCClusterSpecEntity SCClusterSpecEntity(string name = default, string availability = default, string cloud = default, string zone = default, string region = default, string kafkaBootstrapEndpoint = default, string httpEndpoint = default, string apiEndpoint = default, string configKind = default, SCClusterNetworkEnvironmentEntity environment = default, SCClusterNetworkEnvironmentEntity network = default, SCClusterByokEntity byok = default)
+        public static SCClusterSpecEntity SCClusterSpecEntity(string name, string availability, string cloud, string zone, string region, string kafkaBootstrapEndpoint, string httpEndpoint, string apiEndpoint, string configKind, SCClusterNetworkEnvironmentEntity environment, SCClusterNetworkEnvironmentEntity network, SCClusterByokEntity byok)
         {
-            return new SCClusterSpecEntity(
-                name,
-                availability,
-                cloud,
-                zone,
-                default,
-                region,
-                kafkaBootstrapEndpoint,
-                httpEndpoint,
-                apiEndpoint,
-                configKind is null ? default : new ClusterConfigEntity(configKind, default),
-                environment,
-                network,
-                byok,
-                default);
+            return SCClusterSpecEntity(name: name, availability: availability, cloud: cloud, zone: zone, package: default, region: region, kafkaBootstrapEndpoint: kafkaBootstrapEndpoint, httpEndpoint: httpEndpoint, apiEndpoint: apiEndpoint, configKind: configKind, environment: environment, network: network, byok: byok);
         }
 
         /// <summary> Initializes a new instance of ConfluentOrganizationData. </summary>
@@ -1101,23 +1087,7 @@ namespace Azure.ResourceManager.Confluent.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ConfluentOrganizationData ConfluentOrganizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, ConfluentProvisionState? provisioningState, Guid? organizationId, Uri ssoUri, ConfluentOfferDetail offerDetail, ConfluentUserDetail userDetail)
         {
-            return new ConfluentOrganizationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                createdOn is null && provisioningState is null && organizationId is null && ssoUri is null && offerDetail is null && userDetail is null ? default : new OrganizationResourceProperties(
-                    createdOn,
-                    provisioningState,
-                    organizationId,
-                    ssoUri,
-                    offerDetail,
-                    userDetail,
-                    default,
-                    default),
-                default);
+            return ConfluentOrganizationData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, createdOn: createdOn, provisioningState: provisioningState, organizationId: organizationId, ssoUri: ssoUri, offerDetail: offerDetail, userDetail: userDetail, linkOrganizationToken: default);
         }
     }
 }
