@@ -58,19 +58,17 @@ namespace Azure.Generator.Management
         {
             if (provider is ModelFactoryProvider modelFactory)
             {
-                // Run model-factory repairs at write time, after all visitors have finalized model constructor
-                // shape/order. This keeps both current factory bodies and EBV overloads aligned with the final constructors.
-                ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
-                ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+                // Run model-factory repairs at write time, after all visitors have finalized model constructor shape/order.
+                ConstructorCallHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
             }
             else
             {
-                ModelFactoryBackwardCompatHelper.FixConstructorCalls(provider.Methods);
+                ConstructorCallHelper.FixConstructorCalls(provider.Methods);
             }
 
             foreach (var serialization in provider.SerializationProviders)
             {
-                ModelFactoryBackwardCompatHelper.FixConstructorCalls(serialization.Methods);
+                ConstructorCallHelper.FixConstructorCalls(serialization.Methods);
             }
 
             return base.GetWriter(provider);

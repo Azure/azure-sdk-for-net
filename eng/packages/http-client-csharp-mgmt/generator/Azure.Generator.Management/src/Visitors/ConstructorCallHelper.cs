@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -18,17 +17,16 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 namespace Azure.Generator.Management.Visitors
 {
     /// <summary>
-    /// Repairs model factory constructor calls after visitors change the current model shape.
-    /// Used from <see cref="ManagementClientGenerator.GetWriter(TypeProvider)"/> because some compatibility overloads are
-    /// synthesized from LastContractView after normal visitors have finished.
+    /// Repairs constructor calls after visitors change the current model shape.
+    /// Used from <see cref="ManagementClientGenerator.GetWriter(TypeProvider)"/> after visitors have finalized constructors.
     /// </summary>
-    internal static class ModelFactoryBackwardCompatHelper
+    internal static class ConstructorCallHelper
     {
         internal static void FixModelFactoryConstructorCalls(IReadOnlyList<MethodProvider> methods)
         {
             foreach (var method in methods)
             {
-                if (IsBackwardCompatMethod(method) || method.BodyStatements is null)
+                if (method.BodyStatements is null)
                 {
                     continue;
                 }
@@ -103,73 +101,6 @@ namespace Azure.Generator.Management.Visitors
             }
         }
 
-        /// <summary>
-        /// Updates hidden compatibility overload bodies so old parameters still flow into the current flattened model shape.
-        /// Input is the complete model factory method list; output is in-place method body updates for repairable overloads.
-        /// Used just before writing a <see cref="ModelFactoryProvider"/> to cover both visitor-created and LastContractView-created overloads.
-        /// </summary>
-        internal static void FixModelFactoryBackwardCompatOverloads(IReadOnlyList<MethodProvider> methods)
-        {
-            // First identify the current primary overload for each model factory method name. Hidden compatibility overloads
-            // are skipped here because they represent older signatures, not the current argument order/body shape.
-            var primaryMethods = new Dictionary<string, MethodProvider>();
-            foreach (var method in methods)
-            {
-                if (!IsBackwardCompatMethod(method))
-                {
-                    var key = method.Signature.Name;
-                    if (!primaryMethods.TryGetValue(key, out var existing) || method.Signature.Parameters.Count > existing.Signature.Parameters.Count)
-                    {
-                        primaryMethods[key] = method;
-                    }
-                }
-            }
-
-            // Then scan hidden compatibility overload bodies and repair the two shapes we know how to preserve:
-            // 1. A call into the primary overload with stale positional arguments.
-            // 2. A direct model construction with default arguments where the old overload still has matching inputs.
-            foreach (var method in methods)
-            {
-                if (!IsBackwardCompatMethod(method) || method.BodyStatements is null)
-                {
-                    continue;
-                }
-
-                var updatedBodyStatements = new List<MethodBodyStatement>();
-                var bodyUpdated = false;
-                foreach (var statement in method.BodyStatements)
-                {
-                    if (TryUpdatePrimaryMethodInvocation(statement, primaryMethods, out var updatedInvocation))
-                    {
-                        updatedBodyStatements.Add(updatedInvocation);
-                        bodyUpdated = true;
-                    }
-                    else if (statement is ExpressionStatement { Expression: KeywordExpression { Expression: NewInstanceExpression newInstanceExpression } }
-                        && TryRebuildNewInstanceFromMethodSignature(method, newInstanceExpression, out var rebuiltArguments))
-                    {
-                        updatedBodyStatements.Add(Return(New.Instance(newInstanceExpression.Type!, rebuiltArguments)));
-                        bodyUpdated = true;
-                    }
-                    else if (statement is ExpressionStatement { Expression: KeywordExpression { Expression: NewInstanceExpression fallbackNewInstanceExpression } }
-                        && TryUpdateNewInstanceArguments(method, fallbackNewInstanceExpression, out var updatedArguments, out var matchedParameters))
-                    {
-                        updatedBodyStatements.RemoveAll(s => IsNullCoalescingAssignmentToMatchedParameter(s, matchedParameters, fallbackNewInstanceExpression.Parameters));
-                        updatedBodyStatements.Add(Return(New.Instance(fallbackNewInstanceExpression.Type!, updatedArguments)));
-                        bodyUpdated = true;
-                    }
-                    else
-                    {
-                        updatedBodyStatements.Add(statement);
-                    }
-                }
-
-                if (bodyUpdated)
-                {
-                    method.Update(signature: method.Signature, bodyStatements: updatedBodyStatements);
-                }
-            }
-        }
-
         private static bool TryRebuildNewInstanceFromMethodSignature(
             MethodProvider method,
             NewInstanceExpression newInstanceExpression,
@@ -219,200 +150,6 @@ namespace Azure.Generator.Management.Visitors
         }
 
         /// <summary>
-        /// Returns true when a method is a hidden backward-compatibility overload.
-        /// Input is a method provider; output is whether it has <see cref="System.ComponentModel.EditorBrowsableAttribute"/>.
-        /// Used by this helper and tests to separate old compatibility overloads from current primary overloads.
-        /// </summary>
-        internal static bool IsBackwardCompatMethod(MethodProvider method)
-        {
-            return method.Signature.Attributes.Any(a =>
-                a.Type is { IsFrameworkType: true } && a.Type.FrameworkType == typeof(System.ComponentModel.EditorBrowsableAttribute));
-        }
-
-        internal static bool TryCreateBackwardCompatMethod(MethodProvider method, TypeProvider enclosingType, [NotNullWhen(true)] out MethodProvider? updatedMethod)
-        {
-            updatedMethod = null;
-            if (method.Signature.ReturnType is null || !TryGetModelProvider(method.Signature.ReturnType, out var modelProvider))
-            {
-                return false;
-            }
-
-            var constructorParameters = modelProvider.FullConstructor.Signature.Parameters;
-            var directParameterNames = constructorParameters
-                .Where(parameter => TryGetMethodParameter(method, parameter.Name, parameter.Type, parameter.Property, out _))
-                .Select(parameter => parameter.Name)
-                .ToHashSet(StringComparer.OrdinalIgnoreCase);
-
-            var arguments = new List<ValueExpression>(constructorParameters.Count);
-            foreach (var constructorParameter in constructorParameters)
-            {
-                if (TryBuildCompatibilityArgument(method, constructorParameter, directParameterNames, out var argument))
-                {
-                    arguments.Add(argument.Argument);
-                }
-                else
-                {
-                    arguments.Add(GetDefaultArgument(constructorParameter));
-                }
-            }
-
-            updatedMethod = new MethodProvider(
-                CreateBackwardCompatSignature(method.Signature),
-                Return(New.Instance(method.Signature.ReturnType, arguments)),
-                enclosingType);
-            return true;
-        }
-
-        private static MethodSignature CreateBackwardCompatSignature(MethodSignature signature)
-        {
-            var attributes = signature.Attributes.Any(attribute =>
-                attribute.Type is { IsFrameworkType: true } && attribute.Type.FrameworkType == typeof(EditorBrowsableAttribute))
-                    ? signature.Attributes
-                    : [.. signature.Attributes, new AttributeStatement(typeof(EditorBrowsableAttribute), FrameworkEnumValue(EditorBrowsableState.Never))];
-
-            return new MethodSignature(
-                signature.Name,
-                signature.Description,
-                signature.Modifiers,
-                signature.ReturnType,
-                signature.ReturnDescription,
-                signature.Parameters,
-                attributes,
-                signature.GenericArguments,
-                signature.GenericParameterConstraints,
-                signature.ExplicitInterface,
-                signature.NonDocumentComment);
-        }
-
-        /// <summary>
-        /// Rebuilds a hidden overload's primary-method invocation in the current primary method parameter order.
-        /// Inputs are one body statement and the primary method lookup; output is a replacement return statement when the call changed.
-        /// Used by <see cref="FixModelFactoryBackwardCompatOverloads"/> for overloads whose body delegates to another model factory method.
-        /// </summary>
-        private static bool TryUpdatePrimaryMethodInvocation(
-            MethodBodyStatement statement,
-            IReadOnlyDictionary<string, MethodProvider> primaryMethods,
-            [NotNullWhen(true)] out MethodBodyStatement? updatedStatement)
-        {
-            updatedStatement = null;
-            if (statement is not ExpressionStatement expressionStatement
-                || (expressionStatement.Expression as KeywordExpression)?.Expression is not InvokeMethodExpression invokeExpression
-                || (invokeExpression.MethodName ?? invokeExpression.MethodSignature?.Name) is not string calledMethodName
-                || !primaryMethods.TryGetValue(calledMethodName, out var primaryMethod))
-            {
-                return false;
-            }
-
-            // The invoke signature describes the old overload's argument names, while primaryParams describes the current
-            // overload shape. If either side is unavailable, the safest behavior is to leave the old body unchanged.
-            var primaryParams = primaryMethod.Signature.Parameters;
-            var invokeArgs = invokeExpression.Arguments;
-            var invokeSignatureParams = invokeExpression.MethodSignature?.Parameters;
-
-            if (invokeSignatureParams is null || invokeSignatureParams.Count != invokeArgs.Count)
-            {
-                return false;
-            }
-
-            // Compatibility overloads may call the current primary overload using an older parameter order.
-            // Rebuild the call by parameter name so old overload arguments continue to flow to their matching
-            // current parameters, and any parameters not present in the old overload keep a named default value.
-            var argsByName = new Dictionary<string, ValueExpression>(StringComparer.OrdinalIgnoreCase);
-            for (int i = 0; i < invokeSignatureParams.Count; i++)
-            {
-                argsByName[invokeSignatureParams[i].Name] = invokeArgs[i];
-            }
-
-            var newArgs = new List<ValueExpression>(primaryParams.Count);
-            var changed = false;
-            for (int i = 0; i < primaryParams.Count; i++)
-            {
-                // Preserve old arguments by matching parameter names instead of trusting old positional order.
-                if (argsByName.TryGetValue(primaryParams[i].Name, out var arg))
-                {
-                    newArgs.Add(arg);
-                    if (!changed && (i >= invokeArgs.Count || !ReferenceEquals(arg, invokeArgs[i])))
-                    {
-                        changed = true;
-                    }
-                }
-                else
-                {
-                    // Parameters added after the old overload was generated must remain defaulted, but we emit them as
-                    // named positional references so the generated call remains stable if later parameters move again.
-                    newArgs.Add(Snippet.PositionalReference(primaryParams[i], GetDefaultArgument(primaryParams[i])));
-                    changed = true;
-                }
-            }
-
-            if (!changed)
-            {
-                return false;
-            }
-
-            updatedStatement = Return(new InvokeMethodExpression(null, primaryMethod.Signature, newArgs));
-            return true;
-        }
-
-        /// <summary>
-        /// Replaces default arguments in a hidden overload's direct model construction with arguments rebuilt from old parameters.
-        /// Inputs are the old method and its returned <see cref="NewInstanceExpression"/>; outputs are updated constructor arguments
-        /// and the old parameters consumed by the repair. Used for compatibility overloads that construct the model directly.
-        /// </summary>
-        private static bool TryUpdateNewInstanceArguments(
-            MethodProvider method,
-            NewInstanceExpression newInstanceExpression,
-            [NotNullWhen(true)] out IReadOnlyList<ValueExpression>? updatedArguments,
-            [NotNullWhen(true)] out IReadOnlyList<ParameterProvider>? matchedParameters)
-        {
-            updatedArguments = null;
-            matchedParameters = null;
-            if (newInstanceExpression.Type is null || !TryGetModelProvider(newInstanceExpression.Type, out var modelProvider))
-            {
-                return false;
-            }
-
-            // The repair maps arguments by the generated full constructor. If the expression contains named arguments that
-            // target a customization constructor instead, the full-constructor parameter order is not authoritative.
-            var constructorParameters = modelProvider.FullConstructor.Signature.Parameters;
-            if (constructorParameters.Count != newInstanceExpression.Parameters.Count)
-            {
-                return false;
-            }
-
-            if (HasNamedArgumentMismatchingFullConstructor(newInstanceExpression.Parameters, constructorParameters))
-            {
-                return false;
-            }
-
-            List<ValueExpression>? arguments = null;
-            List<ParameterProvider>? matched = null;
-            var unavailableDirectParameterNames = GetUnavailableDirectParameterNames(method, constructorParameters, newInstanceExpression.Parameters);
-            for (int i = 0; i < newInstanceExpression.Parameters.Count; i++)
-            {
-                // Only default slots are candidates for repair. Non-default arguments were intentionally present in the
-                // old generated body and should not be overwritten.
-                var currentArgument = newInstanceExpression.Parameters[i];
-                if (!IsDefaultExpression(currentArgument))
-                {
-                    continue;
-                }
-
-                if (TryBuildCompatibilityArgument(method, constructorParameters[i], unavailableDirectParameterNames, out var replacement))
-                {
-                    arguments ??= [.. newInstanceExpression.Parameters];
-                    matched ??= [];
-                    arguments[i] = replacement.Argument;
-                    matched.AddRange(replacement.MatchedParameters);
-                }
-            }
-
-            updatedArguments = arguments;
-            matchedParameters = matched;
-            return arguments is not null;
-        }
-
-        /// <summary>
         /// Detects named constructor arguments that prove a <see cref="NewInstanceExpression"/> is not bound to the generated full constructor.
         /// Inputs are rendered arguments and full-constructor parameters; output is true when a named argument targets a different slot.
         /// Used before direct-constructor repair to avoid corrupting calls to custom constructors.
@@ -429,26 +166,6 @@ namespace Azure.Generator.Management.Visitors
             }
 
             return false;
-        }
-
-        /// <summary>
-        /// Returns true for a null-coalescing assignment statement that initializes a parameter consumed by a repaired argument.
-        /// Inputs are a method body statement and repaired parameters; output is whether the statement should be removed.
-        /// Used after rebuilding nested model arguments because the new conditional construction handles null/default behavior.
-        /// </summary>
-        private static bool IsNullCoalescingAssignmentToMatchedParameter(
-            MethodBodyStatement statement,
-            IReadOnlyList<ParameterProvider> parameters,
-            IReadOnlyList<ValueExpression> originalArguments)
-        {
-            if (statement is not ExpressionStatement { Expression: AssignmentExpression { UseNullCoalesce: true } assignment })
-            {
-                return false;
-            }
-
-            return parameters.Any(parameter =>
-                ReferencesParameter(assignment.Variable, parameter)
-                && !IsParameterUsedByOriginalArgument(parameter, originalArguments));
         }
 
         /// <summary>
@@ -852,7 +569,6 @@ namespace Azure.Generator.Management.Visitors
         /// <summary>
         /// Returns true when an expression renders as a C# default literal/expression.
         /// Input is a generated value expression; output is whether it is eligible for replacement.
-        /// Used by <see cref="TryUpdateNewInstanceArguments"/> so only previously defaulted constructor slots are repaired.
         /// </summary>
         private static bool IsDefaultExpression(ValueExpression expression)
         {
