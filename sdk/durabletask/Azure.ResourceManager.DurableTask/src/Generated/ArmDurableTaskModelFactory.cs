@@ -262,14 +262,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DurableTaskSchedulerProperties DurableTaskSchedulerProperties(DurableTaskProvisioningState? provisioningState, string endpoint, IEnumerable<string> ipAllowlist, DurableTaskSchedulerSku sku)
         {
-            return new DurableTaskSchedulerProperties(
-                provisioningState,
-                endpoint,
-                (ipAllowlist ?? new ChangeTrackingList<string>()).ToList(),
-                sku,
-                default,
-                default,
-                default);
+            return DurableTaskSchedulerProperties(provisioningState: provisioningState, endpoint: endpoint, ipAllowlist: ipAllowlist, sku: sku, publicNetworkAccess: default, privateEndpointConnections: default);
         }
 
         /// <summary> The Scheduler resource properties to be updated. </summary>
@@ -281,13 +274,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DurableTaskSchedulerPatchProperties DurableTaskSchedulerPatchProperties(DurableTaskProvisioningState? provisioningState, string endpoint, IEnumerable<string> ipAllowlist, DurableTaskSchedulerSkuUpdate sku)
         {
-            return new DurableTaskSchedulerPatchProperties(
-                provisioningState,
-                endpoint,
-                (ipAllowlist ?? new ChangeTrackingList<string>()).ToList(),
-                sku,
-                default,
-                default);
+            return DurableTaskSchedulerPatchProperties(provisioningState: provisioningState, endpoint: endpoint, ipAllowlist: ipAllowlist, sku: sku, publicNetworkAccess: default);
         }
     }
 }

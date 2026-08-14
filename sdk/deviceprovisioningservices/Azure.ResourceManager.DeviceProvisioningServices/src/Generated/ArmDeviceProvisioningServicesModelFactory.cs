@@ -346,8 +346,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="sku"> Sku info for a provisioning Service. </param>
         /// <returns> A new <see cref="DeviceProvisioningServices.DeviceProvisioningServiceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DeviceProvisioningServiceData DeviceProvisioningServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, DeviceProvisioningServiceProperties properties = default, DeviceProvisioningServicesSkuInfo sku = default)
+        public static DeviceProvisioningServiceData DeviceProvisioningServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, DeviceProvisioningServiceProperties properties, DeviceProvisioningServicesSkuInfo sku)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new DeviceProvisioningServiceData(
                 id,
                 name,
@@ -382,24 +384,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// </param>
         /// <returns> A new <see cref="Models.DeviceProvisioningServiceProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DeviceProvisioningServiceProperties DeviceProvisioningServiceProperties(DeviceProvisioningServicesState? state = default, DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<DeviceProvisioningServicesIPFilterRule> ipFilterRules = default, IEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections = default, string provisioningState = default, IEnumerable<IotHubDefinitionDescription> iotHubs = default, DeviceProvisioningServicesAllocationPolicy? allocationPolicy = default, string serviceOperationsHostName = default, string deviceProvisioningHostName = default, string idScope = default, IEnumerable<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies = default, bool? isDataResidencyEnabled = default)
+        public static DeviceProvisioningServiceProperties DeviceProvisioningServiceProperties(DeviceProvisioningServicesState? state, DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess, IEnumerable<DeviceProvisioningServicesIPFilterRule> ipFilterRules, IEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, IEnumerable<IotHubDefinitionDescription> iotHubs, DeviceProvisioningServicesAllocationPolicy? allocationPolicy, string serviceOperationsHostName, string deviceProvisioningHostName, string idScope, IEnumerable<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies, bool? isDataResidencyEnabled)
         {
-            return new DeviceProvisioningServiceProperties(
-                state,
-                publicNetworkAccess,
-                (ipFilterRules ?? new ChangeTrackingList<DeviceProvisioningServicesIPFilterRule>()).ToList(),
-                (privateEndpointConnections ?? new ChangeTrackingList<DeviceProvisioningServicesPrivateEndpointConnectionData>()).ToList(),
-                provisioningState,
-                (iotHubs ?? new ChangeTrackingList<IotHubDefinitionDescription>()).ToList(),
-                default,
-                allocationPolicy,
-                serviceOperationsHostName,
-                deviceProvisioningHostName,
-                idScope,
-                (authorizationPolicies ?? new ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>()).ToList(),
-                isDataResidencyEnabled,
-                default,
-                default);
+            return DeviceProvisioningServiceProperties(state: state, publicNetworkAccess: publicNetworkAccess, ipFilterRules: ipFilterRules, privateEndpointConnections: privateEndpointConnections, provisioningState: provisioningState, iotHubs: iotHubs, deviceRegistryNamespace: default, allocationPolicy: allocationPolicy, serviceOperationsHostName: serviceOperationsHostName, deviceProvisioningHostName: deviceProvisioningHostName, idScope: idScope, authorizationPolicies: authorizationPolicies, isDataResidencyEnabled: isDataResidencyEnabled, portalOperationsHostName: default);
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.DevTestLabs;
@@ -292,34 +291,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new AttachNewDataDiskDetails(diskSizeGiB, diskName, diskType, default);
         }
 
-        /// <param name="status"> The status of the schedule (i.e. Enabled, Disabled). </param>
-        /// <param name="taskType"> The task type of the schedule (e.g. LabVmsShutdownTask, LabVmAutoStart). </param>
-        /// <param name="weeklyRecurrence"> If the schedule will occur only some days of the week, specify the weekly recurrence. </param>
-        /// <param name="timeZoneId"> The time zone ID (e.g. China Standard Time, Greenland Standard Time, Pacific Standard time, etc.). The possible values for this property can be found in `IReadOnlyCollection&lt;string&gt; TimeZoneConverter.TZConvert.KnownWindowsTimeZoneIds` (https://github.com/mattjohnsonpint/TimeZoneConverter/blob/main/README.md). </param>
-        /// <param name="notificationSettings"> Notification settings. </param>
-        /// <param name="targetResourceId"> The resource ID to which the schedule belongs. </param>
-        /// <param name="dailyRecurrenceTime"> The time of day the schedule will occur. </param>
-        /// <param name="hourlyRecurrenceMinute"> Minutes of the hour the schedule will run. </param>
-        /// <param name="name"> The name of the virtual machine or environment. </param>
-        /// <param name="location"> The location of the new virtual machine or environment. </param>
-        /// <param name="tags"> The tags of the resource. </param>
-        /// <returns> A new <see cref="Models.DevTestLabScheduleCreationParameter"/> instance for mocking. </returns>
-        public static DevTestLabScheduleCreationParameter DevTestLabScheduleCreationParameter(DevTestLabEnableStatus? status = default, string taskType = default, DevTestLabWeekDetails weeklyRecurrence = default, string timeZoneId = default, DevTestLabNotificationSettings notificationSettings = default, ResourceIdentifier targetResourceId = default, string dailyRecurrenceTime = default, int? hourlyRecurrenceMinute = default, string name = default, AzureLocation? location = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DevTestLabScheduleCreationParameter(status is null && taskType is null && weeklyRecurrence is null && dailyRecurrenceTime is null && hourlyRecurrenceMinute is null && timeZoneId is null && notificationSettings is null && targetResourceId is null ? default : new ScheduleCreationParameterProperties(
-                status,
-                taskType,
-                weeklyRecurrence,
-                new DayDetails(dailyRecurrenceTime, default),
-                new HourDetails(hourlyRecurrenceMinute, default),
-                timeZoneId,
-                notificationSettings,
-                targetResourceId,
-                default), name, location, tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
         /// <param name="weekdays"> The days of the week for which the schedule is set (e.g. Sunday, Monday, Tuesday, etc.). </param>
         /// <param name="time"> The time of the day the schedule will occur. </param>
         /// <returns> A new <see cref="Models.DevTestLabWeekDetails"/> instance for mocking. </returns>
@@ -382,51 +353,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static DevTestLabVhd DevTestLabVhd(Uri id = default)
         {
             return new DevTestLabVhd(id, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="status"> The status of the schedule (i.e. Enabled, Disabled). </param>
-        /// <param name="taskType"> The task type of the schedule (e.g. LabVmsShutdownTask, LabVmAutoStart). </param>
-        /// <param name="weeklyRecurrence"> If the schedule will occur only some days of the week, specify the weekly recurrence. </param>
-        /// <param name="timeZoneId"> The time zone ID (e.g. China Standard Time, Greenland Standard Time, Pacific Standard time, etc.). The possible values for this property can be found in `IReadOnlyCollection&lt;string&gt; TimeZoneConverter.TZConvert.KnownWindowsTimeZoneIds` (https://github.com/mattjohnsonpint/TimeZoneConverter/blob/main/README.md). </param>
-        /// <param name="notificationSettings"> Notification settings. </param>
-        /// <param name="createdOn"> The creation date of the schedule. </param>
-        /// <param name="targetResourceId"> The resource ID to which the schedule belongs. </param>
-        /// <param name="provisioningState"> The provisioning status of the resource. </param>
-        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        /// <param name="dailyRecurrenceTime"> The time of day the schedule will occur. </param>
-        /// <param name="hourlyRecurrenceMinute"> Minutes of the hour the schedule will run. </param>
-        /// <returns> A new <see cref="DevTestLabs.DevTestLabScheduleData"/> instance for mocking. </returns>
-        public static DevTestLabScheduleData DevTestLabScheduleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DevTestLabEnableStatus? status = default, string taskType = default, DevTestLabWeekDetails weeklyRecurrence = default, string timeZoneId = default, DevTestLabNotificationSettings notificationSettings = default, DateTimeOffset? createdOn = default, string targetResourceId = default, string provisioningState = default, Guid? uniqueIdentifier = default, string dailyRecurrenceTime = default, int? hourlyRecurrenceMinute = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DevTestLabScheduleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                dailyRecurrenceTime is null && hourlyRecurrenceMinute is null ? default : new ScheduleProperties(
-                    default,
-                    default,
-                    default,
-                    new DayDetails(dailyRecurrenceTime, default),
-                    new HourDetails(hourlyRecurrenceMinute, default),
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default),
-                default);
         }
 
         /// <param name="tags"> The tags of the resource. </param>
@@ -605,49 +531,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabArmTemplateInfo(template, parameters, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="targetCost"> The target cost properties. </param>
-        /// <param name="labCostDetails"> The lab cost details component of the cost data. </param>
-        /// <param name="resourceCosts"> The resource cost component of the cost data. </param>
-        /// <param name="currencyCode"> The currency code of the cost. </param>
-        /// <param name="startOn"> The start time of the cost data. </param>
-        /// <param name="endOn"> The end time of the cost data. </param>
-        /// <param name="createdOn"> The creation date of the cost. </param>
-        /// <param name="provisioningState"> The provisioning status of the resource. </param>
-        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        /// <param name="estimatedLabCost"> The cost component of the cost item. </param>
-        /// <returns> A new <see cref="DevTestLabs.DevTestLabCostData"/> instance for mocking. </returns>
-        public static DevTestLabCostData DevTestLabCostData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DevTestLabTargetCost targetCost = default, IEnumerable<DevTestLabCostDetails> labCostDetails = default, IEnumerable<DevTestLabResourceCost> resourceCosts = default, string currencyCode = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DateTimeOffset? createdOn = default, string provisioningState = default, Guid? uniqueIdentifier = default, double? estimatedLabCost = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DevTestLabCostData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                targetCost is null && estimatedLabCost is null && labCostDetails is null ? default : new LabCostProperties(
-                    targetCost,
-                    new LabCostSummaryProperties(estimatedLabCost, default),
-                    (labCostDetails ?? new ChangeTrackingList<DevTestLabCostDetails>()).ToList(),
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default),
-                default);
-        }
-
         /// <param name="status"> Target cost status. </param>
         /// <param name="target"> Lab target cost. </param>
         /// <param name="costThresholds"> Cost thresholds. </param>
@@ -809,45 +692,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DevTestLabCustomImagePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="description"> The description of the formula. </param>
-        /// <param name="author"> The author of the formula. </param>
-        /// <param name="osType"> The OS type of the formula. </param>
-        /// <param name="createdOn"> The creation date of the formula. </param>
-        /// <param name="formulaContent"> The content of the formula. </param>
-        /// <param name="provisioningState"> The provisioning status of the resource. </param>
-        /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        /// <param name="labVmId"> The identifier of the VM from which a formula is to be created. </param>
-        /// <returns> A new <see cref="DevTestLabs.DevTestLabFormulaData"/> instance for mocking. </returns>
-        public static DevTestLabFormulaData DevTestLabFormulaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, string author = default, string osType = default, DateTimeOffset? createdOn = default, DevTestLabVmCreationContent formulaContent = default, string provisioningState = default, Guid? uniqueIdentifier = default, string labVmId = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DevTestLabFormulaData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                formulaContent is null && labVmId is null ? default : new FormulaProperties(
-                    default,
-                    default,
-                    default,
-                    default,
-                    formulaContent,
-                    new FormulaPropertiesFromVm(labVmId, default),
-                    default,
-                    default,
-                    default),
-                default);
         }
 
         /// <param name="tags"> The tags of the resource. </param>
@@ -1661,9 +1505,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         /// <returns> A new <see cref="DevTestLabs.DevTestLabScheduleData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static DevTestLabScheduleData DevTestLabScheduleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DevTestLabEnableStatus? status = default, string taskType = default, DevTestLabWeekDetails weeklyRecurrence = default, string dailyRecurrenceTime = default, int? hourlyRecurrenceMinute = default, string timeZoneId = default, DevTestLabNotificationSettings notificationSettings = default, DateTimeOffset? createdOn = default, string targetResourceId = default, string provisioningState = default, Guid? uniqueIdentifier = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new DevTestLabScheduleData(
                 id,
                 name,
@@ -1705,9 +1550,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         /// <returns> A new <see cref="DevTestLabs.DevTestLabCostData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static DevTestLabCostData DevTestLabCostData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DevTestLabTargetCost targetCost = default, double? estimatedLabCost = default, IEnumerable<DevTestLabCostDetails> labCostDetails = default, IEnumerable<DevTestLabResourceCost> resourceCosts = default, string currencyCode = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DateTimeOffset? createdOn = default, string provisioningState = default, Guid? uniqueIdentifier = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            labCostDetails ??= new ChangeTrackingList<DevTestLabCostDetails>();
+            resourceCosts ??= new ChangeTrackingList<DevTestLabResourceCost>();
+
             return new DevTestLabCostData(
                 id,
                 name,
@@ -1746,9 +1594,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         /// <returns> A new <see cref="DevTestLabs.DevTestLabFormulaData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static DevTestLabFormulaData DevTestLabFormulaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, string author = default, string osType = default, DateTimeOffset? createdOn = default, DevTestLabVmCreationContent formulaContent = default, string labVmId = default, string provisioningState = default, Guid? uniqueIdentifier = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new DevTestLabFormulaData(
                 id,
                 name,
@@ -1782,9 +1631,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="notificationSettings"> Notification settings. </param>
         /// <param name="targetResourceId"> The resource ID to which the schedule belongs. </param>
         /// <returns> A new <see cref="Models.DevTestLabScheduleCreationParameter"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static DevTestLabScheduleCreationParameter DevTestLabScheduleCreationParameter(string name = default, AzureLocation? location = default, IDictionary<string, string> tags = default, DevTestLabEnableStatus? status = default, string taskType = default, DevTestLabWeekDetails weeklyRecurrence = default, string dailyRecurrenceTime = default, int? hourlyRecurrenceMinute = default, string timeZoneId = default, DevTestLabNotificationSettings notificationSettings = default, ResourceIdentifier targetResourceId = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new DevTestLabScheduleCreationParameter(status is null && taskType is null && weeklyRecurrence is null && dailyRecurrenceTime is null && hourlyRecurrenceMinute is null && timeZoneId is null && notificationSettings is null && targetResourceId is null ? default : new ScheduleCreationParameterProperties(
                 status,
                 taskType,

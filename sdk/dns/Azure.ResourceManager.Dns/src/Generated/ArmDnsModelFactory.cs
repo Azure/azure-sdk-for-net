@@ -351,8 +351,13 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="resolutionVirtualNetworks"> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </param>
         /// <returns> A new <see cref="Dns.DnsZoneData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DnsZoneData DnsZoneData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, long? maxNumberOfRecords = default, long? maxNumberOfRecordsPerRecord = default, long? numberOfRecords = default, IEnumerable<string> nameServers = default, DnsZoneType? zoneType = default, IEnumerable<WritableSubResource> registrationVirtualNetworks = default, IEnumerable<WritableSubResource> resolutionVirtualNetworks = default)
+        public static DnsZoneData DnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, long? maxNumberOfRecords, long? maxNumberOfRecordsPerRecord, long? numberOfRecords, IEnumerable<string> nameServers, DnsZoneType? zoneType, IEnumerable<WritableSubResource> registrationVirtualNetworks, IEnumerable<WritableSubResource> resolutionVirtualNetworks)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            nameServers ??= new ChangeTrackingList<string>();
+            registrationVirtualNetworks ??= new ChangeTrackingList<WritableSubResource>();
+            resolutionVirtualNetworks ??= new ChangeTrackingList<WritableSubResource>();
+
             return new DnsZoneData(
                 id,
                 name,
@@ -379,8 +384,10 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="targetResourceId"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <returns> A new <see cref="Models.DnsResourceReference"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DnsResourceReference DnsResourceReference(IEnumerable<WritableSubResource> dnsResources = default, ResourceIdentifier targetResourceId = default)
+        public static DnsResourceReference DnsResourceReference(IEnumerable<WritableSubResource> dnsResources, ResourceIdentifier targetResourceId)
         {
+            dnsResources ??= new ChangeTrackingList<WritableSubResource>();
+
             return new DnsResourceReference((dnsResources ?? new ChangeTrackingList<WritableSubResource>()).ToList(), default, default);
         }
     }
