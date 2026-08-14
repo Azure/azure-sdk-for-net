@@ -6,8 +6,17 @@ words:
 overrides:
   - filename: '**/sdk/containerservice/Azure.ResourceManager.ContainerService/**/*.cs'
     words:
+      - aksadvancednetworking
+      - dranet
+      - iloveyou
       - inodes
+      - karpenter
+      - kubeletidentity
       - millicores
+      - numa
+      - reimaging
+      - rmem
+      - snat
   - filename: '**/sdk/containerservice/Azure.Provisioning.ContainerService/**/*.cs'
     words:
       - aksadvancednetworking

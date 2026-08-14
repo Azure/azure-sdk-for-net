@@ -1,5 +1,11 @@
 # Release History
 
+## 1.7.0 (Unreleased)
+
+### Features Added
+
+- Upgraded api-version to 2026-06-01.
+
 ## 1.7.0-beta.2 (Unreleased)
 
 ### Features Added
