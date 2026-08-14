@@ -533,7 +533,6 @@
     appropriate conditions. See eng/centralpackagemanagement/README.md.
   -->
   <Import Project="AnalyzerAllowList.targets" />
-  <Import Project="NoWarnValidation.targets" />
 
   <Target Name="EnforceCentralPackageManagement" BeforeTargets="Restore;Build;CollectPackageReferences">
     <!-- Block re-enabling VersionOverride -->
