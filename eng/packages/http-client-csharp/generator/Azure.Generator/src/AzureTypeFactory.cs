@@ -159,6 +159,8 @@ namespace Azure.Generator
                 "Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference" => typeof(DataFactoryLinkedServiceReference),
                 "Azure.Core.Expressions.DataFactory.DataFactorySecretString" => typeof(DataFactorySecretString),
                 _ => base.CreateFrameworkType(fullyQualifiedTypeName)
+                    ?? typeof(Response).Assembly.GetType(fullyQualifiedTypeName)
+                    ?? typeof(DataFactoryElement<>).Assembly.GetType(fullyQualifiedTypeName)
             };
         }
 
