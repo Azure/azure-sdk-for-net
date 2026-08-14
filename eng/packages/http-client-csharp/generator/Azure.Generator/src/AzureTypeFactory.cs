@@ -8,6 +8,7 @@ using Azure.Generator.Primitives;
 using Azure.Generator.Providers;
 using Azure.Generator.Providers.Abstraction;
 using Azure.Generator.Utilities;
+using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -159,6 +160,8 @@ namespace Azure.Generator
                 "Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference" => typeof(DataFactoryLinkedServiceReference),
                 "Azure.Core.Expressions.DataFactory.DataFactorySecretString" => typeof(DataFactorySecretString),
                 _ => base.CreateFrameworkType(fullyQualifiedTypeName)
+                    ?? typeof(ResourceIdentifier).Assembly.GetType(fullyQualifiedTypeName)
+                    ?? typeof(ArmClient).Assembly.GetType(fullyQualifiedTypeName)
             };
         }
 
