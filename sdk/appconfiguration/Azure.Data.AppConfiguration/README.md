@@ -267,7 +267,7 @@ var client = new FeatureFlagClient(new Uri(endpoint), new DefaultAzureCredential
 client.DeleteFeatureFlag("some_feature");
 ```
 
-### Retrieve feature flag labels
+### Retrieve labels by resource type
 
 Retrieve the labels associated with feature flags by calling `GetLabels` with a `FeatureFlagLabelSelector`. The `FeatureFlagClient` only returns labels that are associated with feature flags.
 
