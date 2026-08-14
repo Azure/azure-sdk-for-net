@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
@@ -247,12 +248,13 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             VerifyBuildSegment(segmentFactory, "idx/segments/2024/01/15/0900/meta.json", Times.Never());
         }
 
-        // GetPage continuation token suppression: when IncludeNonFinalizedEvents is true the
-        // resulting pages must NOT carry a continuation token, since the underlying segments
-        // may change between calls and a captured position cannot be safely resumed.
+        // GetPage continuation token: pages always carry a continuation token, including when
+        // IncludeNonFinalizedEvents is true. Resuming re-opens the current segment at the saved
+        // position with modifications allowed, so a non-finalized (still growing) segment can be
+        // resumed exactly where the previous read left off.
 
         [Test]
-        public async Task GetPage_IncludeNonFinalizedEventsTrue_ContinuationTokenIsNull()
+        public async Task GetPage_IncludeNonFinalizedEventsTrue_ContinuationTokenIsNotNull()
         {
             Mock<SegmentFactoryBase<ShareChangeFeedEvent>> segmentFactory = SetupRecordingSegmentFactory();
             Mock<BlobContainerClient> containerClient = SetupContainer();
@@ -274,8 +276,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             while (changeFeed.HasNext())
             {
                 Page<ShareChangeFeedEvent> page = await changeFeed.GetPage(IsAsync, pageSize: 5000, CancellationToken.None);
-                Assert.IsNull(page.ContinuationToken,
-                    "Pages produced with IncludeNonFinalizedEvents=true must not carry a continuation token.");
+                Assert.IsNotNull(page.ContinuationToken,
+                    "Pages produced with IncludeNonFinalizedEvents=true must carry a continuation token so callers can resume.");
                 pageCount++;
             }
 
@@ -311,6 +313,69 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             }
 
             Assert.Greater(pageCount, 0, "Expected at least one page to be produced.");
+        }
+
+        [Test]
+        public async Task GetPage_IncludeNonFinalizedEventsTrue_TokenResumesFromSavedPosition()
+        {
+            // Produce a non-finalized read and capture the continuation token from the last page.
+            Mock<SegmentFactoryBase<ShareChangeFeedEvent>> segmentFactory = SetupRecordingSegmentFactory();
+            Mock<BlobContainerClient> containerClient = SetupContainer();
+
+            ChangeFeedFactoryBase<ShareChangeFeedEvent> factory = new ChangeFeedFactoryBase<ShareChangeFeedEvent>(
+                containerClient.Object,
+                segmentFactory.Object,
+                ShareChangeFeedClient.CreateConfiguration("$fileschangefeed-testguid"),
+                includeNonFinalizedEvents: true);
+
+            ChangeFeedBase<ShareChangeFeedEvent> changeFeed = await factory.BuildChangeFeed(
+                startTime: null,
+                endTime: null,
+                continuation: null,
+                async: IsAsync,
+                cancellationToken: CancellationToken.None);
+
+            string continuationToken = null;
+            while (changeFeed.HasNext())
+            {
+                Page<ShareChangeFeedEvent> page = await changeFeed.GetPage(IsAsync, pageSize: 5000, CancellationToken.None);
+                continuationToken = page.ContinuationToken;
+            }
+
+            Assert.IsNotNull(continuationToken, "A non-finalized read must produce a resumable continuation token.");
+
+            // The token captures the exact segment position so a resume knows where to continue.
+            ChangeFeedCursor cursor = JsonSerializer.Deserialize<ChangeFeedCursor>(continuationToken);
+            Assert.IsNotNull(cursor.CurrentSegmentCursor, "Token must capture the current segment position.");
+            Assert.IsNotNull(cursor.CurrentSegmentCursor.SegmentPath, "Token must capture the current segment path.");
+
+            // Resume from the saved token against a fresh container/factory and confirm the resumed
+            // read starts without throwing and still emits resumable tokens.
+            Mock<SegmentFactoryBase<ShareChangeFeedEvent>> resumeSegmentFactory = SetupRecordingSegmentFactory();
+            Mock<BlobContainerClient> resumeContainer = SetupContainer();
+
+            ChangeFeedFactoryBase<ShareChangeFeedEvent> resumeFactory = new ChangeFeedFactoryBase<ShareChangeFeedEvent>(
+                resumeContainer.Object,
+                resumeSegmentFactory.Object,
+                ShareChangeFeedClient.CreateConfiguration("$fileschangefeed-testguid"),
+                includeNonFinalizedEvents: true);
+
+            ChangeFeedBase<ShareChangeFeedEvent> resumed = await resumeFactory.BuildChangeFeed(
+                startTime: null,
+                endTime: null,
+                continuation: continuationToken,
+                async: IsAsync,
+                cancellationToken: CancellationToken.None);
+
+            while (resumed.HasNext())
+            {
+                Page<ShareChangeFeedEvent> page = await resumed.GetPage(IsAsync, pageSize: 5000, CancellationToken.None);
+                Assert.IsNotNull(page.ContinuationToken,
+                    "Pages produced while resuming a non-finalized read must continue to carry a continuation token.");
+            }
+
+            // The resume re-opened the segment identified by the saved cursor.
+            VerifyBuildSegment(resumeSegmentFactory, cursor.CurrentSegmentCursor.SegmentPath, Times.Once());
         }
 
         private async Task DrainAsync(ChangeFeedFactoryBase<ShareChangeFeedEvent> factory)

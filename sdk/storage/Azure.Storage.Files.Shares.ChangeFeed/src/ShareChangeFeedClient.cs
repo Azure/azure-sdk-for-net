@@ -319,11 +319,6 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// A continuation token previously captured from a <see cref="Page{T}.ContinuationToken"/>.
         /// </param>
         /// <returns>A pageable of change feed events resuming from the saved position.</returns>
-        /// <exception cref="ArgumentException">
-        /// Thrown when <see cref="ShareChangeFeedClientOptions.IncludeNonFinalizedEvents"/>
-        /// is enabled. Resumption is not supported in non-finalized mode because pages
-        /// produced in that mode never carry a continuation token.
-        /// </exception>
         /// <exception cref="ShareChangeFeedResetException">
         /// Thrown at the start of enumeration when a reset marker that is newer than the one
         /// captured on the token is discovered and the effective policy is
@@ -331,13 +326,14 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// <see cref="ShareChangeFeedResetPolicy.ContinueOnReset"/>.
         /// </exception>
         /// <remarks>
-        /// To resume from a saved position, the client must be configured with
-        /// <see cref="ShareChangeFeedClientOptions.IncludeNonFinalizedEvents"/> set to <c>false</c>.
+        /// Resume is supported in both finalized and non-finalized modes. When the client is
+        /// configured with <see cref="ShareChangeFeedClientOptions.IncludeNonFinalizedEvents"/>
+        /// enabled, resuming continues reading from the exact saved position, including within a
+        /// segment that is still growing past the finalized watermark.
         /// </remarks>
         public virtual Pageable<ShareChangeFeedEvent> GetChanges(
             string continuationToken)
         {
-            ThrowIfContinuationDisallowed(continuationToken);
             return new ShareChangeFeedPageable(
                 this,
                 _maxTransferSize,
@@ -354,11 +350,6 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// A continuation token previously captured from a <see cref="Page{T}.ContinuationToken"/>.
         /// </param>
         /// <returns>An async pageable of change feed events resuming from the saved position.</returns>
-        /// <exception cref="ArgumentException">
-        /// Thrown when <see cref="ShareChangeFeedClientOptions.IncludeNonFinalizedEvents"/>
-        /// is enabled. Resumption is not supported in non-finalized mode because pages
-        /// produced in that mode never carry a continuation token.
-        /// </exception>
         /// <exception cref="ShareChangeFeedResetException">
         /// Thrown at the start of enumeration when a reset marker that is newer than the one
         /// captured on the token is discovered and the effective policy is
@@ -366,35 +357,20 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// <see cref="ShareChangeFeedResetPolicy.ContinueOnReset"/>.
         /// </exception>
         /// <remarks>
-        /// To resume from a saved position, the client must be configured with
-        /// <see cref="ShareChangeFeedClientOptions.IncludeNonFinalizedEvents"/> set to <c>false</c>.
+        /// Resume is supported in both finalized and non-finalized modes. When the client is
+        /// configured with <see cref="ShareChangeFeedClientOptions.IncludeNonFinalizedEvents"/>
+        /// enabled, resuming continues reading from the exact saved position, including within a
+        /// segment that is still growing past the finalized watermark.
         /// </remarks>
         public virtual AsyncPageable<ShareChangeFeedEvent> GetChangesAsync(
             string continuationToken)
         {
-            ThrowIfContinuationDisallowed(continuationToken);
             return new ShareChangeFeedAsyncPageable(
                 this,
                 _maxTransferSize,
                 _includeNonFinalizedEvents,
                 ResolveEffectivePolicy(isBatched: false),
                 continuation: continuationToken);
-        }
-
-        private void ThrowIfContinuationDisallowed(string continuationToken)
-        {
-            if (continuationToken != null && _includeNonFinalizedEvents)
-            {
-                throw new ArgumentException(
-                    "Resuming from a continuation token is not supported when " +
-                    nameof(ShareChangeFeedClientOptions.IncludeNonFinalizedEvents) +
-                    " is enabled on " + nameof(ShareChangeFeedClientOptions) + ". " +
-                    "Non-finalized reads do not produce continuation tokens because segments past " +
-                    "the finalized watermark may change between calls. Disable " +
-                    nameof(ShareChangeFeedClientOptions.IncludeNonFinalizedEvents) +
-                    " to resume from a saved position.",
-                    nameof(continuationToken));
-            }
         }
         #endregion GetChanges
 

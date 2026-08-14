@@ -206,7 +206,8 @@ namespace Azure.Storage.ChangeFeed.Common
                     years.Dequeue();
             }
 
-            if (years.Count == 0) return ChangeFeedBase<TEvent>.Empty();
+            if (years.Count == 0)
+                return ChangeFeedBase<TEvent>.Empty();
 
             // When _includeNonFinalizedEvents is true, do not cap segment enumeration at the
             // last consumable watermark — pass the user's endTime through directly.
@@ -245,7 +246,6 @@ namespace Azure.Storage.ChangeFeed.Common
                 startTime,
                 endTime,
                 _config,
-                _includeNonFinalizedEvents,
                 disableEventTimeFilter);
         }
 

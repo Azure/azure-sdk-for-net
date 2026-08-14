@@ -181,38 +181,31 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Assert.IsNull(client._maxTransferSize);
         }
 
-        // GetChanges(continuationToken) must reject any non-null continuation when
-        // IncludeNonFinalizedEvents is enabled, since pages produced in that mode
-        // never carry a continuation token.
+        // GetChanges(continuationToken) supports resuming in both finalized and non-finalized
+        // modes. Constructing the pageable must not throw regardless of IncludeNonFinalizedEvents.
 
         [Test]
-        public void GetChanges_WithContinuation_IncludeNonFinalizedEventsTrue_Throws()
+        public void GetChanges_WithContinuation_IncludeNonFinalizedEventsTrue_DoesNotThrow()
         {
             ShareChangeFeedClient client = new ShareChangeFeedClient(
                 FileServiceUriWithSas,
                 TestShareName,
                 new ShareChangeFeedClientOptions { IncludeNonFinalizedEvents = true });
 
-            ArgumentException ex = Assert.Throws<ArgumentException>(
-                () => client.GetChanges("any-continuation-token"));
-
-            StringAssert.Contains(nameof(ShareChangeFeedClientOptions.IncludeNonFinalizedEvents), ex.Message);
-            Assert.AreEqual("continuationToken", ex.ParamName);
+            // Constructing the pageable should not throw; we deliberately do not enumerate
+            // (which would issue a service call against the synthetic SAS URI).
+            Assert.DoesNotThrow(() => client.GetChanges("any-continuation-token"));
         }
 
         [Test]
-        public void GetChangesAsync_WithContinuation_IncludeNonFinalizedEventsTrue_Throws()
+        public void GetChangesAsync_WithContinuation_IncludeNonFinalizedEventsTrue_DoesNotThrow()
         {
             ShareChangeFeedClient client = new ShareChangeFeedClient(
                 FileServiceUriWithSas,
                 TestShareName,
                 new ShareChangeFeedClientOptions { IncludeNonFinalizedEvents = true });
 
-            ArgumentException ex = Assert.Throws<ArgumentException>(
-                () => client.GetChangesAsync("any-continuation-token"));
-
-            StringAssert.Contains(nameof(ShareChangeFeedClientOptions.IncludeNonFinalizedEvents), ex.Message);
-            Assert.AreEqual("continuationToken", ex.ParamName);
+            Assert.DoesNotThrow(() => client.GetChangesAsync("any-continuation-token"));
         }
 
         [Test]

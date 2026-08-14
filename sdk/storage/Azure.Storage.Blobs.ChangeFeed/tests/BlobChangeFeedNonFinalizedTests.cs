@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
@@ -147,7 +148,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                     .Returns((GetBlobsByHierarchyOptions opts, CancellationToken _) =>
                     {
                         callCount++;
-                        if (callCount == 1) return new MockAsyncPageable((_, _) => Task.FromResult(YearListing()));
+                        if (callCount == 1)
+                            return new MockAsyncPageable((_, _) => Task.FromResult(YearListing()));
                         requestedSegmentPrefixes.Add(opts.Prefix);
                         return new MockAsyncPageable((_, _) => Task.FromResult(EmptyListing()));
                     });
@@ -158,7 +160,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                     .Returns((GetBlobsByHierarchyOptions opts, CancellationToken _) =>
                     {
                         callCount++;
-                        if (callCount == 1) return new MockSyncPageable((_, _) => YearListing());
+                        if (callCount == 1)
+                            return new MockSyncPageable((_, _) => YearListing());
                         requestedSegmentPrefixes.Add(opts.Prefix);
                         return new MockSyncPageable((_, _) => EmptyListing());
                     });
@@ -173,7 +176,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             DateTimeOffset startTime = new DateTimeOffset(2024, 6, 15, 0, 0, 0, TimeSpan.Zero);
             ChangeFeedBase<BlobChangeFeedEvent> changeFeed = await factory.BuildChangeFeed(
                 startTime: startTime, endTime: null, continuation: null, async: IsAsync, cancellationToken: CancellationToken.None);
-            while (changeFeed.HasNext()) await changeFeed.GetPage(IsAsync, pageSize: 5000, CancellationToken.None);
+            while (changeFeed.HasNext())
+                await changeFeed.GetPage(IsAsync, pageSize: 5000, CancellationToken.None);
 
             // 2023/ should NOT appear (year is rounded down to 2023, which is before startTime's year 2024).
             CollectionAssert.DoesNotContain(requestedSegmentPrefixes, "idx/segments/2023/");
@@ -197,7 +201,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             DateTimeOffset endTime = new DateTimeOffset(2024, 1, 15, 8, 45, 0, TimeSpan.Zero);
             ChangeFeedBase<BlobChangeFeedEvent> changeFeed = await factory.BuildChangeFeed(
                 startTime: null, endTime: endTime, continuation: null, async: IsAsync, cancellationToken: CancellationToken.None);
-            while (changeFeed.HasNext()) await changeFeed.GetPage(IsAsync, pageSize: 5000, CancellationToken.None);
+            while (changeFeed.HasNext())
+                await changeFeed.GetPage(IsAsync, pageSize: 5000, CancellationToken.None);
 
             // With IncludeNonFinalizedEvents=true and user endTime=08:45, segments at 08:00, 08:15, 08:30,
             // 08:45 should be visited; segment at 09:00 should NOT be visited (past user's endTime).
@@ -223,7 +228,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             DateTimeOffset endTime = new DateTimeOffset(2024, 1, 15, 8, 45, 0, TimeSpan.Zero);
             ChangeFeedBase<BlobChangeFeedEvent> changeFeed = await factory.BuildChangeFeed(
                 startTime: null, endTime: endTime, continuation: null, async: IsAsync, cancellationToken: CancellationToken.None);
-            while (changeFeed.HasNext()) await changeFeed.GetPage(IsAsync, pageSize: 5000, CancellationToken.None);
+            while (changeFeed.HasNext())
+                await changeFeed.GetPage(IsAsync, pageSize: 5000, CancellationToken.None);
 
             // With IncludeNonFinalizedEvents=false, MinDateTime(lastConsumable=08:30, endTime=08:45) = 08:30
             // caps the effective endTime.
@@ -235,7 +241,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         }
 
         [Test]
-        public async Task GetPage_IncludeNonFinalizedEventsTrue_ContinuationTokenIsNull()
+        public async Task GetPage_IncludeNonFinalizedEventsTrue_ContinuationTokenIsNotNull()
         {
             Mock<SegmentFactoryBase<BlobChangeFeedEvent>> segmentFactory = SetupRecordingSegmentFactory();
             Mock<BlobContainerClient> containerClient = SetupContainer();
@@ -257,8 +263,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             while (changeFeed.HasNext())
             {
                 Page<BlobChangeFeedEvent> page = await changeFeed.GetPage(IsAsync, pageSize: 5000, CancellationToken.None);
-                Assert.IsNull(page.ContinuationToken,
-                    "Pages produced with IncludeNonFinalizedEvents=true must not carry a continuation token.");
+                Assert.IsNotNull(page.ContinuationToken,
+                    "Pages produced with IncludeNonFinalizedEvents=true must carry a continuation token so callers can resume.");
                 pageCount++;
             }
 
@@ -294,6 +300,69 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
 
             Assert.Greater(pageCount, 0, "Expected at least one page to be produced.");
+        }
+
+        [Test]
+        public async Task GetPage_IncludeNonFinalizedEventsTrue_TokenResumesFromSavedPosition()
+        {
+            // Produce a non-finalized read and capture the continuation token from the last page.
+            Mock<SegmentFactoryBase<BlobChangeFeedEvent>> segmentFactory = SetupRecordingSegmentFactory();
+            Mock<BlobContainerClient> containerClient = SetupContainer();
+
+            ChangeFeedFactoryBase<BlobChangeFeedEvent> factory = new ChangeFeedFactoryBase<BlobChangeFeedEvent>(
+                containerClient.Object,
+                segmentFactory.Object,
+                BlobChangeFeedClient.CreateConfiguration(),
+                includeNonFinalizedEvents: true);
+
+            ChangeFeedBase<BlobChangeFeedEvent> changeFeed = await factory.BuildChangeFeed(
+                startTime: null,
+                endTime: null,
+                continuation: null,
+                async: IsAsync,
+                cancellationToken: CancellationToken.None);
+
+            string continuationToken = null;
+            while (changeFeed.HasNext())
+            {
+                Page<BlobChangeFeedEvent> page = await changeFeed.GetPage(IsAsync, pageSize: 5000, CancellationToken.None);
+                continuationToken = page.ContinuationToken;
+            }
+
+            Assert.IsNotNull(continuationToken, "A non-finalized read must produce a resumable continuation token.");
+
+            // The token captures the exact segment position so a resume knows where to continue.
+            ChangeFeedCursor cursor = JsonSerializer.Deserialize<ChangeFeedCursor>(continuationToken);
+            Assert.IsNotNull(cursor.CurrentSegmentCursor, "Token must capture the current segment position.");
+            Assert.IsNotNull(cursor.CurrentSegmentCursor.SegmentPath, "Token must capture the current segment path.");
+
+            // Resume from the saved token against a fresh container/factory and confirm the resumed
+            // read starts without throwing and still emits resumable tokens.
+            Mock<SegmentFactoryBase<BlobChangeFeedEvent>> resumeSegmentFactory = SetupRecordingSegmentFactory();
+            Mock<BlobContainerClient> resumeContainer = SetupContainer();
+
+            ChangeFeedFactoryBase<BlobChangeFeedEvent> resumeFactory = new ChangeFeedFactoryBase<BlobChangeFeedEvent>(
+                resumeContainer.Object,
+                resumeSegmentFactory.Object,
+                BlobChangeFeedClient.CreateConfiguration(),
+                includeNonFinalizedEvents: true);
+
+            ChangeFeedBase<BlobChangeFeedEvent> resumed = await resumeFactory.BuildChangeFeed(
+                startTime: null,
+                endTime: null,
+                continuation: continuationToken,
+                async: IsAsync,
+                cancellationToken: CancellationToken.None);
+
+            while (resumed.HasNext())
+            {
+                Page<BlobChangeFeedEvent> page = await resumed.GetPage(IsAsync, pageSize: 5000, CancellationToken.None);
+                Assert.IsNotNull(page.ContinuationToken,
+                    "Pages produced while resuming a non-finalized read must continue to carry a continuation token.");
+            }
+
+            // The resume re-opened the segment identified by the saved cursor.
+            VerifyBuildSegment(resumeSegmentFactory, cursor.CurrentSegmentCursor.SegmentPath, Times.Once());
         }
 
         private async Task DrainAsync(ChangeFeedFactoryBase<BlobChangeFeedEvent> factory)
