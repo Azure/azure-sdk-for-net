@@ -15,13 +15,22 @@ namespace Azure.ResourceManager.HorizonDB
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(HorizonDBAdministratorAdd))]
+    [ModelReaderWriterBuildable(typeof(HorizonDBAdministratorData))]
+    [ModelReaderWriterBuildable(typeof(HorizonDbAdministratorListResult))]
+    [ModelReaderWriterBuildable(typeof(HorizonDBAdministratorProperties))]
+    [ModelReaderWriterBuildable(typeof(HorizonDBAdministratorPropertiesForAdd))]
+    [ModelReaderWriterBuildable(typeof(HorizonDBAdministratorResource))]
+    [ModelReaderWriterBuildable(typeof(HorizonDbClusterAuthConfig))]
     [ModelReaderWriterBuildable(typeof(HorizonDBClusterData))]
     [ModelReaderWriterBuildable(typeof(HorizonDbClusterListResult))]
+    [ModelReaderWriterBuildable(typeof(HorizonDbClusterMirroring))]
     [ModelReaderWriterBuildable(typeof(HorizonDBClusterParameterGroupConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(HorizonDBClusterPatch))]
     [ModelReaderWriterBuildable(typeof(HorizonDBClusterPatchProperties))]
     [ModelReaderWriterBuildable(typeof(HorizonDBClusterProperties))]
     [ModelReaderWriterBuildable(typeof(HorizonDBClusterResource))]
+    [ModelReaderWriterBuildable(typeof(HorizonDbComputeModel))]
     [ModelReaderWriterBuildable(typeof(HorizonDBFirewallRuleData))]
     [ModelReaderWriterBuildable(typeof(HorizonDbFirewallRuleListResult))]
     [ModelReaderWriterBuildable(typeof(HorizonDBFirewallRuleProperties))]
@@ -39,10 +48,7 @@ namespace Azure.ResourceManager.HorizonDB
     [ModelReaderWriterBuildable(typeof(HorizonDbPoolListResult))]
     [ModelReaderWriterBuildable(typeof(HorizonDBPoolProperties))]
     [ModelReaderWriterBuildable(typeof(HorizonDBPoolResource))]
-    [ModelReaderWriterBuildable(typeof(HorizonDBPrivateEndpointConnection))]
     [ModelReaderWriterBuildable(typeof(HorizonDBPrivateEndpointConnectionData))]
-    [ModelReaderWriterBuildable(typeof(HorizonDBPrivateEndpointConnectionPatch))]
-    [ModelReaderWriterBuildable(typeof(HorizonDBPrivateEndpointConnectionPatchProperties))]
     [ModelReaderWriterBuildable(typeof(HorizonDBPrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(HorizonDBPrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(HorizonDBPrivateLinkResource))]
@@ -56,10 +62,12 @@ namespace Azure.ResourceManager.HorizonDB
     [ModelReaderWriterBuildable(typeof(HorizonDBReplicaProperties))]
     [ModelReaderWriterBuildable(typeof(HorizonDBReplicaPropertiesForPatchUpdate))]
     [ModelReaderWriterBuildable(typeof(HorizonDBReplicaResource))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(Network))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionResourceListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerHorizonDBContext : ModelReaderWriterContext
     {
     }

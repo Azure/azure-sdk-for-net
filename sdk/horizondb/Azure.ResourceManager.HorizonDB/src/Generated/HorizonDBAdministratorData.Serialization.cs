@@ -12,64 +12,64 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.HorizonDB;
+using Azure.ResourceManager.HorizonDB.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.HorizonDB.Models
+namespace Azure.ResourceManager.HorizonDB
 {
-    /// <summary> The private endpoint connection resource. </summary>
-    public partial class HorizonDBPrivateEndpointConnection : ResourceData, IJsonModel<HorizonDBPrivateEndpointConnection>
+    /// <summary> Represents an Entra ID administrator configured on a HorizonDB cluster. </summary>
+    public partial class HorizonDBAdministratorData : ResourceData, IJsonModel<HorizonDBAdministratorData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBAdministratorData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHorizonDBPrivateEndpointConnection(document.RootElement, options);
+                        return DeserializeHorizonDBAdministratorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDBPrivateEndpointConnection)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDBAdministratorData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBAdministratorData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHorizonDBContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDBPrivateEndpointConnection)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDBAdministratorData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HorizonDBPrivateEndpointConnection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HorizonDBAdministratorData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDBPrivateEndpointConnection IPersistableModel<HorizonDBPrivateEndpointConnection>.Create(BinaryData data, ModelReaderWriterOptions options) => (HorizonDBPrivateEndpointConnection)PersistableModelCreateCore(data, options);
+        HorizonDBAdministratorData IPersistableModel<HorizonDBAdministratorData>.Create(BinaryData data, ModelReaderWriterOptions options) => (HorizonDBAdministratorData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HorizonDBPrivateEndpointConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HorizonDBAdministratorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HorizonDBPrivateEndpointConnection"/> from. </param>
-        internal static HorizonDBPrivateEndpointConnection FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HorizonDBAdministratorData"/> from. </param>
+        internal static HorizonDBAdministratorData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeHorizonDBPrivateEndpointConnection(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeHorizonDBAdministratorData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HorizonDBPrivateEndpointConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HorizonDBAdministratorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBAdministratorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDBPrivateEndpointConnection)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDBAdministratorData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -110,24 +110,24 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDBPrivateEndpointConnection IJsonModel<HorizonDBPrivateEndpointConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HorizonDBPrivateEndpointConnection)JsonModelCreateCore(ref reader, options);
+        HorizonDBAdministratorData IJsonModel<HorizonDBAdministratorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HorizonDBAdministratorData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBAdministratorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDBPrivateEndpointConnection)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDBAdministratorData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHorizonDBPrivateEndpointConnection(document.RootElement, options);
+            return DeserializeHorizonDBAdministratorData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HorizonDBPrivateEndpointConnection DeserializeHorizonDBPrivateEndpointConnection(JsonElement element, ModelReaderWriterOptions options)
+        internal static HorizonDBAdministratorData DeserializeHorizonDBAdministratorData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            HorizonDBPrivateEndpointConnectionProperties properties = default;
+            HorizonDBAdministratorProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    properties = HorizonDBPrivateEndpointConnectionProperties.DeserializeHorizonDBPrivateEndpointConnectionProperties(prop.Value, options);
+                    properties = HorizonDBAdministratorProperties.DeserializeHorizonDBAdministratorProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HorizonDBPrivateEndpointConnection(
+            return new HorizonDBAdministratorData(
                 id,
                 name,
                 resourceType,
