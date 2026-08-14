@@ -173,7 +173,7 @@ namespace Azure.Storage.ChangeFeed.Common
                 changeFeedContainerExists = _containerClient.Exists(cancellationToken: cancellationToken);
 
             if (!changeFeedContainerExists)
-                throw new ArgumentException("Change Feed hasn't been enabled on this account, or is currently being enabled.");
+                throw ChangeFeedErrors.ChangeFeedNotEnabled();
 
             DateTimeOffset? lastConsumableNullable = await GetLastConsumableInternal(
                 _containerClient,
