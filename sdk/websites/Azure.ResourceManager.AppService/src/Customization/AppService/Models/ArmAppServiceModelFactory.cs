@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService.Models
             => AppServiceEnvironmentAddressResult(id, name, resourceType, systemData, kind, serviceIPAddress, internalIPAddress, outboundIPAddresses, virtualIPMappings);
 
         /// <summary> Initializes a new instance of CsmDeploymentStatus. </summary>
-        /// <summary> Initializes a new instance of CsmDeploymentStatus. </summary>
+        // This factory cannot be generated because CsmDeploymentStatus is recreated as a ResourceData-derived customization.
         public static CsmDeploymentStatus CsmDeploymentStatus(
             ResourceIdentifier id = null,
             string name = null,
