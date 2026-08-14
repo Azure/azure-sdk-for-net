@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Commvault.ContentStore": "2026-07-03-preview"
+  }
+}
