@@ -771,8 +771,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="sku"> The sku of the created namespace. </param>
         /// <returns> A new <see cref="NotificationHubs.NotificationHubNamespaceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NotificationHubNamespaceData NotificationHubNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string namespaceName = default, string provisioningState = default, string region = default, string metricId = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, Uri serviceBusEndpoint = default, string subscriptionId = default, string scaleUnit = default, bool? isEnabled = default, bool? isCritical = default, string dataCenter = default, NotificationHubNamespaceType? namespaceType = default, NotificationHubSku sku = default)
+        public static NotificationHubNamespaceData NotificationHubNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string namespaceName, string provisioningState, string region, string metricId, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, Uri serviceBusEndpoint, string subscriptionId, string scaleUnit, bool? isEnabled, bool? isCritical, string dataCenter, NotificationHubNamespaceType? namespaceType, NotificationHubSku sku)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new NotificationHubNamespaceData(
                 id,
                 name,
@@ -818,8 +820,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="revision"> The revision number for the rule. </param>
         /// <returns> A new <see cref="Models.SharedAccessAuthorizationRuleProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SharedAccessAuthorizationRuleProperties SharedAccessAuthorizationRuleProperties(IEnumerable<AuthorizationRuleAccessRight> rights = default, string primaryKey = default, string secondaryKey = default, string keyName = default, string claimType = default, string claimValue = default, DateTimeOffset? modifiedOn = default, DateTimeOffset? createdOn = default, int? revision = default)
+        public static SharedAccessAuthorizationRuleProperties SharedAccessAuthorizationRuleProperties(IEnumerable<AuthorizationRuleAccessRight> rights, string primaryKey, string secondaryKey, string keyName, string claimType, string claimValue, DateTimeOffset? modifiedOn, DateTimeOffset? createdOn, int? revision)
         {
+            rights ??= new ChangeTrackingList<AuthorizationRuleAccessRight>();
+
             return new SharedAccessAuthorizationRuleProperties(
                 default,
                 primaryKey,
@@ -852,8 +856,11 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="sku"> The sku of the created namespace. </param>
         /// <returns> A new <see cref="NotificationHubs.NotificationHubAuthorizationRuleData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NotificationHubAuthorizationRuleData NotificationHubAuthorizationRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<AuthorizationRuleAccessRight> rights = default, string primaryKey = default, string secondaryKey = default, string keyName = default, string claimType = default, string claimValue = default, DateTimeOffset? modifiedOn = default, DateTimeOffset? createdOn = default, int? revision = default, NotificationHubSku sku = default)
+        public static NotificationHubAuthorizationRuleData NotificationHubAuthorizationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<AuthorizationRuleAccessRight> rights, string primaryKey, string secondaryKey, string keyName, string claimType, string claimValue, DateTimeOffset? modifiedOn, DateTimeOffset? createdOn, int? revision, NotificationHubSku sku)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            rights ??= new ChangeTrackingList<AuthorizationRuleAccessRight>();
+
             return new NotificationHubAuthorizationRuleData(
                 id,
                 name,
@@ -894,32 +901,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="sku"> The sku of the created namespace. </param>
         /// <returns> A new <see cref="NotificationHubs.NotificationHubData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NotificationHubData NotificationHubData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string notificationHubName = default, TimeSpan? registrationTtl = default, IEnumerable<SharedAccessAuthorizationRuleProperties> authorizationRules = default, NotificationHubApnsCredential apnsCredential = default, NotificationHubWnsCredential wnsCredential = default, NotificationHubGcmCredential gcmCredential = default, NotificationHubMpnsCredential mpnsCredential = default, NotificationHubAdmCredential admCredential = default, NotificationHubBaiduCredential baiduCredential = default, NotificationHubSku sku = default)
+        public static NotificationHubData NotificationHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string notificationHubName, TimeSpan? registrationTtl, IEnumerable<SharedAccessAuthorizationRuleProperties> authorizationRules, NotificationHubApnsCredential apnsCredential, NotificationHubWnsCredential wnsCredential, NotificationHubGcmCredential gcmCredential, NotificationHubMpnsCredential mpnsCredential, NotificationHubAdmCredential admCredential, NotificationHubBaiduCredential baiduCredential, NotificationHubSku sku)
         {
-            return new NotificationHubData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                notificationHubName is null && registrationTtl is null && authorizationRules is null && apnsCredential is null && wnsCredential is null && gcmCredential is null && mpnsCredential is null && admCredential is null && baiduCredential is null ? default : new NotificationHubProperties(
-                    notificationHubName,
-                    registrationTtl,
-                    (authorizationRules ?? new ChangeTrackingList<SharedAccessAuthorizationRuleProperties>()).ToList(),
-                    apnsCredential,
-                    wnsCredential,
-                    gcmCredential,
-                    mpnsCredential,
-                    admCredential,
-                    baiduCredential,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default),
-                sku,
-                default);
+            return NotificationHubData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, notificationHubName: notificationHubName, registrationTtl: registrationTtl, authorizationRules: authorizationRules, apnsCredential: apnsCredential, wnsCredential: wnsCredential, gcmCredential: gcmCredential, mpnsCredential: mpnsCredential, admCredential: admCredential, baiduCredential: baiduCredential, browserCredential: default, xiaomiCredential: default, fcmV1Credential: default, dailyMaxActiveDevices: default, sku: sku);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NotificationHubPatch"/>. </summary>
@@ -941,32 +925,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="sku"> The sku of the created namespace. </param>
         /// <returns> A new <see cref="Models.NotificationHubPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NotificationHubPatch NotificationHubPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string notificationHubName = default, TimeSpan? registrationTtl = default, IEnumerable<SharedAccessAuthorizationRuleProperties> authorizationRules = default, NotificationHubApnsCredential apnsCredential = default, NotificationHubWnsCredential wnsCredential = default, NotificationHubGcmCredential gcmCredential = default, NotificationHubMpnsCredential mpnsCredential = default, NotificationHubAdmCredential admCredential = default, NotificationHubBaiduCredential baiduCredential = default, NotificationHubSku sku = default)
+        public static NotificationHubPatch NotificationHubPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string notificationHubName, TimeSpan? registrationTtl, IEnumerable<SharedAccessAuthorizationRuleProperties> authorizationRules, NotificationHubApnsCredential apnsCredential, NotificationHubWnsCredential wnsCredential, NotificationHubGcmCredential gcmCredential, NotificationHubMpnsCredential mpnsCredential, NotificationHubAdmCredential admCredential, NotificationHubBaiduCredential baiduCredential, NotificationHubSku sku)
         {
-            return new NotificationHubPatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                notificationHubName is null && registrationTtl is null && authorizationRules is null && apnsCredential is null && wnsCredential is null && gcmCredential is null && mpnsCredential is null && admCredential is null && baiduCredential is null ? default : new NotificationHubProperties(
-                    notificationHubName,
-                    registrationTtl,
-                    (authorizationRules ?? new ChangeTrackingList<SharedAccessAuthorizationRuleProperties>()).ToList(),
-                    apnsCredential,
-                    wnsCredential,
-                    gcmCredential,
-                    mpnsCredential,
-                    admCredential,
-                    baiduCredential,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default),
-                sku,
-                default);
+            return NotificationHubPatch(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, notificationHubName: notificationHubName, registrationTtl: registrationTtl, authorizationRules: authorizationRules, apnsCredential: apnsCredential, wnsCredential: wnsCredential, gcmCredential: gcmCredential, mpnsCredential: mpnsCredential, admCredential: admCredential, baiduCredential: baiduCredential, browserCredential: default, xiaomiCredential: default, fcmV1Credential: default, dailyMaxActiveDevices: default, sku: sku);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NotificationHubTestSendResult"/>. </summary>
@@ -982,8 +943,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="sku"> The sku of the created namespace. </param>
         /// <returns> A new <see cref="Models.NotificationHubTestSendResult"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NotificationHubTestSendResult NotificationHubTestSendResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, int? success = default, int? failure = default, BinaryData results = default, NotificationHubSku sku = default)
+        public static NotificationHubTestSendResult NotificationHubTestSendResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, int? success, int? failure, BinaryData results, NotificationHubSku sku)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new NotificationHubTestSendResult(
                 id,
                 name,
@@ -1011,8 +974,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="sku"> The sku of the created namespace. </param>
         /// <returns> A new <see cref="Models.NotificationHubPnsCredentials"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NotificationHubPnsCredentials NotificationHubPnsCredentials(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NotificationHubApnsCredential apnsCredential = default, NotificationHubWnsCredential wnsCredential = default, NotificationHubGcmCredential gcmCredential = default, NotificationHubMpnsCredential mpnsCredential = default, NotificationHubAdmCredential admCredential = default, NotificationHubBaiduCredential baiduCredential = default, NotificationHubSku sku = default)
+        public static NotificationHubPnsCredentials NotificationHubPnsCredentials(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NotificationHubApnsCredential apnsCredential, NotificationHubWnsCredential wnsCredential, NotificationHubGcmCredential gcmCredential, NotificationHubMpnsCredential mpnsCredential, NotificationHubAdmCredential admCredential, NotificationHubBaiduCredential baiduCredential, NotificationHubSku sku)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new NotificationHubPnsCredentials(
                 id,
                 name,
