@@ -209,6 +209,7 @@ namespace Azure.AI.AgentServer.Invocations.Voice
         protected VoiceSession(Azure.AI.AgentServer.Invocations.InvocationContext invocationContext) { }
         public virtual Azure.AI.AgentServer.Invocations.InvocationContext InvocationContext { get { throw null; } }
         public virtual System.Threading.Tasks.Task SendAsync(Azure.AI.AgentServer.Invocations.Voice.VoiceOutboundMessage message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AI.AgentServer.Invocations.Voice.VoiceTurnTrace StartTurn(Azure.AI.AgentServer.Invocations.Voice.VoiceTurnOrigin origin, int inputCount) { throw null; }
     }
     public sealed partial class VoiceSessionEndEvent : Azure.AI.AgentServer.Invocations.Voice.VoiceInboundMessage
     {
@@ -235,6 +236,38 @@ namespace Azure.AI.AgentServer.Invocations.Voice
         public string ProtocolVersion { get { throw null; } }
         public bool Reconnect { get { throw null; } }
         public Azure.AI.AgentServer.Invocations.Voice.VoiceResponseTimeouts ResponseTimeouts { get { throw null; } }
+    }
+    public enum VoiceTurnOrigin
+    {
+        User = 0,
+        NoInput = 1,
+        Proactive = 2,
+        Recovery = 3,
+    }
+    public enum VoiceTurnOutcome
+    {
+        Response = 0,
+        None = 1,
+        Timeout = 2,
+        Error = 3,
+        Cancelled = 4,
+        EndCall = 5,
+        TransportError = 6,
+        Abandoned = 7,
+    }
+    public sealed partial class VoiceTurnResult
+    {
+        public VoiceTurnResult(Azure.AI.AgentServer.Invocations.Voice.VoiceTurnOutcome outcome, int? outputItemCount = default(int?), string? responseId = null) { }
+        public Azure.AI.AgentServer.Invocations.Voice.VoiceTurnOutcome Outcome { get { throw null; } }
+        public int? OutputItemCount { get { throw null; } }
+        public string? ResponseId { get { throw null; } }
+    }
+    public partial class VoiceTurnTrace : System.IDisposable
+    {
+        protected VoiceTurnTrace() { }
+        public virtual System.IDisposable Activate() { throw null; }
+        public virtual void Complete(Azure.AI.AgentServer.Invocations.Voice.VoiceTurnResult result) { }
+        public virtual void Dispose() { }
     }
     public sealed partial class VoiceUserMessageEvent : Azure.AI.AgentServer.Invocations.Voice.VoiceInboundMessage
     {

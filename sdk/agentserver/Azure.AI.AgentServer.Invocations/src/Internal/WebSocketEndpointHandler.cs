@@ -134,10 +134,16 @@ internal sealed class WebSocketEndpointHandler
 
             try
             {
-                handlerOutcome = await webSocketHandler.HandleWebSocketWithOutcomeAsync(
-                    webSocket,
-                    context,
-                    httpContext.RequestAborted);
+                handlerOutcome = voiceTelemetry is not null && webSocketHandler is VoiceHandler voiceHandler
+                    ? await voiceHandler.HandleVoiceWebSocketWithOutcomeAsync(
+                        webSocket,
+                        context,
+                        voiceTelemetry.Context,
+                        httpContext.RequestAborted)
+                    : await webSocketHandler.HandleWebSocketWithOutcomeAsync(
+                        webSocket,
+                        context,
+                        httpContext.RequestAborted);
                 if (handlerOutcome is { } outcome)
                 {
                     closeCode = outcome.Code;

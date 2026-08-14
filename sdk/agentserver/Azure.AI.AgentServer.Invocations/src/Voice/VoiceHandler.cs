@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Buffers;
+using System.Diagnostics;
 using System.Net.WebSockets;
 using System.Text;
 using Azure.AI.AgentServer.Invocations.Internal;
@@ -35,10 +36,24 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
         InvocationContext context,
         CancellationToken cancellationToken)
     {
+        return await HandleVoiceWebSocketWithOutcomeAsync(
+            webSocket,
+            context,
+            connectionContext: default,
+            cancellationToken).ConfigureAwait(false);
+    }
+
+    internal async Task<InvocationsWebSocketCloseResult?> HandleVoiceWebSocketWithOutcomeAsync(
+        WebSocket webSocket,
+        InvocationContext context,
+        ActivityContext connectionContext,
+        CancellationToken cancellationToken)
+    {
         var connection = new InvocationsWebSocketConnection(webSocket);
         var outcome = await HandleWebSocketConnectionAsync(
             connection,
             context,
+            connectionContext,
             cancellationToken).ConfigureAwait(false);
         var closeException = await connection.CloseAsync(outcome.Status, outcome.Reason).ConfigureAwait(false);
         return outcome with { CloseException = closeException };
@@ -115,9 +130,20 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
     internal async Task<InvocationsWebSocketCloseResult> HandleWebSocketConnectionAsync(
         InvocationsWebSocketConnection connection,
         InvocationContext context,
+        CancellationToken cancellationToken) =>
+        await HandleWebSocketConnectionAsync(
+            connection,
+            context,
+            connectionContext: default,
+            cancellationToken).ConfigureAwait(false);
+
+    internal async Task<InvocationsWebSocketCloseResult> HandleWebSocketConnectionAsync(
+        InvocationsWebSocketConnection connection,
+        InvocationContext context,
+        ActivityContext connectionContext,
         CancellationToken cancellationToken)
     {
-        var session = new VoiceSession(connection, context);
+        var session = new VoiceSession(connection, context, connectionContext);
         InvocationsWebSocketCloseResult outcome;
         try
         {

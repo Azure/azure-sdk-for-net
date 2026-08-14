@@ -20,15 +20,22 @@ internal sealed class VoiceConnectionTelemetry
         "azure.ai.agentserver.trace_context.propagation_failures");
 
     private readonly Activity? _activity;
+    private readonly ActivityContext _context;
     private readonly Activity? _previousActivity;
     private bool _requestCancelled;
     private int _completed;
 
-    private VoiceConnectionTelemetry(Activity? activity, Activity? previousActivity)
+    private VoiceConnectionTelemetry(
+        Activity? activity,
+        ActivityContext context,
+        Activity? previousActivity)
     {
         _activity = activity;
+        _context = context;
         _previousActivity = previousActivity;
     }
+
+    internal ActivityContext Context => _context;
 
     internal static VoiceConnectionTelemetry Start(IHeaderDictionary headers)
     {
@@ -38,6 +45,7 @@ internal sealed class VoiceConnectionTelemetry
         s_connectionStartToken.Value = startToken;
         Activity? activity = null;
         Activity? startedActivity = null;
+        ActivityContext extractedContext = default;
         EventHandler<ActivityChangedEventArgs> captureStartedActivity = (_, args) =>
         {
             if (!ReferenceEquals(s_connectionStartToken.Value, startToken))
@@ -65,6 +73,7 @@ internal sealed class VoiceConnectionTelemetry
                 static (carrier, key) => carrier.TryGetValue(key, out var values)
                     ? values
                     : Array.Empty<string>());
+            extractedContext = propagationContext.ActivityContext;
             if (propagationContext.ActivityContext == default)
             {
                 RecordPropagationFailure(hasTraceparent ? "invalid" : "missing");
@@ -98,7 +107,9 @@ internal sealed class VoiceConnectionTelemetry
             TrySetCurrent(previousActivity);
         }
 
-        return new VoiceConnectionTelemetry(activity, previousActivity);
+        var connectionContext = activity?.Context ??
+            CreateUnsampledChildContext(extractedContext);
+        return new VoiceConnectionTelemetry(activity, connectionContext, previousActivity);
     }
 
     internal bool TryMarkRequestCancellation(
@@ -228,6 +239,16 @@ internal sealed class VoiceConnectionTelemetry
     private static bool IsConnectionActivity(Activity? activity) =>
         activity?.Source.Name == InvocationsActivitySource.DefaultName &&
         activity.OperationName == ConnectionOperationName;
+
+    private static ActivityContext CreateUnsampledChildContext(ActivityContext parent) =>
+        parent != default && (parent.TraceFlags & ActivityTraceFlags.Recorded) == 0
+            ? new ActivityContext(
+                parent.TraceId,
+                ActivitySpanId.CreateRandom(),
+                parent.TraceFlags,
+                parent.TraceState,
+                isRemote: false)
+            : default;
 
     private static void TrySetCurrent(Activity? activity)
     {

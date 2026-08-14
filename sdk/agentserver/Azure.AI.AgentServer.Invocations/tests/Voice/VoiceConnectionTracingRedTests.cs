@@ -30,6 +30,7 @@ public class VoiceConnectionTracingRedTests
 {
     private const string InvocationsSourceName = "Azure.AI.AgentServer.Invocations";
     private const string ConnectionOperationName = "agentserver.connection";
+    private const string TargetTurnCustomerSourceName = "VoiceConnectionTracingRedTests.Customer";
     private static readonly TimeSpan TestTimeout = TimeSpan.FromSeconds(5);
     private static readonly TimeSpan ObservationTimeout = TimeSpan.FromSeconds(1);
 
@@ -57,6 +58,43 @@ public class VoiceConnectionTracingRedTests
             Assert.That(connection?.ActivityTraceFlags, Is.EqualTo(ActivityTraceFlags.Recorded));
             Assert.That(connection?.TraceStateString, Is.EqualTo(traceState));
             Assert.That(connection?.Kind, Is.EqualTo(ActivityKind.Server));
+        });
+    }
+
+    [Test]
+    public async Task VoiceTargetTurn_ExportsConnectionTargetAndCustomerTree()
+    {
+        var exporter = new CapturingActivityExporter();
+        await using var server = await StartVoiceServerAsync<TargetTurnVoiceHandler>(exporter);
+        var traceId = ActivityTraceId.CreateRandom();
+        var parentSpanId = ActivitySpanId.CreateRandom();
+
+        await ConnectSendAndCloseAsync(
+            server.WebSocketUri,
+            SessionStartPayload,
+            traceId,
+            parentSpanId);
+        var connectionObserved = await exporter.TryWaitForAsync(IsSemanticConnection, ObservationTimeout);
+        var targetObserved = await exporter.TryWaitForAsync(IsTargetTurn, ObservationTimeout);
+        var customerObserved = await exporter.TryWaitForAsync(IsTargetCustomerSpan, ObservationTimeout);
+
+        var activities = exporter.GetFinishedActivities();
+        var connection = activities.SingleOrDefault(IsSemanticConnection);
+        var target = activities.SingleOrDefault(IsTargetTurn);
+        var customer = activities.SingleOrDefault(IsTargetCustomerSpan);
+        Assert.Multiple(() =>
+        {
+            Assert.That(connectionObserved, Is.True);
+            Assert.That(targetObserved, Is.True);
+            Assert.That(customerObserved, Is.True);
+            Assert.That(connection?.TraceId, Is.EqualTo(traceId));
+            Assert.That(connection?.ParentSpanId, Is.EqualTo(parentSpanId));
+            Assert.That(target?.TraceId, Is.EqualTo(traceId));
+            Assert.That(target?.ParentSpanId, Is.EqualTo(connection?.SpanId));
+            Assert.That(customer?.TraceId, Is.EqualTo(traceId));
+            Assert.That(customer?.ParentSpanId, Is.EqualTo(target?.SpanId));
+            Assert.That(target?.GetTagItem("bridge.outcome"), Is.EqualTo("none"));
+            Assert.That(activities.Any(IsGenericWebSocketRequest), Is.False);
         });
     }
 
@@ -402,7 +440,11 @@ public class VoiceConnectionTracingRedTests
         {
             Assert.That(ContextCapturingVoiceHandler.TraceId, Is.EqualTo(traceId));
             Assert.That(ContextCapturingVoiceHandler.TraceFlags, Is.EqualTo(ActivityTraceFlags.None));
+            Assert.That(ContextCapturingVoiceHandler.OperationName, Is.EqualTo("invoke_agent"));
+            Assert.That(ContextCapturingVoiceHandler.ParentSpanId, Is.Not.EqualTo(parentSpanId));
+            Assert.That(ContextCapturingVoiceHandler.ParentSpanId, Is.Not.EqualTo(default(ActivitySpanId)));
             Assert.That(exporter.GetFinishedActivities().Any(IsSemanticConnection), Is.False);
+            Assert.That(exporter.GetFinishedActivities().Any(IsTargetTurn), Is.False);
         });
     }
 
@@ -477,6 +519,59 @@ public class VoiceConnectionTracingRedTests
             Assert.That(
                 connections.SingleOrDefault()?.GetTagItem("bridge.outcome"),
                 Is.EqualTo(expectedOutcome));
+        });
+    }
+
+    [Test]
+    public async Task BeginScopeFailure_DoesNotChangeWireOrLeakConnection()
+    {
+        var exporter = new CapturingActivityExporter();
+        var logger = new ThrowOnceLoggerProvider(throwOnBeginScope: true);
+        await using var server = await StartVoiceServerAsync(
+            exporter,
+            loggerProvider: logger);
+
+        var firstCloseCode = await ConnectAndCloseAsync(server.WebSocketUri);
+        var secondCloseCode = await ConnectAndCloseAsync(server.WebSocketUri);
+        var observed = await exporter.TryWaitForSemanticCountAsync(2, ObservationTimeout);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(firstCloseCode, Is.EqualTo(1000));
+            Assert.That(secondCloseCode, Is.EqualTo(1000));
+            Assert.That(logger.FailureCount, Is.EqualTo(1));
+            Assert.That(observed, Is.True);
+            Assert.That(exporter.GetFinishedActivities().Count(IsSemanticConnection), Is.EqualTo(2));
+        });
+    }
+
+    [Test]
+    public async Task CallbackDiagnosticFailure_PreservesOutcomeAndNextConnection()
+    {
+        var exporter = new CapturingActivityExporter();
+        var logger = new ThrowOnceLoggerProvider(throwOnException: true);
+        await using var server = await StartVoiceServerAsync<ThrowingVoiceHandler>(
+            exporter,
+            loggerProvider: logger);
+
+        var firstCloseCode = await ConnectSendAndReadCloseAsync(
+            server.WebSocketUri,
+            SessionStartPayload);
+        var secondCloseCode = await ConnectSendAndReadCloseAsync(
+            server.WebSocketUri,
+            SessionStartPayload);
+        var observed = await exporter.TryWaitForSemanticCountAsync(2, ObservationTimeout);
+        var connections = exporter.GetFinishedActivities().Where(IsSemanticConnection).ToArray();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(firstCloseCode, Is.EqualTo(1011));
+            Assert.That(secondCloseCode, Is.EqualTo(1011));
+            Assert.That(logger.FailureCount, Is.EqualTo(1));
+            Assert.That(observed, Is.True);
+            Assert.That(connections, Has.Length.EqualTo(2));
+            Assert.That(connections.Select(activity => activity.GetTagItem("bridge.outcome")),
+                Is.All.EqualTo("callback_error"));
         });
     }
 
@@ -1114,6 +1209,7 @@ public class VoiceConnectionTracingRedTests
             .WithTracing(tracing => tracing
                 .AddAspNetCoreInstrumentation()
                 .AddSource(InvocationsSourceName)
+                .AddSource(TargetTurnCustomerSourceName)
                 .AddProcessor(new SimpleActivityExportProcessor(exporter)));
         return builder;
     }
@@ -1275,7 +1371,34 @@ public class VoiceConnectionTracingRedTests
         activity.Source.Name == "Microsoft.AspNetCore" &&
         activity.GetTagItem("url.path") as string == path;
 
+    private static bool IsTargetTurn(Activity activity) =>
+        activity.Source.Name == InvocationsSourceName &&
+        activity.OperationName == "invoke_agent";
+
+    private static bool IsTargetCustomerSpan(Activity activity) =>
+        activity.Source.Name == TargetTurnCustomerSourceName &&
+        activity.OperationName == "customer.model";
+
     private sealed class PassiveVoiceHandler : VoiceHandler;
+
+    private sealed class TargetTurnVoiceHandler : VoiceHandler
+    {
+        private static readonly ActivitySource s_customerSource = new(TargetTurnCustomerSourceName);
+
+        protected override Task OnSessionStartAsync(
+            VoiceSession session,
+            VoiceSessionStartEvent start,
+            CancellationToken cancellationToken)
+        {
+            using var turn = session.StartTurn(VoiceTurnOrigin.User, inputCount: 1);
+            using (turn.Activate())
+            {
+                using var child = s_customerSource.StartActivity("customer.model");
+            }
+            turn.Complete(new VoiceTurnResult(VoiceTurnOutcome.None, outputItemCount: 0));
+            return Task.CompletedTask;
+        }
+    }
 
     private sealed class ThrowingVoiceHandler : VoiceHandler
     {
@@ -1344,11 +1467,17 @@ public class VoiceConnectionTracingRedTests
 
         public static ActivityTraceFlags TraceFlags { get; private set; }
 
+        public static string? OperationName { get; private set; }
+
+        public static ActivitySpanId ParentSpanId { get; private set; }
+
         public static void Reset()
         {
             Captured = new(TaskCreationOptions.RunContinuationsAsynchronously);
             TraceId = default;
             TraceFlags = default;
+            OperationName = null;
+            ParentSpanId = default;
         }
 
         protected override Task OnSessionStartAsync(
@@ -1356,8 +1485,15 @@ public class VoiceConnectionTracingRedTests
             VoiceSessionStartEvent start,
             CancellationToken cancellationToken)
         {
-            TraceId = Activity.Current?.TraceId ?? default;
-            TraceFlags = Activity.Current?.ActivityTraceFlags ?? default;
+            using var turn = session.StartTurn(VoiceTurnOrigin.User, inputCount: 1);
+            using (turn.Activate())
+            {
+                TraceId = Activity.Current?.TraceId ?? default;
+                TraceFlags = Activity.Current?.ActivityTraceFlags ?? default;
+                OperationName = Activity.Current?.OperationName;
+                ParentSpanId = Activity.Current?.ParentSpanId ?? default;
+            }
+            turn.Complete(new VoiceTurnResult(VoiceTurnOutcome.None, outputItemCount: 0));
             Captured.TrySetResult();
             return Task.CompletedTask;
         }
@@ -1523,6 +1659,68 @@ public class VoiceConnectionTracingRedTests
                             _owner._closeEventBaggageKeys.Enqueue(baggage.Key);
                         }
                     }
+                }
+            }
+        }
+    }
+
+    private sealed class ThrowOnceLoggerProvider : ILoggerProvider
+    {
+        private readonly bool _throwOnBeginScope;
+        private readonly bool _throwOnException;
+        private int _failureCount;
+
+        public ThrowOnceLoggerProvider(
+            bool throwOnBeginScope = false,
+            bool throwOnException = false)
+        {
+            _throwOnBeginScope = throwOnBeginScope;
+            _throwOnException = throwOnException;
+        }
+
+        public int FailureCount => Volatile.Read(ref _failureCount);
+
+        public ILogger CreateLogger(string categoryName) => new ThrowOnceLogger(this);
+
+        public void Dispose()
+        {
+        }
+
+        private void ThrowOnce()
+        {
+            if (Interlocked.CompareExchange(ref _failureCount, 1, 0) == 0)
+            {
+                throw new InvalidOperationException("injected logger failure");
+            }
+        }
+
+        private sealed class ThrowOnceLogger : ILogger
+        {
+            private readonly ThrowOnceLoggerProvider _owner;
+
+            public ThrowOnceLogger(ThrowOnceLoggerProvider owner) => _owner = owner;
+
+            public IDisposable? BeginScope<TState>(TState state) where TState : notnull
+            {
+                if (_owner._throwOnBeginScope)
+                {
+                    _owner.ThrowOnce();
+                }
+                return null;
+            }
+
+            public bool IsEnabled(LogLevel logLevel) => true;
+
+            public void Log<TState>(
+                LogLevel logLevel,
+                EventId eventId,
+                TState state,
+                Exception? exception,
+                Func<TState, Exception?, string> formatter)
+            {
+                if (_owner._throwOnException && exception is not null)
+                {
+                    _owner.ThrowOnce();
                 }
             }
         }
