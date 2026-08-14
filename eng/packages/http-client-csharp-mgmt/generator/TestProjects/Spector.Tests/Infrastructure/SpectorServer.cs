@@ -46,11 +46,16 @@ namespace TestProjects.Spector.Tests
 
         private static string CreateResourceManagerScenariosPath()
         {
-            var scenariosPath = Path.Combine(GetCoverageDirectory(), $"resource-manager-scenarios-{Environment.ProcessId}", "specs");
+            var scenariosRoot = Path.Combine(GetCoverageDirectory(), $"resource-manager-scenarios-{Environment.ProcessId}");
+            var scenariosPath = Path.Combine(scenariosRoot, "specs");
             var sourceDistPath = Path.Combine(GetAzureSpecDirectory(), "dist", "specs", "azure", "resource-manager");
-            var targetDistPath = Path.Combine(Path.GetDirectoryName(scenariosPath)!, "dist", "specs", "azure", "resource-manager");
+            var targetDistPath = Path.Combine(scenariosRoot, "dist", "specs", "azure", "resource-manager");
 
             Directory.CreateDirectory(scenariosPath);
+            File.Copy(
+                Path.Combine(GetAzureSpecDirectory(), "package.json"),
+                Path.Combine(scenariosRoot, "package.json"),
+                overwrite: true);
             CopyDirectory(sourceDistPath, targetDistPath);
             return scenariosPath;
         }
