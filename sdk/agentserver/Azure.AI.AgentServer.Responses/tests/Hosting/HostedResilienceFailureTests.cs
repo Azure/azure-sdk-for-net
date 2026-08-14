@@ -7,6 +7,7 @@ using System.Reflection;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Responses.Internal;
+using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -18,8 +19,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Hosting;
 /// US6 / FR-004 hosted-mode task-subsystem parity: in a hosted Foundry environment the resilient
 /// paths still compose the Core task subsystem, but with a hosted task store selected via
 /// <c>AddResilientTasks(credential)</c>. This fixture verifies hosted composition selects the hosted
-/// durable response provider and does register <see cref="ITaskInvoker"/>, and that fail-loud startup
-/// validation accepts this hosted composition.
+/// durable response provider and does register the resilient <see cref="TaskDefinition{TInput,TOutput}"/>
+/// keyed singletons, and that fail-loud startup validation accepts this hosted composition.
 ///
 /// Untestable in this single sandbox (documented, not fabricated): the actual Foundry task-subsystem
 /// recovery and any real HTTP round-trip to <c>FoundryStorageProvider</c> require a live Foundry
@@ -43,8 +44,20 @@ public class HostedResilienceFailureTests
     {
         using var provider = BuildHostedResilientProvider();
 
-        Assert.That(provider.GetService<ITaskInvoker>(), Is.Not.Null,
-            "Hosted mode must register the Core task invoker (backed by hosted task storage).");
+        // The Core task subsystem is now exposed as keyed TaskDefinition<TInput,TOutput> singletons
+        // (one per registered task name) rather than a single ITaskInvoker. Hosted mode must still
+        // compose them so ResponseEndpointHandler.StartResilientTurnAsync can resolve the one-shot
+        // and multi-turn definitions and start turns against the hosted task store.
+        Assert.That(
+            provider.GetRequiredKeyedService<TaskDefinition<ResponseTaskInput, ResponseTaskOutput>>(
+                ResponsesResilientTaskHandler.OneShotTaskName),
+            Is.Not.Null,
+            "Hosted mode must register the one-shot resilient task (backed by hosted task storage).");
+        Assert.That(
+            provider.GetRequiredKeyedService<TaskDefinition<ResponseTaskInput, ResponseTaskOutput>>(
+                ResponsesResilientTaskHandler.MultiTurnTaskName),
+            Is.Not.Null,
+            "Hosted mode must register the multi-turn resilient task (backed by hosted task storage).");
     }
 
     [Test]

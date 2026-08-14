@@ -143,6 +143,24 @@ string result = await echo.RunAsync("hello");
 // result == "you said: hello"
 ```
 
+There are two ways to get a task's `TaskDefinition<TInput, TOutput>` handle:
+
+1. **At registration time** — capture the value `AddResilientTask`/`AddResilientMultiTurnTask`
+   returns, as above. Convenient at startup, when the handle is used immediately or stashed in a
+   local.
+2. **Later, at resolution time** — every registered task is also registered as a **keyed
+   singleton** (keyed by its name), so resolve it from `IServiceProvider` wherever you have one
+   (a request handler, a background service, ...) with `GetResilientTask<TInput, TOutput>(name)`:
+
+```csharp
+// Elsewhere — e.g. a request handler resolved from DI — get the same task by name.
+TaskDefinition<string, string> echo = serviceProvider.GetResilientTask<string, string>("echo");
+string result = await echo.RunAsync("hello again");
+```
+
+Both return the *same* handle instance; use whichever is convenient at the call site. See §5.2 for
+the full `GetResilientTask` signature and the keyed-registration rationale.
+
 ### Multi-turn chain
 
 ```csharp

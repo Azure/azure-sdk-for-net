@@ -41,6 +41,24 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
             return result;
         }
 
+        // §3 Hello world — resolving a registered task later (e.g. in a request handler), instead
+        // of capturing the handle returned at registration time.
+        public static async Task<string> ResolveRegisteredTaskLater(IServiceCollection services)
+        {
+            services.AddResilientTask<string, string>("echo", async (ctx, ct) =>
+            {
+                await Task.Yield();
+                return $"you said: {ctx.Input}";
+            });
+
+            await using ServiceProvider provider = services.BuildServiceProvider();
+            await StartHostedServicesAsync(provider);
+
+            // Elsewhere — e.g. a request handler resolved from DI — get the same task by name.
+            TaskDefinition<string, string> echo = provider.GetResilientTask<string, string>("echo");
+            return await echo.RunAsync("hello again");
+        }
+
         // §3 Hello world — multi-turn chain.
         public static async Task MultiTurnChain(IServiceCollection services)
         {
