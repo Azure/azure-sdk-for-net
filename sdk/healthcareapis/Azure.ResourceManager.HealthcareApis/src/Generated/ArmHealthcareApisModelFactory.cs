@@ -121,25 +121,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             return new MetricDimension(name, displayName, isExportedForShoebox, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
-        /// <returns> A new <see cref="HealthcareApis.HealthcareApisPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static HealthcareApisPrivateEndpointConnectionData HealthcareApisPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthcareApisPrivateLinkServiceConnectionState connectionState = default, HealthcareApisPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
-        {
-            return new HealthcareApisPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
-                default);
-        }
-
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
@@ -751,6 +732,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FhirServiceData FhirServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FhirServiceKind? kind, HealthcareApisProvisioningState? provisioningState, IEnumerable<FhirServiceAccessPolicyEntry> accessPolicies, FhirServiceAcrConfiguration acrConfiguration, FhirServiceAuthenticationConfiguration authenticationConfiguration, FhirServiceCorsConfiguration corsConfiguration, string exportStorageAccountName, IEnumerable<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess, FhirServiceEventState? eventState, FhirServiceResourceVersionPolicyConfiguration resourceVersionPolicyConfiguration, FhirServiceImportConfiguration importConfiguration, ManagedServiceIdentity identity, ETag? etag)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            accessPolicies ??= new ChangeTrackingList<FhirServiceAccessPolicyEntry>();
+            privateEndpointConnections ??= new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
+
             return new FhirServiceData(
                 id,
                 name,
@@ -787,7 +772,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="HealthcareApis.HealthcareApisPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static HealthcareApisPrivateEndpointConnectionData HealthcareApisPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier privateEndpointId = default, HealthcareApisPrivateLinkServiceConnectionState connectionState = default, HealthcareApisPrivateEndpointConnectionProvisioningState? provisioningState = default)
         {
             return new HealthcareApisPrivateEndpointConnectionData(
@@ -820,8 +804,11 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
         /// <returns> A new <see cref="HealthcareApis.DicomServiceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DicomServiceData DicomServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HealthcareApisProvisioningState? provisioningState = default, DicomServiceAuthenticationConfiguration authenticationConfiguration = default, DicomServiceCorsConfiguration corsConfiguration = default, Uri serviceUri = default, IEnumerable<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections = default, HealthcareApisPublicNetworkAccess? publicNetworkAccess = default, FhirServiceEventState? eventState = default, Uri keyEncryptionKeyUri = default, HealthcareApisServiceStorageConfiguration storageConfiguration = default, bool? isDataPartitionsEnabled = default, ManagedServiceIdentity identity = default, ETag? etag = default)
+        public static DicomServiceData DicomServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthcareApisProvisioningState? provisioningState, DicomServiceAuthenticationConfiguration authenticationConfiguration, DicomServiceCorsConfiguration corsConfiguration, Uri serviceUri, IEnumerable<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess, FhirServiceEventState? eventState, Uri keyEncryptionKeyUri, HealthcareApisServiceStorageConfiguration storageConfiguration, bool? isDataPartitionsEnabled, ManagedServiceIdentity identity, ETag? etag)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            privateEndpointConnections ??= new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
+
             return new DicomServiceData(
                 id,
                 name,
@@ -860,8 +847,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
         /// <returns> A new <see cref="HealthcareApis.HealthcareApisIotConnectorData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HealthcareApisIotConnectorData HealthcareApisIotConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HealthcareApisProvisioningState? provisioningState = default, HealthcareApisIotConnectorEventHubIngestionConfiguration ingestionEndpointConfiguration = default, BinaryData deviceMappingContent = default, ManagedServiceIdentity identity = default, ETag? etag = default)
+        public static HealthcareApisIotConnectorData HealthcareApisIotConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthcareApisProvisioningState? provisioningState, HealthcareApisIotConnectorEventHubIngestionConfiguration ingestionEndpointConfiguration, BinaryData deviceMappingContent, ManagedServiceIdentity identity, ETag? etag)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new HealthcareApisIotConnectorData(
                 id,
                 name,
@@ -888,7 +877,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
         /// <returns> A new <see cref="HealthcareApis.HealthcareApisIotFhirDestinationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HealthcareApisIotFhirDestinationData HealthcareApisIotFhirDestinationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthcareApisProvisioningState? provisioningState = default, HealthcareApisIotIdentityResolutionType resourceIdentityResolutionType = default, ResourceIdentifier fhirServiceResourceId = default, BinaryData fhirMappingContent = default, AzureLocation? location = default, ETag? etag = default)
+        public static HealthcareApisIotFhirDestinationData HealthcareApisIotFhirDestinationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HealthcareApisProvisioningState? provisioningState, HealthcareApisIotIdentityResolutionType resourceIdentityResolutionType, ResourceIdentifier fhirServiceResourceId, BinaryData fhirMappingContent, AzureLocation? location, ETag? etag)
         {
             return new HealthcareApisIotFhirDestinationData(
                 id,
@@ -925,8 +914,11 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
         /// <returns> A new <see cref="HealthcareApis.FhirServiceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FhirServiceData FhirServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FhirServiceKind? kind = default, HealthcareApisProvisioningState? provisioningState = default, FhirServiceAcrConfiguration acrConfiguration = default, FhirServiceAuthenticationConfiguration authenticationConfiguration = default, FhirServiceCorsConfiguration corsConfiguration = default, string exportStorageAccountName = default, IEnumerable<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections = default, HealthcareApisPublicNetworkAccess? publicNetworkAccess = default, FhirServiceEventState? eventState = default, FhirServiceResourceVersionPolicyConfiguration resourceVersionPolicyConfiguration = default, FhirServiceImportConfiguration importConfiguration = default, bool? isUsCoreMissingDataEnabled = default, Uri keyEncryptionKeyUri = default, ManagedServiceIdentity identity = default, ETag? etag = default)
+        public static FhirServiceData FhirServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FhirServiceKind? kind, HealthcareApisProvisioningState? provisioningState, FhirServiceAcrConfiguration acrConfiguration, FhirServiceAuthenticationConfiguration authenticationConfiguration, FhirServiceCorsConfiguration corsConfiguration, string exportStorageAccountName, IEnumerable<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess, FhirServiceEventState? eventState, FhirServiceResourceVersionPolicyConfiguration resourceVersionPolicyConfiguration, FhirServiceImportConfiguration importConfiguration, bool? isUsCoreMissingDataEnabled, Uri keyEncryptionKeyUri, ManagedServiceIdentity identity, ETag? etag)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            privateEndpointConnections ??= new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
+
             return new FhirServiceData(
                 id,
                 name,
@@ -973,6 +965,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DicomServiceData DicomServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthcareApisProvisioningState? provisioningState, DicomServiceAuthenticationConfiguration authenticationConfiguration, DicomServiceCorsConfiguration corsConfiguration, Uri serviceUri, IEnumerable<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess, ManagedServiceIdentity identity, ETag? etag)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            privateEndpointConnections ??= new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
+
             return new DicomServiceData(
                 id,
                 name,
@@ -1018,6 +1013,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DicomServiceData DicomServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthcareApisProvisioningState? provisioningState, DicomServiceAuthenticationConfiguration authenticationConfiguration, DicomServiceCorsConfiguration corsConfiguration, Uri serviceUri, IEnumerable<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess, FhirServiceEventState? eventState, Uri keyEncryptionKeyUri, ManagedServiceIdentity identity, ETag? etag)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            privateEndpointConnections ??= new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
+
             return new DicomServiceData(
                 id,
                 name,

@@ -539,27 +539,6 @@ namespace Azure.ResourceManager.HDInsight.Models
             return new HDInsightComputeIsolationProperties(enableComputeIsolation, hostSku, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="connectionState"> The private link service connection state. </param>
-        /// <param name="linkIdentifier"> The link identifier. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="privateEndpointId"> The private endpoint id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionState"/> is null. </exception>
-        /// <returns> A new <see cref="HDInsight.HDInsightPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static HDInsightPrivateEndpointConnectionData HDInsightPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HDInsightPrivateLinkServiceConnectionState connectionState = default, string linkIdentifier = default, HDInsightPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
-        {
-            return new HDInsightPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                privateEndpointId is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, default, default, default),
-                default);
-        }
-
         /// <param name="status"> The concrete private link service connection. </param>
         /// <param name="description"> The optional description of the status. </param>
         /// <param name="actionsRequired"> Whether there is further actions. </param>
@@ -1150,8 +1129,11 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="identity"> The identity of the cluster, if configured. </param>
         /// <returns> A new <see cref="HDInsight.HDInsightClusterData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HDInsightClusterData HDInsightClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, IEnumerable<string> zones = default, HDInsightClusterProperties properties = default, ManagedServiceIdentity identity = default)
+        public static HDInsightClusterData HDInsightClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IEnumerable<string> zones, HDInsightClusterProperties properties, ManagedServiceIdentity identity)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
+
             return new HDInsightClusterData(
                 id,
                 name,
@@ -1176,7 +1158,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="linkIdentifier"> The link identifier. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <returns> A new <see cref="HDInsight.HDInsightPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static HDInsightPrivateEndpointConnectionData HDInsightPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier privateEndpointId = default, HDInsightPrivateLinkServiceConnectionState connectionState = default, string linkIdentifier = default, HDInsightPrivateEndpointConnectionProvisioningState? provisioningState = default)
         {
             return new HDInsightPrivateEndpointConnectionData(
@@ -1198,8 +1179,10 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="properties"> The properties of the application. </param>
         /// <returns> A new <see cref="HDInsight.HDInsightApplicationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HDInsightApplicationData HDInsightApplicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> tags = default, HDInsightApplicationProperties properties = default)
+        public static HDInsightApplicationData HDInsightApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, HDInsightApplicationProperties properties)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new HDInsightApplicationData(
                 id,
                 name,

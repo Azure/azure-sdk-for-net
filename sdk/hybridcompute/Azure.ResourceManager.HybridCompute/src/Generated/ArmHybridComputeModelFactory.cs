@@ -464,39 +464,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputePatchSettingsStatus(hotpatchEnablementStatus, error, default);
         }
 
-        /// <param name="licenseStatus"> Indicates the license status of the OS. </param>
-        /// <param name="licenseChannel"> Indicates the license channel. </param>
-        /// <param name="isSoftwareAssuranceCustomer"> Specifies if this machine is licensed as part of a Software Assurance agreement. </param>
-        /// <param name="esuProfile"> Properties for the Machine ESU profile. </param>
-        /// <param name="subscriptionStatus"> Indicates the subscription status of the product. </param>
-        /// <param name="productType"> Indicates the product type of the license. </param>
-        /// <param name="enrollmentOn"> The timestamp in UTC when the user enrolls the feature. </param>
-        /// <param name="billingStartOn"> The timestamp in UTC when the billing starts. </param>
-        /// <param name="disenrollmentOn"> The timestamp in UTC when the user disenrolled the feature. </param>
-        /// <param name="billingEndOn"> The timestamp in UTC when the billing ends. </param>
-        /// <param name="error"> The errors that were encountered during the feature enrollment or disenrollment. </param>
-        /// <param name="productFeatures"> The list of product features. </param>
-        /// <returns> A new <see cref="Models.LicenseProfileMachineInstanceView"/> instance for mocking. </returns>
-        public static LicenseProfileMachineInstanceView LicenseProfileMachineInstanceView(HybridComputeLicenseStatus? licenseStatus = default, string licenseChannel = default, bool? isSoftwareAssuranceCustomer = default, LicenseProfileMachineInstanceViewEsuProperties esuProfile = default, LicenseProfileSubscriptionStatus? subscriptionStatus = default, LicenseProfileProductType? productType = default, DateTimeOffset? enrollmentOn = default, DateTimeOffset? billingStartOn = default, DateTimeOffset? disenrollmentOn = default, DateTimeOffset? billingEndOn = default, ResponseError error = default, IEnumerable<HybridComputeProductFeature> productFeatures = default)
-        {
-            return new LicenseProfileMachineInstanceView(
-                licenseStatus,
-                licenseChannel,
-                isSoftwareAssuranceCustomer is null ? default : new LicenseProfileMachineInstanceViewSoftwareAssurance(isSoftwareAssuranceCustomer, default),
-                esuProfile,
-                subscriptionStatus is null && productType is null && enrollmentOn is null && billingStartOn is null && disenrollmentOn is null && billingEndOn is null && error is null && productFeatures is null ? default : new LicenseProfileArmProductProfileProperties(
-                    subscriptionStatus,
-                    productType,
-                    enrollmentOn,
-                    billingStartOn,
-                    disenrollmentOn,
-                    billingEndOn,
-                    error,
-                    (productFeatures ?? new ChangeTrackingList<HybridComputeProductFeature>()).ToList(),
-                    default),
-                default);
-        }
-
         /// <param name="assignedLicenseImmutableId"> The guid id of the license. </param>
         /// <param name="esuKeys"> The list of ESU keys. </param>
         /// <param name="serverType"> The type of the Esu servers. </param>
@@ -764,60 +731,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 patchServiceUsed,
                 osType,
                 errorDetails,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="softwareAssuranceCustomer"> Specifies if this machine is licensed as part of a Software Assurance agreement. </param>
-        /// <param name="assignedLicenseImmutableId"> The guid id of the license. </param>
-        /// <param name="esuKeys"> The list of ESU keys. </param>
-        /// <param name="serverType"> The type of the Esu servers. </param>
-        /// <param name="esuEligibility"> Indicates the eligibility state of Esu. </param>
-        /// <param name="esuKeyState"> Indicates whether there is an ESU Key currently active for the machine. </param>
-        /// <param name="assignedLicense"> The resource id of the license. </param>
-        /// <param name="subscriptionStatus"> Indicates the subscription status of the product. </param>
-        /// <param name="productType"> Indicates the product type of the license. </param>
-        /// <param name="enrollmentOn"> The timestamp in UTC when the user enrolls the feature. </param>
-        /// <param name="billingStartOn"> The timestamp in UTC when the billing starts. </param>
-        /// <param name="disenrollmentOn"> The timestamp in UTC when the user disenrolled the feature. </param>
-        /// <param name="billingEndOn"> The timestamp in UTC when the billing ends. </param>
-        /// <param name="error"> The errors that were encountered during the feature enrollment or disenrollment. </param>
-        /// <param name="productFeatures"> The list of product features. </param>
-        /// <returns> A new <see cref="HybridCompute.HybridComputeLicenseProfileData"/> instance for mocking. </returns>
-        public static HybridComputeLicenseProfileData HybridComputeLicenseProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = default, bool? softwareAssuranceCustomer = default, Guid? assignedLicenseImmutableId = default, IEnumerable<EsuKey> esuKeys = default, EsuServerType? serverType = default, EsuEligibility? esuEligibility = default, EsuKeyState? esuKeyState = default, string assignedLicense = default, LicenseProfileSubscriptionStatus? subscriptionStatus = default, LicenseProfileProductType? productType = default, DateTimeOffset? enrollmentOn = default, DateTimeOffset? billingStartOn = default, DateTimeOffset? disenrollmentOn = default, DateTimeOffset? billingEndOn = default, ResponseError error = default, IEnumerable<HybridComputeProductFeature> productFeatures = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new HybridComputeLicenseProfileData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                softwareAssuranceCustomer is null && assignedLicenseImmutableId is null && esuKeys is null && serverType is null && esuEligibility is null && esuKeyState is null && assignedLicense is null && subscriptionStatus is null && productType is null && enrollmentOn is null && billingStartOn is null && disenrollmentOn is null && billingEndOn is null && error is null && productFeatures is null && provisioningState is null ? default : new LicenseProfileProperties(new LicenseProfilePropertiesSoftwareAssurance(softwareAssuranceCustomer, default), new LicenseProfileArmEsuProperties(
-                    assignedLicenseImmutableId,
-                    (esuKeys ?? new ChangeTrackingList<EsuKey>()).ToList(),
-                    default,
-                    serverType,
-                    esuEligibility,
-                    esuKeyState,
-                    assignedLicense), new LicenseProfileArmProductProfileProperties(
-                    subscriptionStatus,
-                    productType,
-                    enrollmentOn,
-                    billingStartOn,
-                    disenrollmentOn,
-                    billingEndOn,
-                    error,
-                    (productFeatures ?? new ChangeTrackingList<HybridComputeProductFeature>()).ToList(),
-                    default), provisioningState, default),
                 default);
         }
 
@@ -1388,9 +1301,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="productFeatures"> The list of product features. </param>
         /// <param name="isSoftwareAssuranceCustomer"> Specifies if this machine is licensed as part of a Software Assurance agreement. </param>
         /// <returns> A new <see cref="Models.LicenseProfileMachineInstanceView"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static LicenseProfileMachineInstanceView LicenseProfileMachineInstanceView(HybridComputeLicenseStatus? licenseStatus = default, string licenseChannel = default, LicenseProfileMachineInstanceViewEsuProperties esuProfile = default, LicenseProfileSubscriptionStatus? subscriptionStatus = default, LicenseProfileProductType? productType = default, DateTimeOffset? enrollmentOn = default, DateTimeOffset? billingStartOn = default, DateTimeOffset? disenrollmentOn = default, DateTimeOffset? billingEndOn = default, ResponseError error = default, IEnumerable<HybridComputeProductFeature> productFeatures = default, bool? isSoftwareAssuranceCustomer = default)
         {
+            productFeatures ??= new ChangeTrackingList<HybridComputeProductFeature>();
+
             return new LicenseProfileMachineInstanceView(
                 licenseStatus,
                 licenseChannel,
@@ -1413,9 +1327,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="ipAddresses"> The list of IP addresses in this interface. </param>
         /// <returns> A new <see cref="Models.HybridComputeNetworkInterface"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HybridComputeNetworkInterface HybridComputeNetworkInterface(IEnumerable<HybridComputeIPAddress> ipAddresses = default)
+        public static HybridComputeNetworkInterface HybridComputeNetworkInterface(IEnumerable<HybridComputeIPAddress> ipAddresses)
         {
-            return new HybridComputeNetworkInterface(default, default, default, (ipAddresses ?? new ChangeTrackingList<HybridComputeIPAddress>()).ToList(), default);
+            return HybridComputeNetworkInterface(macAddress: default, id: default, name: default, ipAddresses: ipAddresses);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridCompute.HybridComputeLicenseProfileData"/>. </summary>
@@ -1442,9 +1356,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="assignedLicense"> The resource id of the license. </param>
         /// <param name="softwareAssuranceCustomer"> Specifies if this machine is licensed as part of a Software Assurance agreement. </param>
         /// <returns> A new <see cref="HybridCompute.HybridComputeLicenseProfileData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static HybridComputeLicenseProfileData HybridComputeLicenseProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = default, LicenseProfileSubscriptionStatus? subscriptionStatus = default, LicenseProfileProductType? productType = default, DateTimeOffset? enrollmentOn = default, DateTimeOffset? billingStartOn = default, DateTimeOffset? disenrollmentOn = default, DateTimeOffset? billingEndOn = default, ResponseError error = default, IEnumerable<HybridComputeProductFeature> productFeatures = default, Guid? assignedLicenseImmutableId = default, IEnumerable<EsuKey> esuKeys = default, EsuServerType? serverType = default, EsuEligibility? esuEligibility = default, EsuKeyState? esuKeyState = default, string assignedLicense = default, bool? softwareAssuranceCustomer = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            productFeatures ??= new ChangeTrackingList<HybridComputeProductFeature>();
+            esuKeys ??= new ChangeTrackingList<EsuKey>();
+
             return new HybridComputeLicenseProfileData(
                 id,
                 name,

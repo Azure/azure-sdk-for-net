@@ -296,20 +296,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static GuestConfigurationNavigation GuestConfigurationNavigation(GuestConfigurationKind? kind, string name, string version, Uri contentUri, string contentHash, GuestConfigurationAssignmentType? assignmentType, string assignmentSource, string contentType, IEnumerable<GuestConfigurationParameter> configurationParameters, IEnumerable<GuestConfigurationParameter> configurationProtectedParameters, LcmConfigurationSetting configurationSetting)
         {
-            return new GuestConfigurationNavigation(
-                kind,
-                name,
-                version,
-                contentUri,
-                contentHash,
-                default,
-                assignmentType,
-                assignmentSource,
-                contentType,
-                (configurationParameters ?? new ChangeTrackingList<GuestConfigurationParameter>()).ToList(),
-                (configurationProtectedParameters ?? new ChangeTrackingList<GuestConfigurationParameter>()).ToList(),
-                configurationSetting,
-                default);
+            return GuestConfigurationNavigation(kind: kind, name: name, version: version, contentUri: contentUri, contentHash: contentHash, contentManagedIdentity: default, assignmentType: assignmentType, assignmentSource: assignmentSource, contentType: contentType, configurationParameters: configurationParameters, configurationProtectedParameters: configurationProtectedParameters, configurationSetting: configurationSetting);
         }
     }
 }
