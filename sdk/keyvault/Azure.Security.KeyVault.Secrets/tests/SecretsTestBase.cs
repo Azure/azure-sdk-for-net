@@ -44,7 +44,6 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             : base(isAsync, mode)
         {
             _serviceVersion = serviceVersion;
-            LegacyExcludedHeaders.Add("x-ms-tokenboundauth");
         }
 
         internal SecretClient GetClient(TokenCredential credential = default)

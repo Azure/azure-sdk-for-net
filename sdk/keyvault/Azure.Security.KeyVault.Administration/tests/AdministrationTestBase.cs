@@ -33,7 +33,6 @@ namespace Azure.Security.KeyVault.Administration.Tests
             : base(isAsync, mode)
         {
             ServiceVersion = serviceVersion;
-            LegacyExcludedHeaders.Add("x-ms-tokenboundauth");
         }
 
         /// <summary>
