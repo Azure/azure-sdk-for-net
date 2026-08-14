@@ -10841,6 +10841,83 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 resources);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningSweepJob"/>. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="displayName"> Display name of job. </param>
+        /// <param name="status"> Status of the job. </param>
+        /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the "Default" experiment. </param>
+        /// <param name="services">
+        /// List of JobEndpoints.
+        ///             For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
+        /// </param>
+        /// <param name="computeId"> ARM resource ID of the compute resource. </param>
+        /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="identity">
+        /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
+        ///             Defaults to AmlToken if null.
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include ,  and .
+        /// </param>
+        /// <param name="componentId"> ARM resource ID of the component resource. </param>
+        /// <param name="notificationSetting"> Notification setting for the job. </param>
+        /// <param name="searchSpace"> [Required] A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
+        /// <param name="samplingAlgorithm">
+        /// [Required] The hyperparameter sampling algorithm
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include ,  and .
+        /// </param>
+        /// <param name="limits"> Sweep Job limit. </param>
+        /// <param name="earlyTermination">
+        /// Early termination policies enable canceling poor-performing runs before they complete
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include ,  and .
+        /// </param>
+        /// <param name="objective"> [Required] Optimization objective. </param>
+        /// <param name="trial"> [Required] Trial component definition. </param>
+        /// <param name="inputs">
+        /// Mapping of input data bindings used in the job.
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include , , , , ,  and .
+        /// </param>
+        /// <param name="outputs">
+        /// Mapping of output data bindings used in the job.
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include , , , ,  and .
+        /// </param>
+        /// <param name="queueJobTier"> Queue settings for the job. </param>
+        /// <returns> A new <see cref="Models.MachineLearningSweepJob"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MachineLearningSweepJob MachineLearningSweepJob(string description = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, string displayName = default, MachineLearningJobStatus? status = default, string experimentName = default, IDictionary<string, MachineLearningJobService> services = default, ResourceIdentifier computeId = default, bool? isArchived = default, MachineLearningIdentityConfiguration identity = default, ResourceIdentifier componentId = default, NotificationSetting notificationSetting = default, BinaryData searchSpace = default, SamplingAlgorithm samplingAlgorithm = default, MachineLearningSweepJobLimits limits = default, MachineLearningEarlyTerminationPolicy earlyTermination = default, MachineLearningObjective objective = default, MachineLearningTrialComponent trial = default, IDictionary<string, MachineLearningJobInput> inputs = default, IDictionary<string, MachineLearningJobOutput> outputs = default, JobTier? queueJobTier = default)
+        {
+            return new MachineLearningSweepJob(
+                description,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                componentId,
+                computeId,
+                displayName,
+                experimentName,
+                identity,
+                isArchived,
+                default,
+                notificationSetting,
+                default,
+                services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
+                status,
+                earlyTermination,
+                inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
+                limits,
+                objective,
+                outputs ?? new ChangeTrackingDictionary<string, MachineLearningJobOutput>(),
+                queueJobTier is null ? default : new QueueSettings(queueJobTier, default),
+                samplingAlgorithm,
+                searchSpace,
+                trial);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.TextClassificationMultilabel"/>. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="trainingData"> [Required] Training data input. </param>

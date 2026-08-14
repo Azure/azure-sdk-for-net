@@ -14176,7 +14176,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
     }
     public partial class StaticInputData : Azure.ResourceManager.MachineLearning.Models.MonitoringInputDataBase, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearning.Models.StaticInputData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearning.Models.StaticInputData>
     {
-        public StaticInputData(Azure.ResourceManager.MachineLearning.Models.JobInputType jobInputType, string uri, System.DateTimeOffset windowStart, System.DateTimeOffset windowEnd) : base (default(Azure.ResourceManager.MachineLearning.Models.JobInputType), default(System.Uri)) { }
         public StaticInputData(Azure.ResourceManager.MachineLearning.Models.JobInputType jobInputType, System.Uri uri, System.DateTimeOffset windowStart, System.DateTimeOffset windowEnd) : base (default(Azure.ResourceManager.MachineLearning.Models.JobInputType), default(System.Uri)) { }
         public string PreprocessingComponentId { get { throw null; } set { } }
         public System.DateTimeOffset WindowEnd { get { throw null; } set { } }
