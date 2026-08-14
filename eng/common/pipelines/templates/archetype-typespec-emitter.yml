@@ -303,7 +303,12 @@ extends:
         jobs:
         - job: Initialize
           steps:
+          # Regeneration does not read repository history, so fetch only the
+          # checked-out commit. git-branch-push.ps1's retry path diffs the branch
+          # tip against its parent, which stays inside the depth-1 boundary.
           - checkout: self
+            fetchDepth: 1
+            fetchTags: false
 
           - template: /eng/common/pipelines/templates/steps/login-to-github.yml
             parameters:
@@ -399,6 +404,8 @@ extends:
             emitterNpmrcPath: $(Agent.TempDirectory)/${{ parameters.EmitterPackagePath }}/.npmrc
           steps:
           - checkout: self
+            fetchDepth: 1
+            fetchTags: false
 
           - template: /eng/common/pipelines/templates/steps/login-to-github.yml
             parameters:

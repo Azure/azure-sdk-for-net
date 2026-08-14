@@ -106,6 +106,7 @@ internal sealed class WebSocketEndpointHandler
         var closeCode = InvocationsWebSocketConstants.CloseNormal;
         string? errorCode = null;
         WebSocket? webSocket = null;
+        InvocationsWebSocketCloseResult? handlerOutcome = null;
 
         try
         {
@@ -126,7 +127,15 @@ internal sealed class WebSocketEndpointHandler
 
             try
             {
-                await webSocketHandler.HandleWebSocketAsync(webSocket, context, httpContext.RequestAborted);
+                handlerOutcome = await webSocketHandler.HandleWebSocketWithOutcomeAsync(
+                    webSocket,
+                    context,
+                    httpContext.RequestAborted);
+                if (handlerOutcome is { } outcome)
+                {
+                    closeCode = outcome.Code;
+                    errorCode = outcome.ErrorCode;
+                }
             }
             catch (OperationCanceledException oce)
                 when (oce.CancellationToken == httpContext.RequestAborted
@@ -160,8 +169,53 @@ internal sealed class WebSocketEndpointHandler
         finally
         {
             var durationMs = GetElapsedMilliseconds(startTimestamp);
-            await CloseSocketAsync(webSocket, closeCode, sessionId);
-            EmitCloseEventLog(sessionId, closeCode, durationMs, errorCode);
+            if (handlerOutcome is null)
+            {
+                await CloseSocketAsync(webSocket, closeCode, sessionId);
+            }
+            else
+            {
+                EmitHandlerOutcomeDiagnostics(handlerOutcome.Value, sessionId);
+            }
+            TryInvokeLogger(() => EmitCloseEventLog(sessionId, closeCode, durationMs, errorCode));
+        }
+    }
+
+    private void EmitHandlerOutcomeDiagnostics(
+        InvocationsWebSocketCloseResult outcome,
+        string sessionId)
+    {
+        if (outcome.Exception is not null)
+        {
+            TryInvokeLogger(() => _logger.LogError(
+                outcome.Exception,
+                "WebSocket handler ended with an error for session {SessionId}",
+                sessionId));
+        }
+        if (outcome.CleanupException is not null)
+        {
+            TryInvokeLogger(() => _logger.LogError(
+                outcome.CleanupException,
+                "WebSocket cleanup callback raised for session {SessionId}",
+                sessionId));
+        }
+        if (outcome.CloseException is not null)
+        {
+            TryInvokeLogger(() => _logger.LogError(
+                outcome.CloseException,
+                "WebSocket close failed for session {SessionId}",
+                sessionId));
+        }
+    }
+
+    private static void TryInvokeLogger(Action log)
+    {
+        try
+        {
+            log();
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
         }
     }
 

@@ -1,0 +1,8 @@
+directory: specification/discovery/Discovery.Combined
+commit: fbe3c49c541a2932f4a4cb348fb0798988f4aca4
+repo: Azure/azure-rest-api-specs
+additionalDirectories:
+  - specification/discovery/Discovery.Common
+  - specification/discovery/Discovery.Workspace
+  - specification/discovery/Discovery.Bookshelf
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json

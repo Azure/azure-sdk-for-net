@@ -11,7 +11,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Monitor compute identity base definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AmlTokenComputeIdentity"/> and <see cref="ManagedComputeIdentity"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AmlTokenComputeIdentity"/> and <see cref="ManagedComputeIdentity"/>.
     /// </summary>
     public partial class MonitorComputeIdentityBase : ProvisionableConstruct
     {

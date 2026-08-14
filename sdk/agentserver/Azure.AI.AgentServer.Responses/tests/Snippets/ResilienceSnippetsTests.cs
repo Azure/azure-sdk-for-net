@@ -4,8 +4,10 @@
 using System.Runtime.CompilerServices;
 using System.Text;
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Core.Storage;
 using Azure.AI.AgentServer.Responses;
 using Azure.AI.AgentServer.Responses.Models;
+using Azure.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
@@ -103,8 +105,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
         #region Snippet:Responses_Sample19_ResilientStreamingHandler
 
         // Sample 19 — resilient streaming with handler-managed phase checkpoints.
-        // Checkpoints are managed entirely via context.ConversationChainMetadata; the
-        // handler seeds a ResponseEventStream and resumes at the first incomplete phase.
+        // The handler seeds a ResponseEventStream from the last durable response snapshot
+        // and resumes after the output items already committed by prior phases.
         public class ResilientStreamingHandler : ResponseHandler
         {
             private static readonly string[] PhaseOrder = { "analyze", "generate", "refine" };
@@ -157,10 +159,6 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                         yield return evt;
                     }
 
-                    // Stamp the phase watermark and durably flush it, then checkpoint.
-                    context.ConversationChainMetadata.Set("stream", "phase_complete", phase);
-                    await context.ConversationChainMetadata.FlushAsync(cancellationToken);
-
                     // Persist a durable snapshot at the phase boundary
                     // (no-op unless resilient background).
                     yield return stream.Checkpoint();
@@ -171,17 +169,10 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
             private static int NextPhaseIndex(ResponseContext context)
             {
-                if (context.ConversationChainMetadata.TryGet("stream", "phase_complete", out var done)
-                    && done is not null)
-                {
-                    int idx = Array.IndexOf(PhaseOrder, done);
-                    if (idx >= 0)
-                    {
-                        return idx + 1;
-                    }
-                }
-
-                return 0;
+                int completedPhases = context.IsRecovery
+                    ? context.PersistedResponse?.Output?.Count ?? 0
+                    : 0;
+                return Math.Min(completedPhases, PhaseOrder.Length);
             }
         }
 
@@ -193,6 +184,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
         // observes IsSteeredTurn on the re-entry and drains the enqueued input.
         public class ResilientSteeringHandler : ResponseHandler
         {
+            private static readonly DefaultAzureCredential s_credential = new();
+
             public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
                 CreateResponse request,
                 ResponseContext context,
@@ -204,16 +197,40 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 bool steered = context.IsSteeredTurn;
                 int pending = context.PendingInputCount;
 
-                int turnCount = 1;
-                if (context.ConversationChainMetadata.TryGet("state", "turn_count", out var raw)
-                    && int.TryParse(raw, out var prior))
-                {
-                    turnCount = prior + 1;
-                }
+                FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync(
+                    $"responses/resilient-steering/{context.ConversationChainId}",
+                    s_credential,
+                    description: "State for the resilient steering response sample",
+                    cancellationToken: CancellationToken.None);
+                StateStoreItem? item = await store.GetItemAsync(
+                    "state",
+                    cancellationToken: CancellationToken.None);
+                IDictionary<string, BinaryData> state = item?.Value
+                    ?? new Dictionary<string, BinaryData>(StringComparer.Ordinal);
 
-                context.ConversationChainMetadata.Set("state", "turn_count", turnCount.ToString());
-                context.ConversationChainMetadata.Set("state", "steered", (steered && pending >= 0).ToString());
-                await context.ConversationChainMetadata.FlushAsync(cancellationToken);
+                int turnCount;
+                if (state.TryGetValue("last_response_id", out BinaryData? responseIdData)
+                    && responseIdData.ToObjectFromJson<string>() == context.ResponseId)
+                {
+                    turnCount = state.TryGetValue("turn_count", out BinaryData? turnData)
+                        ? turnData.ToObjectFromJson<int>()
+                        : 1;
+                }
+                else
+                {
+                    turnCount = state.TryGetValue("turn_count", out BinaryData? turnData)
+                        ? turnData.ToObjectFromJson<int>() + 1
+                        : 1;
+                    await store.SetItemAsync(
+                        "state",
+                        new Dictionary<string, BinaryData>
+                        {
+                            ["turn_count"] = BinaryData.FromObjectAsJson(turnCount),
+                            ["last_response_id"] = BinaryData.FromObjectAsJson(context.ResponseId),
+                            ["steered"] = BinaryData.FromObjectAsJson(steered && pending >= 0),
+                        },
+                        cancellationToken: CancellationToken.None);
+                }
 
                 var stream = new ResponseEventStream(context, request);
 
@@ -272,9 +289,11 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
         #region Snippet:Responses_Sample22_ResilientMultiTurnHandler
 
         // Sample 22 — serial multi-turn (no steering). Durable per-conversation state is
-        // written through a MetadataNamespace on the stable ConversationChainId.
+        // written to an explicit State Store scoped by the stable ConversationChainId.
         public class ResilientMultiTurnHandler : ResponseHandler
         {
+            private static readonly DefaultAzureCredential s_credential = new();
+
             public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
                 CreateResponse request,
                 ResponseContext context,
@@ -284,19 +303,64 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 {
                     string inputText = await context.GetInputTextAsync(cancellationToken: ct);
 
-                    // Durable per-conversation state is scoped to the stable chain id.
-                    ConversationChainMetadataNamespace state = context.MetadataNamespace("state");
                     string chainId = context.ConversationChainId;
+                    FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync(
+                        $"responses/resilient-multiturn/{chainId}",
+                        s_credential,
+                        description: "State for the resilient multi-turn response sample",
+                        cancellationToken: CancellationToken.None);
+                    StateStoreItem? item = await store.GetItemAsync(
+                        "state",
+                        cancellationToken: CancellationToken.None);
+                    IDictionary<string, BinaryData> state = item?.Value
+                        ?? new Dictionary<string, BinaryData>(StringComparer.Ordinal);
 
-                    int turnCount = 1;
-                    if (state.TryGet("turn_count", out var raw) && int.TryParse(raw, out var prior))
+                    if (state.TryGetValue("terminated", out BinaryData? terminatedData)
+                        && terminatedData.ToObjectFromJson<bool>()
+                        && (!state.TryGetValue("last_response_id", out BinaryData? terminatedResponseData)
+                            || terminatedResponseData.ToObjectFromJson<string>() != context.ResponseId))
                     {
-                        turnCount = prior + 1;
+                        state = new Dictionary<string, BinaryData>(StringComparer.Ordinal);
                     }
+
+                    bool repeatedResponse =
+                        state.TryGetValue("last_response_id", out BinaryData? responseIdData)
+                        && responseIdData.ToObjectFromJson<string>() == context.ResponseId;
+                    int turnCount = repeatedResponse
+                        ? state.TryGetValue("turn_count", out BinaryData? existingTurnData)
+                            ? existingTurnData.ToObjectFromJson<int>()
+                            : 1
+                        : state.TryGetValue("turn_count", out BinaryData? priorTurnData)
+                            ? priorTurnData.ToObjectFromJson<int>() + 1
+                            : 1;
 
                     if (string.Equals(inputText.Trim(), "done", StringComparison.OrdinalIgnoreCase))
                     {
-                        return $"Done! Session complete after {turnCount - 1} turns on {chainId}. Goodbye!";
+                        int completedTurns;
+                        if (repeatedResponse
+                            && state.TryGetValue("terminated", out BinaryData? repeatedTerminatedData)
+                            && repeatedTerminatedData.ToObjectFromJson<bool>())
+                        {
+                            completedTurns = state.TryGetValue("completed_turns", out BinaryData? completedData)
+                                ? completedData.ToObjectFromJson<int>()
+                                : 0;
+                        }
+                        else
+                        {
+                            completedTurns = Math.Max(turnCount - 1, 0);
+                            await store.SetItemAsync(
+                                "state",
+                                new Dictionary<string, BinaryData>
+                                {
+                                    ["turn_count"] = BinaryData.FromObjectAsJson(completedTurns),
+                                    ["last_response_id"] = BinaryData.FromObjectAsJson(context.ResponseId),
+                                    ["terminated"] = BinaryData.FromObjectAsJson(true),
+                                    ["completed_turns"] = BinaryData.FromObjectAsJson(completedTurns),
+                                },
+                                cancellationToken: CancellationToken.None);
+                        }
+
+                        return $"Done! Session complete after {completedTurns} turns on {chainId}. Goodbye!";
                     }
 
                     // Framework-managed conversation history.
@@ -306,8 +370,14 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                         $"Turn {turnCount}: You said '{inputText}'. " +
                         $"I have {history.Count} items of conversation context.";
 
-                    state.Set("turn_count", turnCount.ToString());
-                    await state.FlushAsync(ct);
+                    await store.SetItemAsync(
+                        "state",
+                        new Dictionary<string, BinaryData>
+                        {
+                            ["turn_count"] = BinaryData.FromObjectAsJson(turnCount),
+                            ["last_response_id"] = BinaryData.FromObjectAsJson(context.ResponseId),
+                        },
+                        cancellationToken: CancellationToken.None);
 
                     return reply;
                 });
