@@ -116,9 +116,8 @@ internal sealed class WebSocketEndpointHandler
             {
                 webSocket = await httpContext.WebSockets.AcceptWebSocketAsync();
             }
-            catch (OperationCanceledException oce)
+            catch (OperationCanceledException)
                 when (lifecycle?.TryMarkAcceptCancellation(
-                    oce,
                     httpContext.RequestAborted) == true)
             {
                 closeCode = 1006;

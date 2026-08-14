@@ -7,9 +7,7 @@ namespace Azure.AI.AgentServer.Invocations.Internal;
 
 internal interface IInvocationsWebSocketEndpointLifecycle
 {
-    bool TryMarkAcceptCancellation(
-        OperationCanceledException exception,
-        CancellationToken requestCancellation);
+    bool TryMarkAcceptCancellation(CancellationToken requestCancellation);
 
     Task<InvocationsWebSocketCloseResult?> HandleWebSocketWithOutcomeAsync(
         WebSocket webSocket,

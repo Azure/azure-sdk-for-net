@@ -783,6 +783,46 @@ public class VoiceConnectionTracingRedTests
     }
 
     [Test]
+    public async Task TokenlessRequestCancellationDuringAccept_IsCancelledAndDoesNotPolluteRetry()
+    {
+        using var requestCancellation = new CancellationTokenSource();
+        await requestCancellation.CancelAsync();
+        var acceptCancellation = new OperationCanceledException();
+        var featureDecorator = new AcceptFailureFeatureDecorator(acceptCancellation);
+        var requestCount = 0;
+        var exporter = new CapturingActivityExporter();
+        await using var server = await StartVoiceServerAsync<PassiveVoiceHandler>(
+            exporter,
+            decorateWebSocketFeature: featureDecorator.Decorate,
+            configureApplication: app => app.Use(async (context, next) =>
+            {
+                if (Interlocked.Increment(ref requestCount) == 1)
+                {
+                    context.RequestAborted = requestCancellation.Token;
+                }
+                await next();
+            }));
+
+        _ = await ConnectAndCaptureFailureAsync(server.WebSocketUri);
+        var retryCloseCode = await ConnectAndCloseAsync(server.WebSocketUri);
+        var observed = await exporter.TryWaitForSemanticCountAsync(2, ObservationTimeout);
+        var connections = exporter.GetFinishedActivities().Where(IsSemanticConnection).ToArray();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(retryCloseCode, Is.EqualTo(1000));
+            Assert.That(featureDecorator.AttemptCount, Is.EqualTo(2));
+            Assert.That(observed, Is.True);
+            Assert.That(connections, Has.Length.EqualTo(2));
+            Assert.That(
+                connections.Select(activity => activity.GetTagItem("bridge.outcome")),
+                Is.EqualTo(new object?[] { "cancelled", "completed" }));
+            Assert.That(connections[0].Status, Is.Not.EqualTo(ActivityStatusCode.Error));
+            Assert.That(connections[0].GetTagItem("error.type"), Is.Null);
+        });
+    }
+
+    [Test]
     public async Task ActivityStoppedListenerFailure_DoesNotChangeWireOutcomeOrNextConnection()
     {
         var exporter = new CapturingActivityExporter();

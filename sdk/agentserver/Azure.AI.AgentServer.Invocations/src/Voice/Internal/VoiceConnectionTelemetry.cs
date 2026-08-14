@@ -112,12 +112,9 @@ internal sealed class VoiceConnectionTelemetry
         return new VoiceConnectionTelemetry(activity, connectionContext, previousActivity);
     }
 
-    internal bool TryMarkRequestCancellation(
-        OperationCanceledException exception,
-        CancellationToken requestCancellation)
+    internal bool TryMarkRequestCancellation(CancellationToken requestCancellation)
     {
-        if (exception.CancellationToken != requestCancellation ||
-            !requestCancellation.IsCancellationRequested)
+        if (!requestCancellation.IsCancellationRequested)
         {
             return false;
         }

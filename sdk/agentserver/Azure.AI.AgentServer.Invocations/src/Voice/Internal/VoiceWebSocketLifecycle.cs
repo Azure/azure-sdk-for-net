@@ -43,10 +43,8 @@ internal sealed class VoiceWebSocketLifecycle : IInvocationsWebSocketEndpointLif
         return outcome with { CloseException = closeException };
     }
 
-    public bool TryMarkAcceptCancellation(
-        OperationCanceledException exception,
-        CancellationToken requestCancellation) =>
-        _telemetry.TryMarkRequestCancellation(exception, requestCancellation);
+    public bool TryMarkAcceptCancellation(CancellationToken requestCancellation) =>
+        _telemetry.TryMarkRequestCancellation(requestCancellation);
 
     public async Task<InvocationsWebSocketCloseResult?> HandleWebSocketWithOutcomeAsync(
         WebSocket webSocket,

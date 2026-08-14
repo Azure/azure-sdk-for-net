@@ -134,16 +134,16 @@ public class VoiceTurnTrace : IDisposable
         var activity = Volatile.Read(ref _activity);
         if (activity is null || Volatile.Read(ref _completed) != 0)
         {
-            return EmptyActivation.Instance;
+            return VoiceActivityScope.Empty;
         }
 
-        var previous = Activity.Current;
-        if (!TrySetCurrent(activity) || Volatile.Read(ref _completed) != 0 || activity.Duration != default)
+        var activation = VoiceActivityScope.Activate(activity);
+        if (!activation.IsActive || Volatile.Read(ref _completed) != 0 || activity.Duration != default)
         {
-            TrySetCurrent(previous);
-            return EmptyActivation.Instance;
+            activation.Dispose();
+            return VoiceActivityScope.Empty;
         }
-        return new Activation(previous);
+        return activation;
     }
 
     /// <summary>Completes the turn with the first immutable application-supplied result.</summary>
@@ -167,7 +167,7 @@ public class VoiceTurnTrace : IDisposable
         TryInvokeTelemetry(activity.Stop);
         if (!ReferenceEquals(current, activity))
         {
-            TrySetCurrent(current);
+            VoiceActivityScope.TrySetCurrent(current);
         }
     }
 
@@ -266,7 +266,7 @@ public class VoiceTurnTrace : IDisposable
         {
             Activity.CurrentChanged -= captureStartedActivity;
             s_startToken.Value = previousStartToken;
-            TrySetCurrent(previous);
+            VoiceActivityScope.TrySetCurrent(previous);
         }
         return new VoiceTurnTrace(activity);
     }
@@ -324,19 +324,6 @@ public class VoiceTurnTrace : IDisposable
         activity?.Source.Name == "Azure.AI.AgentServer.Invocations" &&
         activity.OperationName == OperationName;
 
-    private static bool TrySetCurrent(Activity? activity)
-    {
-        try
-        {
-            Activity.Current = activity;
-            return true;
-        }
-        catch (Exception exception) when (!ContainsOutOfMemoryException(exception))
-        {
-            return false;
-        }
-    }
-
     private static void TryInvokeTelemetry(Action action)
     {
         try
@@ -356,30 +343,5 @@ public class VoiceTurnTrace : IDisposable
         }
         return exception is AggregateException aggregateException &&
             aggregateException.InnerExceptions.Any(ContainsOutOfMemoryException);
-    }
-
-    private sealed class Activation : IDisposable
-    {
-        private readonly Activity? _previous;
-        private int _disposed;
-
-        public Activation(Activity? previous) => _previous = previous;
-
-        public void Dispose()
-        {
-            if (Interlocked.Exchange(ref _disposed, 1) == 0)
-            {
-                TrySetCurrent(_previous);
-            }
-        }
-    }
-
-    private sealed class EmptyActivation : IDisposable
-    {
-        public static EmptyActivation Instance { get; } = new();
-
-        public void Dispose()
-        {
-        }
     }
 }
