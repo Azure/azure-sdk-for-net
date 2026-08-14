@@ -1,32 +1,32 @@
 {
   "profiles": {
     "http-azure-resource-manager-common-properties": {
-      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/common-properties -g AzureStubGenerator",
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/common-properties -g ManagementClientGenerator",
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
     "http-azure-resource-manager-large-header": {
-      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/large-header -g AzureStubGenerator",
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/large-header -g ManagementClientGenerator",
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
     "http-azure-resource-manager-multi-service": {
-      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/multi-service -g AzureStubGenerator",
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/multi-service -g ManagementClientGenerator",
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
     "http-azure-resource-manager-non-resource": {
-      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/non-resource -g AzureStubGenerator",
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/non-resource -g ManagementClientGenerator",
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
     "http-azure-resource-manager-operation-templates": {
-      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/operation-templates -g AzureStubGenerator",
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/operation-templates -g ManagementClientGenerator",
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
     "http-azure-resource-manager-resources": {
-      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/resources -g AzureStubGenerator",
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/resources -g ManagementClientGenerator",
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
