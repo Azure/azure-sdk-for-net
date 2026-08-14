@@ -69,6 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
         // The current TypeSpec no longer models the old AlertRule resource, so there is no generated factory overload to delegate to.
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        // TODO: Remove these compatibility parameter mappings after https://github.com/Azure/azure-sdk-for-net/issues/61815 is fixed.
         public static Azure.ResourceManager.Monitor.AlertRuleData AlertRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string alertRuleName, string description, string provisioningState, bool isEnabled, AlertRuleCondition condition, AlertRuleAction action, IEnumerable<AlertRuleAction> actions, DateTimeOffset? lastUpdatedOn)
             => throw new NotSupportedException("This API is no longer supported.");
 

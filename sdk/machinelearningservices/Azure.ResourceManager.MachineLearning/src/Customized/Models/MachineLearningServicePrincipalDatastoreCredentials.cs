@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         // parameter ordering. Constructor parameter order cannot be restored with TypeSpec decorators, so these overloads delegate to the
         // generated constructor.
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>. </summary>
+        // TODO: Remove these compatibility constructors after https://github.com/microsoft/typespec/issues/11588 is fixed.
         public MachineLearningServicePrincipalDatastoreCredentials(Guid clientId, MachineLearningServicePrincipalDatastoreSecrets secrets, Guid tenantId)
             : this(CredentialsType.ServicePrincipal, additionalBinaryDataProperties: null, authorityUri: null, clientId, resourceUri: null, secrets, tenantId)
         {

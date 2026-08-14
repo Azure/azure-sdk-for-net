@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <remarks>This API has moved to Azure.ResourceManager.Monitor.Workspaces.</remarks>
         [Obsolete("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        // TODO: Remove these compatibility parameter mappings after https://github.com/Azure/azure-sdk-for-net/issues/61815 is fixed.
         public static MonitorWorkspaceDefaultIngestionSettings MonitorWorkspaceDefaultIngestionSettings(ResourceIdentifier dataCollectionRuleResourceId = default, ResourceIdentifier dataCollectionEndpointResourceId = default)
             => throw new NotSupportedException("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.");
 
