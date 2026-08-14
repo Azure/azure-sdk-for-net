@@ -27,14 +27,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> NIC name. </param>
         /// <param name="publicIPAddress"> Public IP address. </param>
         /// <param name="privateIPAddress"> Private IP address. </param>
+        /// <param name="publicIpAddressV6"> Public IPv6 address. Populated for dual-stack NVAs, including on additional-NIC configurations when the NVA is dual-stack. </param>
+        /// <param name="privateIpAddressV6"> Private IPv6 address. Populated for dual-stack NVAs, including on additional-NIC configurations when the NVA is dual-stack. </param>
         /// <param name="instanceName"> Instance on which nic is attached. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualApplianceNicProperties(NicTypeInResponse? nicType, string name, string publicIPAddress, string privateIPAddress, string instanceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualApplianceNicProperties(NicTypeInResponse? nicType, string name, string publicIPAddress, string privateIPAddress, string publicIpAddressV6, string privateIpAddressV6, string instanceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NicType = nicType;
             Name = name;
             PublicIPAddress = publicIPAddress;
             PrivateIPAddress = privateIPAddress;
+            PublicIpAddressV6 = publicIpAddressV6;
+            PrivateIpAddressV6 = privateIpAddressV6;
             InstanceName = instanceName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -54,6 +58,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Private IP address. </summary>
         [WirePath("privateIpAddress")]
         public string PrivateIPAddress { get; }
+
+        /// <summary> Public IPv6 address. Populated for dual-stack NVAs, including on additional-NIC configurations when the NVA is dual-stack. </summary>
+        [WirePath("publicIpAddressV6")]
+        public string PublicIpAddressV6 { get; }
+
+        /// <summary> Private IPv6 address. Populated for dual-stack NVAs, including on additional-NIC configurations when the NVA is dual-stack. </summary>
+        [WirePath("privateIpAddressV6")]
+        public string PrivateIpAddressV6 { get; }
 
         /// <summary> Instance on which nic is attached. </summary>
         [WirePath("instanceName")]
