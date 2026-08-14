@@ -556,34 +556,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="publicNetworkAccess"> Whether or not public network traffic can access the Redis cluster. Only 'Enabled' or 'Disabled' can be set. null is returned only for clusters created using an old API version which do not have this property and cannot be set. </param>
         /// <returns> A new <see cref="RedisEnterprise.RedisEnterpriseClusterData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RedisEnterpriseClusterData RedisEnterpriseClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, RedisEnterpriseKind? kind = default, RedisEnterpriseSku sku = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, RedisEnterpriseHighAvailability? highAvailability = default, RedisEnterpriseTlsVersion? minimumTlsVersion = default, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = default, string hostName = default, RedisEnterpriseProvisioningStatus? provisioningState = default, RedisEnterpriseRedundancyMode? redundancyMode = default, RedisEnterpriseClusterResourceState? resourceState = default, string redisVersion = default, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = default, RedisEnterprisePublicNetworkAccess? publicNetworkAccess = default)
+        public static RedisEnterpriseClusterData RedisEnterpriseClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RedisEnterpriseKind? kind, RedisEnterpriseSku sku, IEnumerable<string> zones, ManagedServiceIdentity identity, RedisEnterpriseHighAvailability? highAvailability, RedisEnterpriseTlsVersion? minimumTlsVersion, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseRedundancyMode? redundancyMode, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections, RedisEnterprisePublicNetworkAccess? publicNetworkAccess)
         {
-            return new RedisEnterpriseClusterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                highAvailability is null && minimumTlsVersion is null && customerManagedKeyEncryption is null && hostName is null && provisioningState is null && redundancyMode is null && resourceState is null && redisVersion is null && privateEndpointConnections is null && publicNetworkAccess is null ? default : new ClusterCreateProperties(
-                    highAvailability,
-                    minimumTlsVersion,
-                    new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
-                    default,
-                    hostName,
-                    provisioningState,
-                    redundancyMode,
-                    resourceState,
-                    redisVersion,
-                    (privateEndpointConnections ?? new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>()).ToList(),
-                    default,
-                    default,
-                    publicNetworkAccess),
-                kind,
-                sku,
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                identity,
-                default);
+            return RedisEnterpriseClusterData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, highAvailability: highAvailability, minimumTlsVersion: minimumTlsVersion, hostName: hostName, provisioningState: provisioningState, redundancyMode: redundancyMode, resourceState: resourceState, redisVersion: redisVersion, privateEndpointConnections: privateEndpointConnections, migratedEndpoint: default, customerManagedKeyEncryption: customerManagedKeyEncryption, maintenanceWindows: default, publicNetworkAccess: publicNetworkAccess, kind: kind, sku: sku, zones: zones, identity: identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData"/>. </summary>
@@ -596,15 +571,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RedisEnterprisePrivateEndpointConnectionData RedisEnterprisePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier privateEndpointId = default, RedisEnterprisePrivateLinkServiceConnectionState connectionState = default, RedisEnterprisePrivateEndpointConnectionProvisioningState? provisioningState = default)
+        public static RedisEnterprisePrivateEndpointConnectionData RedisEnterprisePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateEndpointId, RedisEnterprisePrivateLinkServiceConnectionState connectionState, RedisEnterprisePrivateEndpointConnectionProvisioningState? provisioningState)
         {
-            return new RedisEnterprisePrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(default, new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
-                default);
+            return RedisEnterprisePrivateEndpointConnectionData(id: id, name: name, resourceType: resourceType, systemData: systemData, groupIds: default, connectionState: connectionState, provisioningState: provisioningState, privateEndpointId: privateEndpointId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RedisEnterpriseClusterPatch"/>. </summary>
@@ -623,22 +592,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="publicNetworkAccess"> Whether or not public network traffic can access the Redis cluster. Only 'Enabled' or 'Disabled' can be set. null is returned only for clusters created using an old API version which do not have this property and cannot be set. </param>
         /// <returns> A new <see cref="Models.RedisEnterpriseClusterPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RedisEnterpriseClusterPatch RedisEnterpriseClusterPatch(RedisEnterpriseSku sku = default, ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, RedisEnterpriseHighAvailability? highAvailability = default, RedisEnterpriseTlsVersion? minimumTlsVersion = default, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = default, string hostName = default, RedisEnterpriseProvisioningStatus? provisioningState = default, RedisEnterpriseRedundancyMode? redundancyMode = default, RedisEnterpriseClusterResourceState? resourceState = default, string redisVersion = default, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = default, RedisEnterprisePublicNetworkAccess? publicNetworkAccess = default)
+        public static RedisEnterpriseClusterPatch RedisEnterpriseClusterPatch(RedisEnterpriseSku sku, ManagedServiceIdentity identity, IDictionary<string, string> tags, RedisEnterpriseHighAvailability? highAvailability, RedisEnterpriseTlsVersion? minimumTlsVersion, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseRedundancyMode? redundancyMode, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections, RedisEnterprisePublicNetworkAccess? publicNetworkAccess)
         {
-            return new RedisEnterpriseClusterPatch(sku, highAvailability is null && minimumTlsVersion is null && customerManagedKeyEncryption is null && hostName is null && provisioningState is null && redundancyMode is null && resourceState is null && redisVersion is null && privateEndpointConnections is null && publicNetworkAccess is null ? default : new ClusterUpdateProperties(
-                highAvailability,
-                minimumTlsVersion,
-                new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
-                default,
-                hostName,
-                provisioningState,
-                redundancyMode,
-                resourceState,
-                redisVersion,
-                (privateEndpointConnections ?? new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>()).ToList(),
-                default,
-                default,
-                publicNetworkAccess), identity, tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return RedisEnterpriseClusterPatch(sku: sku, highAvailability: highAvailability, minimumTlsVersion: minimumTlsVersion, hostName: hostName, provisioningState: provisioningState, redundancyMode: redundancyMode, resourceState: resourceState, redisVersion: redisVersion, privateEndpointConnections: privateEndpointConnections, migratedEndpoint: default, customerManagedKeyEncryption: customerManagedKeyEncryption, maintenanceWindows: default, publicNetworkAccess: publicNetworkAccess, identity: identity, tags: tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterprise.RedisEnterpriseClusterData"/>. </summary>
@@ -665,32 +621,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RedisEnterpriseClusterData RedisEnterpriseClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RedisEnterpriseKind? kind, RedisEnterpriseSku sku, IEnumerable<string> zones, ManagedServiceIdentity identity, RedisEnterpriseHighAvailability? highAvailability, RedisEnterpriseTlsVersion? minimumTlsVersion, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseRedundancyMode? redundancyMode, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections)
         {
-            return new RedisEnterpriseClusterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                highAvailability is null && minimumTlsVersion is null && customerManagedKeyEncryption is null && hostName is null && provisioningState is null && redundancyMode is null && resourceState is null && redisVersion is null && privateEndpointConnections is null ? default : new ClusterCreateProperties(
-                    highAvailability,
-                    minimumTlsVersion,
-                    new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
-                    default,
-                    hostName,
-                    provisioningState,
-                    redundancyMode,
-                    resourceState,
-                    redisVersion,
-                    (privateEndpointConnections ?? new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>()).ToList(),
-                    default,
-                    default,
-                    default),
-                kind,
-                sku,
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                identity,
-                default);
+            return RedisEnterpriseClusterData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, highAvailability: highAvailability, minimumTlsVersion: minimumTlsVersion, hostName: hostName, provisioningState: provisioningState, redundancyMode: redundancyMode, resourceState: resourceState, redisVersion: redisVersion, privateEndpointConnections: privateEndpointConnections, migratedEndpoint: default, customerManagedKeyEncryption: customerManagedKeyEncryption, maintenanceWindows: default, publicNetworkAccess: default, kind: kind, sku: sku, zones: zones, identity: identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RedisEnterpriseClusterPatch"/>. </summary>
@@ -710,20 +641,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RedisEnterpriseClusterPatch RedisEnterpriseClusterPatch(RedisEnterpriseSku sku, ManagedServiceIdentity identity, IDictionary<string, string> tags, RedisEnterpriseHighAvailability? highAvailability, RedisEnterpriseTlsVersion? minimumTlsVersion, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseRedundancyMode? redundancyMode, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections)
         {
-            return new RedisEnterpriseClusterPatch(sku, highAvailability is null && minimumTlsVersion is null && customerManagedKeyEncryption is null && hostName is null && provisioningState is null && redundancyMode is null && resourceState is null && redisVersion is null && privateEndpointConnections is null ? default : new ClusterUpdateProperties(
-                highAvailability,
-                minimumTlsVersion,
-                new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
-                default,
-                hostName,
-                provisioningState,
-                redundancyMode,
-                resourceState,
-                redisVersion,
-                (privateEndpointConnections ?? new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>()).ToList(),
-                default,
-                default,
-                default), identity, tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return RedisEnterpriseClusterPatch(sku: sku, highAvailability: highAvailability, minimumTlsVersion: minimumTlsVersion, hostName: hostName, provisioningState: provisioningState, redundancyMode: redundancyMode, resourceState: resourceState, redisVersion: redisVersion, privateEndpointConnections: privateEndpointConnections, migratedEndpoint: default, customerManagedKeyEncryption: customerManagedKeyEncryption, maintenanceWindows: default, publicNetworkAccess: default, identity: identity, tags: tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterprise.RedisEnterpriseClusterData"/>. </summary>
@@ -747,32 +665,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RedisEnterpriseClusterData RedisEnterpriseClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RedisEnterpriseSku sku, IEnumerable<string> zones, ManagedServiceIdentity identity, RedisEnterpriseTlsVersion? minimumTlsVersion, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections)
         {
-            return new RedisEnterpriseClusterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                minimumTlsVersion is null && customerManagedKeyEncryption is null && hostName is null && provisioningState is null && resourceState is null && redisVersion is null && privateEndpointConnections is null ? default : new ClusterCreateProperties(
-                    default,
-                    minimumTlsVersion,
-                    new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
-                    default,
-                    hostName,
-                    provisioningState,
-                    default,
-                    resourceState,
-                    redisVersion,
-                    (privateEndpointConnections ?? new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>()).ToList(),
-                    default,
-                    default,
-                    default),
-                default,
-                sku,
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                identity,
-                default);
+            return RedisEnterpriseClusterData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, highAvailability: default, minimumTlsVersion: minimumTlsVersion, hostName: hostName, provisioningState: provisioningState, redundancyMode: default, resourceState: resourceState, redisVersion: redisVersion, privateEndpointConnections: privateEndpointConnections, migratedEndpoint: default, customerManagedKeyEncryption: customerManagedKeyEncryption, maintenanceWindows: default, publicNetworkAccess: default, kind: default, sku: sku, zones: zones, identity: identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RedisEnterpriseClusterPatch"/>. </summary>
@@ -790,20 +683,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RedisEnterpriseClusterPatch RedisEnterpriseClusterPatch(RedisEnterpriseSku sku, ManagedServiceIdentity identity, IDictionary<string, string> tags, RedisEnterpriseTlsVersion? minimumTlsVersion, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections)
         {
-            return new RedisEnterpriseClusterPatch(sku, minimumTlsVersion is null && customerManagedKeyEncryption is null && hostName is null && provisioningState is null && resourceState is null && redisVersion is null && privateEndpointConnections is null ? default : new ClusterUpdateProperties(
-                default,
-                minimumTlsVersion,
-                new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
-                default,
-                hostName,
-                provisioningState,
-                default,
-                resourceState,
-                redisVersion,
-                (privateEndpointConnections ?? new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>()).ToList(),
-                default,
-                default,
-                default), identity, tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return RedisEnterpriseClusterPatch(sku: sku, highAvailability: default, minimumTlsVersion: minimumTlsVersion, hostName: hostName, provisioningState: provisioningState, redundancyMode: default, resourceState: resourceState, redisVersion: redisVersion, privateEndpointConnections: privateEndpointConnections, migratedEndpoint: default, customerManagedKeyEncryption: customerManagedKeyEncryption, maintenanceWindows: default, publicNetworkAccess: default, identity: identity, tags: tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterprise.RedisEnterpriseDatabaseData"/>. </summary>
@@ -824,26 +704,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RedisEnterpriseDatabaseData RedisEnterpriseDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RedisEnterpriseClientProtocol? clientProtocol, int? port, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseClusterResourceState? resourceState, RedisEnterpriseClusteringPolicy? clusteringPolicy, RedisEnterpriseEvictionPolicy? evictionPolicy, RedisPersistenceSettings persistence, IEnumerable<RedisEnterpriseModule> modules, RedisEnterpriseDatabaseGeoReplication geoReplication)
         {
-            return new RedisEnterpriseDatabaseData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                clientProtocol is null && port is null && provisioningState is null && resourceState is null && clusteringPolicy is null && evictionPolicy is null && persistence is null && modules is null && geoReplication is null ? default : new DatabaseCreateProperties(
-                    clientProtocol,
-                    port,
-                    provisioningState,
-                    resourceState,
-                    clusteringPolicy,
-                    evictionPolicy,
-                    persistence,
-                    (modules ?? new ChangeTrackingList<RedisEnterpriseModule>()).ToList(),
-                    geoReplication,
-                    default,
-                    default,
-                    default,
-                    default),
-                default);
+            return RedisEnterpriseDatabaseData(id: id, name: name, resourceType: resourceType, systemData: systemData, clientProtocol: clientProtocol, port: port, provisioningState: provisioningState, resourceState: resourceState, clusteringPolicy: clusteringPolicy, evictionPolicy: evictionPolicy, persistence: persistence, modules: modules, geoReplication: geoReplication, redisVersion: default, deferUpgrade: default, accessKeysAuthentication: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RedisEnterpriseDatabasePatch"/>. </summary>
@@ -860,20 +721,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RedisEnterpriseDatabasePatch RedisEnterpriseDatabasePatch(RedisEnterpriseClientProtocol? clientProtocol, int? port, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseClusterResourceState? resourceState, RedisEnterpriseClusteringPolicy? clusteringPolicy, RedisEnterpriseEvictionPolicy? evictionPolicy, RedisPersistenceSettings persistence, IEnumerable<RedisEnterpriseModule> modules, RedisEnterpriseDatabaseGeoReplication geoReplication)
         {
-            return new RedisEnterpriseDatabasePatch(clientProtocol is null && port is null && provisioningState is null && resourceState is null && clusteringPolicy is null && evictionPolicy is null && persistence is null && modules is null && geoReplication is null ? default : new DatabaseUpdateProperties(
-                clientProtocol,
-                port,
-                provisioningState,
-                resourceState,
-                clusteringPolicy,
-                evictionPolicy,
-                persistence,
-                (modules ?? new ChangeTrackingList<RedisEnterpriseModule>()).ToList(),
-                geoReplication,
-                default,
-                default,
-                default,
-                default), default);
+            return RedisEnterpriseDatabasePatch(clientProtocol: clientProtocol, port: port, provisioningState: provisioningState, resourceState: resourceState, clusteringPolicy: clusteringPolicy, evictionPolicy: evictionPolicy, persistence: persistence, modules: modules, geoReplication: geoReplication, redisVersion: default, deferUpgrade: default, accessKeysAuthentication: default);
         }
     }
 }

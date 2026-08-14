@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -257,25 +256,6 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                 default,
                 status,
                 denyStatus);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="error"> The error detail. </param>
-        /// <param name="properties"> The validation result details. </param>
-        /// <returns> A new <see cref="Models.DeploymentStackValidateResult"/> instance for mocking. </returns>
-        public static DeploymentStackValidateResult DeploymentStackValidateResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResponseError error = default, DeploymentStackValidateProperties properties = default)
-        {
-            return new DeploymentStackValidateResult(
-                id,
-                name,
-                resourceType,
-                systemData,
-                error,
-                properties,
-                default);
         }
 
         /// <param name="actionOnUnmanage"> Defines the behavior of resources that are no longer managed after the Deployment stack is updated or deleted. </param>
@@ -531,7 +511,6 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
         /// <param name="error"> The error detail. </param>
         /// <param name="properties"> The validation result details. </param>
         /// <returns> A new <see cref="Models.DeploymentStackValidateResult"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static DeploymentStackValidateResult DeploymentStackValidateResult(ResourceIdentifier id = default, ResourceType resourceType = default, string name = default, SystemData systemData = default, ResponseError error = default, DeploymentStackValidateProperties properties = default)
         {
             return new DeploymentStackValidateResult(
