@@ -19,43 +19,51 @@ namespace TestProjects.Spector.Tests
         public Uri Host { get; }
         public string Port { get; }
 
-        public TestServerBase(string processPath, string processArguments)
+        public TestServerBase(string processPath, string processArguments, Action? startupFailureCleanup = null)
         {
-            var portPhrase = "Started server on ";
+            try
+            {
+                var portPhrase = "Started server on ";
 
-            var processStartInfo = new ProcessStartInfo("node", $"{processPath} {processArguments}")
-            {
-                RedirectStandardOutput = true,
-                RedirectStandardError = true
-            };
-
-            _process = Process.Start(processStartInfo);
-            if (_process == null)
-            {
-                throw new InvalidOperationException($"Unable to start process {processStartInfo.FileName} {processStartInfo.Arguments}");
-            }
-            ProcessTracker.Add(_process);
-            Debug.Assert(_process != null);
-            while (!_process.HasExited)
-            {
-                var s = _process.StandardOutput.ReadLine();
-                var indexOfPort = s?.IndexOf(portPhrase);
-                if (indexOfPort >= 0)
+                var processStartInfo = new ProcessStartInfo("node", $"{processPath} {processArguments}")
                 {
-                    Port = s!.Substring(indexOfPort.Value + portPhrase.Length).Trim();
-                    Host = new Uri($"http://localhost:{Port}");
-                    Client = new HttpClient
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true
+                };
+
+                _process = Process.Start(processStartInfo);
+                if (_process == null)
+                {
+                    throw new InvalidOperationException($"Unable to start process {processStartInfo.FileName} {processStartInfo.Arguments}");
+                }
+                ProcessTracker.Add(_process);
+                Debug.Assert(_process != null);
+                while (!_process.HasExited)
+                {
+                    var s = _process.StandardOutput.ReadLine();
+                    var indexOfPort = s?.IndexOf(portPhrase);
+                    if (indexOfPort >= 0)
                     {
-                        BaseAddress = Host
-                    };
-                    _ = Task.Run(ReadOutput);
-                    return;
+                        Port = s!.Substring(indexOfPort.Value + portPhrase.Length).Trim();
+                        Host = new Uri($"http://localhost:{Port}");
+                        Client = new HttpClient
+                        {
+                            BaseAddress = Host
+                        };
+                        _ = Task.Run(ReadOutput);
+                        return;
+                    }
+                }
+
+                if (Client == null || Host == null || Port == null)
+                {
+                    throw new InvalidOperationException($"Unable to detect server port {_process.StandardOutput.ReadToEnd()} {_process.StandardError.ReadToEnd()}");
                 }
             }
-
-            if (Client == null || Host == null || Port == null)
+            catch
             {
-                throw new InvalidOperationException($"Unable to detect server port {_process.StandardOutput.ReadToEnd()} {_process.StandardError.ReadToEnd()}");
+                startupFailureCleanup?.Invoke();
+                throw;
             }
         }
 
