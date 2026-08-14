@@ -10,7 +10,6 @@ This release migrates the library from emitting its own copies of the OpenAI Res
 - Added `AgentReference` and `ResponseId` extension properties on `OpenAI.Responses.ResponseItem` (via `ResponseItemExtensions`), and `Agent`/`AgentConversationId` on `OpenAI.Responses.ResponseResult` (via `ResponseResultExtensions`). These replace the instance properties that were declared on the removed `AgentResponseItem` base type, and are read-only.
 - Added `ResponseItemKindExtensions` and `ResponseToolKindExtensions`, which surface the Azure-specific kinds (for example `ResponseToolKind.BingGrounding`, `ResponseItemKind.AzureAISearchCall`) as named members on the upstream `OpenAI.Responses.ResponseToolKind` and `ResponseItemKind` extensible enums.
 - `FabricIQPreviewTool.RequireApproval` is now the strongly-typed `FabricIQPreviewToolRequireApprovalChoice` instead of a raw `BinaryData`. It converts implicitly from both `string` and `OpenAI.Responses.McpToolCallApprovalPolicy`.
-- Added an implicit conversion from `ProjectOpenAIClientOptions` to `ProjectResponsesClientOptions` that copies all public configuration (endpoint, organization/project IDs, user-agent application ID, pipeline/retry/logging/transport settings, network timeout, distributed tracing flag, `ApiVersion`, and `AgentName`).
 - The `ProjectResponsesClient` constructors accept `ProjectResponsesClientOptions`, including parameterless-options overloads so `new ProjectResponsesClient(projectEndpoint, tokenProvider)` resolves to a visible constructor without requiring an options argument.
 - Added `MemoryLimit` and `NetworkPolicy` extension properties on `OpenAI.Responses.AutomaticCodeInterpreterToolContainerConfiguration` (via `AutomaticCodeInterpreterToolContainerConfigurationExtensions`). These properties use the `OpenAI.Containers.ContainerMemoryLimit` and `OpenAI.Containers.ContainerNetworkPolicy` types and preserve the Foundry `memory_limit` and `network_policy` request fields.
 
@@ -49,7 +48,7 @@ This release migrates the library from emitting its own copies of the OpenAI Res
   | `ResponsesMemorySearchOptions` | `MemorySearchOptions` |
   | `ResponsesMemorySearchPreviewTool` | `MemorySearchPreviewTool` |
   | `ResponsesMicrosoftFabricPreviewTool` | `MicrosoftFabricPreviewTool` |
-  | `ResponsesOpenApiAnonymousAuthDetails` | `OpenAPIAnonymousAuthenticationDetails` |
+  | `ResponsesOpenApiAnonymousAuthDetails` | `OpenApiAnonymousAuthenticationDetails` |
   | `ResponsesOpenApiAuthDetails` | `OpenApiAuthenticationDetails` |
   | `ResponsesOpenApiFunctionDefinition` | `OpenApiFunctionDefinition` |
   | `ResponsesOpenApiFunctionDefinitionFunction` | `OpenApiFunctionDefinitionFunction` |
@@ -57,13 +56,20 @@ This release migrates the library from emitting its own copies of the OpenAI Res
   | `ResponsesOpenApiManagedSecurityScheme` | `OpenApiManagedSecurityScheme` |
   | `ResponsesOpenApiProjectConnectionAuthDetails` | `OpenApiProjectConnectionAuthenticationDetails` |
   | `ResponsesOpenApiProjectConnectionSecurityScheme` | `OpenApiProjectConnectionSecurityScheme` |
-  | `ResponsesOpenApiTool` | `OpenAPITool` |
+  | `ResponsesOpenApiTool` | `OpenApiTool` |
   | `ResponsesSharepointGroundingToolParameters` | `SharePointGroundingToolOptions` |
-  | `ResponsesSharepointPreviewTool` | `SharepointPreviewTool` |
+  | `ResponsesSharepointPreviewTool` | `SharePointPreviewTool` |
   | `ResponsesStructuredOutputDefinition` | `StructuredOutputDefinition` |
   | `ResponsesToolProjectConnection` | `ToolProjectConnection` |
   | `ResponsesWebSearchConfiguration` | `WebSearchConfiguration` |
   | `ResponsesWorkIQPreviewTool` | `WorkIQPreviewTool` |
+- **Other renames** were done:
+
+  | Old (2.x) | New (3.0.0-beta.1) |
+  | --- | --- |
+  | `OpenAPIAnonymousAuthenticationDetails` | `OpenApiAnonymousAuthenticationDetails` |
+  | `SharepointGroundingToolCall` | `SharePointGroundingToolCall` |
+  | `SharepointGroundingToolCallOutput` | `SharePointGroundingToolCallOutput` |
 
   The built-in tool and item types that OpenAI already models (for example computer-use, web-search, function, and MCP tools) are no longer emitted by this library; use the corresponding `OpenAI.Responses` types instead.
 - **Members were renamed alongside their declaring types:**

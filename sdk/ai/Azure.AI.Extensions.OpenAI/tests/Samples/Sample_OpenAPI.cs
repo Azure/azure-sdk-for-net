@@ -44,11 +44,11 @@ public class Sample_OpenAPI : ProjectsOpenAITestBase
         string filePath = GetFile();
         OpenApiFunctionDefinition toolDefinition = new(
             name: "get_weather",
-            specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
-            authentication: new OpenAPIAnonymousAuthenticationDetails()
+            specification: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+            authentication: new OpenApiAnonymousAuthenticationDetails()
         );
         toolDefinition.Description = "Retrieve weather information for a location.";
-        OpenAPITool openapiTool = new(toolDefinition);
+        OpenApiTool openapiTool = new(toolDefinition);
 
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
@@ -89,11 +89,11 @@ public class Sample_OpenAPI : ProjectsOpenAITestBase
         string filePath = GetFile();
         OpenApiFunctionDefinition toolDefinition = new(
             name: "get_weather",
-            specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
-            authentication: new OpenAPIAnonymousAuthenticationDetails()
+            specification: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+            authentication: new OpenApiAnonymousAuthenticationDetails()
         );
         toolDefinition.Description = "Retrieve weather information for a location.";
-        OpenAPITool openapiTool = new(toolDefinition);
+        OpenApiTool openapiTool = new(toolDefinition);
 
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {

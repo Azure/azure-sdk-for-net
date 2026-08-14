@@ -9,7 +9,7 @@ namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary>
     /// authentication details for OpenApiFunctionDefinition
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAPIAnonymousAuthenticationDetails"/>, <see cref="OpenApiProjectConnectionAuthenticationDetails"/>, and <see cref="OpenApiManagedAuthenticationDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenApiAnonymousAuthenticationDetails"/>, <see cref="OpenApiProjectConnectionAuthenticationDetails"/>, and <see cref="OpenApiManagedAuthenticationDetails"/>.
     /// </summary>
     public abstract partial class OpenApiAuthenticationDetails
     {

@@ -32,7 +32,7 @@ public partial class AzureFunctionDefinitionFunction
 [CodeGenType("MicrosoftFabricPreviewTool")] public partial class MicrosoftFabricPreviewTool { }
 [CodeGenType("OpenApiManagedSecurityScheme")] public partial class OpenApiManagedSecurityScheme { }
 [CodeGenType("OpenApiProjectConnectionSecurityScheme")] public partial class OpenApiProjectConnectionSecurityScheme { }
-[CodeGenType("SharepointPreviewTool")] public partial class SharepointPreviewTool { }
+[CodeGenType("SharepointPreviewTool")] public partial class SharePointPreviewTool { }
 [CodeGenType("StructuredOutputDefinition")] public partial class StructuredOutputDefinition { }
 [CodeGenType("ToolProjectConnection")] public partial class ToolProjectConnection { }
 [CodeGenType("WebSearchConfiguration")] public partial class WebSearchConfiguration { }

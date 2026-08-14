@@ -113,11 +113,11 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> The input definition information for a sharepoint tool as used to configure an agent. </summary>
         /// <param name="toolOptions"> The sharepoint grounding tool parameters. </param>
-        /// <returns> A new <see cref="OpenAI.SharepointPreviewTool"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="OpenAI.SharePointPreviewTool"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static SharepointPreviewTool SharepointPreviewTool(SharePointGroundingToolOptions toolOptions = default)
+        public static SharePointPreviewTool SharePointPreviewTool(SharePointGroundingToolOptions toolOptions = default)
         {
-            return new SharepointPreviewTool("sharepoint_grounding_preview", toolOptions, additionalBinaryDataProperties: null);
+            return new SharePointPreviewTool("sharepoint_grounding_preview", toolOptions, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The sharepoint grounding tool parameters. </summary>
@@ -190,13 +190,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="functionDefinition"> The openapi function definition. </param>
-        /// <returns> A new <see cref="OpenAI.OpenAPITool"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="OpenAI.OpenApiTool"/> instance for mocking. </returns>
         [Experimental("AAIP002")]
-        public static OpenAPITool OpenAPITool(IDictionary<string, ToolConfig> toolConfigs = default, OpenApiFunctionDefinition functionDefinition = default)
+        public static OpenApiTool OpenApiTool(IDictionary<string, ToolConfig> toolConfigs = default, OpenApiFunctionDefinition functionDefinition = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
 
-            return new OpenAPITool("openapi", toolConfigs, functionDefinition, additionalBinaryDataProperties: null);
+            return new OpenApiTool("openapi", toolConfigs, functionDefinition, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The input definition information for an openapi function. </summary>
@@ -207,9 +207,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="defaultParameters"> List of OpenAPI spec parameters that will use user-provided defaults. </param>
         /// <param name="functions"> List of function definitions used by OpenApi tool. </param>
         /// <returns> A new <see cref="OpenAI.OpenApiFunctionDefinition"/> instance for mocking. </returns>
-        public static OpenApiFunctionDefinition OpenApiFunctionDefinition(string name = default, string description = default, IDictionary<string, BinaryData> specification = default, OpenApiAuthenticationDetails authentication = default, IEnumerable<string> defaultParameters = default, IEnumerable<OpenApiFunctionDefinitionFunction> functions = default)
+        public static OpenApiFunctionDefinition OpenApiFunctionDefinition(string name = default, string description = default, BinaryData specification = default, OpenApiAuthenticationDetails authentication = default, IEnumerable<string> defaultParameters = default, IEnumerable<OpenApiFunctionDefinitionFunction> functions = default)
         {
-            specification ??= new ChangeTrackingDictionary<string, BinaryData>();
             defaultParameters ??= new ChangeTrackingList<string>();
             functions ??= new ChangeTrackingList<OpenApiFunctionDefinitionFunction>();
 
@@ -225,7 +224,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary>
         /// authentication details for OpenApiFunctionDefinition
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.OpenAPIAnonymousAuthenticationDetails"/>, <see cref="OpenAI.OpenApiProjectConnectionAuthenticationDetails"/>, and <see cref="OpenAI.OpenApiManagedAuthenticationDetails"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.OpenApiAnonymousAuthenticationDetails"/>, <see cref="OpenAI.OpenApiProjectConnectionAuthenticationDetails"/>, and <see cref="OpenAI.OpenApiManagedAuthenticationDetails"/>.
         /// </summary>
         /// <param name="kind"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>
         /// <returns> A new <see cref="OpenAI.OpenApiAuthenticationDetails"/> instance for mocking. </returns>
@@ -235,10 +234,10 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Security details for OpenApi anonymous authentication. </summary>
-        /// <returns> A new <see cref="OpenAI.OpenAPIAnonymousAuthenticationDetails"/> instance for mocking. </returns>
-        public static OpenAPIAnonymousAuthenticationDetails OpenAPIAnonymousAuthenticationDetails()
+        /// <returns> A new <see cref="OpenAI.OpenApiAnonymousAuthenticationDetails"/> instance for mocking. </returns>
+        public static OpenApiAnonymousAuthenticationDetails OpenApiAnonymousAuthenticationDetails()
         {
-            return new OpenAPIAnonymousAuthenticationDetails(default, additionalBinaryDataProperties: null);
+            return new OpenApiAnonymousAuthenticationDetails(default, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Security details for OpenApi project connection authentication. </summary>
@@ -663,11 +662,11 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="callId"></param>
         /// <param name="arguments"></param>
         /// <param name="status"></param>
-        /// <returns> A new <see cref="OpenAI.SharepointGroundingToolCall"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="OpenAI.SharePointGroundingToolCall"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static SharepointGroundingToolCall SharepointGroundingToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
+        public static SharePointGroundingToolCall SharePointGroundingToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
         {
-            return new SharepointGroundingToolCall(
+            return new SharePointGroundingToolCall(
                 @type,
                 id,
                 agentReference,
@@ -686,11 +685,11 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="callId"></param>
         /// <param name="output"></param>
         /// <param name="status"></param>
-        /// <returns> A new <see cref="OpenAI.SharepointGroundingToolCallOutput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="OpenAI.SharePointGroundingToolCallOutput"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static SharepointGroundingToolCallOutput SharepointGroundingToolCallOutput(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
+        public static SharePointGroundingToolCallOutput SharePointGroundingToolCallOutput(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
         {
-            return new SharepointGroundingToolCallOutput(
+            return new SharePointGroundingToolCallOutput(
                 @type,
                 id,
                 agentReference,

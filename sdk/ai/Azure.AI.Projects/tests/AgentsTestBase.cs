@@ -354,7 +354,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         return tool;
     }
 
-    private global::Azure.AI.Extensions.OpenAI.OpenAPITool GetOpenAPITool(AIProjectClient projectClient, bool withConnection)
+    private global::Azure.AI.Extensions.OpenAI.OpenApiTool GetOpenAPITool(AIProjectClient projectClient, bool withConnection)
     {
         global::Azure.AI.Extensions.OpenAI.OpenApiAuthenticationDetails auth;
         string filePath;
@@ -367,25 +367,25 @@ public class AgentsTestBase : ProjectsClientTestBase
         }
         else
         {
-            auth = new global::Azure.AI.Extensions.OpenAI.OpenAPIAnonymousAuthenticationDetails();
+            auth = new global::Azure.AI.Extensions.OpenAI.OpenApiAnonymousAuthenticationDetails();
             filePath = GetAgentTestFile(name: "weather_openapi.json");
         }
         global::Azure.AI.Extensions.OpenAI.OpenApiFunctionDefinition functionDefinition = new global::Azure.AI.Extensions.OpenAI.OpenApiFunctionDefinition(
             name: withConnection ? "tripadvisor" : "get_weather",
-            specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+            specification: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
             authentication: auth
         );
         functionDefinition.Description = withConnection ? "Trip Advisor API to get travel information." : "Retrieve weather information for a location.";
         return new(functionDefinition);
     }
 
-    private global::Azure.AI.Extensions.OpenAI.SharepointPreviewTool GetSharepointTool(AIProjectClient projectClient)
+    private SharePointPreviewTool GetSharepointTool(AIProjectClient projectClient)
     {
         global::Azure.AI.Extensions.OpenAI.SharePointGroundingToolOptions sharepointToolOption = new()
         {
             ProjectConnections = { new global::Azure.AI.Extensions.OpenAI.ToolProjectConnection(projectConnectionId: TestEnvironment.SHAREPOINT_CONNECTION_ID) }
         };
-        return new global::Azure.AI.Extensions.OpenAI.SharepointPreviewTool(sharepointToolOption);
+        return new global::Azure.AI.Extensions.OpenAI.SharePointPreviewTool(sharepointToolOption);
     }
 
     private global::Azure.AI.Extensions.OpenAI.MicrosoftFabricPreviewTool GetMicrosoftFabricAgentTool()

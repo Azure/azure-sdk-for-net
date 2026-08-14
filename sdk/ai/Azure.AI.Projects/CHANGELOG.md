@@ -8,6 +8,7 @@
 - Added distributed tracing support.
 
 ### Breaking Changes
+- The `GetConnectionAsync` and `GetConnection` methods of `AIProjectConnectionsOperations` are now returning `Task<ClientResult<AIProjectConnection>>` and `ClientResult<AIProjectConnection>` respectively.
 
 ### Bugs Fixed
 - Fix the Foundry-Features header, resulting in 400 error during Agent optimization jobs submission.

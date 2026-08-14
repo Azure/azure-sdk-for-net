@@ -43,8 +43,8 @@ public class ResponseItemDeserializationTests
         yield return Case(ResponseItemKind.OAuthConsentRequest, typeof(OAuthConsentRequestResponseItem));
         yield return Case(ResponseItemKind.OpenApiCall, typeof(OpenApiToolCall));
         yield return Case(ResponseItemKind.OpenApiCallOutput, typeof(OpenApiToolCallOutput));
-        yield return Case(ResponseItemKind.SharepointGroundingPreviewCall, typeof(SharepointGroundingToolCall));
-        yield return Case(ResponseItemKind.SharepointGroundingPreviewCallOutput, typeof(SharepointGroundingToolCallOutput));
+        yield return Case(ResponseItemKind.SharepointGroundingPreviewCall, typeof(SharePointGroundingToolCall));
+        yield return Case(ResponseItemKind.SharepointGroundingPreviewCallOutput, typeof(SharePointGroundingToolCallOutput));
 
         static TestCaseData Case(ResponseItemKind discriminator, Type expectedType)
             => new TestCaseData(discriminator, expectedType).SetName($"{{m}}({discriminator} => {expectedType.Name})");

@@ -28,22 +28,6 @@ public partial class OAuthConsentRequestResponseItem
     public OAuthConsentRequestResponseItem(string consentLink, string serverLabel) : this(new Uri(consentLink), serverLabel)
     { }
 
-    /// <summary> Initializes a new instance of <see cref="OAuthConsentRequestResponseItem"/>. </summary>
-    /// <param name="type"></param>
-    /// <param name="id"></param>
-    /// <param name="agentReference"> The agent that created the item. </param>
-    /// <param name="responseId"> The response on which the item is created. </param>
-    /// <param name="consentLink"> The link the user can use to perform OAuth consent. </param>
-    /// <param name="serverLabel"> The server label for the OAuth consent request. </param>
-    /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-    internal OAuthConsentRequestResponseItem(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, Uri consentLink, string serverLabel, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.OAuthConsentRequest)
-    {
-        ConsentLink = consentLink;
-        ServerLabel = serverLabel;
-        _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        Id = id;
-    }
-
     /// <summary> Initializes a new instance of <see cref="OAuthConsentRequestResponseItem"/> for deserialization. </summary>
     internal OAuthConsentRequestResponseItem() : base(ResponseItemKind.OAuthConsentRequest)
     {

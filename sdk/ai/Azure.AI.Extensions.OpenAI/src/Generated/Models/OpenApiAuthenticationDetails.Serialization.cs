@@ -10,7 +10,7 @@ namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary>
     /// authentication details for OpenApiFunctionDefinition
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAPIAnonymousAuthenticationDetails"/>, <see cref="OpenApiProjectConnectionAuthenticationDetails"/>, and <see cref="OpenApiManagedAuthenticationDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenApiAnonymousAuthenticationDetails"/>, <see cref="OpenApiProjectConnectionAuthenticationDetails"/>, and <see cref="OpenApiManagedAuthenticationDetails"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownOpenApiAuthenticationDetails))]
     public abstract partial class OpenApiAuthenticationDetails : IJsonModel<OpenApiAuthenticationDetails>
@@ -127,7 +127,7 @@ namespace Azure.AI.Extensions.OpenAI
                 switch (discriminator.GetString())
                 {
                     case "anonymous":
-                        return OpenAPIAnonymousAuthenticationDetails.DeserializeOpenAPIAnonymousAuthenticationDetails(element, options);
+                        return OpenApiAnonymousAuthenticationDetails.DeserializeOpenApiAnonymousAuthenticationDetails(element, options);
                     case "project_connection":
                         return OpenApiProjectConnectionAuthenticationDetails.DeserializeOpenApiProjectConnectionAuthenticationDetails(element, options);
                     case "managed_identity":

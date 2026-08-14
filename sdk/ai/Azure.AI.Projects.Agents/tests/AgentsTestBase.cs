@@ -298,7 +298,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             ToolType.OpenAPI => new OpenApiToolboxTool(new OpenApiFunctionDefinition(
                 name: "get_weather",
                 specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(GetTestFile("weather_openapi.json"))),
-                authentication: new OpenAPIAnonymousAuthenticationDetails()
+                authentication: new OpenApiAnonymousAuthenticationDetails()
             ))
             {
                 Name = "open-api",

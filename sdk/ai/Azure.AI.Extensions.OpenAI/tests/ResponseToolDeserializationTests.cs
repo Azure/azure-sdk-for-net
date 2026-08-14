@@ -32,8 +32,8 @@ public class ResponseToolDeserializationTests
         yield return Case(ResponseToolKind.FabricIQPreview, typeof(FabricIQPreviewTool));
         yield return Case(ResponseToolKind.MemorySearchPreview, typeof(MemorySearchPreviewTool));
         yield return Case(ResponseToolKind.FabricDataAgentPreview, typeof(MicrosoftFabricPreviewTool));
-        yield return Case(ResponseToolKind.OpenAPI, typeof(OpenAPITool));
-        yield return Case(ResponseToolKind.SharePointGroundingPreview, typeof(SharepointPreviewTool));
+        yield return Case(ResponseToolKind.OpenAPI, typeof(OpenApiTool));
+        yield return Case(ResponseToolKind.SharePointGroundingPreview, typeof(SharePointPreviewTool));
         yield return Case(ResponseToolKind.WorkIQPreview, typeof(WorkIQPreviewTool));
 
         static TestCaseData Case(ResponseToolKind discriminator, Type expectedType)

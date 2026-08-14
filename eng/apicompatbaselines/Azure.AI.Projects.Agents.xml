@@ -27,10 +27,6 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0001</DiagnosticId>
-    <Target>T:Azure.AI.Projects.Agents.AzureFunctionDefinitionFunction</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0001</DiagnosticId>
     <Target>T:Azure.AI.Projects.Agents.AzureFunctionStorageQueue</Target>
   </Suppression>
   <Suppression>
@@ -151,6 +147,38 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.AzureFunctionDefinitionFunction.#ctor(System.String,System.BinaryData)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.AzureFunctionDefinitionFunction.JsonModelCreateCore(System.Text.Json.Utf8JsonReader@,System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.AzureFunctionDefinitionFunction.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.AzureFunctionDefinitionFunction.PersistableModelCreateCore(System.BinaryData,System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.AzureFunctionDefinitionFunction.PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.AzureFunctionDefinitionFunction.set_Description(System.String)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.AzureFunctionDefinitionFunction.set_Name(System.String)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Agents.AzureFunctionDefinitionFunction.set_Parameters(System.BinaryData)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Azure.AI.Projects.Agents.BingCustomSearchConfiguration.#ctor(System.String,System.String)</Target>
   </Suppression>
   <Suppression>
@@ -260,10 +288,6 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Azure.AI.Projects.Agents.ProjectsAgentsModelFactory.AzureFunctionDefinition(Azure.AI.Projects.Agents.AzureFunctionDefinitionFunction,Azure.AI.Projects.Agents.AzureFunctionBinding,Azure.AI.Projects.Agents.AzureFunctionBinding)</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Agents.ProjectsAgentsModelFactory.AzureFunctionDefinitionFunction(System.String,System.String,System.BinaryData)</Target>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
@@ -404,6 +428,10 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Azure.AI.Projects.Agents.WebSearchToolExtensions.set_CustomSearchConfiguration(OpenAI.Responses.WebSearchTool,Azure.AI.Projects.Agents.ProjectWebSearchConfiguration)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0009</DiagnosticId>
+    <Target>T:Azure.AI.Projects.Agents.AzureFunctionDefinitionFunction</Target>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0009</DiagnosticId>

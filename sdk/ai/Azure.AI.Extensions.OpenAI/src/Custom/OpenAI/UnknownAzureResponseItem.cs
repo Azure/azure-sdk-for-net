@@ -53,8 +53,8 @@ namespace Azure.AI.Extensions.OpenAI
                 [ResponseItemKind.OAuthConsentRequest] = (typeof(OAuthConsentRequestResponseItem), OAuthConsentRequestResponseItem.DeserializeOAuthConsentRequestResponseItem),
                 [ResponseItemKind.OpenApiCall] = (typeof(OpenApiToolCall), OpenApiToolCall.DeserializeOpenApiToolCall),
                 [ResponseItemKind.OpenApiCallOutput] = (typeof(OpenApiToolCallOutput), OpenApiToolCallOutput.DeserializeOpenApiToolCallOutput),
-                [ResponseItemKind.SharepointGroundingPreviewCall] = (typeof(SharepointGroundingToolCall), SharepointGroundingToolCall.DeserializeSharepointGroundingToolCall),
-                [ResponseItemKind.SharepointGroundingPreviewCallOutput] = (typeof(SharepointGroundingToolCallOutput), SharepointGroundingToolCallOutput.DeserializeSharepointGroundingToolCallOutput),
+                [ResponseItemKind.SharepointGroundingPreviewCall] = (typeof(SharePointGroundingToolCall), SharePointGroundingToolCall.DeserializeSharePointGroundingToolCall),
+                [ResponseItemKind.SharepointGroundingPreviewCallOutput] = (typeof(SharePointGroundingToolCallOutput), SharePointGroundingToolCallOutput.DeserializeSharePointGroundingToolCallOutput),
             };
 
         internal UnknownAzureResponseItem()

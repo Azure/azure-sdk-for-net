@@ -13,7 +13,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> The kind of the security setting. </summary>
+    /// <summary>
+    /// The kind of the security setting
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="DataExportSettings"/> and <see cref="AlertSyncSettings"/>.
+    /// </summary>
     public partial class SecuritySettingData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
