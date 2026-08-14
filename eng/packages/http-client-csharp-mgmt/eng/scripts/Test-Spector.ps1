@@ -22,7 +22,7 @@ foreach ($specFile in Get-Sorted-Specs) {
     $subPath = Get-SubPath $specFile
 
     # skip the HTTP root folder when computing the namespace filter
-    $folders = $subPath.Split([System.IO.Path]::DirectorySeparatorChar) | Select-Object -Skip 1
+    $folders = $subPath -split '[\\/]' | Select-Object -Skip 1
 
     if (-not (Compare-Paths $subPath $filter)) {
         continue
@@ -43,6 +43,11 @@ foreach ($specFile in Get-Sorted-Specs) {
           $testFilter += ".$segment"
           $testPath = Join-Path $testPath $segment
         }
+    }
+
+    if (-not (Test-Path $testPath)) {
+        Write-Host "Skipping $subPath because no test directory exists at $testPath" -ForegroundColor Yellow
+        continue
     }
 
     Write-Host "Regenerating $subPath" -ForegroundColor Cyan

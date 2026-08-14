@@ -52,7 +52,7 @@ $spectorLaunchProjects = @{}
 
 foreach ($specFile in Get-Sorted-Specs) {
     $subPath = Get-SubPath $specFile
-    $folders = $subPath.Split([System.IO.Path]::DirectorySeparatorChar)
+    $folders = $subPath -split '[\\/]'
 
     if (-not (Compare-Paths $subPath $filter)) {
         continue
@@ -70,7 +70,7 @@ foreach ($specFile in Get-Sorted-Specs) {
 
     Write-Host "Generating $subPath" -ForegroundColor Cyan
 
-    $spectorLaunchProjects.Add(($folders -join "-"), ("TestProjects/Spector/$($subPath.Replace([System.IO.Path]::DirectorySeparatorChar, '/'))"))
+    $spectorLaunchProjects.Add(($folders -join "-"), "TestProjects/Spector/$subPath")
     if ($LaunchOnly) {
         continue
     }

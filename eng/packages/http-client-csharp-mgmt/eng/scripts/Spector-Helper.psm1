@@ -49,7 +49,7 @@ function IsValidSpecDir {
 
     $subPath = Get-SubPath $fullPath
 
-    if ($failingSpecs.Contains($subPath)) {
+    if ($failingSpecs.Contains(($subPath -replace '\\', '/'))) {
         Write-Host "Skipping $subPath" -ForegroundColor Yellow
         return $false
     }
@@ -108,10 +108,10 @@ function Get-SubPath {
     # also strip off the spec file name if present
     $leaf = Split-Path -Leaf $subPath
     if ($leaf -like '*.tsp') {
-        return (Split-Path $subPath)
+        return ((Split-Path $subPath) -replace '\\', '/')
     }
 
-    return $subPath
+    return ($subPath -replace '\\', '/')
 }
 
 Export-ModuleMember -Function "Get-Namespace"

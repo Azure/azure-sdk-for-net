@@ -32,7 +32,18 @@ namespace TestProjects.Spector.Tests.Http.Azure.ResourceManager.OperationTemplat
             }
             """;
 
-        protected override string WirePayload => JsonPayload;
+        protected override string WirePayload => """
+            {
+                "location": "eastus",
+                "tags": {
+                    "tagKey1": "tagValue1"
+                },
+                "properties": {
+                    "name": "Widget One",
+                    "description": "Test widget"
+                }
+            }
+            """;
 
         protected override WidgetData GetModelInstance()
         {
@@ -41,15 +52,21 @@ namespace TestProjects.Spector.Tests.Http.Azure.ResourceManager.OperationTemplat
 
         protected override void VerifyModel(WidgetData model, string format)
         {
-            Assert.That(model.Id.ToString(), Is.EqualTo("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Azure.ResourceManager.OperationTemplates/widgets/widget1"));
-            Assert.That(model.Name, Is.EqualTo("widget1"));
+            if (format == "J")
+            {
+                Assert.That(model.Id.ToString(), Is.EqualTo("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Azure.ResourceManager.OperationTemplates/widgets/widget1"));
+                Assert.That(model.Name, Is.EqualTo("widget1"));
+            }
             Assert.That(model.Location.Name, Is.EqualTo("eastus"));
             Assert.That(model.Tags, Is.Not.Null);
             Assert.That(model.Tags["tagKey1"], Is.EqualTo("tagValue1"));
             Assert.That(model.Properties, Is.Not.Null);
             Assert.That(model.Properties.Name, Is.EqualTo("Widget One"));
             Assert.That(model.Properties.Description, Is.EqualTo("Test widget"));
-            Assert.That(model.Properties.ProvisioningState, Is.EqualTo("Succeeded"));
+            if (format == "J")
+            {
+                Assert.That(model.Properties.ProvisioningState, Is.EqualTo("Succeeded"));
+            }
         }
 
         protected override void CompareModels(WidgetData model, WidgetData model2, string format)
