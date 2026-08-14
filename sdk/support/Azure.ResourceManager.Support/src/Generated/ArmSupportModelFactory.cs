@@ -515,45 +515,9 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="secondaryConsent"> This property indicates secondary consents for the support ticket. </param>
         /// <returns> A new <see cref="Support.SupportTicketData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SupportTicketData SupportTicketData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string supportTicketId = default, string description = default, string problemClassificationId = default, string problemClassificationDisplayName = default, SupportSeverityLevel severity = default, string enrollmentId = default, bool? require24X7Response = default, AdvancedDiagnosticConsent advancedDiagnosticConsent = default, string problemScopingQuestions = default, string supportPlanId = default, SupportContactProfile contactDetails = default, SupportServiceLevelAgreement serviceLevelAgreement = default, string supportEngineerEmailAddress = default, string supportPlanType = default, string supportPlanDisplayName = default, string title = default, DateTimeOffset? problemStartOn = default, string serviceId = default, string serviceDisplayName = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, string fileWorkspaceName = default, IsTemporaryTicket? isTemporaryTicket = default, ResourceIdentifier technicalTicketDetailsResourceId = default, QuotaTicketDetails quotaTicketDetails = default, IEnumerable<SecondaryConsent> secondaryConsent = default)
+        public static SupportTicketData SupportTicketData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string supportTicketId, string description, string problemClassificationId, string problemClassificationDisplayName, SupportSeverityLevel severity, string enrollmentId, bool? require24X7Response, AdvancedDiagnosticConsent advancedDiagnosticConsent, string problemScopingQuestions, string supportPlanId, SupportContactProfile contactDetails, SupportServiceLevelAgreement serviceLevelAgreement, string supportEngineerEmailAddress, string supportPlanType, string supportPlanDisplayName, string title, DateTimeOffset? problemStartOn, string serviceId, string serviceDisplayName, string status, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string fileWorkspaceName, IsTemporaryTicket? isTemporaryTicket, ResourceIdentifier technicalTicketDetailsResourceId, QuotaTicketDetails quotaTicketDetails, IEnumerable<SecondaryConsent> secondaryConsent)
         {
-            return new SupportTicketData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                supportTicketId is null && description is null && problemClassificationId is null && problemClassificationDisplayName is null && enrollmentId is null && require24X7Response is null && problemScopingQuestions is null && supportPlanId is null && contactDetails is null && serviceLevelAgreement is null && supportEngineerEmailAddress is null && supportPlanType is null && supportPlanDisplayName is null && title is null && problemStartOn is null && serviceId is null && serviceDisplayName is null && status is null && createdOn is null && modifiedOn is null && fileWorkspaceName is null && isTemporaryTicket is null && technicalTicketDetailsResourceId is null && quotaTicketDetails is null && secondaryConsent is null ? default : new SupportTicketDetailsProperties(
-                    supportTicketId,
-                    description,
-                    problemClassificationId,
-                    problemClassificationDisplayName,
-                    severity,
-                    enrollmentId,
-                    require24X7Response,
-                    advancedDiagnosticConsent,
-                    problemScopingQuestions,
-                    supportPlanId,
-                    contactDetails,
-                    serviceLevelAgreement,
-                    new SupportEngineer(supportEngineerEmailAddress, default),
-                    supportPlanType,
-                    supportPlanDisplayName,
-                    title,
-                    problemStartOn,
-                    serviceId,
-                    serviceDisplayName,
-                    status,
-                    createdOn,
-                    modifiedOn,
-                    fileWorkspaceName,
-                    isTemporaryTicket,
-                    new TechnicalTicketDetails(technicalTicketDetailsResourceId, default),
-                    quotaTicketDetails,
-                    (secondaryConsent ?? new ChangeTrackingList<SecondaryConsent>()).ToList(),
-                    default,
-                    default,
-                    default),
-                default);
+            return SupportTicketData(id: id, name: name, resourceType: resourceType, systemData: systemData, supportTicketId: supportTicketId, description: description, problemClassificationId: problemClassificationId, problemClassificationDisplayName: problemClassificationDisplayName, severity: severity, enrollmentId: enrollmentId, require24X7Response: require24X7Response, advancedDiagnosticConsent: advancedDiagnosticConsent, problemScopingQuestions: problemScopingQuestions, supportPlanId: supportPlanId, contactDetails: contactDetails, serviceLevelAgreement: serviceLevelAgreement, supportPlanType: supportPlanType, supportPlanDisplayName: supportPlanDisplayName, title: title, problemStartOn: problemStartOn, serviceId: serviceId, serviceDisplayName: serviceDisplayName, status: status, createdOn: createdOn, modifiedOn: modifiedOn, fileWorkspaceName: fileWorkspaceName, isTemporaryTicket: isTemporaryTicket, quotaTicketDetails: quotaTicketDetails, secondaryConsent: secondaryConsent, directConnectEscalation: default, communityForumPost: default, supportEngineerEmailAddress: supportEngineerEmailAddress, technicalTicketDetailsResourceId: technicalTicketDetailsResourceId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ChatTranscriptMessageProperties"/>. </summary>
@@ -564,7 +528,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="createdOn"> Time in UTC (ISO 8601 format) when the communication was created. </param>
         /// <returns> A new <see cref="Models.ChatTranscriptMessageProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ChatTranscriptMessageProperties ChatTranscriptMessageProperties(TranscriptContentType? contentType = default, SupportTicketCommunicationDirection? communicationDirection = default, string sender = default, string body = default, DateTimeOffset? createdOn = default)
+        public static ChatTranscriptMessageProperties ChatTranscriptMessageProperties(TranscriptContentType? contentType, SupportTicketCommunicationDirection? communicationDirection, string sender, string body, DateTimeOffset? createdOn)
         {
             return new ChatTranscriptMessageProperties(
                 default,

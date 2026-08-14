@@ -577,86 +577,6 @@ namespace Azure.ResourceManager.StorageMover.Models
             return new JobRunWarning(code, message, target, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="status"> The state of the job execution. </param>
-        /// <param name="scanStatus"> The status of Agent's scanning of source. </param>
-        /// <param name="agentName"> Name of the Agent assigned to this run. </param>
-        /// <param name="agentResourceId"> Fully qualified resource id of the Agent assigned to this run. </param>
-        /// <param name="executionStartOn"> Start time of the run. Null if no Agent reported that the job has started. </param>
-        /// <param name="executionEndOn"> End time of the run. Null if Agent has not reported that the job has ended. </param>
-        /// <param name="triggerType"> Trigger type for the job run. Default is manual. </param>
-        /// <param name="scheduledExecutionOn"> Scheduled execution time. Null if Trigger type is manual. </param>
-        /// <param name="lastStatusUpdate"> The last updated time of the Job Run. </param>
-        /// <param name="itemsScanned"> Number of items scanned so far in source. </param>
-        /// <param name="itemsExcluded"> Number of items that will not be transferred, as they are excluded by user configuration. </param>
-        /// <param name="itemsUnsupported"> Number of items that will not be transferred, as they are unsupported on target. </param>
-        /// <param name="itemsNoTransferNeeded"> Number of items that will not be transferred, as they are already found on target (e.g. mirror mode). </param>
-        /// <param name="itemsFailed"> Number of items that were attempted to transfer and failed. </param>
-        /// <param name="itemsTransferred"> Number of items successfully transferred to target. </param>
-        /// <param name="bytesScanned"> Bytes of data scanned so far in source. </param>
-        /// <param name="bytesExcluded"> Bytes of data that will not be transferred, as they are excluded by user configuration. </param>
-        /// <param name="bytesUnsupported"> Bytes of data that will not be transferred, as they are unsupported on target. </param>
-        /// <param name="bytesNoTransferNeeded"> Bytes of data that will not be transferred, as they are already found on target (e.g. mirror mode). </param>
-        /// <param name="bytesFailed"> Bytes of data that were attempted to transfer and failed. </param>
-        /// <param name="bytesTransferred"> Bytes of data successfully transferred to target. </param>
-        /// <param name="sourceName"> Name of source Endpoint resource. This resource may no longer exist. </param>
-        /// <param name="sourceResourceId"> Fully qualified resource id of source Endpoint. This id may no longer exist. </param>
-        /// <param name="sourceProperties"> Copy of source Endpoint resource's properties at time of Job Run creation. </param>
-        /// <param name="targetName"> Name of target Endpoint resource. This resource may no longer exist. </param>
-        /// <param name="targetResourceId"> Fully qualified resource id of of Endpoint. This id may no longer exist. </param>
-        /// <param name="targetProperties"> Copy of Endpoint resource's properties at time of Job Run creation. </param>
-        /// <param name="jobDefinitionProperties"> Copy of parent Job Definition's properties at time of Job Run creation. </param>
-        /// <param name="error"> Error details. </param>
-        /// <param name="warnings"> Warning details. </param>
-        /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        /// <returns> A new <see cref="StorageMover.JobRunData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static JobRunData JobRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, JobRunStatus? status = default, JobRunScanStatus? scanStatus = default, string agentName = default, ResourceIdentifier agentResourceId = default, DateTimeOffset? executionStartOn = default, DateTimeOffset? executionEndOn = default, StorageMoverJobTriggerType? triggerType = default, DateTimeOffset? scheduledExecutionOn = default, DateTimeOffset? lastStatusUpdate = default, long? itemsScanned = default, long? itemsExcluded = default, long? itemsUnsupported = default, long? itemsNoTransferNeeded = default, long? itemsFailed = default, long? itemsTransferred = default, long? bytesScanned = default, long? bytesExcluded = default, long? bytesUnsupported = default, long? bytesNoTransferNeeded = default, long? bytesFailed = default, long? bytesTransferred = default, string sourceName = default, ResourceIdentifier sourceResourceId = default, BinaryData sourceProperties = default, string targetName = default, ResourceIdentifier targetResourceId = default, BinaryData targetProperties = default, BinaryData jobDefinitionProperties = default, JobRunError error = default, IEnumerable<JobRunWarning> warnings = default, StorageMoverProvisioningState? provisioningState = default)
-        {
-            return new JobRunData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                status is null && scanStatus is null && agentName is null && agentResourceId is null && executionStartOn is null && executionEndOn is null && triggerType is null && scheduledExecutionOn is null && lastStatusUpdate is null && itemsScanned is null && itemsExcluded is null && itemsUnsupported is null && itemsNoTransferNeeded is null && itemsFailed is null && itemsTransferred is null && bytesScanned is null && bytesExcluded is null && bytesUnsupported is null && bytesNoTransferNeeded is null && bytesFailed is null && bytesTransferred is null && sourceName is null && sourceResourceId is null && sourceProperties is null && targetName is null && targetResourceId is null && targetProperties is null && jobDefinitionProperties is null && error is null && warnings is null && provisioningState is null ? default : new JobRunProperties(
-                    status,
-                    scanStatus,
-                    agentName,
-                    agentResourceId,
-                    executionStartOn,
-                    executionEndOn,
-                    triggerType,
-                    scheduledExecutionOn,
-                    lastStatusUpdate,
-                    itemsScanned,
-                    itemsExcluded,
-                    itemsUnsupported,
-                    itemsNoTransferNeeded,
-                    itemsFailed,
-                    itemsTransferred,
-                    bytesScanned,
-                    bytesExcluded,
-                    bytesUnsupported,
-                    bytesNoTransferNeeded,
-                    bytesFailed,
-                    bytesTransferred,
-                    sourceName,
-                    sourceResourceId,
-                    sourceProperties,
-                    targetName,
-                    targetResourceId,
-                    targetProperties,
-                    jobDefinitionProperties,
-                    error,
-                    (warnings ?? new ChangeTrackingList<JobRunWarning>()).ToList(),
-                    provisioningState,
-                    default),
-                default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.AzureStorageBlobContainerEndpointProperties"/>. </summary>
         /// <param name="description"> A description for the Endpoint. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
@@ -666,14 +586,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AzureStorageBlobContainerEndpointProperties AzureStorageBlobContainerEndpointProperties(string description, StorageMoverProvisioningState? provisioningState, string storageAccountResourceId, string blobContainerName)
         {
-            return new AzureStorageBlobContainerEndpointProperties(
-                default,
-                description,
-                default,
-                provisioningState,
-                default,
-                storageAccountResourceId,
-                blobContainerName);
+            return AzureStorageBlobContainerEndpointProperties(description: description, endpointKind: default, provisioningState: provisioningState, storageAccountResourceId: storageAccountResourceId, blobContainerName: blobContainerName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NfsMountEndpointProperties"/>. </summary>
@@ -686,15 +599,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NfsMountEndpointProperties NfsMountEndpointProperties(string description, StorageMoverProvisioningState? provisioningState, string host, NfsVersion? nfsVersion, string export)
         {
-            return new NfsMountEndpointProperties(
-                default,
-                description,
-                default,
-                provisioningState,
-                default,
-                host,
-                nfsVersion,
-                export);
+            return NfsMountEndpointProperties(description: description, endpointKind: default, provisioningState: provisioningState, host: host, nfsVersion: nfsVersion, export: export);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureStorageSmbFileShareEndpointProperties"/>. </summary>
@@ -706,14 +611,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AzureStorageSmbFileShareEndpointProperties AzureStorageSmbFileShareEndpointProperties(string description, StorageMoverProvisioningState? provisioningState, ResourceIdentifier storageAccountResourceId, string fileShareName)
         {
-            return new AzureStorageSmbFileShareEndpointProperties(
-                default,
-                description,
-                default,
-                provisioningState,
-                default,
-                storageAccountResourceId,
-                fileShareName);
+            return AzureStorageSmbFileShareEndpointProperties(description: description, endpointKind: default, provisioningState: provisioningState, storageAccountResourceId: storageAccountResourceId, fileShareName: fileShareName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SmbMountEndpointProperties"/>. </summary>
@@ -726,15 +624,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SmbMountEndpointProperties SmbMountEndpointProperties(string description, StorageMoverProvisioningState? provisioningState, string host, string shareName, AzureKeyVaultSmbCredentials credentials)
         {
-            return new SmbMountEndpointProperties(
-                default,
-                description,
-                default,
-                provisioningState,
-                default,
-                host,
-                shareName,
-                credentials);
+            return SmbMountEndpointProperties(description: description, endpointKind: default, provisioningState: provisioningState, host: host, shareName: shareName, credentials: credentials);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureStorageNfsFileShareEndpointProperties"/>. </summary>
@@ -746,14 +636,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AzureStorageNfsFileShareEndpointProperties AzureStorageNfsFileShareEndpointProperties(string description, StorageMoverProvisioningState? provisioningState, ResourceIdentifier storageAccountResourceId, string fileShareName)
         {
-            return new AzureStorageNfsFileShareEndpointProperties(
-                default,
-                description,
-                default,
-                provisioningState,
-                default,
-                storageAccountResourceId,
-                fileShareName);
+            return AzureStorageNfsFileShareEndpointProperties(description: description, endpointKind: default, provisioningState: provisioningState, storageAccountResourceId: storageAccountResourceId, fileShareName: fileShareName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureMultiCloudConnectorEndpointProperties"/>. </summary>
@@ -765,14 +648,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AzureMultiCloudConnectorEndpointProperties AzureMultiCloudConnectorEndpointProperties(string description, StorageMoverProvisioningState? provisioningState, ResourceIdentifier multiCloudConnectorId, ResourceIdentifier awsS3BucketId)
         {
-            return new AzureMultiCloudConnectorEndpointProperties(
-                default,
-                description,
-                default,
-                provisioningState,
-                default,
-                multiCloudConnectorId,
-                awsS3BucketId);
+            return AzureMultiCloudConnectorEndpointProperties(description: description, endpointKind: default, provisioningState: provisioningState, multiCloudConnectorId: multiCloudConnectorId, awsS3BucketId: awsS3BucketId);
         }
     }
 }
