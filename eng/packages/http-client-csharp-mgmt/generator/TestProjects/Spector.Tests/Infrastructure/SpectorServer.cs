@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
@@ -10,10 +9,15 @@ namespace TestProjects.Spector.Tests
 {
     public class SpectorServer : TestServerBase
     {
-        private static readonly Lazy<string> s_resourceManagerScenariosPath = new(CreateResourceManagerScenariosPath);
+        private readonly string _scenariosRoot;
 
-        public SpectorServer() : base(GetProcessPath(), $"serve {string.Join(" ", GetScenariosPaths())} --port 0 --coverageFile {GetCoverageFilePath()}")
+        public SpectorServer() : this(CreateResourceManagerScenariosPath())
         {
+        }
+
+        private SpectorServer(string scenariosPath) : base(GetProcessPath(), $"serve {scenariosPath} --port 0 --coverageFile {GetCoverageFilePath()}")
+        {
+            _scenariosRoot = Path.GetDirectoryName(scenariosPath)!;
         }
 
         internal static string GetProcessPath()
@@ -28,11 +32,6 @@ namespace TestProjects.Spector.Tests
             return Path.Combine(nodeModules, "@azure-tools", "azure-http-specs");
         }
 
-        internal static IEnumerable<string> GetScenariosPaths()
-        {
-            yield return s_resourceManagerScenariosPath.Value;
-        }
-
         internal static string GetCoverageFilePath()
         {
             return Path.Combine(GetCoverageDirectory(), "tsp-spector-coverage-azure.json");
@@ -40,8 +39,15 @@ namespace TestProjects.Spector.Tests
 
         protected override void Stop(Process process)
         {
-            Process.Start(new ProcessStartInfo("node", $"{GetProcessPath()} server stop --port {Port}"));
-            process.WaitForExit();
+            try
+            {
+                Process.Start(new ProcessStartInfo("node", $"{GetProcessPath()} server stop --port {Port}"));
+                process.WaitForExit();
+            }
+            finally
+            {
+                Directory.Delete(_scenariosRoot, recursive: true);
+            }
         }
 
         private static string CreateResourceManagerScenariosPath()
