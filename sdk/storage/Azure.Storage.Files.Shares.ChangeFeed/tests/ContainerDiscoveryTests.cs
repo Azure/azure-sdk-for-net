@@ -128,9 +128,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Mock<ShareClient> shareClient = new Mock<ShareClient>();
             SetupMockShareWithHeader(shareClient, "");
 
-            System.InvalidOperationException ex = Assert.ThrowsAsync<System.InvalidOperationException>(
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
                 async () => await ContainerDiscovery.DiscoverContainerNameAsync(shareClient.Object, IsAsync, CancellationToken.None));
-            StringAssert.Contains("empty", ex.Message);
+            StringAssert.Contains("empty", ex.InnerException.Message);
         }
 
         [Test]
@@ -139,9 +139,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Mock<ShareClient> shareClient = new Mock<ShareClient>();
             SetupMockShareWithHeader(shareClient, "fileschangefeed-no-prefix");
 
-            System.InvalidOperationException ex = Assert.ThrowsAsync<System.InvalidOperationException>(
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
                 async () => await ContainerDiscovery.DiscoverContainerNameAsync(shareClient.Object, IsAsync, CancellationToken.None));
-            StringAssert.Contains("'$' prefix", ex.Message);
+            StringAssert.Contains("'$' prefix", ex.InnerException.Message);
         }
 
         [Test]

@@ -30,12 +30,10 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public static void ValidateInputString(string snapshot, string paramName)
         {
             if (string.IsNullOrEmpty(snapshot))
-                throw new ArgumentNullException(paramName);
+                throw ShareChangeFeedErrors.ArgumentNull(paramName);
 
             if (!IsValidUtcSnapshot(snapshot))
-                throw new ArgumentException(
-                    $"'{snapshot}' is not a valid UTC ISO 8601 snapshot timestamp (must end with 'Z').",
-                    paramName);
+                throw ShareChangeFeedErrors.InvalidSnapshotTimestamp(snapshot, paramName);
         }
 
         // Snapshot timestamps are surfaced by the service in UTC ISO 8601 with an uppercase 'Z'
@@ -62,32 +60,24 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             string endSnapshot)
         {
             if (!beginMeta.Status.Equals("Finalized", StringComparison.OrdinalIgnoreCase))
-                throw new ArgumentException(
-                    $"Begin snapshot '{beginSnapshot}' is not finalized (status: {beginMeta.Status}). " +
-                    "Wait for the snapshot to be finalized before querying.",
-                    nameof(beginSnapshot));
+                throw ShareChangeFeedErrors.SnapshotNotFinalized("Begin", beginSnapshot, beginMeta.Status, nameof(beginSnapshot));
 
             if (!endMeta.Status.Equals("Finalized", StringComparison.OrdinalIgnoreCase))
-                throw new ArgumentException(
-                    $"End snapshot '{endSnapshot}' is not finalized (status: {endMeta.Status}). " +
-                    "Wait for the snapshot to be finalized before querying.",
-                    nameof(endSnapshot));
+                throw ShareChangeFeedErrors.SnapshotNotFinalized("End", endSnapshot, endMeta.Status, nameof(endSnapshot));
 
             if (beginMeta.SnapshotTimestamp > endMeta.SnapshotTimestamp)
-                throw new ArgumentException(
-                    $"Begin snapshot '{beginSnapshot}' (taken {beginMeta.SnapshotTimestamp:O}) is later than " +
-                    $"end snapshot '{endSnapshot}' (taken {endMeta.SnapshotTimestamp:O}).",
+                throw ShareChangeFeedErrors.BeginSnapshotAfterEnd(
+                    beginSnapshot,
+                    beginMeta.SnapshotTimestamp,
+                    endSnapshot,
+                    endMeta.SnapshotTimestamp,
                     nameof(beginSnapshot));
 
             if (beginMeta.CvId > endMeta.CvId)
-                throw new ArgumentException(
-                    $"Begin snapshot CvId ({beginMeta.CvId}) exceeds end snapshot CvId ({endMeta.CvId}).",
-                    nameof(beginSnapshot));
+                throw ShareChangeFeedErrors.BeginSnapshotCvIdExceedsEnd(beginMeta.CvId, endMeta.CvId, nameof(beginSnapshot));
 
             if (beginMeta.CvId == endMeta.CvId)
-                throw new ArgumentException(
-                    $"Begin and end snapshots have the same CvId ({beginMeta.CvId}); the query range is empty.",
-                    nameof(endSnapshot));
+                throw ShareChangeFeedErrors.EmptySnapshotRange(beginMeta.CvId, nameof(endSnapshot));
         }
     }
 }

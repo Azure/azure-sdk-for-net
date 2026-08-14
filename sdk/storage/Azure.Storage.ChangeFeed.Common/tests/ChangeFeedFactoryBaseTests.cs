@@ -44,7 +44,7 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
                 new Mock<SegmentFactoryBase<TestEvent>>().Object,
                 CreateTestConfig());
 
-            Assert.ThrowsAsync<ArgumentException>(
+            Assert.ThrowsAsync<InvalidOperationException>(
                 async () => await factory.BuildChangeFeed(null, null, null, IsAsync, CancellationToken.None));
         }
 
@@ -89,8 +89,8 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             containerClient.Setup(r => r.Uri).Returns(new Uri("https://account1.blob.core.windows.net/container"));
 
             // Make the existence check fail right after ValidateCursor returns. The resulting
-            // ArgumentException carries a different message, which lets us prove we got past
-            // the cursor check rather than relying on absence of throw.
+            // InvalidOperationException carries a different message, which lets us prove we got
+            // past the cursor check rather than relying on absence of throw.
             if (IsAsync)
                 containerClient.Setup(r => r.ExistsAsync(It.IsAny<CancellationToken>())).ReturnsAsync(Response.FromValue(false, null));
             else
@@ -105,10 +105,10 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
                 new Mock<SegmentFactoryBase<TestEvent>>().Object,
                 CreateTestConfig());
 
-            ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(
+            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(
                 async () => await factory.BuildChangeFeed(null, null, continuation, IsAsync, CancellationToken.None));
-            StringAssert.DoesNotContain("URL Host", ex.Message);
-            StringAssert.Contains("Change Feed hasn't been enabled", ex.Message);
+            StringAssert.DoesNotContain("host", ex.Message);
+            StringAssert.Contains("Change Feed is not enabled", ex.Message);
         }
 
         /// <summary>
