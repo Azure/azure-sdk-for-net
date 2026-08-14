@@ -53,20 +53,28 @@ internal sealed class VoiceWebSocketLifecycle : IInvocationsWebSocketEndpointLif
         InvocationContext context,
         CancellationToken cancellationToken)
     {
-        var outcome = await HandleAsync(
-            _handler,
-            webSocket,
-            context,
-            _telemetry.Context,
-            cancellationToken).ConfigureAwait(false);
-        if (outcome is { } value)
+        try
         {
-            _telemetry.ObserveHandlerOutcome(value, cancellationToken);
+            var outcome = await HandleAsync(
+                _handler,
+                webSocket,
+                context,
+                _telemetry.Context,
+                cancellationToken).ConfigureAwait(false);
+            if (outcome is { } value)
+            {
+                _telemetry.ObserveHandlerOutcome(value, cancellationToken);
+            }
+            return outcome;
         }
-        return outcome;
+        catch (OperationCanceledException exception)
+            when (exception.CancellationToken == cancellationToken &&
+                  cancellationToken.IsCancellationRequested)
+        {
+            _telemetry.MarkRequestCancelled();
+            throw;
+        }
     }
-
-    public void MarkRequestCancelled() => _telemetry.MarkRequestCancelled();
 
     public async Task FinalizeAsync(
         Func<Task> finalizeConnection,

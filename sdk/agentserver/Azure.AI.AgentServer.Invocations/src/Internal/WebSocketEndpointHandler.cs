@@ -117,9 +117,9 @@ internal sealed class WebSocketEndpointHandler
                 webSocket = await httpContext.WebSockets.AcceptWebSocketAsync();
             }
             catch (OperationCanceledException oce)
-                when (lifecycle.TryMarkAcceptCancellation(
+                when (lifecycle?.TryMarkAcceptCancellation(
                     oce,
-                    httpContext.RequestAborted))
+                    httpContext.RequestAborted) == true)
             {
                 closeCode = 1006;
                 throw;
@@ -137,10 +137,15 @@ internal sealed class WebSocketEndpointHandler
 
             try
             {
-                handlerOutcome = await lifecycle.HandleWebSocketWithOutcomeAsync(
-                    webSocket,
-                    context,
-                    httpContext.RequestAborted);
+                handlerOutcome = lifecycle is null
+                    ? await webSocketHandler.HandleWebSocketWithOutcomeAsync(
+                        webSocket,
+                        context,
+                        httpContext.RequestAborted)
+                    : await lifecycle.HandleWebSocketWithOutcomeAsync(
+                        webSocket,
+                        context,
+                        httpContext.RequestAborted);
                 if (handlerOutcome is { } outcome)
                 {
                     closeCode = outcome.Code;
@@ -161,7 +166,6 @@ internal sealed class WebSocketEndpointHandler
                 // concurrently with shutdown) — those should still surface as close
                 // code 1011 so real handler bugs aren't masked.
                 closeCode = InvocationsWebSocketConstants.CloseNormal;
-                lifecycle.MarkRequestCancelled();
             }
             catch (Exception ex)
             {
@@ -180,26 +184,38 @@ internal sealed class WebSocketEndpointHandler
         finally
         {
             var durationMs = GetElapsedMilliseconds(startTimestamp);
-            await lifecycle.FinalizeAsync(
-                async () =>
+            async Task FinalizeConnectionAsync()
+            {
+                if (handlerOutcome is null)
                 {
-                    if (handlerOutcome is null)
-                    {
-                        await CloseSocketAsync(webSocket, closeCode, sessionId);
-                    }
-                    else
-                    {
-                        EmitHandlerOutcomeDiagnostics(handlerOutcome.Value, sessionId);
-                    }
-                },
-                () => TryInvokeLogger(() =>
-                    EmitCloseEventLog(sessionId, closeCode, durationMs, errorCode)),
-                new WebSocketEndpointCompletion(
+                    await CloseSocketAsync(webSocket, closeCode, sessionId);
+                }
+                else
+                {
+                    EmitHandlerOutcomeDiagnostics(handlerOutcome.Value, sessionId);
+                }
+            }
+
+            void EmitCloseEvent() => TryInvokeLogger(() =>
+                EmitCloseEventLog(sessionId, closeCode, durationMs, errorCode));
+
+            if (lifecycle is null)
+            {
+                await FinalizeConnectionAsync();
+                EmitCloseEvent();
+            }
+            else
+            {
+                await lifecycle.FinalizeAsync(
+                    FinalizeConnectionAsync,
+                    EmitCloseEvent,
+                    new WebSocketEndpointCompletion(
                     sessionId,
                     closeCode,
                     errorCode,
                     handlerOutcome,
                     () => GetElapsedMilliseconds(startTimestamp)));
+            }
         }
     }
 
