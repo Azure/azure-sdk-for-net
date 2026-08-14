@@ -269,27 +269,6 @@ namespace Azure.ResourceManager.EventHubs.Models
             return new RetentionDescription(cleanupPolicy, retentionTimeInHours, minCompactionLagTimeInMinutes, tombstoneRetentionTimeInHours, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="connectionState"> Details about the state of the connection. </param>
-        /// <param name="provisioningState"> Provisioning state of the Private Endpoint Connection. </param>
-        /// <param name="privateEndpointId"> The ARM identifier for Private Endpoint. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="EventHubs.EventHubsPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static EventHubsPrivateEndpointConnectionData EventHubsPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EventHubsPrivateLinkServiceConnectionState connectionState = default, EventHubsPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default, AzureLocation? location = default)
-        {
-            return new EventHubsPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
-                location,
-                default);
-        }
-
         /// <param name="status"> Status of the connection. </param>
         /// <param name="description"> Description of the connection state. </param>
         /// <returns> A new <see cref="Models.EventHubsPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
@@ -732,27 +711,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="supportsScaling"> A value that indicates whether Scaling is Supported. </param>
         /// <returns> A new <see cref="EventHubs.EventHubsClusterData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static EventHubsClusterData EventHubsClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EventHubsClusterSku sku = default, DateTimeOffset? createdOn = default, EventHubsClusterProvisioningState? provisioningState = default, DateTimeOffset? updatedOn = default, string metricId = default, string status = default, bool? supportsScaling = default)
+        public static EventHubsClusterData EventHubsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EventHubsClusterSku sku, DateTimeOffset? createdOn, EventHubsClusterProvisioningState? provisioningState, DateTimeOffset? updatedOn, string metricId, string status, bool? supportsScaling)
         {
-            return new EventHubsClusterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                createdOn is null && provisioningState is null && updatedOn is null && metricId is null && status is null && supportsScaling is null ? default : new ClusterProperties(
-                    createdOn,
-                    provisioningState,
-                    updatedOn,
-                    metricId,
-                    status,
-                    supportsScaling,
-                    default,
-                    default,
-                    default),
-                sku,
-                default);
+            return EventHubsClusterData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, createdOn: createdOn, provisioningState: provisioningState, updatedOn: updatedOn, metricId: metricId, status: status, supportsScaling: supportsScaling, zoneRedundant: default, platformCapabilitiesConfidentialComputeMode: default, sku: sku);
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubs.EventHubsNamespaceData"/>. </summary>
@@ -783,40 +744,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="alternateName"> Alternate name specified when alias and namespace names are same. </param>
         /// <returns> A new <see cref="EventHubs.EventHubsNamespaceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static EventHubsNamespaceData EventHubsNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EventHubsSku sku = default, ManagedServiceIdentity identity = default, EventHubsTlsVersion? minimumTlsVersion = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, ResourceIdentifier clusterArmId = default, string metricId = default, bool? isAutoInflateEnabled = default, EventHubsPublicNetworkAccess? publicNetworkAccess = default, int? maximumThroughputUnits = default, bool? kafkaEnabled = default, bool? zoneRedundant = default, EventHubsEncryption encryption = default, IEnumerable<EventHubsPrivateEndpointConnectionData> privateEndpointConnections = default, bool? disableLocalAuth = default, string alternateName = default)
+        public static EventHubsNamespaceData EventHubsNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EventHubsSku sku, ManagedServiceIdentity identity, EventHubsTlsVersion? minimumTlsVersion, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, ResourceIdentifier clusterArmId, string metricId, bool? isAutoInflateEnabled, EventHubsPublicNetworkAccess? publicNetworkAccess, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, EventHubsEncryption encryption, IEnumerable<EventHubsPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName)
         {
-            return new EventHubsNamespaceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                minimumTlsVersion is null && provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && clusterArmId is null && metricId is null && isAutoInflateEnabled is null && publicNetworkAccess is null && maximumThroughputUnits is null && kafkaEnabled is null && zoneRedundant is null && encryption is null && privateEndpointConnections is null && disableLocalAuth is null && alternateName is null ? default : new EHNamespaceProperties(
-                    minimumTlsVersion,
-                    provisioningState,
-                    status,
-                    createdOn,
-                    updatedOn,
-                    serviceBusEndpoint,
-                    clusterArmId,
-                    metricId,
-                    isAutoInflateEnabled,
-                    publicNetworkAccess,
-                    maximumThroughputUnits,
-                    kafkaEnabled,
-                    zoneRedundant,
-                    encryption,
-                    (privateEndpointConnections ?? new ChangeTrackingList<EventHubsPrivateEndpointConnectionData>()).ToList(),
-                    disableLocalAuth,
-                    alternateName,
-                    default,
-                    default,
-                    default,
-                    default),
-                sku,
-                identity,
-                default);
+            return EventHubsNamespaceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, minimumTlsVersion: minimumTlsVersion, provisioningState: provisioningState, status: status, createdOn: createdOn, updatedOn: updatedOn, serviceBusEndpoint: serviceBusEndpoint, clusterArmId: clusterArmId, metricId: metricId, isAutoInflateEnabled: isAutoInflateEnabled, publicNetworkAccess: publicNetworkAccess, maximumThroughputUnits: maximumThroughputUnits, kafkaEnabled: kafkaEnabled, zoneRedundant: zoneRedundant, encryption: encryption, privateEndpointConnections: privateEndpointConnections, disableLocalAuth: disableLocalAuth, alternateName: alternateName, geoDataReplication: default, ipAddressType: default, platformCapabilitiesConfidentialComputeMode: default, sku: sku, identity: identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubs.EventHubsPrivateEndpointConnectionData"/>. </summary>
@@ -829,7 +759,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="provisioningState"> Provisioning state of the Private Endpoint Connection. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="EventHubs.EventHubsPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static EventHubsPrivateEndpointConnectionData EventHubsPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier privateEndpointId = default, EventHubsPrivateLinkServiceConnectionState connectionState = default, EventHubsPrivateEndpointConnectionProvisioningState? provisioningState = default, AzureLocation? location = default)
         {
             return new EventHubsPrivateEndpointConnectionData(
@@ -858,28 +787,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="EventHubs.EventHubData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static EventHubData EventHubData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> partitionIds = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, long? partitionCount = default, EventHubEntityStatus? status = default, string userMetadata = default, CaptureDescription captureDescription = default, RetentionDescription retentionDescription = default, AzureLocation? location = default)
+        public static EventHubData EventHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<string> partitionIds, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, long? partitionCount, EventHubEntityStatus? status, string userMetadata, CaptureDescription captureDescription, RetentionDescription retentionDescription, AzureLocation? location)
         {
-            return new EventHubData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                partitionIds is null && createdOn is null && updatedOn is null && partitionCount is null && status is null && captureDescription is null && retentionDescription is null && userMetadata is null ? default : new EventhubProperties(
-                    (partitionIds ?? new ChangeTrackingList<string>()).ToList(),
-                    createdOn,
-                    updatedOn,
-                    default,
-                    partitionCount,
-                    status,
-                    captureDescription,
-                    retentionDescription,
-                    default,
-                    default,
-                    userMetadata,
-                    default),
-                location,
-                default);
+            return EventHubData(id: id, name: name, resourceType: resourceType, systemData: systemData, partitionIds: partitionIds, createdOn: createdOn, updatedOn: updatedOn, messageRetentionInDays: default, partitionCount: partitionCount, status: status, captureDescription: captureDescription, retentionDescription: retentionDescription, identifier: default, userMetadata: userMetadata, messageTimestampType: default, location: location);
         }
     }
 }

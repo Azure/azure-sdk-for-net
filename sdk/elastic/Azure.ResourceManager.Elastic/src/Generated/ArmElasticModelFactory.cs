@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="isSubscribed"> Flag specifying if the Marketplace status is subscribed or not. </param>
         /// <returns> A new <see cref="Models.MarketplaceSaaSInfo"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MarketplaceSaaSInfo MarketplaceSaaSInfo(ResourceIdentifier marketplaceSubscriptionId = default, string marketplaceName = default, string marketplaceResourceId = default, string marketplaceStatus = default, string billedAzureSubscriptionId = default, bool? isSubscribed = default)
+        public static MarketplaceSaaSInfo MarketplaceSaaSInfo(ResourceIdentifier marketplaceSubscriptionId, string marketplaceName, string marketplaceResourceId, string marketplaceStatus, string billedAzureSubscriptionId, bool? isSubscribed)
         {
             return new MarketplaceSaaSInfo(
                 marketplaceSubscriptionId is null ? default : new MarketplaceSaaSInfoMarketplaceSubscription(marketplaceSubscriptionId, default, default, default),
@@ -623,18 +623,7 @@ namespace Azure.ResourceManager.Elastic.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ElasticMonitorData ElasticMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string skuName, ElasticMonitorProperties properties, ManagedServiceIdentity identity)
         {
-            return new ElasticMonitorData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default,
-                skuName is null ? default : new ElasticSku(skuName, default),
-                identity,
-                default);
+            return ElasticMonitorData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, properties: properties, kind: default, skuName: skuName, identity: identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ElasticMonitorProperties"/>. </summary>
@@ -655,23 +644,7 @@ namespace Azure.ResourceManager.Elastic.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ElasticMonitorProperties ElasticMonitorProperties(ElasticProvisioningState? provisioningState, ElasticMonitoringStatus? monitoringStatus, ElasticCloudProperties elasticProperties, ElasticUserInfo userInfo, ElasticPlanDetails planDetails, string version, string subscriptionState, string saaSAzureSubscriptionStatus, string sourceCampaignName, string sourceCampaignId, ElasticLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, bool? isApiKeyGenerated)
         {
-            return new ElasticMonitorProperties(
-                provisioningState,
-                monitoringStatus,
-                elasticProperties,
-                userInfo,
-                planDetails,
-                version,
-                subscriptionState,
-                saaSAzureSubscriptionStatus,
-                sourceCampaignName,
-                sourceCampaignId,
-                liftrResourceCategory,
-                liftrResourcePreference,
-                isApiKeyGenerated,
-                default,
-                default,
-                default);
+            return ElasticMonitorProperties(provisioningState: provisioningState, monitoringStatus: monitoringStatus, elasticProperties: elasticProperties, userInfo: userInfo, planDetails: planDetails, version: version, subscriptionState: subscriptionState, saaSAzureSubscriptionStatus: saaSAzureSubscriptionStatus, sourceCampaignName: sourceCampaignName, sourceCampaignId: sourceCampaignId, liftrResourceCategory: liftrResourceCategory, liftrResourcePreference: liftrResourcePreference, isApiKeyGenerated: isApiKeyGenerated, hostingType: default, projectDetails: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ElasticDeploymentInfoResult"/>. </summary>
@@ -686,17 +659,7 @@ namespace Azure.ResourceManager.Elastic.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ElasticDeploymentInfoResult ElasticDeploymentInfoResult(ElasticDeploymentStatus? status, string version, string memoryCapacity, string diskCapacity, string elasticsearchEndPoint, Uri deploymentUri, MarketplaceSaaSInfo marketplaceSaasInfo)
         {
-            return new ElasticDeploymentInfoResult(
-                status,
-                version,
-                memoryCapacity,
-                diskCapacity,
-                elasticsearchEndPoint,
-                deploymentUri,
-                marketplaceSaasInfo,
-                default,
-                default,
-                default);
+            return ElasticDeploymentInfoResult(status: status, version: version, memoryCapacity: memoryCapacity, diskCapacity: diskCapacity, elasticsearchEndPoint: elasticsearchEndPoint, deploymentUri: deploymentUri, marketplaceSaasInfo: marketplaceSaasInfo, projectType: default, configurationType: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectedPartnerResourceProperties"/>. </summary>
@@ -708,13 +671,7 @@ namespace Azure.ResourceManager.Elastic.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ConnectedPartnerResourceProperties ConnectedPartnerResourceProperties(string partnerDeploymentName, Uri partnerDeploymentUri, ResourceIdentifier azureResourceId, AzureLocation? location)
         {
-            return new ConnectedPartnerResourceProperties(
-                partnerDeploymentName,
-                partnerDeploymentUri,
-                azureResourceId,
-                location,
-                default,
-                default);
+            return ConnectedPartnerResourceProperties(partnerDeploymentName: partnerDeploymentName, partnerDeploymentUri: partnerDeploymentUri, azureResourceId: azureResourceId, location: location, connectedPartnerResourcePropertiesType: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ElasticOpenAIIntegrationProperties"/>. </summary>
@@ -726,13 +683,7 @@ namespace Azure.ResourceManager.Elastic.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ElasticOpenAIIntegrationProperties ElasticOpenAIIntegrationProperties(ResourceIdentifier openAIResourceId, string openAIResourceEndpoint, string key, DateTimeOffset? lastRefreshOn)
         {
-            return new ElasticOpenAIIntegrationProperties(
-                openAIResourceId,
-                openAIResourceEndpoint,
-                default,
-                key,
-                lastRefreshOn,
-                default);
+            return ElasticOpenAIIntegrationProperties(openAIResourceId: openAIResourceId, openAIResourceEndpoint: openAIResourceEndpoint, openAIConnectorId: default, key: key, lastRefreshOn: lastRefreshOn);
         }
     }
 }

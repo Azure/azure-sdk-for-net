@@ -20,35 +20,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     public static partial class ArmContainerServiceFleetModelFactory
     {
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="hubProfile"> The FleetHubProfile configures the Fleet's hub. </param>
-        /// <param name="status"> Status information for the fleet. </param>
-        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="identity"> Managed identity. </param>
-        /// <returns> A new <see cref="ContainerServiceFleet.ContainerServiceFleetData"/> instance for mocking. </returns>
-        public static ContainerServiceFleetData ContainerServiceFleetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FleetProvisioningState? provisioningState = default, FleetHubProfile hubProfile = default, ContainerServiceFleetStatus status = default, ETag? eTag = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ContainerServiceFleetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && hubProfile is null && status is null ? default : new FleetProperties(provisioningState, hubProfile, status, default),
-                eTag,
-                identity,
-                default);
-        }
-
         /// <param name="dnsPrefix"> DNS prefix used to create the FQDN for the Fleet hub. </param>
         /// <param name="apiServerAccessProfile"> The access profile for the Fleet hub API server. </param>
         /// <param name="agentProfile"> The agent profile for the Fleet hub. </param>
@@ -378,45 +349,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             return new ContainerServiceFleetGatePatch(new GatePatchProperties(gatePatchState, default), default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> The provisioning state of the UpdateRun resource. </param>
-        /// <param name="updateStrategyId">
-        /// The resource id of the FleetUpdateStrategy resource to reference.
-        /// When creating a new run, there are three ways to define a strategy for the run:
-        /// <list type="number"><item><description>Define a new strategy in place: Set the "strategy" field.</description></item><item><description>Use an existing strategy: Set the "updateStrategyId" field. (since 2023-08-15-preview)</description></item><item><description>Use the default strategy to update all the members one by one: Leave both "updateStrategyId" and "strategy" unset. (since 2023-08-15-preview)</description></item></list>
-        /// Setting both "updateStrategyId" and "strategy" is invalid.
-        /// UpdateRuns created by "updateStrategyId" snapshot the referenced UpdateStrategy at the time of creation and store it in the "strategy" field. 
-        /// Subsequent changes to the referenced FleetUpdateStrategy resource do not propagate.
-        /// UpdateRunStrategy changes can be made directly on the "strategy" field before launching the UpdateRun.
-        /// </param>
-        /// <param name="managedClusterUpdate"> The update to be applied to all clusters in the UpdateRun. The managedClusterUpdate can be modified until the run is started. </param>
-        /// <param name="status"> The status of the UpdateRun. </param>
-        /// <param name="autoUpgradeProfileId"> AutoUpgradeProfileId is the id of an auto upgrade profile resource. </param>
-        /// <param name="strategyStages"> The list of stages that compose this update run. Min size: 1. </param>
-        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="ContainerServiceFleet.ContainerServiceFleetUpdateRunData"/> instance for mocking. </returns>
-        public static ContainerServiceFleetUpdateRunData ContainerServiceFleetUpdateRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerServiceFleetUpdateRunProvisioningState? provisioningState = default, ResourceIdentifier updateStrategyId = default, ContainerServiceFleetManagedClusterUpdate managedClusterUpdate = default, ContainerServiceFleetUpdateRunStatus status = default, ResourceIdentifier autoUpgradeProfileId = default, IEnumerable<ContainerServiceFleetUpdateStage> strategyStages = default, ETag? eTag = default)
-        {
-            return new ContainerServiceFleetUpdateRunData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && updateStrategyId is null && strategyStages is null && managedClusterUpdate is null && status is null && autoUpgradeProfileId is null ? default : new UpdateRunProperties(
-                    provisioningState,
-                    updateStrategyId,
-                    new ContainerServiceFleetUpdateRunStrategy((strategyStages ?? new ChangeTrackingList<ContainerServiceFleetUpdateStage>()).ToList(), default),
-                    managedClusterUpdate,
-                    status,
-                    autoUpgradeProfileId,
-                    default),
-                eTag,
-                default);
-        }
-
         /// <param name="name"> The name of the stage. Must be unique within the UpdateRun. </param>
         /// <param name="groups"> Defines the groups to be executed in parallel in this stage. Duplicate groups are not allowed. Min size: 1. </param>
         /// <param name="afterStageWaitInSeconds"> The time in seconds to wait at the end of this stage before starting the next one. Defaults to 0 seconds if unspecified. </param>
@@ -648,26 +580,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             return new ContainerServiceFleetSkipTarget(targetType, name, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> The provisioning state of the UpdateStrategy resource. </param>
-        /// <param name="strategyStages"> The list of stages that compose this update run. Min size: 1. </param>
-        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="ContainerServiceFleet.FleetUpdateStrategyData"/> instance for mocking. </returns>
-        public static FleetUpdateStrategyData FleetUpdateStrategyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FleetUpdateStrategyProvisioningState? provisioningState = default, IEnumerable<ContainerServiceFleetUpdateStage> strategyStages = default, ETag? eTag = default)
-        {
-            return new FleetUpdateStrategyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && strategyStages is null ? default : new FleetUpdateStrategyProperties(provisioningState, new ContainerServiceFleetUpdateRunStrategy((strategyStages ?? new ChangeTrackingList<ContainerServiceFleetUpdateStage>()).ToList(), default), default),
-                eTag,
-                default);
-        }
-
         /// <param name="lastTriggeredOn"> The UTC time of the last attempt to automatically create and start an UpdateRun as triggered by the release of new versions. </param>
         /// <param name="lastTriggerStatus"> The status of the last AutoUpgrade trigger. </param>
         /// <param name="lastTriggerError"> The error details of the last trigger. </param>
@@ -700,9 +612,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="hubProfile"> The FleetHubProfile configures the Fleet's hub. </param>
         /// <param name="status"> Status information for the fleet. </param>
         /// <returns> A new <see cref="ContainerServiceFleet.ContainerServiceFleetData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerServiceFleetData ContainerServiceFleetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? eTag = default, ManagedServiceIdentity identity = default, FleetProvisioningState? provisioningState = default, FleetHubProfile hubProfile = default, ContainerServiceFleetStatus status = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new ContainerServiceFleetData(
                 id,
                 name,
@@ -728,22 +641,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="status"> Status information of the last operation for fleet member. </param>
         /// <returns> A new <see cref="ContainerServiceFleet.ContainerServiceFleetMemberData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerServiceFleetMemberData ContainerServiceFleetMemberData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? eTag = default, ResourceIdentifier clusterResourceId = default, string @group = default, FleetMemberProvisioningState? provisioningState = default, ContainerServiceFleetMemberStatus status = default)
+        public static ContainerServiceFleetMemberData ContainerServiceFleetMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, ResourceIdentifier clusterResourceId, string @group, FleetMemberProvisioningState? provisioningState, ContainerServiceFleetMemberStatus status)
         {
-            return new ContainerServiceFleetMemberData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                clusterResourceId is null && @group is null && provisioningState is null && status is null ? default : new FleetMemberProperties(
-                    clusterResourceId,
-                    @group,
-                    provisioningState,
-                    default,
-                    status,
-                    default),
-                eTag,
-                default);
+            return ContainerServiceFleetMemberData(id: id, name: name, resourceType: resourceType, systemData: systemData, clusterResourceId: clusterResourceId, @group: @group, provisioningState: provisioningState, labels: default, status: status, eTag: eTag);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleet.ContainerServiceFleetUpdateRunData"/>. </summary>
@@ -776,9 +676,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="status"> The status of the UpdateRun. </param>
         /// <param name="autoUpgradeProfileId"> AutoUpgradeProfileId is the id of an auto upgrade profile resource. </param>
         /// <returns> A new <see cref="ContainerServiceFleet.ContainerServiceFleetUpdateRunData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerServiceFleetUpdateRunData ContainerServiceFleetUpdateRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? eTag = default, ContainerServiceFleetUpdateRunProvisioningState? provisioningState = default, ResourceIdentifier updateStrategyId = default, IEnumerable<ContainerServiceFleetUpdateStage> strategyStages = default, ContainerServiceFleetManagedClusterUpdate managedClusterUpdate = default, ContainerServiceFleetUpdateRunStatus status = default, ResourceIdentifier autoUpgradeProfileId = default)
         {
+            strategyStages ??= new ChangeTrackingList<ContainerServiceFleetUpdateStage>();
+
             return new ContainerServiceFleetUpdateRunData(
                 id,
                 name,
@@ -803,17 +704,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="afterStageWaitStatus"> The status of the wait period configured on the UpdateStage. </param>
         /// <returns> A new <see cref="Models.ContainerServiceFleetUpdateStageStatus"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerServiceFleetUpdateStageStatus ContainerServiceFleetUpdateStageStatus(ContainerServiceFleetUpdateStatus status = default, string name = default, IEnumerable<ContainerServiceFleetUpdateGroupStatus> groups = default, ContainerServiceFleetWaitStatus afterStageWaitStatus = default)
+        public static ContainerServiceFleetUpdateStageStatus ContainerServiceFleetUpdateStageStatus(ContainerServiceFleetUpdateStatus status, string name, IEnumerable<ContainerServiceFleetUpdateGroupStatus> groups, ContainerServiceFleetWaitStatus afterStageWaitStatus)
         {
-            return new ContainerServiceFleetUpdateStageStatus(
-                status,
-                name,
-                default,
-                (groups ?? new ChangeTrackingList<ContainerServiceFleetUpdateGroupStatus>()).ToList(),
-                default,
-                default,
-                afterStageWaitStatus,
-                default);
+            return ContainerServiceFleetUpdateStageStatus(status: status, name: name, maxConcurrency: default, groups: groups, beforeGates: default, afterGates: default, afterStageWaitStatus: afterStageWaitStatus);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerServiceFleetUpdateGroupStatus"/>. </summary>
@@ -822,16 +715,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="members"> The list of member this UpdateGroup updates. </param>
         /// <returns> A new <see cref="Models.ContainerServiceFleetUpdateGroupStatus"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerServiceFleetUpdateGroupStatus ContainerServiceFleetUpdateGroupStatus(ContainerServiceFleetUpdateStatus status = default, string name = default, IEnumerable<MemberUpdateStatus> members = default)
+        public static ContainerServiceFleetUpdateGroupStatus ContainerServiceFleetUpdateGroupStatus(ContainerServiceFleetUpdateStatus status, string name, IEnumerable<MemberUpdateStatus> members)
         {
-            return new ContainerServiceFleetUpdateGroupStatus(
-                status,
-                name,
-                default,
-                (members ?? new ChangeTrackingList<MemberUpdateStatus>()).ToList(),
-                default,
-                default,
-                default);
+            return ContainerServiceFleetUpdateGroupStatus(status: status, name: name, maxConcurrency: default, members: members, beforeGates: default, afterGates: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleet.FleetUpdateStrategyData"/>. </summary>
@@ -843,9 +729,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="provisioningState"> The provisioning state of the UpdateStrategy resource. </param>
         /// <param name="strategyStages"> Defines the update sequence of the clusters. </param>
         /// <returns> A new <see cref="ContainerServiceFleet.FleetUpdateStrategyData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static FleetUpdateStrategyData FleetUpdateStrategyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? eTag = default, FleetUpdateStrategyProvisioningState? provisioningState = default, IEnumerable<ContainerServiceFleetUpdateStage> strategyStages = default)
         {
+            strategyStages ??= new ChangeTrackingList<ContainerServiceFleetUpdateStage>();
+
             return new FleetUpdateStrategyData(
                 id,
                 name,
@@ -870,17 +757,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerServiceFleetData ContainerServiceFleetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? eTag, ManagedServiceIdentity identity, FleetProvisioningState? provisioningState)
         {
-            return new ContainerServiceFleetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null ? default : new FleetProperties(provisioningState, default, default, default),
-                eTag,
-                identity,
-                default);
+            return ContainerServiceFleetData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, provisioningState: provisioningState, hubProfile: default, status: default, eTag: eTag, identity: identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleet.ContainerServiceFleetMemberData"/>. </summary>
@@ -896,20 +773,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerServiceFleetMemberData ContainerServiceFleetMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, ResourceIdentifier clusterResourceId, string @group, FleetMemberProvisioningState? provisioningState)
         {
-            return new ContainerServiceFleetMemberData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                clusterResourceId is null && @group is null && provisioningState is null ? default : new FleetMemberProperties(
-                    clusterResourceId,
-                    @group,
-                    provisioningState,
-                    default,
-                    default,
-                    default),
-                eTag,
-                default);
+            return ContainerServiceFleetMemberData(id: id, name: name, resourceType: resourceType, systemData: systemData, clusterResourceId: clusterResourceId, @group: @group, provisioningState: provisioningState, labels: default, status: default, eTag: eTag);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleet.ContainerServiceFleetUpdateRunData"/>. </summary>
@@ -941,21 +805,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerServiceFleetUpdateRunData ContainerServiceFleetUpdateRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, ContainerServiceFleetUpdateRunProvisioningState? provisioningState, ResourceIdentifier updateStrategyId, IEnumerable<ContainerServiceFleetUpdateStage> strategyStages, ContainerServiceFleetManagedClusterUpdate managedClusterUpdate, ContainerServiceFleetUpdateRunStatus status)
         {
-            return new ContainerServiceFleetUpdateRunData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && updateStrategyId is null && strategyStages is null && managedClusterUpdate is null && status is null ? default : new UpdateRunProperties(
-                    provisioningState,
-                    updateStrategyId,
-                    new ContainerServiceFleetUpdateRunStrategy((strategyStages ?? new ChangeTrackingList<ContainerServiceFleetUpdateStage>()).ToList(), default),
-                    managedClusterUpdate,
-                    status,
-                    default,
-                    default),
-                eTag,
-                default);
+            return ContainerServiceFleetUpdateRunData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: provisioningState, updateStrategyId: updateStrategyId, managedClusterUpdate: managedClusterUpdate, status: status, autoUpgradeProfileId: default, strategyStages: strategyStages, eTag: eTag);
         }
     }
 }

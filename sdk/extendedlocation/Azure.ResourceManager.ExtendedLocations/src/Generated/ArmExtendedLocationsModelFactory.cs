@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ExtendedLocations;
@@ -30,45 +29,6 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         public static CustomLocationOperationInfo CustomLocationOperationInfo(string description = default, string operation = default, string provider = default, string resource = default, bool? isDataAction = default, string name = default, string origin = default)
         {
             return new CustomLocationOperationInfo(description is null && operation is null && provider is null && resource is null ? default : new CustomLocationOperationValueDisplay(description, operation, provider, resource, default), isDataAction, name, origin, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="authentication"> This is optional input that contains the authentication that should be used to generate the namespace. </param>
-        /// <param name="clusterExtensionIds"> Contains the reference to the add-on that contains charts to deploy CRDs and operators. </param>
-        /// <param name="displayName"> Display name for the Custom Locations location. </param>
-        /// <param name="hostResourceId"> Connected Cluster or AKS Cluster. The Custom Locations RP will perform a checkAccess API for listAdminCredentials permissions. </param>
-        /// <param name="hostType"> Type of host the Custom Locations is referencing (Kubernetes, etc...). </param>
-        /// <param name="namespace"> Kubernetes namespace that will be created on the specified cluster. </param>
-        /// <param name="provisioningState"> Provisioning State for the Custom Location. </param>
-        /// <param name="identity"> Identity for the resource. </param>
-        /// <returns> A new <see cref="ExtendedLocations.CustomLocationData"/> instance for mocking. </returns>
-        public static CustomLocationData CustomLocationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CustomLocationAuthentication authentication = default, IEnumerable<ResourceIdentifier> clusterExtensionIds = default, string displayName = default, ResourceIdentifier hostResourceId = default, CustomLocationHostType? hostType = default, string @namespace = default, string provisioningState = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CustomLocationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                authentication is null && clusterExtensionIds is null && displayName is null && hostResourceId is null && hostType is null && @namespace is null && provisioningState is null ? default : new CustomLocationProperties(
-                    authentication,
-                    (clusterExtensionIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    displayName,
-                    hostResourceId,
-                    hostType,
-                    @namespace,
-                    provisioningState,
-                    default),
-                identity,
-                default);
         }
 
         /// <param name="customLocationPropertiesAuthenticationType"> The type of the Custom Locations authentication. </param>
@@ -226,9 +186,11 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         /// <param name="namespace"> Kubernetes namespace that will be created on the specified cluster. </param>
         /// <param name="provisioningState"> Provisioning State for the Custom Location. </param>
         /// <returns> A new <see cref="ExtendedLocations.CustomLocationData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static CustomLocationData CustomLocationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, CustomLocationAuthentication authentication = default, IEnumerable<ResourceIdentifier> clusterExtensionIds = default, string displayName = default, ResourceIdentifier hostResourceId = default, CustomLocationHostType? hostType = default, string @namespace = default, string provisioningState = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            clusterExtensionIds ??= new ChangeTrackingList<ResourceIdentifier>();
+
             return new CustomLocationData(
                 id,
                 name,
