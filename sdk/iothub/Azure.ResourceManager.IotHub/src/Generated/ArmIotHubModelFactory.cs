@@ -1011,8 +1011,10 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="identity"> The managed identities for the IotHub. </param>
         /// <returns> A new <see cref="IotHub.IotHubDescriptionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static IotHubDescriptionData IotHubDescriptionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, IotHubProperties properties = default, IotHubSkuInfo sku = default, ManagedServiceIdentity identity = default)
+        public static IotHubDescriptionData IotHubDescriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IotHubProperties properties, IotHubSkuInfo sku, ManagedServiceIdentity identity)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new IotHubDescriptionData(
                 id,
                 name,
@@ -1054,42 +1056,9 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="enableDataResidency"> This property when set to true, will enable data residency, thus, disabling disaster recovery. </param>
         /// <returns> A new <see cref="Models.IotHubProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static IotHubProperties IotHubProperties(IEnumerable<SharedAccessSignatureAuthorizationRule> authorizationPolicies = default, bool? disableLocalAuth = default, bool? disableDeviceSas = default, bool? disableModuleSas = default, bool? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdns = default, IotHubPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<IotHubIPFilterRule> ipFilterRules = default, IotHubNetworkRuleSetProperties networkRuleSets = default, string minTlsVersion = default, IEnumerable<IotHubPrivateEndpointConnectionData> privateEndpointConnections = default, string provisioningState = default, string state = default, string hostName = default, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints = default, IotHubRoutingProperties routing = default, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints = default, IDictionary<string, MessagingEndpointProperties> messagingEndpoints = default, bool? enableFileUploadNotifications = default, CloudToDeviceProperties cloudToDevice = default, string comments = default, IotHubCapability? features = default, IEnumerable<IotHubLocationDescription> locations = default, bool? enableDataResidency = default)
+        public static IotHubProperties IotHubProperties(IEnumerable<SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSas, bool? disableModuleSas, bool? restrictOutboundNetworkAccess, IEnumerable<string> allowedFqdns, IotHubPublicNetworkAccess? publicNetworkAccess, IEnumerable<IotHubIPFilterRule> ipFilterRules, IotHubNetworkRuleSetProperties networkRuleSets, string minTlsVersion, IEnumerable<IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints, IotHubRoutingProperties routing, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints, IDictionary<string, MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, CloudToDeviceProperties cloudToDevice, string comments, IotHubCapability? features, IEnumerable<IotHubLocationDescription> locations, bool? enableDataResidency)
         {
-            return new IotHubProperties(
-                (authorizationPolicies ?? new ChangeTrackingList<SharedAccessSignatureAuthorizationRule>()).ToList(),
-                disableLocalAuth,
-                disableDeviceSas,
-                disableModuleSas,
-                restrictOutboundNetworkAccess,
-                (allowedFqdns ?? new ChangeTrackingList<string>()).ToList(),
-                publicNetworkAccess,
-                (ipFilterRules ?? new ChangeTrackingList<IotHubIPFilterRule>()).ToList(),
-                networkRuleSets,
-                minTlsVersion,
-                (privateEndpointConnections ?? new ChangeTrackingList<IotHubPrivateEndpointConnectionData>()).ToList(),
-                provisioningState,
-                state,
-                hostName,
-                default,
-                default,
-                eventHubEndpoints ?? new ChangeTrackingDictionary<string, EventHubCompatibleEndpointProperties>(),
-                routing,
-                storageEndpoints ?? new ChangeTrackingDictionary<string, IotHubStorageEndpointProperties>(),
-                messagingEndpoints ?? new ChangeTrackingDictionary<string, MessagingEndpointProperties>(),
-                enableFileUploadNotifications,
-                cloudToDevice,
-                comments,
-                default,
-                features,
-                default,
-                (locations ?? new ChangeTrackingList<IotHubLocationDescription>()).ToList(),
-                enableDataResidency,
-                default,
-                default,
-                default,
-                default,
-                default);
+            return IotHubProperties(authorizationPolicies: authorizationPolicies, disableLocalAuth: disableLocalAuth, disableDeviceSas: disableDeviceSas, disableModuleSas: disableModuleSas, restrictOutboundNetworkAccess: restrictOutboundNetworkAccess, allowedFqdns: allowedFqdns, publicNetworkAccess: publicNetworkAccess, ipFilterRules: ipFilterRules, networkRuleSets: networkRuleSets, minTlsVersion: minTlsVersion, privateEndpointConnections: privateEndpointConnections, provisioningState: provisioningState, state: state, hostName: hostName, deviceHostName: default, serviceHostName: default, eventHubEndpoints: eventHubEndpoints, routing: routing, storageEndpoints: storageEndpoints, messagingEndpoints: messagingEndpoints, enableFileUploadNotifications: enableFileUploadNotifications, cloudToDevice: cloudToDevice, comments: comments, deviceStreamsStreamingEndpoints: default, features: features, encryption: default, locations: locations, enableDataResidency: enableDataResidency, rootCertificate: default, ipVersion: default, deviceRegistry: default, iotHubDetailsGatewayVersion: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IotHubCertificateProperties"/>. </summary>
@@ -1102,18 +1071,9 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="certificate"> The certificate content. </param>
         /// <returns> A new <see cref="Models.IotHubCertificateProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static IotHubCertificateProperties IotHubCertificateProperties(string subject = default, DateTimeOffset? expireOn = default, string thumbprintString = default, bool? isVerified = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, BinaryData certificate = default)
+        public static IotHubCertificateProperties IotHubCertificateProperties(string subject, DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, BinaryData certificate)
         {
-            return new IotHubCertificateProperties(
-                subject,
-                expireOn,
-                thumbprintString,
-                isVerified,
-                createdOn,
-                updatedOn,
-                certificate,
-                default,
-                default);
+            return IotHubCertificateProperties(subject: subject, expireOn: expireOn, thumbprintString: thumbprintString, isVerified: isVerified, createdOn: createdOn, updatedOn: updatedOn, certificate: certificate, policyResourceId: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IotHubCertificatePropertiesWithNonce"/>. </summary>
@@ -1127,19 +1087,9 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="certificate"> The certificate content. </param>
         /// <returns> A new <see cref="Models.IotHubCertificatePropertiesWithNonce"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static IotHubCertificatePropertiesWithNonce IotHubCertificatePropertiesWithNonce(string subject = default, DateTimeOffset? expireOn = default, string thumbprintString = default, bool? isVerified = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string verificationCode = default, BinaryData certificate = default)
+        public static IotHubCertificatePropertiesWithNonce IotHubCertificatePropertiesWithNonce(string subject, DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string verificationCode, BinaryData certificate)
         {
-            return new IotHubCertificatePropertiesWithNonce(
-                subject,
-                expireOn,
-                thumbprintString,
-                isVerified,
-                createdOn,
-                updatedOn,
-                verificationCode,
-                certificate,
-                default,
-                default);
+            return IotHubCertificatePropertiesWithNonce(subject: subject, expireOn: expireOn, thumbprintString: thumbprintString, isVerified: isVerified, createdOn: createdOn, updatedOn: updatedOn, verificationCode: verificationCode, certificate: certificate, policyResourceId: default);
         }
     }
 }
