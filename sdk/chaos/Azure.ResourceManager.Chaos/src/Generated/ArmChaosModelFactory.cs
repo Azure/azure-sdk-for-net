@@ -1297,22 +1297,9 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="urn"> String of the URN for this Capability Type. </param>
         /// <returns> A new <see cref="Chaos.ChaosCapabilityData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ChaosCapabilityData ChaosCapabilityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string publisher = default, string targetType = default, string description = default, string parametersSchema = default, string urn = default)
+        public static ChaosCapabilityData ChaosCapabilityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string targetType, string description, string parametersSchema, string urn)
         {
-            return new ChaosCapabilityData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                publisher is null && targetType is null && description is null && parametersSchema is null && urn is null ? default : new CapabilityProperties(
-                    publisher,
-                    targetType,
-                    description,
-                    parametersSchema,
-                    urn,
-                    default,
-                    default),
-                default);
+            return ChaosCapabilityData(id: id, name: name, resourceType: resourceType, systemData: systemData, publisher: publisher, targetType: targetType, description: description, parametersSchema: parametersSchema, urn: urn, provisioningState: default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1327,18 +1314,9 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="selectors"> List of selectors. </param>
         /// <returns> A new <see cref="Chaos.ChaosExperimentData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ChaosExperimentData ChaosExperimentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, ChaosProvisioningState? provisioningState = default, IEnumerable<ChaosExperimentStep> steps = default, IEnumerable<ChaosTargetSelector> selectors = default)
+        public static ChaosExperimentData ChaosExperimentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ChaosProvisioningState? provisioningState, IEnumerable<ChaosExperimentStep> steps, IEnumerable<ChaosTargetSelector> selectors)
         {
-            return new ChaosExperimentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                identity,
-                provisioningState is null && steps is null && selectors is null ? default : new ExperimentProperties(provisioningState, (steps ?? new ChangeTrackingList<ChaosExperimentStep>()).ToList(), (selectors ?? new ChangeTrackingList<ChaosTargetSelector>()).ToList(), default, default),
-                default);
+            return ChaosExperimentData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: identity, provisioningState: provisioningState, steps: steps, selectors: selectors, customerDataStorage: default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1350,15 +1328,9 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="stoppedOn"> String that represents the stop date time. </param>
         /// <returns> A new <see cref="Chaos.ChaosExperimentExecutionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ChaosExperimentExecutionData ChaosExperimentExecutionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string status = default, DateTimeOffset? startedOn = default, DateTimeOffset? stoppedOn = default)
+        public static ChaosExperimentExecutionData ChaosExperimentExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string status, DateTimeOffset? startedOn, DateTimeOffset? stoppedOn)
         {
-            return new ChaosExperimentExecutionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                status is null && startedOn is null && stoppedOn is null ? default : new ExperimentExecutionProperties(status, startedOn, stoppedOn, default, default),
-                default);
+            return ChaosExperimentExecutionData(id: id, name: name, resourceType: resourceType, systemData: systemData, status: status, startedOn: startedOn, stoppedOn: stoppedOn, provisioningState: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExperimentExecutionDetails"/>. </summary>
@@ -1374,23 +1346,9 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="runInformationSteps"> The information of the experiment run. </param>
         /// <returns> A new <see cref="Models.ExperimentExecutionDetails"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ExperimentExecutionDetails ExperimentExecutionDetails(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string status = default, DateTimeOffset? startedOn = default, DateTimeOffset? stoppedOn = default, string failureReason = default, DateTimeOffset? lastActionOn = default, IEnumerable<ChaosExperimentRunStepStatus> runInformationSteps = default)
+        public static ExperimentExecutionDetails ExperimentExecutionDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string status, DateTimeOffset? startedOn, DateTimeOffset? stoppedOn, string failureReason, DateTimeOffset? lastActionOn, IEnumerable<ChaosExperimentRunStepStatus> runInformationSteps)
         {
-            return new ExperimentExecutionDetails(
-                id,
-                name,
-                resourceType,
-                systemData,
-                status is null && startedOn is null && stoppedOn is null && failureReason is null && lastActionOn is null && runInformationSteps is null ? default : new ExperimentExecutionDetailsProperties(
-                    status,
-                    startedOn,
-                    stoppedOn,
-                    default,
-                    failureReason,
-                    lastActionOn,
-                    new ExperimentExecutionDetailsPropertiesRunInformation((runInformationSteps ?? new ChangeTrackingList<ChaosExperimentRunStepStatus>()).ToList(), default),
-                    default),
-                default);
+            return ExperimentExecutionDetails(id: id, name: name, resourceType: resourceType, systemData: systemData, status: status, startedOn: startedOn, stoppedOn: stoppedOn, provisioningState: default, failureReason: failureReason, lastActionOn: lastActionOn, runInformationSteps: runInformationSteps);
         }
     }
 }

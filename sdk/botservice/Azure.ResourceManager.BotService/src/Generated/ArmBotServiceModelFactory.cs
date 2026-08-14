@@ -138,26 +138,6 @@ namespace Azure.ResourceManager.BotService.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <param name="groupIds"> Group ids. </param>
-        /// <param name="privateEndpointId"> The ARM identifier for Private Endpoint. </param>
-        /// <returns> A new <see cref="BotService.BotServicePrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static BotServicePrivateEndpointConnectionData BotServicePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BotServicePrivateLinkServiceConnectionState connectionState = default, BotServicePrivateEndpointConnectionProvisioningState? provisioningState = default, IEnumerable<string> groupIds = default, ResourceIdentifier privateEndpointId = default)
-        {
-            return new BotServicePrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null && groupIds is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, (groupIds ?? new ChangeTrackingList<string>()).ToList(), default),
-                default);
-        }
-
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
@@ -1392,46 +1372,9 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="publishingCredentials"> Publishing credentials of the resource. </param>
         /// <returns> A new <see cref="Models.BotProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BotProperties BotProperties(string displayName = default, string description = default, Uri iconUri = default, Uri endpoint = default, string endpointVersion = default, IDictionary<string, string> allSettings = default, IDictionary<string, string> parameters = default, Uri manifestUri = default, BotMsaAppType? msaAppType = default, string msaAppId = default, string msaAppTenantId = default, ResourceIdentifier msaAppMSIResourceId = default, IEnumerable<string> configuredChannels = default, IEnumerable<string> enabledChannels = default, string developerAppInsightKey = default, string developerAppInsightsApiKey = default, string developerAppInsightsApplicationId = default, IEnumerable<string> luisAppIds = default, string luisKey = default, bool? isCmekEnabled = default, Uri cmekKeyVaultUri = default, string cmekEncryptionStatus = default, Guid? tenantId = default, BotServicePublicNetworkAccess? publicNetworkAccess = default, bool? isStreamingSupported = default, bool? isDeveloperAppInsightsApiKeySet = default, string migrationToken = default, bool? isLocalAuthDisabled = default, string schemaTransformationVersion = default, ResourceIdentifier storageResourceId = default, IEnumerable<BotServicePrivateEndpointConnectionData> privateEndpointConnections = default, string openWithHint = default, string appPasswordHint = default, string provisioningState = default, string publishingCredentials = default)
+        public static BotProperties BotProperties(string displayName, string description, Uri iconUri, Uri endpoint, string endpointVersion, IDictionary<string, string> allSettings, IDictionary<string, string> parameters, Uri manifestUri, BotMsaAppType? msaAppType, string msaAppId, string msaAppTenantId, ResourceIdentifier msaAppMSIResourceId, IEnumerable<string> configuredChannels, IEnumerable<string> enabledChannels, string developerAppInsightKey, string developerAppInsightsApiKey, string developerAppInsightsApplicationId, IEnumerable<string> luisAppIds, string luisKey, bool? isCmekEnabled, Uri cmekKeyVaultUri, string cmekEncryptionStatus, Guid? tenantId, BotServicePublicNetworkAccess? publicNetworkAccess, bool? isStreamingSupported, bool? isDeveloperAppInsightsApiKeySet, string migrationToken, bool? isLocalAuthDisabled, string schemaTransformationVersion, ResourceIdentifier storageResourceId, IEnumerable<BotServicePrivateEndpointConnectionData> privateEndpointConnections, string openWithHint, string appPasswordHint, string provisioningState, string publishingCredentials)
         {
-            return new BotProperties(
-                displayName,
-                description,
-                iconUri,
-                endpoint,
-                endpointVersion,
-                allSettings ?? new ChangeTrackingDictionary<string, string>(),
-                parameters ?? new ChangeTrackingDictionary<string, string>(),
-                manifestUri,
-                msaAppType,
-                msaAppId,
-                msaAppTenantId,
-                msaAppMSIResourceId,
-                (configuredChannels ?? new ChangeTrackingList<string>()).ToList(),
-                (enabledChannels ?? new ChangeTrackingList<string>()).ToList(),
-                developerAppInsightKey,
-                developerAppInsightsApiKey,
-                developerAppInsightsApplicationId,
-                (luisAppIds ?? new ChangeTrackingList<string>()).ToList(),
-                luisKey,
-                isCmekEnabled,
-                cmekKeyVaultUri,
-                cmekEncryptionStatus,
-                tenantId,
-                publicNetworkAccess,
-                isStreamingSupported,
-                isDeveloperAppInsightsApiKeySet,
-                migrationToken,
-                isLocalAuthDisabled,
-                schemaTransformationVersion,
-                storageResourceId,
-                (privateEndpointConnections ?? new ChangeTrackingList<BotServicePrivateEndpointConnectionData>()).ToList(),
-                default,
-                openWithHint,
-                appPasswordHint,
-                provisioningState,
-                publishingCredentials,
-                default);
+            return BotProperties(displayName: displayName, description: description, iconUri: iconUri, endpoint: endpoint, endpointVersion: endpointVersion, allSettings: allSettings, parameters: parameters, manifestUri: manifestUri, msaAppType: msaAppType, msaAppId: msaAppId, msaAppTenantId: msaAppTenantId, msaAppMSIResourceId: msaAppMSIResourceId, configuredChannels: configuredChannels, enabledChannels: enabledChannels, developerAppInsightKey: developerAppInsightKey, developerAppInsightsApiKey: developerAppInsightsApiKey, developerAppInsightsApplicationId: developerAppInsightsApplicationId, luisAppIds: luisAppIds, luisKey: luisKey, isCmekEnabled: isCmekEnabled, cmekKeyVaultUri: cmekKeyVaultUri, cmekEncryptionStatus: cmekEncryptionStatus, tenantId: tenantId, publicNetworkAccess: publicNetworkAccess, isStreamingSupported: isStreamingSupported, isDeveloperAppInsightsApiKeySet: isDeveloperAppInsightsApiKeySet, migrationToken: migrationToken, isLocalAuthDisabled: isLocalAuthDisabled, schemaTransformationVersion: schemaTransformationVersion, storageResourceId: storageResourceId, privateEndpointConnections: privateEndpointConnections, networkSecurityPerimeterConfigurations: default, openWithHint: openWithHint, appPasswordHint: appPasswordHint, provisioningState: provisioningState, publishingCredentials: publishingCredentials);
         }
 
         /// <summary> Initializes a new instance of <see cref="BotService.BotServicePrivateEndpointConnectionData"/>. </summary>
@@ -1444,9 +1387,10 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="groupIds"> Group ids. </param>
         /// <returns> A new <see cref="BotService.BotServicePrivateEndpointConnectionData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static BotServicePrivateEndpointConnectionData BotServicePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier privateEndpointId = default, BotServicePrivateLinkServiceConnectionState connectionState = default, BotServicePrivateEndpointConnectionProvisioningState? provisioningState = default, IEnumerable<string> groupIds = default)
         {
+            groupIds ??= new ChangeTrackingList<string>();
+
             return new BotServicePrivateEndpointConnectionData(
                 id,
                 name,
@@ -1467,20 +1411,9 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.BotConnectionSettingProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BotConnectionSettingProperties BotConnectionSettingProperties(string clientId = default, string settingId = default, string clientSecret = default, string scopes = default, string serviceProviderId = default, string serviceProviderDisplayName = default, IEnumerable<BotConnectionSettingParameter> parameters = default, string provisioningState = default)
+        public static BotConnectionSettingProperties BotConnectionSettingProperties(string clientId, string settingId, string clientSecret, string scopes, string serviceProviderId, string serviceProviderDisplayName, IEnumerable<BotConnectionSettingParameter> parameters, string provisioningState)
         {
-            return new BotConnectionSettingProperties(
-                default,
-                default,
-                clientId,
-                settingId,
-                clientSecret,
-                scopes,
-                serviceProviderId,
-                serviceProviderDisplayName,
-                (parameters ?? new ChangeTrackingList<BotConnectionSettingParameter>()).ToList(),
-                provisioningState,
-                default);
+            return BotConnectionSettingProperties(id: default, name: default, clientId: clientId, settingId: settingId, clientSecret: clientSecret, scopes: scopes, serviceProviderId: serviceProviderId, serviceProviderDisplayName: serviceProviderDisplayName, parameters: parameters, provisioningState: provisioningState);
         }
     }
 }
