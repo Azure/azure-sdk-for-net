@@ -551,24 +551,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SqlVmGroupData SqlVmGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, string sqlImageOffer, SqlVmGroupImageSku? sqlImageSku, SqlVmGroupScaleType? scaleType, SqlVmClusterManagerType? clusterManagerType, SqlVmClusterConfiguration? clusterConfiguration, WindowsServerFailoverClusterDomainProfile windowsServerFailoverClusterDomainProfile)
         {
-            return new SqlVmGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && sqlImageOffer is null && sqlImageSku is null && scaleType is null && clusterManagerType is null && clusterConfiguration is null && windowsServerFailoverClusterDomainProfile is null ? default : new SqlVirtualMachineGroupProperties(
-                    provisioningState,
-                    sqlImageOffer,
-                    sqlImageSku,
-                    scaleType,
-                    clusterManagerType,
-                    clusterConfiguration,
-                    windowsServerFailoverClusterDomainProfile,
-                    default),
-                default,
-                default);
+            return SqlVmGroupData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, provisioningState: provisioningState, sqlImageOffer: sqlImageOffer, sqlImageSku: sqlImageSku, scaleType: scaleType, clusterManagerType: clusterManagerType, clusterConfiguration: clusterConfiguration, windowsServerFailoverClusterDomainProfile: windowsServerFailoverClusterDomainProfile, sqlVmGroupName: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlVirtualMachine.SqlVmData"/>. </summary>
@@ -598,39 +581,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SqlVmData SqlVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ResourceIdentifier virtualMachineResourceId, string provisioningState, string sqlImageOffer, SqlServerLicenseType? sqlServerLicenseType, SqlManagementMode? sqlManagement, SqlImageSku? sqlImageSku, ResourceIdentifier sqlVmGroupResourceId, WindowsServerFailoverClusterDomainCredentials windowsServerFailoverClusterDomainCredentials, IPAddress windowsServerFailoverClusterStaticIP, SqlVmAutoPatchingSettings autoPatchingSettings, SqlVmAutoBackupSettings autoBackupSettings, SqlVmKeyVaultCredentialSettings keyVaultCredentialSettings, SqlServerConfigurationsManagementSettings serverConfigurationsManagementSettings, SqlVmStorageConfigurationSettings storageConfigurationSettings, SqlVmAssessmentSettings assessmentSettings)
         {
-            return new SqlVmData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                virtualMachineResourceId is null && provisioningState is null && sqlImageOffer is null && sqlServerLicenseType is null && sqlManagement is null && sqlImageSku is null && sqlVmGroupResourceId is null && windowsServerFailoverClusterDomainCredentials is null && windowsServerFailoverClusterStaticIP is null && autoPatchingSettings is null && autoBackupSettings is null && keyVaultCredentialSettings is null && serverConfigurationsManagementSettings is null && storageConfigurationSettings is null && assessmentSettings is null ? default : new SqlVirtualMachineProperties(
-                    virtualMachineResourceId,
-                    provisioningState,
-                    sqlImageOffer,
-                    sqlServerLicenseType,
-                    sqlManagement,
-                    default,
-                    sqlImageSku,
-                    sqlVmGroupResourceId,
-                    windowsServerFailoverClusterDomainCredentials,
-                    windowsServerFailoverClusterStaticIP,
-                    autoPatchingSettings,
-                    autoBackupSettings,
-                    keyVaultCredentialSettings,
-                    serverConfigurationsManagementSettings,
-                    storageConfigurationSettings,
-                    default,
-                    assessmentSettings,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default),
-                default,
-                identity,
-                default);
+            return SqlVmData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, virtualMachineResourceId: virtualMachineResourceId, provisioningState: provisioningState, sqlImageOffer: sqlImageOffer, sqlServerLicenseType: sqlServerLicenseType, sqlManagement: sqlManagement, leastPrivilegeMode: default, sqlImageSku: sqlImageSku, sqlVmGroupResourceId: sqlVmGroupResourceId, windowsServerFailoverClusterDomainCredentials: windowsServerFailoverClusterDomainCredentials, windowsServerFailoverClusterStaticIP: windowsServerFailoverClusterStaticIP, autoPatchingSettings: autoPatchingSettings, autoBackupSettings: autoBackupSettings, keyVaultCredentialSettings: keyVaultCredentialSettings, serverConfigurationsManagementSettings: serverConfigurationsManagementSettings, storageConfigurationSettings: storageConfigurationSettings, troubleshootingStatus: default, assessmentSettings: assessmentSettings, enableAutomaticUpgrade: default, additionalVmPatch: default, virtualMachineIdentitySettings: default, osType: default, sqlVmName: default, identity: identity);
         }
     }
 }

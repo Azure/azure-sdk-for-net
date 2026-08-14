@@ -307,7 +307,9 @@ namespace Azure.ResourceManager.StandbyPool.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StandbyVirtualMachineInstanceCountSummary StandbyVirtualMachineInstanceCountSummary(long? zone, IEnumerable<PoolVirtualMachineStateCount> standbyVirtualMachineInstanceCountsByState)
         {
-            return new StandbyVirtualMachineInstanceCountSummary(zone, (standbyVirtualMachineInstanceCountsByState ?? new ChangeTrackingList<PoolVirtualMachineStateCount>()).ToList(), default);
+            standbyVirtualMachineInstanceCountsByState ??= new ChangeTrackingList<PoolVirtualMachineStateCount>();
+
+            return new StandbyVirtualMachineInstanceCountSummary(zone, default, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StandbyContainerGroupPoolRuntimeViewProperties"/>. </summary>
@@ -317,7 +319,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StandbyContainerGroupPoolRuntimeViewProperties StandbyContainerGroupPoolRuntimeViewProperties(IEnumerable<ContainerGroupInstanceCountSummary> instanceCountSummary, StandbyProvisioningState? provisioningState)
         {
-            return new StandbyContainerGroupPoolRuntimeViewProperties((instanceCountSummary ?? new ChangeTrackingList<ContainerGroupInstanceCountSummary>()).ToList(), default, provisioningState, default, default);
+            return StandbyContainerGroupPoolRuntimeViewProperties(instanceCountSummary: instanceCountSummary, status: default, provisioningState: provisioningState, prediction: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StandbyContainerGroupPoolProperties"/>. </summary>
@@ -328,7 +330,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StandbyContainerGroupPoolProperties StandbyContainerGroupPoolProperties(StandbyContainerGroupPoolElasticityProfile elasticityProfile, StandbyContainerGroupProperties containerGroupProperties, StandbyProvisioningState? provisioningState)
         {
-            return new StandbyContainerGroupPoolProperties(elasticityProfile, containerGroupProperties, default, provisioningState, default);
+            return StandbyContainerGroupPoolProperties(elasticityProfile: elasticityProfile, containerGroupProperties: containerGroupProperties, zones: default, provisioningState: provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StandbyVirtualMachinePoolRuntimeViewProperties"/>. </summary>
@@ -343,7 +345,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StandbyVirtualMachinePoolRuntimeViewProperties StandbyVirtualMachinePoolRuntimeViewProperties(IEnumerable<StandbyVirtualMachineInstanceCountSummary> instanceCountSummary, StandbyProvisioningState? provisioningState)
         {
-            return new StandbyVirtualMachinePoolRuntimeViewProperties((instanceCountSummary ?? new ChangeTrackingList<StandbyVirtualMachineInstanceCountSummary>()).ToList(), default, provisioningState, default, default);
+            return StandbyVirtualMachinePoolRuntimeViewProperties(instanceCountSummary: instanceCountSummary, status: default, provisioningState: provisioningState, prediction: default);
         }
     }
 }

@@ -44,61 +44,6 @@ namespace Azure.ResourceManager.StorageCache.Models
             return new RequiredAmlFileSystemSubnetsSize(filesystemSubnetSize, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="cacheSizeGB"> The size of this Cache, in GB. </param>
-        /// <param name="health"> Health of the cache. </param>
-        /// <param name="mountAddresses"> Array of IPv4 addresses that can be used by clients mounting this cache. </param>
-        /// <param name="provisioningState"> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </param>
-        /// <param name="subnet"> Subnet used for the cache. </param>
-        /// <param name="upgradeStatus"> Upgrade status of the cache. </param>
-        /// <param name="upgradeSettings"> Upgrade settings of the cache. </param>
-        /// <param name="networkSettings"> Specifies network settings of the cache. </param>
-        /// <param name="encryptionSettings"> Specifies encryption settings of the cache. </param>
-        /// <param name="directoryServicesSettings"> Specifies Directory Services settings of the cache. </param>
-        /// <param name="zones"> Availability zones for resources. This field should only contain a single element in the array. </param>
-        /// <param name="primingJobs"> Specifies the priming jobs defined in the cache. </param>
-        /// <param name="spaceAllocation"> Specifies the space allocation percentage for each storage target in the cache. </param>
-        /// <param name="securityAccessPolicies"> NFS access policies defined for this cache. </param>
-        /// <param name="identity"> The identity of the cache, if configured. </param>
-        /// <param name="skuName"> SKU name for this cache. </param>
-        /// <returns> A new <see cref="StorageCache.StorageCacheData"/> instance for mocking. </returns>
-        public static StorageCacheData StorageCacheData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, int? cacheSizeGB = default, StorageCacheHealth health = default, IEnumerable<IPAddress> mountAddresses = default, StorageCacheProvisioningStateType? provisioningState = default, ResourceIdentifier subnet = default, StorageCacheUpgradeStatus upgradeStatus = default, StorageCacheUpgradeSettings upgradeSettings = default, StorageCacheNetworkSettings networkSettings = default, StorageCacheEncryptionSettings encryptionSettings = default, StorageCacheDirectorySettings directoryServicesSettings = default, IEnumerable<string> zones = default, IEnumerable<PrimingJob> primingJobs = default, IEnumerable<StorageTargetSpaceAllocation> spaceAllocation = default, IEnumerable<NfsAccessPolicy> securityAccessPolicies = default, ManagedServiceIdentity identity = default, string skuName = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new StorageCacheData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                cacheSizeGB is null && health is null && mountAddresses is null && provisioningState is null && subnet is null && upgradeStatus is null && upgradeSettings is null && networkSettings is null && encryptionSettings is null && securityAccessPolicies is null && directoryServicesSettings is null && zones is null && primingJobs is null && spaceAllocation is null ? default : new CacheProperties(
-                    cacheSizeGB,
-                    health,
-                    (mountAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
-                    provisioningState,
-                    subnet,
-                    upgradeStatus,
-                    upgradeSettings,
-                    networkSettings,
-                    encryptionSettings,
-                    new StorageCacheSecuritySettings((securityAccessPolicies ?? new ChangeTrackingList<NfsAccessPolicy>()).ToList(), default),
-                    directoryServicesSettings,
-                    (zones ?? new ChangeTrackingList<string>()).ToList(),
-                    (primingJobs ?? new ChangeTrackingList<PrimingJob>()).ToList(),
-                    (spaceAllocation ?? new ChangeTrackingList<StorageTargetSpaceAllocation>()).ToList(),
-                    default),
-                identity,
-                skuName is null ? default : new StorageCacheSkuInfo(skuName, default),
-                default);
-        }
-
         /// <param name="state"> List of cache health states. Down is when the cluster is not responding.  Degraded is when its functioning but has some alerts. Transitioning when it is creating or deleting. Unknown will be returned in old api versions when a new value is added in future versions. WaitingForKey is when the create is waiting for the system assigned identity to be given access to the encryption key in the encryption settings. </param>
         /// <param name="statusDescription"> Describes explanation of state. </param>
         /// <param name="conditions"> Outstanding conditions that need to be investigated and resolved. </param>
@@ -322,43 +267,6 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static PrimingJobContent PrimingJobContent(string primingJobId = default)
         {
             return new PrimingJobContent(primingJobId, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="junctions"> List of cache namespace junctions to target for namespace associations. </param>
-        /// <param name="targetType"> Type of the Storage Target. </param>
-        /// <param name="provisioningState"> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </param>
-        /// <param name="state"> Storage target operational state. </param>
-        /// <param name="nfs3"> Properties when targetType is nfs3. </param>
-        /// <param name="blobNfs"> Properties when targetType is blobNfs. </param>
-        /// <param name="allocationPercentage"> The percentage of cache space allocated for this storage target. </param>
-        /// <param name="clfsTarget"> Resource ID of storage container. </param>
-        /// <param name="unknownAttributes"> Dictionary of string-&gt;string pairs containing information about the Storage Target. </param>
-        /// <param name="location"> Region name string. </param>
-        /// <returns> A new <see cref="StorageCache.StorageTargetData"/> instance for mocking. </returns>
-        public static StorageTargetData StorageTargetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<NamespaceJunction> junctions = default, StorageTargetType? targetType = default, StorageCacheProvisioningStateType? provisioningState = default, StorageTargetOperationalStateType? state = default, Nfs3Target nfs3 = default, BlobNfsTarget blobNfs = default, int? allocationPercentage = default, ResourceIdentifier clfsTarget = default, IDictionary<string, string> unknownAttributes = default, AzureLocation? location = default)
-        {
-            return new StorageTargetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                junctions is null && targetType is null && provisioningState is null && state is null && nfs3 is null && clfsTarget is null && unknownAttributes is null && blobNfs is null && allocationPercentage is null ? default : new StorageTargetProperties(
-                    (junctions ?? new ChangeTrackingList<NamespaceJunction>()).ToList(),
-                    targetType.GetValueOrDefault(),
-                    provisioningState,
-                    state,
-                    nfs3,
-                    new ClfsTarget(clfsTarget, default),
-                    new UnknownTarget(unknownAttributes ?? new ChangeTrackingDictionary<string, string>(), default),
-                    blobNfs,
-                    allocationPercentage,
-                    default),
-                location,
-                default);
         }
 
         /// <param name="namespacePath"> Namespace path on a cache for a Storage Target. </param>
@@ -1014,33 +922,9 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="rootSquashSettings"> Specifies root squash settings of the AML file system. </param>
         /// <returns> A new <see cref="StorageCache.AmlFileSystemData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AmlFileSystemData AmlFileSystemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, string skuName = default, IEnumerable<string> zones = default, float? storageCapacityTiB = default, AmlFileSystemHealth health = default, AmlFileSystemProvisioningStateType? provisioningState = default, string filesystemSubnet = default, AmlFileSystemClientInfo clientInfo = default, int? throughputProvisionedMBps = default, StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey = default, AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow = default, AmlFileSystemPropertiesHsm hsm = default, AmlFileSystemRootSquashSettings rootSquashSettings = default)
+        public static AmlFileSystemData AmlFileSystemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string skuName, IEnumerable<string> zones, float? storageCapacityTiB, AmlFileSystemHealth health, AmlFileSystemProvisioningStateType? provisioningState, string filesystemSubnet, AmlFileSystemClientInfo clientInfo, int? throughputProvisionedMBps, StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey, AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow, AmlFileSystemPropertiesHsm hsm, AmlFileSystemRootSquashSettings rootSquashSettings)
         {
-            return new AmlFileSystemData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                storageCapacityTiB is null && health is null && provisioningState is null && filesystemSubnet is null && clientInfo is null && throughputProvisionedMBps is null && keyEncryptionKey is null && maintenanceWindow is null && hsm is null && rootSquashSettings is null ? default : new AmlFilesystemProperties(
-                    storageCapacityTiB.GetValueOrDefault(),
-                    default,
-                    default,
-                    health,
-                    provisioningState,
-                    filesystemSubnet,
-                    clientInfo,
-                    throughputProvisionedMBps,
-                    new AmlFileSystemEncryptionSettings(keyEncryptionKey, default),
-                    maintenanceWindow,
-                    hsm,
-                    rootSquashSettings,
-                    default),
-                identity,
-                skuName is null ? default : new StorageCacheSkuName(skuName, default),
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                default);
+            return AmlFileSystemData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, storageCapacityTiB: storageCapacityTiB, currentStorageCapacityTiB: default, clusterUuid: default, health: health, provisioningState: provisioningState, filesystemSubnet: filesystemSubnet, clientInfo: clientInfo, throughputProvisionedMBps: throughputProvisionedMBps, maintenanceWindow: maintenanceWindow, hsm: hsm, rootSquashSettings: rootSquashSettings, keyEncryptionKey: keyEncryptionKey, identity: identity, skuName: skuName, zones: zones);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageCache.StorageCacheData"/>. </summary>
@@ -1067,9 +951,15 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="primingJobs"> Specifies the priming jobs defined in the cache. </param>
         /// <param name="spaceAllocation"> Specifies the space allocation percentage for each storage target in the cache. </param>
         /// <returns> A new <see cref="StorageCache.StorageCacheData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageCacheData StorageCacheData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, string skuName = default, int? cacheSizeGB = default, StorageCacheHealth health = default, IEnumerable<IPAddress> mountAddresses = default, StorageCacheProvisioningStateType? provisioningState = default, ResourceIdentifier subnet = default, StorageCacheUpgradeStatus upgradeStatus = default, StorageCacheUpgradeSettings upgradeSettings = default, StorageCacheNetworkSettings networkSettings = default, StorageCacheEncryptionSettings encryptionSettings = default, IEnumerable<NfsAccessPolicy> securityAccessPolicies = default, StorageCacheDirectorySettings directoryServicesSettings = default, IEnumerable<string> zones = default, IEnumerable<PrimingJob> primingJobs = default, IEnumerable<StorageTargetSpaceAllocation> spaceAllocation = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            mountAddresses ??= new ChangeTrackingList<IPAddress>();
+            securityAccessPolicies ??= new ChangeTrackingList<NfsAccessPolicy>();
+            zones ??= new ChangeTrackingList<string>();
+            primingJobs ??= new ChangeTrackingList<PrimingJob>();
+            spaceAllocation ??= new ChangeTrackingList<StorageTargetSpaceAllocation>();
+
             return new StorageCacheData(
                 id,
                 name,
@@ -1114,9 +1004,11 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="allocationPercentage"> The percentage of cache space allocated for this storage target. </param>
         /// <param name="location"> Region name string. </param>
         /// <returns> A new <see cref="StorageCache.StorageTargetData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageTargetData StorageTargetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<NamespaceJunction> junctions = default, StorageTargetType? targetType = default, StorageCacheProvisioningStateType? provisioningState = default, StorageTargetOperationalStateType? state = default, Nfs3Target nfs3 = default, ResourceIdentifier clfsTarget = default, IDictionary<string, string> unknownAttributes = default, BlobNfsTarget blobNfs = default, int? allocationPercentage = default, AzureLocation? location = default)
         {
+            junctions ??= new ChangeTrackingList<NamespaceJunction>();
+            unknownAttributes ??= new ChangeTrackingDictionary<string, string>();
+
             return new StorageTargetData(
                 id,
                 name,
@@ -1162,39 +1054,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageCacheImportJobData StorageCacheImportJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ImportJobProvisioningStateType? provisioningState, IEnumerable<string> importPrefixes, ConflictResolutionMode? conflictResolutionMode, int? maximumErrors, ImportStatusType? state, string statusMessage, long? totalBlobsWalked, long? blobsWalkedPerSecond, long? totalBlobsImported, long? blobsImportedPerSecond, DateTimeOffset? lastCompletionOn, DateTimeOffset? lastStartedOn, int? totalErrors, int? totalConflicts)
         {
-            return new StorageCacheImportJobData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && importPrefixes is null && conflictResolutionMode is null && maximumErrors is null && state is null && statusMessage is null && totalBlobsWalked is null && blobsWalkedPerSecond is null && totalBlobsImported is null && blobsImportedPerSecond is null && lastCompletionOn is null && lastStartedOn is null && totalErrors is null && totalConflicts is null ? default : new ImportJobProperties(
-                    provisioningState,
-                    default,
-                    (importPrefixes ?? new ChangeTrackingList<string>()).ToList(),
-                    conflictResolutionMode,
-                    maximumErrors,
-                    new ImportJobPropertiesStatus(
-                        state,
-                        statusMessage,
-                        totalBlobsWalked,
-                        blobsWalkedPerSecond,
-                        totalBlobsImported,
-                        default,
-                        default,
-                        default,
-                        default,
-                        default,
-                        default,
-                        blobsImportedPerSecond,
-                        lastCompletionOn,
-                        lastStartedOn,
-                        totalErrors,
-                        totalConflicts,
-                        default),
-                    default),
-                default);
+            return StorageCacheImportJobData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, provisioningState: provisioningState, adminStatus: default, importPrefixes: importPrefixes, conflictResolutionMode: conflictResolutionMode, maximumErrors: maximumErrors, state: state, statusMessage: statusMessage, totalBlobsWalked: totalBlobsWalked, blobsWalkedPerSecond: blobsWalkedPerSecond, totalBlobsImported: totalBlobsImported, importedFiles: default, importedDirectories: default, importedSymlinks: default, preexistingFiles: default, preexistingDirectories: default, preexistingSymlinks: default, blobsImportedPerSecond: blobsImportedPerSecond, lastCompletionOn: lastCompletionOn, lastStartedOn: lastStartedOn, totalErrors: totalErrors, totalConflicts: totalConflicts);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageCache.AmlFileSystemData"/>. </summary>
@@ -1220,31 +1080,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AmlFileSystemData AmlFileSystemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string skuName, IEnumerable<string> zones, float? storageCapacityTiB, AmlFileSystemHealth health, AmlFileSystemProvisioningStateType? provisioningState, string filesystemSubnet, AmlFileSystemClientInfo clientInfo, int? throughputProvisionedMBps, StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey, AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow, AmlFileSystemPropertiesHsm hsm)
         {
-            return new AmlFileSystemData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                storageCapacityTiB is null && health is null && provisioningState is null && filesystemSubnet is null && clientInfo is null && throughputProvisionedMBps is null && keyEncryptionKey is null && maintenanceWindow is null && hsm is null ? default : new AmlFilesystemProperties(
-                    storageCapacityTiB.GetValueOrDefault(),
-                    default,
-                    default,
-                    health,
-                    provisioningState,
-                    filesystemSubnet,
-                    clientInfo,
-                    throughputProvisionedMBps,
-                    new AmlFileSystemEncryptionSettings(keyEncryptionKey, default),
-                    maintenanceWindow,
-                    hsm,
-                    default,
-                    default),
-                identity,
-                skuName is null ? default : new StorageCacheSkuName(skuName, default),
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                default);
+            return AmlFileSystemData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, storageCapacityTiB: storageCapacityTiB, currentStorageCapacityTiB: default, clusterUuid: default, health: health, provisioningState: provisioningState, filesystemSubnet: filesystemSubnet, clientInfo: clientInfo, throughputProvisionedMBps: throughputProvisionedMBps, maintenanceWindow: maintenanceWindow, hsm: hsm, rootSquashSettings: default, keyEncryptionKey: keyEncryptionKey, identity: identity, skuName: skuName, zones: zones);
         }
     }
 }

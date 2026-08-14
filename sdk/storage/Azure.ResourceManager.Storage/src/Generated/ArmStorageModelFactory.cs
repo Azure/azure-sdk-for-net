@@ -1078,27 +1078,6 @@ namespace Azure.ResourceManager.Storage.Models
             return new LeaseShareResponse(leaseId, leaseTimeSeconds, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="shareDeleteRetentionPolicy"> The file service properties for share soft delete. </param>
-        /// <param name="protocolSettings"> Protocol settings for file service. </param>
-        /// <param name="corsRules"> The List of CORS rules. You can include up to five CorsRule elements in the request. </param>
-        /// <param name="sku"> Sku name and tier. </param>
-        /// <returns> A new <see cref="Storage.FileServiceData"/> instance for mocking. </returns>
-        public static FileServiceData FileServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeleteRetentionPolicy shareDeleteRetentionPolicy = default, FileServiceProtocolSettings protocolSettings = default, IEnumerable<StorageCorsRule> corsRules = default, StorageSku sku = default)
-        {
-            return new FileServiceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                corsRules is null && shareDeleteRetentionPolicy is null && protocolSettings is null ? default : new FileServicePropertiesProperties(new StorageCorsRules((corsRules ?? new ChangeTrackingList<StorageCorsRule>()).ToList(), default), shareDeleteRetentionPolicy, protocolSettings, default),
-                sku,
-                default);
-        }
-
         /// <param name="smbSetting"> Setting for SMB protocol. </param>
         /// <param name="isRequired"> Indicates whether encryption in transit is required. </param>
         /// <returns> A new <see cref="Models.FileServiceProtocolSettings"/> instance for mocking. </returns>
@@ -2366,67 +2345,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageAccountData StorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StorageAccountProvisioningState? provisioningState, StorageAccountEndpoints primaryEndpoints, AzureLocation? primaryLocation, StorageAccountStatus? statusOfPrimary, DateTimeOffset? lastGeoFailoverOn, AzureLocation? secondaryLocation, StorageAccountStatus? statusOfSecondary, DateTimeOffset? createdOn, StorageCustomDomain customDomain, StorageAccountSasPolicy sasPolicy, StorageAccountKeyCreationTime keyCreationTime, StorageAccountEndpoints secondaryEndpoints, StorageAccountEncryption encryption, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, StorageAccountNetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, GeoReplicationStatistics geoReplicationStats, bool? isFailoverInProgress, LargeFileSharesState? largeFileSharesState, IEnumerable<StoragePrivateEndpointConnectionData> privateEndpointConnections, StorageRoutingPreference routingPreference, BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, StoragePublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageAccountSkuConversionStatus storageAccountSkuConversionStatus, StorageDnsEndpointType? dnsEndpointType, bool? isSkuConversionBlocked, bool? isAccountMigrationInProgress, int? keyExpirationPeriodInDays, bool? isIPv6EndpointToBePublished, bool? isBlobEnabled, StorageSku sku, StorageKind? kind, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, IEnumerable<string> zones, StorageAccountZonePlacementPolicy? zonePlacementPolicy)
         {
-            return new StorageAccountData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && primaryEndpoints is null && primaryLocation is null && statusOfPrimary is null && lastGeoFailoverOn is null && secondaryLocation is null && statusOfSecondary is null && createdOn is null && customDomain is null && sasPolicy is null && keyExpirationPeriodInDays is null && keyCreationTime is null && secondaryEndpoints is null && encryption is null && accessTier is null && azureFilesIdentityBasedAuthentication is null && enableHttpsTrafficOnly is null && networkRuleSet is null && isSftpEnabled is null && isLocalUserEnabled is null && isExtendedGroupEnabled is null && isHnsEnabled is null && geoReplicationStats is null && isFailoverInProgress is null && largeFileSharesState is null && privateEndpointConnections is null && routingPreference is null && isIPv6EndpointToBePublished is null && blobRestoreStatus is null && allowBlobPublicAccess is null && minimumTlsVersion is null && allowSharedKeyAccess is null && isNfsV3Enabled is null && allowCrossTenantReplication is null && isDefaultToOAuthAuthentication is null && publicNetworkAccess is null && immutableStorageWithVersioning is null && allowedCopyScope is null && storageAccountSkuConversionStatus is null && dnsEndpointType is null && isSkuConversionBlocked is null && isAccountMigrationInProgress is null && isBlobEnabled is null && isBlobEnabled is null ? default : new StorageAccountProperties(
-                    provisioningState,
-                    primaryEndpoints,
-                    primaryLocation,
-                    statusOfPrimary,
-                    lastGeoFailoverOn,
-                    secondaryLocation,
-                    statusOfSecondary,
-                    createdOn,
-                    customDomain,
-                    sasPolicy,
-                    new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
-                    keyCreationTime,
-                    secondaryEndpoints,
-                    encryption,
-                    accessTier,
-                    azureFilesIdentityBasedAuthentication,
-                    enableHttpsTrafficOnly,
-                    networkRuleSet,
-                    isSftpEnabled,
-                    isLocalUserEnabled,
-                    isExtendedGroupEnabled,
-                    isHnsEnabled,
-                    geoReplicationStats,
-                    isFailoverInProgress,
-                    largeFileSharesState,
-                    (privateEndpointConnections ?? new ChangeTrackingList<StoragePrivateEndpointConnectionData>()).ToList(),
-                    routingPreference,
-                    new DualStackEndpointPreference(isIPv6EndpointToBePublished, default),
-                    blobRestoreStatus,
-                    allowBlobPublicAccess,
-                    minimumTlsVersion,
-                    allowSharedKeyAccess,
-                    isNfsV3Enabled,
-                    allowCrossTenantReplication,
-                    isDefaultToOAuthAuthentication,
-                    publicNetworkAccess,
-                    immutableStorageWithVersioning,
-                    allowedCopyScope,
-                    storageAccountSkuConversionStatus,
-                    dnsEndpointType,
-                    isSkuConversionBlocked,
-                    isAccountMigrationInProgress,
-                    new GeoPriorityReplicationStatus(isBlobEnabled, default),
-                    new StorageAccountSharedKeyAccessProperties(new ServiceSharedKeyAccessProperties(isBlobEnabled, default), default, default, default, default),
-                    default,
-                    default),
-                sku,
-                kind,
-                identity,
-                extendedLocation,
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                zonePlacementPolicy is null ? default : new Placement(zonePlacementPolicy, default),
-                default);
+            return StorageAccountData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, provisioningState: provisioningState, primaryEndpoints: primaryEndpoints, primaryLocation: primaryLocation, statusOfPrimary: statusOfPrimary, lastGeoFailoverOn: lastGeoFailoverOn, secondaryLocation: secondaryLocation, statusOfSecondary: statusOfSecondary, createdOn: createdOn, customDomain: customDomain, sasPolicy: sasPolicy, keyCreationTime: keyCreationTime, secondaryEndpoints: secondaryEndpoints, encryption: encryption, accessTier: accessTier, azureFilesIdentityBasedAuthentication: azureFilesIdentityBasedAuthentication, enableHttpsTrafficOnly: enableHttpsTrafficOnly, networkRuleSet: networkRuleSet, isSftpEnabled: isSftpEnabled, isLocalUserEnabled: isLocalUserEnabled, isExtendedGroupEnabled: isExtendedGroupEnabled, isHnsEnabled: isHnsEnabled, geoReplicationStats: geoReplicationStats, isFailoverInProgress: isFailoverInProgress, largeFileSharesState: largeFileSharesState, privateEndpointConnections: privateEndpointConnections, routingPreference: routingPreference, blobRestoreStatus: blobRestoreStatus, allowBlobPublicAccess: allowBlobPublicAccess, minimumTlsVersion: minimumTlsVersion, allowSharedKeyAccess: allowSharedKeyAccess, isNfsV3Enabled: isNfsV3Enabled, allowCrossTenantReplication: allowCrossTenantReplication, isDefaultToOAuthAuthentication: isDefaultToOAuthAuthentication, publicNetworkAccess: publicNetworkAccess, immutableStorageWithVersioning: immutableStorageWithVersioning, allowedCopyScope: allowedCopyScope, storageAccountSkuConversionStatus: storageAccountSkuConversionStatus, dnsEndpointType: dnsEndpointType, isSkuConversionBlocked: isSkuConversionBlocked, isAccountMigrationInProgress: isAccountMigrationInProgress, allowSharedKeyAccessForServices: default, dataCollaborationPolicyProperties: default, keyExpirationPeriodInDays: keyExpirationPeriodInDays, isIPv6EndpointToBePublished: isIPv6EndpointToBePublished, isBlobEnabled: isBlobEnabled, sku: sku, kind: kind, identity: identity, extendedLocation: extendedLocation, zones: zones, zonePlacementPolicy: zonePlacementPolicy);
         }
 
         /// <param name="sku"> Gets or sets the SKU name. Note that the SKU name cannot be updated to Standard_ZRS, Premium_LRS or Premium_ZRS, nor can accounts of those SKU names be updated to any other value. </param>
@@ -2463,42 +2382,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageAccountPatch StorageAccountPatch(StorageSku sku, IDictionary<string, string> tags, ManagedServiceIdentity identity, StorageCustomDomain customDomain, StorageAccountEncryption encryption, StorageAccountSasPolicy sasPolicy, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, StorageAccountNetworkRuleSet networkRuleSet, LargeFileSharesState? largeFileSharesState, StorageRoutingPreference routingPreference, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, StoragePublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageDnsEndpointType? dnsEndpointType, int? keyExpirationPeriodInDays, bool? isIPv6EndpointToBePublished, bool? isBlobEnabled, StorageKind? kind, IEnumerable<string> zones, StorageAccountZonePlacementPolicy? zonePlacementPolicy)
         {
-            return new StorageAccountPatch(
-                sku,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                identity,
-                customDomain is null && encryption is null && sasPolicy is null && keyExpirationPeriodInDays is null && accessTier is null && azureFilesIdentityBasedAuthentication is null && enableHttpsTrafficOnly is null && isSftpEnabled is null && isLocalUserEnabled is null && isExtendedGroupEnabled is null && networkRuleSet is null && largeFileSharesState is null && routingPreference is null && isIPv6EndpointToBePublished is null && allowBlobPublicAccess is null && minimumTlsVersion is null && allowSharedKeyAccess is null && allowCrossTenantReplication is null && isDefaultToOAuthAuthentication is null && publicNetworkAccess is null && immutableStorageWithVersioning is null && allowedCopyScope is null && dnsEndpointType is null && isBlobEnabled is null && isBlobEnabled is null ? default : new StorageAccountPropertiesUpdateParameters(
-                    customDomain,
-                    encryption,
-                    sasPolicy,
-                    new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
-                    accessTier,
-                    azureFilesIdentityBasedAuthentication,
-                    enableHttpsTrafficOnly,
-                    isSftpEnabled,
-                    isLocalUserEnabled,
-                    isExtendedGroupEnabled,
-                    networkRuleSet,
-                    largeFileSharesState,
-                    routingPreference,
-                    new DualStackEndpointPreference(isIPv6EndpointToBePublished, default),
-                    allowBlobPublicAccess,
-                    minimumTlsVersion,
-                    allowSharedKeyAccess,
-                    allowCrossTenantReplication,
-                    isDefaultToOAuthAuthentication,
-                    publicNetworkAccess,
-                    immutableStorageWithVersioning,
-                    allowedCopyScope,
-                    dnsEndpointType,
-                    new GeoPriorityReplicationStatus(isBlobEnabled, default),
-                    new StorageAccountSharedKeyAccessProperties(new ServiceSharedKeyAccessProperties(isBlobEnabled, default), default, default, default, default),
-                    default,
-                    default),
-                kind,
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                zonePlacementPolicy is null ? default : new Placement(zonePlacementPolicy, default),
-                default);
+            return StorageAccountPatch(sku: sku, tags: tags, identity: identity, customDomain: customDomain, encryption: encryption, sasPolicy: sasPolicy, accessTier: accessTier, azureFilesIdentityBasedAuthentication: azureFilesIdentityBasedAuthentication, enableHttpsTrafficOnly: enableHttpsTrafficOnly, isSftpEnabled: isSftpEnabled, isLocalUserEnabled: isLocalUserEnabled, isExtendedGroupEnabled: isExtendedGroupEnabled, networkRuleSet: networkRuleSet, largeFileSharesState: largeFileSharesState, routingPreference: routingPreference, allowBlobPublicAccess: allowBlobPublicAccess, minimumTlsVersion: minimumTlsVersion, allowSharedKeyAccess: allowSharedKeyAccess, allowCrossTenantReplication: allowCrossTenantReplication, isDefaultToOAuthAuthentication: isDefaultToOAuthAuthentication, publicNetworkAccess: publicNetworkAccess, immutableStorageWithVersioning: immutableStorageWithVersioning, allowedCopyScope: allowedCopyScope, dnsEndpointType: dnsEndpointType, allowSharedKeyAccessForServices: default, dataCollaborationPolicyProperties: default, keyExpirationPeriodInDays: keyExpirationPeriodInDays, isIPv6EndpointToBePublished: isIPv6EndpointToBePublished, isBlobEnabled: isBlobEnabled, kind: kind, zones: zones, zonePlacementPolicy: zonePlacementPolicy);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2516,22 +2400,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ObjectReplicationPolicyData ObjectReplicationPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyId, DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, IEnumerable<ObjectReplicationPolicyRule> rules, bool? isMetricsEnabled, bool? isPriorityReplicationEnabled)
         {
-            return new ObjectReplicationPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                policyId is null && enabledOn is null && sourceAccount is null && destinationAccount is null && rules is null && isMetricsEnabled is null && isPriorityReplicationEnabled is null ? default : new ObjectReplicationPolicyProperties(
-                    policyId,
-                    enabledOn,
-                    sourceAccount,
-                    destinationAccount,
-                    (rules ?? new ChangeTrackingList<ObjectReplicationPolicyRule>()).ToList(),
-                    new ObjectReplicationPolicyPropertiesMetrics(isMetricsEnabled, default),
-                    new ObjectReplicationPolicyPropertiesPriorityReplication(isPriorityReplicationEnabled, default),
-                    default,
-                    default),
-                default);
+            return ObjectReplicationPolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, policyId: policyId, enabledOn: enabledOn, sourceAccount: sourceAccount, destinationAccount: destinationAccount, rules: rules, isMetricsEnabled: isMetricsEnabled, isPriorityReplicationEnabled: isPriorityReplicationEnabled, isTagsReplicationEnabled: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.BlobServiceData"/>. </summary>
@@ -2553,25 +2422,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobServiceData BlobServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageSku sku, IEnumerable<StorageCorsRule> corsRules, string defaultServiceVersion, DeleteRetentionPolicy deleteRetentionPolicy, bool? isVersioningEnabled, bool? isAutomaticSnapshotPolicyEnabled, BlobServiceChangeFeed changeFeed, RestorePolicy restorePolicy, DeleteRetentionPolicy containerDeleteRetentionPolicy, LastAccessTimeTrackingPolicy lastAccessTimeTrackingPolicy)
         {
-            return new BlobServiceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                corsRules is null && defaultServiceVersion is null && deleteRetentionPolicy is null && isVersioningEnabled is null && isAutomaticSnapshotPolicyEnabled is null && changeFeed is null && restorePolicy is null && containerDeleteRetentionPolicy is null && lastAccessTimeTrackingPolicy is null ? default : new BlobServicePropertiesProperties(
-                    new StorageCorsRules((corsRules ?? new ChangeTrackingList<StorageCorsRule>()).ToList(), default),
-                    defaultServiceVersion,
-                    deleteRetentionPolicy,
-                    default,
-                    isVersioningEnabled,
-                    isAutomaticSnapshotPolicyEnabled,
-                    changeFeed,
-                    restorePolicy,
-                    containerDeleteRetentionPolicy,
-                    lastAccessTimeTrackingPolicy,
-                    default),
-                sku,
-                default);
+            return BlobServiceData(id: id, name: name, resourceType: resourceType, systemData: systemData, defaultServiceVersion: defaultServiceVersion, deleteRetentionPolicy: deleteRetentionPolicy, staticWebsite: default, isVersioningEnabled: isVersioningEnabled, isAutomaticSnapshotPolicyEnabled: isAutomaticSnapshotPolicyEnabled, changeFeed: changeFeed, restorePolicy: restorePolicy, containerDeleteRetentionPolicy: containerDeleteRetentionPolicy, lastAccessTimeTrackingPolicy: lastAccessTimeTrackingPolicy, corsRules: corsRules, sku: sku);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BlobContainerImmutabilityPolicy"/>. </summary>
@@ -2585,6 +2436,8 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobContainerImmutabilityPolicy BlobContainerImmutabilityPolicy(ETag? etag, IEnumerable<UpdateHistoryEntry> updateHistory, int? immutabilityPeriodSinceCreationInDays, ImmutabilityPolicyState? state, bool? allowProtectedAppendWrites, bool? allowProtectedAppendWritesAll)
         {
+            updateHistory ??= new ChangeTrackingList<UpdateHistoryEntry>();
+
             return new BlobContainerImmutabilityPolicy(immutabilityPeriodSinceCreationInDays is null && state is null && allowProtectedAppendWrites is null && allowProtectedAppendWritesAll is null ? default : new ImmutabilityPolicyProperty(immutabilityPeriodSinceCreationInDays, state, allowProtectedAppendWrites, allowProtectedAppendWritesAll, default), etag, (updateHistory ?? new ChangeTrackingList<UpdateHistoryEntry>()).ToList(), default);
         }
 
@@ -2598,9 +2451,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="shareDeleteRetentionPolicy"> The file service properties for share soft delete. </param>
         /// <param name="protocolSettings"> Protocol settings for file service. </param>
         /// <returns> A new <see cref="Storage.FileServiceData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static FileServiceData FileServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StorageSku sku = default, IEnumerable<StorageCorsRule> corsRules = default, DeleteRetentionPolicy shareDeleteRetentionPolicy = default, FileServiceProtocolSettings protocolSettings = default)
         {
+            corsRules ??= new ChangeTrackingList<StorageCorsRule>();
+
             return new FileServiceData(
                 id,
                 name,
@@ -2650,46 +2504,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageAccountCreateOrUpdateContent StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, AzureLocation location, ExtendedLocation extendedLocation, IEnumerable<string> zones, StorageAccountZonePlacementPolicy? zonePlacementPolicy, IDictionary<string, string> tags, ManagedServiceIdentity identity, AllowedCopyScope? allowedCopyScope, StoragePublicNetworkAccess? publicNetworkAccess, StorageAccountSasPolicy sasPolicy, int? keyExpirationPeriodInDays, StorageCustomDomain customDomain, StorageAccountEncryption encryption, StorageAccountNetworkRuleSet networkRuleSet, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, LargeFileSharesState? largeFileSharesState, StorageRoutingPreference routingPreference, bool? isIPv6EndpointToBePublished, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, ImmutableStorageAccount immutableStorageWithVersioning, StorageDnsEndpointType? dnsEndpointType, bool? isBlobEnabled)
         {
-            return new StorageAccountCreateOrUpdateContent(
-                sku,
-                kind,
-                location,
-                extendedLocation,
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                zonePlacementPolicy is null ? default : new Placement(zonePlacementPolicy, default),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                identity,
-                allowedCopyScope is null && publicNetworkAccess is null && sasPolicy is null && keyExpirationPeriodInDays is null && customDomain is null && encryption is null && networkRuleSet is null && accessTier is null && azureFilesIdentityBasedAuthentication is null && enableHttpsTrafficOnly is null && isSftpEnabled is null && isLocalUserEnabled is null && isExtendedGroupEnabled is null && isHnsEnabled is null && largeFileSharesState is null && routingPreference is null && isIPv6EndpointToBePublished is null && allowBlobPublicAccess is null && minimumTlsVersion is null && allowSharedKeyAccess is null && isNfsV3Enabled is null && allowCrossTenantReplication is null && isDefaultToOAuthAuthentication is null && immutableStorageWithVersioning is null && dnsEndpointType is null && isBlobEnabled is null && isBlobEnabled is null ? default : new StorageAccountPropertiesCreateParameters(
-                    allowedCopyScope,
-                    publicNetworkAccess,
-                    sasPolicy,
-                    new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
-                    customDomain,
-                    encryption,
-                    networkRuleSet,
-                    accessTier,
-                    azureFilesIdentityBasedAuthentication,
-                    enableHttpsTrafficOnly,
-                    isSftpEnabled,
-                    isLocalUserEnabled,
-                    isExtendedGroupEnabled,
-                    isHnsEnabled,
-                    largeFileSharesState,
-                    routingPreference,
-                    new DualStackEndpointPreference(isIPv6EndpointToBePublished, default),
-                    allowBlobPublicAccess,
-                    minimumTlsVersion,
-                    allowSharedKeyAccess,
-                    isNfsV3Enabled,
-                    allowCrossTenantReplication,
-                    isDefaultToOAuthAuthentication,
-                    immutableStorageWithVersioning,
-                    dnsEndpointType,
-                    new GeoPriorityReplicationStatus(isBlobEnabled, default),
-                    new StorageAccountSharedKeyAccessProperties(new ServiceSharedKeyAccessProperties(isBlobEnabled, default), default, default, default, default),
-                    default,
-                    default),
-                default);
+            return StorageAccountCreateOrUpdateContent(sku: sku, kind: kind, location: location, extendedLocation: extendedLocation, zones: zones, zonePlacementPolicy: zonePlacementPolicy, tags: tags, identity: identity, allowedCopyScope: allowedCopyScope, publicNetworkAccess: publicNetworkAccess, sasPolicy: sasPolicy, customDomain: customDomain, encryption: encryption, networkRuleSet: networkRuleSet, accessTier: accessTier, azureFilesIdentityBasedAuthentication: azureFilesIdentityBasedAuthentication, enableHttpsTrafficOnly: enableHttpsTrafficOnly, isSftpEnabled: isSftpEnabled, isLocalUserEnabled: isLocalUserEnabled, isExtendedGroupEnabled: isExtendedGroupEnabled, isHnsEnabled: isHnsEnabled, largeFileSharesState: largeFileSharesState, routingPreference: routingPreference, allowBlobPublicAccess: allowBlobPublicAccess, minimumTlsVersion: minimumTlsVersion, allowSharedKeyAccess: allowSharedKeyAccess, isNfsV3Enabled: isNfsV3Enabled, allowCrossTenantReplication: allowCrossTenantReplication, isDefaultToOAuthAuthentication: isDefaultToOAuthAuthentication, immutableStorageWithVersioning: immutableStorageWithVersioning, dnsEndpointType: dnsEndpointType, allowSharedKeyAccessForServices: default, dataCollaborationPolicyProperties: default, keyExpirationPeriodInDays: keyExpirationPeriodInDays, isIPv6EndpointToBePublished: isIPv6EndpointToBePublished, isBlobEnabled: isBlobEnabled);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.StorageAccountData"/>. </summary>
@@ -2752,6 +2567,10 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageAccountData StorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StorageSku sku, StorageKind? kind, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, IEnumerable<string> zones, StorageAccountZonePlacementPolicy? zonePlacementPolicy, StorageAccountProvisioningState? storageAccountProvisioningState, StorageAccountEndpoints primaryEndpoints, AzureLocation? primaryLocation, StorageAccountStatus? statusOfPrimary, DateTimeOffset? lastGeoFailoverOn, AzureLocation? secondaryLocation, StorageAccountStatus? statusOfSecondary, DateTimeOffset? createdOn, StorageCustomDomain customDomain, StorageAccountSasPolicy sasPolicy, int? keyExpirationPeriodInDays, StorageAccountKeyCreationTime keyCreationTime, StorageAccountEndpoints secondaryEndpoints, StorageAccountEncryption encryption, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, StorageAccountNetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, GeoReplicationStatistics geoReplicationStats, bool? isFailoverInProgress, LargeFileSharesState? largeFileSharesState, IEnumerable<StoragePrivateEndpointConnectionData> privateEndpointConnections, StorageRoutingPreference routingPreference, bool? isIPv6EndpointToBePublished, BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, StoragePublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageAccountSkuConversionStatus storageAccountSkuConversionStatus, StorageDnsEndpointType? dnsEndpointType, bool? isSkuConversionBlocked, bool? isAccountMigrationInProgress, bool? isBlobEnabled)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
+            privateEndpointConnections ??= new ChangeTrackingList<StoragePrivateEndpointConnectionData>();
+
             return new StorageAccountData(
                 id,
                 name,
@@ -2870,6 +2689,9 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StoragePrivateLinkResourceData StoragePrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier groupId, IEnumerable<string> requiredMembers, IEnumerable<string> requiredZoneNames)
         {
+            requiredMembers ??= new ChangeTrackingList<string>();
+            requiredZoneNames ??= new ChangeTrackingList<string>();
+
             return new StoragePrivateLinkResourceData(
                 id,
                 name,
@@ -2984,6 +2806,10 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageAccountData StorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StorageSku sku, StorageKind? kind, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, IEnumerable<string> zones, StorageAccountZonePlacementPolicy? zonePlacementPolicy, StorageAccountProvisioningState? storageAccountProvisioningState, StorageAccountEndpoints primaryEndpoints, AzureLocation? primaryLocation, StorageAccountStatus? statusOfPrimary, DateTimeOffset? lastGeoFailoverOn, AzureLocation? secondaryLocation, StorageAccountStatus? statusOfSecondary, DateTimeOffset? createdOn, StorageCustomDomain customDomain, StorageAccountSasPolicy sasPolicy, int? keyExpirationPeriodInDays, StorageAccountKeyCreationTime keyCreationTime, StorageAccountEndpoints secondaryEndpoints, StorageAccountEncryption encryption, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, StorageAccountNetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, GeoReplicationStatistics geoReplicationStats, bool? isFailoverInProgress, LargeFileSharesState? largeFileSharesState, IEnumerable<StoragePrivateEndpointConnectionData> privateEndpointConnections, StorageRoutingPreference routingPreference, bool? isIPv6EndpointToBePublished, BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, StoragePublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageAccountSkuConversionStatus storageAccountSkuConversionStatus, StorageDnsEndpointType? dnsEndpointType, bool? isSkuConversionBlocked, bool? isAccountMigrationInProgress)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
+            privateEndpointConnections ??= new ChangeTrackingList<StoragePrivateEndpointConnectionData>();
+
             return new StorageAccountData(
                 id,
                 name,
@@ -3062,22 +2888,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ObjectReplicationPolicyData ObjectReplicationPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyId, DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, IEnumerable<ObjectReplicationPolicyRule> rules, bool? isMetricsEnabled)
         {
-            return new ObjectReplicationPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                policyId is null && enabledOn is null && sourceAccount is null && destinationAccount is null && rules is null && isMetricsEnabled is null ? default : new ObjectReplicationPolicyProperties(
-                    policyId,
-                    enabledOn,
-                    sourceAccount,
-                    destinationAccount,
-                    (rules ?? new ChangeTrackingList<ObjectReplicationPolicyRule>()).ToList(),
-                    new ObjectReplicationPolicyPropertiesMetrics(isMetricsEnabled, default),
-                    default,
-                    default,
-                    default),
-                default);
+            return ObjectReplicationPolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, policyId: policyId, enabledOn: enabledOn, sourceAccount: sourceAccount, destinationAccount: destinationAccount, rules: rules, isMetricsEnabled: isMetricsEnabled, isPriorityReplicationEnabled: default, isTagsReplicationEnabled: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageSkuInformation"/>. </summary>
@@ -3092,16 +2903,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageSkuInformation StorageSkuInformation(StorageSkuName name, StorageSkuTier? tier, string resourceType, StorageKind? kind, IEnumerable<string> locations, IEnumerable<StorageSkuCapability> capabilities, IEnumerable<StorageSkuRestriction> restrictions)
         {
-            return new StorageSkuInformation(
-                name,
-                tier,
-                resourceType,
-                kind,
-                (locations ?? new ChangeTrackingList<string>()).ToList(),
-                default,
-                (capabilities ?? new ChangeTrackingList<StorageSkuCapability>()).ToList(),
-                (restrictions ?? new ChangeTrackingList<StorageSkuRestriction>()).ToList(),
-                default);
+            return StorageSkuInformation(name: name, tier: tier, resourceType: resourceType, kind: kind, locations: locations, locationInfo: default, capabilities: capabilities, restrictions: restrictions);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.StorageAccountData"/>. </summary>
@@ -3160,6 +2962,9 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageAccountData StorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StorageSku sku, StorageKind? kind, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, StorageAccountProvisioningState? storageAccountProvisioningState, StorageAccountEndpoints primaryEndpoints, AzureLocation? primaryLocation, StorageAccountStatus? statusOfPrimary, DateTimeOffset? lastGeoFailoverOn, AzureLocation? secondaryLocation, StorageAccountStatus? statusOfSecondary, DateTimeOffset? createdOn, StorageCustomDomain customDomain, StorageAccountSasPolicy sasPolicy, int? keyExpirationPeriodInDays, StorageAccountKeyCreationTime keyCreationTime, StorageAccountEndpoints secondaryEndpoints, StorageAccountEncryption encryption, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, StorageAccountNetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, GeoReplicationStatistics geoReplicationStats, bool? isFailoverInProgress, LargeFileSharesState? largeFileSharesState, IEnumerable<StoragePrivateEndpointConnectionData> privateEndpointConnections, StorageRoutingPreference routingPreference, BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, StoragePublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageAccountSkuConversionStatus storageAccountSkuConversionStatus, StorageDnsEndpointType? dnsEndpointType, bool? isSkuConversionBlocked, bool? isAccountMigrationInProgress)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            privateEndpointConnections ??= new ChangeTrackingList<StoragePrivateEndpointConnectionData>();
+
             return new StorageAccountData(
                 id,
                 name,
@@ -3236,26 +3041,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageAccountEndpoints StorageAccountEndpoints(Uri blobUri, Uri queueUri, Uri tableUri, Uri fileUri, Uri webUri, Uri dfsUri, StorageAccountMicrosoftEndpoints microsoftEndpoints, StorageAccountInternetEndpoints internetEndpoints)
         {
-            return new StorageAccountEndpoints(
-                blobUri,
-                queueUri,
-                tableUri,
-                fileUri,
-                webUri,
-                dfsUri,
-                microsoftEndpoints,
-                internetEndpoints,
-                microsoftEndpoints is null && internetEndpoints is null ? default : new StorageAccountIPv6Endpoints(
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    microsoftEndpoints,
-                    internetEndpoints,
-                    default),
-                default);
+            return StorageAccountEndpoints(blobUri: blobUri, queueUri: queueUri, tableUri: tableUri, fileUri: fileUri, webUri: webUri, dfsUri: dfsUri, microsoftEndpoints: microsoftEndpoints, internetEndpoints: internetEndpoints, iPv6Endpoints: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.FileShareData"/>. </summary>
@@ -3286,6 +3072,9 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FileShareData FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, IDictionary<string, string> metadata, int? shareQuota, FileShareEnabledProtocol? enabledProtocol, RootSquashType? rootSquash, string version, bool? isDeleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, FileShareAccessTier? accessTier, DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, StorageLeaseStatus? leaseStatus, StorageLeaseState? leaseState, StorageLeaseDurationType? leaseDuration, IEnumerable<StorageSignedIdentifier> signedIdentifiers, DateTimeOffset? snapshotOn, ETag? etag)
         {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            signedIdentifiers ??= new ChangeTrackingList<StorageSignedIdentifier>();
+
             return new FileShareData(
                 id,
                 name,
@@ -3337,22 +3126,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ObjectReplicationPolicyData ObjectReplicationPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyId, DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, IEnumerable<ObjectReplicationPolicyRule> rules)
         {
-            return new ObjectReplicationPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                policyId is null && enabledOn is null && sourceAccount is null && destinationAccount is null && rules is null ? default : new ObjectReplicationPolicyProperties(
-                    policyId,
-                    enabledOn,
-                    sourceAccount,
-                    destinationAccount,
-                    (rules ?? new ChangeTrackingList<ObjectReplicationPolicyRule>()).ToList(),
-                    default,
-                    default,
-                    default,
-                    default),
-                default);
+            return ObjectReplicationPolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, policyId: policyId, enabledOn: enabledOn, sourceAccount: sourceAccount, destinationAccount: destinationAccount, rules: rules, isMetricsEnabled: default, isPriorityReplicationEnabled: default, isTagsReplicationEnabled: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GeoReplicationStatistics"/>. </summary>
@@ -3363,14 +3137,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static GeoReplicationStatistics GeoReplicationStatistics(GeoReplicationStatus? status, DateTimeOffset? lastSyncOn, bool? canFailover)
         {
-            return new GeoReplicationStatistics(
-                status,
-                lastSyncOn,
-                canFailover,
-                default,
-                default,
-                default,
-                default);
+            return GeoReplicationStatistics(status: status, lastSyncOn: lastSyncOn, canFailover: canFailover, canPlannedFailover: default, postFailoverRedundancy: default, postPlannedFailoverRedundancy: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.StorageAccountLocalUserData"/>. </summary>
@@ -3389,26 +3156,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageAccountLocalUserData StorageAccountLocalUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<StoragePermissionScope> permissionScopes, string homeDirectory, IEnumerable<StorageSshPublicKey> sshAuthorizedKeys, string sid, bool? hasSharedKey, bool? hasSshKey, bool? hasSshPassword)
         {
-            return new StorageAccountLocalUserData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                permissionScopes is null && homeDirectory is null && sshAuthorizedKeys is null && sid is null && hasSharedKey is null && hasSshKey is null && hasSshPassword is null ? default : new LocalUserProperties(
-                    (permissionScopes ?? new ChangeTrackingList<StoragePermissionScope>()).ToList(),
-                    homeDirectory,
-                    (sshAuthorizedKeys ?? new ChangeTrackingList<StorageSshPublicKey>()).ToList(),
-                    sid,
-                    hasSharedKey,
-                    hasSshKey,
-                    hasSshPassword,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default),
-                default);
+            return StorageAccountLocalUserData(id: id, name: name, resourceType: resourceType, systemData: systemData, permissionScopes: permissionScopes, homeDirectory: homeDirectory, sshAuthorizedKeys: sshAuthorizedKeys, sid: sid, hasSharedKey: hasSharedKey, hasSshKey: hasSshKey, hasSshPassword: hasSshPassword, userId: default, groupId: default, isAclAuthorizationAllowed: default, extendedGroups: default, isNfsV3Enabled: default);
         }
     }
 }
