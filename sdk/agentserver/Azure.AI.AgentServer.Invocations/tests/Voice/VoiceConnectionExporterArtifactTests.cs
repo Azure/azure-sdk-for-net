@@ -2,13 +2,17 @@
 // Licensed under the MIT License.
 
 using System.Buffers.Binary;
+using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Invocations.Voice;
 using Azure.Core.TestFramework;
 using Azure.Monitor.OpenTelemetry.Exporter;
+using Microsoft.Agents.A365.Observability.Runtime.Common;
+using Microsoft.Agents.A365.Observability.Runtime.Tracing.Exporters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Server;
@@ -16,9 +20,11 @@ using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using NUnit.Framework;
 using OpenTelemetry;
 using OpenTelemetry.Exporter;
+using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
 namespace Azure.AI.AgentServer.Invocations.Tests.Voice;
@@ -30,11 +36,18 @@ public class VoiceConnectionExporterArtifactTests
     private const string ActivitySourceName = "Azure.AI.AgentServer.Invocations";
     private const string ConnectionOperationName = "agentserver.connection";
     private const string SessionId = "session_artifact";
+    private const string SecondSessionId = "session_artifact_second";
     private const string SecretSentinel = "customer-secret-must-not-export";
+    private const string AgentId = "agent-artifact";
+    private const string TenantId = "tenant-artifact";
     private static readonly ActivityTraceId s_traceId =
         ActivityTraceId.CreateFromString("0123456789abcdef0123456789abcdef".AsSpan());
     private static readonly ActivitySpanId s_parentSpanId =
         ActivitySpanId.CreateFromString("0123456789abcdef".AsSpan());
+    private static readonly ActivityTraceId s_secondTraceId =
+        ActivityTraceId.CreateFromString("fedcba9876543210fedcba9876543210".AsSpan());
+    private static readonly ActivitySpanId s_secondParentSpanId =
+        ActivitySpanId.CreateFromString("fedcba9876543210".AsSpan());
 
     [Test]
     public async Task OtlpHttpProtobuf_ExportsSemanticConnectionArtifact()
@@ -89,7 +102,7 @@ public class VoiceConnectionExporterArtifactTests
         var options = new AzureMonitorExporterOptions
         {
             ConnectionString =
-                "InstrumentationKey=00000000-0000-0000-0000-000000000000;" +
+                "InstrumentationKey=00000000-0000-0000-0000-000000000001;" +
                 "IngestionEndpoint=https://ingestion.test/",
             DisableOfflineStorage = true,
             SamplingRatio = 1.0F,
@@ -130,22 +143,316 @@ public class VoiceConnectionExporterArtifactTests
         });
     }
 
-    private static void EmitCompletedConnection()
+    [TestCase("token")]
+    [TestCase("send")]
+    [TestCase("status")]
+    public async Task Agent365_FailureDoesNotSuppressCoexportersOrPoisonLaterConnection(string failureStage)
     {
+        await using var otlpReceiver = await OtlpHttpReceiver.StartAsync();
+        var otlpOptions = new OtlpExporterOptions
+        {
+            Endpoint = new Uri(otlpReceiver.BaseUri, "/v1/traces"),
+            Protocol = OtlpExportProtocol.HttpProtobuf,
+            ExportProcessorType = ExportProcessorType.Simple,
+            TimeoutMilliseconds = 3000,
+        };
+        var azureMonitorBodies = new ConcurrentQueue<byte[]>();
+        var azureMonitorTransport = MockTransport.FromMessageCallback(message =>
+        {
+            using var stream = new MemoryStream();
+            message.Request.Content.WriteTo(stream, CancellationToken.None);
+            azureMonitorBodies.Enqueue(stream.ToArray());
+            return new MockResponse(200).SetContent(
+                "{\"itemsReceived\":1,\"itemsAccepted\":1,\"errors\":[]}");
+        });
+        var instrumentationKeySuffix = failureStage switch
+        {
+            "token" => 3,
+            "send" => 4,
+            _ => 5,
+        };
+        var azureMonitorOptions = new AzureMonitorExporterOptions
+        {
+            ConnectionString =
+                $"InstrumentationKey=00000000-0000-0000-0000-00000000000{instrumentationKeySuffix};" +
+                "IngestionEndpoint=https://ingestion.test/",
+            DisableOfflineStorage = true,
+            SamplingRatio = 1.0F,
+            TracesPerSecond = null,
+            Transport = azureMonitorTransport,
+        };
+        var tokenResolverCalls = 0;
+        using var transport = new CapturingHttpMessageHandler(
+            failureStage == "send"
+                ? new HttpRequestException("injected send failure")
+                : null,
+            failureStage == "status" ? HttpStatusCode.ServiceUnavailable : null);
+        using var agent365Client = new HttpClient(transport, disposeHandler: false);
+        var options = CreateAgent365Options((_, _) =>
+        {
+            var call = Interlocked.Increment(ref tokenResolverCalls);
+            return failureStage == "token" && call == 1
+                ? Task.FromException<string>(new InvalidOperationException("injected token failure"))
+                : Task.FromResult("artifact-token");
+        });
+        using var provider = Sdk.CreateTracerProviderBuilder()
+            .AddSource(ActivitySourceName)
+            .AddProcessor(new AgentIdentityProcessor())
+            .AddProcessor(new SimpleActivityExportProcessor(
+                new AzureMonitorTraceExporter(azureMonitorOptions)))
+            .AddProcessor(new SimpleActivityExportProcessor(
+                CreateAgent365Exporter(options, agent365Client)))
+            .AddProcessor(new SimpleActivityExportProcessor(new OtlpTraceExporter(otlpOptions)))
+            .Build();
+
+        Assert.That(() => EmitCompletedConnection(), Throws.Nothing);
+        Assert.That(() => EmitCompletedConnection(
+            traceId: s_secondTraceId,
+            parentSpanId: s_secondParentSpanId,
+            sessionId: SecondSessionId), Throws.Nothing);
+        Assert.That(provider.ForceFlush(), Is.True);
+
+        var successfulAgent365Request = transport.SuccessfulRequests.Single();
+        var successfulAgent365Span = Agent365SpanArtifact.ParseSingle(
+            successfulAgent365Request.Body,
+            ConnectionOperationName);
+        var azureMonitorTraceIds = azureMonitorBodies
+            .Select(ParseAzureMonitorRequestTraceId)
+            .ToArray();
+        var otlpTraceIds = otlpReceiver.Requests
+            .Select(request => OtlpSpanArtifact.ParseSingle(
+                request.Body,
+                ConnectionOperationName).TraceId)
+            .ToArray();
+        Assert.Multiple(() =>
+        {
+            Assert.That(tokenResolverCalls, Is.EqualTo(2));
+            Assert.That(transport.RequestCount, Is.EqualTo(failureStage == "token" ? 1 : 2));
+            Assert.That(transport.SuccessfulRequestCount, Is.EqualTo(1));
+            Assert.That(azureMonitorTransport.Requests, Has.Count.EqualTo(2));
+            Assert.That(otlpReceiver.RequestCount, Is.EqualTo(2));
+            Assert.That(successfulAgent365Span.TraceId, Is.EqualTo(s_secondTraceId.ToHexString()));
+            Assert.That(successfulAgent365Span.ParentSpanId, Is.EqualTo(s_secondParentSpanId.ToHexString()));
+            Assert.That(successfulAgent365Span.Attributes[
+                "azure.ai.agentserver.invocations_ws.session_id"].GetString(), Is.EqualTo(SecondSessionId));
+            Assert.That(Encoding.UTF8.GetString(successfulAgent365Request.Body),
+                Does.Not.Contain(s_traceId.ToHexString()));
+            Assert.That(azureMonitorTraceIds, Is.EquivalentTo(new[]
+            {
+                s_traceId.ToHexString(),
+                s_secondTraceId.ToHexString(),
+            }));
+            Assert.That(otlpTraceIds, Is.EquivalentTo(new[]
+            {
+                s_traceId.ToHexString(),
+                s_secondTraceId.ToHexString(),
+            }));
+        });
+    }
+
+    [Test]
+    public async Task Agent365AzureMonitorAndOtlp_ExportSameConnectionExactlyOnce()
+    {
+        await using var otlpReceiver = await OtlpHttpReceiver.StartAsync();
+        var otlpOptions = new OtlpExporterOptions
+        {
+            Endpoint = new Uri(otlpReceiver.BaseUri, "/v1/traces"),
+            Protocol = OtlpExportProtocol.HttpProtobuf,
+            ExportProcessorType = ExportProcessorType.Simple,
+            TimeoutMilliseconds = 3000,
+        };
+        byte[]? azureMonitorBody = null;
+        var azureMonitorTransport = MockTransport.FromMessageCallback(message =>
+        {
+            using var stream = new MemoryStream();
+            message.Request.Content.WriteTo(stream, CancellationToken.None);
+            azureMonitorBody = stream.ToArray();
+            return new MockResponse(200).SetContent(
+                "{\"itemsReceived\":1,\"itemsAccepted\":1,\"errors\":[]}");
+        });
+        var azureMonitorOptions = new AzureMonitorExporterOptions
+        {
+            ConnectionString =
+                "InstrumentationKey=00000000-0000-0000-0000-000000000002;" +
+                "IngestionEndpoint=https://ingestion.test/",
+            DisableOfflineStorage = true,
+            SamplingRatio = 1.0F,
+            TracesPerSecond = null,
+            Transport = azureMonitorTransport,
+        };
+        using var agent365Transport = new CapturingHttpMessageHandler();
+        using var agent365Client = new HttpClient(agent365Transport, disposeHandler: false);
+        var agent365Options = CreateAgent365Options((agentId, tenantId) =>
+        {
+            Assert.Multiple(() =>
+            {
+                Assert.That(agentId, Is.EqualTo(AgentId));
+                Assert.That(tenantId, Is.EqualTo(TenantId));
+            });
+            return Task.FromResult("artifact-token");
+        });
+        using var provider = Sdk.CreateTracerProviderBuilder()
+            .AddSource(ActivitySourceName)
+            .AddProcessor(new AgentIdentityProcessor())
+            .AddProcessor(new SimpleActivityExportProcessor(
+                new AzureMonitorTraceExporter(azureMonitorOptions)))
+            .AddProcessor(new SimpleActivityExportProcessor(
+                CreateAgent365Exporter(agent365Options, agent365Client)))
+            .AddProcessor(new SimpleActivityExportProcessor(new OtlpTraceExporter(otlpOptions)))
+            .Build();
+
+        EmitCompletedConnection();
+        Assert.That(provider.ForceFlush(), Is.True);
+        var agent365Request = await agent365Transport.Request.Task.WaitAsync(TimeSpan.FromSeconds(5));
+        var otlpRequest = await otlpReceiver.Request.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+        Assert.That(azureMonitorBody, Is.Not.Null);
+        var agent365Body = Encoding.UTF8.GetString(agent365Request.Body);
+        var agent365Span = Agent365SpanArtifact.ParseSingle(
+            agent365Request.Body,
+            ConnectionOperationName);
+        var azureBody = Encoding.UTF8.GetString(azureMonitorBody!);
+        var azureTraceId = ParseAzureMonitorRequestTraceId(azureMonitorBody!);
+        var otlpSpan = OtlpSpanArtifact.ParseSingle(otlpRequest.Body, ConnectionOperationName);
+        Assert.Multiple(() =>
+        {
+            Assert.That(agent365Transport.RequestCount, Is.EqualTo(1));
+            Assert.That(azureMonitorTransport.Requests, Has.Count.EqualTo(1));
+            Assert.That(otlpReceiver.RequestCount, Is.EqualTo(1));
+            Assert.That(agent365Request.Method, Is.EqualTo(HttpMethod.Post));
+            Assert.That(agent365Request.Uri.AbsolutePath, Is.EqualTo(
+                $"/observabilityService/tenants/{TenantId}/otlp/agents/{AgentId}/traces"));
+            Assert.That(agent365Request.Uri.Query, Is.EqualTo("?api-version=1"));
+            Assert.That(agent365Request.ContentType, Is.EqualTo("application/json"));
+            Assert.That(agent365Request.Authorization, Is.EqualTo("Bearer artifact-token"));
+            Assert.That(agent365Span.TraceId, Is.EqualTo(s_traceId.ToHexString()));
+            Assert.That(agent365Span.ParentSpanId, Is.EqualTo(s_parentSpanId.ToHexString()));
+            Assert.That(agent365Span.Kind, Is.EqualTo((int)ActivityKind.Server));
+            Assert.That(agent365Span.Attributes[
+                "azure.ai.agentserver.invocations_ws.session_id"].GetString(), Is.EqualTo(SessionId));
+            Assert.That(agent365Span.Attributes[
+                "azure.ai.agentserver.invocations_ws.close_code"].GetInt32(), Is.EqualTo(1000));
+            Assert.That(agent365Span.Attributes["bridge.outcome"].GetString(), Is.EqualTo("completed"));
+            Assert.That(agent365Span.Attributes, Does.Not.ContainKey("error.type"));
+            Assert.That(agent365Body, Does.Not.Contain(SecretSentinel));
+            Assert.That(agent365Body, Does.Not.Contain("artifact-token"));
+            Assert.That(azureTraceId, Is.EqualTo(s_traceId.ToHexString()));
+            Assert.That(azureBody, Does.Contain(ConnectionOperationName));
+            Assert.That(azureBody, Does.Not.Contain(SecretSentinel));
+            Assert.That(otlpSpan.TraceId, Is.EqualTo(s_traceId.ToHexString()));
+            Assert.That(otlpSpan.ParentSpanId, Is.EqualTo(s_parentSpanId.ToHexString()));
+            Assert.That(Encoding.UTF8.GetString(otlpRequest.Body), Does.Not.Contain(SecretSentinel));
+        });
+    }
+
+    [Test]
+    public async Task Agent365AzureMonitorAndOtlp_UnsampledParentExportsNothing()
+    {
+        await using var otlpReceiver = await OtlpHttpReceiver.StartAsync();
+        var otlpOptions = new OtlpExporterOptions
+        {
+            Endpoint = new Uri(otlpReceiver.BaseUri, "/v1/traces"),
+            Protocol = OtlpExportProtocol.HttpProtobuf,
+            ExportProcessorType = ExportProcessorType.Simple,
+            TimeoutMilliseconds = 3000,
+        };
+        var azureMonitorTransport = MockTransport.FromMessageCallback(_ => new MockResponse(200));
+        var azureMonitorOptions = new AzureMonitorExporterOptions
+        {
+            ConnectionString =
+                "InstrumentationKey=00000000-0000-0000-0000-000000000006;" +
+                "IngestionEndpoint=https://ingestion.test/",
+            DisableOfflineStorage = true,
+            SamplingRatio = 1.0F,
+            TracesPerSecond = null,
+            Transport = azureMonitorTransport,
+        };
+        var tokenResolverCalls = 0;
+        using var agent365Transport = new CapturingHttpMessageHandler();
+        using var agent365Client = new HttpClient(agent365Transport, disposeHandler: false);
+        var agent365Options = CreateAgent365Options((_, _) =>
+        {
+            Interlocked.Increment(ref tokenResolverCalls);
+            return Task.FromResult("artifact-token");
+        });
+        using var provider = Sdk.CreateTracerProviderBuilder()
+            .AddSource(ActivitySourceName)
+            .AddProcessor(new AgentIdentityProcessor())
+            .AddProcessor(new SimpleActivityExportProcessor(
+                new AzureMonitorTraceExporter(azureMonitorOptions)))
+            .AddProcessor(new SimpleActivityExportProcessor(
+                CreateAgent365Exporter(agent365Options, agent365Client)))
+            .AddProcessor(new SimpleActivityExportProcessor(new OtlpTraceExporter(otlpOptions)))
+            .Build();
+
+        EmitCompletedConnection(traceFlags: "00");
+        Assert.That(provider.ForceFlush(), Is.True);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(tokenResolverCalls, Is.Zero);
+            Assert.That(agent365Transport.RequestCount, Is.Zero);
+            Assert.That(azureMonitorTransport.Requests, Is.Empty);
+            Assert.That(otlpReceiver.RequestCount, Is.Zero);
+        });
+    }
+
+    private static void EmitCompletedConnection(
+        string traceFlags = "01",
+        ActivityTraceId? traceId = null,
+        ActivitySpanId? parentSpanId = null,
+        string sessionId = SessionId)
+    {
+        traceId ??= s_traceId;
+        parentSpanId ??= s_parentSpanId;
         var headers = new HeaderDictionary
         {
-            [PlatformHeaders.TraceParent] = $"00-{s_traceId}-{s_parentSpanId}-01",
+            [PlatformHeaders.TraceParent] = $"00-{traceId}-{parentSpanId}-{traceFlags}",
             ["tracestate"] = "vendor=value",
             ["baggage"] = $"customer-secret={SecretSentinel}",
         };
         var telemetry = VoiceConnectionTelemetry.Start(headers);
 
         telemetry.Complete(
-            SessionId,
+            sessionId,
             closeCode: 1000,
             errorCode: null,
             handlerOutcome: null,
             durationMs: 42);
+    }
+
+    private static Agent365ExporterOptions CreateAgent365Options(AsyncAuthTokenResolver tokenResolver) =>
+        new()
+        {
+            TokenResolver = tokenResolver,
+            DomainResolver = _ => "agent365.test",
+            UseS2SEndpoint = true,
+            ExporterTimeoutMilliseconds = 3000,
+        };
+
+    private static Agent365Exporter CreateAgent365Exporter(
+        Agent365ExporterOptions options,
+        HttpClient client)
+    {
+        var formatter = new ExportFormatter(NullLogger<ExportFormatter>.Instance);
+        var core = new Agent365ExporterCore(
+            formatter,
+            NullLogger<Agent365ExporterCore>.Instance);
+        return new Agent365Exporter(
+            core,
+            NullLogger<Agent365Exporter>.Instance,
+            options,
+            ResourceBuilder.CreateDefault().Build(),
+            client);
+    }
+
+    private static string ParseAzureMonitorRequestTraceId(byte[] requestBody)
+    {
+        var envelopeText = Encoding.UTF8.GetString(requestBody)
+            .Split('\n', StringSplitOptions.RemoveEmptyEntries)
+            .Single(IsAzureMonitorRequestEnvelope);
+        using var document = JsonDocument.Parse(envelopeText);
+        return document.RootElement.GetProperty("tags").GetProperty("ai.operation.id").GetString()!;
     }
 
     private static bool IsAzureMonitorRequestEnvelope(string value)
@@ -169,6 +476,13 @@ public class VoiceConnectionExporterArtifactTests
         public TaskCompletionSource<CapturedHttpRequest> Request { get; } =
             new(TaskCreationOptions.RunContinuationsAsynchronously);
 
+        public int RequestCount => Volatile.Read(ref _requestCount);
+
+        public IReadOnlyCollection<CapturedHttpRequest> Requests => _requests.ToArray();
+
+        private int _requestCount;
+        private readonly ConcurrentQueue<CapturedHttpRequest> _requests = new();
+
         public static async Task<OtlpHttpReceiver> StartAsync()
         {
             var builder = WebApplication.CreateBuilder();
@@ -180,11 +494,14 @@ public class VoiceConnectionExporterArtifactTests
             {
                 using var stream = new MemoryStream();
                 await context.Request.Body.CopyToAsync(stream, context.RequestAborted);
-                receiver!.Request.TrySetResult(new CapturedHttpRequest(
+                Interlocked.Increment(ref receiver!._requestCount);
+                var request = new CapturedHttpRequest(
                     HttpMethod.Post,
                     new Uri($"http://receiver.test{context.Request.Path}"),
                     context.Request.ContentType,
-                    stream.ToArray()));
+                    stream.ToArray());
+                receiver!._requests.Enqueue(request);
+                receiver.Request.TrySetResult(request);
                 context.Response.StatusCode = StatusCodes.Status200OK;
                 context.Response.ContentType = "application/x-protobuf";
             });
@@ -206,7 +523,106 @@ public class VoiceConnectionExporterArtifactTests
         HttpMethod Method,
         Uri Uri,
         string? ContentType,
-        byte[] Body);
+        byte[] Body,
+        string? Authorization = null);
+
+    private sealed class CapturingHttpMessageHandler : HttpMessageHandler
+    {
+        private readonly Exception? _failure;
+        private readonly HttpStatusCode? _failureStatusCode;
+        private int _requestCount;
+        private int _successfulRequestCount;
+        private int _remainingFailures;
+
+        public CapturingHttpMessageHandler(
+            Exception? failure = null,
+            HttpStatusCode? failureStatusCode = null)
+        {
+            _failure = failure;
+            _failureStatusCode = failureStatusCode;
+            _remainingFailures = failure is null && failureStatusCode is null ? 0 : 1;
+        }
+
+        public int RequestCount => Volatile.Read(ref _requestCount);
+
+        public int SuccessfulRequestCount => Volatile.Read(ref _successfulRequestCount);
+
+        public IReadOnlyCollection<CapturedHttpRequest> SuccessfulRequests =>
+            _successfulRequests.ToArray();
+
+        public TaskCompletionSource<CapturedHttpRequest> Request { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        private readonly ConcurrentQueue<CapturedHttpRequest> _successfulRequests = new();
+
+        protected override async Task<HttpResponseMessage> SendAsync(
+            HttpRequestMessage request,
+            CancellationToken cancellationToken)
+        {
+            Interlocked.Increment(ref _requestCount);
+            var body = await request.Content!.ReadAsByteArrayAsync(cancellationToken);
+            var capturedRequest = new CapturedHttpRequest(
+                request.Method,
+                request.RequestUri!,
+                request.Content.Headers.ContentType?.MediaType,
+                body,
+                request.Headers.Authorization?.ToString());
+            Request.TrySetResult(capturedRequest);
+            if (_failure is not null && Interlocked.Decrement(ref _remainingFailures) >= 0)
+            {
+                throw _failure;
+            }
+            var statusCode = _failureStatusCode is not null &&
+                Interlocked.Decrement(ref _remainingFailures) >= 0
+                    ? _failureStatusCode.Value
+                    : HttpStatusCode.OK;
+            if ((int)statusCode is >= 200 and <= 299)
+            {
+                Interlocked.Increment(ref _successfulRequestCount);
+                _successfulRequests.Enqueue(capturedRequest);
+            }
+            return new HttpResponseMessage(statusCode);
+        }
+    }
+
+    private sealed class AgentIdentityProcessor : BaseProcessor<Activity>
+    {
+        public override void OnStart(Activity activity)
+        {
+            if (activity.OperationName == ConnectionOperationName)
+            {
+                activity.SetTag("gen_ai.agent.id", AgentId);
+                activity.SetTag("microsoft.tenant.id", TenantId);
+            }
+        }
+    }
+
+    private sealed record Agent365SpanArtifact(
+        string TraceId,
+        string ParentSpanId,
+        int Kind,
+        IReadOnlyDictionary<string, JsonElement> Attributes)
+    {
+        internal static Agent365SpanArtifact ParseSingle(byte[] payload, string operationName)
+        {
+            using var document = JsonDocument.Parse(payload);
+            var spans = document.RootElement
+                .GetProperty("resourceSpans")
+                .EnumerateArray()
+                .SelectMany(resourceSpan => resourceSpan.GetProperty("scopeSpans").EnumerateArray())
+                .SelectMany(scopeSpan => scopeSpan.GetProperty("spans").EnumerateArray())
+                .Where(span => span.GetProperty("name").GetString() == operationName)
+                .Select(span => new Agent365SpanArtifact(
+                    span.GetProperty("traceId").GetString()!,
+                    span.GetProperty("parentSpanId").GetString()!,
+                    span.GetProperty("kind").GetInt32(),
+                    span.GetProperty("attributes").EnumerateObject()
+                        .ToDictionary(attribute => attribute.Name, attribute => attribute.Value.Clone())))
+                .ToArray();
+            Assert.That(spans, Has.Length.EqualTo(1));
+            return spans[0];
+        }
+    }
 
     private sealed record OtlpSpanArtifact(
         string TraceId,
