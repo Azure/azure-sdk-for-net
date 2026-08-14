@@ -503,7 +503,7 @@ namespace Azure.Data.AppConfiguration.Tests
             MockRequest request2 = mockTransport.Requests[1];
             Assert.That(request2.Method, Is.EqualTo(RequestMethod.Get));
             Assert.That(request2.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/kv?after=5&api-version={s_version}"));
-            AssertRequestCommon(request1);
+            AssertRequestCommon(request2);
         }
 
         [Test]
