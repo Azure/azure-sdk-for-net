@@ -30,10 +30,7 @@ namespace Azure.SdkAnalyzers
         {
             "AZC0007",
             "AZC0030",
-<<<<<<< HEAD
             "AZC0031",
-=======
->>>>>>> 157d93f06e3 (Add point-suppression mechanism via DiagnosticSuppressor + analyzer assembly split (#59723))
             "AZC0034",
             "AZC0035",
             "CS0618",
