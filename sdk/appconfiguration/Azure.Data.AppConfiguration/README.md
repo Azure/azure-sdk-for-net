@@ -117,7 +117,7 @@ The following sections provide several code snippets covering some of the most c
 * [Retrieve a Feature Flag](#retrieve-a-feature-flag)
 * [Retrieve all Feature Flags](#retrieve-all-feature-flags)
 * [Delete a Feature Flag](#delete-a-feature-flag)
-* [Retrieve labels by resource type](#retrieve-labels-by-resource-type)
+* [Retrieve labels by resource type](#retrieve-feature-flag-labels)
 
 ### Create a Configuration Setting
 
@@ -267,7 +267,7 @@ var client = new FeatureFlagClient(new Uri(endpoint), new DefaultAzureCredential
 client.DeleteFeatureFlag("some_feature");
 ```
 
-### Retrieve feature flag labels
+### Retrieve labels by resource type
 
 Retrieve the labels associated with feature flags by calling `GetLabels` with a `FeatureFlagLabelSelector`. The `FeatureFlagClient` only returns labels that are associated with feature flags.
 
