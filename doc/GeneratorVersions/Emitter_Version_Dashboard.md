@@ -1,6 +1,6 @@
 # Emitter Version Dashboard
 
-> **Auto-generated** by `Emitter_Version_Dashboard` on 2026-08-14 03:03:26 UTC.
+> **Auto-generated** by `Emitter_Version_Dashboard` on 2026-08-14 05:46:44 UTC.
 > Run that script to refresh this file after dependency version changes.
 
 ## Latest Published Version Chain
@@ -17,7 +17,7 @@
 | Emitter | Depends On | Dependency Version | Latest on npm | Dependency Commit |
 |---|---|---|---|---|
 | `@azure-typespec/http-client-csharp` | `@typespec/http-client-csharp` | [1.0.0-alpha.20260813.5](https://www.npmjs.com/package/@typespec/http-client-csharp/v/1.0.0-alpha.20260813.5) | [1.0.0-alpha.20260813.6](https://www.npmjs.com/package/@typespec/http-client-csharp/v/1.0.0-alpha.20260813.6) | [65a2ee8](https://github.com/microsoft/typespec/commit/65a2ee8924f62b897f28c806981364f75d5be8ba) |
-| `@azure-typespec/http-client-csharp-mgmt` | `@azure-typespec/http-client-csharp` | [1.0.0-alpha.20260813.3](https://www.npmjs.com/package/@azure-typespec/http-client-csharp/v/1.0.0-alpha.20260813.3) | [1.0.0-alpha.20260813.5](https://www.npmjs.com/package/@azure-typespec/http-client-csharp/v/1.0.0-alpha.20260813.5) | [6a1c3f1](https://github.com/Azure/azure-sdk-for-net/commit/6a1c3f17281b854a42dea5c785f57f1e70f2aef8) |
+| `@azure-typespec/http-client-csharp-mgmt` | `@azure-typespec/http-client-csharp` | [1.0.0-alpha.20260813.5](https://www.npmjs.com/package/@azure-typespec/http-client-csharp/v/1.0.0-alpha.20260813.5) | [1.0.0-alpha.20260813.5](https://www.npmjs.com/package/@azure-typespec/http-client-csharp/v/1.0.0-alpha.20260813.5) | [5605bc1](https://github.com/Azure/azure-sdk-for-net/commit/5605bc1228fd06eb87ec8c30d98f0bdefa5dd642) |
 | `@azure-typespec/http-client-csharp-provisioning` | `@azure-typespec/http-client-csharp-mgmt` | [1.0.0-alpha.20260812.1](https://www.npmjs.com/package/@azure-typespec/http-client-csharp-mgmt/v/1.0.0-alpha.20260812.1) | [1.0.0-alpha.20260812.4](https://www.npmjs.com/package/@azure-typespec/http-client-csharp-mgmt/v/1.0.0-alpha.20260812.4) | [ad23c92](https://github.com/Azure/azure-sdk-for-net/commit/ad23c928f50a12ca01629266a2d8d4ad3798dcad) |
 
 ## Source Files
