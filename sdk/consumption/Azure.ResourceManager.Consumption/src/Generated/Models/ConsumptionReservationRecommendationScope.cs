@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.Consumption.Models
         private readonly string _value;
         private const string SingleValue = "Single";
         private const string SharedValue = "Shared";
+        /// <summary> Management group scoped recommendation. </summary>
+        private const string ManagementGroupValue = "ManagementGroup";
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionReservationRecommendationScope"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -33,6 +35,9 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Gets the Shared. </summary>
         public static ConsumptionReservationRecommendationScope Shared { get; } = new ConsumptionReservationRecommendationScope(SharedValue);
+
+        /// <summary> Management group scoped recommendation. </summary>
+        public static ConsumptionReservationRecommendationScope ManagementGroup { get; } = new ConsumptionReservationRecommendationScope(ManagementGroupValue);
 
         /// <summary> Determines if two <see cref="ConsumptionReservationRecommendationScope"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
