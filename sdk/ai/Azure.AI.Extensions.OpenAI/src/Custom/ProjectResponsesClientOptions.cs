@@ -57,7 +57,7 @@ public partial class ProjectResponsesClientOptions : ResponsesClientOptions
     /// destination instance is only consulted by <see cref="ResponsesClient"/> for its own
     /// properties such as <see cref="ResponsesClientOptions.Endpoint"/>.
     /// </remarks>
-    public static ProjectResponsesClientOptions ToProjectResponsesClientOptions(ProjectOpenAIClientOptions source)
+    internal static ProjectResponsesClientOptions ToProjectResponsesClientOptions(ProjectOpenAIClientOptions source)
     {
         if (source is null)
         {

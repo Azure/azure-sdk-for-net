@@ -1326,7 +1326,6 @@ namespace Azure.AI.Extensions.OpenAI
         public ProjectResponsesClientOptions() { }
         public string AgentName { get { throw null; } set { } }
         public string ApiVersion { get { throw null; } set { } }
-        public static Azure.AI.Extensions.OpenAI.ProjectResponsesClientOptions ToProjectResponsesClientOptions(Azure.AI.Extensions.OpenAI.ProjectOpenAIClientOptions source) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public partial class ProjectVectorStoresClient : OpenAI.VectorStores.VectorStoreClient
