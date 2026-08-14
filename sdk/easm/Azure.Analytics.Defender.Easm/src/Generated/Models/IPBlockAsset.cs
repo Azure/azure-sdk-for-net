@@ -10,11 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    /// <summary> The IpBlockAsset. </summary>
-    public partial class IpBlockAsset : InventoryAsset
+    /// <summary> The IPBlockAsset. </summary>
+    public partial class IPBlockAsset : InventoryAsset
     {
-        /// <summary> Initializes a new instance of <see cref="IpBlockAsset"/>. </summary>
-        internal IpBlockAsset()
+        /// <summary> Initializes a new instance of <see cref="IPBlockAsset"/>. </summary>
+        internal IPBlockAsset()
         {
             Asns = new ChangeTrackingList<ObservedLong>();
             BgpPrefixes = new ChangeTrackingList<ObservedString>();
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Defender.Easm
             TechnicalPhones = new ChangeTrackingList<ObservedString>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IpBlockAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPBlockAsset"/>. </summary>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="ipBlock"></param>
         /// <param name="asns"></param>
@@ -53,8 +53,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="registrarCreatedAt"></param>
         /// <param name="registrarUpdatedAt"></param>
         /// <param name="netRanges"></param>
-        /// <param name="startIp"></param>
-        /// <param name="endIp"></param>
+        /// <param name="startIP"></param>
+        /// <param name="endIP"></param>
         /// <param name="reputations"></param>
         /// <param name="detailedFromWhoisAt"></param>
         /// <param name="sources"></param>
@@ -71,11 +71,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="registrantPhones"></param>
         /// <param name="adminPhones"></param>
         /// <param name="technicalPhones"></param>
-        /// <param name="ipv4"></param>
-        /// <param name="ipv6"></param>
-        internal IpBlockAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, string ipBlock, IList<ObservedLong> asns, IList<ObservedString> bgpPrefixes, IList<ObservedString> netNames, IList<ObservedString> registrantContacts, IList<ObservedString> registrantOrgs, IList<ObservedString> adminContacts, IList<ObservedString> technicalContacts, IList<ObservedLong> registrarCreatedAt, IList<ObservedLong> registrarUpdatedAt, IList<ObservedString> netRanges, string startIp, string endIp, IList<ReputationDetails> reputations, DateTimeOffset? detailedFromWhoisAt, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<ObservedLocation> location, IList<ObservedLong> registrarExpiresAt, IList<ObservedString> registrantNames, IList<ObservedString> adminNames, IList<ObservedString> technicalNames, IList<ObservedString> adminOrgs, IList<ObservedString> technicalOrgs, IList<ObservedString> registrantPhones, IList<ObservedString> adminPhones, IList<ObservedString> technicalPhones, bool? ipv4, bool? ipv6) : base(additionalBinaryDataProperties)
+        /// <param name="iPv4"></param>
+        /// <param name="iPv6"></param>
+        internal IPBlockAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, string ipBlock, IList<ObservedLong> asns, IList<ObservedString> bgpPrefixes, IList<ObservedString> netNames, IList<ObservedString> registrantContacts, IList<ObservedString> registrantOrgs, IList<ObservedString> adminContacts, IList<ObservedString> technicalContacts, IList<ObservedLong> registrarCreatedAt, IList<ObservedLong> registrarUpdatedAt, IList<ObservedString> netRanges, string startIP, string endIP, IList<ReputationDetails> reputations, DateTimeOffset? detailedFromWhoisAt, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<ObservedLocation> location, IList<ObservedLong> registrarExpiresAt, IList<ObservedString> registrantNames, IList<ObservedString> adminNames, IList<ObservedString> technicalNames, IList<ObservedString> adminOrgs, IList<ObservedString> technicalOrgs, IList<ObservedString> registrantPhones, IList<ObservedString> adminPhones, IList<ObservedString> technicalPhones, bool? iPv4, bool? iPv6) : base(additionalBinaryDataProperties)
         {
-            IpBlock = ipBlock;
+            IPBlock = ipBlock;
             Asns = asns;
             BgpPrefixes = bgpPrefixes;
             NetNames = netNames;
@@ -86,8 +86,8 @@ namespace Azure.Analytics.Defender.Easm
             RegistrarCreatedAt = registrarCreatedAt;
             RegistrarUpdatedAt = registrarUpdatedAt;
             NetRanges = netRanges;
-            StartIp = startIp;
-            EndIp = endIp;
+            StartIP = startIP;
+            EndIP = endIP;
             Reputations = reputations;
             DetailedFromWhoisAt = detailedFromWhoisAt;
             Sources = sources;
@@ -104,12 +104,12 @@ namespace Azure.Analytics.Defender.Easm
             RegistrantPhones = registrantPhones;
             AdminPhones = adminPhones;
             TechnicalPhones = technicalPhones;
-            Ipv4 = ipv4;
-            Ipv6 = ipv6;
+            IPv4 = iPv4;
+            IPv6 = iPv6;
         }
 
-        /// <summary> Gets the IpBlock. </summary>
-        public string IpBlock { get; }
+        /// <summary> Gets the IPBlock. </summary>
+        public string IPBlock { get; }
 
         /// <summary> Gets the Asns. </summary>
         public IList<ObservedLong> Asns { get; }
@@ -141,11 +141,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the NetRanges. </summary>
         public IList<ObservedString> NetRanges { get; }
 
-        /// <summary> Gets the StartIp. </summary>
-        public string StartIp { get; }
+        /// <summary> Gets the StartIP. </summary>
+        public string StartIP { get; }
 
-        /// <summary> Gets the EndIp. </summary>
-        public string EndIp { get; }
+        /// <summary> Gets the EndIP. </summary>
+        public string EndIP { get; }
 
         /// <summary> Gets the Reputations. </summary>
         public IList<ReputationDetails> Reputations { get; }
@@ -195,10 +195,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the TechnicalPhones. </summary>
         public IList<ObservedString> TechnicalPhones { get; }
 
-        /// <summary> Gets the Ipv4. </summary>
-        public bool? Ipv4 { get; }
+        /// <summary> Gets the IPv4. </summary>
+        public bool? IPv4 { get; }
 
-        /// <summary> Gets the Ipv6. </summary>
-        public bool? Ipv6 { get; }
+        /// <summary> Gets the IPv6. </summary>
+        public bool? IPv6 { get; }
     }
 }
