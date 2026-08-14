@@ -81,6 +81,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             Assert.IsTrue(credential.LastRequestContext.IsProofOfPossessionEnabled);
             Assert.AreEqual(TenantId, credential.LastRequestContext.TenantId);
             CollectionAssert.AreEqual(new[] { "https://vault.azure.net/.default" }, credential.LastRequestContext.Scopes);
+            Assert.AreEqual(RequestMethod.Get.ToString(), credential.LastRequestContext.ResourceRequestMethod);
+            Assert.AreEqual(new Uri("https://test.vault.azure.net/secrets/test-secret?api-version=2025-07-01"), credential.LastRequestContext.ResourceRequestUri);
         }
 
         // Test concurrent authentication requests with immediate, fast, and slow network simulations.

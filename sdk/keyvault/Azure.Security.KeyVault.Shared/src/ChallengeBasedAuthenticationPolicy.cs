@@ -53,7 +53,14 @@ namespace Azure.Security.KeyVault
             if (_challenge != null)
             {
                 // We fetched the challenge from the cache, but we have not initialized the Scopes in the base yet.
-                var context = new TokenRequestContext(_challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: _challenge.TenantId, isCaeEnabled: true, isProofOfPossessionEnabled: true);
+                var context = new TokenRequestContext(
+                    _challenge.Scopes,
+                    parentRequestId: message.Request.ClientRequestId,
+                    tenantId: _challenge.TenantId,
+                    isCaeEnabled: true,
+                    isProofOfPossessionEnabled: true,
+                    requestUri: message.Request.Uri.ToUri(),
+                    requestMethod: message.Request.Method.ToString());
                 AddTokenBoundAuthHeader(message, context);
                 if (async)
                 {
@@ -182,7 +189,15 @@ namespace Azure.Security.KeyVault
                 return false;
             }
 
-            var context = new TokenRequestContext(_challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: _challenge.TenantId, isCaeEnabled: true, claims: claims, isProofOfPossessionEnabled: true);
+            var context = new TokenRequestContext(
+                _challenge.Scopes,
+                parentRequestId: message.Request.ClientRequestId,
+                tenantId: _challenge.TenantId,
+                isCaeEnabled: true,
+                claims: claims,
+                isProofOfPossessionEnabled: true,
+                requestUri: message.Request.Uri.ToUri(),
+                requestMethod: message.Request.Method.ToString());
             AddTokenBoundAuthHeader(message, context);
             if (async)
             {
