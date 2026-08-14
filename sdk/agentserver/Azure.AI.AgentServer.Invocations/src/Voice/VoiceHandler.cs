@@ -31,33 +31,20 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
             cancellationToken).ConfigureAwait(false);
     }
 
-    internal sealed override async Task<InvocationsWebSocketCloseResult?> HandleWebSocketWithOutcomeAsync(
+    internal sealed override IInvocationsWebSocketEndpointLifecycle CreateEndpointLifecycle(
+        Microsoft.AspNetCore.Http.IHeaderDictionary headers) =>
+        VoiceWebSocketLifecycle.Start(this, headers);
+
+    internal sealed override Task<InvocationsWebSocketCloseResult?> HandleWebSocketWithOutcomeAsync(
         WebSocket webSocket,
         InvocationContext context,
-        CancellationToken cancellationToken)
-    {
-        return await HandleVoiceWebSocketWithOutcomeAsync(
+        CancellationToken cancellationToken) =>
+        VoiceWebSocketLifecycle.HandleAsync(
+            this,
             webSocket,
             context,
             connectionContext: default,
-            cancellationToken).ConfigureAwait(false);
-    }
-
-    internal async Task<InvocationsWebSocketCloseResult?> HandleVoiceWebSocketWithOutcomeAsync(
-        WebSocket webSocket,
-        InvocationContext context,
-        ActivityContext connectionContext,
-        CancellationToken cancellationToken)
-    {
-        var connection = new InvocationsWebSocketConnection(webSocket);
-        var outcome = await HandleWebSocketConnectionAsync(
-            connection,
-            context,
-            connectionContext,
-            cancellationToken).ConfigureAwait(false);
-        var closeException = await connection.CloseAsync(outcome.Status, outcome.Reason).ConfigureAwait(false);
-        return outcome with { CloseException = closeException };
-    }
+            cancellationToken);
 
     /// <summary>Handles an explicit application start event.</summary>
     protected virtual Task OnSessionStartAsync(

@@ -4,7 +4,6 @@
 using System.Diagnostics;
 using System.Net.WebSockets;
 using Azure.AI.AgentServer.Core;
-using Azure.AI.AgentServer.Invocations.Voice;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
@@ -16,10 +15,12 @@ namespace Azure.AI.AgentServer.Invocations.Internal;
 /// structured close-event log line.
 /// </summary>
 /// <remarks>
-/// Voice handlers emit one semantic <c>agentserver.connection</c> Activity
-/// parented from the explicitly extracted inbound W3C context. Raw WebSocket
-/// handlers retain the ASP.NET Core request Activity. Structured close telemetry
-/// carries
+/// No framework-level OpenTelemetry span is created for the connection.
+/// ASP.NET Core automatically propagates the inbound W3C trace context to
+/// the request <see cref="Activity"/>, so any spans the user handler starts
+/// inside <c>HandleWebSocketAsync</c> are parented correctly without a
+/// per-connection wrapper span. Telemetry for the connection is delivered
+/// as a single structured close-event log line carrying
 /// <c>azure.ai.agentserver.invocations_ws.session_id</c>,
 /// <c>azure.ai.agentserver.invocations_ws.close_code</c>, and
 /// <c>azure.ai.agentserver.invocations_ws.duration_ms</c>.
@@ -87,12 +88,14 @@ internal sealed class WebSocketEndpointHandler
             httpContext.Response.Headers[SessionIdResponseHeader] = sessionId;
         }
 
-        var voiceTelemetry = webSocketHandler is VoiceHandler
-            ? VoiceConnectionTelemetry.Start(httpContext.Request.Headers)
-            : null;
+        var lifecycle = webSocketHandler.CreateEndpointLifecycle(httpContext.Request.Headers);
 
-        // Preserve the existing request-level correlation baggage for both raw and
-        // Voice WebSocket hosts. Voice semantic telemetry owns its own allowlisted tags.
+        // Propagate invocation/session/x-request-id baggage onto the current request
+        // Activity for downstream correlation. Reuses the same helper the HTTP
+        // `POST /invocations` endpoint uses so HTTP and WS paths produce
+        // the same baggage shape. No framework-level WS span is created — ASP.NET
+        // Core auto-propagates the inbound W3C trace context to the request
+        // Activity, so any spans the handler starts inherit it directly.
         _activitySource.PropagateInvocationBaggage(context, httpContext.Request.Headers);
 
         using var logScope = _logger.BeginScope(new Dictionary<string, object>
@@ -114,9 +117,9 @@ internal sealed class WebSocketEndpointHandler
                 webSocket = await httpContext.WebSockets.AcceptWebSocketAsync();
             }
             catch (OperationCanceledException oce)
-                when (voiceTelemetry?.TryMarkRequestCancellation(
+                when (lifecycle.TryMarkAcceptCancellation(
                     oce,
-                    httpContext.RequestAborted) == true)
+                    httpContext.RequestAborted))
             {
                 closeCode = 1006;
                 throw;
@@ -134,23 +137,14 @@ internal sealed class WebSocketEndpointHandler
 
             try
             {
-                handlerOutcome = voiceTelemetry is not null && webSocketHandler is VoiceHandler voiceHandler
-                    ? await voiceHandler.HandleVoiceWebSocketWithOutcomeAsync(
-                        webSocket,
-                        context,
-                        voiceTelemetry.Context,
-                        httpContext.RequestAborted)
-                    : await webSocketHandler.HandleWebSocketWithOutcomeAsync(
-                        webSocket,
-                        context,
-                        httpContext.RequestAborted);
+                handlerOutcome = await lifecycle.HandleWebSocketWithOutcomeAsync(
+                    webSocket,
+                    context,
+                    httpContext.RequestAborted);
                 if (handlerOutcome is { } outcome)
                 {
                     closeCode = outcome.Code;
                     errorCode = outcome.ErrorCode;
-                    voiceTelemetry?.ObserveHandlerOutcome(
-                        outcome,
-                        httpContext.RequestAborted);
                 }
             }
             catch (OperationCanceledException oce)
@@ -167,7 +161,7 @@ internal sealed class WebSocketEndpointHandler
                 // concurrently with shutdown) — those should still surface as close
                 // code 1011 so real handler bugs aren't masked.
                 closeCode = InvocationsWebSocketConstants.CloseNormal;
-                voiceTelemetry?.MarkRequestCancelled();
+                lifecycle.MarkRequestCancelled();
             }
             catch (Exception ex)
             {
@@ -185,37 +179,27 @@ internal sealed class WebSocketEndpointHandler
         }
         finally
         {
-            try
-            {
-                var durationMs = GetElapsedMilliseconds(startTimestamp);
-                if (handlerOutcome is null)
+            var durationMs = GetElapsedMilliseconds(startTimestamp);
+            await lifecycle.FinalizeAsync(
+                async () =>
                 {
-                    await CloseSocketAsync(webSocket, closeCode, sessionId);
-                }
-                else
-                {
-                    EmitHandlerOutcomeDiagnostics(handlerOutcome.Value, sessionId);
-                }
-                if (voiceTelemetry is not null)
-                {
-                    voiceTelemetry.EmitStructuredLog(() =>
-                        EmitCloseEventLog(sessionId, closeCode, durationMs, errorCode));
-                }
-                else
-                {
-                    TryInvokeLogger(() =>
-                        EmitCloseEventLog(sessionId, closeCode, durationMs, errorCode));
-                }
-            }
-            finally
-            {
-                voiceTelemetry?.Complete(
+                    if (handlerOutcome is null)
+                    {
+                        await CloseSocketAsync(webSocket, closeCode, sessionId);
+                    }
+                    else
+                    {
+                        EmitHandlerOutcomeDiagnostics(handlerOutcome.Value, sessionId);
+                    }
+                },
+                () => TryInvokeLogger(() =>
+                    EmitCloseEventLog(sessionId, closeCode, durationMs, errorCode)),
+                new WebSocketEndpointCompletion(
                     sessionId,
                     closeCode,
                     errorCode,
                     handlerOutcome,
-                    GetElapsedMilliseconds(startTimestamp));
-            }
+                    () => GetElapsedMilliseconds(startTimestamp)));
         }
     }
 

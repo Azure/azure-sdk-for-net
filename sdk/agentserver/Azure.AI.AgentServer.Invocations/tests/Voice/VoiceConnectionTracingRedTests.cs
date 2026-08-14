@@ -675,6 +675,46 @@ public class VoiceConnectionTracingRedTests
     }
 
     [Test]
+    public async Task VoiceLifecycleDuration_IncludesFinalizationDelay()
+    {
+        var exporter = new CapturingActivityExporter();
+        using var provider = Sdk.CreateTracerProviderBuilder()
+            .AddSource(InvocationsSourceName)
+            .AddProcessor(new SimpleActivityExportProcessor(exporter))
+            .Build();
+        var traceId = ActivityTraceId.CreateRandom();
+        var parentSpanId = ActivitySpanId.CreateRandom();
+        var headers = new HeaderDictionary
+        {
+            [PlatformHeaders.TraceParent] = $"00-{traceId}-{parentSpanId}-01",
+        };
+        var lifecycle = VoiceWebSocketLifecycle.Start(new PassiveVoiceHandler(), headers);
+        var started = Stopwatch.GetTimestamp();
+
+        await lifecycle.FinalizeAsync(
+            async () => await Task.Delay(TimeSpan.FromMilliseconds(75)),
+            static () => { },
+            new WebSocketEndpointCompletion(
+                "session_duration",
+                1000,
+                ErrorCode: null,
+                HandlerOutcome: null,
+                GetFinalDurationMs: () =>
+                    (long)Stopwatch.GetElapsedTime(started).TotalMilliseconds));
+
+        var observed = await exporter.TryWaitForSemanticCountAsync(1, ObservationTimeout);
+        var connection = exporter.GetFinishedActivities().SingleOrDefault(IsSemanticConnection);
+        Assert.Multiple(() =>
+        {
+            Assert.That(observed, Is.True);
+            Assert.That(
+                connection?.GetTagItem(InvocationsWebSocketConstants.AttrSpanDurationMs),
+                Is.GreaterThanOrEqualTo(50L));
+            Assert.That(Stopwatch.GetElapsedTime(started), Is.GreaterThanOrEqualTo(TimeSpan.FromMilliseconds(50)));
+        });
+    }
+
+    [Test]
     public async Task PeerProtocolClose_IsNotMisclassifiedAsCallbackFailure()
     {
         var exporter = new CapturingActivityExporter();

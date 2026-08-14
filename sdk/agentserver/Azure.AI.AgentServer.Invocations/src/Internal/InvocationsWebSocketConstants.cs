@@ -11,8 +11,9 @@ namespace Azure.AI.AgentServer.Invocations.Internal;
 /// The route path, close codes, and structured-log field names are part of
 /// the cross-language <c>invocations_ws</c> wire contract; keep them in
 /// lock-step with the same set surfaced by other SDKs implementing the
-/// protocol. The <c>AttrSpan*</c> keys are shared by the structured close-event
-/// log record and the semantic Voice connection Activity.
+/// protocol. The <c>AttrSpan*</c> field names read as OTel-style attribute
+/// keys but are actually used as <c>extra</c> keys on the close-event log
+/// record (the WS endpoint does not create framework-level spans).
 /// </remarks>
 internal static class InvocationsWebSocketConstants
 {
@@ -28,9 +29,12 @@ internal static class InvocationsWebSocketConstants
     // ----------------------------------------------------------------
     // Structured-log `extra` keys.
     //
-    // Raw WebSocket handlers retain the ASP.NET request Activity. Voice handlers
-    // emit a semantic connection Activity. The keys below are used on that
-    // Activity and on the structured close-event log line.
+    // The library does not create a framework-level OpenTelemetry span
+    // for a WebSocket connection — ASP.NET Core auto-propagates the W3C
+    // trace context, so any spans the user handler starts are parented
+    // correctly without a per-connection wrapper. The keys below are
+    // used as field names on the structured close-event log line emitted
+    // by `WebSocketEndpointHandler.EmitCloseEventLog`.
     // ----------------------------------------------------------------
 
     /// <summary>Structured-log field key carrying the per-connection session ID.</summary>
