@@ -8,35 +8,36 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.HorizonDB.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.HorizonDB.Models
+namespace Azure.ResourceManager.HorizonDB
 {
-    /// <summary> The private endpoint connection resource. </summary>
-    public partial class HorizonDBPrivateEndpointConnection : ResourceData
+    /// <summary> Represents an Entra ID administrator configured on a HorizonDB cluster. </summary>
+    public partial class HorizonDBAdministratorData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDBPrivateEndpointConnection"/>. </summary>
-        internal HorizonDBPrivateEndpointConnection()
+        /// <summary> Initializes a new instance of <see cref="HorizonDBAdministratorData"/>. </summary>
+        internal HorizonDBAdministratorData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDBPrivateEndpointConnection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBAdministratorData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The private endpoint connection properties. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBPrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HorizonDBPrivateEndpointConnectionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal HorizonDBAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HorizonDBAdministratorProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The private endpoint connection properties. </summary>
-        public HorizonDBPrivateEndpointConnectionProperties Properties { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public HorizonDBAdministratorProperties Properties { get; }
     }
 }
