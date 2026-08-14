@@ -23,6 +23,7 @@ public static class VoiceHostingExtensions
                 "Voice must be the only InvocationHandler registered for /invocations_ws.");
         }
 
+        VoiceTracingRegistration.Add(services);
         services.AddInvocationsServer(configure);
         services.AddScoped<VoiceHandler, THandler>();
         services.AddScoped<InvocationHandler>(provider =>
