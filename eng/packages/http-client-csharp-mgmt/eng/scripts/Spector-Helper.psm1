@@ -1,14 +1,7 @@
 $repoRoot = Resolve-Path (Join-Path $PSScriptRoot '..')
 
-# These are specs that are not yet building correctly with the management generator
-# Add specs here as needed when they fail to build
-$failingSpecs = @(
-    # management-group: Skipped due to "Some file paths are too long" error in CI
-    "http/azure/resource-manager/management-group"
-    # method-subscription-id: Skipped due to "Some file paths are too long" error in CI
-    "http/azure/resource-manager/method-subscription-id"
-    # multi-service-shared-models: Skipped due to "Some file paths are too long" error in CI
-    "http/azure/resource-manager/multi-service-shared-models"
+$supportedSpecs = @(
+    "http/azure/resource-manager/operation-templates"
 )
 
 function Capitalize-FirstLetter {
@@ -49,12 +42,7 @@ function IsValidSpecDir {
 
     $subPath = Get-SubPath $fullPath
 
-    if ($failingSpecs.Contains(($subPath -replace '\\', '/'))) {
-        Write-Host "Skipping $subPath" -ForegroundColor Yellow
-        return $false
-    }
-
-    return $true
+    return $supportedSpecs.Contains(($subPath -replace '\\', '/'))
 }
 
 function Get-Azure-Specs-Directory {

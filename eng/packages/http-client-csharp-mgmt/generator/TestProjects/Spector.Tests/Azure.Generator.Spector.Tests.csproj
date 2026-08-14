@@ -14,19 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.Generator.Management\test\Common\Azure.Generator.Management.Tests.Common.csproj" />
-    <!-- Some generated projects have build issues - commenting out for now -->
-    <!-- <ProjectReference Include="..\Spector\http\azure\resource-manager\common-properties\src\Azure.ResourceManager.CommonProperties.csproj" /> -->
-    <ProjectReference Include="..\Spector\http\azure\resource-manager\large-header\src\Azure.ResourceManager.LargeHeader.csproj" />
-    <!-- management-group: Skipped due to "Some file paths are too long" error in CI -->
-    <!-- <ProjectReference Include="..\Spector\http\azure\resource-manager\management-group\src\Azure.ResourceManager.ManagementGroup.csproj" /> -->
-    <!-- method-subscription-id: Skipped due to "Some file paths are too long" error in CI -->
-    <!-- <ProjectReference Include="..\Spector\http\azure\resource-manager\method-subscription-id\src\Azure.ResourceManager.MethodSubscriptionId.csproj" /> -->
-    <!-- <ProjectReference Include="..\Spector\http\azure\resource-manager\multi-service\src\Azure.ResourceManager.MultiService.Combined.csproj" /> -->
-    <!-- multi-service-shared-models: Skipped due to "Some file paths are too long" error in CI -->
-    <!-- <ProjectReference Include="..\Spector\http\azure\resource-manager\multi-service-shared-models\src\Azure.ResourceManager.MultiServiceSharedModels.Combined.csproj" /> -->
-    <!-- <ProjectReference Include="..\Spector\http\azure\resource-manager\non-resource\src\Azure.ResourceManager.NonResource.csproj" /> -->
     <ProjectReference Include="..\Spector\http\azure\resource-manager\operation-templates\src\Azure.ResourceManager.OperationTemplates.csproj" />
-    <!-- <ProjectReference Include="..\Spector\http\azure\resource-manager\resources\src\Azure.ResourceManager.Resources.csproj" /> -->
   </ItemGroup>
 
   <ItemGroup>
