@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 
             InitialAgentPoolConfiguration[] initialAgentPoolConfigurationsArray = new InitialAgentPoolConfiguration[]
             {
-                new InitialAgentPoolConfiguration(1, NetworkCloudAgentPoolMode.System, "NC_G2_8_v1", "agentPoolConfig")
+                new InitialAgentPoolConfiguration(1, NetworkCloudAgentPoolMode.System, "agentPoolConfig", "NC_G2_8_v1")
                 {
                     AgentOptions = new NetworkCloudAgentConfiguration(4)
                     {
