@@ -30,6 +30,12 @@ namespace TestProjects.Spector.Tests
                 clientCodeDirectory = GetGeneratedDirectory(test, false);
             }
 
+            if (!Directory.Exists(clientCodeDirectory))
+            {
+                SkipTest(test);
+                return;
+            }
+
             var clientCsFile = GetClientCsFile(clientCodeDirectory);
 
             TestContext.Progress.WriteLine($"Checking if '{clientCsFile}' is a stubbed implementation.");
