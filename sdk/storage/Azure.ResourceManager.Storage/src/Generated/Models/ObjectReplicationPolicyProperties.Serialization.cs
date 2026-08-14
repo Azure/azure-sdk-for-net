@@ -113,6 +113,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("priorityReplication"u8);
                 writer.WriteObjectValue(PriorityReplication, options);
             }
+            if (Optional.IsDefined(TagsReplication))
+            {
+                writer.WritePropertyName("tagsReplication"u8);
+                writer.WriteObjectValue(TagsReplication, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -162,6 +167,7 @@ namespace Azure.ResourceManager.Storage.Models
             IList<ObjectReplicationPolicyRule> rules = default;
             ObjectReplicationPolicyPropertiesMetrics metrics = default;
             ObjectReplicationPolicyPropertiesPriorityReplication priorityReplication = default;
+            ObjectReplicationPolicyPropertiesTagsReplication tagsReplication = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -221,6 +227,15 @@ namespace Azure.ResourceManager.Storage.Models
                     priorityReplication = ObjectReplicationPolicyPropertiesPriorityReplication.DeserializeObjectReplicationPolicyPropertiesPriorityReplication(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("tagsReplication"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tagsReplication = ObjectReplicationPolicyPropertiesTagsReplication.DeserializeObjectReplicationPolicyPropertiesTagsReplication(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -234,6 +249,7 @@ namespace Azure.ResourceManager.Storage.Models
                 rules ?? new ChangeTrackingList<ObjectReplicationPolicyRule>(),
                 metrics,
                 priorityReplication,
+                tagsReplication,
                 additionalBinaryDataProperties);
         }
     }

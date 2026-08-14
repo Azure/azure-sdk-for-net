@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -40,11 +41,11 @@ namespace Azure.ResourceManager.Confluent.Mocking
 
         private ClientDiagnostics ConfluentOrganizationClientDiagnostics => _confluentOrganizationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ConfluentOrganization ConfluentOrganizationRestClient => _confluentOrganizationRestClient ??= new ConfluentOrganization(ConfluentOrganizationClientDiagnostics, Pipeline, Endpoint, "2025-08-18-preview");
+        private ConfluentOrganization ConfluentOrganizationRestClient => _confluentOrganizationRestClient ??= new ConfluentOrganization(ConfluentOrganizationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-18-preview");
 
         private ClientDiagnostics MarketplaceAgreementsOperationGroupClientDiagnostics => _marketplaceAgreementsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MarketplaceAgreementsOperationGroup MarketplaceAgreementsOperationGroupRestClient => _marketplaceAgreementsOperationGroupRestClient ??= new MarketplaceAgreementsOperationGroup(MarketplaceAgreementsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-08-18-preview");
+        private MarketplaceAgreementsOperationGroup MarketplaceAgreementsOperationGroupRestClient => _marketplaceAgreementsOperationGroupRestClient ??= new MarketplaceAgreementsOperationGroup(MarketplaceAgreementsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-18-preview");
 
         /// <summary>
         /// List all organizations under the specified subscription.
@@ -246,6 +247,30 @@ namespace Azure.ResourceManager.Confluent.Mocking
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Create Confluent Marketplace agreement in the subscription.
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements/defaultOperation IdMarketplaceAgreements_CreateDefault Api Version2024-02-13
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<Response<ConfluentAgreement>> CreateMarketplaceAgreementAsync(CancellationToken cancellationToken = default)
+        {
+            return CreateMarketplaceAgreementAsync(body: default, cancellationToken: cancellationToken);
+        }
+
+        /// <summary>
+        /// Create Confluent Marketplace agreement in the subscription.
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements/defaultOperation IdMarketplaceAgreements_CreateDefault Api Version2024-02-13
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Response<ConfluentAgreement> CreateMarketplaceAgreement(CancellationToken cancellationToken = default)
+        {
+            return CreateMarketplaceAgreement(body: default, cancellationToken: cancellationToken);
         }
     }
 }

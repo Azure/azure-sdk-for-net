@@ -5,35 +5,16 @@
 
 #nullable disable
 
-using System;
 using System.ClientModel.Primitives;
-using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary></summary>
-    public partial class NetAppElasticAccountResource : IJsonModel<NetAppElasticAccountData>
+    public partial class NetAppElasticAccountResource : ArmResource, IJsonModel<NetAppElasticAccountData>
     {
         private static IJsonModel<NetAppElasticAccountData> s_dataDeserializationInstance;
 
         private static IJsonModel<NetAppElasticAccountData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetAppElasticAccountData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NetAppElasticAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppElasticAccountData>)Data).Write(writer, options);
-
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NetAppElasticAccountData IJsonModel<NetAppElasticAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NetAppElasticAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppElasticAccountData>(Data, options, AzureResourceManagerNetAppContext.Default);
-
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NetAppElasticAccountData IPersistableModel<NetAppElasticAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppElasticAccountData>(data, options, AzureResourceManagerNetAppContext.Default);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NetAppElasticAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

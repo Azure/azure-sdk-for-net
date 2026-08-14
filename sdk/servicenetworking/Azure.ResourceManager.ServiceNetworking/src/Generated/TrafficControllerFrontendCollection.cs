@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             TryGetApiVersion(TrafficControllerFrontendResource.ResourceType, out string trafficControllerFrontendApiVersion);
             _frontendsInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceNetworking", TrafficControllerFrontendResource.ResourceType.Namespace, Diagnostics);
-            _frontendsInterfaceRestClient = new FrontendsInterface(_frontendsInterfaceClientDiagnostics, Pipeline, Endpoint, trafficControllerFrontendApiVersion ?? "2025-03-01-preview");
+            _frontendsInterfaceRestClient = new FrontendsInterface(_frontendsInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, trafficControllerFrontendApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 HttpMessage message = _frontendsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, TrafficControllerFrontendData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceNetworkingArmOperation<TrafficControllerFrontendResource> operation = new ServiceNetworkingArmOperation<TrafficControllerFrontendResource>(
-                    new TrafficControllerFrontendOperationSource(Client),
+                    new TrafficControllerFrontendResourceOperationSource(Client),
                     _frontendsInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 HttpMessage message = _frontendsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, TrafficControllerFrontendData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceNetworkingArmOperation<TrafficControllerFrontendResource> operation = new ServiceNetworkingArmOperation<TrafficControllerFrontendResource>(
-                    new TrafficControllerFrontendOperationSource(Client),
+                    new TrafficControllerFrontendResourceOperationSource(Client),
                     _frontendsInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,

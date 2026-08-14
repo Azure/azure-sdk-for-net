@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.NetApp.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticAccountProperties"/>. </summary>
-        public ElasticAccountProperties()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ElasticAccountProperties"/>. </summary>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="encryption"> Encryption settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -31,11 +26,5 @@ namespace Azure.ResourceManager.NetApp.Models
             Encryption = encryption;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Azure lifecycle management. </summary>
-        public NetAppProvisioningState? ProvisioningState { get; }
-
-        /// <summary> Encryption settings. </summary>
-        public ElasticEncryption Encryption { get; set; }
     }
 }

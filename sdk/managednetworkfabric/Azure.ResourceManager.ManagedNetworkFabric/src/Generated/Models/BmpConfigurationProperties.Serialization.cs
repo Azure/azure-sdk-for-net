@@ -10,13 +10,55 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class BmpConfigurationProperties : IUtf8JsonSerializable, IJsonModel<BmpConfigurationProperties>
+    /// <summary> BGP Monitoring Protocol (BMP) Configuration properties. </summary>
+    public partial class BmpConfigurationProperties : IJsonModel<BmpConfigurationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BmpConfigurationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BmpConfigurationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BmpConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBmpConfigurationProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BmpConfigurationProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BmpConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BmpConfigurationProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BmpConfigurationProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BmpConfigurationProperties IPersistableModel<BmpConfigurationProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BmpConfigurationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BmpConfigurationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +70,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BmpConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BmpConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BmpConfigurationProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(StationConfigurationState))
             {
                 writer.WritePropertyName("stationConfigurationState"u8);
@@ -78,7 +119,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("monitoredNetworks"u8);
                 writer.WriteStartArray();
-                foreach (var item in MonitoredNetworks)
+                foreach (ResourceIdentifier item in MonitoredNetworks)
                 {
                     if (item == null)
                     {
@@ -103,21 +144,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("monitoredAddressFamilies"u8);
                 writer.WriteStartArray();
-                foreach (var item in MonitoredAddressFamilies)
+                foreach (BmpMonitoredAddressFamily item in MonitoredAddressFamilies)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -126,22 +167,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        BmpConfigurationProperties IJsonModel<BmpConfigurationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BmpConfigurationProperties IJsonModel<BmpConfigurationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BmpConfigurationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BmpConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BmpConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BmpConfigurationProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBmpConfigurationProperties(document.RootElement, options);
         }
 
-        internal static BmpConfigurationProperties DeserializeBmpConfigurationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BmpConfigurationProperties DeserializeBmpConfigurationProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -158,82 +204,81 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             BmpExportPolicy? exportPolicy = default;
             BmpExportPolicyProperties exportPolicyConfiguration = default;
             IList<BmpMonitoredAddressFamily> monitoredAddressFamilies = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("stationConfigurationState"u8))
+                if (prop.NameEquals("stationConfigurationState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    stationConfigurationState = new NetworkFabricStationConfigurationState(property.Value.GetString());
+                    stationConfigurationState = new NetworkFabricStationConfigurationState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("scopeResourceId"u8))
+                if (prop.NameEquals("scopeResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scopeResourceId = new ResourceIdentifier(property.Value.GetString());
+                    scopeResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("stationName"u8))
+                if (prop.NameEquals("stationName"u8))
                 {
-                    stationName = property.Value.GetString();
+                    stationName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stationIp"u8))
+                if (prop.NameEquals("stationIp"u8))
                 {
-                    stationIP = property.Value.GetString();
+                    stationIP = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stationPort"u8))
+                if (prop.NameEquals("stationPort"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    stationPort = property.Value.GetInt32();
+                    stationPort = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("stationConnectionMode"u8))
+                if (prop.NameEquals("stationConnectionMode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    stationConnectionMode = new NetworkFabricStationConnectionMode(property.Value.GetString());
+                    stationConnectionMode = new NetworkFabricStationConnectionMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("stationConnectionProperties"u8))
+                if (prop.NameEquals("stationConnectionProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    stationConnectionProperties = StationConnectionProperties.DeserializeStationConnectionProperties(property.Value, options);
+                    stationConnectionProperties = StationConnectionProperties.DeserializeStationConnectionProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("stationNetwork"u8))
+                if (prop.NameEquals("stationNetwork"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    stationNetwork = new ResourceIdentifier(property.Value.GetString());
+                    stationNetwork = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("monitoredNetworks"u8))
+                if (prop.NameEquals("monitoredNetworks"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -247,32 +292,32 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     monitoredNetworks = array;
                     continue;
                 }
-                if (property.NameEquals("exportPolicy"u8))
+                if (prop.NameEquals("exportPolicy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    exportPolicy = new BmpExportPolicy(property.Value.GetString());
+                    exportPolicy = new BmpExportPolicy(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("exportPolicyConfiguration"u8))
+                if (prop.NameEquals("exportPolicyConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    exportPolicyConfiguration = BmpExportPolicyProperties.DeserializeBmpExportPolicyProperties(property.Value, options);
+                    exportPolicyConfiguration = BmpExportPolicyProperties.DeserializeBmpExportPolicyProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("monitoredAddressFamilies"u8))
+                if (prop.NameEquals("monitoredAddressFamilies"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<BmpMonitoredAddressFamily> array = new List<BmpMonitoredAddressFamily>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new BmpMonitoredAddressFamily(item.GetString()));
                     }
@@ -281,10 +326,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new BmpConfigurationProperties(
                 stationConfigurationState,
                 scopeResourceId,
@@ -298,38 +342,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 exportPolicy,
                 exportPolicyConfiguration,
                 monitoredAddressFamilies ?? new ChangeTrackingList<BmpMonitoredAddressFamily>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<BmpConfigurationProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BmpConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BmpConfigurationProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        BmpConfigurationProperties IPersistableModel<BmpConfigurationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BmpConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBmpConfigurationProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BmpConfigurationProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<BmpConfigurationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

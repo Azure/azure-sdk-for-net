@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         {
             TryGetApiVersion(ResourceType, out string databaseWatcherApiVersion);
             _watchersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DatabaseWatcher", ResourceType.Namespace, Diagnostics);
-            _watchersRestClient = new Watchers(_watchersClientDiagnostics, Pipeline, Endpoint, databaseWatcherApiVersion ?? "2025-01-02");
+            _watchersRestClient = new Watchers(_watchersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databaseWatcherApiVersion ?? "2025-01-02");
             ValidateResourceId(id);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 HttpMessage message = _watchersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DatabaseWatcherPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DatabaseWatcherArmOperation<DatabaseWatcherResource> operation = new DatabaseWatcherArmOperation<DatabaseWatcherResource>(
-                    new DatabaseWatcherOperationSource(Client),
+                    new DatabaseWatcherResourceOperationSource(Client),
                     _watchersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 HttpMessage message = _watchersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DatabaseWatcherPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DatabaseWatcherArmOperation<DatabaseWatcherResource> operation = new DatabaseWatcherArmOperation<DatabaseWatcherResource>(
-                    new DatabaseWatcherOperationSource(Client),
+                    new DatabaseWatcherResourceOperationSource(Client),
                     _watchersClientDiagnostics,
                     Pipeline,
                     message.Request,

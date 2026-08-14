@@ -29,20 +29,37 @@ namespace Azure.Storage.ChangeFeed.Common
 
             string[] splitPath = segmentPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
             if (splitPath.Length < 3)
-                throw new ArgumentException($"{nameof(segmentPath)} is not a valid segment path.");
+                throw ChangeFeedErrors.InvalidSegmentPath(segmentPath);
 
             int timeValue = splitPath.Length >= 6
-                ? int.Parse(splitPath[5], CultureInfo.InvariantCulture)
+                ? ParseSegmentComponent(splitPath[5], segmentPath)
                 : 0;
 
-            return new DateTimeOffset(
-                year: int.Parse(splitPath[2], CultureInfo.InvariantCulture),
-                month: splitPath.Length >= 4 ? int.Parse(splitPath[3], CultureInfo.InvariantCulture) : 1,
-                day: splitPath.Length >= 5 ? int.Parse(splitPath[4], CultureInfo.InvariantCulture) : 1,
-                hour: timeValue / 100,    // HHmm encoded: integer division extracts the hour component
-                minute: timeValue % 100,  // HHmm encoded: modulo extracts the minute component
-                second: 0,
-                offset: TimeSpan.Zero);
+            try
+            {
+                return new DateTimeOffset(
+                    year: ParseSegmentComponent(splitPath[2], segmentPath),
+                    month: splitPath.Length >= 4 ? ParseSegmentComponent(splitPath[3], segmentPath) : 1,
+                    day: splitPath.Length >= 5 ? ParseSegmentComponent(splitPath[4], segmentPath) : 1,
+                    hour: timeValue / 100,    // HHmm encoded: integer division extracts the hour component
+                    minute: timeValue % 100,  // HHmm encoded: modulo extracts the minute component
+                    second: 0,
+                    offset: TimeSpan.Zero);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                // A syntactically numeric but out-of-range component (e.g. month 13) would
+                // otherwise surface as a raw ArgumentOutOfRangeException from DateTimeOffset.
+                throw ChangeFeedErrors.InvalidSegmentPath(segmentPath);
+            }
+        }
+
+        private static int ParseSegmentComponent(string component, string segmentPath)
+        {
+            if (!int.TryParse(component, NumberStyles.Integer, CultureInfo.InvariantCulture, out int value))
+                throw ChangeFeedErrors.InvalidSegmentPath(segmentPath);
+
+            return value;
         }
 
         /// <summary>

@@ -13,7 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ContainerService
 {
     /// <summary> Properties for the container service agent pool profile. </summary>
-    internal partial class ManagedClusterAgentPoolProfileProperties : ProvisionableConstruct
+    public partial class ManagedClusterAgentPoolProfileProperties : ProvisionableConstruct
     {
         private BicepValue<ETag> _eTag;
         private BicepValue<int> _count;
@@ -1038,6 +1038,10 @@ namespace Azure.Provisioning.ContainerService
             _virtualMachineNodesStatus = DefineListProperty<AgentPoolVirtualMachineNodes>(nameof(VirtualMachineNodesStatus), new string[] { "virtualMachineNodesStatus" });
             _status = DefineModelProperty<AgentPoolStatus>(nameof(Status), new string[] { "status" });
             _localDnsProfile = DefineModelProperty<LocalDnsProfile>(nameof(LocalDnsProfile), new string[] { "localDNSProfile" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterAgentPoolProfileProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

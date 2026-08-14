@@ -78,11 +78,11 @@ namespace Azure.AI.Projects.Agents
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("size"u8);
-            writer.WriteNumberValue(Size);
+            writer.WriteNumberValue(SizeInBytes);
             writer.WritePropertyName("is_directory"u8);
             writer.WriteBooleanValue(IsDirectory);
             writer.WritePropertyName("modified_time"u8);
-            writer.WriteNumberValue(ModifiedTime, "U");
+            writer.WriteNumberValue(ModifiedAt, "U");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -126,9 +126,9 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             string name = default;
-            long size = default;
+            long sizeInBytes = default;
             bool isDirectory = default;
-            DateTimeOffset modifiedTime = default;
+            DateTimeOffset modifiedAt = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -139,7 +139,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("size"u8))
                 {
-                    size = prop.Value.GetInt64();
+                    sizeInBytes = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("is_directory"u8))
@@ -149,7 +149,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("modified_time"u8))
                 {
-                    modifiedTime = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    modifiedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (options.Format != "W")
@@ -157,7 +157,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SessionDirectoryEntry(name, size, isDirectory, modifiedTime, additionalBinaryDataProperties);
+            return new SessionDirectoryEntry(name, sizeInBytes, isDirectory, modifiedAt, additionalBinaryDataProperties);
         }
     }
 }

@@ -4,6 +4,8 @@
 #nullable enable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -18,15 +20,23 @@ namespace Azure.AI.ContentUnderstanding
     /// </summary>
     public static class LlmInputHelper
     {
-        private static readonly HashSet<string> s_reservedMetadataKeys = new HashSet<string>(StringComparer.Ordinal)
-        {
-            "contentType",
-            "timeRange",
-            "category",
-            "pages",
-            "fields",
-            "rai_warnings"
-        };
+        // YAML front-matter key for the optional caller-supplied dictionary.
+        // Kept distinct from service AnalysisContent.Metadata ("metadata").
+        private const string CustomMetadataFrontMatterKey = "customMetadata";
+
+        // Marker emitted by ToLlmInput at each page boundary. Future Content
+        // Understanding service versions emit this same marker directly in the
+        // returned markdown (per ContentUnderstanding-Docs#249). When the helper
+        // sees any occurrence of this prefix in the input markdown it treats
+        // the service as having already paginated the content and skips its own
+        // injection to avoid duplicate markers.
+        private const string InputPageMarkerPrefix = "<!-- InputPageNumber:";
+        // Message prefixes the Content Understanding service has been observed
+        // to emit into the warnings collection that are not real Responsible-AI
+        // warnings (they are internal telemetry counters). The helper drops any
+        // warning whose message starts with one of these prefixes before
+        // rendering the warnings block, so the noise never reaches the LLM.
+        private static readonly string[] s_telemetryMessagePrefixes = { "LLMStats:" };
 
         // ---------------------------------------------------------------
         // Public API
@@ -41,45 +51,60 @@ namespace Azure.AI.ContentUnderstanding
         /// </para>
         /// <para>
         /// The YAML front matter (delimited by <c>---</c>) may include:
-        /// <c>contentType</c> (document, image, audio, video),
+        /// <c>mimeType</c> (detected content MIME type),
+        /// <c>customMetadata</c> (caller-supplied key-value pairs from <paramref name="customMetadata"/>),
+        /// <c>metadata</c> (analysis-result metadata from <see cref="AnalysisContent.Metadata"/>),
         /// <c>pages</c> (page range),
         /// <c>timeRange</c> (media time span),
         /// <c>category</c> (classification label),
         /// <c>fields</c> (extracted structured fields as YAML),
-        /// <c>rai_warnings</c> (content safety flags),
-        /// and any caller-supplied <paramref name="metadata"/> entries.
+        /// and <c>warnings</c> (content safety flags).
         /// </para>
         /// <para>
         /// The markdown body contains the extracted text with page-break markers
-        /// (<c>&lt;!-- page N --&gt;</c>) inserted at page boundaries so downstream
-        /// consumers can locate content by page number.
+        /// (<c>&lt;!-- InputPageNumber: N --&gt;</c>) inserted at page boundaries so
+        /// downstream consumers can locate content by page number. <c>N</c> is the
+        /// <strong>original 1-based page number from the source document</strong>
+        /// (i.e., the page index in the analyzed PDF), not a counter that restarts
+        /// at 1 for each call. This matters when the analyze request specifies a
+        /// <see cref="ContentRange"/> (e.g., <c>"2-3,5"</c>): the markers in the
+        /// output will read <c>InputPageNumber: 2</c>, <c>3</c>, <c>5</c> &#8212;
+        /// not <c>1</c>, <c>2</c>, <c>3</c>. Downstream consumers (RAG indexers,
+        /// page-citation prompts) can rely on the marker value to cite the
+        /// correct source page even when only a subset of pages was analyzed.
+        /// If the service markdown already contains <c>&lt;!-- InputPageNumber:</c>
+        /// markers, the helper passes the markdown through unchanged to avoid
+        /// duplicate markers.
+        /// </para>
+        /// <para>
+        /// Internal telemetry messages such as <c>LLMStats: ...</c> are filtered
+        /// from the rendered <c>warnings</c> front matter.
         /// </para>
         /// </summary>
         /// <param name="result">The <see cref="AnalysisResult"/> from a Content Understanding analyze operation.</param>
-        /// <param name="metadata">Optional user-supplied key-value pairs to include in the YAML front matter.
-        /// Keys must not conflict with helper-generated front matter keys
-        /// (<c>contentType</c>, <c>timeRange</c>, <c>category</c>, <c>pages</c>, <c>fields</c>, <c>rai_warnings</c>).</param>
+        /// <param name="customMetadata">Optional caller-supplied key-value pairs emitted under a nested
+        /// <c>customMetadata</c> YAML front-matter block (kept separate from service
+        /// <see cref="AnalysisContent.Metadata"/> / <c>metadata</c>). Common keys include
+        /// <c>source</c>, <c>documentId</c>, or <c>department</c>.</param>
         /// <param name="options">Optional rendering options controlling field/markdown inclusion.</param>
         /// <returns>A formatted text string with YAML front matter followed by markdown content.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="result"/> is <c>null</c>.</exception>
-        /// <exception cref="ArgumentException"><paramref name="metadata"/> contains a reserved front matter key.</exception>
         public static string ToLlmInput(
             this AnalysisResult result,
-            IDictionary<string, object>? metadata = null,
+            IDictionary<string, object>? customMetadata = null,
             LlmInputOptions? options = null)
         {
             options ??= new LlmInputOptions();
-            return ToLlmInputCore(result, options.IncludeFields, options.IncludeMarkdown, metadata);
+            return ToLlmInputCore(result, options.IncludeFields, options.IncludeMarkdown, customMetadata);
         }
 
         private static string ToLlmInputCore(
             AnalysisResult result,
             bool includeFields,
             bool includeMarkdown,
-            IDictionary<string, object>? metadata)
+            IDictionary<string, object>? customMetadata)
         {
             Argument.AssertNotNull(result, nameof(result));
-            ValidateMetadata(metadata);
 
             if (result.Contents == null || result.Contents.Count == 0)
             {
@@ -102,7 +127,7 @@ namespace Azure.AI.ContentUnderstanding
                     result,
                     includeFields,
                     includeMarkdown,
-                    metadata,
+                    customMetadata,
                     isMultiSegment: avCount > 1);
                 if (!string.IsNullOrEmpty(block))
                 {
@@ -113,25 +138,64 @@ namespace Azure.AI.ContentUnderstanding
             return string.Join("\n\n*****\n\n", blocks);
         }
 
-        private static void ValidateMetadata(IDictionary<string, object>? metadata)
+        // Convert .NET-specific collection shapes (arrays, typed dictionaries, and
+        // JsonElement values) into the Dictionary<string, object>/List<object>
+        // shapes understood by the minimal YAML emitter. Null mapping values and
+        // sequence items are retained and rendered as YAML null.
+        private static object? NormalizeMetadataValue(object? value)
         {
-            if (metadata == null || metadata.Count == 0)
+            if (value == null)
             {
-                return;
+                return null;
             }
 
-            string[] reservedKeys = metadata.Keys
-                .Where(key => s_reservedMetadataKeys.Contains(key))
-                .OrderBy(key => key, StringComparer.Ordinal)
-                .ToArray();
-
-            if (reservedKeys.Length > 0)
+            if (value is JsonElement jsonElement)
             {
-                throw new ArgumentException(
-                    $"Metadata contains reserved front matter key(s): {string.Join(", ", reservedKeys)}. " +
-                    "Use custom keys such as 'source', 'documentId', or 'department' instead.",
-                    nameof(metadata));
+                return ResolveJsonElement(jsonElement, preserveNullProperties: true);
             }
+
+            if (value is string)
+            {
+                return value;
+            }
+
+            if (value is IDictionary dictionary)
+            {
+                var map = new Dictionary<string, object>(StringComparer.Ordinal);
+                foreach (DictionaryEntry entry in dictionary)
+                {
+                    object? nestedValue = NormalizeMetadataValue(entry.Value);
+                    if (entry.Key is string key)
+                    {
+                        map[key] = nestedValue!;
+                    }
+                }
+
+                return map;
+            }
+
+            if (value is IEnumerable sequence && value is not string)
+            {
+                var list = new List<object>();
+                foreach (object? item in sequence)
+                {
+                    if (item == null)
+                    {
+                        list.Add(null!);
+                        continue;
+                    }
+
+                    object? nestedItem = NormalizeMetadataValue(item);
+                    if (nestedItem != null)
+                    {
+                        list.Add(nestedItem);
+                    }
+                }
+
+                return list;
+            }
+
+            return value;
         }
 
         // ---------------------------------------------------------------
@@ -212,7 +276,7 @@ namespace Azure.AI.ContentUnderstanding
             return ResolveJsonElement(document.RootElement);
         }
 
-        private static object? ResolveJsonElement(JsonElement element)
+        private static object? ResolveJsonElement(JsonElement element, bool preserveNullProperties = false)
         {
             switch (element.ValueKind)
             {
@@ -220,10 +284,10 @@ namespace Azure.AI.ContentUnderstanding
                     var dict = new Dictionary<string, object>();
                     foreach (JsonProperty property in element.EnumerateObject())
                     {
-                        object? value = ResolveJsonElement(property.Value);
-                        if (value != null)
+                        object? value = ResolveJsonElement(property.Value, preserveNullProperties);
+                        if (value != null || preserveNullProperties)
                         {
-                            dict[property.Name] = value;
+                            dict[property.Name] = value!;
                         }
                     }
                     return dict;
@@ -232,7 +296,7 @@ namespace Azure.AI.ContentUnderstanding
                     var list = new List<object>();
                     foreach (JsonElement item in element.EnumerateArray())
                     {
-                        list.Add(ResolveJsonElement(item)!);
+                        list.Add(ResolveJsonElement(item, preserveNullProperties)!);
                     }
                     return list;
 
@@ -381,47 +445,69 @@ namespace Azure.AI.ContentUnderstanding
             AnalysisResult result,
             bool includeFields,
             bool includeMarkdown,
-            IDictionary<string, object>? metadata,
+            IDictionary<string, object>? customMetadata,
             bool isMultiSegment)
         {
             // Build ordered front matter data
             var fm = new List<KeyValuePair<string, object>>();
 
-            // 1. contentType
-            string kindStr = content is DocumentContent ? "document" :
-                             content is AudioVisualContent ? "audioVisual" : "unknown";
-            fm.Add(new KeyValuePair<string, object>("contentType", kindStr));
+            // 1. mimeType
+            fm.Add(new KeyValuePair<string, object>(
+                "mimeType",
+                string.IsNullOrEmpty(content.MimeType) ? "unknown" : content.MimeType));
 
-            // 2. User metadata
-            if (metadata != null)
+            // 2. Caller-supplied customMetadata (nested block — no top-level key collisions)
+            if (customMetadata != null)
             {
-                foreach (var kvp in metadata)
+                var normalizedCustom = new Dictionary<string, object>(StringComparer.Ordinal);
+                foreach (var kvp in customMetadata)
                 {
-                    fm.Add(new KeyValuePair<string, object>(kvp.Key, kvp.Value));
+                    object? normalized = NormalizeMetadataValue(kvp.Value);
+                    normalizedCustom[kvp.Key] = normalized!;
+                }
+
+                fm.Add(new KeyValuePair<string, object>(CustomMetadataFrontMatterKey, normalizedCustom));
+            }
+
+            // 3. Analysis metadata (service AnalysisContent.Metadata)
+            if (content.Metadata != null && content.Metadata.Count > 0)
+            {
+                var analysisMetadata = new Dictionary<string, object>(StringComparer.Ordinal);
+                foreach (KeyValuePair<string, string> kvp in content.Metadata)
+                {
+                    if (kvp.Value != null)
+                    {
+                        analysisMetadata[kvp.Key] = kvp.Value;
+                    }
+                }
+
+                if (analysisMetadata.Count > 0)
+                {
+                    fm.Add(new KeyValuePair<string, object>("metadata", analysisMetadata));
                 }
             }
 
-            // 3. timeRange (audioVisual — only for multi-segment)
+            // 4. timeRange (audioVisual — only for multi-segment)
             if (content is AudioVisualContent av && isMultiSegment)
             {
                 string timeRange = FormatTimeRange(av.StartTime, av.EndTime);
                 fm.Add(new KeyValuePair<string, object>("timeRange", timeRange));
             }
 
-            // 4. category (classified documents)
+            // 5. category (classified documents)
             if (!string.IsNullOrEmpty(content.Category))
             {
                 fm.Add(new KeyValuePair<string, object>("category", content.Category));
             }
 
-            // 5. pages (documents)
+            // 6. pages (documents)
             object? pagesVal = FormatPages(content);
             if (pagesVal != null)
             {
                 fm.Add(new KeyValuePair<string, object>("pages", pagesVal));
             }
 
-            // 6. fields
+            // 7. fields
             if (includeFields && content.Fields != null && content.Fields.Count > 0)
             {
                 var resolved = ResolveFields(content.Fields);
@@ -431,16 +517,15 @@ namespace Azure.AI.ContentUnderstanding
                 }
             }
 
-            // 7. rai_warnings
+            // 8. warnings
             if (result.Warnings != null && result.Warnings.Count > 0)
             {
                 var warningsList = FormatWarnings(result.Warnings);
                 if (warningsList.Count > 0)
                 {
-                    fm.Add(new KeyValuePair<string, object>("rai_warnings", warningsList));
+                    fm.Add(new KeyValuePair<string, object>("warnings", warningsList));
                 }
             }
-
             // Build output string
             string frontMatter = BuildFrontMatter(fm);
 
@@ -462,6 +547,15 @@ namespace Azure.AI.ContentUnderstanding
 
         internal static string AddPageMarkers(DocumentContent content, string markdown)
         {
+            // If the service markdown already includes InputPageNumber markers
+            // (e.g., because the service paginated the content itself per
+            // ContentUnderstanding-Docs#249), pass it through unchanged to
+            // avoid duplicate markers.
+            if (HasInputPageMarker(markdown))
+            {
+                return markdown;
+            }
+
             if (content.Pages != null && content.Pages.Count > 0)
             {
                 string result = PageMarkersFromSpans(markdown, content.Pages);
@@ -472,6 +566,9 @@ namespace Azure.AI.ContentUnderstanding
             }
             return PageMarkersFromBreaks(markdown, content);
         }
+
+        private static bool HasInputPageMarker(string markdown)
+            => !string.IsNullOrEmpty(markdown) && markdown.IndexOf(InputPageMarkerPrefix, StringComparison.Ordinal) >= 0;
 
         private static readonly Regex s_pageBreakPattern = new Regex(@"\n*<!-- PageBreak -->\n*", RegexOptions.Compiled);
 
@@ -528,7 +625,7 @@ namespace Azure.AI.ContentUnderstanding
                 {
                     sb.Append(cleaned, prev, adj - prev);
                 }
-                sb.Append($"<!-- page {marker.PageNumber} -->\n\n");
+                sb.Append($"{InputPageMarkerPrefix} {marker.PageNumber} -->\n\n");
                 prev = adj;
             }
             if (prev < cleaned.Length)
@@ -551,7 +648,7 @@ namespace Azure.AI.ContentUnderstanding
                 string text = chunks[i].Trim();
                 if (!string.IsNullOrEmpty(text))
                 {
-                    parts.Add($"<!-- page {pageNum} -->\n\n{text}");
+                    parts.Add($"{InputPageMarkerPrefix} {pageNum} -->\n\n{text}");
                 }
             }
             return string.Join("\n\n", parts);
@@ -645,19 +742,42 @@ namespace Azure.AI.ContentUnderstanding
             return string.Join(", ", ranges);
         }
 
-        private static List<Dictionary<string, string>> FormatWarnings(IList<ResponseError> warnings)
+        private static List<object> FormatWarnings(IList<ResponseError> warnings)
         {
-            var items = new List<Dictionary<string, string>>();
+            var items = new List<object>();
             foreach (var w in warnings)
             {
-                var entry = new Dictionary<string, string>();
+                string? message = w.Message;
+                // Skip internal service telemetry strings (e.g. "LLMStats: ...")
+                // that occasionally leak into the warnings collection. These are
+                // not Responsible-AI warnings and would otherwise be rendered
+                // into the LLM-facing warnings block.
+                if (!string.IsNullOrEmpty(message) && IsTelemetryMessage(message!))
+                {
+                    continue;
+                }
+
+                var entry = new Dictionary<string, object>();
                 if (!string.IsNullOrEmpty(w.Code))
                 {
                     entry["code"] = w.Code!;
                 }
-                if (!string.IsNullOrEmpty(w.Message))
+                if (!string.IsNullOrEmpty(message))
                 {
-                    entry["message"] = w.Message!;
+                    entry["message"] = message!;
+                }
+                BinaryData warningData = ((IPersistableModel<ResponseError>)w).Write(ModelReaderWriterOptions.Json);
+                using (JsonDocument warningJson = JsonDocument.Parse(warningData))
+                {
+                    if (warningJson.RootElement.TryGetProperty("target", out JsonElement targetElement) &&
+                        targetElement.ValueKind == JsonValueKind.String)
+                    {
+                        string? target = targetElement.GetString();
+                        if (!string.IsNullOrEmpty(target))
+                        {
+                            entry["target"] = target!;
+                        }
+                    }
                 }
                 if (entry.Count > 0)
                 {
@@ -665,6 +785,19 @@ namespace Azure.AI.ContentUnderstanding
                 }
             }
             return items;
+        }
+
+        private static bool IsTelemetryMessage(string message)
+        {
+            string trimmed = message.TrimStart();
+            foreach (string prefix in s_telemetryMessagePrefixes)
+            {
+                if (trimmed.StartsWith(prefix, StringComparison.Ordinal))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         // ---------------------------------------------------------------
@@ -732,73 +865,37 @@ namespace Azure.AI.ContentUnderstanding
             return string.Join("\n", lines);
         }
 
-        private static void EmitMapping(List<string> lines, List<KeyValuePair<string, object>> mapping, int indent)
+        private static string IndentScalarContinuationLines(object value, int indent)
         {
-            string prefix = new string(' ', indent * 2);
-            foreach (var kvp in mapping)
-            {
-                if (kvp.Value == null)
-                {
-                    continue;
-                }
-                string safeKey = YamlScalar(kvp.Key);
-                if (kvp.Value is Dictionary<string, object> dict)
-                {
-                    if (dict.Count == 0)
-                    {
-                        continue;
-                    }
-                    lines.Add($"{prefix}{safeKey}:");
-                    EmitMappingFromDict(lines, dict, indent + 1);
-                }
-                else if (kvp.Value is List<object> list)
-                {
-                    if (list.Count == 0)
-                    {
-                        continue;
-                    }
-                    lines.Add($"{prefix}{safeKey}:");
-                    EmitSequence(lines, list, indent);
-                }
-                else if (kvp.Value is List<Dictionary<string, string>> dictList)
-                {
-                    if (dictList.Count == 0)
-                    {
-                        continue;
-                    }
-                    lines.Add($"{prefix}{safeKey}:");
-                    EmitSequenceOfDicts(lines, dictList, indent);
-                }
-                else
-                {
-                    lines.Add($"{prefix}{safeKey}: {YamlScalar(kvp.Value)}");
-                }
-            }
+            string scalar = YamlScalar(value);
+            // Keep continuation lines nested so an embedded "---" cannot terminate the front matter.
+            return scalar.Replace("\n", $"\n{new string(' ', indent * 2)}");
         }
 
-        private static void EmitMappingFromDict(List<string> lines, Dictionary<string, object> mapping, int indent)
+        private static void EmitMapping(
+            List<string> lines,
+            IEnumerable<KeyValuePair<string, object>> mapping,
+            int indent)
         {
             string prefix = new string(' ', indent * 2);
             foreach (var kvp in mapping)
             {
-                if (kvp.Value == null)
-                {
-                    continue;
-                }
                 string safeKey = YamlScalar(kvp.Key);
                 if (kvp.Value is Dictionary<string, object> dict)
                 {
                     if (dict.Count == 0)
                     {
+                        lines.Add($"{prefix}{safeKey}: {{}}");
                         continue;
                     }
                     lines.Add($"{prefix}{safeKey}:");
-                    EmitMappingFromDict(lines, dict, indent + 1);
+                    EmitMapping(lines, dict, indent + 1);
                 }
                 else if (kvp.Value is List<object> list)
                 {
                     if (list.Count == 0)
                     {
+                        lines.Add($"{prefix}{safeKey}: []");
                         continue;
                     }
                     lines.Add($"{prefix}{safeKey}:");
@@ -806,7 +903,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 else
                 {
-                    lines.Add($"{prefix}{safeKey}: {YamlScalar(kvp.Value)}");
+                    lines.Add($"{prefix}{safeKey}: {IndentScalarContinuationLines(kvp.Value, indent + 1)}");
                 }
             }
         }
@@ -821,47 +918,42 @@ namespace Azure.AI.ContentUnderstanding
                     bool first = true;
                     foreach (var kvp in dict)
                     {
-                        if (kvp.Value == null)
-                        {
-                            continue;
-                        }
                         string tag = first ? $"{prefix}- " : $"{prefix}  ";
                         string safeKey = YamlScalar(kvp.Key);
-                        if (kvp.Value is Dictionary<string, object> nested && nested.Count > 0)
+                        if (kvp.Value is Dictionary<string, object> nested)
                         {
-                            lines.Add($"{tag}{safeKey}:");
-                            EmitMappingFromDict(lines, nested, indent + 2);
+                            if (nested.Count == 0)
+                            {
+                                lines.Add($"{tag}{safeKey}: {{}}");
+                            }
+                            else
+                            {
+                                lines.Add($"{tag}{safeKey}:");
+                                EmitMapping(lines, nested, indent + 2);
+                            }
                         }
-                        else if (kvp.Value is List<object> nestedList && nestedList.Count > 0)
+                        else if (kvp.Value is List<object> nestedList)
                         {
-                            lines.Add($"{tag}{safeKey}:");
-                            EmitSequence(lines, nestedList, indent + 2);
+                            if (nestedList.Count == 0)
+                            {
+                                lines.Add($"{tag}{safeKey}: []");
+                            }
+                            else
+                            {
+                                lines.Add($"{tag}{safeKey}:");
+                                EmitSequence(lines, nestedList, indent + 2);
+                            }
                         }
                         else
                         {
-                            lines.Add($"{tag}{safeKey}: {YamlScalar(kvp.Value)}");
+                            lines.Add($"{tag}{safeKey}: {IndentScalarContinuationLines(kvp.Value, indent + 2)}");
                         }
                         first = false;
                     }
                 }
                 else
                 {
-                    lines.Add($"{prefix}- {YamlScalar(item)}");
-                }
-            }
-        }
-
-        private static void EmitSequenceOfDicts(List<string> lines, List<Dictionary<string, string>> sequence, int indent)
-        {
-            string prefix = new string(' ', indent * 2);
-            foreach (var dict in sequence)
-            {
-                bool first = true;
-                foreach (var kvp in dict)
-                {
-                    string tag = first ? $"{prefix}- " : $"{prefix}  ";
-                    lines.Add($"{tag}{YamlScalar(kvp.Key)}: {YamlScalar(kvp.Value)}");
-                    first = false;
+                    lines.Add($"{prefix}- {IndentScalarContinuationLines(item, indent + 1)}");
                 }
             }
         }

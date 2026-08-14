@@ -93,8 +93,8 @@ The `PlatformHeaders` static class defines all HTTP header name constants used a
 | `RequestId` | `x-request-id` | Request ↔ Response | Request correlation ID |
 | `ServerVersion` | `x-platform-server` | Response | Server SDK identity |
 | `SessionId` | `x-agent-session-id` | Response | Resolved session ID |
-| `UserIsolationKey` | `x-agent-user-isolation-key` | Request | Platform user partition key |
-| `ChatIsolationKey` | `x-agent-chat-isolation-key` | Request | Platform conversation partition key |
+| `UserId` | `x-agent-user-id` | Request | Global per-user partition key |
+| `FoundryCallId` | `x-agent-foundry-call-id` | Request | Opaque per-request call ID (protocol `2.0.0`); forwarded on outbound 1P calls |
 | `ClientHeaderPrefix` | `x-client-` | Request | Pass-through client header prefix |
 | `ErrorSource` | `x-platform-error-source` | Response | Error origin classification |
 | `ErrorDetail` | `x-platform-error-detail` | Response | Diagnostic error context |
@@ -123,6 +123,23 @@ Platform errors also include `x-platform-error-detail` with diagnostic context (
 
 Reads Azure AI Foundry platform variables (`FOUNDRY_*`, `PORT`, `SSE_KEEPALIVE_INTERVAL`) to resolve agent identity, listening port, and connection strings. Also detects `OTEL_EXPORTER_OTLP_ENDPOINT` and `APPLICATIONINSIGHTS_CONNECTION_STRING` for telemetry configuration. Useful when your agent server runs as a hosted agent in AI Foundry.
 
+### FoundryAgentRequestContext
+
+On container protocol `2.0.0` a single agent session can serve **multiple users**. Each request carries `x-agent-user-id` (the user — partition state by it) and an opaque `x-agent-foundry-call-id` (the per-request caller identity). Read both via `FoundryAgentRequestContext.Current`. Register `FoundryCallIdHandler` on any `HttpClient` that calls Foundry services so the call ID is echoed automatically on every outbound request — **only** the call ID is echoed (`x-agent-user-id` is never forwarded). Forwarding the call ID lets a tool server resolve which user made the request and act on their behalf.
+
+```csharp
+using Azure.AI.AgentServer.Core;
+
+// Any HttpClient with FoundryCallIdHandler echoes the CURRENT request's
+// x-agent-foundry-call-id — never bake one call's ID into static DefaultRequestHeaders.
+builder.Services.AddHttpClient("foundry", c => c.BaseAddress = new Uri(projectEndpoint))
+    .AddHttpMessageHandler<FoundryCallIdHandler>();
+
+// Anywhere during the request:
+string? userId = FoundryAgentRequestContext.Current.UserId;   // for the container's own per-user state
+string? callId = FoundryAgentRequestContext.Current.CallId;   // per-request caller identity
+```
+
 ### Telemetry
 
 OpenTelemetry is configured automatically via the `Microsoft.OpenTelemetry` distro. The Responses and Invocations protocols use dedicated activity source names (`Azure.AI.AgentServer.Responses` and `Azure.AI.AgentServer.Invocations`) for distributed tracing. Azure Monitor export is enabled when `APPLICATIONINSIGHTS_CONNECTION_STRING` is set, and OTLP export is enabled when `OTEL_EXPORTER_OTLP_ENDPOINT` is set.
@@ -130,6 +147,14 @@ OpenTelemetry is configured automatically via the `Microsoft.OpenTelemetry` dist
 ### Health endpoint
 
 A `/readiness` endpoint is registered by default, responding to liveness and readiness probes. It reports healthy as soon as the host finishes starting.
+
+### Resilient tasks and streaming
+
+The library provides durable **task** and resumable **streaming** primitives for long-running agents. Register tasks with `AddResilientTasks()` and event streams with `AddAgentEventStreams()`, then run work through `ITaskInvoker` and emit progress through `AgentEventStreamRegistry`. Tasks survive process restarts and support multi-turn conversations and steering. Persist application checkpoints and idempotency state explicitly with `FoundryStateStore`. See the [Tasks guide][tasks_guide], [Streaming guide][streaming_guide], and [State Store guide][state_store_guide] for full walkthroughs.
+
+### Durable state store
+
+`FoundryStateStore` is a durable, server-backed store for agent state. Each store is bound to a caller-chosen name and holds items — keyed JSON values — that you read, write, and list. Use it to persist checkpoints, conversation state, or counters across requests and restarts. `FoundryStateStore.GetOrCreateAsync` fetches or creates the store in one call, and items support tags, store-level TTL, and optimistic concurrency via `If-Match`. See the [state store guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/docs/StateStoreGuide.md).
 
 ## Examples
 
@@ -148,7 +173,10 @@ The library emits OpenTelemetry traces via the `Azure.AI.AgentServer.Responses` 
 
 ## Next steps
 
+- [Tasks guide][tasks_guide] — Build durable, resumable one-shot and multi-turn tasks
+- [Streaming guide][streaming_guide] — Emit resumable event streams to clients
 - [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Core/samples) — Getting started, multi-protocol composition
+- [State store guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/docs/StateStoreGuide.md) — Persist agent state with `FoundryStateStore`
 
 ## Contributing
 
@@ -165,5 +193,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 [migration]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/MigrationGuide.md
 [responses]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses
 [invocations]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations
+[tasks_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/docs/tasks-guide.md
+[streaming_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/docs/streaming-guide.md
+[state_store_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/docs/StateStoreGuide.md
 [responses_tier3]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample9_Tier3SelfHosting.md
 [invocations_tier3]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample7_Tier3SelfHosting.md

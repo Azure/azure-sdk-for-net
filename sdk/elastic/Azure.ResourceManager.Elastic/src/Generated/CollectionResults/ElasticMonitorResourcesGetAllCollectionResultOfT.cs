@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Elastic
                     yield break;
                 }
                 ElasticMonitorResourceListResponse result = ElasticMonitorResourceListResponse.FromResponse(response);
-                yield return Page<ElasticMonitorData>.FromValues((IReadOnlyList<ElasticMonitorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ElasticMonitorData>.FromValues((IReadOnlyList<ElasticMonitorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

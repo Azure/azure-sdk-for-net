@@ -55,8 +55,8 @@ namespace Azure.Communication.Messages
                     yield break;
                 }
                 PagedConversation result = (PagedConversation)response;
-                yield return Page<CommunicationConversation>.FromValues((IReadOnlyList<CommunicationConversation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CommunicationConversation>.FromValues((IReadOnlyList<CommunicationConversation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

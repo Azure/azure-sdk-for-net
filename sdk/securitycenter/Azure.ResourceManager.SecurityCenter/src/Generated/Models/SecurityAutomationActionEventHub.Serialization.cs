@@ -10,13 +10,55 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityAutomationActionEventHub : IUtf8JsonSerializable, IJsonModel<SecurityAutomationActionEventHub>
+    /// <summary> The target Event Hub to which event data will be exported. To learn more about Microsoft Defender for Cloud continuous export capabilities, visit https://aka.ms/ASCExportLearnMore. </summary>
+    public partial class SecurityAutomationActionEventHub : SecurityAutomationAction, IJsonModel<SecurityAutomationActionEventHub>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityAutomationActionEventHub>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SecurityAutomationAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationActionEventHub>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSecurityAutomationActionEventHub(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityAutomationActionEventHub)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationActionEventHub>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityAutomationActionEventHub)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SecurityAutomationActionEventHub>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityAutomationActionEventHub IPersistableModel<SecurityAutomationActionEventHub>.Create(BinaryData data, ModelReaderWriterOptions options) => (SecurityAutomationActionEventHub)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecurityAutomationActionEventHub>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecurityAutomationActionEventHub>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +70,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationActionEventHub>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationActionEventHub>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecurityAutomationActionEventHub)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(EventHubResourceId))
             {
@@ -50,98 +91,91 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
+            if (Optional.IsDefined(IsTrustedServiceEnabled))
+            {
+                writer.WritePropertyName("isTrustedServiceEnabled"u8);
+                writer.WriteBooleanValue(IsTrustedServiceEnabled.Value);
+            }
         }
 
-        SecurityAutomationActionEventHub IJsonModel<SecurityAutomationActionEventHub>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityAutomationActionEventHub IJsonModel<SecurityAutomationActionEventHub>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SecurityAutomationActionEventHub)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SecurityAutomationAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationActionEventHub>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationActionEventHub>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecurityAutomationActionEventHub)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSecurityAutomationActionEventHub(document.RootElement, options);
         }
 
-        internal static SecurityAutomationActionEventHub DeserializeSecurityAutomationActionEventHub(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SecurityAutomationActionEventHub DeserializeSecurityAutomationActionEventHub(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            ActionType actionType = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier eventHubResourceId = default;
             string sasPolicyName = default;
             string connectionString = default;
-            ActionType actionType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            bool? isTrustedServiceEnabled = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("eventHubResourceId"u8))
+                if (prop.NameEquals("actionType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    actionType = new ActionType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("eventHubResourceId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    eventHubResourceId = new ResourceIdentifier(property.Value.GetString());
+                    eventHubResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sasPolicyName"u8))
+                if (prop.NameEquals("sasPolicyName"u8))
                 {
-                    sasPolicyName = property.Value.GetString();
+                    sasPolicyName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("connectionString"u8))
+                if (prop.NameEquals("connectionString"u8))
                 {
-                    connectionString = property.Value.GetString();
+                    connectionString = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("actionType"u8))
+                if (prop.NameEquals("isTrustedServiceEnabled"u8))
                 {
-                    actionType = new ActionType(property.Value.GetString());
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isTrustedServiceEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new SecurityAutomationActionEventHub(actionType, serializedAdditionalRawData, eventHubResourceId, sasPolicyName, connectionString);
+            return new SecurityAutomationActionEventHub(
+                actionType,
+                additionalBinaryDataProperties,
+                eventHubResourceId,
+                sasPolicyName,
+                connectionString,
+                isTrustedServiceEnabled);
         }
-
-        BinaryData IPersistableModel<SecurityAutomationActionEventHub>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationActionEventHub>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SecurityAutomationActionEventHub)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SecurityAutomationActionEventHub IPersistableModel<SecurityAutomationActionEventHub>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationActionEventHub>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSecurityAutomationActionEventHub(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SecurityAutomationActionEventHub)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SecurityAutomationActionEventHub>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

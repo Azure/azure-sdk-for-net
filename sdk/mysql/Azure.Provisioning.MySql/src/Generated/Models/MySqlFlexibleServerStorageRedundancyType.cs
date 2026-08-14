@@ -11,8 +11,8 @@ namespace Azure.Provisioning.MySql
     public enum MySqlFlexibleServerStorageRedundancyType
     {
         /// <summary> LocalRedundancy. </summary>
-        LocalRedundancy,
+        LocalRedundancy = 0,
         /// <summary> ZoneRedundancy. </summary>
-        ZoneRedundancy
+        ZoneRedundancy = 1
     }
 }

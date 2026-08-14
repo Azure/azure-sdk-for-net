@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.BotService
         {
             TryGetApiVersion(ResourceType, out string botServiceNetworkSecurityPerimeterConfigurationApiVersion);
             _networkSecurityPerimeterConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", ResourceType.Namespace, Diagnostics);
-            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Endpoint, botServiceNetworkSecurityPerimeterConfigurationApiVersion ?? "2023-09-15-preview");
+            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, botServiceNetworkSecurityPerimeterConfigurationApiVersion ?? "2023-09-15-preview");
             ValidateResourceId(id);
         }
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.BotService
                 HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateReconcileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BotServiceArmOperation<BotServiceNetworkSecurityPerimeterConfigurationResource> operation = new BotServiceArmOperation<BotServiceNetworkSecurityPerimeterConfigurationResource>(
-                    new BotServiceNetworkSecurityPerimeterConfigurationOperationSource(Client),
+                    new BotServiceNetworkSecurityPerimeterConfigurationResourceOperationSource(Client),
                     _networkSecurityPerimeterConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.BotService
                 HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateReconcileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BotServiceArmOperation<BotServiceNetworkSecurityPerimeterConfigurationResource> operation = new BotServiceArmOperation<BotServiceNetworkSecurityPerimeterConfigurationResource>(
-                    new BotServiceNetworkSecurityPerimeterConfigurationOperationSource(Client),
+                    new BotServiceNetworkSecurityPerimeterConfigurationResourceOperationSource(Client),
                     _networkSecurityPerimeterConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -103,6 +103,11 @@ steps:
         ${{ if ne(parameters.NpmConfigRegistry, '') }}:
           npm_config_registry: ${{ parameters.NpmConfigRegistry }}
 
+    - template: /eng/common/pipelines/templates/steps/login-to-github.yml
+      parameters:
+        TokenOwners:
+          - ${{ parameters.TargetDocRepoOwner }}
+        ScriptDirectory: ${{ parameters.ScriptDirectory }}
     - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
       parameters:
         BaseRepoBranch: $(TargetBranchName)
@@ -112,3 +117,5 @@ steps:
         TargetRepoOwner: ${{ parameters.TargetDocRepoOwner }}
         WorkingDirectory: $(DocRepoLocation)
         ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
+        AuthToken: $(GH_TOKEN)
+

@@ -9,40 +9,38 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Dns;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmDnsModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Dns.DnssecConfigData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> The etag of the DNSSEC configuration. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"> Provisioning State of the DNSSEC configuration. </param>
         /// <param name="signingKeys"> The list of signing keys. </param>
+        /// <param name="eTag"> The etag of the DNSSEC configuration. </param>
         /// <returns> A new <see cref="Dns.DnssecConfigData"/> instance for mocking. </returns>
-        public static DnssecConfigData DnssecConfigData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, ETag? etag = null, string provisioningState = null, IEnumerable<DnsSigningKey> signingKeys = null)
+        public static DnssecConfigData DnssecConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, IEnumerable<DnsSigningKey> signingKeys = default, ETag? eTag = default)
         {
-            signingKeys ??= new List<DnsSigningKey>();
-
             return new DnssecConfigData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                etag,
-                provisioningState,
-                signingKeys?.ToList(),
-                serializedAdditionalRawData: null);
+                provisioningState is null && signingKeys is null ? default : new DnssecProperties(provisioningState, (signingKeys ?? new ChangeTrackingList<DnsSigningKey>()).ToList(), default),
+                eTag,
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DnsSigningKey"/>. </summary>
         /// <param name="delegationSignerInfo"> The delegation signer information. </param>
         /// <param name="flags"> The flags specifies how the key is used. </param>
         /// <param name="keyTag"> The key tag value of the DNSKEY Resource Record. </param>
@@ -50,28 +48,290 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="publicKey"> The public key, represented as a Base64 encoding. </param>
         /// <param name="securityAlgorithmType"> The security algorithm type represents the standard security algorithm number of the DNSKEY Resource Record. See: https://www.iana.org/assignments/dns-sec-alg-numbers/dns-sec-alg-numbers.xhtml. </param>
         /// <returns> A new <see cref="Models.DnsSigningKey"/> instance for mocking. </returns>
-        public static DnsSigningKey DnsSigningKey(IEnumerable<DelegationSignerInfo> delegationSignerInfo = null, int? flags = null, int? keyTag = null, int? protocol = null, string publicKey = null, int? securityAlgorithmType = null)
+        public static DnsSigningKey DnsSigningKey(IEnumerable<DelegationSignerInfo> delegationSignerInfo = default, int? flags = default, int? keyTag = default, int? protocol = default, string publicKey = default, int? securityAlgorithmType = default)
         {
-            delegationSignerInfo ??= new List<DelegationSignerInfo>();
+            delegationSignerInfo ??= new ChangeTrackingList<DelegationSignerInfo>();
 
             return new DnsSigningKey(
-                delegationSignerInfo?.ToList(),
+                (delegationSignerInfo ?? new ChangeTrackingList<DelegationSignerInfo>()).ToList(),
                 flags,
                 keyTag,
                 protocol,
                 publicKey,
                 securityAlgorithmType,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DelegationSignerInfo"/>. </summary>
         /// <param name="digestAlgorithmType"> The digest algorithm type represents the standard digest algorithm number used to construct the digest. See: https://www.iana.org/assignments/ds-rr-types/ds-rr-types.xhtml. </param>
         /// <param name="digestValue"> The digest value is a cryptographic hash value of the referenced DNSKEY Resource Record. </param>
         /// <param name="record"> The record represents a delegation signer (DS) record. </param>
         /// <returns> A new <see cref="Models.DelegationSignerInfo"/> instance for mocking. </returns>
-        public static DelegationSignerInfo DelegationSignerInfo(int? digestAlgorithmType = null, string digestValue = null, string record = null)
+        public static DelegationSignerInfo DelegationSignerInfo(int? digestAlgorithmType = default, string digestValue = default, string @record = default)
         {
-            return new DelegationSignerInfo(digestAlgorithmType, digestValue, record, serializedAdditionalRawData: null);
+            return new DelegationSignerInfo(digestAlgorithmType, digestValue, @record, default);
+        }
+
+        /// <param name="metadata"> The metadata attached to the record set. </param>
+        /// <param name="ttlInSeconds"> The TTL (time-to-live) of the records in the record set. </param>
+        /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
+        /// <param name="provisioningState"> provisioning State of the record set. </param>
+        /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
+        /// <param name="trafficManagementProfile"> A reference to an azure traffic manager profile resource from where the dns resource value is taken. </param>
+        /// <param name="dnsARecords"> The list of A records in the record set. </param>
+        /// <param name="dnsAaaaRecords"> The list of AAAA records in the record set. </param>
+        /// <param name="dnsMXRecords"> The list of MX records in the record set. </param>
+        /// <param name="dnsNSRecords"> The list of NS records in the record set. </param>
+        /// <param name="dnsPtrRecords"> The list of PTR records in the record set. </param>
+        /// <param name="dnsSrvRecords"> The list of SRV records in the record set. </param>
+        /// <param name="dnsTxtRecords"> The list of TXT records in the record set. </param>
+        /// <param name="cname"> The canonical name for this CNAME record. </param>
+        /// <param name="dnsSoaRecord"> The SOA record in the record set. </param>
+        /// <param name="dnsCaaRecords"> The list of CAA records in the record set. </param>
+        /// <param name="dnsDSRecords"> The list of DS records in the record set. </param>
+        /// <param name="dnsTlsaRecords"> The list of TLSA records in the record set. </param>
+        /// <param name="dnsNaptrRecords"> The list of NAPTR records in the record set. </param>
+        /// <returns> A new <see cref="Models.DnsRecordSetProperties"/> instance for mocking. </returns>
+        public static DnsRecordSetProperties DnsRecordSetProperties(IDictionary<string, string> metadata = default, long? ttlInSeconds = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, WritableSubResource trafficManagementProfile = default, IEnumerable<DnsARecordInfo> dnsARecords = default, IEnumerable<DnsAaaaRecordInfo> dnsAaaaRecords = default, IEnumerable<DnsMXRecordInfo> dnsMXRecords = default, IEnumerable<DnsNSRecordInfo> dnsNSRecords = default, IEnumerable<DnsPtrRecordInfo> dnsPtrRecords = default, IEnumerable<DnsSrvRecordInfo> dnsSrvRecords = default, IEnumerable<DnsTxtRecordInfo> dnsTxtRecords = default, string cname = default, DnsSoaRecordInfo dnsSoaRecord = default, IEnumerable<DnsCaaRecordInfo> dnsCaaRecords = default, IEnumerable<DnsDSRecordInfo> dnsDSRecords = default, IEnumerable<DnsTlsaRecordInfo> dnsTlsaRecords = default, IEnumerable<DnsNaptrRecordInfo> dnsNaptrRecords = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            dnsARecords ??= new ChangeTrackingList<DnsARecordInfo>();
+            dnsAaaaRecords ??= new ChangeTrackingList<DnsAaaaRecordInfo>();
+            dnsMXRecords ??= new ChangeTrackingList<DnsMXRecordInfo>();
+            dnsNSRecords ??= new ChangeTrackingList<DnsNSRecordInfo>();
+            dnsPtrRecords ??= new ChangeTrackingList<DnsPtrRecordInfo>();
+            dnsSrvRecords ??= new ChangeTrackingList<DnsSrvRecordInfo>();
+            dnsTxtRecords ??= new ChangeTrackingList<DnsTxtRecordInfo>();
+            dnsCaaRecords ??= new ChangeTrackingList<DnsCaaRecordInfo>();
+            dnsDSRecords ??= new ChangeTrackingList<DnsDSRecordInfo>();
+            dnsTlsaRecords ??= new ChangeTrackingList<DnsTlsaRecordInfo>();
+            dnsNaptrRecords ??= new ChangeTrackingList<DnsNaptrRecordInfo>();
+
+            return new DnsRecordSetProperties(
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                ttlInSeconds,
+                fqdn,
+                provisioningState,
+                targetResource,
+                trafficManagementProfile,
+                (dnsARecords ?? new ChangeTrackingList<DnsARecordInfo>()).ToList(),
+                (dnsAaaaRecords ?? new ChangeTrackingList<DnsAaaaRecordInfo>()).ToList(),
+                (dnsMXRecords ?? new ChangeTrackingList<DnsMXRecordInfo>()).ToList(),
+                (dnsNSRecords ?? new ChangeTrackingList<DnsNSRecordInfo>()).ToList(),
+                (dnsPtrRecords ?? new ChangeTrackingList<DnsPtrRecordInfo>()).ToList(),
+                (dnsSrvRecords ?? new ChangeTrackingList<DnsSrvRecordInfo>()).ToList(),
+                (dnsTxtRecords ?? new ChangeTrackingList<DnsTxtRecordInfo>()).ToList(),
+                cname is null ? default : new DnsCnameRecordInfo(cname, default),
+                dnsSoaRecord,
+                (dnsCaaRecords ?? new ChangeTrackingList<DnsCaaRecordInfo>()).ToList(),
+                (dnsDSRecords ?? new ChangeTrackingList<DnsDSRecordInfo>()).ToList(),
+                (dnsTlsaRecords ?? new ChangeTrackingList<DnsTlsaRecordInfo>()).ToList(),
+                (dnsNaptrRecords ?? new ChangeTrackingList<DnsNaptrRecordInfo>()).ToList(),
+                default);
+        }
+
+        /// <param name="iPv4Address"> The IPv4 address of this A record. </param>
+        /// <returns> A new <see cref="Models.DnsARecordInfo"/> instance for mocking. </returns>
+        public static DnsARecordInfo DnsARecordInfo(IPAddress iPv4Address = default)
+        {
+            return new DnsARecordInfo(iPv4Address, default);
+        }
+
+        /// <param name="iPv6Address"> The IPv6 address of this AAAA record. </param>
+        /// <returns> A new <see cref="Models.DnsAaaaRecordInfo"/> instance for mocking. </returns>
+        public static DnsAaaaRecordInfo DnsAaaaRecordInfo(IPAddress iPv6Address = default)
+        {
+            return new DnsAaaaRecordInfo(iPv6Address, default);
+        }
+
+        /// <param name="preference"> The preference value for this MX record. </param>
+        /// <param name="exchange"> The domain name of the mail host for this MX record. </param>
+        /// <returns> A new <see cref="Models.DnsMXRecordInfo"/> instance for mocking. </returns>
+        public static DnsMXRecordInfo DnsMXRecordInfo(int? preference = default, string exchange = default)
+        {
+            return new DnsMXRecordInfo(preference, exchange, default);
+        }
+
+        /// <param name="dnsNSDomainName"> The name server name for this NS record. </param>
+        /// <returns> A new <see cref="Models.DnsNSRecordInfo"/> instance for mocking. </returns>
+        public static DnsNSRecordInfo DnsNSRecordInfo(string dnsNSDomainName = default)
+        {
+            return new DnsNSRecordInfo(dnsNSDomainName, default);
+        }
+
+        /// <param name="dnsPtrDomainName"> The PTR target domain name for this PTR record. </param>
+        /// <returns> A new <see cref="Models.DnsPtrRecordInfo"/> instance for mocking. </returns>
+        public static DnsPtrRecordInfo DnsPtrRecordInfo(string dnsPtrDomainName = default)
+        {
+            return new DnsPtrRecordInfo(dnsPtrDomainName, default);
+        }
+
+        /// <param name="priority"> The priority value for this SRV record. </param>
+        /// <param name="weight"> The weight value for this SRV record. </param>
+        /// <param name="port"> The port value for this SRV record. </param>
+        /// <param name="target"> The target domain name for this SRV record. </param>
+        /// <returns> A new <see cref="Models.DnsSrvRecordInfo"/> instance for mocking. </returns>
+        public static DnsSrvRecordInfo DnsSrvRecordInfo(int? priority = default, int? weight = default, int? port = default, string target = default)
+        {
+            return new DnsSrvRecordInfo(priority, weight, port, target, default);
+        }
+
+        /// <param name="values"> The text value of this TXT record. </param>
+        /// <returns> A new <see cref="Models.DnsTxtRecordInfo"/> instance for mocking. </returns>
+        public static DnsTxtRecordInfo DnsTxtRecordInfo(IEnumerable<string> values = default)
+        {
+            values ??= new ChangeTrackingList<string>();
+
+            return new DnsTxtRecordInfo((values ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <param name="host"> The domain name of the authoritative name server for this SOA record. </param>
+        /// <param name="email"> The email contact for this SOA record. </param>
+        /// <param name="serialNumber"> The serial number for this SOA record. </param>
+        /// <param name="refreshTimeInSeconds"> The refresh value for this SOA record. </param>
+        /// <param name="retryTimeInSeconds"> The retry time for this SOA record. </param>
+        /// <param name="expireTimeInSeconds"> The expire time for this SOA record. </param>
+        /// <param name="minimumTtlInSeconds"> The minimum value for this SOA record. By convention this is used to determine the negative caching duration. </param>
+        /// <returns> A new <see cref="Models.DnsSoaRecordInfo"/> instance for mocking. </returns>
+        public static DnsSoaRecordInfo DnsSoaRecordInfo(string host = default, string email = default, long? serialNumber = default, long? refreshTimeInSeconds = default, long? retryTimeInSeconds = default, long? expireTimeInSeconds = default, long? minimumTtlInSeconds = default)
+        {
+            return new DnsSoaRecordInfo(
+                host,
+                email,
+                serialNumber,
+                refreshTimeInSeconds,
+                retryTimeInSeconds,
+                expireTimeInSeconds,
+                minimumTtlInSeconds,
+                default);
+        }
+
+        /// <param name="flags"> The flags for this CAA record as an integer between 0 and 255. </param>
+        /// <param name="tag"> The tag for this CAA record. </param>
+        /// <param name="value"> The value for this CAA record. </param>
+        /// <returns> A new <see cref="Models.DnsCaaRecordInfo"/> instance for mocking. </returns>
+        public static DnsCaaRecordInfo DnsCaaRecordInfo(int? flags = default, string tag = default, string value = default)
+        {
+            return new DnsCaaRecordInfo(flags, tag, value, default);
+        }
+
+        /// <param name="keyTag"> The key tag value is used to determine which DNSKEY Resource Record is used for signature verification. </param>
+        /// <param name="algorithm"> The security algorithm type represents the standard security algorithm number of the DNSKEY Resource Record. See: https://www.iana.org/assignments/dns-sec-alg-numbers/dns-sec-alg-numbers.xhtml. </param>
+        /// <param name="digest"> The digest entity. </param>
+        /// <returns> A new <see cref="Models.DnsDSRecordInfo"/> instance for mocking. </returns>
+        public static DnsDSRecordInfo DnsDSRecordInfo(int? keyTag = default, int? algorithm = default, DSRecordDigest digest = default)
+        {
+            return new DnsDSRecordInfo(keyTag, algorithm, digest, default);
+        }
+
+        /// <param name="algorithmType"> The digest algorithm type represents the standard digest algorithm number used to construct the digest. See: https://www.iana.org/assignments/ds-rr-types/ds-rr-types.xhtml. </param>
+        /// <param name="value"> The digest value is a cryptographic hash value of the referenced DNSKEY Resource Record. </param>
+        /// <returns> A new <see cref="Models.DSRecordDigest"/> instance for mocking. </returns>
+        public static DSRecordDigest DSRecordDigest(int? algorithmType = default, string value = default)
+        {
+            return new DSRecordDigest(algorithmType, value, default);
+        }
+
+        /// <param name="usage"> The usage specifies the provided association that will be used to match the certificate presented in the TLS handshake. </param>
+        /// <param name="selector"> The selector specifies which part of the TLS certificate presented by the server will be matched against the association data. </param>
+        /// <param name="matchingType"> The matching type specifies how the certificate association is presented. </param>
+        /// <param name="certAssociationData"> This specifies the certificate association data to be matched. </param>
+        /// <returns> A new <see cref="Models.DnsTlsaRecordInfo"/> instance for mocking. </returns>
+        public static DnsTlsaRecordInfo DnsTlsaRecordInfo(int? usage = default, int? selector = default, int? matchingType = default, string certAssociationData = default)
+        {
+            return new DnsTlsaRecordInfo(usage, selector, matchingType, certAssociationData, default);
+        }
+
+        /// <param name="order"> The order in which the NAPTR records MUST be processed in order to accurately represent the ordered list of rules. The ordering is from lowest to highest. Valid values: 0-65535. </param>
+        /// <param name="preference"> The preference specifies the order in which NAPTR records with equal 'order' values should be processed, low numbers being processed before high numbers. Valid values: 0-65535. </param>
+        /// <param name="flags"> The flags specific to DDDS applications. Values currently defined in RFC 3404 are uppercase and lowercase letters "A", "P", "S", and "U", and the empty string, "". Enclose Flags in quotation marks. </param>
+        /// <param name="services"> The services specific to DDDS applications. Enclose Services in quotation marks. </param>
+        /// <param name="regexp"> The regular expression that the DDDS application uses to convert an input value into an output value. For example: an IP phone system might use a regular expression to convert a phone number that is entered by a user into a SIP URI. Enclose the regular expression in quotation marks. Specify either a value for 'regexp' or a value for 'replacement'. </param>
+        /// <param name="replacement"> The replacement is a fully qualified domain name (FQDN) of the next domain name that you want the DDDS application to submit a DNS query for. The DDDS application replaces the input value with the value specified for replacement. Specify either a value for 'regexp' or a value for 'replacement'. If you specify a value for 'regexp', specify a dot (.) for 'replacement'. </param>
+        /// <returns> A new <see cref="Models.DnsNaptrRecordInfo"/> instance for mocking. </returns>
+        public static DnsNaptrRecordInfo DnsNaptrRecordInfo(int? order = default, int? preference = default, string flags = default, string services = default, string regexp = default, string replacement = default)
+        {
+            return new DnsNaptrRecordInfo(
+                order,
+                preference,
+                flags,
+                services,
+                regexp,
+                replacement,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="maxNumberOfRecords"> The maximum number of record sets that can be created in this DNS zone.  This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="maxNumberOfRecordsPerRecord"> The maximum number of records per record set that can be created in this DNS zone.  This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="numberOfRecords"> The current number of record sets in this DNS zone.  This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="nameServers"> The name servers for this DNS zone. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="zoneType"> The type of this DNS zone (Public or Private). </param>
+        /// <param name="registrationVirtualNetworks"> A list of references to virtual networks that register hostnames in this DNS zone. This is a only when ZoneType is Private. </param>
+        /// <param name="resolutionVirtualNetworks"> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </param>
+        /// <param name="signingKeys"> The list of signing keys. </param>
+        /// <param name="eTag"> The etag of the zone. </param>
+        /// <returns> A new <see cref="Dns.DnsZoneData"/> instance for mocking. </returns>
+        public static DnsZoneData DnsZoneData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, long? maxNumberOfRecords = default, long? maxNumberOfRecordsPerRecord = default, long? numberOfRecords = default, IEnumerable<string> nameServers = default, DnsZoneType? zoneType = default, IEnumerable<WritableSubResource> registrationVirtualNetworks = default, IEnumerable<WritableSubResource> resolutionVirtualNetworks = default, IEnumerable<DnsSigningKey> signingKeys = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DnsZoneData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                maxNumberOfRecords is null && maxNumberOfRecordsPerRecord is null && numberOfRecords is null && nameServers is null && zoneType is null && registrationVirtualNetworks is null && resolutionVirtualNetworks is null && signingKeys is null ? default : new ZoneProperties(
+                    maxNumberOfRecords,
+                    maxNumberOfRecordsPerRecord,
+                    numberOfRecords,
+                    (nameServers ?? new ChangeTrackingList<string>()).ToList(),
+                    zoneType,
+                    (registrationVirtualNetworks ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    (resolutionVirtualNetworks ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    (signingKeys ?? new ChangeTrackingList<DnsSigningKey>()).ToList(),
+                    default),
+                eTag,
+                default);
+        }
+
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.DnsZonePatch"/> instance for mocking. </returns>
+        public static DnsZonePatch DnsZonePatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DnsZonePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <param name="targetResources"> A list of references to azure resources for which referencing dns records need to be queried. </param>
+        /// <returns> A new <see cref="Models.DnsResourceReferenceContent"/> instance for mocking. </returns>
+        public static DnsResourceReferenceContent DnsResourceReferenceContent(IEnumerable<WritableSubResource> targetResources = default)
+        {
+            return new DnsResourceReferenceContent(targetResources is null ? default : new DnsResourceReferenceRequestProperties((targetResources ?? new ChangeTrackingList<WritableSubResource>()).ToList(), default), default);
+        }
+
+        /// <param name="dnsResourceReferences"> The result of dns resource reference request. A list of dns resource references for each of the azure resource in the request. </param>
+        /// <returns> A new <see cref="Models.DnsResourceReferenceResult"/> instance for mocking. </returns>
+        public static DnsResourceReferenceResult DnsResourceReferenceResult(IEnumerable<DnsResourceReference> dnsResourceReferences = default)
+        {
+            return new DnsResourceReferenceResult(dnsResourceReferences is null ? default : new DnsResourceReferenceResultProperties((dnsResourceReferences ?? new ChangeTrackingList<DnsResourceReference>()).ToList(), default), default);
+        }
+
+        /// <param name="dnsResources"> A list of dns Records. </param>
+        /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
+        /// <returns> A new <see cref="Models.DnsResourceReference"/> instance for mocking. </returns>
+        public static DnsResourceReference DnsResourceReference(IEnumerable<WritableSubResource> dnsResources = default, WritableSubResource targetResource = default)
+        {
+            dnsResources ??= new ChangeTrackingList<WritableSubResource>();
+
+            return new DnsResourceReference((dnsResources ?? new ChangeTrackingList<WritableSubResource>()).ToList(), targetResource, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Dns.DnsZoneData"/>. </summary>
@@ -89,76 +349,39 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="zoneType"> The type of this DNS zone (Public or Private). </param>
         /// <param name="registrationVirtualNetworks"> A list of references to virtual networks that register hostnames in this DNS zone. This is a only when ZoneType is Private. </param>
         /// <param name="resolutionVirtualNetworks"> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </param>
-        /// <param name="signingKeys"> The list of signing keys. </param>
         /// <returns> A new <see cref="Dns.DnsZoneData"/> instance for mocking. </returns>
-        public static DnsZoneData DnsZoneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, long? maxNumberOfRecords = null, long? maxNumberOfRecordsPerRecord = null, long? numberOfRecords = null, IEnumerable<string> nameServers = null, DnsZoneType? zoneType = null, IEnumerable<WritableSubResource> registrationVirtualNetworks = null, IEnumerable<WritableSubResource> resolutionVirtualNetworks = null, IEnumerable<DnsSigningKey> signingKeys = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DnsZoneData DnsZoneData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, long? maxNumberOfRecords = default, long? maxNumberOfRecordsPerRecord = default, long? numberOfRecords = default, IEnumerable<string> nameServers = default, DnsZoneType? zoneType = default, IEnumerable<WritableSubResource> registrationVirtualNetworks = default, IEnumerable<WritableSubResource> resolutionVirtualNetworks = default)
         {
-            tags ??= new Dictionary<string, string>();
-            nameServers ??= new List<string>();
-            registrationVirtualNetworks ??= new List<WritableSubResource>();
-            resolutionVirtualNetworks ??= new List<WritableSubResource>();
-            signingKeys ??= new List<DnsSigningKey>();
-
             return new DnsZoneData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                maxNumberOfRecords is null && maxNumberOfRecordsPerRecord is null && numberOfRecords is null && nameServers is null && zoneType is null && registrationVirtualNetworks is null && resolutionVirtualNetworks is null ? default : new ZoneProperties(
+                    maxNumberOfRecords,
+                    maxNumberOfRecordsPerRecord,
+                    numberOfRecords,
+                    (nameServers ?? new ChangeTrackingList<string>()).ToList(),
+                    zoneType,
+                    (registrationVirtualNetworks ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    (resolutionVirtualNetworks ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    default,
+                    default),
                 etag,
-                maxNumberOfRecords,
-                maxNumberOfRecordsPerRecord,
-                numberOfRecords,
-                nameServers?.ToList(),
-                zoneType,
-                registrationVirtualNetworks?.ToList(),
-                resolutionVirtualNetworks?.ToList(),
-                signingKeys?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DnsResourceReferenceResult"/>. </summary>
-        /// <param name="dnsResourceReferences"> The result of dns resource reference request. A list of dns resource references for each of the azure resource in the request. </param>
-        /// <returns> A new <see cref="Models.DnsResourceReferenceResult"/> instance for mocking. </returns>
-        public static DnsResourceReferenceResult DnsResourceReferenceResult(IEnumerable<DnsResourceReference> dnsResourceReferences = null)
-        {
-            dnsResourceReferences ??= new List<DnsResourceReference>();
-
-            return new DnsResourceReferenceResult(dnsResourceReferences?.ToList(), serializedAdditionalRawData: null);
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DnsResourceReference"/>. </summary>
         /// <param name="dnsResources"> A list of dns Records. </param>
         /// <param name="targetResourceId"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <returns> A new <see cref="Models.DnsResourceReference"/> instance for mocking. </returns>
-        public static DnsResourceReference DnsResourceReference(IEnumerable<WritableSubResource> dnsResources = null, ResourceIdentifier targetResourceId = null)
-        {
-            dnsResources ??= new List<WritableSubResource>();
-
-            return new DnsResourceReference(dnsResources?.ToList(), targetResourceId != null ? ResourceManagerModelFactory.WritableSubResource(targetResourceId) : null, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Dns.DnsZoneData" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> The etag of the zone. </param>
-        /// <param name="maxNumberOfRecords"> The maximum number of record sets that can be created in this DNS zone.  This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <param name="maxNumberOfRecordsPerRecord"> The maximum number of records per record set that can be created in this DNS zone.  This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <param name="numberOfRecords"> The current number of record sets in this DNS zone.  This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <param name="nameServers"> The name servers for this DNS zone. This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <param name="zoneType"> The type of this DNS zone (Public or Private). </param>
-        /// <param name="registrationVirtualNetworks"> A list of references to virtual networks that register hostnames in this DNS zone. This is a only when ZoneType is Private. </param>
-        /// <param name="resolutionVirtualNetworks"> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Dns.DnsZoneData" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DnsZoneData DnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, long? maxNumberOfRecords, long? maxNumberOfRecordsPerRecord, long? numberOfRecords, IEnumerable<string> nameServers, DnsZoneType? zoneType, IEnumerable<WritableSubResource> registrationVirtualNetworks, IEnumerable<WritableSubResource> resolutionVirtualNetworks)
+        public static DnsResourceReference DnsResourceReference(IEnumerable<WritableSubResource> dnsResources = default, ResourceIdentifier targetResourceId = default)
         {
-            return DnsZoneData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, etag: etag, maxNumberOfRecords: maxNumberOfRecords, maxNumberOfRecordsPerRecord: maxNumberOfRecordsPerRecord, numberOfRecords: numberOfRecords, nameServers: nameServers, zoneType: zoneType, registrationVirtualNetworks: registrationVirtualNetworks, resolutionVirtualNetworks: resolutionVirtualNetworks, signingKeys: default);
+            return new DnsResourceReference((dnsResources ?? new ChangeTrackingList<WritableSubResource>()).ToList(), default, default);
         }
     }
 }

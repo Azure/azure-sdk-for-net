@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct SpecialTaxationType : IEquatable<SpecialTaxationType>
     {
         private readonly string _value;
+        /// <summary> SubtotalLevel. </summary>
+        private const string SubtotalLevelValue = "SubtotalLevel";
+        /// <summary> InvoiceLevel. </summary>
+        private const string InvoiceLevelValue = "InvoiceLevel";
 
         /// <summary> Initializes a new instance of <see cref="SpecialTaxationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SpecialTaxationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SubtotalLevelValue = "SubtotalLevel";
-        private const string InvoiceLevelValue = "InvoiceLevel";
+            _value = value;
+        }
 
         /// <summary> SubtotalLevel. </summary>
         public static SpecialTaxationType SubtotalLevel { get; } = new SpecialTaxationType(SubtotalLevelValue);
+
         /// <summary> InvoiceLevel. </summary>
         public static SpecialTaxationType InvoiceLevel { get; } = new SpecialTaxationType(InvoiceLevelValue);
+
         /// <summary> Determines if two <see cref="SpecialTaxationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SpecialTaxationType left, SpecialTaxationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SpecialTaxationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SpecialTaxationType left, SpecialTaxationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SpecialTaxationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SpecialTaxationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SpecialTaxationType(string value) => new SpecialTaxationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SpecialTaxationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SpecialTaxationType?(string value) => value == null ? null : new SpecialTaxationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SpecialTaxationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SpecialTaxationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

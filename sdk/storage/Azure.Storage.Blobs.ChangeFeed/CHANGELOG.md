@@ -1,17 +1,17 @@
 # Release History
 
-## 12.0.0-preview.63 (Unreleased)
+## 12.0.0-preview.64 (2026-07-22)
 
 ### Features Added
-- Added `BlobChangeFeedClientOptions.IncludeNonFinalizedEvents`. When enabled, the change feed reader returns events past the finalized watermark; pages produced in this mode do not carry a continuation token, and `GetChanges(string)` / `GetChangesAsync(string)` will throw if a continuation token is supplied.
+- Added support for service version 2026-10-06.
 
-### Breaking Changes
+## 12.0.0-preview.63 (2026-06-04)
+
+### Features Added
+- This release contains bug fixes to improve quality.
 
 ### Bugs Fixed
-
-### Other Changes
-- Rebuilt on top of the shared `Azure.Storage.ChangeFeed.Common` change-feed engine for parity with `Azure.Storage.Files.Shares.ChangeFeed`. Continuation tokens issued by prior previews remain compatible (cursor JSON shape is unchanged).
-- Default chunk download size raised from 1 MB to 256 MB to match Files Change Feed (reduces round trips on large feeds). Override via `BlobChangeFeedClientOptions.MaximumTransferSize`.
+- Added validation for length-prefixed fields when parsing Avro responses to prevent excessive memory allocation from malformed or untrusted payloads.
 
 ## 12.0.0-preview.62 (2026-05-12)
 

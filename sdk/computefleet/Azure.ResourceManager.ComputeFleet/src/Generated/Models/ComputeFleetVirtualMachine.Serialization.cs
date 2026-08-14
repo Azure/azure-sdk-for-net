@@ -16,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    /// <summary> An instant Fleet's virtual machine. </summary>
+    /// <summary> A Launch mode Fleet's virtual machine. </summary>
     public partial class ComputeFleetVirtualMachine : ResourceData, IJsonModel<ComputeFleetVirtualMachine>
     {
         /// <param name="data"> The data to parse. </param>
@@ -88,6 +88,36 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(VmSize))
+            {
+                writer.WritePropertyName("vmSize"u8);
+                writer.WriteStringValue(VmSize);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Zone))
+            {
+                writer.WritePropertyName("zone"u8);
+                writer.WriteStringValue(Zone);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Priority))
+            {
+                writer.WritePropertyName("priority"u8);
+                writer.WriteStringValue(Priority);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -119,9 +149,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ComputeFleetVmOperationStatus operationStatus = default;
             ComputeFleetApiError error = default;
+            string vmSize = default;
+            string zone = default;
+            string priority = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -170,6 +203,21 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     error = ComputeFleetApiError.DeserializeComputeFleetApiError(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("vmSize"u8))
+                {
+                    vmSize = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("zone"u8))
+                {
+                    zone = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("priority"u8))
+                {
+                    priority = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -180,9 +228,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
                 operationStatus,
-                error);
+                error,
+                vmSize,
+                zone,
+                priority,
+                additionalBinaryDataProperties);
         }
     }
 }

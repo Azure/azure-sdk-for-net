@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -15,31 +16,31 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class A2ASwitchClusterProtectionContent : SwitchClusterProtectionProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="A2ASwitchClusterProtectionContent"/>. </summary>
-        public A2ASwitchClusterProtectionContent()
+        public A2ASwitchClusterProtectionContent() : base("A2A")
         {
             ProtectedItemsDetail = new ChangeTrackingList<A2AProtectedItemDetail>();
-            InstanceType = "A2A";
         }
 
         /// <summary> Initializes a new instance of <see cref="A2ASwitchClusterProtectionContent"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryContainerId"> The recovery container Id. </param>
         /// <param name="policyId"> The Policy Id. </param>
         /// <param name="protectedItemsDetail"></param>
-        internal A2ASwitchClusterProtectionContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier recoveryContainerId, ResourceIdentifier policyId, IList<A2AProtectedItemDetail> protectedItemsDetail) : base(instanceType, serializedAdditionalRawData)
+        internal A2ASwitchClusterProtectionContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier recoveryContainerId, ResourceIdentifier policyId, IList<A2AProtectedItemDetail> protectedItemsDetail) : base(instanceType, additionalBinaryDataProperties)
         {
             RecoveryContainerId = recoveryContainerId;
             PolicyId = policyId;
             ProtectedItemsDetail = protectedItemsDetail;
-            InstanceType = instanceType ?? "A2A";
         }
 
         /// <summary> The recovery container Id. </summary>
         public ResourceIdentifier RecoveryContainerId { get; set; }
+
         /// <summary> The Policy Id. </summary>
         public ResourceIdentifier PolicyId { get; set; }
-        /// <summary> Gets the protected items detail. </summary>
+
+        /// <summary> Gets the ProtectedItemsDetail. </summary>
         public IList<A2AProtectedItemDetail> ProtectedItemsDetail { get; }
     }
 }

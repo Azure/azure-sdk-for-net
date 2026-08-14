@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             TryGetApiVersion(ResourceType, out string metricsObjectFirewallApiVersion);
             _metricsObjectFirewallClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
-            _metricsObjectFirewallRestClient = new MetricsObjectFirewall(_metricsObjectFirewallClientDiagnostics, Pipeline, Endpoint, metricsObjectFirewallApiVersion ?? "2025-10-08");
+            _metricsObjectFirewallRestClient = new MetricsObjectFirewall(_metricsObjectFirewallClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, metricsObjectFirewallApiVersion ?? "2025-10-08");
             ValidateResourceId(id);
         }
 
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _metricsObjectFirewallRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, MetricsObjectFirewallData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<MetricsObjectFirewallResource> operation = new NgfwArmOperation<MetricsObjectFirewallResource>(
-                    new MetricsObjectFirewallOperationSource(Client),
+                    new MetricsObjectFirewallResourceOperationSource(Client),
                     _metricsObjectFirewallClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _metricsObjectFirewallRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, MetricsObjectFirewallData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<MetricsObjectFirewallResource> operation = new NgfwArmOperation<MetricsObjectFirewallResource>(
-                    new MetricsObjectFirewallOperationSource(Client),
+                    new MetricsObjectFirewallResourceOperationSource(Client),
                     _metricsObjectFirewallClientDiagnostics,
                     Pipeline,
                     message.Request,

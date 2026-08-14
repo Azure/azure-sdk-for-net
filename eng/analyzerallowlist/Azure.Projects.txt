@@ -1,0 +1,8 @@
+# Azure.Projects approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# AZC0007 wants a constructor overload without a trailing options parameter. Both clients
+# are constructed from a ProjectClient/connection provider rather than from an endpoint and
+# credential, so the options-free overload the rule asks for has no meaningful shape here.
+nowarn:AZC0007 T:Azure.Projects.OfxClient
+nowarn:AZC0007 T:Azure.Projects.ProjectClient

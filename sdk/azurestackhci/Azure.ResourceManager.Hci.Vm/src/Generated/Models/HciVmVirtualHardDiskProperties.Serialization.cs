@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeInGB.Value);
             }
-            if (Optional.IsDefined(Dynamic))
+            if (Optional.IsDefined(IsDynamic))
             {
                 writer.WritePropertyName("dynamic"u8);
-                writer.WriteBooleanValue(Dynamic.Value);
+                writer.WriteBooleanValue(IsDynamic.Value);
             }
             if (Optional.IsDefined(LogicalSectorInBytes))
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
             int? blockSizeInBytes = default;
             long? diskSizeInGB = default;
-            bool? dynamic = default;
+            bool? isDynamic = default;
             int? logicalSectorInBytes = default;
             int? physicalSectorInBytes = default;
             Uri downloadUri = default;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    dynamic = prop.Value.GetBoolean();
+                    isDynamic = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("logicalSectorBytes"u8))
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             return new HciVmVirtualHardDiskProperties(
                 blockSizeInBytes,
                 diskSizeInGB,
-                dynamic,
+                isDynamic,
                 logicalSectorInBytes,
                 physicalSectorInBytes,
                 downloadUri,

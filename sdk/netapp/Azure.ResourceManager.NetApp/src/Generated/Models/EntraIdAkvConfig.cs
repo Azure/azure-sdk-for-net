@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -17,19 +16,6 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="EntraIdAkvConfig"/>. </summary>
-        /// <param name="azureKeyVaultUri"> The Azure Key Vault URI where the Entra ID credentials are stored. </param>
-        /// <param name="certificateName"> The name of the certificate in Azure Key Vault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureKeyVaultUri"/> or <paramref name="certificateName"/> is null. </exception>
-        public EntraIdAkvConfig(Uri azureKeyVaultUri, string certificateName)
-        {
-            Argument.AssertNotNull(azureKeyVaultUri, nameof(azureKeyVaultUri));
-            Argument.AssertNotNull(certificateName, nameof(certificateName));
-
-            AzureKeyVaultUri = azureKeyVaultUri;
-            CertificateName = certificateName;
-        }
 
         /// <summary> Initializes a new instance of <see cref="EntraIdAkvConfig"/>. </summary>
         /// <param name="azureKeyVaultUri"> The Azure Key Vault URI where the Entra ID credentials are stored. </param>
@@ -43,14 +29,5 @@ namespace Azure.ResourceManager.NetApp.Models
             UserAssignedIdentity = userAssignedIdentity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The Azure Key Vault URI where the Entra ID credentials are stored. </summary>
-        public Uri AzureKeyVaultUri { get; set; }
-
-        /// <summary> The name of the certificate in Azure Key Vault. </summary>
-        public string CertificateName { get; set; }
-
-        /// <summary> The ARM resource identifier of the user assigned identity used to authenticate with key vault. </summary>
-        public ResourceIdentifier UserAssignedIdentity { get; set; }
     }
 }

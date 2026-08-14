@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.RedHatOpenShift
                     yield break;
                 }
                 OpenShiftVersionList result = OpenShiftVersionList.FromResponse(response);
-                yield return Page<OpenShiftVersionData>.FromValues((IReadOnlyList<OpenShiftVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<OpenShiftVersionData>.FromValues((IReadOnlyList<OpenShiftVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -1,0 +1,7 @@
+# Microsoft.Azure.WebPubSub.Common approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# WebPubSubCommonJsonSerializerContext is a System.Text.Json source-generated
+# JsonSerializerContext, which by design exposes System.Text.Json types on its
+# public surface.
+nowarn:AZC0014 T:Microsoft.Azure.WebPubSub.Common.WebPubSubCommonJsonSerializerContext

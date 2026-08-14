@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Samples
             ExpressRouteProviderPortCollection collection = subscriptionResource.GetExpressRouteProviderPorts();
 
             // invoke the operation and iterate over the result
-            await foreach (ExpressRouteProviderPortResource item in collection.GetAllAsync())
+            await foreach (ExpressRouteProviderPortResource item in collection.GetAllAsync(null, System.Threading.CancellationToken.None))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance

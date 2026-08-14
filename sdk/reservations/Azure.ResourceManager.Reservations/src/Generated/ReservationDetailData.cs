@@ -13,43 +13,11 @@ using Azure.ResourceManager.Reservations.Models;
 
 namespace Azure.ResourceManager.Reservations
 {
-    /// <summary>
-    /// A class representing the ReservationDetail data model.
-    /// The definition of the reservation.
-    /// </summary>
+    /// <summary> The definition of the reservation. </summary>
     public partial class ReservationDetailData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReservationDetailData"/>. </summary>
         internal ReservationDetailData()
@@ -57,41 +25,48 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary> Initializes a new instance of <see cref="ReservationDetailData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The properties associated to this reservation . </param>
         /// <param name="location"> The Azure region where the reserved resource lives. </param>
         /// <param name="version"></param>
         /// <param name="sku"> The sku information associated to this reservation. </param>
-        /// <param name="properties"> The properties associated to this reservation. </param>
         /// <param name="kind"> Resource Provider type to be reserved. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReservationDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, int? version, ReservationsSkuName sku, ReservationProperties properties, ReservationKind? kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReservationProperties properties, AzureLocation? location, int? version, ReservationsSkuName sku, ReservationKind? kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Location = location;
             Version = version;
             Sku = sku;
-            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The properties associated to this reservation . </summary>
+        public ReservationProperties Properties { get; }
 
         /// <summary> The Azure region where the reserved resource lives. </summary>
         public AzureLocation? Location { get; }
-        /// <summary> Gets the version. </summary>
+
+        /// <summary> Gets the Version. </summary>
         public int? Version { get; }
+
         /// <summary> The sku information associated to this reservation. </summary>
         internal ReservationsSkuName Sku { get; }
-        /// <summary> Gets the sku name. </summary>
-        public string SkuName
-        {
-            get => Sku?.Name;
-        }
 
-        /// <summary> The properties associated to this reservation. </summary>
-        public ReservationProperties Properties { get; }
         /// <summary> Resource Provider type to be reserved. </summary>
         public ReservationKind? Kind { get; }
+
+        /// <summary> Gets or sets the Name. </summary>
+        public string SkuName
+        {
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
+        }
     }
 }

@@ -15,6 +15,11 @@ namespace Azure.ResourceManager.Storage
     public partial class BlobInventoryPolicyResource
     {
         // Backward-compatible CreateResourceIdentifier was generated for singleton resource previously.
+        /// <summary> Generates the resource identifier of a <see cref="BlobInventoryPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscription ID. </param>
+        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="accountName"> The account name. </param>
+        /// <param name="blobInventoryPolicyName"> The blob inventory policy name. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, BlobInventoryPolicyName blobInventoryPolicyName)
         {

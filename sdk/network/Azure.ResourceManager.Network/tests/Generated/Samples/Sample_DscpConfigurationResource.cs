@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             DscpConfigurationResource dscpConfiguration = client.GetDscpConfigurationResource(dscpConfigurationResourceId);
 
             // invoke the operation
-            await dscpConfiguration.DeleteAsync(WaitUntil.Completed);
+            await dscpConfiguration.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -150,7 +150,7 @@ Protocol = ProtocolType.Udp,
 }},
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<DscpConfigurationResource> lro = await dscpConfiguration.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<DscpConfigurationResource> lro = await dscpConfiguration.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             DscpConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

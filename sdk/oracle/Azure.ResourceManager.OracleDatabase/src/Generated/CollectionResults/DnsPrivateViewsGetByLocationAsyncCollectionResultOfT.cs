@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.OracleDatabase
                     yield break;
                 }
                 DnsPrivateViewListResult result = DnsPrivateViewListResult.FromResponse(response);
-                yield return Page<OracleDnsPrivateViewData>.FromValues((IReadOnlyList<OracleDnsPrivateViewData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<OracleDnsPrivateViewData>.FromValues((IReadOnlyList<OracleDnsPrivateViewData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

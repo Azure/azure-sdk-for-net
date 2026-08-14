@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.DevTestLabs
                     yield break;
                 }
                 UserList result = UserList.FromResponse(response);
-                yield return Page<DevTestLabUserData>.FromValues((IReadOnlyList<DevTestLabUserData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DevTestLabUserData>.FromValues((IReadOnlyList<DevTestLabUserData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class DataWarehouseUserActivityResource : IJsonModel<DataWarehouseUserActivityData>
     {
-        private static DataWarehouseUserActivityData s_dataDeserializationInstance;
-        private static DataWarehouseUserActivityData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DataWarehouseUserActivityData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DataWarehouseUserActivityData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DataWarehouseUserActivityData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataWarehouseUserActivityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataWarehouseUserActivityData>)Data).Write(writer, options);
 
-        DataWarehouseUserActivityData IJsonModel<DataWarehouseUserActivityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataWarehouseUserActivityData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataWarehouseUserActivityData IJsonModel<DataWarehouseUserActivityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DataWarehouseUserActivityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataWarehouseUserActivityData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DataWarehouseUserActivityData IPersistableModel<DataWarehouseUserActivityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataWarehouseUserActivityData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<DataWarehouseUserActivityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataWarehouseUserActivityData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataWarehouseUserActivityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

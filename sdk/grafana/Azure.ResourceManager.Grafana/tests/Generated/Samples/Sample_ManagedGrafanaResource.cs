@@ -123,14 +123,14 @@ MonitorWorkspaceResourceId = new ResourceIdentifier("/subscriptions/00000000-000
                             Password = "<password>",
                             FromAddress = "test@sendemail.com",
                             FromName = "emailsender",
-                            StartTLSPolicy = GrafanaStartTlsPolicy.OpportunisticStartTls,
+                            StartTlsPolicy = GrafanaStartTlsPolicy.OpportunisticStartTls,
                             SkipVerify = true,
                         },
                         IsExternalEnabled = true,
                         Users = new GrafanaUserSettings
                         {
-                            ViewersCanEdit = true,
-                            EditorsCanAdmin = true,
+                            CanViewersEdit = true,
+                            CanEditorsAdmin = true,
                         },
                         IsCsrfAlwaysCheckEnabled = false,
                         IsCaptureEnabled = false,

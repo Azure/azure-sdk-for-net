@@ -15,19 +15,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureSearchIndexDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of <see cref="AzureSearchIndexDataset"/>. </summary>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <param name="indexName"> The name of the Azure Search Index. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="indexName"/> is null. </exception>
-        public AzureSearchIndexDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> indexName) : base(linkedServiceName)
-        {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
-            Argument.AssertNotNull(indexName, nameof(indexName));
-
-            IndexName = indexName;
-            DatasetType = "AzureSearchIndex";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AzureSearchIndexDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -36,20 +23,31 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="indexName"> The name of the Azure Search Index. Type: string (or Expression with resultType string). </param>
-        internal AzureSearchIndexDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> indexName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Properties specific to this dataset type. </param>
+        internal AzureSearchIndexDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, AzureSearchIndexDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
-            IndexName = indexName;
-            DatasetType = datasetType ?? "AzureSearchIndex";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureSearchIndexDataset"/> for deserialization. </summary>
-        internal AzureSearchIndexDataset()
-        {
-        }
+        /// <summary> Properties specific to this dataset type. </summary>
+        internal AzureSearchIndexDatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> The name of the Azure Search Index. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> IndexName { get; set; }
+        public DataFactoryElement<string> IndexName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.IndexName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureSearchIndexDatasetTypeProperties();
+                }
+                TypeProperties.IndexName = value;
+            }
+        }
     }
 }

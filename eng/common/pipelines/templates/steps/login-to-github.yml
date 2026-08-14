@@ -8,6 +8,12 @@ parameters:
 - name: VariableNamePrefix
   type: string 
   default: GH_TOKEN
+- name: AlwaysUseOwnerSuffix
+  type: boolean
+  default: false
+- name: ExportAsOutputVariable
+  type: boolean 
+  default: false
 - name: ScriptDirectory
   default: eng/common/scripts
 
@@ -20,6 +26,7 @@ steps:
     scriptLocation: scriptPath
     scriptPath: ${{ parameters.ScriptDirectory }}/login-to-github.ps1
     arguments: >
-     -InstallationTokenOwners '${{ join(''',''', parameters.TokenOwners) }}'
-     -VariableNamePrefix '${{ parameters.VariableNamePrefix }}'
-     
+      -InstallationTokenOwners '${{ join(''',''', parameters.TokenOwners) }}'
+      -VariableNamePrefix '${{ parameters.VariableNamePrefix }}'
+      -AlwaysUseOwnerSuffix:$${{ parameters.AlwaysUseOwnerSuffix }}
+      -ExportAsOutputVariable:$${{ parameters.ExportAsOutputVariable }}

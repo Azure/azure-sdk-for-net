@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,50 +15,39 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateMySqlAzureDBForMySqlOfflineTaskProperties : DataMigrationProjectTaskProperties
     {
         /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskProperties"/>. </summary>
-        public MigrateMySqlAzureDBForMySqlOfflineTaskProperties()
+        public MigrateMySqlAzureDBForMySqlOfflineTaskProperties() : base(DataMigrationTaskType.MigrateMySqlAzureDbForMySql)
         {
             Output = new ChangeTrackingList<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>();
-            TaskType = DataMigrationTaskType.MigrateMySqlAzureDBForMySql;
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
-        /// <param name="commands">
-        /// Array of command properties.
-        /// Please note <see cref="DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataMigrationMongoDBCancelCommand"/>, <see cref="DataMigrationMongoDBFinishCommand"/>, <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/> and <see cref="DataMigrationMongoDBRestartCommand"/>.
-        /// </param>
+        /// <param name="commands"> Array of command properties. </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="input"> Task input. </param>
-        /// <param name="output">
-        /// Task output. This is ignored if submitted.
-        /// Please note <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel"/>, <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputError"/>, <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel"/> and <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel"/>.
-        /// </param>
+        /// <param name="output"> Task output. This is ignored if submitted. </param>
         /// <param name="isCloneable"> whether the task can be cloned or not. </param>
         /// <param name="taskId"> Task id. </param>
-        internal MigrateMySqlAzureDBForMySqlOfflineTaskProperties(DataMigrationTaskType taskType, IReadOnlyList<DataMigrationODataError> errors, DataMigrationTaskState? state, IReadOnlyList<DataMigrationCommandProperties> commands, IDictionary<string, string> clientData, IDictionary<string, BinaryData> serializedAdditionalRawData, MigrateMySqlAzureDBForMySqlOfflineTaskInput input, IReadOnlyList<MigrateMySqlAzureDBForMySqlOfflineTaskOutput> output, bool? isCloneable, string taskId) : base(taskType, errors, state, commands, clientData, serializedAdditionalRawData)
+        internal MigrateMySqlAzureDBForMySqlOfflineTaskProperties(DataMigrationTaskType taskType, IReadOnlyList<DataMigrationODataError> errors, DataMigrationTaskState? state, IReadOnlyList<DataMigrationCommandProperties> commands, IDictionary<string, string> clientData, IDictionary<string, BinaryData> additionalBinaryDataProperties, MigrateMySqlAzureDBForMySqlOfflineTaskInput input, IReadOnlyList<MigrateMySqlAzureDBForMySqlOfflineTaskOutput> output, bool? isCloneable, string taskId) : base(taskType, errors, state, commands, clientData, additionalBinaryDataProperties)
         {
             Input = input;
             Output = output;
             IsCloneable = isCloneable;
             TaskId = taskId;
-            TaskType = taskType;
         }
 
         /// <summary> Task input. </summary>
         public MigrateMySqlAzureDBForMySqlOfflineTaskInput Input { get; set; }
-        /// <summary>
-        /// Task output. This is ignored if submitted.
-        /// Please note <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel"/>, <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputError"/>, <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel"/> and <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel"/>.
-        /// </summary>
+
+        /// <summary> Task output. This is ignored if submitted. </summary>
         public IReadOnlyList<MigrateMySqlAzureDBForMySqlOfflineTaskOutput> Output { get; }
+
         /// <summary> whether the task can be cloned or not. </summary>
         public bool? IsCloneable { get; set; }
+
         /// <summary> Task id. </summary>
         public string TaskId { get; set; }
     }

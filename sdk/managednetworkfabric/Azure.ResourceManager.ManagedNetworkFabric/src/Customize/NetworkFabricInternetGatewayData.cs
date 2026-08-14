@@ -8,30 +8,45 @@ using System.ComponentModel;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
-using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    // Backward compatibility shims for the swagger upgrade from package-2023-06-15 to package-2025-07-15.
-    // The new API version removed the InternetGatewayType from the constructor and changed IPv4Address
-    // property type. These shims preserve the v1.1.2 constructor and property signatures.
-    public partial class NetworkFabricInternetGatewayData : TrackedResourceData
+    // 1. The service has duplicate gateway type properties: type and internetGatewayType.
+    // 2. We suppress the less descriptive generated Type property and keep InternetGatewayType as the current property.
+    // 3. Without this customization, the SDK would expose both Type and InternetGatewayType for the same service value.
+    [CodeGenSuppress("Type")]
+    public partial class NetworkFabricInternetGatewayData
     {
-        // /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayData"/>. </summary>
-        // /// <param name="location"> The location. </param>
-        // /// <param name="typePropertiesType"> Type of Gateway. </param>
-        // /// <param name="networkFabricControllerId"> Resource ID of the network fabric controller. </param>
-        // [EditorBrowsable(EditorBrowsableState.Never)]
-        // [Obsolete("This constructor is obsolete and will be removed in a future version.")]
-        // public NetworkFabricInternetGatewayData(AzureLocation location, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId) : base(location)
-        // {
-        //     TypePropertiesType = typePropertiesType;
-        //     NetworkFabricControllerId = networkFabricControllerId;
-        // }
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayData"/>. </summary>
+        /// <param name="location"> The location. </param>
+        /// <param name="typePropertiesType"> Type of Gateway. </param>
+        /// <param name="networkFabricControllerId"> Resource ID of the network fabric controller. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This constructor is obsolete and will be removed in a future version.")]
+        public NetworkFabricInternetGatewayData(AzureLocation location, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId) : this(location, networkFabricControllerId)
+        {
+            InternetGatewayType = typePropertiesType;
+        }
 
         /// <summary> IPv4 Address of Internet Gateway. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("IPv4Address is deprecated, use IPV4Address instead")]
-        public IPAddress IPv4Address => IPAddress.TryParse(IPV4Address, out IPAddress address) ? address : null;
+        public IPAddress IPv4Address
+        {
+            get => throw new NotSupportedException("IPv4Address is deprecated, use IPV4Address instead.");
+        }
+
+        // 1. The new API version replaced the shipped TypePropertiesType property with InternetGatewayType.
+        // 2. We keep the obsolete TypePropertiesType property and redirect it to InternetGatewayType.
+        // 3. Without this custom code, the shipped TypePropertiesType API surface would be removed.
+        /// <summary> Gateway Type of the resource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future version. Use InternetGatewayType instead.")]
+        public InternetGatewayType TypePropertiesType
+        {
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use InternetGatewayType instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use InternetGatewayType instead.");
+        }
     }
 }

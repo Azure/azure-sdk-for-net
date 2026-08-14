@@ -56,6 +56,11 @@ namespace Azure.AI.VoiceLive
         /// </summary>
         internal bool ShouldBufferTurnResponseData { get; set; }
 
+        /// <summary> Initializes a new instance of <see cref="VoiceLiveSession"/> for mocking. </summary>
+        protected VoiceLiveSession()
+        {
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="VoiceLiveSession"/> class.
         /// </summary>

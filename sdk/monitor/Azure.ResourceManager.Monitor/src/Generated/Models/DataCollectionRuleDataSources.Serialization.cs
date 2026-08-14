@@ -9,14 +9,58 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DataCollectionRuleDataSources : IUtf8JsonSerializable, IJsonModel<DataCollectionRuleDataSources>
+    /// <summary>
+    /// The specification of data sources.
+    /// This property is optional and can be omitted if the rule is meant to be used via direct calls to the provisioned endpoint.
+    /// </summary>
+    public partial class DataCollectionRuleDataSources : DataSourcesSpec, IJsonModel<DataCollectionRuleDataSources>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionRuleDataSources>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataSourcesSpec PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleDataSources>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataCollectionRuleDataSources(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataCollectionRuleDataSources)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleDataSources>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataCollectionRuleDataSources)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataCollectionRuleDataSources>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataCollectionRuleDataSources IPersistableModel<DataCollectionRuleDataSources>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataCollectionRuleDataSources)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataCollectionRuleDataSources>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataCollectionRuleDataSources>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,36 +72,41 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleDataSources>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleDataSources>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataCollectionRuleDataSources)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
         }
 
-        DataCollectionRuleDataSources IJsonModel<DataCollectionRuleDataSources>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataCollectionRuleDataSources IJsonModel<DataCollectionRuleDataSources>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataCollectionRuleDataSources)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataSourcesSpec JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleDataSources>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleDataSources>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataCollectionRuleDataSources)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataCollectionRuleDataSources(document.RootElement, options);
         }
 
-        internal static DataCollectionRuleDataSources DeserializeDataCollectionRuleDataSources(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataCollectionRuleDataSources DeserializeDataCollectionRuleDataSources(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<PerfCounterDataSource> performanceCounters = default;
+            IList<PerformanceCountersOtelDataSource> performanceCountersOtel = default;
             IList<WindowsEventLogDataSource> windowsEventLogs = default;
             IList<SyslogDataSource> syslog = default;
             IList<ExtensionDataSource> extensions = default;
@@ -67,153 +116,226 @@ namespace Azure.ResourceManager.Monitor.Models
             IList<PrometheusForwarderDataSource> prometheusForwarder = default;
             IList<PlatformTelemetryDataSource> platformTelemetry = default;
             DataSourcesSpecDataImports dataImports = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<OtelLogsDataSource> otelLogs = default;
+            IList<OtelTracesDataSource> otelTraces = default;
+            IList<OtelMetricsDataSource> otelMetrics = default;
+            IList<EtwProviderDataSource> etwProviders = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("performanceCounters"u8))
+                if (prop.NameEquals("performanceCounters"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<PerfCounterDataSource> array = new List<PerfCounterDataSource>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(PerfCounterDataSource.DeserializePerfCounterDataSource(item, options));
                     }
                     performanceCounters = array;
                     continue;
                 }
-                if (property.NameEquals("windowsEventLogs"u8))
+                if (prop.NameEquals("performanceCountersOTel"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<PerformanceCountersOtelDataSource> array = new List<PerformanceCountersOtelDataSource>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(PerformanceCountersOtelDataSource.DeserializePerformanceCountersOtelDataSource(item, options));
+                    }
+                    performanceCountersOtel = array;
+                    continue;
+                }
+                if (prop.NameEquals("windowsEventLogs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<WindowsEventLogDataSource> array = new List<WindowsEventLogDataSource>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(WindowsEventLogDataSource.DeserializeWindowsEventLogDataSource(item, options));
                     }
                     windowsEventLogs = array;
                     continue;
                 }
-                if (property.NameEquals("syslog"u8))
+                if (prop.NameEquals("syslog"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SyslogDataSource> array = new List<SyslogDataSource>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SyslogDataSource.DeserializeSyslogDataSource(item, options));
                     }
                     syslog = array;
                     continue;
                 }
-                if (property.NameEquals("extensions"u8))
+                if (prop.NameEquals("extensions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ExtensionDataSource> array = new List<ExtensionDataSource>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ExtensionDataSource.DeserializeExtensionDataSource(item, options));
                     }
                     extensions = array;
                     continue;
                 }
-                if (property.NameEquals("logFiles"u8))
+                if (prop.NameEquals("logFiles"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<LogFilesDataSource> array = new List<LogFilesDataSource>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(LogFilesDataSource.DeserializeLogFilesDataSource(item, options));
                     }
                     logFiles = array;
                     continue;
                 }
-                if (property.NameEquals("iisLogs"u8))
+                if (prop.NameEquals("iisLogs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<IisLogsDataSource> array = new List<IisLogsDataSource>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(IisLogsDataSource.DeserializeIisLogsDataSource(item, options));
                     }
                     iisLogs = array;
                     continue;
                 }
-                if (property.NameEquals("windowsFirewallLogs"u8))
+                if (prop.NameEquals("windowsFirewallLogs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<WindowsFirewallLogsDataSource> array = new List<WindowsFirewallLogsDataSource>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(WindowsFirewallLogsDataSource.DeserializeWindowsFirewallLogsDataSource(item, options));
                     }
                     windowsFirewallLogs = array;
                     continue;
                 }
-                if (property.NameEquals("prometheusForwarder"u8))
+                if (prop.NameEquals("prometheusForwarder"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<PrometheusForwarderDataSource> array = new List<PrometheusForwarderDataSource>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(PrometheusForwarderDataSource.DeserializePrometheusForwarderDataSource(item, options));
                     }
                     prometheusForwarder = array;
                     continue;
                 }
-                if (property.NameEquals("platformTelemetry"u8))
+                if (prop.NameEquals("platformTelemetry"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<PlatformTelemetryDataSource> array = new List<PlatformTelemetryDataSource>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(PlatformTelemetryDataSource.DeserializePlatformTelemetryDataSource(item, options));
                     }
                     platformTelemetry = array;
                     continue;
                 }
-                if (property.NameEquals("dataImports"u8))
+                if (prop.NameEquals("dataImports"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataImports = DataSourcesSpecDataImports.DeserializeDataSourcesSpecDataImports(property.Value, options);
+                    dataImports = DataSourcesSpecDataImports.DeserializeDataSourcesSpecDataImports(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("otelLogs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<OtelLogsDataSource> array = new List<OtelLogsDataSource>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(OtelLogsDataSource.DeserializeOtelLogsDataSource(item, options));
+                    }
+                    otelLogs = array;
+                    continue;
+                }
+                if (prop.NameEquals("otelTraces"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<OtelTracesDataSource> array = new List<OtelTracesDataSource>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(OtelTracesDataSource.DeserializeOtelTracesDataSource(item, options));
+                    }
+                    otelTraces = array;
+                    continue;
+                }
+                if (prop.NameEquals("otelMetrics"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<OtelMetricsDataSource> array = new List<OtelMetricsDataSource>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(OtelMetricsDataSource.DeserializeOtelMetricsDataSource(item, options));
+                    }
+                    otelMetrics = array;
+                    continue;
+                }
+                if (prop.NameEquals("etwProviders"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<EtwProviderDataSource> array = new List<EtwProviderDataSource>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(EtwProviderDataSource.DeserializeEtwProviderDataSource(item, options));
+                    }
+                    etwProviders = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DataCollectionRuleDataSources(
                 performanceCounters ?? new ChangeTrackingList<PerfCounterDataSource>(),
+                performanceCountersOtel ?? new ChangeTrackingList<PerformanceCountersOtelDataSource>(),
                 windowsEventLogs ?? new ChangeTrackingList<WindowsEventLogDataSource>(),
                 syslog ?? new ChangeTrackingList<SyslogDataSource>(),
                 extensions ?? new ChangeTrackingList<ExtensionDataSource>(),
@@ -223,38 +345,11 @@ namespace Azure.ResourceManager.Monitor.Models
                 prometheusForwarder ?? new ChangeTrackingList<PrometheusForwarderDataSource>(),
                 platformTelemetry ?? new ChangeTrackingList<PlatformTelemetryDataSource>(),
                 dataImports,
-                serializedAdditionalRawData);
+                otelLogs ?? new ChangeTrackingList<OtelLogsDataSource>(),
+                otelTraces ?? new ChangeTrackingList<OtelTracesDataSource>(),
+                otelMetrics ?? new ChangeTrackingList<OtelMetricsDataSource>(),
+                etwProviders ?? new ChangeTrackingList<EtwProviderDataSource>(),
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<DataCollectionRuleDataSources>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleDataSources>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataCollectionRuleDataSources)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataCollectionRuleDataSources IPersistableModel<DataCollectionRuleDataSources>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleDataSources>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataCollectionRuleDataSources(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataCollectionRuleDataSources)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataCollectionRuleDataSources>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

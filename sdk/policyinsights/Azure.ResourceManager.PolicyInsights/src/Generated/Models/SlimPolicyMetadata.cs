@@ -15,37 +15,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Slim version of policy metadata resource definition, excluding properties with large strings. </summary>
     public partial class SlimPolicyMetadata : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SlimPolicyMetadata"/>. </summary>
         internal SlimPolicyMetadata()
@@ -53,68 +24,73 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SlimPolicyMetadata"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="metadataId"> The policy metadata identifier. </param>
-        /// <param name="category"> The category of the policy metadata. </param>
-        /// <param name="title"> The title of the policy metadata. </param>
-        /// <param name="owner"> The owner of the policy metadata. </param>
-        /// <param name="additionalContentUri"> Url for getting additional content about the resource metadata. </param>
-        /// <param name="metadata"> Additional metadata. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SlimPolicyMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string metadataId, string category, string title, string owner, Uri additionalContentUri, BinaryData metadata, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the policy metadata. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SlimPolicyMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PolicyMetadataSlimProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            MetadataId = metadataId;
-            Category = category;
-            Title = title;
-            Owner = owner;
-            AdditionalContentUri = additionalContentUri;
-            Metadata = metadata;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Properties of the policy metadata. </summary>
+        internal PolicyMetadataSlimProperties Properties { get; }
+
         /// <summary> The policy metadata identifier. </summary>
-        public string MetadataId { get; }
+        public string MetadataId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MetadataId;
+            }
+        }
+
         /// <summary> The category of the policy metadata. </summary>
-        public string Category { get; }
+        public string Category
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Category;
+            }
+        }
+
         /// <summary> The title of the policy metadata. </summary>
-        public string Title { get; }
+        public string Title
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Title;
+            }
+        }
+
         /// <summary> The owner of the policy metadata. </summary>
-        public string Owner { get; }
+        public string Owner
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Owner;
+            }
+        }
+
         /// <summary> Url for getting additional content about the resource metadata. </summary>
-        public Uri AdditionalContentUri { get; }
-        /// <summary>
-        /// Additional metadata.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Metadata { get; }
+        public Uri AdditionalContentUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdditionalContentUri;
+            }
+        }
+
+        /// <summary> Additional metadata. </summary>
+        public BinaryData Metadata
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Metadata;
+            }
+        }
     }
 }

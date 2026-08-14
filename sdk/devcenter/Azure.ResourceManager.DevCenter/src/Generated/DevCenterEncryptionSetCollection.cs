@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(DevCenterEncryptionSetResource.ResourceType, out string devCenterEncryptionSetApiVersion);
             _encryptionSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterEncryptionSetResource.ResourceType.Namespace, Diagnostics);
-            _encryptionSetsRestClient = new EncryptionSets(_encryptionSetsClientDiagnostics, Pipeline, Endpoint, devCenterEncryptionSetApiVersion ?? "2026-01-01-preview");
+            _encryptionSetsRestClient = new EncryptionSets(_encryptionSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterEncryptionSetApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _encryptionSetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, encryptionSetName, DevCenterEncryptionSetData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevCenterArmOperation<DevCenterEncryptionSetResource> operation = new DevCenterArmOperation<DevCenterEncryptionSetResource>(
-                    new DevCenterEncryptionSetOperationSource(Client),
+                    new DevCenterEncryptionSetResourceOperationSource(Client),
                     _encryptionSetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _encryptionSetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, encryptionSetName, DevCenterEncryptionSetData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevCenterArmOperation<DevCenterEncryptionSetResource> operation = new DevCenterArmOperation<DevCenterEncryptionSetResource>(
-                    new DevCenterEncryptionSetOperationSource(Client),
+                    new DevCenterEncryptionSetResourceOperationSource(Client),
                     _encryptionSetsClientDiagnostics,
                     Pipeline,
                     message.Request,

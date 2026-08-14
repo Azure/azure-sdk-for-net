@@ -46,23 +46,17 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             Response rawResponse = response.GetRawResponse();
             if (!rawResponse.Headers.TryGetValue(Constants.FilesChangeFeed.ChangeFeedContainerHeader, out string containerName))
             {
-                throw new InvalidOperationException(
-                    $"Change Feed is not enabled for share '{shareClient.Name}'. " +
-                    $"Enable it by setting x-ms-file-enable-change-feed: true when creating or updating the share.");
+                throw ShareChangeFeedErrors.ChangeFeedNotEnabledForShare(shareClient.Name);
             }
 
             if (string.IsNullOrEmpty(containerName))
             {
-                throw new InvalidOperationException(
-                    $"Change Feed container header for share '{shareClient.Name}' was present but empty. " +
-                    "The service returned an unexpected response.");
+                throw ShareChangeFeedErrors.ChangeFeedContainerHeaderEmpty(rawResponse, shareClient.Name);
             }
 
             if (containerName[0] != '$')
             {
-                throw new InvalidOperationException(
-                    $"Change Feed container name '{containerName}' for share '{shareClient.Name}' does not begin with the expected '$' prefix. " +
-                    "The service returned an unexpected response.");
+                throw ShareChangeFeedErrors.ChangeFeedContainerBadPrefix(rawResponse, containerName, shareClient.Name);
             }
 
             return containerName;

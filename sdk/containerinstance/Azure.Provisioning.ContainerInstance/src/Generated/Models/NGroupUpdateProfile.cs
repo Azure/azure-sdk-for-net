@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerInstance
             base.DefineProvisionableProperties();
             _updateMode = DefineProperty<NGroupUpdateMode>(nameof(UpdateMode), new string[] { "updateMode" });
             _rollingUpdateProfile = DefineModelProperty<NGroupRollingUpdateProfile>(nameof(RollingUpdateProfile), new string[] { "rollingUpdateProfile" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for NGroupUpdateProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

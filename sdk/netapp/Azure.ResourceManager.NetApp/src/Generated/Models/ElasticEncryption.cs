@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.NetApp.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticEncryption"/>. </summary>
-        public ElasticEncryption()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ElasticEncryption"/>. </summary>
         /// <param name="keySource"> The encryption keySource (provider). Possible values (case-insensitive): Microsoft.NetApp, Microsoft.KeyVault. </param>
         /// <param name="keyVaultProperties"> Properties provided by KeyVault. Applicable if keySource is 'Microsoft.KeyVault'. </param>
         /// <param name="identity"> Identity used to authenticate to KeyVault. Applicable if keySource is 'Microsoft.KeyVault'. </param>
@@ -33,14 +28,5 @@ namespace Azure.ResourceManager.NetApp.Models
             Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The encryption keySource (provider). Possible values (case-insensitive): Microsoft.NetApp, Microsoft.KeyVault. </summary>
-        public NetAppKeySource? KeySource { get; set; }
-
-        /// <summary> Properties provided by KeyVault. Applicable if keySource is 'Microsoft.KeyVault'. </summary>
-        public ElasticKeyVaultProperties KeyVaultProperties { get; set; }
-
-        /// <summary> Identity used to authenticate to KeyVault. Applicable if keySource is 'Microsoft.KeyVault'. </summary>
-        public ElasticEncryptionIdentity Identity { get; set; }
     }
 }

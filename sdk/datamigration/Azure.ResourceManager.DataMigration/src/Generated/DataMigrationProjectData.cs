@@ -7,126 +7,168 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataMigration.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    /// <summary>
-    /// A class representing the DataMigrationProject data model.
-    /// A project resource
-    /// </summary>
+    /// <summary> A project resource. </summary>
     public partial class DataMigrationProjectData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationProjectData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public DataMigrationProjectData(AzureLocation location) : base(location)
         {
-            DatabasesInfo = new ChangeTrackingList<DataMigrationProjectDatabaseInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationProjectData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> HTTP strong entity tag value. This is ignored if submitted. </param>
-        /// <param name="sourcePlatform"> Source platform for the project. </param>
-        /// <param name="azureAuthenticationInfo"> Field that defines the Azure active directory application info, used to connect to the target Azure resource. </param>
-        /// <param name="targetPlatform"> Target platform for the project. </param>
-        /// <param name="createdOn"> UTC Date and time when project was created. </param>
-        /// <param name="sourceConnectionInfo">
-        /// Information for connecting to source
-        /// Please note <see cref="ServerConnectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataMigrationMISqlConnectionInfo"/>, <see cref="DataMigrationMongoDBConnectionInfo"/>, <see cref="DataMigrationMySqlConnectionInfo"/>, <see cref="DataMigrationOracleConnectionInfo"/>, <see cref="DataMigrationPostgreSqlConnectionInfo"/> and <see cref="DataMigrationSqlConnectionInfo"/>.
-        /// </param>
-        /// <param name="targetConnectionInfo">
-        /// Information for connecting to target
-        /// Please note <see cref="ServerConnectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataMigrationMISqlConnectionInfo"/>, <see cref="DataMigrationMongoDBConnectionInfo"/>, <see cref="DataMigrationMySqlConnectionInfo"/>, <see cref="DataMigrationOracleConnectionInfo"/>, <see cref="DataMigrationPostgreSqlConnectionInfo"/> and <see cref="DataMigrationSqlConnectionInfo"/>.
-        /// </param>
-        /// <param name="databasesInfo"> List of DatabaseInfo. </param>
-        /// <param name="provisioningState"> The project's provisioning state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataMigrationProjectData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, DataMigrationProjectSourcePlatform? sourcePlatform, DataMigrationAadApp azureAuthenticationInfo, DataMigrationProjectTargetPlatform? targetPlatform, DateTimeOffset? createdOn, ServerConnectionInfo sourceConnectionInfo, ServerConnectionInfo targetConnectionInfo, IList<DataMigrationProjectDatabaseInfo> databasesInfo, DataMigrationProjectProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Project properties. </param>
+        /// <param name="eTag"> HTTP strong entity tag value. This is ignored if submitted. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataMigrationProjectData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProjectProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
-            SourcePlatform = sourcePlatform;
-            AzureAuthenticationInfo = azureAuthenticationInfo;
-            TargetPlatform = targetPlatform;
-            CreatedOn = createdOn;
-            SourceConnectionInfo = sourceConnectionInfo;
-            TargetConnectionInfo = targetConnectionInfo;
-            DatabasesInfo = databasesInfo;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMigrationProjectData"/> for deserialization. </summary>
-        internal DataMigrationProjectData()
-        {
-        }
+        /// <summary> Project properties. </summary>
+        internal ProjectProperties Properties { get; set; }
 
         /// <summary> HTTP strong entity tag value. This is ignored if submitted. </summary>
         public ETag? ETag { get; set; }
+
         /// <summary> Source platform for the project. </summary>
-        public DataMigrationProjectSourcePlatform? SourcePlatform { get; set; }
+        public DataMigrationProjectSourcePlatform? SourcePlatform
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourcePlatform;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new ProjectProperties();
+                    }
+                    Properties.SourcePlatform = value.Value;
+                }
+            }
+        }
+
         /// <summary> Field that defines the Azure active directory application info, used to connect to the target Azure resource. </summary>
-        public DataMigrationAadApp AzureAuthenticationInfo { get; set; }
+        public DataMigrationAadApp AzureAuthenticationInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureAuthenticationInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectProperties();
+                }
+                Properties.AzureAuthenticationInfo = value;
+            }
+        }
+
         /// <summary> Target platform for the project. </summary>
-        public DataMigrationProjectTargetPlatform? TargetPlatform { get; set; }
+        public DataMigrationProjectTargetPlatform? TargetPlatform
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetPlatform;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new ProjectProperties();
+                    }
+                    Properties.TargetPlatform = value.Value;
+                }
+            }
+        }
+
         /// <summary> UTC Date and time when project was created. </summary>
-        public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// Information for connecting to source
-        /// Please note <see cref="ServerConnectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataMigrationMISqlConnectionInfo"/>, <see cref="DataMigrationMongoDBConnectionInfo"/>, <see cref="DataMigrationMySqlConnectionInfo"/>, <see cref="DataMigrationOracleConnectionInfo"/>, <see cref="DataMigrationPostgreSqlConnectionInfo"/> and <see cref="DataMigrationSqlConnectionInfo"/>.
-        /// </summary>
-        public ServerConnectionInfo SourceConnectionInfo { get; set; }
-        /// <summary>
-        /// Information for connecting to target
-        /// Please note <see cref="ServerConnectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataMigrationMISqlConnectionInfo"/>, <see cref="DataMigrationMongoDBConnectionInfo"/>, <see cref="DataMigrationMySqlConnectionInfo"/>, <see cref="DataMigrationOracleConnectionInfo"/>, <see cref="DataMigrationPostgreSqlConnectionInfo"/> and <see cref="DataMigrationSqlConnectionInfo"/>.
-        /// </summary>
-        public ServerConnectionInfo TargetConnectionInfo { get; set; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
+        /// <summary> Information for connecting to source. </summary>
+        public ServerConnectionInfo SourceConnectionInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceConnectionInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectProperties();
+                }
+                Properties.SourceConnectionInfo = value;
+            }
+        }
+
+        /// <summary> Information for connecting to target. </summary>
+        public ServerConnectionInfo TargetConnectionInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetConnectionInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectProperties();
+                }
+                Properties.TargetConnectionInfo = value;
+            }
+        }
+
         /// <summary> List of DatabaseInfo. </summary>
-        public IList<DataMigrationProjectDatabaseInfo> DatabasesInfo { get; }
+        public IList<DataMigrationProjectDatabaseInfo> DatabasesInfo
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectProperties();
+                }
+                return Properties.DatabasesInfo;
+            }
+        }
+
         /// <summary> The project's provisioning state. </summary>
-        public DataMigrationProjectProvisioningState? ProvisioningState { get; }
+        public DataMigrationProjectProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }
