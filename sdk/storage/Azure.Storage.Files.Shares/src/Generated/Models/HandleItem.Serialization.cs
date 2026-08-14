@@ -124,7 +124,7 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteValue(SessionId);
             writer.WriteEndElement();
             writer.WriteStartElement("ClientIp");
-            writer.WriteValue(ClientIp);
+            writer.WriteValue(ClientIP);
             writer.WriteEndElement();
             writer.WriteStartElement("ClientName");
             writer.WriteValue(ClientName);
@@ -165,7 +165,7 @@ namespace Azure.Storage.Files.Shares.Models
             string fileId = default;
             string parentId = default;
             string sessionId = default;
-            string clientIp = default;
+            string clientIP = default;
             string clientName = default;
             DateTimeOffset openTime = default;
             DateTimeOffset? lastReconnectTime = default;
@@ -201,7 +201,7 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 if (localName == "ClientIp")
                 {
-                    clientIp = (string)child;
+                    clientIP = (string)child;
                     continue;
                 }
                 if (localName == "ClientName")
@@ -236,7 +236,7 @@ namespace Azure.Storage.Files.Shares.Models
                 fileId,
                 parentId,
                 sessionId,
-                clientIp,
+                clientIP,
                 clientName,
                 openTime,
                 lastReconnectTime,
