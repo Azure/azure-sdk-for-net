@@ -194,26 +194,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new CosmosDBVirtualNetworkRule(id, ignoreMissingVnetServiceEndpoint, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="connectionState"> Connection State of the Private Endpoint Connection. </param>
-        /// <param name="groupId"> Group id of the private endpoint. </param>
-        /// <param name="provisioningState"> Provisioning state of the private endpoint. </param>
-        /// <param name="privateEndpointId"> Resource id of the private endpoint. </param>
-        /// <returns> A new <see cref="CosmosDB.CosmosDBPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static CosmosDBPrivateEndpointConnectionData CosmosDBPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CosmosDBPrivateLinkServiceConnectionStateProperty connectionState = default, string groupId = default, string provisioningState = default, ResourceIdentifier privateEndpointId = default)
-        {
-            return new CosmosDBPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                privateEndpointId is null && connectionState is null && groupId is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpointProperty(privateEndpointId, default), connectionState, groupId, provisioningState, default),
-                default);
-        }
-
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> Any action that is required beyond basic workflow (approve/ reject/ disconnect). </param>
@@ -2118,31 +2098,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        /// <param name="resourceKeyspaceName"> Name of the Cosmos DB Cassandra keyspace. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceKeyspaceName"/> is null. </exception>
-        /// <returns> A new <see cref="Models.CassandraKeyspaceCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static CassandraKeyspaceCreateOrUpdateContent CassandraKeyspaceCreateOrUpdateContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CosmosDBCreateUpdateConfig options = default, string resourceKeyspaceName = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CassandraKeyspaceCreateOrUpdateContent(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                resourceKeyspaceName is null ? default : new CassandraKeyspaceCreateUpdateProperties(new CassandraKeyspaceResourceInfo(resourceKeyspaceName, default), default, default),
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="resource"> Gets or sets the Resource. </param>
         /// <param name="options"> Gets or sets the Options. </param>
         /// <param name="identity"> Identity for the resource. </param>
@@ -3100,37 +3055,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="accountName"> The name of the global database account. </param>
-        /// <param name="createdOn"> The creation time of the restorable database account (ISO-8601 format). </param>
-        /// <param name="oldestRestorableOn"> The least recent time at which the database account can be restored to (ISO-8601 format). </param>
-        /// <param name="deletedOn"> The time at which the restorable database account has been deleted (ISO-8601 format). </param>
-        /// <param name="apiType"> The API type of the restorable database account. </param>
-        /// <param name="restorableLocations"> List of regions where the of the database account can be restored from. </param>
-        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
-        /// <returns> A new <see cref="CosmosDB.RestorableCosmosDBAccountData"/> instance for mocking. </returns>
-        public static RestorableCosmosDBAccountData RestorableCosmosDBAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string accountName = default, DateTimeOffset? createdOn = default, DateTimeOffset? oldestRestorableOn = default, DateTimeOffset? deletedOn = default, CosmosDBApiType? apiType = default, IEnumerable<RestorableLocationResourceInfo> restorableLocations = default, AzureLocation? location = default)
-        {
-            return new RestorableCosmosDBAccountData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                accountName is null && createdOn is null && oldestRestorableOn is null && deletedOn is null && apiType is null && restorableLocations is null ? default : new RestorableDatabaseAccountProperties(
-                    accountName,
-                    createdOn,
-                    oldestRestorableOn,
-                    deletedOn,
-                    apiType,
-                    (restorableLocations ?? new ChangeTrackingList<RestorableLocationResourceInfo>()).ToList(),
-                    default),
-                location,
-                default);
-        }
-
         /// <param name="locationName"> The location of the regional restorable account. </param>
         /// <param name="regionalDatabaseAccountInstanceId"> The instance id of the regional restorable account. </param>
         /// <param name="createdOn"> The creation time of the regional restorable database account (ISO-8601 format). </param>
@@ -3996,64 +3920,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="defaultPriorityLevel"> Enum to indicate default Priority Level of request for Priority Based Execution. </param>
         /// <returns> A new <see cref="CosmosDB.CosmosDBAccountData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CosmosDBAccountData CosmosDBAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CosmosDBAccountKind? kind = default, ManagedServiceIdentity identity = default, string provisioningState = default, string documentEndpoint = default, CosmosDBAccountOfferType? databaseAccountOfferType = default, IEnumerable<CosmosDBIPAddressOrRange> ipRules = default, bool? isVirtualNetworkFilterEnabled = default, bool? enableAutomaticFailover = default, ConsistencyPolicy consistencyPolicy = default, IEnumerable<CosmosDBAccountCapability> capabilities = default, IEnumerable<CosmosDBAccountLocation> writeLocations = default, IEnumerable<CosmosDBAccountLocation> readLocations = default, IEnumerable<CosmosDBAccountLocation> locations = default, IEnumerable<CosmosDBFailoverPolicy> failoverPolicies = default, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules = default, IEnumerable<CosmosDBPrivateEndpointConnectionData> privateEndpointConnections = default, bool? enableMultipleWriteLocations = default, bool? enableCassandraConnector = default, ConnectorOffer? connectorOffer = default, bool? disableKeyBasedMetadataWriteAccess = default, Uri keyVaultKeyUri = default, string defaultIdentity = default, CosmosDBPublicNetworkAccess? publicNetworkAccess = default, bool? isFreeTierEnabled = default, CosmosDBServerVersion? apiServerVersion = default, bool? isAnalyticalStorageEnabled = default, AnalyticalStorageSchemaType? analyticalStorageSchemaType = default, Guid? instanceId = default, CosmosDBAccountCreateMode? createMode = default, CosmosDBAccountRestoreParameters restoreParameters = default, CosmosDBAccountBackupPolicy backupPolicy = default, IEnumerable<CosmosDBAccountCorsPolicy> cors = default, NetworkAclBypass? networkAclBypass = default, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds = default, bool? disableLocalAuth = default, int? capacityTotalThroughputLimit = default, DatabaseAccountKeysMetadata keysMetadata = default, bool? enablePartitionMerge = default, CosmosDBMinimalTlsVersion? minimalTlsVersion = default, bool? enableBurstCapacity = default, string customerManagedKeyStatus = default, bool? enablePerRegionPerPartitionAutoscale = default, string keyVaultKeyUriVersion = default, bool? enablePriorityBasedExecution = default, DefaultPriorityLevel? defaultPriorityLevel = default)
+        public static CosmosDBAccountData CosmosDBAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountKind? kind, ManagedServiceIdentity identity, string provisioningState, string documentEndpoint, CosmosDBAccountOfferType? databaseAccountOfferType, IEnumerable<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, ConsistencyPolicy consistencyPolicy, IEnumerable<CosmosDBAccountCapability> capabilities, IEnumerable<CosmosDBAccountLocation> writeLocations, IEnumerable<CosmosDBAccountLocation> readLocations, IEnumerable<CosmosDBAccountLocation> locations, IEnumerable<CosmosDBFailoverPolicy> failoverPolicies, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules, IEnumerable<CosmosDBPrivateEndpointConnectionData> privateEndpointConnections, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, CosmosDBServerVersion? apiServerVersion, bool? isAnalyticalStorageEnabled, AnalyticalStorageSchemaType? analyticalStorageSchemaType, Guid? instanceId, CosmosDBAccountCreateMode? createMode, CosmosDBAccountRestoreParameters restoreParameters, CosmosDBAccountBackupPolicy backupPolicy, IEnumerable<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds, bool? disableLocalAuth, int? capacityTotalThroughputLimit, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, CosmosDBMinimalTlsVersion? minimalTlsVersion, bool? enableBurstCapacity, string customerManagedKeyStatus, bool? enablePerRegionPerPartitionAutoscale, string keyVaultKeyUriVersion, bool? enablePriorityBasedExecution, DefaultPriorityLevel? defaultPriorityLevel)
         {
-            return new CosmosDBAccountData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && documentEndpoint is null && databaseAccountOfferType is null && ipRules is null && isVirtualNetworkFilterEnabled is null && enableAutomaticFailover is null && consistencyPolicy is null && capabilities is null && writeLocations is null && readLocations is null && locations is null && failoverPolicies is null && virtualNetworkRules is null && privateEndpointConnections is null && enableMultipleWriteLocations is null && enableCassandraConnector is null && connectorOffer is null && disableKeyBasedMetadataWriteAccess is null && keyVaultKeyUri is null && defaultIdentity is null && publicNetworkAccess is null && isFreeTierEnabled is null && apiServerVersion is null && isAnalyticalStorageEnabled is null && analyticalStorageSchemaType is null && instanceId is null && createMode is null && restoreParameters is null && backupPolicy is null && cors is null && networkAclBypass is null && networkAclBypassResourceIds is null && disableLocalAuth is null && capacityTotalThroughputLimit is null && keysMetadata is null && enablePartitionMerge is null && enableBurstCapacity is null && minimalTlsVersion is null && customerManagedKeyStatus is null && keyVaultKeyUriVersion is null && enablePriorityBasedExecution is null && defaultPriorityLevel is null && enablePerRegionPerPartitionAutoscale is null ? default : new CosmosDBAccountProperties(
-                    provisioningState,
-                    documentEndpoint,
-                    databaseAccountOfferType,
-                    (ipRules ?? new ChangeTrackingList<CosmosDBIPAddressOrRange>()).ToList(),
-                    isVirtualNetworkFilterEnabled,
-                    enableAutomaticFailover,
-                    consistencyPolicy,
-                    (capabilities ?? new ChangeTrackingList<CosmosDBAccountCapability>()).ToList(),
-                    (writeLocations ?? new ChangeTrackingList<CosmosDBAccountLocation>()).ToList(),
-                    (readLocations ?? new ChangeTrackingList<CosmosDBAccountLocation>()).ToList(),
-                    (locations ?? new ChangeTrackingList<CosmosDBAccountLocation>()).ToList(),
-                    (failoverPolicies ?? new ChangeTrackingList<CosmosDBFailoverPolicy>()).ToList(),
-                    (virtualNetworkRules ?? new ChangeTrackingList<CosmosDBVirtualNetworkRule>()).ToList(),
-                    (privateEndpointConnections ?? new ChangeTrackingList<CosmosDBPrivateEndpointConnectionData>()).ToList(),
-                    enableMultipleWriteLocations,
-                    enableCassandraConnector,
-                    connectorOffer,
-                    disableKeyBasedMetadataWriteAccess,
-                    keyVaultKeyUri,
-                    defaultIdentity,
-                    publicNetworkAccess,
-                    isFreeTierEnabled,
-                    new ApiProperties(apiServerVersion, default),
-                    isAnalyticalStorageEnabled,
-                    new AnalyticalStorageConfiguration(analyticalStorageSchemaType, default),
-                    instanceId,
-                    createMode,
-                    restoreParameters,
-                    backupPolicy,
-                    (cors ?? new ChangeTrackingList<CosmosDBAccountCorsPolicy>()).ToList(),
-                    networkAclBypass,
-                    (networkAclBypassResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    disableLocalAuth,
-                    new CosmosDBAccountCapacity(capacityTotalThroughputLimit, default),
-                    keysMetadata,
-                    enablePartitionMerge,
-                    enableBurstCapacity,
-                    minimalTlsVersion,
-                    customerManagedKeyStatus,
-                    keyVaultKeyUriVersion,
-                    enablePriorityBasedExecution,
-                    defaultPriorityLevel,
-                    enablePerRegionPerPartitionAutoscale,
-                    default,
-                    default),
-                identity,
-                kind,
-                default);
+            return CosmosDBAccountData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, provisioningState: provisioningState, documentEndpoint: documentEndpoint, databaseAccountOfferType: databaseAccountOfferType, ipRules: ipRules, isVirtualNetworkFilterEnabled: isVirtualNetworkFilterEnabled, enableAutomaticFailover: enableAutomaticFailover, consistencyPolicy: consistencyPolicy, capabilities: capabilities, writeLocations: writeLocations, readLocations: readLocations, locations: locations, failoverPolicies: failoverPolicies, virtualNetworkRules: virtualNetworkRules, privateEndpointConnections: privateEndpointConnections, enableMultipleWriteLocations: enableMultipleWriteLocations, enableCassandraConnector: enableCassandraConnector, connectorOffer: connectorOffer, disableKeyBasedMetadataWriteAccess: disableKeyBasedMetadataWriteAccess, keyVaultKeyUri: keyVaultKeyUri, defaultIdentity: defaultIdentity, publicNetworkAccess: publicNetworkAccess, isFreeTierEnabled: isFreeTierEnabled, isAnalyticalStorageEnabled: isAnalyticalStorageEnabled, instanceId: instanceId, createMode: createMode, restoreParameters: restoreParameters, backupPolicy: backupPolicy, cors: cors, networkAclBypass: networkAclBypass, networkAclBypassResourceIds: networkAclBypassResourceIds, disableLocalAuth: disableLocalAuth, keysMetadata: keysMetadata, enablePartitionMerge: enablePartitionMerge, enableBurstCapacity: enableBurstCapacity, minimalTlsVersion: minimalTlsVersion, customerManagedKeyStatus: customerManagedKeyStatus, keyVaultKeyUriVersion: keyVaultKeyUriVersion, enablePriorityBasedExecution: enablePriorityBasedExecution, defaultPriorityLevel: defaultPriorityLevel, enablePerRegionPerPartitionAutoscale: enablePerRegionPerPartitionAutoscale, isHierarchicalPartitionKeyIdLastLevelEnforced: default, apiServerVersion: apiServerVersion, analyticalStorageSchemaType: analyticalStorageSchemaType, capacityTotalThroughputLimit: capacityTotalThroughputLimit, identity: identity, kind: kind);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBPrivateEndpointConnectionData"/>. </summary>
@@ -4066,7 +3935,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="groupId"> Group id of the private endpoint. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint. </param>
         /// <returns> A new <see cref="CosmosDB.CosmosDBPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static CosmosDBPrivateEndpointConnectionData CosmosDBPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier privateEndpointId = default, CosmosDBPrivateLinkServiceConnectionStateProperty connectionState = default, string groupId = default, string provisioningState = default)
         {
             return new CosmosDBPrivateEndpointConnectionData(
@@ -4120,43 +3988,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="defaultPriorityLevel"> Enum to indicate default Priority Level of request for Priority Based Execution. </param>
         /// <returns> A new <see cref="Models.CosmosDBAccountPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CosmosDBAccountPatch CosmosDBAccountPatch(IDictionary<string, string> tags = default, AzureLocation? location = default, ManagedServiceIdentity identity = default, ConsistencyPolicy consistencyPolicy = default, IEnumerable<CosmosDBAccountLocation> locations = default, IEnumerable<CosmosDBIPAddressOrRange> ipRules = default, bool? isVirtualNetworkFilterEnabled = default, bool? enableAutomaticFailover = default, IEnumerable<CosmosDBAccountCapability> capabilities = default, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules = default, bool? enableMultipleWriteLocations = default, bool? enableCassandraConnector = default, ConnectorOffer? connectorOffer = default, bool? disableKeyBasedMetadataWriteAccess = default, Uri keyVaultKeyUri = default, string defaultIdentity = default, CosmosDBPublicNetworkAccess? publicNetworkAccess = default, bool? isFreeTierEnabled = default, CosmosDBServerVersion? apiServerVersion = default, bool? isAnalyticalStorageEnabled = default, AnalyticalStorageSchemaType? analyticalStorageSchemaType = default, CosmosDBAccountBackupPolicy backupPolicy = default, IEnumerable<CosmosDBAccountCorsPolicy> cors = default, NetworkAclBypass? networkAclBypass = default, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds = default, bool? disableLocalAuth = default, int? capacityTotalThroughputLimit = default, DatabaseAccountKeysMetadata keysMetadata = default, bool? enablePartitionMerge = default, CosmosDBMinimalTlsVersion? minimalTlsVersion = default, bool? enableBurstCapacity = default, string customerManagedKeyStatus = default, bool? enablePerRegionPerPartitionAutoscale = default, bool? enablePriorityBasedExecution = default, DefaultPriorityLevel? defaultPriorityLevel = default)
+        public static CosmosDBAccountPatch CosmosDBAccountPatch(IDictionary<string, string> tags, AzureLocation? location, ManagedServiceIdentity identity, ConsistencyPolicy consistencyPolicy, IEnumerable<CosmosDBAccountLocation> locations, IEnumerable<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IEnumerable<CosmosDBAccountCapability> capabilities, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, CosmosDBServerVersion? apiServerVersion, bool? isAnalyticalStorageEnabled, AnalyticalStorageSchemaType? analyticalStorageSchemaType, CosmosDBAccountBackupPolicy backupPolicy, IEnumerable<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds, bool? disableLocalAuth, int? capacityTotalThroughputLimit, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, CosmosDBMinimalTlsVersion? minimalTlsVersion, bool? enableBurstCapacity, string customerManagedKeyStatus, bool? enablePerRegionPerPartitionAutoscale, bool? enablePriorityBasedExecution, DefaultPriorityLevel? defaultPriorityLevel)
         {
-            return new CosmosDBAccountPatch(tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, consistencyPolicy is null && locations is null && ipRules is null && isVirtualNetworkFilterEnabled is null && enableAutomaticFailover is null && capabilities is null && virtualNetworkRules is null && enableMultipleWriteLocations is null && enableCassandraConnector is null && connectorOffer is null && disableKeyBasedMetadataWriteAccess is null && keyVaultKeyUri is null && defaultIdentity is null && publicNetworkAccess is null && isFreeTierEnabled is null && apiServerVersion is null && isAnalyticalStorageEnabled is null && analyticalStorageSchemaType is null && backupPolicy is null && cors is null && networkAclBypass is null && networkAclBypassResourceIds is null && disableLocalAuth is null && capacityTotalThroughputLimit is null && keysMetadata is null && enablePartitionMerge is null && enableBurstCapacity is null && minimalTlsVersion is null && customerManagedKeyStatus is null && enablePriorityBasedExecution is null && defaultPriorityLevel is null && enablePerRegionPerPartitionAutoscale is null ? default : new DatabaseAccountUpdateProperties(
-                consistencyPolicy,
-                (locations ?? new ChangeTrackingList<CosmosDBAccountLocation>()).ToList(),
-                (ipRules ?? new ChangeTrackingList<CosmosDBIPAddressOrRange>()).ToList(),
-                isVirtualNetworkFilterEnabled,
-                enableAutomaticFailover,
-                (capabilities ?? new ChangeTrackingList<CosmosDBAccountCapability>()).ToList(),
-                (virtualNetworkRules ?? new ChangeTrackingList<CosmosDBVirtualNetworkRule>()).ToList(),
-                enableMultipleWriteLocations,
-                enableCassandraConnector,
-                connectorOffer,
-                disableKeyBasedMetadataWriteAccess,
-                keyVaultKeyUri,
-                defaultIdentity,
-                publicNetworkAccess,
-                isFreeTierEnabled,
-                new ApiProperties(apiServerVersion, default),
-                isAnalyticalStorageEnabled,
-                new AnalyticalStorageConfiguration(analyticalStorageSchemaType, default),
-                backupPolicy,
-                (cors ?? new ChangeTrackingList<CosmosDBAccountCorsPolicy>()).ToList(),
-                networkAclBypass,
-                (networkAclBypassResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                disableLocalAuth,
-                new CosmosDBAccountCapacity(capacityTotalThroughputLimit, default),
-                keysMetadata,
-                enablePartitionMerge,
-                enableBurstCapacity,
-                minimalTlsVersion,
-                customerManagedKeyStatus,
-                enablePriorityBasedExecution,
-                defaultPriorityLevel,
-                enablePerRegionPerPartitionAutoscale,
-                default,
-                default), default);
+            return CosmosDBAccountPatch(tags: tags, location: location, identity: identity, consistencyPolicy: consistencyPolicy, locations: locations, ipRules: ipRules, isVirtualNetworkFilterEnabled: isVirtualNetworkFilterEnabled, enableAutomaticFailover: enableAutomaticFailover, capabilities: capabilities, virtualNetworkRules: virtualNetworkRules, enableMultipleWriteLocations: enableMultipleWriteLocations, enableCassandraConnector: enableCassandraConnector, connectorOffer: connectorOffer, disableKeyBasedMetadataWriteAccess: disableKeyBasedMetadataWriteAccess, keyVaultKeyUri: keyVaultKeyUri, defaultIdentity: defaultIdentity, publicNetworkAccess: publicNetworkAccess, isFreeTierEnabled: isFreeTierEnabled, isAnalyticalStorageEnabled: isAnalyticalStorageEnabled, backupPolicy: backupPolicy, cors: cors, networkAclBypass: networkAclBypass, networkAclBypassResourceIds: networkAclBypassResourceIds, disableLocalAuth: disableLocalAuth, keysMetadata: keysMetadata, enablePartitionMerge: enablePartitionMerge, enableBurstCapacity: enableBurstCapacity, minimalTlsVersion: minimalTlsVersion, customerManagedKeyStatus: customerManagedKeyStatus, enablePriorityBasedExecution: enablePriorityBasedExecution, defaultPriorityLevel: defaultPriorityLevel, enablePerRegionPerPartitionAutoscale: enablePerRegionPerPartitionAutoscale, isHierarchicalPartitionKeyIdLastLevelEnforced: default, apiServerVersion: apiServerVersion, analyticalStorageSchemaType: analyticalStorageSchemaType, capacityTotalThroughputLimit: capacityTotalThroughputLimit);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CosmosDBAccountCreateOrUpdateContent"/>. </summary>
@@ -4209,56 +4043,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="defaultPriorityLevel"> Enum to indicate default Priority Level of request for Priority Based Execution. </param>
         /// <returns> A new <see cref="Models.CosmosDBAccountCreateOrUpdateContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CosmosDBAccountCreateOrUpdateContent CosmosDBAccountCreateOrUpdateContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CosmosDBAccountKind? kind = default, ManagedServiceIdentity identity = default, ConsistencyPolicy consistencyPolicy = default, IEnumerable<CosmosDBAccountLocation> locations = default, CosmosDBAccountOfferType databaseAccountOfferType = default, IEnumerable<CosmosDBIPAddressOrRange> ipRules = default, bool? isVirtualNetworkFilterEnabled = default, bool? enableAutomaticFailover = default, IEnumerable<CosmosDBAccountCapability> capabilities = default, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules = default, bool? enableMultipleWriteLocations = default, bool? enableCassandraConnector = default, ConnectorOffer? connectorOffer = default, bool? disableKeyBasedMetadataWriteAccess = default, Uri keyVaultKeyUri = default, string defaultIdentity = default, CosmosDBPublicNetworkAccess? publicNetworkAccess = default, bool? isFreeTierEnabled = default, CosmosDBServerVersion? apiServerVersion = default, bool? isAnalyticalStorageEnabled = default, AnalyticalStorageSchemaType? analyticalStorageSchemaType = default, CosmosDBAccountCreateMode? createMode = default, CosmosDBAccountBackupPolicy backupPolicy = default, IEnumerable<CosmosDBAccountCorsPolicy> cors = default, NetworkAclBypass? networkAclBypass = default, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds = default, bool? disableLocalAuth = default, CosmosDBAccountRestoreParameters restoreParameters = default, int? capacityTotalThroughputLimit = default, DatabaseAccountKeysMetadata keysMetadata = default, bool? enablePartitionMerge = default, CosmosDBMinimalTlsVersion? minimalTlsVersion = default, bool? enableBurstCapacity = default, string customerManagedKeyStatus = default, bool? enablePerRegionPerPartitionAutoscale = default, bool? enablePriorityBasedExecution = default, DefaultPriorityLevel? defaultPriorityLevel = default)
+        public static CosmosDBAccountCreateOrUpdateContent CosmosDBAccountCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountKind? kind, ManagedServiceIdentity identity, ConsistencyPolicy consistencyPolicy, IEnumerable<CosmosDBAccountLocation> locations, CosmosDBAccountOfferType databaseAccountOfferType, IEnumerable<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IEnumerable<CosmosDBAccountCapability> capabilities, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, CosmosDBServerVersion? apiServerVersion, bool? isAnalyticalStorageEnabled, AnalyticalStorageSchemaType? analyticalStorageSchemaType, CosmosDBAccountCreateMode? createMode, CosmosDBAccountBackupPolicy backupPolicy, IEnumerable<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds, bool? disableLocalAuth, CosmosDBAccountRestoreParameters restoreParameters, int? capacityTotalThroughputLimit, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, CosmosDBMinimalTlsVersion? minimalTlsVersion, bool? enableBurstCapacity, string customerManagedKeyStatus, bool? enablePerRegionPerPartitionAutoscale, bool? enablePriorityBasedExecution, DefaultPriorityLevel? defaultPriorityLevel)
         {
-            return new CosmosDBAccountCreateOrUpdateContent(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                kind,
-                identity,
-                consistencyPolicy is null && locations is null && ipRules is null && isVirtualNetworkFilterEnabled is null && enableAutomaticFailover is null && capabilities is null && virtualNetworkRules is null && enableMultipleWriteLocations is null && enableCassandraConnector is null && connectorOffer is null && disableKeyBasedMetadataWriteAccess is null && keyVaultKeyUri is null && defaultIdentity is null && publicNetworkAccess is null && isFreeTierEnabled is null && apiServerVersion is null && isAnalyticalStorageEnabled is null && analyticalStorageSchemaType is null && createMode is null && backupPolicy is null && cors is null && networkAclBypass is null && networkAclBypassResourceIds is null && disableLocalAuth is null && restoreParameters is null && capacityTotalThroughputLimit is null && keysMetadata is null && enablePartitionMerge is null && enableBurstCapacity is null && minimalTlsVersion is null && customerManagedKeyStatus is null && enablePriorityBasedExecution is null && defaultPriorityLevel is null && enablePerRegionPerPartitionAutoscale is null ? default : new DatabaseAccountCreateUpdateProperties(
-                    consistencyPolicy,
-                    (locations ?? new ChangeTrackingList<CosmosDBAccountLocation>()).ToList(),
-                    databaseAccountOfferType,
-                    (ipRules ?? new ChangeTrackingList<CosmosDBIPAddressOrRange>()).ToList(),
-                    isVirtualNetworkFilterEnabled,
-                    enableAutomaticFailover,
-                    (capabilities ?? new ChangeTrackingList<CosmosDBAccountCapability>()).ToList(),
-                    (virtualNetworkRules ?? new ChangeTrackingList<CosmosDBVirtualNetworkRule>()).ToList(),
-                    enableMultipleWriteLocations,
-                    enableCassandraConnector,
-                    connectorOffer,
-                    disableKeyBasedMetadataWriteAccess,
-                    keyVaultKeyUri,
-                    defaultIdentity,
-                    publicNetworkAccess,
-                    isFreeTierEnabled,
-                    new ApiProperties(apiServerVersion, default),
-                    isAnalyticalStorageEnabled,
-                    new AnalyticalStorageConfiguration(analyticalStorageSchemaType, default),
-                    createMode,
-                    backupPolicy,
-                    (cors ?? new ChangeTrackingList<CosmosDBAccountCorsPolicy>()).ToList(),
-                    networkAclBypass,
-                    (networkAclBypassResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    disableLocalAuth,
-                    restoreParameters,
-                    new CosmosDBAccountCapacity(capacityTotalThroughputLimit, default),
-                    keysMetadata,
-                    enablePartitionMerge,
-                    enableBurstCapacity,
-                    minimalTlsVersion,
-                    customerManagedKeyStatus,
-                    enablePriorityBasedExecution,
-                    defaultPriorityLevel,
-                    enablePerRegionPerPartitionAutoscale,
-                    default,
-                    default),
-                default);
+            return CosmosDBAccountCreateOrUpdateContent(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, kind: kind, identity: identity, consistencyPolicy: consistencyPolicy, locations: locations, databaseAccountOfferType: databaseAccountOfferType, ipRules: ipRules, isVirtualNetworkFilterEnabled: isVirtualNetworkFilterEnabled, enableAutomaticFailover: enableAutomaticFailover, capabilities: capabilities, virtualNetworkRules: virtualNetworkRules, enableMultipleWriteLocations: enableMultipleWriteLocations, enableCassandraConnector: enableCassandraConnector, connectorOffer: connectorOffer, disableKeyBasedMetadataWriteAccess: disableKeyBasedMetadataWriteAccess, keyVaultKeyUri: keyVaultKeyUri, defaultIdentity: defaultIdentity, publicNetworkAccess: publicNetworkAccess, isFreeTierEnabled: isFreeTierEnabled, isAnalyticalStorageEnabled: isAnalyticalStorageEnabled, createMode: createMode, backupPolicy: backupPolicy, cors: cors, networkAclBypass: networkAclBypass, networkAclBypassResourceIds: networkAclBypassResourceIds, disableLocalAuth: disableLocalAuth, restoreParameters: restoreParameters, keysMetadata: keysMetadata, enablePartitionMerge: enablePartitionMerge, enableBurstCapacity: enableBurstCapacity, minimalTlsVersion: minimalTlsVersion, customerManagedKeyStatus: customerManagedKeyStatus, enablePriorityBasedExecution: enablePriorityBasedExecution, defaultPriorityLevel: defaultPriorityLevel, enablePerRegionPerPartitionAutoscale: enablePerRegionPerPartitionAutoscale, isHierarchicalPartitionKeyIdLastLevelEnforced: default, apiServerVersion: apiServerVersion, analyticalStorageSchemaType: analyticalStorageSchemaType, capacityTotalThroughputLimit: capacityTotalThroughputLimit);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBSqlDatabaseData"/>. </summary>
@@ -4272,18 +4059,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"></param>
         /// <returns> A new <see cref="CosmosDB.CosmosDBSqlDatabaseData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CosmosDBSqlDatabaseData CosmosDBSqlDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedCosmosDBSqlDatabaseResourceInfo resource = default, CosmosDBSqlDatabasePropertiesConfig options = default)
+        public static CosmosDBSqlDatabaseData CosmosDBSqlDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedCosmosDBSqlDatabaseResourceInfo resource, CosmosDBSqlDatabasePropertiesConfig options)
         {
-            return new CosmosDBSqlDatabaseData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                resource is null && options is null ? default : new CosmosDBSqlDatabaseProperties(resource, options, default),
-                default,
-                default);
+            return CosmosDBSqlDatabaseData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, resource: resource, options: options, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExtendedCosmosDBSqlDatabaseResourceInfo"/>. </summary>
@@ -4297,7 +4075,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
         /// <returns> A new <see cref="Models.ExtendedCosmosDBSqlDatabaseResourceInfo"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ExtendedCosmosDBSqlDatabaseResourceInfo ExtendedCosmosDBSqlDatabaseResourceInfo(string databaseName = default, ResourceRestoreParameters restoreParameters = default, CosmosDBAccountCreateMode? createMode = default, string colls = default, string users = default, string rid = default, float? timestamp = default, ETag? etag = default)
+        public static ExtendedCosmosDBSqlDatabaseResourceInfo ExtendedCosmosDBSqlDatabaseResourceInfo(string databaseName, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, string colls, string users, string rid, float? timestamp, ETag? etag)
         {
             return new ExtendedCosmosDBSqlDatabaseResourceInfo(
                 databaseName,
@@ -4321,18 +4099,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="resource"></param>
         /// <returns> A new <see cref="CosmosDB.ThroughputSettingData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ThroughputSettingData ThroughputSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedThroughputSettingsResourceInfo resource = default)
+        public static ThroughputSettingData ThroughputSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedThroughputSettingsResourceInfo resource)
         {
-            return new ThroughputSettingData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                resource is null ? default : new ThroughputSettingsProperties(resource, default),
-                default,
-                default);
+            return ThroughputSettingData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, resource: resource, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBSqlContainerData"/>. </summary>
@@ -4346,18 +4115,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"></param>
         /// <returns> A new <see cref="CosmosDB.CosmosDBSqlContainerData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CosmosDBSqlContainerData CosmosDBSqlContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedCosmosDBSqlContainerResourceInfo resource = default, CosmosDBSqlContainerPropertiesConfig options = default)
+        public static CosmosDBSqlContainerData CosmosDBSqlContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedCosmosDBSqlContainerResourceInfo resource, CosmosDBSqlContainerPropertiesConfig options)
         {
-            return new CosmosDBSqlContainerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                resource is null && options is null ? default : new CosmosDBSqlContainerProperties(resource, options, default),
-                default,
-                default);
+            return CosmosDBSqlContainerData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, resource: resource, options: options, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBSqlStoredProcedureData"/>. </summary>
@@ -4370,18 +4130,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="resource"></param>
         /// <returns> A new <see cref="CosmosDB.CosmosDBSqlStoredProcedureData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CosmosDBSqlStoredProcedureData CosmosDBSqlStoredProcedureData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedCosmosDBSqlStoredProcedureResourceInfo resource = default)
+        public static CosmosDBSqlStoredProcedureData CosmosDBSqlStoredProcedureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedCosmosDBSqlStoredProcedureResourceInfo resource)
         {
-            return new CosmosDBSqlStoredProcedureData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                resource is null ? default : new CosmosDBSqlStoredProcedureProperties(resource, default),
-                default,
-                default);
+            return CosmosDBSqlStoredProcedureData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, resource: resource, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBSqlUserDefinedFunctionData"/>. </summary>
@@ -4394,18 +4145,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="resource"></param>
         /// <returns> A new <see cref="CosmosDB.CosmosDBSqlUserDefinedFunctionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CosmosDBSqlUserDefinedFunctionData CosmosDBSqlUserDefinedFunctionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo resource = default)
+        public static CosmosDBSqlUserDefinedFunctionData CosmosDBSqlUserDefinedFunctionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo resource)
         {
-            return new CosmosDBSqlUserDefinedFunctionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                resource is null ? default : new CosmosDBSqlUserDefinedFunctionProperties(resource, default),
-                default,
-                default);
+            return CosmosDBSqlUserDefinedFunctionData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, resource: resource, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBSqlTriggerData"/>. </summary>
@@ -4418,18 +4160,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="resource"></param>
         /// <returns> A new <see cref="CosmosDB.CosmosDBSqlTriggerData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CosmosDBSqlTriggerData CosmosDBSqlTriggerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedCosmosDBSqlTriggerResourceInfo resource = default)
+        public static CosmosDBSqlTriggerData CosmosDBSqlTriggerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedCosmosDBSqlTriggerResourceInfo resource)
         {
-            return new CosmosDBSqlTriggerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                resource is null ? default : new CosmosDBSqlTriggerProperties(resource, default),
-                default,
-                default);
+            return CosmosDBSqlTriggerData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, resource: resource, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.MongoDBDatabaseData"/>. </summary>
@@ -4443,18 +4176,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"></param>
         /// <returns> A new <see cref="CosmosDB.MongoDBDatabaseData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MongoDBDatabaseData MongoDBDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedMongoDBDatabaseResourceInfo resource = default, MongoDBDatabasePropertiesConfig options = default)
+        public static MongoDBDatabaseData MongoDBDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedMongoDBDatabaseResourceInfo resource, MongoDBDatabasePropertiesConfig options)
         {
-            return new MongoDBDatabaseData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                resource is null && options is null ? default : new MongoDBDatabaseProperties(resource, options, default),
-                default,
-                default);
+            return MongoDBDatabaseData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, resource: resource, options: options, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.MongoDBCollectionData"/>. </summary>
@@ -4468,18 +4192,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"></param>
         /// <returns> A new <see cref="CosmosDB.MongoDBCollectionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MongoDBCollectionData MongoDBCollectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedMongoDBCollectionResourceInfo resource = default, MongoDBCollectionPropertiesConfig options = default)
+        public static MongoDBCollectionData MongoDBCollectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedMongoDBCollectionResourceInfo resource, MongoDBCollectionPropertiesConfig options)
         {
-            return new MongoDBCollectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                resource is null && options is null ? default : new MongoDBCollectionProperties(resource, options, default),
-                default,
-                default);
+            return MongoDBCollectionData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, resource: resource, options: options, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBTableData"/>. </summary>
@@ -4493,18 +4208,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"></param>
         /// <returns> A new <see cref="CosmosDB.CosmosDBTableData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CosmosDBTableData CosmosDBTableData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CosmosDBTablePropertiesResource resource = default, CosmosDBTablePropertiesOptions options = default)
+        public static CosmosDBTableData CosmosDBTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBTablePropertiesResource resource, CosmosDBTablePropertiesOptions options)
         {
-            return new CosmosDBTableData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                resource is null && options is null ? default : new CosmosDBTableProperties(resource, options, default),
-                default,
-                default);
+            return CosmosDBTableData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, resource: resource, options: options, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CassandraKeyspaceData"/>. </summary>
@@ -4518,18 +4224,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"></param>
         /// <returns> A new <see cref="CosmosDB.CassandraKeyspaceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CassandraKeyspaceData CassandraKeyspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedCassandraKeyspaceResourceInfo resource = default, CassandraKeyspacePropertiesConfig options = default)
+        public static CassandraKeyspaceData CassandraKeyspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedCassandraKeyspaceResourceInfo resource, CassandraKeyspacePropertiesConfig options)
         {
-            return new CassandraKeyspaceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                resource is null && options is null ? default : new CassandraKeyspaceProperties(resource, options, default),
-                default,
-                default);
+            return CassandraKeyspaceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, resource: resource, options: options, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CassandraKeyspaceCreateOrUpdateContent"/>. </summary>
@@ -4542,9 +4239,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="resourceKeyspaceName"> The standard JSON format of a Cassandra keyspace. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
         /// <returns> A new <see cref="Models.CassandraKeyspaceCreateOrUpdateContent"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static CassandraKeyspaceCreateOrUpdateContent CassandraKeyspaceCreateOrUpdateContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string resourceKeyspaceName = default, CosmosDBCreateUpdateConfig options = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new CassandraKeyspaceCreateOrUpdateContent(
                 id,
                 name,
@@ -4567,18 +4265,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"></param>
         /// <returns> A new <see cref="CosmosDB.CassandraTableData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CassandraTableData CassandraTableData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedCassandraTableResourceInfo resource = default, CassandraTablePropertiesConfig options = default)
+        public static CassandraTableData CassandraTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedCassandraTableResourceInfo resource, CassandraTablePropertiesConfig options)
         {
-            return new CassandraTableData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                resource is null && options is null ? default : new CassandraTableProperties(resource, options, default),
-                default,
-                default);
+            return CassandraTableData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, resource: resource, options: options, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.GremlinDatabaseData"/>. </summary>
@@ -4592,18 +4281,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"></param>
         /// <returns> A new <see cref="CosmosDB.GremlinDatabaseData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static GremlinDatabaseData GremlinDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedGremlinDatabaseResourceInfo resource = default, GremlinDatabasePropertiesConfig options = default)
+        public static GremlinDatabaseData GremlinDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedGremlinDatabaseResourceInfo resource, GremlinDatabasePropertiesConfig options)
         {
-            return new GremlinDatabaseData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                resource is null && options is null ? default : new GremlinDatabaseProperties(resource, options, default),
-                default,
-                default);
+            return GremlinDatabaseData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, resource: resource, options: options, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.GremlinGraphData"/>. </summary>
@@ -4617,18 +4297,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"></param>
         /// <returns> A new <see cref="CosmosDB.GremlinGraphData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static GremlinGraphData GremlinGraphData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedGremlinGraphResourceInfo resource = default, GremlinGraphPropertiesConfig options = default)
+        public static GremlinGraphData GremlinGraphData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedGremlinGraphResourceInfo resource, GremlinGraphPropertiesConfig options)
         {
-            return new GremlinGraphData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                resource is null && options is null ? default : new GremlinGraphProperties(resource, options, default),
-                default,
-                default);
+            return GremlinGraphData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, resource: resource, options: options, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CassandraClusterProperties"/>. </summary>
@@ -4654,35 +4325,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="privateLinkResourceId"> If the Connection Method is VPN, this is the Id of the private link resource that the datacenters need to connect to. </param>
         /// <returns> A new <see cref="Models.CassandraClusterProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CassandraClusterProperties CassandraClusterProperties(CassandraProvisioningState? provisioningState = default, string restoreFromBackupId = default, ResourceIdentifier delegatedManagementSubnetId = default, string cassandraVersion = default, string clusterNameOverride = default, CassandraAuthenticationMethod? authenticationMethod = default, string initialCassandraAdminPassword = default, string prometheusEndpointIPAddress = default, bool? isRepairEnabled = default, IEnumerable<CassandraCertificate> clientCertificates = default, IEnumerable<CassandraCertificate> externalGossipCertificates = default, IEnumerable<CassandraCertificate> gossipCertificates = default, IEnumerable<CassandraDataCenterSeedNode> externalSeedNodes = default, IEnumerable<CassandraDataCenterSeedNode> seedNodes = default, int? hoursBetweenBackups = default, bool? isDeallocated = default, bool? isCassandraAuditLoggingEnabled = default, CassandraError provisionError = default, ServiceConnectionType? azureConnectionMethod = default, ResourceIdentifier privateLinkResourceId = default)
+        public static CassandraClusterProperties CassandraClusterProperties(CassandraProvisioningState? provisioningState, string restoreFromBackupId, ResourceIdentifier delegatedManagementSubnetId, string cassandraVersion, string clusterNameOverride, CassandraAuthenticationMethod? authenticationMethod, string initialCassandraAdminPassword, string prometheusEndpointIPAddress, bool? isRepairEnabled, IEnumerable<CassandraCertificate> clientCertificates, IEnumerable<CassandraCertificate> externalGossipCertificates, IEnumerable<CassandraCertificate> gossipCertificates, IEnumerable<CassandraDataCenterSeedNode> externalSeedNodes, IEnumerable<CassandraDataCenterSeedNode> seedNodes, int? hoursBetweenBackups, bool? isDeallocated, bool? isCassandraAuditLoggingEnabled, CassandraError provisionError, ServiceConnectionType? azureConnectionMethod, ResourceIdentifier privateLinkResourceId)
         {
-            return new CassandraClusterProperties(
-                provisioningState,
-                restoreFromBackupId,
-                delegatedManagementSubnetId,
-                cassandraVersion,
-                clusterNameOverride,
-                authenticationMethod,
-                initialCassandraAdminPassword,
-                prometheusEndpointIPAddress is null ? default : new CassandraDataCenterSeedNode(prometheusEndpointIPAddress, default),
-                isRepairEnabled,
-                default,
-                (clientCertificates ?? new ChangeTrackingList<CassandraCertificate>()).ToList(),
-                (externalGossipCertificates ?? new ChangeTrackingList<CassandraCertificate>()).ToList(),
-                (gossipCertificates ?? new ChangeTrackingList<CassandraCertificate>()).ToList(),
-                (externalSeedNodes ?? new ChangeTrackingList<CassandraDataCenterSeedNode>()).ToList(),
-                (seedNodes ?? new ChangeTrackingList<CassandraDataCenterSeedNode>()).ToList(),
-                default,
-                hoursBetweenBackups,
-                isDeallocated,
-                isCassandraAuditLoggingEnabled,
-                provisionError,
-                default,
-                default,
-                default,
-                azureConnectionMethod,
-                privateLinkResourceId,
-                default);
+            return CassandraClusterProperties(provisioningState: provisioningState, restoreFromBackupId: restoreFromBackupId, delegatedManagementSubnetId: delegatedManagementSubnetId, cassandraVersion: cassandraVersion, clusterNameOverride: clusterNameOverride, authenticationMethod: authenticationMethod, initialCassandraAdminPassword: initialCassandraAdminPassword, prometheusEndpointIPAddress: prometheusEndpointIPAddress, isRepairEnabled: isRepairEnabled, autoReplicate: default, clientCertificates: clientCertificates, externalGossipCertificates: externalGossipCertificates, gossipCertificates: gossipCertificates, externalSeedNodes: externalSeedNodes, seedNodes: seedNodes, externalDataCenters: default, hoursBetweenBackups: hoursBetweenBackups, isDeallocated: isDeallocated, isCassandraAuditLoggingEnabled: isCassandraAuditLoggingEnabled, provisionError: provisionError, extensions: default, backupSchedules: default, scheduledEventStrategy: default, azureConnectionMethod: azureConnectionMethod, privateLinkResourceId: privateLinkResourceId);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.RestorableCosmosDBAccountData"/>. </summary>
@@ -4698,9 +4343,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="apiType"> The API type of the restorable database account. </param>
         /// <param name="restorableLocations"> List of regions where the of the database account can be restored from. </param>
         /// <returns> A new <see cref="CosmosDB.RestorableCosmosDBAccountData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static RestorableCosmosDBAccountData RestorableCosmosDBAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, string accountName = default, DateTimeOffset? createdOn = default, DateTimeOffset? deletedOn = default, DateTimeOffset? oldestRestorableOn = default, CosmosDBApiType? apiType = default, IEnumerable<RestorableLocationResourceInfo> restorableLocations = default)
         {
+            restorableLocations ??= new ChangeTrackingList<RestorableLocationResourceInfo>();
+
             return new RestorableCosmosDBAccountData(
                 id,
                 name,
@@ -4730,7 +4376,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
         /// <returns> A new <see cref="Models.RestorableSqlDatabasePropertiesResourceDatabase"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RestorableSqlDatabasePropertiesResourceDatabase RestorableSqlDatabasePropertiesResourceDatabase(string databaseName = default, ResourceRestoreParameters restoreParameters = default, CosmosDBAccountCreateMode? createMode = default, string colls = default, string users = default, string self = default, string rid = default, float? timestamp = default, ETag? etag = default)
+        public static RestorableSqlDatabasePropertiesResourceDatabase RestorableSqlDatabasePropertiesResourceDatabase(string databaseName, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, string colls, string users, string self, string rid, float? timestamp, ETag? etag)
         {
             return new RestorableSqlDatabasePropertiesResourceDatabase(
                 databaseName,
@@ -4765,8 +4411,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
         /// <returns> A new <see cref="Models.RestorableSqlContainerPropertiesResourceContainer"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RestorableSqlContainerPropertiesResourceContainer RestorableSqlContainerPropertiesResourceContainer(string containerName = default, CosmosDBIndexingPolicy indexingPolicy = default, CosmosDBContainerPartitionKey partitionKey = default, int? defaultTtl = default, IEnumerable<CosmosDBUniqueKey> uniqueKeys = default, ConflictResolutionPolicy conflictResolutionPolicy = default, CosmosDBClientEncryptionPolicy clientEncryptionPolicy = default, long? analyticalStorageTtl = default, ResourceRestoreParameters restoreParameters = default, CosmosDBAccountCreateMode? createMode = default, IEnumerable<ComputedProperty> computedProperties = default, IEnumerable<CosmosDBVectorEmbedding> vectorEmbeddings = default, FullTextPolicy fullTextPolicy = default, string self = default, string rid = default, float? timestamp = default, ETag? etag = default)
+        public static RestorableSqlContainerPropertiesResourceContainer RestorableSqlContainerPropertiesResourceContainer(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, IEnumerable<CosmosDBUniqueKey> uniqueKeys, ConflictResolutionPolicy conflictResolutionPolicy, CosmosDBClientEncryptionPolicy clientEncryptionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, IEnumerable<ComputedProperty> computedProperties, IEnumerable<CosmosDBVectorEmbedding> vectorEmbeddings, FullTextPolicy fullTextPolicy, string self, string rid, float? timestamp, ETag? etag)
         {
+            uniqueKeys ??= new ChangeTrackingList<CosmosDBUniqueKey>();
+            computedProperties ??= new ChangeTrackingList<ComputedProperty>();
+            vectorEmbeddings ??= new ChangeTrackingList<CosmosDBVectorEmbedding>();
+
             return new RestorableSqlContainerPropertiesResourceContainer(
                 containerName,
                 indexingPolicy,

@@ -2408,27 +2408,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new AgentPoolRecentlyUsedVersion(orchestratorVersion, nodeImageVersion, lastUsedOn, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The properties of the machine. </param>
-        /// <param name="zones"> The Availability zone in which machine is located. </param>
-        /// <returns> A new <see cref="ContainerService.ContainerServiceMachineData"/> instance for mocking. </returns>
-        public static ContainerServiceMachineData ContainerServiceMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerServiceMachineProperties properties = default, IEnumerable<string> zones = default)
-        {
-            zones ??= new ChangeTrackingList<string>();
-
-            return new ContainerServiceMachineData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                default);
-        }
-
         /// <param name="network"> network properties of the machine. </param>
         /// <param name="resourceId"> Azure resource id of the machine. It can be used to GET underlying VM Instance. </param>
         /// <param name="hardware"> The hardware and GPU settings of the machine. </param>
@@ -2596,25 +2575,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 driftAction,
                 driftReason,
                 vmState,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> The current provisioning state. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="privateEndpointId"> The resource ID of the private endpoint. </param>
-        /// <returns> A new <see cref="ContainerService.ContainerServicePrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static ContainerServicePrivateEndpointConnectionData ContainerServicePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerServicePrivateEndpointConnectionProvisioningState? provisioningState = default, ContainerServicePrivateLinkServiceConnectionState connectionState = default, ResourceIdentifier privateEndpointId = default)
-        {
-            return new ContainerServicePrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && privateEndpointId is null && connectionState is null ? default : new ContainerServicePrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, default), connectionState, default),
                 default);
         }
 
@@ -3212,24 +3172,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="podMaxPids"> The maximum number of processes per pod. </param>
         /// <returns> A new <see cref="Models.KubeletConfig"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KubeletConfig KubeletConfig(string cpuManagerPolicy = default, bool? isCpuCfsQuotaEnabled = default, string cpuCfsQuotaPeriod = default, int? imageGcHighThreshold = default, int? imageGcLowThreshold = default, string topologyManagerPolicy = default, IEnumerable<string> allowedUnsafeSysctls = default, bool? shouldFailStartWithSwapOn = default, int? containerLogMaxSizeInMB = default, int? containerLogMaxFiles = default, int? podMaxPids = default)
+        public static KubeletConfig KubeletConfig(string cpuManagerPolicy, bool? isCpuCfsQuotaEnabled, string cpuCfsQuotaPeriod, int? imageGcHighThreshold, int? imageGcLowThreshold, string topologyManagerPolicy, IEnumerable<string> allowedUnsafeSysctls, bool? shouldFailStartWithSwapOn, int? containerLogMaxSizeInMB, int? containerLogMaxFiles, int? podMaxPids)
         {
-            return new KubeletConfig(
-                cpuManagerPolicy,
-                isCpuCfsQuotaEnabled,
-                cpuCfsQuotaPeriod,
-                imageGcHighThreshold,
-                imageGcLowThreshold,
-                topologyManagerPolicy,
-                (allowedUnsafeSysctls ?? new ChangeTrackingList<string>()).ToList(),
-                shouldFailStartWithSwapOn,
-                containerLogMaxSizeInMB,
-                containerLogMaxFiles,
-                podMaxPids,
-                default,
-                default,
-                default,
-                default);
+            return KubeletConfig(cpuManagerPolicy: cpuManagerPolicy, isCpuCfsQuotaEnabled: isCpuCfsQuotaEnabled, cpuCfsQuotaPeriod: cpuCfsQuotaPeriod, imageGcHighThreshold: imageGcHighThreshold, imageGcLowThreshold: imageGcLowThreshold, topologyManagerPolicy: topologyManagerPolicy, allowedUnsafeSysctls: allowedUnsafeSysctls, shouldFailStartWithSwapOn: shouldFailStartWithSwapOn, containerLogMaxSizeInMB: containerLogMaxSizeInMB, containerLogMaxFiles: containerLogMaxFiles, podMaxPids: podMaxPids, seccompDefault: default, kubeReserved: default, hardEvictionThreshold: default);
         }
 
         /// <param name="nodePublicIPTags"> IPTags of instance-level public IPs. </param>
@@ -3237,15 +3182,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="applicationSecurityGroups"> The IDs of the application security groups which agent pool will associate when created. </param>
         /// <returns> A new <see cref="Models.AgentPoolNetworkProfile"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AgentPoolNetworkProfile AgentPoolNetworkProfile(IEnumerable<ContainerServiceIPTag> nodePublicIPTags = default, IEnumerable<AgentPoolNetworkPortRange> allowedHostPorts = default, IEnumerable<ResourceIdentifier> applicationSecurityGroups = default)
+        public static AgentPoolNetworkProfile AgentPoolNetworkProfile(IEnumerable<ContainerServiceIPTag> nodePublicIPTags, IEnumerable<AgentPoolNetworkPortRange> allowedHostPorts, IEnumerable<ResourceIdentifier> applicationSecurityGroups)
         {
-            return new AgentPoolNetworkProfile(
-                (nodePublicIPTags ?? new ChangeTrackingList<ContainerServiceIPTag>()).ToList(),
-                default,
-                (allowedHostPorts ?? new ChangeTrackingList<AgentPoolNetworkPortRange>()).ToList(),
-                (applicationSecurityGroups ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                default,
-                default);
+            return AgentPoolNetworkProfile(nodePublicIPTags: nodePublicIPTags, nodePublicIPPrefixIDs: default, allowedHostPorts: allowedHostPorts, applicationSecurityGroups: applicationSecurityGroups, secondaryNetworkInterfaces: default);
         }
 
         /// <param name="networkPlugin"> Network plugin used for building the Kubernetes network. </param>
@@ -3267,31 +3206,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="networkIPFamilies"> The IP families used to specify IP versions available to the cluster. IP families are used to determine single-stack or dual-stack clusters. For single-stack, the expected value is IPv4. For dual-stack, the expected values are IPv4 and IPv6. </param>
         /// <returns> A new <see cref="Models.ContainerServiceNetworkProfile"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerServiceNetworkProfile ContainerServiceNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin = default, ContainerServiceNetworkPluginMode? networkPluginMode = default, ContainerServiceNetworkPolicy? networkPolicy = default, ContainerServiceNetworkMode? networkMode = default, NetworkDataplane? networkDataplane = default, ManagedClusterAdvancedNetworking advancedNetworking = default, string podCidr = default, string serviceCidr = default, string dnsServiceIP = default, ContainerServiceOutboundType? outboundType = default, ContainerServiceLoadBalancerSku? loadBalancerSku = default, ManagedClusterLoadBalancerProfile loadBalancerProfile = default, ManagedClusterNatGatewayProfile natGatewayProfile = default, bool? isStaticEgressGatewayAddonEnabled = default, IEnumerable<string> podCidrs = default, IEnumerable<string> serviceCidrs = default, IEnumerable<ContainerServiceIPFamily> networkIPFamilies = default)
+        public static ContainerServiceNetworkProfile ContainerServiceNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin, ContainerServiceNetworkPluginMode? networkPluginMode, ContainerServiceNetworkPolicy? networkPolicy, ContainerServiceNetworkMode? networkMode, NetworkDataplane? networkDataplane, ManagedClusterAdvancedNetworking advancedNetworking, string podCidr, string serviceCidr, string dnsServiceIP, ContainerServiceOutboundType? outboundType, ContainerServiceLoadBalancerSku? loadBalancerSku, ManagedClusterLoadBalancerProfile loadBalancerProfile, ManagedClusterNatGatewayProfile natGatewayProfile, bool? isStaticEgressGatewayAddonEnabled, IEnumerable<string> podCidrs, IEnumerable<string> serviceCidrs, IEnumerable<ContainerServiceIPFamily> networkIPFamilies)
         {
-            return new ContainerServiceNetworkProfile(
-                networkPlugin,
-                networkPluginMode,
-                networkPolicy,
-                networkMode,
-                networkDataplane,
-                advancedNetworking,
-                podCidr,
-                serviceCidr,
-                dnsServiceIP,
-                outboundType,
-                loadBalancerSku,
-                loadBalancerProfile,
-                default,
-                natGatewayProfile,
-                default,
-                isStaticEgressGatewayAddonEnabled is null ? default : new ManagedClusterStaticEgressGatewayProfile(isStaticEgressGatewayAddonEnabled, default),
-                (podCidrs ?? new ChangeTrackingList<string>()).ToList(),
-                (serviceCidrs ?? new ChangeTrackingList<string>()).ToList(),
-                (networkIPFamilies ?? new ChangeTrackingList<ContainerServiceIPFamily>()).ToList(),
-                default,
-                default,
-                default);
+            return ContainerServiceNetworkProfile(networkPlugin: networkPlugin, networkPluginMode: networkPluginMode, networkPolicy: networkPolicy, networkMode: networkMode, networkDataplane: networkDataplane, advancedNetworking: advancedNetworking, podCidr: podCidr, serviceCidr: serviceCidr, dnsServiceIP: dnsServiceIP, outboundType: outboundType, loadBalancerSku: loadBalancerSku, loadBalancerProfile: loadBalancerProfile, bastionProfile: default, natGatewayProfile: natGatewayProfile, natGatewayId: default, isStaticEgressGatewayAddonEnabled: isStaticEgressGatewayAddonEnabled, podCidrs: podCidrs, serviceCidrs: serviceCidrs, networkIPFamilies: networkIPFamilies, podLinkLocalAccess: default, kubeProxyConfig: default);
         }
 
         /// <param name="httpProxy"> The HTTP proxy server endpoint to use. </param>
@@ -3301,16 +3218,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="isHttpProxyEnabled"> Whether to enable HTTP proxy. If disabled, the specified proxy configuration will be not be set on pods and nodes. If not specified, the default is true. </param>
         /// <returns> A new <see cref="Models.ManagedClusterHttpProxyConfig"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedClusterHttpProxyConfig ManagedClusterHttpProxyConfig(string httpProxy = default, string httpsProxy = default, IEnumerable<string> noProxy = default, string trustedCA = default, bool? isHttpProxyEnabled = default)
+        public static ManagedClusterHttpProxyConfig ManagedClusterHttpProxyConfig(string httpProxy, string httpsProxy, IEnumerable<string> noProxy, string trustedCA, bool? isHttpProxyEnabled)
         {
-            return new ManagedClusterHttpProxyConfig(
-                httpProxy,
-                httpsProxy,
-                (noProxy ?? new ChangeTrackingList<string>()).ToList(),
-                default,
-                trustedCA,
-                isHttpProxyEnabled,
-                default);
+            return ManagedClusterHttpProxyConfig(httpProxy: httpProxy, httpsProxy: httpsProxy, noProxy: noProxy, effectiveNoProxy: default, trustedCA: trustedCA, isHttpProxyEnabled: isHttpProxyEnabled);
         }
 
         /// <param name="defender"> Microsoft Defender settings for the security profile. </param>
@@ -3320,19 +3230,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="customCATrustCertificates"> A list of up to 10 base64 encoded CAs that will be added to the trust store on all nodes in the cluster. For more information see [Custom CA Trust Certificates](https://learn.microsoft.com/en-us/azure/aks/custom-certificate-authority). </param>
         /// <returns> A new <see cref="Models.ManagedClusterSecurityProfile"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedClusterSecurityProfile ManagedClusterSecurityProfile(ManagedClusterSecurityProfileDefender defender = default, ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms = default, bool? isWorkloadIdentityEnabled = default, ManagedClusterSecurityProfileImageCleaner imageCleaner = default, IEnumerable<byte[]> customCATrustCertificates = default)
+        public static ManagedClusterSecurityProfile ManagedClusterSecurityProfile(ManagedClusterSecurityProfileDefender defender, ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms, bool? isWorkloadIdentityEnabled, ManagedClusterSecurityProfileImageCleaner imageCleaner, IEnumerable<byte[]> customCATrustCertificates)
         {
-            return new ManagedClusterSecurityProfile(
-                defender,
-                azureKeyVaultKms,
-                default,
-                isWorkloadIdentityEnabled is null ? default : new ManagedClusterSecurityProfileWorkloadIdentity(isWorkloadIdentityEnabled, default),
-                imageCleaner,
-                default,
-                default,
-                (customCATrustCertificates ?? new ChangeTrackingList<byte[]>()).ToList(),
-                default,
-                default);
+            return ManagedClusterSecurityProfile(defender: defender, azureKeyVaultKms: azureKeyVaultKms, infrastructureEncryption: default, isWorkloadIdentityEnabled: isWorkloadIdentityEnabled, imageCleaner: imageCleaner, isImageIntegrityEnabled: default, isNodeRestrictionEnabled: default, customCATrustCertificates: customCATrustCertificates, serviceAccountImagePullProfile: default);
         }
 
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
@@ -3341,24 +3241,18 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="upgrades"> List of orchestrator types and versions available for upgrade. </param>
         /// <returns> A new <see cref="Models.ManagedClusterPoolUpgradeProfile"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedClusterPoolUpgradeProfile ManagedClusterPoolUpgradeProfile(string kubernetesVersion = default, string name = default, ContainerServiceOSType osType = default, IEnumerable<ManagedClusterPoolUpgradeProfileUpgradesItem> upgrades = default)
+        public static ManagedClusterPoolUpgradeProfile ManagedClusterPoolUpgradeProfile(string kubernetesVersion, string name, ContainerServiceOSType osType, IEnumerable<ManagedClusterPoolUpgradeProfileUpgradesItem> upgrades)
         {
-            return new ManagedClusterPoolUpgradeProfile(
-                kubernetesVersion,
-                name,
-                osType,
-                (upgrades ?? new ChangeTrackingList<ManagedClusterPoolUpgradeProfileUpgradesItem>()).ToList(),
-                default,
-                default);
+            return ManagedClusterPoolUpgradeProfile(kubernetesVersion: kubernetesVersion, name: name, osType: osType, upgrades: upgrades, componentsByReleases: default);
         }
 
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="isPreview"> Whether the Kubernetes version is currently in preview. </param>
         /// <returns> A new <see cref="Models.ManagedClusterPoolUpgradeProfileUpgradesItem"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedClusterPoolUpgradeProfileUpgradesItem ManagedClusterPoolUpgradeProfileUpgradesItem(string kubernetesVersion = default, bool? isPreview = default)
+        public static ManagedClusterPoolUpgradeProfileUpgradesItem ManagedClusterPoolUpgradeProfileUpgradesItem(string kubernetesVersion, bool? isPreview)
         {
-            return new ManagedClusterPoolUpgradeProfileUpgradesItem(kubernetesVersion, isPreview, default, default);
+            return ManagedClusterPoolUpgradeProfileUpgradesItem(kubernetesVersion: kubernetesVersion, isPreview: isPreview, isOutOfSupport: default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3370,32 +3264,28 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="maintenanceWindow"> Maintenance window for the maintenance configuration. </param>
         /// <returns> A new <see cref="ContainerService.ContainerServiceMaintenanceConfigurationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerServiceMaintenanceConfigurationData ContainerServiceMaintenanceConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<ContainerServiceTimeInWeek> timesInWeek = default, IEnumerable<ContainerServiceTimeSpan> notAllowedTimes = default, ContainerServiceMaintenanceWindow maintenanceWindow = default)
+        public static ContainerServiceMaintenanceConfigurationData ContainerServiceMaintenanceConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<ContainerServiceTimeInWeek> timesInWeek, IEnumerable<ContainerServiceTimeSpan> notAllowedTimes, ContainerServiceMaintenanceWindow maintenanceWindow)
         {
-            return new ContainerServiceMaintenanceConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                timesInWeek is null && notAllowedTimes is null && maintenanceWindow is null ? default : new MaintenanceConfigurationProperties((timesInWeek ?? new ChangeTrackingList<ContainerServiceTimeInWeek>()).ToList(), (notAllowedTimes ?? new ChangeTrackingList<ContainerServiceTimeSpan>()).ToList(), default, maintenanceWindow, default),
-                default);
+            return ContainerServiceMaintenanceConfigurationData(id: id, name: name, resourceType: resourceType, systemData: systemData, timesInWeek: timesInWeek, notAllowedTimes: notAllowedTimes, maintenanceWindowId: default, maintenanceWindow: maintenanceWindow);
         }
 
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="isPreview"> Whether the Kubernetes version is currently in preview. </param>
         /// <returns> A new <see cref="Models.AgentPoolUpgradeProfilePropertiesUpgradesItem"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AgentPoolUpgradeProfilePropertiesUpgradesItem AgentPoolUpgradeProfilePropertiesUpgradesItem(string kubernetesVersion = default, bool? isPreview = default)
+        public static AgentPoolUpgradeProfilePropertiesUpgradesItem AgentPoolUpgradeProfilePropertiesUpgradesItem(string kubernetesVersion, bool? isPreview)
         {
-            return new AgentPoolUpgradeProfilePropertiesUpgradesItem(kubernetesVersion, isPreview, default, default);
+            return AgentPoolUpgradeProfilePropertiesUpgradesItem(kubernetesVersion: kubernetesVersion, isPreview: isPreview, isOutOfSupport: default);
         }
 
         /// <param name="networkIPAddresses"> IPv4, IPv6 addresses of the machine. </param>
         /// <param name="resourceId"> Azure resource id of the machine. It can be used to GET underlying VM Instance. </param>
         /// <returns> A new <see cref="Models.ContainerServiceMachineProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerServiceMachineProperties ContainerServiceMachineProperties(IEnumerable<ContainerServiceMachineIPAddress> networkIPAddresses = default, ResourceIdentifier resourceId = default)
+        public static ContainerServiceMachineProperties ContainerServiceMachineProperties(IEnumerable<ContainerServiceMachineIPAddress> networkIPAddresses, ResourceIdentifier resourceId)
         {
+            networkIPAddresses ??= new ChangeTrackingList<ContainerServiceMachineIPAddress>();
+
             return new ContainerServiceMachineProperties(
                 networkIPAddresses is null ? default : new ContainerServiceMachineNetworkProperties(
                     (networkIPAddresses ?? new ChangeTrackingList<ContainerServiceMachineIPAddress>()).ToList(),
@@ -3428,9 +3318,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.ManagedClusterIdentityBindingProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedClusterIdentityBindingProperties ManagedClusterIdentityBindingProperties(IdentityBindingManagedIdentityProfile managedIdentity = default, Uri oidcIssuerUri = default, ManagedClusterIdentityBindingProvisioningState? provisioningState = default)
+        public static ManagedClusterIdentityBindingProperties ManagedClusterIdentityBindingProperties(IdentityBindingManagedIdentityProfile managedIdentity, Uri oidcIssuerUri, ManagedClusterIdentityBindingProvisioningState? provisioningState)
         {
-            return new ManagedClusterIdentityBindingProperties(managedIdentity, oidcIssuerUri is null ? default : new IdentityBindingOidcIssuerProfile(oidcIssuerUri, default), provisioningState, default, default);
+            return ManagedClusterIdentityBindingProperties(managedIdentity: managedIdentity, oidcIssuerUri: oidcIssuerUri, provisioningState: provisioningState, allowedSubjects: default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3500,8 +3390,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="enableUltraSsd"> Gets or sets the EnableUltraSsd. </param>
         /// <returns> A new <see cref="ContainerService.ContainerServiceAgentPoolData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerServiceAgentPoolData ContainerServiceAgentPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, int? count = default, string vmSize = default, int? osDiskSizeInGB = default, ContainerServiceOSDiskType? osDiskType = default, KubeletDiskType? kubeletDiskType = default, WorkloadRuntime? workloadRuntime = default, string messageOfTheDay = default, ResourceIdentifier vnetSubnetId = default, ResourceIdentifier podSubnetId = default, PodIPAllocationMode? podIPAllocationMode = default, int? maxPods = default, ContainerServiceOSType? osType = default, ContainerServiceOSSku? osSku = default, int? maxCount = default, int? minCount = default, bool? isAutoScalingEnabled = default, ScaleDownMode? scaleDownMode = default, AgentPoolType? agentPoolType = default, AgentPoolMode? mode = default, string orchestratorVersion = default, string currentOrchestratorVersion = default, string nodeImageVersion = default, AgentPoolUpgradeSettings upgradeSettings = default, string provisioningState = default, IEnumerable<string> availabilityZones = default, bool? isNodePublicIpEnabled = default, ResourceIdentifier nodePublicIPPrefixId = default, ScaleSetPriority? scaleSetPriority = default, ScaleSetEvictionPolicy? scaleSetEvictionPolicy = default, float? spotMaxPrice = default, IDictionary<string, string> tags = default, IDictionary<string, string> nodeLabels = default, IEnumerable<string> nodeTaints = default, ResourceIdentifier proximityPlacementGroupId = default, KubeletConfig kubeletConfig = default, LinuxOSConfig linuxOSConfig = default, bool? isEncryptionAtHostEnabled = default, bool? isUltraSsdEnabled = default, bool? isFipsEnabled = default, GpuInstanceProfile? gpuInstanceProfile = default, ResourceIdentifier capacityReservationGroupId = default, ResourceIdentifier hostGroupId = default, AgentPoolNetworkProfile networkProfile = default, AgentPoolSecurityProfile securityProfile = default, IEnumerable<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus = default, LocalDnsProfile localDnsProfile = default, ContainerServiceStateCode? powerStateCode = default, ResourceIdentifier creationDataSourceResourceId = default, bool? isOutboundNatDisabled = default, AgentPoolGpuDriver? gpuDriver = default, int? gatewayPublicIPPrefixSize = default, IEnumerable<ManualScaleProfile> virtualMachinesScaleManual = default, ResponseError statusProvisioningError = default, string upgradeMaxSurge = default, IEnumerable<ManualScaleProfile> scaleManual = default, bool? enableAutoScaling = default, bool? enableNodePublicIP = default, bool? enableEncryptionAtHost = default, bool? enableFips = default, bool? enableUltraSsd = default)
+        public static ContainerServiceAgentPoolData ContainerServiceAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, int? count, string vmSize, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, string messageOfTheDay, ResourceIdentifier vnetSubnetId, ResourceIdentifier podSubnetId, PodIPAllocationMode? podIPAllocationMode, int? maxPods, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, int? maxCount, int? minCount, bool? isAutoScalingEnabled, ScaleDownMode? scaleDownMode, AgentPoolType? agentPoolType, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, AgentPoolUpgradeSettings upgradeSettings, string provisioningState, IEnumerable<string> availabilityZones, bool? isNodePublicIpEnabled, ResourceIdentifier nodePublicIPPrefixId, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IEnumerable<string> nodeTaints, ResourceIdentifier proximityPlacementGroupId, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? isEncryptionAtHostEnabled, bool? isUltraSsdEnabled, bool? isFipsEnabled, GpuInstanceProfile? gpuInstanceProfile, ResourceIdentifier capacityReservationGroupId, ResourceIdentifier hostGroupId, AgentPoolNetworkProfile networkProfile, AgentPoolSecurityProfile securityProfile, IEnumerable<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus, LocalDnsProfile localDnsProfile, ContainerServiceStateCode? powerStateCode, ResourceIdentifier creationDataSourceResourceId, bool? isOutboundNatDisabled, AgentPoolGpuDriver? gpuDriver, int? gatewayPublicIPPrefixSize, IEnumerable<ManualScaleProfile> virtualMachinesScaleManual, ResponseError statusProvisioningError, string upgradeMaxSurge, IEnumerable<ManualScaleProfile> scaleManual, bool? enableAutoScaling, bool? enableNodePublicIP, bool? enableEncryptionAtHost, bool? enableFips, bool? enableUltraSsd)
         {
+            availabilityZones ??= new ChangeTrackingList<string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            nodeLabels ??= new ChangeTrackingDictionary<string, string>();
+            nodeTaints ??= new ChangeTrackingList<string>();
+            virtualMachineNodesStatus ??= new ChangeTrackingList<AgentPoolVirtualMachineNodes>();
+            virtualMachinesScaleManual ??= new ChangeTrackingList<ManualScaleProfile>();
+            scaleManual ??= new ChangeTrackingList<ManualScaleProfile>();
+
             return new ContainerServiceAgentPoolData(
                 id,
                 name,
@@ -3628,8 +3526,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="localDnsProfile"> Configures the per-node local DNS, with VnetDNS and KubeDNS overrides. LocalDNS helps improve performance and reliability of DNS resolution in an AKS cluster. For more details see aka.ms/aks/localdns. </param>
         /// <returns> A new <see cref="Models.ManagedClusterAgentPoolProfileProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedClusterAgentPoolProfileProperties ManagedClusterAgentPoolProfileProperties(ETag? etag = default, int? count = default, string vmSize = default, int? osDiskSizeInGB = default, ContainerServiceOSDiskType? osDiskType = default, KubeletDiskType? kubeletDiskType = default, WorkloadRuntime? workloadRuntime = default, string messageOfTheDay = default, ResourceIdentifier vnetSubnetId = default, ResourceIdentifier podSubnetId = default, PodIPAllocationMode? podIPAllocationMode = default, int? maxPods = default, ContainerServiceOSType? osType = default, ContainerServiceOSSku? osSku = default, int? maxCount = default, int? minCount = default, bool? isAutoScalingEnabled = default, ScaleDownMode? scaleDownMode = default, AgentPoolType? agentPoolType = default, AgentPoolMode? mode = default, string orchestratorVersion = default, string currentOrchestratorVersion = default, string nodeImageVersion = default, AgentPoolUpgradeSettings upgradeSettings = default, string provisioningState = default, ContainerServiceStateCode? powerStateCode = default, IEnumerable<string> availabilityZones = default, bool? isNodePublicIpEnabled = default, ResourceIdentifier nodePublicIPPrefixId = default, ScaleSetPriority? scaleSetPriority = default, ScaleSetEvictionPolicy? scaleSetEvictionPolicy = default, float? spotMaxPrice = default, IDictionary<string, string> tags = default, IDictionary<string, string> nodeLabels = default, IEnumerable<string> nodeTaints = default, ResourceIdentifier proximityPlacementGroupId = default, KubeletConfig kubeletConfig = default, LinuxOSConfig linuxOSConfig = default, bool? isEncryptionAtHostEnabled = default, bool? isUltraSsdEnabled = default, bool? isFipsEnabled = default, GpuInstanceProfile? gpuInstanceProfile = default, ResourceIdentifier creationDataSourceResourceId = default, ResourceIdentifier capacityReservationGroupId = default, ResourceIdentifier hostGroupId = default, AgentPoolNetworkProfile networkProfile = default, bool? isOutboundNatDisabled = default, AgentPoolSecurityProfile securityProfile = default, AgentPoolGpuDriver? gpuDriver = default, int? gatewayPublicIPPrefixSize = default, IEnumerable<ManualScaleProfile> virtualMachinesScaleManual = default, IEnumerable<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus = default, ResponseError statusProvisioningError = default, LocalDnsProfile localDnsProfile = default)
+        public static ManagedClusterAgentPoolProfileProperties ManagedClusterAgentPoolProfileProperties(ETag? etag, int? count, string vmSize, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, string messageOfTheDay, ResourceIdentifier vnetSubnetId, ResourceIdentifier podSubnetId, PodIPAllocationMode? podIPAllocationMode, int? maxPods, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, int? maxCount, int? minCount, bool? isAutoScalingEnabled, ScaleDownMode? scaleDownMode, AgentPoolType? agentPoolType, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, AgentPoolUpgradeSettings upgradeSettings, string provisioningState, ContainerServiceStateCode? powerStateCode, IEnumerable<string> availabilityZones, bool? isNodePublicIpEnabled, ResourceIdentifier nodePublicIPPrefixId, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IEnumerable<string> nodeTaints, ResourceIdentifier proximityPlacementGroupId, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? isEncryptionAtHostEnabled, bool? isUltraSsdEnabled, bool? isFipsEnabled, GpuInstanceProfile? gpuInstanceProfile, ResourceIdentifier creationDataSourceResourceId, ResourceIdentifier capacityReservationGroupId, ResourceIdentifier hostGroupId, AgentPoolNetworkProfile networkProfile, bool? isOutboundNatDisabled, AgentPoolSecurityProfile securityProfile, AgentPoolGpuDriver? gpuDriver, int? gatewayPublicIPPrefixSize, IEnumerable<ManualScaleProfile> virtualMachinesScaleManual, IEnumerable<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus, ResponseError statusProvisioningError, LocalDnsProfile localDnsProfile)
         {
+            availabilityZones ??= new ChangeTrackingList<string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            nodeLabels ??= new ChangeTrackingDictionary<string, string>();
+            nodeTaints ??= new ChangeTrackingList<string>();
+            virtualMachinesScaleManual ??= new ChangeTrackingList<ManualScaleProfile>();
+            virtualMachineNodesStatus ??= new ChangeTrackingList<AgentPoolVirtualMachineNodes>();
+
             return new ManagedClusterAgentPoolProfileProperties(
                 etag,
                 count,
@@ -3752,8 +3657,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="kind"> This is primarily used to expose different UI experiences in the portal for different kinds. </param>
         /// <returns> A new <see cref="ContainerService.ContainerServiceManagedClusterData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerServiceManagedClusterData ContainerServiceManagedClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, int? maxAgentPools = default, string kubernetesVersion = default, string currentKubernetesVersion = default, string dnsPrefix = default, string fqdnSubdomain = default, string fqdn = default, string privateFqdn = default, string azurePortalFqdn = default, IEnumerable<ManagedClusterAgentPoolProfile> agentPoolProfiles = default, ContainerServiceLinuxProfile linuxProfile = default, ManagedClusterWindowsProfile windowsProfile = default, ManagedClusterServicePrincipalProfile servicePrincipalProfile = default, IDictionary<string, ManagedClusterAddonProfile> addonProfiles = default, ManagedClusterPodIdentityProfile podIdentityProfile = default, ManagedClusterOidcIssuerProfile oidcIssuerProfile = default, string nodeResourceGroup = default, bool? isRbacEnabled = default, KubernetesSupportPlan? supportPlan = default, ContainerServiceNetworkProfile networkProfile = default, ManagedClusterAadProfile aadProfile = default, ManagedClusterAutoUpgradeProfile autoUpgradeProfile = default, ManagedClusterAutoScalerProfile autoScalerProfile = default, ManagedClusterApiServerAccessProfile apiServerAccessProfile = default, ResourceIdentifier diskEncryptionSetId = default, IDictionary<string, ContainerServiceUserAssignedIdentity> identityProfile = default, IEnumerable<ContainerServicePrivateLinkResourceData> privateLinkResources = default, bool? isLocalAccountsDisabled = default, ManagedClusterHttpProxyConfig httpProxyConfig = default, ManagedClusterSecurityProfile securityProfile = default, ManagedClusterStorageProfile storageProfile = default, ContainerServicePublicNetworkAccess? publicNetworkAccess = default, ManagedClusterWorkloadAutoScalerProfile workloadAutoScalerProfile = default, ServiceMeshProfile serviceMeshProfile = default, ResourceIdentifier resourceId = default, ManagedClusterNodeProvisioningProfile nodeProvisioningProfile = default, ManagedClusterBootstrapProfile bootstrapProfile = default, ContainerServiceStateCode? powerStateCode = default, ManagedClusterNodeResourceGroupRestrictionLevel? nodeResourceGroupRestrictionLevel = default, UpgradeOverrideSettings upgradeOverrideSettings = default, ManagedClusterIngressProfileWebAppRouting ingressWebAppRouting = default, ManagedClusterMonitorProfileMetrics azureMonitorMetrics = default, bool? isCostAnalysisEnabled = default, bool? isAIToolchainOperatorEnabled = default, ResponseError statusProvisioningError = default, ETag? etag = default, ManagedClusterSku sku = default, ExtendedLocation extendedLocation = default, ManagedClusterIdentity clusterIdentity = default, string kind = default)
+        public static ContainerServiceManagedClusterData ContainerServiceManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, int? maxAgentPools, string kubernetesVersion, string currentKubernetesVersion, string dnsPrefix, string fqdnSubdomain, string fqdn, string privateFqdn, string azurePortalFqdn, IEnumerable<ManagedClusterAgentPoolProfile> agentPoolProfiles, ContainerServiceLinuxProfile linuxProfile, ManagedClusterWindowsProfile windowsProfile, ManagedClusterServicePrincipalProfile servicePrincipalProfile, IDictionary<string, ManagedClusterAddonProfile> addonProfiles, ManagedClusterPodIdentityProfile podIdentityProfile, ManagedClusterOidcIssuerProfile oidcIssuerProfile, string nodeResourceGroup, bool? isRbacEnabled, KubernetesSupportPlan? supportPlan, ContainerServiceNetworkProfile networkProfile, ManagedClusterAadProfile aadProfile, ManagedClusterAutoUpgradeProfile autoUpgradeProfile, ManagedClusterAutoScalerProfile autoScalerProfile, ManagedClusterApiServerAccessProfile apiServerAccessProfile, ResourceIdentifier diskEncryptionSetId, IDictionary<string, ContainerServiceUserAssignedIdentity> identityProfile, IEnumerable<ContainerServicePrivateLinkResourceData> privateLinkResources, bool? isLocalAccountsDisabled, ManagedClusterHttpProxyConfig httpProxyConfig, ManagedClusterSecurityProfile securityProfile, ManagedClusterStorageProfile storageProfile, ContainerServicePublicNetworkAccess? publicNetworkAccess, ManagedClusterWorkloadAutoScalerProfile workloadAutoScalerProfile, ServiceMeshProfile serviceMeshProfile, ResourceIdentifier resourceId, ManagedClusterNodeProvisioningProfile nodeProvisioningProfile, ManagedClusterBootstrapProfile bootstrapProfile, ContainerServiceStateCode? powerStateCode, ManagedClusterNodeResourceGroupRestrictionLevel? nodeResourceGroupRestrictionLevel, UpgradeOverrideSettings upgradeOverrideSettings, ManagedClusterIngressProfileWebAppRouting ingressWebAppRouting, ManagedClusterMonitorProfileMetrics azureMonitorMetrics, bool? isCostAnalysisEnabled, bool? isAIToolchainOperatorEnabled, ResponseError statusProvisioningError, ETag? etag, ManagedClusterSku sku, ExtendedLocation extendedLocation, ManagedClusterIdentity clusterIdentity, string kind)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            agentPoolProfiles ??= new ChangeTrackingList<ManagedClusterAgentPoolProfile>();
+            addonProfiles ??= new ChangeTrackingDictionary<string, ManagedClusterAddonProfile>();
+            identityProfile ??= new ChangeTrackingDictionary<string, ContainerServiceUserAssignedIdentity>();
+            privateLinkResources ??= new ChangeTrackingList<ContainerServicePrivateLinkResourceData>();
+
             return new ContainerServiceManagedClusterData(
                 id,
                 name,
@@ -3881,8 +3792,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="name"> Unique name of the agent pool profile in the context of the subscription and resource group. Windows agent pool names must be 6 characters or less. </param>
         /// <returns> A new <see cref="Models.ManagedClusterAgentPoolProfile"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedClusterAgentPoolProfile ManagedClusterAgentPoolProfile(ETag? etag = default, int? count = default, string vmSize = default, int? osDiskSizeInGB = default, ContainerServiceOSDiskType? osDiskType = default, KubeletDiskType? kubeletDiskType = default, WorkloadRuntime? workloadRuntime = default, string messageOfTheDay = default, ResourceIdentifier vnetSubnetId = default, ResourceIdentifier podSubnetId = default, PodIPAllocationMode? podIPAllocationMode = default, int? maxPods = default, ContainerServiceOSType? osType = default, ContainerServiceOSSku? osSku = default, int? maxCount = default, int? minCount = default, bool? isAutoScalingEnabled = default, ScaleDownMode? scaleDownMode = default, AgentPoolType? agentPoolType = default, AgentPoolMode? mode = default, string orchestratorVersion = default, string currentOrchestratorVersion = default, string nodeImageVersion = default, AgentPoolUpgradeSettings upgradeSettings = default, string provisioningState = default, ContainerServiceStateCode? powerStateCode = default, IEnumerable<string> availabilityZones = default, bool? isNodePublicIpEnabled = default, ResourceIdentifier nodePublicIPPrefixId = default, ScaleSetPriority? scaleSetPriority = default, ScaleSetEvictionPolicy? scaleSetEvictionPolicy = default, float? spotMaxPrice = default, IDictionary<string, string> tags = default, IDictionary<string, string> nodeLabels = default, IEnumerable<string> nodeTaints = default, ResourceIdentifier proximityPlacementGroupId = default, KubeletConfig kubeletConfig = default, LinuxOSConfig linuxOSConfig = default, bool? isEncryptionAtHostEnabled = default, bool? isUltraSsdEnabled = default, bool? isFipsEnabled = default, GpuInstanceProfile? gpuInstanceProfile = default, ResourceIdentifier creationDataSourceResourceId = default, ResourceIdentifier capacityReservationGroupId = default, ResourceIdentifier hostGroupId = default, AgentPoolNetworkProfile networkProfile = default, bool? isOutboundNatDisabled = default, AgentPoolSecurityProfile securityProfile = default, AgentPoolGpuDriver? gpuDriver = default, int? gatewayPublicIPPrefixSize = default, IEnumerable<ManualScaleProfile> virtualMachinesScaleManual = default, IEnumerable<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus = default, ResponseError statusProvisioningError = default, LocalDnsProfile localDnsProfile = default, string name = default)
+        public static ManagedClusterAgentPoolProfile ManagedClusterAgentPoolProfile(ETag? etag, int? count, string vmSize, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, string messageOfTheDay, ResourceIdentifier vnetSubnetId, ResourceIdentifier podSubnetId, PodIPAllocationMode? podIPAllocationMode, int? maxPods, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, int? maxCount, int? minCount, bool? isAutoScalingEnabled, ScaleDownMode? scaleDownMode, AgentPoolType? agentPoolType, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, AgentPoolUpgradeSettings upgradeSettings, string provisioningState, ContainerServiceStateCode? powerStateCode, IEnumerable<string> availabilityZones, bool? isNodePublicIpEnabled, ResourceIdentifier nodePublicIPPrefixId, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IEnumerable<string> nodeTaints, ResourceIdentifier proximityPlacementGroupId, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? isEncryptionAtHostEnabled, bool? isUltraSsdEnabled, bool? isFipsEnabled, GpuInstanceProfile? gpuInstanceProfile, ResourceIdentifier creationDataSourceResourceId, ResourceIdentifier capacityReservationGroupId, ResourceIdentifier hostGroupId, AgentPoolNetworkProfile networkProfile, bool? isOutboundNatDisabled, AgentPoolSecurityProfile securityProfile, AgentPoolGpuDriver? gpuDriver, int? gatewayPublicIPPrefixSize, IEnumerable<ManualScaleProfile> virtualMachinesScaleManual, IEnumerable<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus, ResponseError statusProvisioningError, LocalDnsProfile localDnsProfile, string name)
         {
+            availabilityZones ??= new ChangeTrackingList<string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            nodeLabels ??= new ChangeTrackingDictionary<string, string>();
+            nodeTaints ??= new ChangeTrackingList<string>();
+            virtualMachinesScaleManual ??= new ChangeTrackingList<ManualScaleProfile>();
+            virtualMachineNodesStatus ??= new ChangeTrackingList<AgentPoolVirtualMachineNodes>();
+
             return new ManagedClusterAgentPoolProfile(
                 etag,
                 count,
@@ -3954,38 +3872,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="identity"> Managed identity of the Application Routing add-on. This is the identity that should be granted permissions, for example, to manage the associated Azure DNS resource and get certificates from Azure Key Vault. See [this overview of the add-on](https://learn.microsoft.com/en-us/azure/aks/web-app-routing?tabs=with-osm) for more instructions. </param>
         /// <returns> A new <see cref="Models.ManagedClusterIngressProfileWebAppRouting"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedClusterIngressProfileWebAppRouting ManagedClusterIngressProfileWebAppRouting(bool? isEnabled = default, IEnumerable<ResourceIdentifier> dnsZoneResourceIds = default, NginxIngressControllerType? nginxDefaultIngressControllerType = default, ContainerServiceUserAssignedIdentity identity = default)
+        public static ManagedClusterIngressProfileWebAppRouting ManagedClusterIngressProfileWebAppRouting(bool? isEnabled, IEnumerable<ResourceIdentifier> dnsZoneResourceIds, NginxIngressControllerType? nginxDefaultIngressControllerType, ContainerServiceUserAssignedIdentity identity)
         {
-            return new ManagedClusterIngressProfileWebAppRouting(
-                isEnabled,
-                default,
-                (dnsZoneResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                nginxDefaultIngressControllerType is null ? default : new ManagedClusterIngressProfileNginx(nginxDefaultIngressControllerType, default),
-                identity,
-                default,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="kubeConfig"> Base64-encoded Kubernetes configuration file. </param>
-        /// <returns> A new <see cref="Models.ManagedClusterAccessProfile"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedClusterAccessProfile ManagedClusterAccessProfile(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, byte[] kubeConfig = default)
-        {
-            return new ManagedClusterAccessProfile(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                kubeConfig is null ? default : new AccessProfile(kubeConfig, default),
-                default);
+            return ManagedClusterIngressProfileWebAppRouting(isEnabled: isEnabled, gatewayApiImplementationsIstioMode: default, dnsZoneResourceIds: dnsZoneResourceIds, nginxDefaultIngressControllerType: nginxDefaultIngressControllerType, identity: identity, defaultDomain: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerService.ContainerServiceManagedClusterData"/>. </summary>
@@ -4041,6 +3930,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerServiceManagedClusterData ContainerServiceManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedClusterSku sku, ExtendedLocation extendedLocation, ManagedClusterIdentity clusterIdentity, string provisioningState, ContainerServiceStateCode? powerStateCode, int? maxAgentPools, string kubernetesVersion, string currentKubernetesVersion, string dnsPrefix, string fqdnSubdomain, string fqdn, string privateFqdn, string azurePortalFqdn, IEnumerable<ManagedClusterAgentPoolProfile> agentPoolProfiles, ContainerServiceLinuxProfile linuxProfile, ManagedClusterWindowsProfile windowsProfile, ManagedClusterServicePrincipalProfile servicePrincipalProfile, IDictionary<string, ManagedClusterAddonProfile> addonProfiles, ManagedClusterPodIdentityProfile podIdentityProfile, ManagedClusterOidcIssuerProfile oidcIssuerProfile, string nodeResourceGroup, bool? enableRbac, KubernetesSupportPlan? supportPlan, bool? enablePodSecurityPolicy, ContainerServiceNetworkProfile networkProfile, ManagedClusterAadProfile aadProfile, ManagedClusterAutoUpgradeProfile autoUpgradeProfile, UpgradeOverrideSettings upgradeOverrideSettings, ManagedClusterAutoScalerProfile autoScalerProfile, ManagedClusterApiServerAccessProfile apiServerAccessProfile, ResourceIdentifier diskEncryptionSetId, IDictionary<string, ContainerServiceUserAssignedIdentity> identityProfile, IEnumerable<ContainerServicePrivateLinkResourceData> privateLinkResources, bool? disableLocalAccounts, ManagedClusterHttpProxyConfig httpProxyConfig, ManagedClusterSecurityProfile securityProfile, ManagedClusterStorageProfile storageProfile, ContainerServicePublicNetworkAccess? publicNetworkAccess, ManagedClusterWorkloadAutoScalerProfile workloadAutoScalerProfile, ManagedClusterMonitorProfileMetrics azureMonitorMetrics, ServiceMeshProfile serviceMeshProfile, ResourceIdentifier resourceId)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            agentPoolProfiles ??= new ChangeTrackingList<ManagedClusterAgentPoolProfile>();
+            addonProfiles ??= new ChangeTrackingDictionary<string, ManagedClusterAddonProfile>();
+            identityProfile ??= new ChangeTrackingDictionary<string, ContainerServiceUserAssignedIdentity>();
+            privateLinkResources ??= new ChangeTrackingList<ContainerServicePrivateLinkResourceData>();
+
             return new ContainerServiceManagedClusterData(
                 id,
                 name,
@@ -4179,6 +4074,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerServiceManagedClusterData ContainerServiceManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedClusterSku sku, ExtendedLocation extendedLocation, ManagedClusterIdentity clusterIdentity, string kind, string provisioningState, ContainerServiceStateCode? powerStateCode, int? maxAgentPools, string kubernetesVersion, string currentKubernetesVersion, string dnsPrefix, string fqdnSubdomain, string fqdn, string privateFqdn, string azurePortalFqdn, IEnumerable<ManagedClusterAgentPoolProfile> agentPoolProfiles, ContainerServiceLinuxProfile linuxProfile, ManagedClusterWindowsProfile windowsProfile, ManagedClusterServicePrincipalProfile servicePrincipalProfile, IDictionary<string, ManagedClusterAddonProfile> addonProfiles, ManagedClusterPodIdentityProfile podIdentityProfile, ManagedClusterOidcIssuerProfile oidcIssuerProfile, string nodeResourceGroup, ManagedClusterNodeResourceGroupRestrictionLevel? nodeResourceGroupRestrictionLevel, bool? enableRbac, KubernetesSupportPlan? supportPlan, ContainerServiceNetworkProfile networkProfile, ManagedClusterAadProfile aadProfile, ManagedClusterAutoUpgradeProfile autoUpgradeProfile, UpgradeOverrideSettings upgradeOverrideSettings, ManagedClusterAutoScalerProfile autoScalerProfile, ManagedClusterApiServerAccessProfile apiServerAccessProfile, ResourceIdentifier diskEncryptionSetId, IDictionary<string, ContainerServiceUserAssignedIdentity> identityProfile, IEnumerable<ContainerServicePrivateLinkResourceData> privateLinkResources, bool? disableLocalAccounts, ManagedClusterHttpProxyConfig httpProxyConfig, ManagedClusterSecurityProfile securityProfile, ManagedClusterStorageProfile storageProfile, ManagedClusterIngressProfileWebAppRouting ingressWebAppRouting, ContainerServicePublicNetworkAccess? publicNetworkAccess, ManagedClusterWorkloadAutoScalerProfile workloadAutoScalerProfile, ManagedClusterMonitorProfileMetrics azureMonitorMetrics, ServiceMeshProfile serviceMeshProfile, ResourceIdentifier resourceId, bool? isCostAnalysisEnabled, ManagedClusterNodeProvisioningProfile nodeProvisioningProfile, ManagedClusterBootstrapProfile bootstrapProfile, bool? isAIToolchainOperatorEnabled, ResponseError statusProvisioningError)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            agentPoolProfiles ??= new ChangeTrackingList<ManagedClusterAgentPoolProfile>();
+            addonProfiles ??= new ChangeTrackingDictionary<string, ManagedClusterAddonProfile>();
+            identityProfile ??= new ChangeTrackingDictionary<string, ContainerServiceUserAssignedIdentity>();
+            privateLinkResources ??= new ChangeTrackingList<ContainerServicePrivateLinkResourceData>();
+
             return new ContainerServiceManagedClusterData(
                 id,
                 name,
@@ -4281,8 +4182,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="properties"> Properties of a namespace. </param>
         /// <returns> A new <see cref="ContainerService.ManagedClusterNamespaceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedClusterNamespaceData ManagedClusterNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, ManagedClusterNamespaceProperties properties = default)
+        public static ManagedClusterNamespaceData ManagedClusterNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedClusterNamespaceProperties properties)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new ManagedClusterNamespaceData(
                 id,
                 name,
@@ -4358,6 +4261,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerServiceAgentPoolData ContainerServiceAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, int? count, string vmSize, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, string messageOfTheDay, ResourceIdentifier vnetSubnetId, ResourceIdentifier podSubnetId, PodIPAllocationMode? podIPAllocationMode, int? maxPods, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, int? maxCount, int? minCount, bool? enableAutoScaling, ScaleDownMode? scaleDownMode, AgentPoolType? typePropertiesType, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, AgentPoolUpgradeSettings upgradeSettings, string provisioningState, ContainerServiceStateCode? powerStateCode, IEnumerable<string> availabilityZones, bool? enableNodePublicIP, ResourceIdentifier nodePublicIPPrefixId, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IEnumerable<string> nodeTaints, ResourceIdentifier proximityPlacementGroupId, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? enableEncryptionAtHost, bool? enableUltraSsd, bool? enableFips, GpuInstanceProfile? gpuInstanceProfile, ResourceIdentifier creationDataSourceResourceId, ResourceIdentifier capacityReservationGroupId, ResourceIdentifier hostGroupId, AgentPoolNetworkProfile networkProfile, bool? isOutboundNatDisabled, AgentPoolSecurityProfile securityProfile, AgentPoolGpuDriver? gpuDriver, int? gatewayPublicIPPrefixSize, IEnumerable<ManualScaleProfile> scaleManual, IEnumerable<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus, ResponseError statusProvisioningError, LocalDnsProfile localDnsProfile)
         {
+            availabilityZones ??= new ChangeTrackingList<string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            nodeLabels ??= new ChangeTrackingDictionary<string, string>();
+            nodeTaints ??= new ChangeTrackingList<string>();
+            scaleManual ??= new ChangeTrackingList<ManualScaleProfile>();
+            virtualMachineNodesStatus ??= new ChangeTrackingList<AgentPoolVirtualMachineNodes>();
+
             return new ContainerServiceAgentPoolData(
                 id,
                 name,
@@ -4437,7 +4347,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="privateEndpointId"> The resource of private endpoint. </param>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <returns> A new <see cref="ContainerService.ContainerServicePrivateEndpointConnectionData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerServicePrivateEndpointConnectionData ContainerServicePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerServicePrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default, ContainerServicePrivateLinkServiceConnectionState connectionState = default)
         {
             return new ContainerServicePrivateEndpointConnectionData(
@@ -4468,6 +4377,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AgentPoolSnapshotData AgentPoolSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier creationDataSourceResourceId, SnapshotType? snapshotType, string kubernetesVersion, string nodeImageVersion, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, string vmSize, bool? enableFips)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new AgentPoolSnapshotData(
                 id,
                 name,
@@ -4496,9 +4407,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="zones"> The Availability zone in which machine is located. </param>
         /// <param name="properties"> The properties of the machine. </param>
         /// <returns> A new <see cref="ContainerService.ContainerServiceMachineData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerServiceMachineData ContainerServiceMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> zones = default, ContainerServiceMachineProperties properties = default)
         {
+            zones ??= new ChangeTrackingList<string>();
+
             return new ContainerServiceMachineData(
                 id,
                 name,
@@ -4518,13 +4430,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static KubernetesVersion KubernetesVersion(string version, IEnumerable<KubernetesSupportPlan> capabilitiesSupportPlan, bool? isPreview, IReadOnlyDictionary<string, KubernetesPatchVersion> patchVersions)
         {
-            return new KubernetesVersion(
-                version,
-                capabilitiesSupportPlan is null ? default : new KubernetesVersionCapabilities((capabilitiesSupportPlan ?? new ChangeTrackingList<KubernetesSupportPlan>()).ToList(), default),
-                default,
-                isPreview,
-                patchVersions ?? new ChangeTrackingDictionary<string, KubernetesPatchVersion>(),
-                default);
+            return KubernetesVersion(version: version, capabilitiesSupportPlan: capabilitiesSupportPlan, isDefault: default, isPreview: isPreview, patchVersions: patchVersions);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedClusterAgentPoolProfile"/>. </summary>
@@ -4576,6 +4482,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ManagedClusterAgentPoolProfile ManagedClusterAgentPoolProfile(int? count, string vmSize, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, ResourceIdentifier vnetSubnetId, ResourceIdentifier podSubnetId, int? maxPods, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, int? maxCount, int? minCount, bool? enableAutoScaling, ScaleDownMode? scaleDownMode, AgentPoolType? agentPoolType, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, AgentPoolUpgradeSettings upgradeSettings, string provisioningState, ContainerServiceStateCode? powerStateCode, IEnumerable<string> availabilityZones, bool? enableNodePublicIP, ResourceIdentifier nodePublicIPPrefixId, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IEnumerable<string> nodeTaints, ResourceIdentifier proximityPlacementGroupId, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? enableEncryptionAtHost, bool? enableUltraSsd, bool? enableFips, GpuInstanceProfile? gpuInstanceProfile, ResourceIdentifier creationDataSourceResourceId, ResourceIdentifier capacityReservationGroupId, ResourceIdentifier hostGroupId, AgentPoolNetworkProfile networkProfile, string name)
         {
+            availabilityZones ??= new ChangeTrackingList<string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            nodeLabels ??= new ChangeTrackingDictionary<string, string>();
+            nodeTaints ??= new ChangeTrackingList<string>();
+
             return new ManagedClusterAgentPoolProfile(
                 default,
                 count,
@@ -4689,6 +4600,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ManagedClusterAgentPoolProfileProperties ManagedClusterAgentPoolProfileProperties(int? count, string vmSize, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, ResourceIdentifier vnetSubnetId, ResourceIdentifier podSubnetId, int? maxPods, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, int? maxCount, int? minCount, bool? enableAutoScaling, ScaleDownMode? scaleDownMode, AgentPoolType? agentPoolType, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, AgentPoolUpgradeSettings upgradeSettings, string provisioningState, ContainerServiceStateCode? powerStateCode, IEnumerable<string> availabilityZones, bool? enableNodePublicIP, ResourceIdentifier nodePublicIPPrefixId, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IEnumerable<string> nodeTaints, ResourceIdentifier proximityPlacementGroupId, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? enableEncryptionAtHost, bool? enableUltraSsd, bool? enableFips, GpuInstanceProfile? gpuInstanceProfile, ResourceIdentifier creationDataSourceResourceId, ResourceIdentifier capacityReservationGroupId, ResourceIdentifier hostGroupId, AgentPoolNetworkProfile networkProfile)
         {
+            availabilityZones ??= new ChangeTrackingList<string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            nodeLabels ??= new ChangeTrackingDictionary<string, string>();
+            nodeTaints ??= new ChangeTrackingList<string>();
+
             return new ManagedClusterAgentPoolProfileProperties(
                 default,
                 count,
@@ -4805,6 +4721,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerServiceAgentPoolData ContainerServiceAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? count, string vmSize, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, ResourceIdentifier vnetSubnetId, ResourceIdentifier podSubnetId, int? maxPods, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, int? maxCount, int? minCount, bool? enableAutoScaling, ScaleDownMode? scaleDownMode, AgentPoolType? typePropertiesType, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, AgentPoolUpgradeSettings upgradeSettings, string provisioningState, ContainerServiceStateCode? powerStateCode, IEnumerable<string> availabilityZones, bool? enableNodePublicIP, ResourceIdentifier nodePublicIPPrefixId, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IEnumerable<string> nodeTaints, ResourceIdentifier proximityPlacementGroupId, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? enableEncryptionAtHost, bool? enableUltraSsd, bool? enableFips, GpuInstanceProfile? gpuInstanceProfile, ResourceIdentifier creationDataSourceResourceId, ResourceIdentifier capacityReservationGroupId, ResourceIdentifier hostGroupId, AgentPoolNetworkProfile networkProfile)
         {
+            availabilityZones ??= new ChangeTrackingList<string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            nodeLabels ??= new ChangeTrackingDictionary<string, string>();
+            nodeTaints ??= new ChangeTrackingList<string>();
+
             return new ContainerServiceAgentPoolData(
                 id,
                 name,

@@ -199,25 +199,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the private link resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of private endpoint connection resource. </param>
-        /// <param name="privateEndpointId"> This is private endpoint resource created with Microsoft.Network resource provider. </param>
-        /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static ContainerRegistryPrivateEndpointConnectionData ContainerRegistryPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerRegistryPrivateLinkServiceConnectionState connectionState = default, ContainerRegistryProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
-        {
-            return new ContainerRegistryPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
-                default);
-        }
-
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The description for connection status. For example if connection is rejected it can indicate reason for rejection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
@@ -534,31 +515,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryCacheRulePatch ContainerRegistryCacheRulePatch(ResourceIdentifier credentialSetResourceId = default, ContainerRegistryCacheAuthentication additionalAuthenticationProperties = default, ManagedServiceIdentity identity = default)
         {
             return new ContainerRegistryCacheRulePatch(credentialSetResourceId is null && additionalAuthenticationProperties is null ? default : new CacheRuleUpdateProperties(credentialSetResourceId, additionalAuthenticationProperties, default), identity, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the private link resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="loginServer"> The credentials are stored for this upstream or login server. </param>
-        /// <param name="authCredentials">
-        /// List of authentication credentials stored for an upstream.
-        /// Usually consists of a primary and an optional secondary credential.
-        /// </param>
-        /// <param name="createdOn"> The creation date of credential store resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="identity"> Identities associated with the resource. This is used to access the KeyVault secrets. </param>
-        /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryCredentialSetData"/> instance for mocking. </returns>
-        public static ContainerRegistryCredentialSetData ContainerRegistryCredentialSetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string loginServer = default, IEnumerable<ContainerRegistryAuthCredential> authCredentials = default, DateTimeOffset? createdOn = default, ContainerRegistryProvisioningState? provisioningState = default, ManagedServiceIdentity identity = default)
-        {
-            return new ContainerRegistryCredentialSetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                loginServer is null && authCredentials is null && createdOn is null && provisioningState is null ? default : new CredentialSetProperties(loginServer, (authCredentials ?? new ChangeTrackingList<ContainerRegistryAuthCredential>()).ToList(), createdOn, provisioningState, default),
-                identity,
-                default);
         }
 
         /// <param name="name"> The name of the credential. </param>
@@ -1273,43 +1229,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="roleAssignmentMode"> Determines registry role assignment mode. </param>
         /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerRegistryData ContainerRegistryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ContainerRegistrySku sku = default, ManagedServiceIdentity identity = default, string loginServer = default, DateTimeOffset? createdOn = default, ContainerRegistryProvisioningState? provisioningState = default, ContainerRegistryResourceStatus status = default, bool? isAdminUserEnabled = default, ContainerRegistryNetworkRuleSet networkRuleSet = default, ContainerRegistryPolicies policies = default, ContainerRegistryEncryption encryption = default, bool? isDataEndpointEnabled = default, IEnumerable<string> dataEndpointHostNames = default, IEnumerable<ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections = default, ContainerRegistryPublicNetworkAccess? publicNetworkAccess = default, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions = default, bool? isNetworkRuleBypassAllowedForTasks = default, ContainerRegistryZoneRedundancy? zoneRedundancy = default, bool? isAnonymousPullEnabled = default, AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = default, ContainerRegistryRoleAssignmentMode? roleAssignmentMode = default)
+        public static ContainerRegistryData ContainerRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerRegistrySku sku, ManagedServiceIdentity identity, string loginServer, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, ContainerRegistryResourceStatus status, bool? isAdminUserEnabled, ContainerRegistryNetworkRuleSet networkRuleSet, ContainerRegistryPolicies policies, ContainerRegistryEncryption encryption, bool? isDataEndpointEnabled, IEnumerable<string> dataEndpointHostNames, IEnumerable<ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections, ContainerRegistryPublicNetworkAccess? publicNetworkAccess, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions, bool? isNetworkRuleBypassAllowedForTasks, ContainerRegistryZoneRedundancy? zoneRedundancy, bool? isAnonymousPullEnabled, AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope, ContainerRegistryRoleAssignmentMode? roleAssignmentMode)
         {
-            return new ContainerRegistryData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                loginServer is null && createdOn is null && provisioningState is null && status is null && isAdminUserEnabled is null && networkRuleSet is null && policies is null && encryption is null && isDataEndpointEnabled is null && dataEndpointHostNames is null && privateEndpointConnections is null && publicNetworkAccess is null && networkRuleBypassOptions is null && isNetworkRuleBypassAllowedForTasks is null && zoneRedundancy is null && isAnonymousPullEnabled is null && autoGeneratedDomainNameLabelScope is null && roleAssignmentMode is null ? default : new RegistryProperties(
-                    loginServer,
-                    createdOn,
-                    provisioningState,
-                    status,
-                    isAdminUserEnabled,
-                    networkRuleSet,
-                    policies,
-                    encryption,
-                    isDataEndpointEnabled,
-                    (dataEndpointHostNames ?? new ChangeTrackingList<string>()).ToList(),
-                    default,
-                    default,
-                    default,
-                    (privateEndpointConnections ?? new ChangeTrackingList<ContainerRegistryPrivateEndpointConnectionData>()).ToList(),
-                    publicNetworkAccess,
-                    networkRuleBypassOptions,
-                    isNetworkRuleBypassAllowedForTasks,
-                    zoneRedundancy,
-                    isAnonymousPullEnabled,
-                    default,
-                    autoGeneratedDomainNameLabelScope,
-                    default,
-                    roleAssignmentMode,
-                    default),
-                sku,
-                identity,
-                default);
+            return ContainerRegistryData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, loginServer: loginServer, createdOn: createdOn, provisioningState: provisioningState, status: status, isAdminUserEnabled: isAdminUserEnabled, networkRuleSet: networkRuleSet, policies: policies, encryption: encryption, isDataEndpointEnabled: isDataEndpointEnabled, dataEndpointHostNames: dataEndpointHostNames, regionalEndpoints: default, regionalEndpointHostNames: default, endpointProtocol: default, privateEndpointConnections: privateEndpointConnections, publicNetworkAccess: publicNetworkAccess, networkRuleBypassOptions: networkRuleBypassOptions, isNetworkRuleBypassAllowedForTasks: isNetworkRuleBypassAllowedForTasks, zoneRedundancy: zoneRedundancy, isAnonymousPullEnabled: isAnonymousPullEnabled, metadataSearch: default, autoGeneratedDomainNameLabelScope: autoGeneratedDomainNameLabelScope, writableCacheRepos: default, roleAssignmentMode: roleAssignmentMode, sku: sku, identity: identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryPrivateEndpointConnectionData"/>. </summary>
@@ -1321,7 +1243,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of private endpoint connection resource. </param>
         /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerRegistryPrivateEndpointConnectionData ContainerRegistryPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier privateEndpointId = default, ContainerRegistryPrivateLinkServiceConnectionState connectionState = default, ContainerRegistryProvisioningState? provisioningState = default)
         {
             return new ContainerRegistryPrivateEndpointConnectionData(
@@ -1348,23 +1269,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryCacheRuleData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerRegistryCacheRuleData ContainerRegistryCacheRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier credentialSetResourceId = default, string sourceRepository = default, string targetRepository = default, DateTimeOffset? createdOn = default, ContainerRegistryProvisioningState? provisioningState = default)
+        public static ContainerRegistryCacheRuleData ContainerRegistryCacheRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier credentialSetResourceId, string sourceRepository, string targetRepository, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState)
         {
-            return new ContainerRegistryCacheRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                credentialSetResourceId is null && sourceRepository is null && targetRepository is null && createdOn is null && provisioningState is null ? default : new CacheRuleProperties(
-                    credentialSetResourceId,
-                    default,
-                    sourceRepository,
-                    targetRepository,
-                    createdOn,
-                    provisioningState,
-                    default),
-                default,
-                default);
+            return ContainerRegistryCacheRuleData(id: id, name: name, resourceType: resourceType, systemData: systemData, credentialSetResourceId: credentialSetResourceId, additionalAuthenticationProperties: default, sourceRepository: sourceRepository, targetRepository: targetRepository, createdOn: createdOn, provisioningState: provisioningState, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ConnectedRegistryData"/>. </summary>
@@ -1387,30 +1294,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="garbageCollection"> The garbage collection properties of the connected registry. </param>
         /// <returns> A new <see cref="ContainerRegistry.ConnectedRegistryData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ConnectedRegistryData ConnectedRegistryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerRegistryProvisioningState? provisioningState = default, ConnectedRegistryMode? mode = default, string version = default, ConnectedRegistryConnectionState? connectionState = default, DateTimeOffset? lastActivityOn = default, ConnectedRegistryActivationStatus? activationStatus = default, ConnectedRegistryParent parent = default, IEnumerable<ResourceIdentifier> clientTokenIds = default, ConnectedRegistryLoginServer loginServer = default, ConnectedRegistryLogging logging = default, IEnumerable<ConnectedRegistryStatusDetail> statusDetails = default, IEnumerable<string> notificationsList = default, GarbageCollectionProperties garbageCollection = default)
+        public static ConnectedRegistryData ConnectedRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerRegistryProvisioningState? provisioningState, ConnectedRegistryMode? mode, string version, ConnectedRegistryConnectionState? connectionState, DateTimeOffset? lastActivityOn, ConnectedRegistryActivationStatus? activationStatus, ConnectedRegistryParent parent, IEnumerable<ResourceIdentifier> clientTokenIds, ConnectedRegistryLoginServer loginServer, ConnectedRegistryLogging logging, IEnumerable<ConnectedRegistryStatusDetail> statusDetails, IEnumerable<string> notificationsList, GarbageCollectionProperties garbageCollection)
         {
-            return new ConnectedRegistryData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && mode is null && version is null && connectionState is null && lastActivityOn is null && activationStatus is null && parent is null && clientTokenIds is null && loginServer is null && logging is null && statusDetails is null && notificationsList is null && garbageCollection is null ? default : new ConnectedRegistryProperties(
-                    provisioningState,
-                    mode.GetValueOrDefault(),
-                    version,
-                    connectionState,
-                    lastActivityOn,
-                    new ActivationProperties(activationStatus, default),
-                    parent,
-                    (clientTokenIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    loginServer,
-                    logging,
-                    (statusDetails ?? new ChangeTrackingList<ConnectedRegistryStatusDetail>()).ToList(),
-                    (notificationsList ?? new ChangeTrackingList<string>()).ToList(),
-                    garbageCollection,
-                    default,
-                    default),
-                default);
+            return ConnectedRegistryData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: provisioningState, mode: mode, version: version, connectionState: connectionState, lastActivityOn: lastActivityOn, parent: parent, clientTokenIds: clientTokenIds, loginServer: loginServer, logging: logging, statusDetails: statusDetails, notificationsList: notificationsList, garbageCollection: garbageCollection, registrySyncResult: default, activationStatus: activationStatus);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryCredentialSetData"/>. </summary>
@@ -1427,9 +1313,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="createdOn"> The creation date of credential store resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryCredentialSetData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerRegistryCredentialSetData ContainerRegistryCredentialSetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedServiceIdentity identity = default, string loginServer = default, IEnumerable<ContainerRegistryAuthCredential> authCredentials = default, DateTimeOffset? createdOn = default, ContainerRegistryProvisioningState? provisioningState = default)
         {
+            authCredentials ??= new ChangeTrackingList<ContainerRegistryAuthCredential>();
+
             return new ContainerRegistryCredentialSetData(
                 id,
                 name,
@@ -1452,30 +1339,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// </param>
         /// <returns> A new <see cref="Models.ContainerRegistryImportSource"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerRegistryImportSource ContainerRegistryImportSource(ResourceIdentifier resourceId = default, string registryAddress = default, ContainerRegistryImportSourceCredentials credentials = default, string sourceImage = default)
+        public static ContainerRegistryImportSource ContainerRegistryImportSource(ResourceIdentifier resourceId, string registryAddress, ContainerRegistryImportSourceCredentials credentials, string sourceImage)
         {
             return new ContainerRegistryImportSource(resourceId, default, credentials, sourceImage, default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryWebhookCreateOrUpdateContent"/>. </summary>
-        /// <param name="tags"> The tags for the webhook. </param>
-        /// <param name="location"> The location of the webhook. This cannot be changed after the resource is created. </param>
-        /// <param name="serviceUri"> The service URI for the webhook to post notifications. </param>
-        /// <param name="customHeaders"> Custom headers that will be added to the webhook notifications. </param>
-        /// <param name="status"> The status of the webhook at the time the operation was called. </param>
-        /// <param name="scope"> The scope of repositories where the event can be triggered. For example, 'foo:*' means events for all tags under repository 'foo'. 'foo:bar' means events for 'foo:bar' only. 'foo' is equivalent to 'foo:latest'. Empty means all events. </param>
-        /// <param name="actions"> The list of actions that trigger the webhook to post notifications. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryWebhookCreateOrUpdateContent"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerRegistryWebhookCreateOrUpdateContent ContainerRegistryWebhookCreateOrUpdateContent(IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, IDictionary<string, string> customHeaders = default, ContainerRegistryWebhookStatus? status = default, string scope = default, IEnumerable<ContainerRegistryWebhookAction> actions = default)
-        {
-            return new ContainerRegistryWebhookCreateOrUpdateContent(tags ?? new ChangeTrackingDictionary<string, string>(), location, serviceUri is null && customHeaders is null && status is null && scope is null && actions is null ? default : new WebhookPropertiesCreateParameters(
-                serviceUri,
-                customHeaders ?? new ChangeTrackingDictionary<string, string>(),
-                status,
-                scope,
-                (actions ?? new ChangeTrackingList<ContainerRegistryWebhookAction>()).ToList(),
-                default), default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryNameAvailabilityContent"/>. </summary>
@@ -1485,7 +1351,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerRegistryNameAvailabilityContent ContainerRegistryNameAvailabilityContent(string name, ContainerRegistryResourceType resourceType)
         {
-            return new ContainerRegistryNameAvailabilityContent(name, resourceType, default, default, default);
+            return ContainerRegistryNameAvailabilityContent(name: name, resourceType: resourceType, resourceGroupName: default, autoGeneratedDomainNameLabelScope: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryNameAvailableResult"/>. </summary>
@@ -1496,7 +1362,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerRegistryNameAvailableResult ContainerRegistryNameAvailableResult(bool? isNameAvailable, string reason, string message)
         {
-            return new ContainerRegistryNameAvailableResult(default, isNameAvailable, reason, message, default);
+            return ContainerRegistryNameAvailableResult(availableLoginServerName: default, isNameAvailable: isNameAvailable, reason: reason, message: message);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryData"/>. </summary>
@@ -1527,41 +1393,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerRegistryData ContainerRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerRegistrySku sku, ManagedServiceIdentity identity, string loginServer, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, ContainerRegistryResourceStatus status, bool? isAdminUserEnabled, ContainerRegistryNetworkRuleSet networkRuleSet, ContainerRegistryPolicies policies, ContainerRegistryEncryption encryption, bool? isDataEndpointEnabled, IEnumerable<string> dataEndpointHostNames, IEnumerable<ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections, ContainerRegistryPublicNetworkAccess? publicNetworkAccess, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions, ContainerRegistryZoneRedundancy? zoneRedundancy, bool? isAnonymousPullEnabled)
         {
-            return new ContainerRegistryData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                loginServer is null && createdOn is null && provisioningState is null && status is null && isAdminUserEnabled is null && networkRuleSet is null && policies is null && encryption is null && isDataEndpointEnabled is null && dataEndpointHostNames is null && privateEndpointConnections is null && publicNetworkAccess is null && networkRuleBypassOptions is null && zoneRedundancy is null && isAnonymousPullEnabled is null ? default : new RegistryProperties(
-                    loginServer,
-                    createdOn,
-                    provisioningState,
-                    status,
-                    isAdminUserEnabled,
-                    networkRuleSet,
-                    policies,
-                    encryption,
-                    isDataEndpointEnabled,
-                    (dataEndpointHostNames ?? new ChangeTrackingList<string>()).ToList(),
-                    default,
-                    default,
-                    default,
-                    (privateEndpointConnections ?? new ChangeTrackingList<ContainerRegistryPrivateEndpointConnectionData>()).ToList(),
-                    publicNetworkAccess,
-                    networkRuleBypassOptions,
-                    default,
-                    zoneRedundancy,
-                    isAnonymousPullEnabled,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default),
-                sku,
-                identity,
-                default);
+            return ContainerRegistryData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, loginServer: loginServer, createdOn: createdOn, provisioningState: provisioningState, status: status, isAdminUserEnabled: isAdminUserEnabled, networkRuleSet: networkRuleSet, policies: policies, encryption: encryption, isDataEndpointEnabled: isDataEndpointEnabled, dataEndpointHostNames: dataEndpointHostNames, regionalEndpoints: default, regionalEndpointHostNames: default, endpointProtocol: default, privateEndpointConnections: privateEndpointConnections, publicNetworkAccess: publicNetworkAccess, networkRuleBypassOptions: networkRuleBypassOptions, isNetworkRuleBypassAllowedForTasks: default, zoneRedundancy: zoneRedundancy, isAnonymousPullEnabled: isAnonymousPullEnabled, metadataSearch: default, autoGeneratedDomainNameLabelScope: default, writableCacheRepos: default, roleAssignmentMode: default, sku: sku, identity: identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryData"/>. </summary>
@@ -1591,41 +1423,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerRegistryData ContainerRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerRegistrySku sku, ManagedServiceIdentity identity, string loginServer, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, ContainerRegistryResourceStatus status, bool? isAdminUserEnabled, ContainerRegistryNetworkRuleSet networkRuleSet, ContainerRegistryPolicies policies, ContainerRegistryEncryption encryption, bool? isDataEndpointEnabled, IEnumerable<string> dataEndpointHostNames, IEnumerable<ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections, ContainerRegistryPublicNetworkAccess? publicNetworkAccess, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions, ContainerRegistryZoneRedundancy? zoneRedundancy)
         {
-            return new ContainerRegistryData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                loginServer is null && createdOn is null && provisioningState is null && status is null && isAdminUserEnabled is null && networkRuleSet is null && policies is null && encryption is null && isDataEndpointEnabled is null && dataEndpointHostNames is null && privateEndpointConnections is null && publicNetworkAccess is null && networkRuleBypassOptions is null && zoneRedundancy is null ? default : new RegistryProperties(
-                    loginServer,
-                    createdOn,
-                    provisioningState,
-                    status,
-                    isAdminUserEnabled,
-                    networkRuleSet,
-                    policies,
-                    encryption,
-                    isDataEndpointEnabled,
-                    (dataEndpointHostNames ?? new ChangeTrackingList<string>()).ToList(),
-                    default,
-                    default,
-                    default,
-                    (privateEndpointConnections ?? new ChangeTrackingList<ContainerRegistryPrivateEndpointConnectionData>()).ToList(),
-                    publicNetworkAccess,
-                    networkRuleBypassOptions,
-                    default,
-                    zoneRedundancy,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default),
-                sku,
-                identity,
-                default);
+            return ContainerRegistryData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, loginServer: loginServer, createdOn: createdOn, provisioningState: provisioningState, status: status, isAdminUserEnabled: isAdminUserEnabled, networkRuleSet: networkRuleSet, policies: policies, encryption: encryption, isDataEndpointEnabled: isDataEndpointEnabled, dataEndpointHostNames: dataEndpointHostNames, regionalEndpoints: default, regionalEndpointHostNames: default, endpointProtocol: default, privateEndpointConnections: privateEndpointConnections, publicNetworkAccess: publicNetworkAccess, networkRuleBypassOptions: networkRuleBypassOptions, isNetworkRuleBypassAllowedForTasks: default, zoneRedundancy: zoneRedundancy, isAnonymousPullEnabled: default, metadataSearch: default, autoGeneratedDomainNameLabelScope: default, writableCacheRepos: default, roleAssignmentMode: default, sku: sku, identity: identity);
         }
     }
 }
