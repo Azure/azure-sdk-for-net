@@ -567,6 +567,9 @@ namespace Azure.Storage.Files.DataLake
                 case "2026-10-06":
                     serviceVersion = ServiceVersion.V2026_10_06;
                     return true;
+                case "2027-03-07":
+                    serviceVersion = ServiceVersion.V2027_03_07;
+                    return true;
                 default:
                     return false;
             }
