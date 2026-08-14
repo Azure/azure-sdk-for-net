@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="autoUpgradeProfileStatus"> The status of the auto upgrade profile. </param>
         /// <returns> A new <see cref="T:Azure.ResourceManager.ContainerServiceFleet.AutoUpgradeProfileData" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AutoUpgradeProfileData AutoUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, AutoUpgradeProfileProvisioningState? provisioningState, ResourceIdentifier updateStrategyId, ContainerServiceFleetUpgradeChannel? channel, AutoUpgradeNodeImageSelectionType? selectionType, bool? disabled, AutoUpgradeProfileStatus autoUpgradeProfileStatus)
+        public static AutoUpgradeProfileData AutoUpgradeProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? eTag = default, AutoUpgradeProfileProvisioningState? provisioningState = default, ResourceIdentifier updateStrategyId = null, ContainerServiceFleetUpgradeChannel? channel = default, AutoUpgradeNodeImageSelectionType? selectionType = default, bool? disabled = default, AutoUpgradeProfileStatus autoUpgradeProfileStatus = null)
         {
-            return new AutoUpgradeProfileData(id, name, resourceType, systemData, additionalBinaryDataProperties: null, new AutoUpgradeProfileProperties(provisioningState, updateStrategyId, channel, nodeImageSelection: default, disabled, autoUpgradeProfileStatus, targetKubernetesVersion: default, longTermSupport: default, additionalBinaryDataProperties: default), eTag);
+            return new AutoUpgradeProfileData(id, name, resourceType, systemData, new AutoUpgradeProfileProperties(provisioningState, updateStrategyId, channel, nodeImageSelection: default, disabled, autoUpgradeProfileStatus, targetKubernetesVersion: default, isLongTermSupport: default, additionalBinaryDataProperties: default), eTag, additionalBinaryDataProperties: null);
         }
     }
 }

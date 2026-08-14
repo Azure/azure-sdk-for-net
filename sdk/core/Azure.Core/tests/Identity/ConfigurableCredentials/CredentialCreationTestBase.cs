@@ -121,12 +121,12 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
         }
 
         /// <summary>
-        /// Verifies that without WithAzureCredential, CredentialProvider is null
+        /// Verifies that without an Azure credential resolver registered, CredentialProvider is null
         /// and AuthenticationPolicy.Create throws the appropriate error.
         /// </summary>
         [Test]
         [NonParallelizable]
-        public void WithoutWithAzureCredential_AuthenticationPolicyCreateThrows()
+        public void WithoutAzureCredentialResolver_AuthenticationPolicyCreateThrows()
         {
             using (new TestEnvVar(GetRequiredEnvVars()))
             {
@@ -155,37 +155,12 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
         }
 
         /// <summary>
-        /// Verifies that AddClient with WithAzureCredential resolves a working client from DI.
+        /// Verifies that AddClient through the SCM-only path (no Azure resolver registered)
+        /// throws ArgumentNullException because the credential is never resolved.
         /// </summary>
         [Test]
         [NonParallelizable]
-        public void AddClient_WithAzureCredential_ResolvesClient()
-        {
-            using (new TestEnvVar(GetRequiredEnvVars()))
-            {
-                HostApplicationBuilder builder = Host.CreateApplicationBuilder();
-                var configValues = BuildConfigValues();
-
-                builder.Configuration.AddInMemoryCollection(configValues);
-                builder.AddClient<DITestClient, E2ETestSettings>("MyClient").WithAzureCredential();
-
-                IHost host = builder.Build();
-                var client = host.Services.GetRequiredService<DITestClient>();
-
-                Assert.IsNotNull(client);
-                Assert.IsNotNull(client.Endpoint);
-                Assert.IsNotNull(client.Credential);
-                Assert.IsInstanceOf<ConfigurableCredential>(client.Credential);
-            }
-        }
-
-        /// <summary>
-        /// Verifies that AddClient without WithAzureCredential throws ArgumentNullException
-        /// because the credential is null when the DI container resolves the client.
-        /// </summary>
-        [Test]
-        [NonParallelizable]
-        public void AddClient_WithoutWithAzureCredential_ThrowsOnResolve()
+        public void AddClient_WithoutAzureCredentialResolver_ThrowsOnResolve()
         {
             using (new TestEnvVar(GetRequiredEnvVars()))
             {
@@ -202,37 +177,12 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
         }
 
         /// <summary>
-        /// Verifies that AddKeyedClient with WithAzureCredential resolves a working client from DI.
+        /// Verifies that AddKeyedClient through the SCM-only path (no Azure resolver registered)
+        /// throws ArgumentNullException because the credential is never resolved.
         /// </summary>
         [Test]
         [NonParallelizable]
-        public void AddKeyedClient_WithAzureCredential_ResolvesClient()
-        {
-            using (new TestEnvVar(GetRequiredEnvVars()))
-            {
-                HostApplicationBuilder builder = Host.CreateApplicationBuilder();
-                var configValues = BuildConfigValues();
-
-                builder.Configuration.AddInMemoryCollection(configValues);
-                builder.AddKeyedClient<DITestClient, E2ETestSettings>("myKey", "MyClient").WithAzureCredential();
-
-                IHost host = builder.Build();
-                var client = host.Services.GetRequiredKeyedService<DITestClient>("myKey");
-
-                Assert.IsNotNull(client);
-                Assert.IsNotNull(client.Endpoint);
-                Assert.IsNotNull(client.Credential);
-                Assert.IsInstanceOf<ConfigurableCredential>(client.Credential);
-            }
-        }
-
-        /// <summary>
-        /// Verifies that AddKeyedClient without WithAzureCredential throws ArgumentNullException
-        /// because the credential is null when the DI container resolves the client.
-        /// </summary>
-        [Test]
-        [NonParallelizable]
-        public void AddKeyedClient_WithoutWithAzureCredential_ThrowsOnResolve()
+        public void AddKeyedClient_WithoutAzureCredentialResolver_ThrowsOnResolve()
         {
             using (new TestEnvVar(GetRequiredEnvVars()))
             {

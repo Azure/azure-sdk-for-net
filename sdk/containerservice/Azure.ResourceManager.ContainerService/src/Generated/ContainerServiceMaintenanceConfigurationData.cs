@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of a default maintenance configuration. </param>
-        internal ContainerServiceMaintenanceConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, MaintenanceConfigurationProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceMaintenanceConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MaintenanceConfigurationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of a default maintenance configuration. </summary>
@@ -66,6 +66,24 @@ namespace Azure.ResourceManager.ContainerService
                     Properties = new MaintenanceConfigurationProperties();
                 }
                 return Properties.NotAllowedTimes;
+            }
+        }
+
+        /// <summary> The fully qualified resource ID of the maintenance window that this maintenance configuration is linked to. When set, the schedule is derived read-only from the linked maintenance window — maintenanceWindow becomes a computed field. When absent (the default), the schedule is defined inline via the maintenanceWindow property. The caller must have read access to the target maintenance window. </summary>
+        [WirePath("properties.maintenanceWindowId")]
+        public ResourceIdentifier MaintenanceWindowId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaintenanceWindowId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MaintenanceConfigurationProperties();
+                }
+                Properties.MaintenanceWindowId = value;
             }
         }
 

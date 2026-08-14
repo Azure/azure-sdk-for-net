@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    internal class SiteRecoveryReplicationProtectionClusterResourceOperationSource : IOperationSource<SiteRecoveryReplicationProtectionClusterResource>
+    /// <summary></summary>
+    internal partial class SiteRecoveryReplicationProtectionClusterResourceOperationSource : IOperationSource<SiteRecoveryReplicationProtectionClusterResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal SiteRecoveryReplicationProtectionClusterResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         SiteRecoveryReplicationProtectionClusterResource IOperationSource<SiteRecoveryReplicationProtectionClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SiteRecoveryReplicationProtectionClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            SiteRecoveryReplicationProtectionClusterData data = SiteRecoveryReplicationProtectionClusterData.DeserializeSiteRecoveryReplicationProtectionClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SiteRecoveryReplicationProtectionClusterResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SiteRecoveryReplicationProtectionClusterResource> IOperationSource<SiteRecoveryReplicationProtectionClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SiteRecoveryReplicationProtectionClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-            return await Task.FromResult(new SiteRecoveryReplicationProtectionClusterResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            SiteRecoveryReplicationProtectionClusterData data = SiteRecoveryReplicationProtectionClusterData.DeserializeSiteRecoveryReplicationProtectionClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SiteRecoveryReplicationProtectionClusterResource(_client, data);
         }
     }
 }

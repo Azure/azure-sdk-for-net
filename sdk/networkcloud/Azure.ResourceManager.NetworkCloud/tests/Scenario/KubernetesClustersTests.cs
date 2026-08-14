@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.NetworkCloud.Models;
 using Azure.ResourceManager.Resources;
-using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 
             InitialAgentPoolConfiguration[] initialAgentPoolConfigurationsArray = new InitialAgentPoolConfiguration[]
             {
-                new InitialAgentPoolConfiguration(1, NetworkCloudAgentPoolMode.System, "NC_G2_8_v1", "agentPoolConfig")
+                new InitialAgentPoolConfiguration(1, NetworkCloudAgentPoolMode.System, "agentPoolConfig", "NC_G2_8_v1")
                 {
                     AgentOptions = new NetworkCloudAgentConfiguration(4)
                     {

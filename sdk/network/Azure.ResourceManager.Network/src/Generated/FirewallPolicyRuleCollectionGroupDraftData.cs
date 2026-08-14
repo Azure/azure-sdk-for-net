@@ -12,49 +12,69 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the FirewallPolicyRuleCollectionGroupDraft data model.
-    /// Rule Collection Group resource.
-    /// </summary>
+    /// <summary> Rule Collection Group resource. </summary>
     public partial class FirewallPolicyRuleCollectionGroupDraftData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyRuleCollectionGroupDraftData"/>. </summary>
         public FirewallPolicyRuleCollectionGroupDraftData()
         {
-            RuleCollections = new ChangeTrackingList<FirewallPolicyRuleCollectionInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyRuleCollectionGroupDraftData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="size"> A read-only string that represents the size of the FirewallPolicyRuleCollectionGroupProperties in MB. (ex 1.2MB). </param>
-        /// <param name="priority"> Priority of the Firewall Policy Rule Collection Group resource. </param>
-        /// <param name="ruleCollections">
-        /// Group of Firewall Policy rule collections.
-        /// Please note <see cref="FirewallPolicyRuleCollectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FirewallPolicyFilterRuleCollectionInfo"/> and <see cref="FirewallPolicyNatRuleCollectionInfo"/>.
-        /// </param>
-        internal FirewallPolicyRuleCollectionGroupDraftData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string size, int? priority, IList<FirewallPolicyRuleCollectionInfo> ruleCollections) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> The properties of the firewall policy rule collection group. </param>
+        internal FirewallPolicyRuleCollectionGroupDraftData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, FirewallPolicyRuleCollectionGroupDraftProperties properties) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            Size = size;
-            Priority = priority;
-            RuleCollections = ruleCollections;
+            Properties = properties;
         }
+
+        /// <summary> The properties of the firewall policy rule collection group. </summary>
+        [WirePath("properties")]
+        internal FirewallPolicyRuleCollectionGroupDraftProperties Properties { get; set; }
 
         /// <summary> A read-only string that represents the size of the FirewallPolicyRuleCollectionGroupProperties in MB. (ex 1.2MB). </summary>
         [WirePath("properties.size")]
-        public string Size { get; }
+        public string Size
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Size;
+            }
+        }
+
         /// <summary> Priority of the Firewall Policy Rule Collection Group resource. </summary>
         [WirePath("properties.priority")]
-        public int? Priority { get; set; }
-        /// <summary>
-        /// Group of Firewall Policy rule collections.
-        /// Please note <see cref="FirewallPolicyRuleCollectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FirewallPolicyFilterRuleCollectionInfo"/> and <see cref="FirewallPolicyNatRuleCollectionInfo"/>.
-        /// </summary>
+        public int? Priority
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Priority;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyRuleCollectionGroupDraftProperties();
+                }
+                Properties.Priority = value;
+            }
+        }
+
+        /// <summary> Group of Firewall Policy rule collections. </summary>
         [WirePath("properties.ruleCollections")]
-        public IList<FirewallPolicyRuleCollectionInfo> RuleCollections { get; }
+        public IList<FirewallPolicyRuleCollectionInfo> RuleCollections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyRuleCollectionGroupDraftProperties();
+                }
+                return Properties.RuleCollections;
+            }
+        }
     }
 }

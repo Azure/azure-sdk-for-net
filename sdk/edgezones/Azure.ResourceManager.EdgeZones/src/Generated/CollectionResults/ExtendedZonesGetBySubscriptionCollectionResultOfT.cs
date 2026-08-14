@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.EdgeZones
                     yield break;
                 }
                 ExtendedZoneListResult result = ExtendedZoneListResult.FromResponse(response);
-                yield return Page<ExtendedZoneData>.FromValues((IReadOnlyList<ExtendedZoneData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ExtendedZoneData>.FromValues((IReadOnlyList<ExtendedZoneData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

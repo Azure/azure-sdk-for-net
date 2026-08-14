@@ -8,15 +8,28 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Projects;
 
+/// <summary>
+/// Represents a provisioning feature that emits an Azure App Service resource.
+/// </summary>
 public class AppServiceFeature : AzureProjectFeature
 {
+    /// <summary>
+    /// Gets or sets the SKU description for the App Service plan.
+    /// </summary>
     public AppServiceSkuDescription Sku { get; set; }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AppServiceFeature"/> class with a free-tier SKU.
+    /// </summary>
     public AppServiceFeature()
     {
         Sku = new AppServiceSkuDescription { Tier = "Free", Name = "F1" };
     }
 
+    /// <summary>
+    /// Emits the provisioning constructs for the App Service resource into the specified infrastructure.
+    /// </summary>
+    /// <param name="infrastructure">The project infrastructure to emit constructs into.</param>
     protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         //Add a App Service to the infrastructure.

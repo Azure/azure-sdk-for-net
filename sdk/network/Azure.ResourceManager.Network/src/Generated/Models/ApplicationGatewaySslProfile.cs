@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -18,42 +19,73 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslProfile"/>. </summary>
         public ApplicationGatewaySslProfile()
         {
-            TrustedClientCertificates = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslProfile"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="trustedClientCertificates"> Array of references to application gateway trusted client certificates. </param>
-        /// <param name="sslPolicy"> SSL policy of the application gateway resource. </param>
-        /// <param name="clientAuthConfiguration"> Client authentication configuration of the application gateway resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the HTTP listener resource. </param>
-        internal ApplicationGatewaySslProfile(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<WritableSubResource> trustedClientCertificates, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayClientAuthConfiguration clientAuthConfiguration, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the application gateway SSL profile. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal ApplicationGatewaySslProfile(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ApplicationGatewaySslProfilePropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            TrustedClientCertificates = trustedClientCertificates;
-            SslPolicy = sslPolicy;
-            ClientAuthConfiguration = clientAuthConfiguration;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the application gateway SSL profile. </summary>
+        [WirePath("properties")]
+        internal ApplicationGatewaySslProfilePropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
-        /// <summary> Array of references to application gateway trusted client certificates. </summary>
-        [WirePath("properties.trustedClientCertificates")]
-        public IList<WritableSubResource> TrustedClientCertificates { get; }
+
         /// <summary> SSL policy of the application gateway resource. </summary>
         [WirePath("properties.sslPolicy")]
-        public ApplicationGatewaySslPolicy SslPolicy { get; set; }
+        public ApplicationGatewaySslPolicy SslPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SslPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewaySslProfilePropertiesFormat();
+                }
+                Properties.SslPolicy = value;
+            }
+        }
+
         /// <summary> Client authentication configuration of the application gateway resource. </summary>
         [WirePath("properties.clientAuthConfiguration")]
-        public ApplicationGatewayClientAuthConfiguration ClientAuthConfiguration { get; set; }
+        public ApplicationGatewayClientAuthConfiguration ClientAuthConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientAuthConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewaySslProfilePropertiesFormat();
+                }
+                Properties.ClientAuthConfiguration = value;
+            }
+        }
+
         /// <summary> The provisioning state of the HTTP listener resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> The encryption properties for the IoT hub. </summary>
     public partial class IotHubEncryptionProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IotHubEncryptionProperties"/>. </summary>
         public IotHubEncryptionProperties()
@@ -54,16 +26,17 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Initializes a new instance of <see cref="IotHubEncryptionProperties"/>. </summary>
         /// <param name="keySource"> The source of the key. </param>
         /// <param name="keyVaultProperties"> The properties of the KeyVault key. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotHubEncryptionProperties(string keySource, IList<IotHubKeyVaultKeyProperties> keyVaultProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubEncryptionProperties(string keySource, IList<IotHubKeyVaultKeyProperties> keyVaultProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeySource = keySource;
             KeyVaultProperties = keyVaultProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The source of the key. </summary>
         public string KeySource { get; set; }
+
         /// <summary> The properties of the KeyVault key. </summary>
         public IList<IotHubKeyVaultKeyProperties> KeyVaultProperties { get; }
     }

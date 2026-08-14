@@ -18,11 +18,6 @@ namespace Azure.ResourceManager.NetApp.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticKeyVaultProperties"/>. </summary>
-        public ElasticKeyVaultProperties()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ElasticKeyVaultProperties"/>. </summary>
         /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
         /// <param name="keyName"> The name of KeyVault key. </param>
         /// <param name="keyVaultResourceId"> The resource ID of KeyVault. </param>
@@ -36,17 +31,5 @@ namespace Azure.ResourceManager.NetApp.Models
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The Uri of KeyVault. </summary>
-        public Uri KeyVaultUri { get; set; }
-
-        /// <summary> The name of KeyVault key. </summary>
-        public string KeyName { get; set; }
-
-        /// <summary> The resource ID of KeyVault. </summary>
-        public ResourceIdentifier KeyVaultResourceId { get; set; }
-
-        /// <summary> Status of the KeyVault connection. </summary>
-        public ElasticKeyVaultStatus? Status { get; }
     }
 }

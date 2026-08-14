@@ -78,6 +78,17 @@ internal partial class InternalOpenAIPaginatedListResultOfT<TData> : ReadOnlyCol
                     }
                 }
             }
+            else if (topProperty.NameEquals("entries"u8))
+            {
+                if (topProperty.Value.ValueKind == JsonValueKind.Array)
+                {
+                    foreach (JsonElement dataElement in topProperty.Value.EnumerateArray())
+                    {
+                        TData dataItem = dataItemDeserializer.Invoke(dataElement, options);
+                        data.Add(dataItem);
+                    }
+                }
+            }
         }
 
         return new(firstId, lastId, hasMore, data);

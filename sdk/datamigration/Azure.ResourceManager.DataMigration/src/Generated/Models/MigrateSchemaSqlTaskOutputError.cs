@@ -14,20 +14,18 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateSchemaSqlTaskOutputError : MigrateSchemaSqlServerSqlDBTaskOutput
     {
         /// <summary> Initializes a new instance of <see cref="MigrateSchemaSqlTaskOutputError"/>. </summary>
-        internal MigrateSchemaSqlTaskOutputError()
+        internal MigrateSchemaSqlTaskOutputError() : base("ErrorOutput")
         {
-            ResultType = "ErrorOutput";
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrateSchemaSqlTaskOutputError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="error"> Migration error. </param>
-        internal MigrateSchemaSqlTaskOutputError(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataMigrationReportableException error) : base(id, resultType, serializedAdditionalRawData)
+        internal MigrateSchemaSqlTaskOutputError(string id, string resultType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataMigrationReportableException error) : base(id, resultType, additionalBinaryDataProperties)
         {
             Error = error;
-            ResultType = resultType ?? "ErrorOutput";
         }
 
         /// <summary> Migration error. </summary>

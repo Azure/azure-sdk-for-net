@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         {
             ContentFilters = new ChangeTrackingList<RaiPolicyContentFilter>();
             CustomBlocklists = new ChangeTrackingList<CustomBlocklistConfig>();
-            SafetyProviders = new ChangeTrackingList<SafetyProviderConfig>();
+            SafetyProviders = new ChangeTrackingList<RaiSafetyProviderSourceConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RaiPolicyProperties"/>. </summary>
@@ -32,8 +32,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="contentFilters"> The list of Content Filters. </param>
         /// <param name="customBlocklists"> The list of custom Blocklist. </param>
         /// <param name="safetyProviders"> The list of Safety Providers. </param>
+        /// <param name="egressPolicy">
+        /// Egress (outbound network) policy controlling which external endpoints sandboxed
+        /// agents can reach. Includes rules with Allow/Deny/Transform/Rewrite actions.
+        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RaiPolicyProperties(RaiPolicyType? policyType, RaiPolicyMode? mode, string basePolicyName, IList<RaiPolicyContentFilter> contentFilters, IList<CustomBlocklistConfig> customBlocklists, IList<SafetyProviderConfig> safetyProviders, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RaiPolicyProperties(RaiPolicyType? policyType, RaiPolicyMode? mode, string basePolicyName, IList<RaiPolicyContentFilter> contentFilters, IList<CustomBlocklistConfig> customBlocklists, IList<RaiSafetyProviderSourceConfig> safetyProviders, RaiEgressPolicyConfig egressPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicyType = policyType;
             Mode = mode;
@@ -41,6 +45,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             ContentFilters = contentFilters;
             CustomBlocklists = customBlocklists;
             SafetyProviders = safetyProviders;
+            EgressPolicy = egressPolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -66,6 +71,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> The list of Safety Providers. </summary>
         [WirePath("safetyProviders")]
-        public IList<SafetyProviderConfig> SafetyProviders { get; }
+        public IList<RaiSafetyProviderSourceConfig> SafetyProviders { get; }
+
+        /// <summary>
+        /// Egress (outbound network) policy controlling which external endpoints sandboxed
+        /// agents can reach. Includes rules with Allow/Deny/Transform/Rewrite actions.
+        /// </summary>
+        [WirePath("egressPolicy")]
+        public RaiEgressPolicyConfig EgressPolicy { get; set; }
     }
 }

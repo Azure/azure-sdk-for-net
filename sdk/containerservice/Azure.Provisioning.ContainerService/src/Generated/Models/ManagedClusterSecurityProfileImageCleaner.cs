@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "enabled" });
             _intervalHours = DefineProperty<int>(nameof(IntervalHours), new string[] { "intervalHours" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterSecurityProfileImageCleaner that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

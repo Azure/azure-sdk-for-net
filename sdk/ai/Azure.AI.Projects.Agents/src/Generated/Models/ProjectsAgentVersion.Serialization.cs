@@ -121,10 +121,15 @@ namespace Azure.AI.Projects.Agents
             writer.WriteNumberValue(CreatedAt, "U");
             writer.WritePropertyName("definition"u8);
             writer.WriteObjectValue(Definition, options);
+            if (Optional.IsDefined(Draft))
+            {
+                writer.WritePropertyName("draft"u8);
+                writer.WriteBooleanValue(Draft.Value);
+            }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToSerialString());
+                writer.WriteStringValue(Status.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(InstanceIdentity))
             {
@@ -141,10 +146,10 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("blueprint_reference"u8);
                 writer.WriteObjectValue(BlueprintReference, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(AgentGuid))
+            if (options.Format != "W" && Optional.IsDefined(AgentGuidInternal))
             {
                 writer.WritePropertyName("agent_guid"u8);
-                writer.WriteStringValue(AgentGuid);
+                writer.WriteStringValue(AgentGuidInternal);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -196,11 +201,12 @@ namespace Azure.AI.Projects.Agents
             string description = default;
             DateTimeOffset createdAt = default;
             ProjectsAgentDefinition definition = default;
+            bool? draft = default;
             AgentVersionStatus? status = default;
             AgentIdentity instanceIdentity = default;
             AgentIdentity blueprint = default;
             AgentBlueprintReference blueprintReference = default;
-            string agentGuid = default;
+            string agentGuidInternal = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -261,13 +267,22 @@ namespace Azure.AI.Projects.Agents
                     definition = ProjectsAgentDefinition.DeserializeProjectsAgentDefinition(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("draft"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    draft = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("status"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToAgentVersionStatus();
+                    status = new AgentVersionStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("instance_identity"u8))
@@ -299,7 +314,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("agent_guid"u8))
                 {
-                    agentGuid = prop.Value.GetString();
+                    agentGuidInternal = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -316,11 +331,12 @@ namespace Azure.AI.Projects.Agents
                 description,
                 createdAt,
                 definition,
+                draft,
                 status,
                 instanceIdentity,
                 blueprint,
                 blueprintReference,
-                agentGuid,
+                agentGuidInternal,
                 additionalBinaryDataProperties);
         }
     }

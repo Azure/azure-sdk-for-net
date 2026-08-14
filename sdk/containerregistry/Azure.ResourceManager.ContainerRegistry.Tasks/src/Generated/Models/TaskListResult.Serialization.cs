@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (TaskData item in Value)
+                foreach (ContainerRegistryTaskData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             {
                 return null;
             }
-            IList<TaskData> value = default;
+            IList<ContainerRegistryTaskData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    List<TaskData> array = new List<TaskData>();
+                    List<ContainerRegistryTaskData> array = new List<ContainerRegistryTaskData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TaskData.DeserializeTaskData(item, options));
+                        array.Add(ContainerRegistryTaskData.DeserializeContainerRegistryTaskData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TaskListResult(value ?? new ChangeTrackingList<TaskData>(), nextLink, additionalBinaryDataProperties);
+            return new TaskListResult(value ?? new ChangeTrackingList<ContainerRegistryTaskData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

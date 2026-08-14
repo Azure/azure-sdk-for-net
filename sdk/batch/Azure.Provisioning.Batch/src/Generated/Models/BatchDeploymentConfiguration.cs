@@ -39,6 +39,10 @@ namespace Azure.Provisioning.Batch
         {
             base.DefineProvisionableProperties();
             _vmConfiguration = DefineModelProperty<BatchVmConfiguration>(nameof(VmConfiguration), new string[] { "virtualMachineConfiguration" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchDeploymentConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

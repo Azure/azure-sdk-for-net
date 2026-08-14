@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ContainerAppResource.ResourceType, out string containerAppApiVersion);
             _containerAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppResource.ResourceType.Namespace, Diagnostics);
-            _containerAppsRestClient = new ContainerApps(_containerAppsClientDiagnostics, Pipeline, Endpoint, containerAppApiVersion ?? "2025-10-02-preview");
+            _containerAppsRestClient = new ContainerApps(_containerAppsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _containerAppsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerAppName, ContainerAppData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<ContainerAppResource> operation = new AppContainersArmOperation<ContainerAppResource>(
-                    new ContainerAppOperationSource(Client),
+                    new ContainerAppResourceOperationSource(Client),
                     _containerAppsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _containerAppsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerAppName, ContainerAppData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<ContainerAppResource> operation = new AppContainersArmOperation<ContainerAppResource>(
-                    new ContainerAppOperationSource(Client),
+                    new ContainerAppResourceOperationSource(Client),
                     _containerAppsClientDiagnostics,
                     Pipeline,
                     message.Request,

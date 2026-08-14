@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -44,17 +44,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 7,
                 "10.18.0.0/19",
                 29249,
-                new TerminalServerConfiguration("10.0.0.12/30", "20.0.0.13/30")
+                new NetworkFabricTerminalServerConfiguration("username", "xxxx", "10.0.0.12/30", "20.0.0.13/30")
                 {
                     PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
                     SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
-                    Username = "username",
-                    Password = "xxxx",
                     SerialNumber = "123456",
                 },
                 new ManagementNetworkConfigurationProperties(
-                    new VpnConfigurationProperties(PeeringOption.OptionA)
+                    new VpnConfigurationProperties()
                     {
+                        PeeringOption = PeeringOption.OptionA,
                         OptionBProperties = new OptionBProperties()
                         {
                             RouteTargets = new RouteTargetInformation()
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                                 },
                             },
                         },
-                        OptionAProperties = new VpnConfigurationOptionAProperties()
+                        OptionASettings = new VpnOptionAProperties()
                         {
                             PrimaryIPv4Prefix = "10.0.0.12/30",
                             PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
@@ -93,8 +92,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                             },
                         },
                     },
-                    new VpnConfigurationProperties(PeeringOption.OptionA)
+                    new VpnConfigurationProperties()
                     {
+                        PeeringOption = PeeringOption.OptionA,
                         OptionBProperties = new OptionBProperties()
                         {
                             RouteTargets = new RouteTargetInformation()
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                                 },
                             },
                         },
-                        OptionAProperties = new VpnConfigurationOptionAProperties()
+                        OptionASettings = new VpnOptionAProperties()
                         {
                             PrimaryIPv4Prefix = "10.0.0.14/30",
                             PrimaryIPv6Prefix = "2FFE:FFFF:0:CD30::a7/127",

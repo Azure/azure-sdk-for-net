@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string duplicatePropertyTestApiVersion);
             _duplicatePropertyTestsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _duplicatePropertyTestsRestClient = new DuplicatePropertyTests(_duplicatePropertyTestsClientDiagnostics, Pipeline, Endpoint, duplicatePropertyTestApiVersion ?? "2024-05-01");
+            _duplicatePropertyTestsRestClient = new DuplicatePropertyTests(_duplicatePropertyTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, duplicatePropertyTestApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -338,7 +338,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _duplicatePropertyTestsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DuplicatePropertyTestData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<DuplicatePropertyTestResource> operation = new TestsArmOperation<DuplicatePropertyTestResource>(
-                    new DuplicatePropertyTestOperationSource(Client),
+                    new DuplicatePropertyTestResourceOperationSource(Client),
                     _duplicatePropertyTestsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -398,7 +398,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _duplicatePropertyTestsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DuplicatePropertyTestData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<DuplicatePropertyTestResource> operation = new TestsArmOperation<DuplicatePropertyTestResource>(
-                    new DuplicatePropertyTestOperationSource(Client),
+                    new DuplicatePropertyTestResourceOperationSource(Client),
                     _duplicatePropertyTestsClientDiagnostics,
                     Pipeline,
                     message.Request,

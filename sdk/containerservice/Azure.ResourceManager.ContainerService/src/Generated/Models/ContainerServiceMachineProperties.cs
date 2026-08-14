@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> network properties of the machine. </summary>
         [WirePath("network")]
-        public ContainerServiceMachineNetworkProperties Network { get; }
+        public ContainerServiceMachineNetworkProperties Network { get; set; }
 
         /// <summary> Azure resource id of the machine. It can be used to GET underlying VM Instance. </summary>
         [WirePath("resourceId")]

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class ManagedDatabaseSensitivityLabelResource : IJsonModel<SensitivityLabelData>
     {
-        private static SensitivityLabelData s_dataDeserializationInstance;
-        private static SensitivityLabelData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SensitivityLabelData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SensitivityLabelData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SensitivityLabelData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SensitivityLabelData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SensitivityLabelData>)Data).Write(writer, options);
 
-        SensitivityLabelData IJsonModel<SensitivityLabelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SensitivityLabelData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SensitivityLabelData IJsonModel<SensitivityLabelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SensitivityLabelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SensitivityLabelData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SensitivityLabelData IPersistableModel<SensitivityLabelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SensitivityLabelData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SensitivityLabelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SensitivityLabelData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SensitivityLabelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

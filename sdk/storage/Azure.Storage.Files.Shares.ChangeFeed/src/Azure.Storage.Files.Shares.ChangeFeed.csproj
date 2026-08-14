@@ -12,7 +12,7 @@
       For this release see notes - https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Files.Shares.ChangeFeed/README.md and https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Files.Shares.ChangeFeed/CHANGELOG.md
     </Description>
     <GenerateAPIListing>true</GenerateAPIListing>
-    <NoWarn>$(NoWarn);AZC0002;AZC0015;AZC0035;CS1591</NoWarn>
+    <!-- Approved analyzer suppressions live in eng/analyzerallowlist/Azure.Storage.Files.Shares.ChangeFeed.txt -->
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
   <ItemGroup>
@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\AvroParser.cs" LinkBase="Shared\Avro" />
     <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\AvroConstants.cs" LinkBase="Shared\Avro" />
+    <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\Errors.Avro.cs" LinkBase="Shared\Avro" />
     <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\AvroReader.cs" LinkBase="Shared\Avro" />
     <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\StreamWithPosition.cs" LinkBase="Shared\Avro" />
   </ItemGroup>

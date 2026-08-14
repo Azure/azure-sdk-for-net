@@ -21,15 +21,8 @@ public sealed class MultiPartFormContent : BinaryContent
     private const string MediaTypeApplicationJson = "application/json";
     private const string MediaTypeTextPlain = "text/plain";
     private const string MediaTypeApplicationOctetStream = "application/octet-stream";
-    private const int BoundaryLength = 70;
-    private const int BoundaryAlphabetMask = 0x3F; // 64-char alphabet → 6-bit mask, unbiased.
 
     private static readonly ModelReaderWriterOptions _modelWriteWireOptions = new ModelReaderWriterOptions("W");
-    private static readonly char[] _boundaryValues = "0123456789=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".ToCharArray();
-#if !NET6_0_OR_GREATER
-    private static readonly Random _random = new Random();
-    private static readonly object _randomLock = new object();
-#endif
 
     private readonly MultipartFormDataContent _multipartContent;
     private bool _disposed;
@@ -38,19 +31,9 @@ public sealed class MultiPartFormContent : BinaryContent
     /// Initializes a new instance of <see cref="MultiPartFormContent"/> with a
     /// randomly generated boundary.
     /// </summary>
-    public MultiPartFormContent() : this(CreateBoundary()) { }
-
-    /// <summary>
-    /// Initializes a new instance of <see cref="MultiPartFormContent"/> with the
-    /// specified boundary.
-    /// </summary>
-    /// <param name="boundary">The boundary string used to separate parts in the
-    /// <c>multipart/form-data</c> payload.</param>
-    public MultiPartFormContent(string boundary)
+    public MultiPartFormContent()
     {
-        Argument.AssertNotNullOrEmpty(boundary, nameof(boundary));
-
-        _multipartContent = new MultipartFormDataContent(boundary);
+        _multipartContent = new MultipartFormDataContent(Guid.NewGuid().ToString());
         MediaType = _multipartContent.Headers.ContentType?.ToString();
     }
 
@@ -59,76 +42,82 @@ public sealed class MultiPartFormContent : BinaryContent
     /// <see cref="MultiPartFormContent"/> and transfers ownership of
     /// <paramref name="fileContent"/> to this instance.
     /// </summary>
-    /// <param name="fieldName">The form field name for the part.</param>
+    /// <param name="name">The form field name for the part.</param>
     /// <param name="fileContent">The <see cref="FileBinaryContent"/> to add as a part.</param>
-#pragma warning disable SCME0004 // FileBinaryContent is experimental.
-    public void Add(string fieldName, FileBinaryContent fileContent)
+    public void Add(string name, FileBinaryContent fileContent)
     {
-        Argument.AssertNotNullOrEmpty(fieldName, nameof(fieldName));
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
         Argument.AssertNotNull(fileContent, nameof(fileContent));
         CheckDisposed();
 
         HttpContent content = new FileHttpContentAdapter(fileContent);
 
-        Add(content, fieldName, fileContent.MediaType, fileContent.Filename);
+        Add(content, name, fileContent.MediaType, fileContent.Filename);
     }
-#pragma warning restore SCME0004
 
     /// <summary>
     /// Adds the provided <see cref="IPersistableModel{T}"/> as a part of this
     /// <see cref="MultiPartFormContent"/>.
     /// </summary>
     /// <typeparam name="T">The model type.</typeparam>
-    /// <param name="fieldName">The form field name for the part.</param>
+    /// <param name="name">The form field name for the part.</param>
     /// <param name="model">The <see cref="IPersistableModel{T}"/> to add as a part.</param>
     /// <param name="context">The <see cref="ModelReaderWriterContext"/> used to write the model.</param>
     /// <param name="options">The <see cref="ModelReaderWriterOptions"/> that indicates what format the <paramref name="model"/> will be written in.</param>
     /// <param name="mediaType">The media type for the part.</param>
     public void Add<T>(
-        string fieldName,
+        string name,
         IPersistableModel<T> model,
-        ModelReaderWriterContext? context = default,
-        ModelReaderWriterOptions? options = default,
-        string? mediaType = MediaTypeApplicationJson)
+        ModelReaderWriterContext context,
+        ModelReaderWriterOptions options,
+        string mediaType)
     {
-        Argument.AssertNotNullOrEmpty(fieldName, nameof(fieldName));
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
         Argument.AssertNotNull(model, nameof(model));
+        Argument.AssertNotNull(context, nameof(context));
+        Argument.AssertNotNull(options, nameof(options));
+        Argument.AssertNotNullOrEmpty(mediaType, nameof(mediaType));
         CheckDisposed();
 
-        options ??= _modelWriteWireOptions;
-        BinaryData data = context != null
-            ? ModelReaderWriter.Write(model, options, context)
-            : model.Write(options);
-        Add(fieldName, data.WithMediaType(mediaType));
+        BinaryData data = ModelReaderWriter.Write(model, options, context);
+        Add(name, data.WithMediaType(mediaType));
     }
 
     /// <summary>
     /// Adds the provided <see cref="IPersistableModel{T}"/> as a part of this
-    /// <see cref="MultiPartFormContent"/> using the default options.
+    /// <see cref="MultiPartFormContent"/> using the default wire-format options
+    /// and an <c>application/json</c> media type.
     /// </summary>
     /// <typeparam name="T">The model type.</typeparam>
-    /// <param name="fieldName">The form field name for the part.</param>
+    /// <param name="name">The form field name for the part.</param>
     /// <param name="model">The <see cref="IPersistableModel{T}"/> to add as a part.</param>
-    public void Add<T>(string fieldName, IPersistableModel<T> model)
-        => Add<T>(fieldName, model, context: null);
+    public void Add<T>(string name, IPersistableModel<T> model)
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNull(model, nameof(model));
+        CheckDisposed();
+
+        BinaryData data = model.Write(_modelWriteWireOptions);
+        Add(name, data.WithMediaType(MediaTypeApplicationJson));
+    }
 
     /// <summary>
     /// Adds the bytes held in the provided <see cref="BinaryData"/> as a part
     /// of this <see cref="MultiPartFormContent"/>. The media type from
     /// <see cref="BinaryData.MediaType"/>, if any, is used for the part.
     /// </summary>
-    /// <param name="fieldName">The form field name for the part.</param>
+    /// <param name="name">The form field name for the part.</param>
     /// <param name="content">The <see cref="BinaryData"/> to add as a part.</param>
-    public void Add(string fieldName, BinaryData content)
+    public void Add(string name, BinaryData content)
     {
-        Argument.AssertNotNullOrEmpty(fieldName, nameof(fieldName));
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
         Argument.AssertNotNull(content, nameof(content));
         CheckDisposed();
 
 #if NET6_0_OR_GREATER
-        Add(new ReadOnlyMemoryContent(content.ToMemory()), fieldName, mediaType: content.MediaType);
+        Add(new ReadOnlyMemoryContent(content.ToMemory()), name, mediaType: content.MediaType);
 #else
-        Add(new StreamContent(content.ToStream()), fieldName, mediaType: content.MediaType);
+        Add(new StreamContent(content.ToStream()), name, mediaType: content.MediaType);
 #endif
     }
 
@@ -136,38 +125,38 @@ public sealed class MultiPartFormContent : BinaryContent
     /// Adds the provided byte array as a part of this
     /// <see cref="MultiPartFormContent"/>.
     /// </summary>
-    /// <param name="fieldName">The form field name for the part.</param>
+    /// <param name="name">The form field name for the part.</param>
     /// <param name="content">The byte array to add as a part.</param>
     /// <param name="mediaType">The media type for the part.</param>
-    public void Add(string fieldName, byte[] content, string? mediaType = MediaTypeApplicationOctetStream)
+    public void Add(string name, byte[] content, string? mediaType = MediaTypeApplicationOctetStream)
     {
-        Argument.AssertNotNullOrEmpty(fieldName, nameof(fieldName));
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
         Argument.AssertNotNull(content, nameof(content));
         CheckDisposed();
 
-        Add(new ByteArrayContent(content), fieldName, mediaType: mediaType);
+        Add(new ByteArrayContent(content), name, mediaType: mediaType);
     }
 
     /// <summary>
     /// Adds the provided <see cref="string"/> as a part of this
     /// <see cref="MultiPartFormContent"/>.
     /// </summary>
-    /// <param name="fieldName">The form field name for the part.</param>
+    /// <param name="name">The form field name for the part.</param>
     /// <param name="content">The <see cref="string"/> to add as a part.</param>
     /// <param name="mediaType">The media type for the part.</param>
-    public void Add(string fieldName, string content, string? mediaType = MediaTypeApplicationJson)
+    public void Add(string name, string content, string? mediaType = MediaTypeTextPlain)
     {
-        Argument.AssertNotNullOrEmpty(fieldName, nameof(fieldName));
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
         Argument.AssertNotNull(content, nameof(content));
         CheckDisposed();
 
         if (mediaType == MediaTypeApplicationJson)
         {
-            Add(new StreamContent(CreateJsonStream(content)), fieldName, mediaType);
+            Add(new StreamContent(CreateJsonStream(content)), name, mediaType);
         }
         else
         {
-            Add(new StringContent(content, encoding: null, mediaType ?? MediaTypeTextPlain), fieldName, mediaType);
+            Add(new StringContent(content, encoding: null, mediaType ?? MediaTypeTextPlain), name, mediaType);
         }
     }
 
@@ -175,22 +164,21 @@ public sealed class MultiPartFormContent : BinaryContent
     /// Adds the provided <see cref="int"/> as a part of this
     /// <see cref="MultiPartFormContent"/>.
     /// </summary>
-    /// <param name="fieldName">The form field name for the part.</param>
+    /// <param name="name">The form field name for the part.</param>
     /// <param name="content">The <see cref="int"/> to add as a part.</param>
     /// <param name="mediaType">The media type for the part.</param>
-    public void Add(string fieldName, int content, string? mediaType = MediaTypeApplicationJson)
+    public void Add(string name, int content, string? mediaType = MediaTypeTextPlain)
     {
-        Argument.AssertNotNullOrEmpty(fieldName, nameof(fieldName));
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
         CheckDisposed();
 
         if (mediaType == MediaTypeApplicationJson)
         {
-            Add(new StreamContent(CreateJsonStream(content)), fieldName, mediaType);
+            Add(new StreamContent(CreateJsonStream(content)), name, mediaType);
         }
         else
         {
-            string value = content.ToString(CultureInfo.InvariantCulture);
-            Add(new StringContent(value, encoding: null, mediaType ?? MediaTypeTextPlain), fieldName, mediaType);
+            Add(new StringContent(content.ToString(CultureInfo.InvariantCulture), encoding: null, mediaType ?? MediaTypeTextPlain), name, mediaType);
         }
     }
 
@@ -198,22 +186,21 @@ public sealed class MultiPartFormContent : BinaryContent
     /// Adds the provided <see cref="long"/> as a part of this
     /// <see cref="MultiPartFormContent"/>.
     /// </summary>
-    /// <param name="fieldName">The form field name for the part.</param>
+    /// <param name="name">The form field name for the part.</param>
     /// <param name="content">The <see cref="long"/> to add as a part.</param>
     /// <param name="mediaType">The media type for the part.</param>
-    public void Add(string fieldName, long content, string? mediaType = MediaTypeApplicationJson)
+    public void Add(string name, long content, string? mediaType = MediaTypeTextPlain)
     {
-        Argument.AssertNotNullOrEmpty(fieldName, nameof(fieldName));
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
         CheckDisposed();
 
         if (mediaType == MediaTypeApplicationJson)
         {
-            Add(new StreamContent(CreateJsonStream(content)), fieldName, mediaType);
+            Add(new StreamContent(CreateJsonStream(content)), name, mediaType);
         }
         else
         {
-            string value = content.ToString(CultureInfo.InvariantCulture);
-            Add(new StringContent(value, encoding: null, mediaType ?? MediaTypeTextPlain), fieldName, mediaType);
+            Add(new StringContent(content.ToString(CultureInfo.InvariantCulture), encoding: null, mediaType ?? MediaTypeTextPlain), name, mediaType);
         }
     }
 
@@ -221,22 +208,21 @@ public sealed class MultiPartFormContent : BinaryContent
     /// Adds the provided <see cref="float"/> as a part of this
     /// <see cref="MultiPartFormContent"/>.
     /// </summary>
-    /// <param name="fieldName">The form field name for the part.</param>
+    /// <param name="name">The form field name for the part.</param>
     /// <param name="content">The <see cref="float"/> to add as a part.</param>
     /// <param name="mediaType">The media type for the part.</param>
-    public void Add(string fieldName, float content, string? mediaType = MediaTypeApplicationJson)
+    public void Add(string name, float content, string? mediaType = MediaTypeTextPlain)
     {
-        Argument.AssertNotNullOrEmpty(fieldName, nameof(fieldName));
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
         CheckDisposed();
 
         if (mediaType == MediaTypeApplicationJson)
         {
-            Add(new StreamContent(CreateJsonStream(content)), fieldName, mediaType);
+            Add(new StreamContent(CreateJsonStream(content)), name, mediaType);
         }
         else
         {
-            string value = content.ToString("R", CultureInfo.InvariantCulture);
-            Add(new StringContent(value, encoding: null, mediaType ?? MediaTypeTextPlain), fieldName, mediaType);
+            Add(new StringContent(content.ToString("R", CultureInfo.InvariantCulture), encoding: null, mediaType ?? MediaTypeTextPlain), name, mediaType);
         }
     }
 
@@ -244,22 +230,21 @@ public sealed class MultiPartFormContent : BinaryContent
     /// Adds the provided <see cref="double"/> as a part of this
     /// <see cref="MultiPartFormContent"/>.
     /// </summary>
-    /// <param name="fieldName">The form field name for the part.</param>
+    /// <param name="name">The form field name for the part.</param>
     /// <param name="content">The <see cref="double"/> to add as a part.</param>
     /// <param name="mediaType">The media type for the part.</param>
-    public void Add(string fieldName, double content, string? mediaType = MediaTypeApplicationJson)
+    public void Add(string name, double content, string? mediaType = MediaTypeTextPlain)
     {
-        Argument.AssertNotNullOrEmpty(fieldName, nameof(fieldName));
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
         CheckDisposed();
 
         if (mediaType == MediaTypeApplicationJson)
         {
-            Add(new StreamContent(CreateJsonStream(content)), fieldName, mediaType);
+            Add(new StreamContent(CreateJsonStream(content)), name, mediaType);
         }
         else
         {
-            string value = content.ToString("R", CultureInfo.InvariantCulture);
-            Add(new StringContent(value, encoding: null, mediaType ?? MediaTypeTextPlain), fieldName, mediaType);
+            Add(new StringContent(content.ToString("R", CultureInfo.InvariantCulture), encoding: null, mediaType ?? MediaTypeTextPlain), name, mediaType);
         }
     }
 
@@ -267,22 +252,197 @@ public sealed class MultiPartFormContent : BinaryContent
     /// Adds the provided <see cref="decimal"/> as a part of this
     /// <see cref="MultiPartFormContent"/>.
     /// </summary>
-    /// <param name="fieldName">The form field name for the part.</param>
+    /// <param name="name">The form field name for the part.</param>
     /// <param name="content">The <see cref="decimal"/> to add as a part.</param>
     /// <param name="mediaType">The media type for the part.</param>
-    public void Add(string fieldName, decimal content, string? mediaType = MediaTypeApplicationJson)
+    public void Add(string name, decimal content, string? mediaType = MediaTypeTextPlain)
     {
-        Argument.AssertNotNullOrEmpty(fieldName, nameof(fieldName));
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
         CheckDisposed();
 
         if (mediaType == MediaTypeApplicationJson)
         {
-            Add(new StreamContent(CreateJsonStream(content)), fieldName, mediaType);
+            Add(new StreamContent(CreateJsonStream(content)), name, mediaType);
         }
         else
         {
-            string value = content.ToString(CultureInfo.InvariantCulture);
-            Add(new StringContent(value, encoding: null, mediaType ?? MediaTypeTextPlain), fieldName, mediaType);
+            Add(new StringContent(content.ToString(CultureInfo.InvariantCulture), encoding: null, mediaType ?? MediaTypeTextPlain), name, mediaType);
+        }
+    }
+
+    /// <summary>
+    /// Adds the provided <see cref="bool"/> as a part of this
+    /// <see cref="MultiPartFormContent"/>.
+    /// </summary>
+    /// <param name="name">The form field name for the part.</param>
+    /// <param name="content">The <see cref="bool"/> to add as a part.</param>
+    /// <param name="mediaType">The media type for the part.</param>
+    public void Add(string name, bool content, string? mediaType = MediaTypeTextPlain)
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        CheckDisposed();
+
+        if (mediaType == MediaTypeApplicationJson)
+        {
+            Add(new StreamContent(CreateJsonStream(content)), name, mediaType);
+        }
+        else
+        {
+            Add(new StringContent(content ? "true" : "false", encoding: null, mediaType ?? MediaTypeTextPlain), name, mediaType);
+        }
+    }
+
+    /// <summary>
+    /// Adds the provided <see cref="byte"/> as a part of this
+    /// <see cref="MultiPartFormContent"/>.
+    /// </summary>
+    /// <param name="name">The form field name for the part.</param>
+    /// <param name="content">The <see cref="byte"/> to add as a part.</param>
+    /// <param name="mediaType">The media type for the part.</param>
+    public void Add(string name, byte content, string? mediaType = MediaTypeTextPlain)
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        CheckDisposed();
+
+        if (mediaType == MediaTypeApplicationJson)
+        {
+            Add(new StreamContent(CreateJsonStream(content)), name, mediaType);
+        }
+        else
+        {
+            Add(new StringContent(content.ToString(CultureInfo.InvariantCulture), encoding: null, mediaType ?? MediaTypeTextPlain), name, mediaType);
+        }
+    }
+
+    /// <summary>
+    /// Adds the provided <see cref="sbyte"/> as a part of this
+    /// <see cref="MultiPartFormContent"/>.
+    /// </summary>
+    /// <param name="name">The form field name for the part.</param>
+    /// <param name="content">The <see cref="sbyte"/> to add as a part.</param>
+    /// <param name="mediaType">The media type for the part.</param>
+    public void Add(string name, sbyte content, string? mediaType = MediaTypeTextPlain)
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        CheckDisposed();
+
+        if (mediaType == MediaTypeApplicationJson)
+        {
+            Add(new StreamContent(CreateJsonStream(content)), name, mediaType);
+        }
+        else
+        {
+            Add(new StringContent(content.ToString(CultureInfo.InvariantCulture), encoding: null, mediaType ?? MediaTypeTextPlain), name, mediaType);
+        }
+    }
+
+    /// <summary>
+    /// Adds the provided <see cref="char"/> as a part of this
+    /// <see cref="MultiPartFormContent"/>.
+    /// </summary>
+    /// <param name="name">The form field name for the part.</param>
+    /// <param name="content">The <see cref="char"/> to add as a part.</param>
+    /// <param name="mediaType">The media type for the part.</param>
+    public void Add(string name, char content, string? mediaType = MediaTypeTextPlain)
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        CheckDisposed();
+
+        if (mediaType == MediaTypeApplicationJson)
+        {
+            Add(new StreamContent(CreateJsonStream(content)), name, mediaType);
+        }
+        else
+        {
+            Add(new StringContent(content.ToString(), encoding: null, mediaType ?? MediaTypeTextPlain), name, mediaType);
+        }
+    }
+
+    /// <summary>
+    /// Adds the provided <see cref="short"/> as a part of this
+    /// <see cref="MultiPartFormContent"/>.
+    /// </summary>
+    /// <param name="name">The form field name for the part.</param>
+    /// <param name="content">The <see cref="short"/> to add as a part.</param>
+    /// <param name="mediaType">The media type for the part.</param>
+    public void Add(string name, short content, string? mediaType = MediaTypeTextPlain)
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        CheckDisposed();
+
+        if (mediaType == MediaTypeApplicationJson)
+        {
+            Add(new StreamContent(CreateJsonStream(content)), name, mediaType);
+        }
+        else
+        {
+            Add(new StringContent(content.ToString(CultureInfo.InvariantCulture), encoding: null, mediaType ?? MediaTypeTextPlain), name, mediaType);
+        }
+    }
+
+    /// <summary>
+    /// Adds the provided <see cref="ushort"/> as a part of this
+    /// <see cref="MultiPartFormContent"/>.
+    /// </summary>
+    /// <param name="name">The form field name for the part.</param>
+    /// <param name="content">The <see cref="ushort"/> to add as a part.</param>
+    /// <param name="mediaType">The media type for the part.</param>
+    public void Add(string name, ushort content, string? mediaType = MediaTypeTextPlain)
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        CheckDisposed();
+
+        if (mediaType == MediaTypeApplicationJson)
+        {
+            Add(new StreamContent(CreateJsonStream(content)), name, mediaType);
+        }
+        else
+        {
+            Add(new StringContent(content.ToString(CultureInfo.InvariantCulture), encoding: null, mediaType ?? MediaTypeTextPlain), name, mediaType);
+        }
+    }
+
+    /// <summary>
+    /// Adds the provided <see cref="uint"/> as a part of this
+    /// <see cref="MultiPartFormContent"/>.
+    /// </summary>
+    /// <param name="name">The form field name for the part.</param>
+    /// <param name="content">The <see cref="uint"/> to add as a part.</param>
+    /// <param name="mediaType">The media type for the part.</param>
+    public void Add(string name, uint content, string? mediaType = MediaTypeTextPlain)
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        CheckDisposed();
+
+        if (mediaType == MediaTypeApplicationJson)
+        {
+            Add(new StreamContent(CreateJsonStream(content)), name, mediaType);
+        }
+        else
+        {
+            Add(new StringContent(content.ToString(CultureInfo.InvariantCulture), encoding: null, mediaType ?? MediaTypeTextPlain), name, mediaType);
+        }
+    }
+
+    /// <summary>
+    /// Adds the provided <see cref="ulong"/> as a part of this
+    /// <see cref="MultiPartFormContent"/>.
+    /// </summary>
+    /// <param name="name">The form field name for the part.</param>
+    /// <param name="content">The <see cref="ulong"/> to add as a part.</param>
+    /// <param name="mediaType">The media type for the part.</param>
+    public void Add(string name, ulong content, string? mediaType = MediaTypeTextPlain)
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        CheckDisposed();
+
+        if (mediaType == MediaTypeApplicationJson)
+        {
+            Add(new StreamContent(CreateJsonStream(content)), name, mediaType);
+        }
+        else
+        {
+            Add(new StringContent(content.ToString(CultureInfo.InvariantCulture), encoding: null, mediaType ?? MediaTypeTextPlain), name, mediaType);
         }
     }
 
@@ -349,7 +509,7 @@ public sealed class MultiPartFormContent : BinaryContent
         }
     }
 
-    private void Add(HttpContent content, string fieldName, string? mediaType, string? filename = default)
+    private void Add(HttpContent content, string name, string? mediaType, string? filename = default)
     {
         if (content.Headers.ContentType is null && mediaType is not null)
         {
@@ -360,33 +520,12 @@ public sealed class MultiPartFormContent : BinaryContent
         if (filename != null)
         {
             Argument.AssertNotNullOrEmpty(filename, nameof(filename));
-            _multipartContent.Add(content, fieldName, filename);
+            _multipartContent.Add(content, name, filename);
         }
         else
         {
-            _multipartContent.Add(content, fieldName);
+            _multipartContent.Add(content, name);
         }
-    }
-
-    private static string CreateBoundary()
-    {
-#if NET6_0_OR_GREATER
-        Span<char> chars = stackalloc char[BoundaryLength];
-        Span<byte> random = stackalloc byte[BoundaryLength];
-        Random.Shared.NextBytes(random);
-#else
-        char[] chars = new char[BoundaryLength];
-        byte[] random = new byte[BoundaryLength];
-        lock (_randomLock)
-        {
-            _random.NextBytes(random);
-        }
-#endif
-        for (int i = 0; i < BoundaryLength; i++)
-        {
-            chars[i] = _boundaryValues[random[i] & BoundaryAlphabetMask];
-        }
-        return new string(chars);
     }
 
     private static MemoryStream CreateJsonStream(object value)
@@ -399,11 +538,35 @@ public sealed class MultiPartFormContent : BinaryContent
                 case string s:
                     writer.WriteStringValue(s);
                     break;
+                case bool b:
+                    writer.WriteBooleanValue(b);
+                    break;
+                case byte by:
+                    writer.WriteNumberValue(by);
+                    break;
+                case sbyte sb:
+                    writer.WriteNumberValue(sb);
+                    break;
+                case char c:
+                    writer.WriteStringValue(c.ToString());
+                    break;
+                case short sh:
+                    writer.WriteNumberValue(sh);
+                    break;
+                case ushort ush:
+                    writer.WriteNumberValue(ush);
+                    break;
                 case int i:
                     writer.WriteNumberValue(i);
                     break;
+                case uint ui:
+                    writer.WriteNumberValue(ui);
+                    break;
                 case long l:
                     writer.WriteNumberValue(l);
+                    break;
+                case ulong ul:
+                    writer.WriteNumberValue(ul);
                     break;
                 case float f:
                     writer.WriteNumberValue(f);

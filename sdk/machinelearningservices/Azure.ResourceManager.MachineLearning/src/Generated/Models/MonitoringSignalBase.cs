@@ -7,74 +7,51 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
-    /// Please note <see cref="MonitoringSignalBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="CustomMonitoringSignal"/>, <see cref="DataDriftMonitoringSignal"/>, <see cref="DataQualityMonitoringSignal"/>, <see cref="FeatureAttributionDriftMonitoringSignal"/> and <see cref="PredictionDriftMonitoringSignal"/>.
+    /// The MonitoringSignalBase.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomMonitoringSignal"/>, <see cref="DataDriftMonitoringSignal"/>, <see cref="DataQualityMonitoringSignal"/>, <see cref="FeatureAttributionDriftMonitoringSignal"/>, and <see cref="PredictionDriftMonitoringSignal"/>.
     /// </summary>
     public abstract partial class MonitoringSignalBase
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
-        /// <summary> Initializes a new instance of <see cref="MonitoringSignalBase"/>. </summary>
-        protected MonitoringSignalBase()
-        {
-            NotificationTypes = new ChangeTrackingList<MonitoringNotificationType>();
-            Properties = new ChangeTrackingDictionary<string, string>();
-        }
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MonitoringSignalBase"/>. </summary>
         /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>
-        /// <param name="notificationTypes"> The current notification mode for this signal. </param>
-        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoringSignalBase(MonitoringSignalType signalType, IList<MonitoringNotificationType> notificationTypes, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        private protected MonitoringSignalBase(MonitoringSignalType signalType)
         {
+            NotificationTypes = new ChangeTrackingList<MonitoringNotificationType>();
+            Properties = new ChangeTrackingDictionary<string, string>();
             SignalType = signalType;
-            NotificationTypes = notificationTypes;
-            Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> [Required] Specifies the type of signal to monitor. </summary>
-        internal MonitoringSignalType SignalType { get; set; }
+        /// <summary> Initializes a new instance of <see cref="MonitoringSignalBase"/>. </summary>
+        /// <param name="notificationTypes"> The current notification mode for this signal. </param>
+        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
+        /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MonitoringSignalBase(IList<MonitoringNotificationType> notificationTypes, IDictionary<string, string> properties, MonitoringSignalType signalType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            NotificationTypes = notificationTypes;
+            Properties = properties;
+            SignalType = signalType;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
         /// <summary> The current notification mode for this signal. </summary>
         [WirePath("notificationTypes")]
         public IList<MonitoringNotificationType> NotificationTypes { get; set; }
+
         /// <summary> Property dictionary. Properties can be added, but not removed or altered. </summary>
         [WirePath("properties")]
         public IDictionary<string, string> Properties { get; set; }
+
+        /// <summary> [Required] Specifies the type of signal to monitor. </summary>
+        [WirePath("signalType")]
+        internal MonitoringSignalType SignalType { get; set; }
     }
 }

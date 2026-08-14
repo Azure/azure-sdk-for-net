@@ -41,15 +41,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         private ClientDiagnostics CheckNameAvailabilityOperationGroupClientDiagnostics => _checkNameAvailabilityOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CheckNameAvailabilityOperationGroup CheckNameAvailabilityOperationGroupRestClient => _checkNameAvailabilityOperationGroupRestClient ??= new CheckNameAvailabilityOperationGroup(CheckNameAvailabilityOperationGroupClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+        private CheckNameAvailabilityOperationGroup CheckNameAvailabilityOperationGroupRestClient => _checkNameAvailabilityOperationGroupRestClient ??= new CheckNameAvailabilityOperationGroup(CheckNameAvailabilityOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-05-01");
 
         private ClientDiagnostics SelfHelpScopeQueryOperationGroupClientDiagnostics => _selfHelpScopeQueryOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SelfHelpScopeQueryOperationGroup SelfHelpScopeQueryOperationGroupRestClient => _selfHelpScopeQueryOperationGroupRestClient ??= new SelfHelpScopeQueryOperationGroup(SelfHelpScopeQueryOperationGroupClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+        private SelfHelpScopeQueryOperationGroup SelfHelpScopeQueryOperationGroupRestClient => _selfHelpScopeQueryOperationGroupRestClient ??= new SelfHelpScopeQueryOperationGroup(SelfHelpScopeQueryOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-05-01");
 
         private ClientDiagnostics ScheduledActionExtensionClientDiagnostics => _scheduledActionExtensionClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ScheduledActionExtension ScheduledActionExtensionRestClient => _scheduledActionExtensionRestClient ??= new ScheduledActionExtension(ScheduledActionExtensionClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+        private ScheduledActionExtension ScheduledActionExtensionRestClient => _scheduledActionExtensionRestClient ??= new ScheduledActionExtension(ScheduledActionExtensionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-05-01");
 
         /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -78,13 +78,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new FooResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="FooSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="FooConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FooSettingsResource"/> object. </returns>
-        public virtual FooSettingsResource GetFooSettingsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FooConfigurationResource"/> object. </returns>
+        public virtual FooConfigurationResource GetFooConfigurationResource(ResourceIdentifier id)
         {
-            FooSettingsResource.ValidateResourceId(id);
-            return new FooSettingsResource(Client, id);
+            FooConfigurationResource.ValidateResourceId(id);
+            return new FooConfigurationResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="BarSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -695,6 +695,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return await GetPolicyArcAssignments(scope).GetAsync(policyAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> Gets an object representing a <see cref="DeleteFinalResultTestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DeleteFinalResultTestResource"/> object. </returns>
+        public virtual DeleteFinalResultTestResource GetDeleteFinalResultTestResource(ResourceIdentifier id)
+        {
+            DeleteFinalResultTestResource.ValidateResourceId(id);
+            return new DeleteFinalResultTestResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="CustomBaseTypeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CustomBaseTypeResource"/> object. </returns>
+        public virtual CustomBaseTypeResource GetCustomBaseTypeResource(ResourceIdentifier id)
+        {
+            CustomBaseTypeResource.ValidateResourceId(id);
+            return new CustomBaseTypeResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="TestCertificateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TestCertificateResource"/> object. </returns>
@@ -794,6 +812,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new EventGridDomainResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="SolutionsApplicationDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SolutionsApplicationDefinitionResource"/> object. </returns>
+        public virtual SolutionsApplicationDefinitionResource GetSolutionsApplicationDefinitionResource(ResourceIdentifier id)
+        {
+            SolutionsApplicationDefinitionResource.ValidateResourceId(id);
+            return new SolutionsApplicationDefinitionResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="BarResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BarResource"/> object. </returns>
@@ -821,22 +848,22 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new WorkloadNetworkSegmentResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="EventGridTopicEventGridPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="EventGridTopicPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventGridTopicEventGridPrivateEndpointConnectionResource"/> object. </returns>
-        public virtual EventGridTopicEventGridPrivateEndpointConnectionResource GetEventGridTopicEventGridPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EventGridTopicPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual EventGridTopicPrivateEndpointConnectionResource GetEventGridTopicPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            EventGridTopicEventGridPrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new EventGridTopicEventGridPrivateEndpointConnectionResource(Client, id);
+            EventGridTopicPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new EventGridTopicPrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="EventGridDomainEventGridPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="EventGridDomainPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventGridDomainEventGridPrivateEndpointConnectionResource"/> object. </returns>
-        public virtual EventGridDomainEventGridPrivateEndpointConnectionResource GetEventGridDomainEventGridPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EventGridDomainPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual EventGridDomainPrivateEndpointConnectionResource GetEventGridDomainPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            EventGridDomainEventGridPrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new EventGridDomainEventGridPrivateEndpointConnectionResource(Client, id);
+            EventGridDomainPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new EventGridDomainPrivateEndpointConnectionResource(Client, id);
         }
 
         /// <summary>

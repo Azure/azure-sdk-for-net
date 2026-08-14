@@ -7,24 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Deployment build status.
-    /// Serialized Name: DeploymentBuildStatus
-    /// </summary>
+    /// <summary> Deployment build status. </summary>
     public readonly partial struct DeploymentBuildStatus : IEquatable<DeploymentBuildStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DeploymentBuildStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DeploymentBuildStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string TimedOutValue = "TimedOut";
         private const string RuntimeFailedValue = "RuntimeFailed";
         private const string BuildAbortedValue = "BuildAborted";
@@ -39,88 +29,85 @@ namespace Azure.ResourceManager.AppService.Models
         private const string RuntimeStartingValue = "RuntimeStarting";
         private const string RuntimeSuccessfulValue = "RuntimeSuccessful";
 
-        /// <summary>
-        /// TimedOut
-        /// Serialized Name: DeploymentBuildStatus.TimedOut
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentBuildStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DeploymentBuildStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the TimedOut. </summary>
         public static DeploymentBuildStatus TimedOut { get; } = new DeploymentBuildStatus(TimedOutValue);
-        /// <summary>
-        /// RuntimeFailed
-        /// Serialized Name: DeploymentBuildStatus.RuntimeFailed
-        /// </summary>
+
+        /// <summary> Gets the RuntimeFailed. </summary>
         public static DeploymentBuildStatus RuntimeFailed { get; } = new DeploymentBuildStatus(RuntimeFailedValue);
-        /// <summary>
-        /// BuildAborted
-        /// Serialized Name: DeploymentBuildStatus.BuildAborted
-        /// </summary>
+
+        /// <summary> Gets the BuildAborted. </summary>
         public static DeploymentBuildStatus BuildAborted { get; } = new DeploymentBuildStatus(BuildAbortedValue);
-        /// <summary>
-        /// BuildFailed
-        /// Serialized Name: DeploymentBuildStatus.BuildFailed
-        /// </summary>
+
+        /// <summary> Gets the BuildFailed. </summary>
         public static DeploymentBuildStatus BuildFailed { get; } = new DeploymentBuildStatus(BuildFailedValue);
-        /// <summary>
-        /// BuildRequestReceived
-        /// Serialized Name: DeploymentBuildStatus.BuildRequestReceived
-        /// </summary>
+
+        /// <summary> Gets the BuildRequestReceived. </summary>
         public static DeploymentBuildStatus BuildRequestReceived { get; } = new DeploymentBuildStatus(BuildRequestReceivedValue);
-        /// <summary>
-        /// BuildPending
-        /// Serialized Name: DeploymentBuildStatus.BuildPending
-        /// </summary>
+
+        /// <summary> Gets the BuildPending. </summary>
         public static DeploymentBuildStatus BuildPending { get; } = new DeploymentBuildStatus(BuildPendingValue);
-        /// <summary>
-        /// BuildInProgress
-        /// Serialized Name: DeploymentBuildStatus.BuildInProgress
-        /// </summary>
+
+        /// <summary> Gets the BuildInProgress. </summary>
         public static DeploymentBuildStatus BuildInProgress { get; } = new DeploymentBuildStatus(BuildInProgressValue);
-        /// <summary>
-        /// BuildSuccessful
-        /// Serialized Name: DeploymentBuildStatus.BuildSuccessful
-        /// </summary>
+
+        /// <summary> Gets the BuildSuccessful. </summary>
         public static DeploymentBuildStatus BuildSuccessful { get; } = new DeploymentBuildStatus(BuildSuccessfulValue);
-        /// <summary>
-        /// PostBuildRestartRequired
-        /// Serialized Name: DeploymentBuildStatus.PostBuildRestartRequired
-        /// </summary>
+
+        /// <summary> Gets the PostBuildRestartRequired. </summary>
         public static DeploymentBuildStatus PostBuildRestartRequired { get; } = new DeploymentBuildStatus(PostBuildRestartRequiredValue);
-        /// <summary>
-        /// StartPolling
-        /// Serialized Name: DeploymentBuildStatus.StartPolling
-        /// </summary>
+
+        /// <summary> Gets the StartPolling. </summary>
         public static DeploymentBuildStatus StartPolling { get; } = new DeploymentBuildStatus(StartPollingValue);
-        /// <summary>
-        /// StartPollingWithRestart
-        /// Serialized Name: DeploymentBuildStatus.StartPollingWithRestart
-        /// </summary>
+
+        /// <summary> Gets the StartPollingWithRestart. </summary>
         public static DeploymentBuildStatus StartPollingWithRestart { get; } = new DeploymentBuildStatus(StartPollingWithRestartValue);
-        /// <summary>
-        /// RuntimeStarting
-        /// Serialized Name: DeploymentBuildStatus.RuntimeStarting
-        /// </summary>
+
+        /// <summary> Gets the RuntimeStarting. </summary>
         public static DeploymentBuildStatus RuntimeStarting { get; } = new DeploymentBuildStatus(RuntimeStartingValue);
-        /// <summary>
-        /// RuntimeSuccessful
-        /// Serialized Name: DeploymentBuildStatus.RuntimeSuccessful
-        /// </summary>
+
+        /// <summary> Gets the RuntimeSuccessful. </summary>
         public static DeploymentBuildStatus RuntimeSuccessful { get; } = new DeploymentBuildStatus(RuntimeSuccessfulValue);
+
         /// <summary> Determines if two <see cref="DeploymentBuildStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DeploymentBuildStatus left, DeploymentBuildStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DeploymentBuildStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DeploymentBuildStatus left, DeploymentBuildStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DeploymentBuildStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DeploymentBuildStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DeploymentBuildStatus(string value) => new DeploymentBuildStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DeploymentBuildStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DeploymentBuildStatus?(string value) => value == null ? null : new DeploymentBuildStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeploymentBuildStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DeploymentBuildStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

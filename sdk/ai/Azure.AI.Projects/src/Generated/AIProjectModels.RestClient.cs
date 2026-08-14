@@ -157,7 +157,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateCreateModelVersionAsyncRequest(string name, string version, BinaryContent content, RequestOptions options)
+        internal PipelineMessage CreateCreateModelVersionRequestRequest(string name, string version, BinaryContent content, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);

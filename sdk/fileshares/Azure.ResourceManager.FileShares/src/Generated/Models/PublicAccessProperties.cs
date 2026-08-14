@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.FileShares.Models
         }
 
         /// <summary> The allowed set of subnets when access is restricted. </summary>
-        public IList<string> AllowedSubnets { get; }
+        public IList<string> AllowedSubnets { get; } = new ChangeTrackingList<string>();
     }
 }

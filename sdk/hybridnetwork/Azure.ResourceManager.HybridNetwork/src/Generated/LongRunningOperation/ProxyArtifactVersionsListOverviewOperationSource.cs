@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HybridNetwork.Models;
 
 namespace Azure.ResourceManager.HybridNetwork
 {
-    internal class ProxyArtifactVersionsListOverviewOperationSource : IOperationSource<ProxyArtifactVersionsListOverview>
+    /// <summary></summary>
+    internal partial class ProxyArtifactVersionsListOverviewOperationSource : IOperationSource<ProxyArtifactVersionsListOverview>
     {
-        ProxyArtifactVersionsListOverview IOperationSource<ProxyArtifactVersionsListOverview>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal ProxyArtifactVersionsListOverviewOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return ProxyArtifactVersionsListOverview.DeserializeProxyArtifactVersionsListOverview(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        ProxyArtifactVersionsListOverview IOperationSource<ProxyArtifactVersionsListOverview>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return ProxyArtifactVersionsListOverview.DeserializeProxyArtifactVersionsListOverview(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ProxyArtifactVersionsListOverview> IOperationSource<ProxyArtifactVersionsListOverview>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return ProxyArtifactVersionsListOverview.DeserializeProxyArtifactVersionsListOverview(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return ProxyArtifactVersionsListOverview.DeserializeProxyArtifactVersionsListOverview(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

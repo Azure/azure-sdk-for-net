@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new RecoveryServicesPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), null));
+                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new RecoveryServicesPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -58,13 +58,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
                 identity,
                 sku,
-                etag);
+                etag,
+                default);
         }
 
         /// <param name="provisioningState"> Provisioning State. </param>
@@ -78,6 +78,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="backupStorageVersion"> Backup storage version. </param>
         /// <param name="publicNetworkAccess"> property to enable or disable resource provider inbound network traffic from public clients. </param>
         /// <param name="monitoringSettings"> Monitoring Settings of the vault. </param>
+        /// <param name="costManagementGranularityLevel"> Settings for granularity level. </param>
         /// <param name="crossSubscriptionRestoreState"> Gets or sets the CrossSubscriptionRestoreState. </param>
         /// <param name="redundancySettings"> The redundancy Settings of a Vault. </param>
         /// <param name="securitySettings"> Security Settings of the vault. </param>
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="bcdrSecurityLevel"> Security levels of Recovery Services Vault for business continuity and disaster recovery. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <returns> A new <see cref="Models.RecoveryServicesVaultProperties"/> instance for mocking. </returns>
-        public static RecoveryServicesVaultProperties RecoveryServicesVaultProperties(string provisioningState = default, VaultUpgradeDetails upgradeDetails = default, IEnumerable<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections = default, VaultPrivateEndpointState? privateEndpointStateForBackup = default, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery = default, VaultPropertiesEncryption encryption = default, VaultPropertiesMoveDetails moveDetails = default, ResourceMoveState? moveState = default, BackupStorageVersion? backupStorageVersion = default, VaultPublicNetworkAccess? publicNetworkAccess = default, VaultMonitoringSettings monitoringSettings = default, CrossSubscriptionRestoreState? crossSubscriptionRestoreState = default, VaultPropertiesRedundancySettings redundancySettings = default, RecoveryServicesSecuritySettings securitySettings = default, SecureScoreLevel? secureScore = default, BcdrSecurityLevel? bcdrSecurityLevel = default, IEnumerable<string> resourceGuardOperationRequests = default)
+        public static RecoveryServicesVaultProperties RecoveryServicesVaultProperties(string provisioningState = default, VaultUpgradeDetails upgradeDetails = default, IEnumerable<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections = default, VaultPrivateEndpointState? privateEndpointStateForBackup = default, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery = default, VaultPropertiesEncryption encryption = default, VaultPropertiesMoveDetails moveDetails = default, ResourceMoveState? moveState = default, BackupStorageVersion? backupStorageVersion = default, VaultPublicNetworkAccess? publicNetworkAccess = default, VaultMonitoringSettings monitoringSettings = default, GranularityLevel? costManagementGranularityLevel = default, CrossSubscriptionRestoreState? crossSubscriptionRestoreState = default, VaultPropertiesRedundancySettings redundancySettings = default, RecoveryServicesSecuritySettings securitySettings = default, SecureScoreLevel? secureScore = default, BcdrSecurityLevel? bcdrSecurityLevel = default, IEnumerable<string> resourceGuardOperationRequests = default)
         {
             privateEndpointConnections ??= new ChangeTrackingList<RecoveryServicesPrivateEndpointConnectionVaultProperties>();
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new RecoveryServicesVaultProperties(
                 provisioningState,
                 upgradeDetails,
-                privateEndpointConnections.ToList(),
+                (privateEndpointConnections ?? new ChangeTrackingList<RecoveryServicesPrivateEndpointConnectionVaultProperties>()).ToList(),
                 privateEndpointStateForBackup,
                 privateEndpointStateForSiteRecovery,
                 encryption,
@@ -102,16 +103,16 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 backupStorageVersion,
                 publicNetworkAccess,
                 monitoringSettings,
-                crossSubscriptionRestoreState is null ? default : new RestoreSettings(new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState, null), null),
+                costManagementGranularityLevel is null ? default : new CostManagementSettings(costManagementGranularityLevel, default),
+                crossSubscriptionRestoreState is null ? default : new RestoreSettings(new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState, default), default),
                 redundancySettings,
                 securitySettings,
                 secureScore,
                 bcdrSecurityLevel,
-                resourceGuardOperationRequests.ToList(),
-                additionalBinaryDataProperties: null);
+                (resourceGuardOperationRequests ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
 
-        /// <summary> Details for upgrading vault. </summary>
         /// <param name="operationId"> ID of the vault upgrade operation. </param>
         /// <param name="startOn"> UTC time at which the upgrade operation has started. </param>
         /// <param name="lastUpdatedOn"> UTC time at which the upgrade operation status was last updated. </param>
@@ -134,10 +135,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 triggerType,
                 upgradedResourceId,
                 previousResourceId,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Information to be stored in Vault properties as an element of privateEndpointConnections List. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 properties,
-                location);
+                location,
+                default);
         }
 
         /// <param name="provisioningState"> Gets or sets provisioning state of the private endpoint connection. </param>
@@ -166,20 +166,35 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         {
             groupIds ??= new ChangeTrackingList<VaultSubResourceType>();
 
-            return new RecoveryServicesPrivateEndpointConnection(provisioningState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, groupIds.ToList(), additionalBinaryDataProperties: null);
+            return new RecoveryServicesPrivateEndpointConnection(provisioningState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, (groupIds ?? new ChangeTrackingList<VaultSubResourceType>()).ToList(), default);
         }
 
-        /// <summary> Gets or sets private link service connection state. </summary>
         /// <param name="status"> Gets or sets the status. </param>
         /// <param name="description"> Gets or sets description. </param>
         /// <param name="actionsRequired"> Gets or sets actions required. </param>
         /// <returns> A new <see cref="Models.RecoveryServicesPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
         public static RecoveryServicesPrivateLinkServiceConnectionState RecoveryServicesPrivateLinkServiceConnectionState(RecoveryServicesPrivateEndpointConnectionStatus? status = default, string description = default, string actionsRequired = default)
         {
-            return new RecoveryServicesPrivateLinkServiceConnectionState(status, description, actionsRequired, additionalBinaryDataProperties: null);
+            return new RecoveryServicesPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
-        /// <summary> The details of the latest move operation performed on the Azure Resource. </summary>
+        /// <param name="keyUri"> The key uri of the Customer Managed Key. </param>
+        /// <param name="kekIdentity"> The details of the identity used for CMK. </param>
+        /// <param name="infrastructureEncryption"> Enabling/Disabling the Double Encryption state. </param>
+        /// <returns> A new <see cref="Models.VaultPropertiesEncryption"/> instance for mocking. </returns>
+        public static VaultPropertiesEncryption VaultPropertiesEncryption(Uri keyUri = default, CmkKekIdentity kekIdentity = default, InfrastructureEncryptionState? infrastructureEncryption = default)
+        {
+            return new VaultPropertiesEncryption(keyUri is null ? default : new CmkKeyVaultProperties(keyUri, default), kekIdentity, infrastructureEncryption, default);
+        }
+
+        /// <param name="useSystemAssignedIdentity"> Indicate that system assigned identity should be used. Mutually exclusive with 'userAssignedIdentity' field. </param>
+        /// <param name="userAssignedIdentity"> The user assigned identity to be used to grant permissions in case the type of identity used is UserAssigned. </param>
+        /// <returns> A new <see cref="Models.CmkKekIdentity"/> instance for mocking. </returns>
+        public static CmkKekIdentity CmkKekIdentity(bool? useSystemAssignedIdentity = default, ResourceIdentifier userAssignedIdentity = default)
+        {
+            return new CmkKekIdentity(useSystemAssignedIdentity, userAssignedIdentity, default);
+        }
+
         /// <param name="operationId"> OperationId of the Resource Move Operation. </param>
         /// <param name="startOn"> Start Time of the Resource Move Operation. </param>
         /// <param name="completedOn"> End Time of the Resource Move Operation. </param>
@@ -194,17 +209,104 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 completedOn,
                 sourceResourceId,
                 targetResourceId,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <param name="immutabilityState"> Gets or sets the State. </param>
+        /// <param name="azureMonitorAlertSettings"> Settings for Azure Monitor based alerts. </param>
+        /// <param name="classicAlertSettings"> Settings for classic alerts. </param>
+        /// <returns> A new <see cref="Models.VaultMonitoringSettings"/> instance for mocking. </returns>
+        public static VaultMonitoringSettings VaultMonitoringSettings(RecoveryServicesAzureMonitorAlertSettings azureMonitorAlertSettings = default, RecoveryServicesClassicAlertSettings classicAlertSettings = default)
+        {
+            return new VaultMonitoringSettings(azureMonitorAlertSettings, classicAlertSettings, default);
+        }
+
+        /// <param name="alertsForAllJobFailures"></param>
+        /// <param name="alertsForAllReplicationIssues"></param>
+        /// <param name="alertsForAllFailoverIssues"></param>
+        /// <returns> A new <see cref="Models.RecoveryServicesAzureMonitorAlertSettings"/> instance for mocking. </returns>
+        public static RecoveryServicesAzureMonitorAlertSettings RecoveryServicesAzureMonitorAlertSettings(RecoveryServicesAlertsState? alertsForAllJobFailures = default, RecoveryServicesAlertsState? alertsForAllReplicationIssues = default, RecoveryServicesAlertsState? alertsForAllFailoverIssues = default)
+        {
+            return new RecoveryServicesAzureMonitorAlertSettings(alertsForAllJobFailures, alertsForAllReplicationIssues, alertsForAllFailoverIssues, default);
+        }
+
+        /// <param name="alertsForCriticalOperations"></param>
+        /// <param name="emailNotificationsForSiteRecovery"></param>
+        /// <returns> A new <see cref="Models.RecoveryServicesClassicAlertSettings"/> instance for mocking. </returns>
+        public static RecoveryServicesClassicAlertSettings RecoveryServicesClassicAlertSettings(RecoveryServicesAlertsState? alertsForCriticalOperations = default, RecoveryServicesAlertsState? emailNotificationsForSiteRecovery = default)
+        {
+            return new RecoveryServicesClassicAlertSettings(alertsForCriticalOperations, emailNotificationsForSiteRecovery, default);
+        }
+
+        /// <param name="immutabilitySettings"> Immutability Settings of a vault. </param>
         /// <param name="softDeleteSettings"> Soft delete Settings of a vault. </param>
         /// <param name="multiUserAuthorization"> MUA Settings of a vault. </param>
         /// <param name="sourceScanConfiguration"> Source scan configuration of vault. </param>
         /// <returns> A new <see cref="Models.RecoveryServicesSecuritySettings"/> instance for mocking. </returns>
-        public static RecoveryServicesSecuritySettings RecoveryServicesSecuritySettings(ImmutabilityState? immutabilityState = default, RecoveryServicesSoftDeleteSettings softDeleteSettings = default, MultiUserAuthorization? multiUserAuthorization = default, SourceScanConfiguration sourceScanConfiguration = default)
+        public static RecoveryServicesSecuritySettings RecoveryServicesSecuritySettings(ImmutabilitySettings immutabilitySettings = default, RecoveryServicesSoftDeleteSettings softDeleteSettings = default, MultiUserAuthorization? multiUserAuthorization = default, SourceScanConfiguration sourceScanConfiguration = default)
         {
-            return new RecoveryServicesSecuritySettings(immutabilityState is null ? default : new ImmutabilitySettings(immutabilityState, null), softDeleteSettings, multiUserAuthorization, sourceScanConfiguration, additionalBinaryDataProperties: null);
+            return new RecoveryServicesSecuritySettings(immutabilitySettings, softDeleteSettings, multiUserAuthorization, sourceScanConfiguration, default);
+        }
+
+        /// <param name="state"></param>
+        /// <param name="configuration">
+        /// Immutability configuration of the vault — selects whether immutability is
+        /// inherited from the backup policy (AsPerPolicy) or fixed for a specific
+        /// duration (TimeBased).
+        /// </param>
+        /// <returns> A new <see cref="Models.ImmutabilitySettings"/> instance for mocking. </returns>
+        public static ImmutabilitySettings ImmutabilitySettings(ImmutabilityState? state = default, ImmutabilityConfiguration configuration = default)
+        {
+            return new ImmutabilitySettings(state, configuration, default);
+        }
+
+        /// <param name="type"> Immutability type. 'AsPerPolicy' inherits duration from backup policy; 'TimeBased' requires explicit durationInDays. </param>
+        /// <param name="durationInDays"> Duration in days. Required when type is TimeBased, omitted when AsPerPolicy. </param>
+        /// <returns> A new <see cref="Models.ImmutabilityConfiguration"/> instance for mocking. </returns>
+        public static ImmutabilityConfiguration ImmutabilityConfiguration(ImmutabilityType? @type = default, int? durationInDays = default)
+        {
+            return new ImmutabilityConfiguration(@type, durationInDays, default);
+        }
+
+        /// <param name="softDeleteState"></param>
+        /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
+        /// <param name="enhancedSecurityState"></param>
+        /// <returns> A new <see cref="Models.RecoveryServicesSoftDeleteSettings"/> instance for mocking. </returns>
+        public static RecoveryServicesSoftDeleteSettings RecoveryServicesSoftDeleteSettings(RecoveryServicesSoftDeleteState? softDeleteState = default, int? softDeleteRetentionPeriodInDays = default, RecoveryServicesEnhancedSecurityState? enhancedSecurityState = default)
+        {
+            return new RecoveryServicesSoftDeleteSettings(softDeleteState, softDeleteRetentionPeriodInDays, enhancedSecurityState, default);
+        }
+
+        /// <param name="state"></param>
+        /// <param name="sourceScanIdentity"> Identity details to be used for an operation. </param>
+        /// <returns> A new <see cref="Models.SourceScanConfiguration"/> instance for mocking. </returns>
+        public static SourceScanConfiguration SourceScanConfiguration(RecoveryServicesSourceScanState? state = default, RecoveryServicesAssociatedIdentity sourceScanIdentity = default)
+        {
+            return new SourceScanConfiguration(state, sourceScanIdentity, default);
+        }
+
+        /// <param name="operationIdentityType"> Identity type that should be used for an operation. </param>
+        /// <param name="userAssignedIdentity"> User assigned identity to be used for an operation if operationIdentityType is UserAssigned. </param>
+        /// <returns> A new <see cref="Models.RecoveryServicesAssociatedIdentity"/> instance for mocking. </returns>
+        public static RecoveryServicesAssociatedIdentity RecoveryServicesAssociatedIdentity(RecoveryServicesIdentityType? operationIdentityType = default, string userAssignedIdentity = default)
+        {
+            return new RecoveryServicesAssociatedIdentity(operationIdentityType, userAssignedIdentity, default);
+        }
+
+        /// <param name="name"> Name of SKU is RS0 (Recovery Services 0th version) and the tier is standard tier. They do not have affect on backend storage redundancy or any other vault settings. To manage storage redundancy, use the backupstorageconfig. </param>
+        /// <param name="tier"> The Sku tier. </param>
+        /// <param name="family"> The sku family. </param>
+        /// <param name="size"> The sku size. </param>
+        /// <param name="capacity"> The sku capacity. </param>
+        /// <returns> A new <see cref="Models.RecoveryServicesSku"/> instance for mocking. </returns>
+        public static RecoveryServicesSku RecoveryServicesSku(RecoveryServicesSkuName name = default, string tier = default, string family = default, string size = default, string capacity = default)
+        {
+            return new RecoveryServicesSku(
+                name,
+                tier,
+                family,
+                size,
+                capacity,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -227,16 +329,30 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
                 sku,
                 identity,
-                etag);
+                etag,
+                default);
         }
 
-        /// <summary> Certificate corresponding to a vault that can be used by clients to register themselves with the vault. </summary>
+        /// <param name="properties"> Raw certificate data. </param>
+        /// <returns> A new <see cref="Models.RecoveryServicesCertificateContent"/> instance for mocking. </returns>
+        public static RecoveryServicesCertificateContent RecoveryServicesCertificateContent(RawCertificateData properties = default)
+        {
+            return new RecoveryServicesCertificateContent(properties, default);
+        }
+
+        /// <param name="authType"> Specifies the authentication type. </param>
+        /// <param name="certificate"> The base64 encoded certificate raw data string. </param>
+        /// <returns> A new <see cref="Models.RawCertificateData"/> instance for mocking. </returns>
+        public static RawCertificateData RawCertificateData(RecoveryServicesAuthType? authType = default, byte[] certificate = default)
+        {
+            return new RawCertificateData(authType, certificate, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -250,14 +366,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary>
-        /// Certificate details representing the Vault credentials.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ResourceCertificateAndAadDetails"/> and <see cref="Models.ResourceCertificateAndAcsDetails"/>.
-        /// </summary>
         /// <param name="authType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="certificate"> The base64 encoded certificate raw data string. </param>
         /// <param name="friendlyName"> Certificate friendly name. </param>
@@ -280,10 +392,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 thumbprint,
                 validStartOn,
                 validEndOn,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Certificate details representing the Vault credentials for AAD. </summary>
         /// <param name="certificate"> The base64 encoded certificate raw data string. </param>
         /// <param name="friendlyName"> Certificate friendly name. </param>
         /// <param name="issuer"> Certificate issuer. </param>
@@ -303,7 +414,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static ResourceCertificateAndAadDetails ResourceCertificateAndAadDetails(byte[] certificate = default, string friendlyName = default, string issuer = default, long? resourceId = default, string subject = default, BinaryData thumbprint = default, DateTimeOffset? validStartOn = default, DateTimeOffset? validEndOn = default, string aadAuthority = default, Guid aadTenantId = default, string servicePrincipalClientId = default, string servicePrincipalObjectId = default, string azureManagementEndpointAudience = default, ResourceIdentifier serviceResourceId = default, string aadAudience = default)
         {
             return new ResourceCertificateAndAadDetails(
-                "AzureActiveDirectory",
+                default,
                 certificate,
                 friendlyName,
                 issuer,
@@ -312,7 +423,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 thumbprint,
                 validStartOn,
                 validEndOn,
-                additionalBinaryDataProperties: null,
+                default,
                 aadAuthority,
                 aadTenantId,
                 servicePrincipalClientId,
@@ -322,7 +433,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 aadAudience);
         }
 
-        /// <summary> Certificate details representing the Vault credentials for ACS. </summary>
         /// <param name="certificate"> The base64 encoded certificate raw data string. </param>
         /// <param name="friendlyName"> Certificate friendly name. </param>
         /// <param name="issuer"> Certificate issuer. </param>
@@ -338,7 +448,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static ResourceCertificateAndAcsDetails ResourceCertificateAndAcsDetails(byte[] certificate = default, string friendlyName = default, string issuer = default, long? resourceId = default, string subject = default, BinaryData thumbprint = default, DateTimeOffset? validStartOn = default, DateTimeOffset? validEndOn = default, string globalAcsNamespace = default, string globalAcsHostName = default, string globalAcsRPRealm = default)
         {
             return new ResourceCertificateAndAcsDetails(
-                "AccessControlService",
+                default,
                 certificate,
                 friendlyName,
                 issuer,
@@ -347,13 +457,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 thumbprint,
                 validStartOn,
                 validEndOn,
-                additionalBinaryDataProperties: null,
+                default,
                 globalAcsNamespace,
                 globalAcsHostName,
                 globalAcsRPRealm);
         }
 
-        /// <summary> Replication usages of a vault. </summary>
         /// <param name="monitoringSummary"> Summary of the replication monitoring data for this vault. </param>
         /// <param name="jobsSummary"> Summary of the replication jobs data for this vault. </param>
         /// <param name="protectedItemCount"> Number of replication protected items for this vault. </param>
@@ -370,10 +479,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 recoveryPlanCount,
                 registeredServersCount,
                 recoveryServicesProviderAuthType,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Summary of the replication monitoring data for this vault. </summary>
         /// <param name="unHealthyVmCount"> Count of unhealthy VMs. </param>
         /// <param name="unHealthyProviderCount"> Count of unhealthy replication providers. </param>
         /// <param name="eventsCount"> Count of all critical warnings. </param>
@@ -390,20 +498,18 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 deprecatedProviderCount,
                 supportedProviderCount,
                 unsupportedProviderCount,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Summary of the replication job data for this vault. </summary>
         /// <param name="failedJobs"> Count of failed jobs. </param>
         /// <param name="suspendedJobs"> Count of suspended jobs. </param>
         /// <param name="inProgressJobs"> Count of in-progress jobs. </param>
         /// <returns> A new <see cref="Models.ReplicationJobSummary"/> instance for mocking. </returns>
         public static ReplicationJobSummary ReplicationJobSummary(int? failedJobs = default, int? suspendedJobs = default, int? inProgressJobs = default)
         {
-            return new ReplicationJobSummary(failedJobs, suspendedJobs, inProgressJobs, additionalBinaryDataProperties: null);
+            return new ReplicationJobSummary(failedJobs, suspendedJobs, inProgressJobs, default);
         }
 
-        /// <summary> Usages of a vault. </summary>
         /// <param name="unit"> Unit of the usage. </param>
         /// <param name="quotaPeriod"> Quota period of usage. </param>
         /// <param name="nextResetOn"> Next reset time of usage. </param>
@@ -420,16 +526,15 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 currentValue,
                 limit,
                 name,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The name of usage. </summary>
         /// <param name="value"> Value of usage. </param>
         /// <param name="localizedValue"> Localized value of usage. </param>
         /// <returns> A new <see cref="Models.VaultUsageNameInfo"/> instance for mocking. </returns>
         public static VaultUsageNameInfo VaultUsageNameInfo(string value = default, string localizedValue = default)
         {
-            return new VaultUsageNameInfo(value, localizedValue, additionalBinaryDataProperties: null);
+            return new VaultUsageNameInfo(value, localizedValue, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -449,22 +554,58 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                integrityKey is null && encryptionKey is null && encryptionKeyThumbprint is null && algorithm is null ? default : new VaultExtendedInfo(integrityKey, encryptionKey, encryptionKeyThumbprint, algorithm, null),
-                etag);
+                integrityKey is null && encryptionKey is null && encryptionKeyThumbprint is null && algorithm is null ? default : new VaultExtendedInfo(integrityKey, encryptionKey, encryptionKeyThumbprint, algorithm, default),
+                etag,
+                default);
         }
 
-        /// <summary> Response for check name availability API. Resource provider will set availability as true | false. </summary>
+        /// <param name="resourceType"> Describes the Resource type: Microsoft.RecoveryServices/Vaults. </param>
+        /// <param name="name"> Resource name for which availability needs to be checked. </param>
+        /// <returns> A new <see cref="Models.RecoveryServicesNameAvailabilityContent"/> instance for mocking. </returns>
+        public static RecoveryServicesNameAvailabilityContent RecoveryServicesNameAvailabilityContent(ResourceType? resourceType = default, string name = default)
+        {
+            return new RecoveryServicesNameAvailabilityContent(resourceType, name, default);
+        }
+
         /// <param name="isNameAvailable"></param>
         /// <param name="reason"></param>
         /// <param name="message"></param>
         /// <returns> A new <see cref="Models.RecoveryServicesNameAvailabilityResult"/> instance for mocking. </returns>
         public static RecoveryServicesNameAvailabilityResult RecoveryServicesNameAvailabilityResult(bool? isNameAvailable = default, string reason = default, string message = default)
         {
-            return new RecoveryServicesNameAvailabilityResult(isNameAvailable, reason, message, additionalBinaryDataProperties: null);
+            return new RecoveryServicesNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
-        /// <summary> DNSZone information for Microsoft.RecoveryServices. </summary>
+        /// <param name="resourceCapabilitiesBaseType"> Describes the Resource type: Microsoft.RecoveryServices/Vaults. </param>
+        /// <param name="capabilitiesDnsZones"> Gets the DnsZones. </param>
+        /// <returns> A new <see cref="Models.ResourceCapabilities"/> instance for mocking. </returns>
+        public static ResourceCapabilities ResourceCapabilities(ResourceType resourceCapabilitiesBaseType = default, IEnumerable<DnsZone> capabilitiesDnsZones = default)
+        {
+            return new ResourceCapabilities(resourceCapabilitiesBaseType, default, capabilitiesDnsZones is null ? default : new CapabilitiesProperties((capabilitiesDnsZones ?? new ChangeTrackingList<DnsZone>()).ToList(), default));
+        }
+
+        /// <param name="subResource"> Subresource type for vault AzureBackup, AzureBackup_secondary or AzureSiteRecovery. </param>
+        /// <returns> A new <see cref="Models.DnsZone"/> instance for mocking. </returns>
+        public static DnsZone DnsZone(VaultSubResourceType? subResource = default)
+        {
+            return new DnsZone(subResource, default);
+        }
+
+        /// <param name="resourceCapabilitiesBaseType"> Describes the Resource type: Microsoft.RecoveryServices/Vaults. </param>
+        /// <returns> A new <see cref="Models.ResourceCapabilitiesBase"/> instance for mocking. </returns>
+        public static ResourceCapabilitiesBase ResourceCapabilitiesBase(ResourceType resourceCapabilitiesBaseType = default)
+        {
+            return new ResourceCapabilitiesBase(resourceCapabilitiesBaseType, default);
+        }
+
+        /// <param name="resourceCapabilitiesBaseType"> Describes the Resource type: Microsoft.RecoveryServices/Vaults. </param>
+        /// <param name="capabilitiesResultDnsZones"> Gets the DnsZones. </param>
+        /// <returns> A new <see cref="Models.CapabilitiesResult"/> instance for mocking. </returns>
+        public static CapabilitiesResult CapabilitiesResult(ResourceType resourceCapabilitiesBaseType = default, IEnumerable<DnsZoneResult> capabilitiesResultDnsZones = default)
+        {
+            return new CapabilitiesResult(resourceCapabilitiesBaseType, default, capabilitiesResultDnsZones is null ? default : new CapabilitiesResultProperties((capabilitiesResultDnsZones ?? new ChangeTrackingList<DnsZoneResult>()).ToList(), default));
+        }
+
         /// <param name="subResource"> Subresource type for vault AzureBackup, AzureBackup_secondary or AzureSiteRecovery. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone names. </param>
         /// <returns> A new <see cref="Models.DnsZoneResult"/> instance for mocking. </returns>
@@ -472,10 +613,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         {
             requiredZoneNames ??= new ChangeTrackingList<string>();
 
-            return new DnsZoneResult(subResource, additionalBinaryDataProperties: null, requiredZoneNames.ToList());
+            return new DnsZoneResult(subResource, default, (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList());
         }
 
-        /// <summary> DeletedVault information as returned by the resource provider. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -489,25 +629,79 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Properties of the DeletedVault. </summary>
         /// <param name="vaultId"> ARM Id of the Vault which was deleted. </param>
         /// <param name="vaultDeletionOn"> Time in UTC at which the Vault was deleted. </param>
         /// <param name="purgeOn"> Time in UTC at which the DeletedVault will be purged. </param>
         /// <returns> A new <see cref="Models.DeletedVaultProperties"/> instance for mocking. </returns>
         public static DeletedVaultProperties DeletedVaultProperties(string vaultId = default, DateTimeOffset? vaultDeletionOn = default, DateTimeOffset? purgeOn = default)
         {
-            return new DeletedVaultProperties(vaultId, vaultDeletionOn, purgeOn, additionalBinaryDataProperties: null);
+            return new DeletedVaultProperties(vaultId, vaultDeletionOn, purgeOn, default);
         }
 
         /// <param name="deletedVaultRestoreInputRecoveryResourceGroupId"> Recovery resource group Id. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deletedVaultRestoreInputRecoveryResourceGroupId"/> is null. </exception>
         /// <returns> A new <see cref="Models.DeletedVaultRestoreInput"/> instance for mocking. </returns>
         public static DeletedVaultRestoreInput DeletedVaultRestoreInput(string deletedVaultRestoreInputRecoveryResourceGroupId = default)
         {
-            return new DeletedVaultRestoreInput(new DeletedVaultRestoreInputProperties(deletedVaultRestoreInputRecoveryResourceGroupId, null), additionalBinaryDataProperties: null);
+            return new DeletedVaultRestoreInput(deletedVaultRestoreInputRecoveryResourceGroupId is null ? default : new DeletedVaultRestoreInputProperties(deletedVaultRestoreInputRecoveryResourceGroupId, default), default);
+        }
+
+        /// <param name="provisioningState"> Provisioning State. </param>
+        /// <param name="upgradeDetails"> Details for upgrading vault. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connection. </param>
+        /// <param name="privateEndpointStateForBackup"> Private endpoint state for backup. </param>
+        /// <param name="privateEndpointStateForSiteRecovery"> Private endpoint state for site recovery. </param>
+        /// <param name="encryption"> Customer Managed Key details of the resource. </param>
+        /// <param name="moveDetails"> The details of the latest move operation performed on the Azure Resource. </param>
+        /// <param name="moveState"> The State of the Resource after the move operation. </param>
+        /// <param name="backupStorageVersion"> Backup storage version. </param>
+        /// <param name="publicNetworkAccess"> property to enable or disable resource provider inbound network traffic from public clients. </param>
+        /// <param name="monitoringSettings"> Monitoring Settings of the vault. </param>
+        /// <param name="crossSubscriptionRestoreState"> Gets or sets the CrossSubscriptionRestoreState. </param>
+        /// <param name="redundancySettings"> The redundancy Settings of a Vault. </param>
+        /// <param name="securitySettings"> Security Settings of the vault. </param>
+        /// <param name="secureScore"> Secure Score of Recovery Services Vault. </param>
+        /// <param name="bcdrSecurityLevel"> Security levels of Recovery Services Vault for business continuity and disaster recovery. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
+        /// <returns> A new <see cref="Models.RecoveryServicesVaultProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RecoveryServicesVaultProperties RecoveryServicesVaultProperties(string provisioningState = default, VaultUpgradeDetails upgradeDetails = default, IEnumerable<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections = default, VaultPrivateEndpointState? privateEndpointStateForBackup = default, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery = default, VaultPropertiesEncryption encryption = default, VaultPropertiesMoveDetails moveDetails = default, ResourceMoveState? moveState = default, BackupStorageVersion? backupStorageVersion = default, VaultPublicNetworkAccess? publicNetworkAccess = default, VaultMonitoringSettings monitoringSettings = default, CrossSubscriptionRestoreState? crossSubscriptionRestoreState = default, VaultPropertiesRedundancySettings redundancySettings = default, RecoveryServicesSecuritySettings securitySettings = default, SecureScoreLevel? secureScore = default, BcdrSecurityLevel? bcdrSecurityLevel = default, IEnumerable<string> resourceGuardOperationRequests = default)
+        {
+            return new RecoveryServicesVaultProperties(
+                provisioningState,
+                upgradeDetails,
+                (privateEndpointConnections ?? new ChangeTrackingList<RecoveryServicesPrivateEndpointConnectionVaultProperties>()).ToList(),
+                privateEndpointStateForBackup,
+                privateEndpointStateForSiteRecovery,
+                encryption,
+                moveDetails,
+                moveState,
+                backupStorageVersion,
+                publicNetworkAccess,
+                monitoringSettings,
+                default,
+                crossSubscriptionRestoreState is null ? default : new RestoreSettings(new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState, default), default),
+                redundancySettings,
+                securitySettings,
+                secureScore,
+                bcdrSecurityLevel,
+                (resourceGuardOperationRequests ?? new ChangeTrackingList<string>()).ToList(),
+                default);
+        }
+
+        /// <param name="immutabilityState"> Gets or sets the State. </param>
+        /// <param name="softDeleteSettings"> Soft delete Settings of a vault. </param>
+        /// <param name="multiUserAuthorization"> MUA Settings of a vault. </param>
+        /// <param name="sourceScanConfiguration"> Source scan configuration of vault. </param>
+        /// <returns> A new <see cref="Models.RecoveryServicesSecuritySettings"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RecoveryServicesSecuritySettings RecoveryServicesSecuritySettings(ImmutabilityState? immutabilityState = default, RecoveryServicesSoftDeleteSettings softDeleteSettings = default, MultiUserAuthorization? multiUserAuthorization = default, SourceScanConfiguration sourceScanConfiguration = default)
+        {
+            return new RecoveryServicesSecuritySettings(immutabilityState is null ? default : new ImmutabilitySettings(immutabilityState, default, default), softDeleteSettings, multiUserAuthorization, sourceScanConfiguration, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RecoveryServicesVaultProperties"/>. </summary>
@@ -530,7 +724,26 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RecoveryServicesVaultProperties RecoveryServicesVaultProperties(string provisioningState, VaultUpgradeDetails upgradeDetails, IEnumerable<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections, VaultPrivateEndpointState? privateEndpointStateForBackup, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery, VaultPropertiesEncryption encryption, VaultPropertiesMoveDetails moveDetails, ResourceMoveState? moveState, BackupStorageVersion? backupStorageVersion, VaultPublicNetworkAccess? publicNetworkAccess, VaultMonitoringSettings monitoringSettings, CrossSubscriptionRestoreState? crossSubscriptionRestoreState, VaultPropertiesRedundancySettings redundancySettings, RecoveryServicesSecuritySettings securitySettings, SecureScoreLevel? secureScore)
         {
-            return RecoveryServicesVaultProperties(provisioningState: provisioningState, upgradeDetails: upgradeDetails, privateEndpointConnections: privateEndpointConnections, privateEndpointStateForBackup: privateEndpointStateForBackup, privateEndpointStateForSiteRecovery: privateEndpointStateForSiteRecovery, encryption: encryption, moveDetails: moveDetails, moveState: moveState, backupStorageVersion: backupStorageVersion, publicNetworkAccess: publicNetworkAccess, monitoringSettings: monitoringSettings, crossSubscriptionRestoreState: crossSubscriptionRestoreState, redundancySettings: redundancySettings, securitySettings: securitySettings, secureScore: secureScore, bcdrSecurityLevel: default, resourceGuardOperationRequests: default);
+            return new RecoveryServicesVaultProperties(
+                provisioningState,
+                upgradeDetails,
+                (privateEndpointConnections ?? new ChangeTrackingList<RecoveryServicesPrivateEndpointConnectionVaultProperties>()).ToList(),
+                privateEndpointStateForBackup,
+                privateEndpointStateForSiteRecovery,
+                encryption,
+                moveDetails,
+                moveState,
+                backupStorageVersion,
+                publicNetworkAccess,
+                monitoringSettings,
+                default,
+                crossSubscriptionRestoreState is null ? default : new RestoreSettings(new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState, default), default),
+                redundancySettings,
+                securitySettings,
+                secureScore,
+                default,
+                default,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RecoveryServicesSecuritySettings"/>. </summary>
@@ -541,7 +754,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RecoveryServicesSecuritySettings RecoveryServicesSecuritySettings(ImmutabilityState? immutabilityState, RecoveryServicesSoftDeleteSettings softDeleteSettings, MultiUserAuthorization? multiUserAuthorization)
         {
-            return RecoveryServicesSecuritySettings(immutabilityState: immutabilityState, softDeleteSettings: softDeleteSettings, multiUserAuthorization: multiUserAuthorization, sourceScanConfiguration: default);
+            return new RecoveryServicesSecuritySettings(immutabilityState is null ? default : new ImmutabilitySettings(immutabilityState, default, default), softDeleteSettings, multiUserAuthorization, default, default);
         }
     }
 }

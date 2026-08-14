@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
+    [Experimental("AAIP001")]
     public partial class ResponsesBrowserAutomationPreviewTool : ResponsesTool
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesBrowserAutomationPreviewTool"/>. </summary>
@@ -23,21 +25,11 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="ResponsesBrowserAutomationPreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="browserAutomationPreview"> The Browser Automation Tool parameters. </param>
-        internal ResponsesBrowserAutomationPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, ResponsesBrowserAutomationToolParameters browserAutomationPreview) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesBrowserAutomationPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesBrowserAutomationToolParameters browserAutomationPreview) : base(@type, additionalBinaryDataProperties)
         {
-            Name = name;
-            Description = description;
             BrowserAutomationPreview = browserAutomationPreview;
         }
-
-        /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
-
-        /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
 
         /// <summary> The Browser Automation Tool parameters. </summary>
         public ResponsesBrowserAutomationToolParameters BrowserAutomationPreview { get; set; }

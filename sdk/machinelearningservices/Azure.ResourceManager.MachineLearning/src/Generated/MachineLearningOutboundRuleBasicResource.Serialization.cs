@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.MachineLearning
 {
+    /// <summary></summary>
     public partial class MachineLearningOutboundRuleBasicResource : IJsonModel<MachineLearningOutboundRuleBasicData>
     {
-        private static MachineLearningOutboundRuleBasicData s_dataDeserializationInstance;
-        private static MachineLearningOutboundRuleBasicData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<MachineLearningOutboundRuleBasicData> s_dataDeserializationInstance;
 
+        private static IJsonModel<MachineLearningOutboundRuleBasicData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MachineLearningOutboundRuleBasicData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MachineLearningOutboundRuleBasicData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningOutboundRuleBasicData>)Data).Write(writer, options);
 
-        MachineLearningOutboundRuleBasicData IJsonModel<MachineLearningOutboundRuleBasicData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningOutboundRuleBasicData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningOutboundRuleBasicData IJsonModel<MachineLearningOutboundRuleBasicData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<MachineLearningOutboundRuleBasicData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningOutboundRuleBasicData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         MachineLearningOutboundRuleBasicData IPersistableModel<MachineLearningOutboundRuleBasicData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningOutboundRuleBasicData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        string IPersistableModel<MachineLearningOutboundRuleBasicData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningOutboundRuleBasicData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MachineLearningOutboundRuleBasicData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

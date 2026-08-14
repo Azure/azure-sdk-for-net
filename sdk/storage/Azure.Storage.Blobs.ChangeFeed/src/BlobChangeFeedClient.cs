@@ -288,7 +288,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
         {
             if (start.HasValue && end.HasValue && start.Value > end.Value)
             {
-                throw ChangeFeedErrors.StartAfterEnd(start.Value, end.Value, nameof(start));
+                throw new ArgumentException(
+                    $"{nameof(start)} ({start.Value:O}) must be earlier than or equal to {nameof(end)} ({end.Value:O}).",
+                    nameof(start));
             }
         }
 
@@ -296,7 +298,15 @@ namespace Azure.Storage.Blobs.ChangeFeed
         {
             if (continuationToken != null && _includeNonFinalizedEvents)
             {
-                throw BlobChangeFeedErrors.ContinuationNotSupportedWithNonFinalized(nameof(continuationToken));
+                throw new ArgumentException(
+                    "Resuming from a continuation token is not supported when " +
+                    nameof(BlobChangeFeedClientOptions.IncludeNonFinalizedEvents) +
+                    " is enabled on " + nameof(BlobChangeFeedClientOptions) + ". " +
+                    "Non-finalized reads do not produce continuation tokens because segments past " +
+                    "the finalized watermark may change between calls. Disable " +
+                    nameof(BlobChangeFeedClientOptions.IncludeNonFinalizedEvents) +
+                    " to resume from a saved position.",
+                    nameof(continuationToken));
             }
         }
         #endregion GetChanges

@@ -11,6 +11,7 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal static partial class FilePermissionFormatExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this FilePermissionFormat value) => value switch
         {
             FilePermissionFormat.Sddl => "Sddl",
@@ -18,10 +19,17 @@ namespace Azure.Storage.Files.Shares.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FilePermissionFormat value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static FilePermissionFormat ToFilePermissionFormat(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sddl")) return FilePermissionFormat.Sddl;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Binary")) return FilePermissionFormat.Binary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sddl"))
+            {
+                return FilePermissionFormat.Sddl;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Binary"))
+            {
+                return FilePermissionFormat.Binary;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FilePermissionFormat value.");
         }
     }

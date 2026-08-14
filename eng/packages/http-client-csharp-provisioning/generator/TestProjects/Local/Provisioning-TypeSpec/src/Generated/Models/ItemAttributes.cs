@@ -7,17 +7,14 @@
 
 using System;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     /// <summary> Item-specific attributes that inherit all base properties. </summary>
-    public partial class ItemAttributes : ProvisionableConstruct
+    public partial class ItemAttributes : BaseItemAttributes
     {
         private BicepValue<DateTimeOffset> _expires;
-        private BicepValue<bool> _enabled;
-        private BicepValue<DateTimeOffset> _created;
-        private BicepValue<DateTimeOffset> _updated;
+        private BicepValue<string> _displayName;
 
         /// <summary> Creates a new ItemAttributes. </summary>
         public ItemAttributes()
@@ -39,38 +36,18 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
-        /// <summary> Gets or sets the Enabled. </summary>
-        public BicepValue<bool> Enabled
+        /// <summary> Gets or sets the DisplayName. </summary>
+        public new BicepValue<string> DisplayName
         {
             get
             {
                 Initialize();
-                return _enabled;
+                return _displayName;
             }
             set
             {
                 Initialize();
-                _enabled.Assign(value);
-            }
-        }
-
-        /// <summary> Gets the Created. </summary>
-        public BicepValue<DateTimeOffset> Created
-        {
-            get
-            {
-                Initialize();
-                return _created;
-            }
-        }
-
-        /// <summary> Gets the Updated. </summary>
-        public BicepValue<DateTimeOffset> Updated
-        {
-            get
-            {
-                Initialize();
-                return _updated;
+                _displayName.Assign(value);
             }
         }
 
@@ -78,10 +55,12 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _expires = DefineProperty<DateTimeOffset>(nameof(Expires), new string[] { "expires" });
-            _enabled = DefineProperty<bool>(nameof(Enabled), new string[] { "enabled" });
-            _created = DefineProperty<DateTimeOffset>(nameof(Created), new string[] { "created" }, isOutput: true);
-            _updated = DefineProperty<DateTimeOffset>(nameof(Updated), new string[] { "updated" }, isOutput: true);
+            _expires = DefineProperty<DateTimeOffset>(nameof(Expires), new string[] { "expires" }, format: "O");
+            _displayName = DefineProperty<string>(nameof(DisplayName), new string[] { "displayName" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ItemAttributes that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

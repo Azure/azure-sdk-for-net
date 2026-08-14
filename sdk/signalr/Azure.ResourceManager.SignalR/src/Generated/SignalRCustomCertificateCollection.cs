@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SignalR
         {
             TryGetApiVersion(SignalRCustomCertificateResource.ResourceType, out string signalRCustomCertificateApiVersion);
             _customCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SignalR", SignalRCustomCertificateResource.ResourceType.Namespace, Diagnostics);
-            _customCertificatesRestClient = new CustomCertificates(_customCertificatesClientDiagnostics, Pipeline, Endpoint, signalRCustomCertificateApiVersion ?? "2025-01-01-preview");
+            _customCertificatesRestClient = new CustomCertificates(_customCertificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, signalRCustomCertificateApiVersion ?? "2025-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SignalR
                 HttpMessage message = _customCertificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, SignalRCustomCertificateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SignalRArmOperation<SignalRCustomCertificateResource> operation = new SignalRArmOperation<SignalRCustomCertificateResource>(
-                    new SignalRCustomCertificateOperationSource(Client),
+                    new SignalRCustomCertificateResourceOperationSource(Client),
                     _customCertificatesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SignalR
                 HttpMessage message = _customCertificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, SignalRCustomCertificateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SignalRArmOperation<SignalRCustomCertificateResource> operation = new SignalRArmOperation<SignalRCustomCertificateResource>(
-                    new SignalRCustomCertificateOperationSource(Client),
+                    new SignalRCustomCertificateResourceOperationSource(Client),
                     _customCertificatesClientDiagnostics,
                     Pipeline,
                     message.Request,

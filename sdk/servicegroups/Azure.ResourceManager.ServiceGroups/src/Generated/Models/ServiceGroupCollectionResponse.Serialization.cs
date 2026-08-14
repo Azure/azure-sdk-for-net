@@ -14,6 +14,7 @@ using Azure.ResourceManager.ServiceGroups;
 
 namespace Azure.ResourceManager.ServiceGroups.Models
 {
+    /// <summary> Response holding an array of service groups and a nextLink that supports pagination. </summary>
     internal partial class ServiceGroupCollectionResponse : IJsonModel<ServiceGroupCollectionResponse>
     {
         /// <summary> Initializes a new instance of <see cref="ServiceGroupCollectionResponse"/> for deserialization. </summary>

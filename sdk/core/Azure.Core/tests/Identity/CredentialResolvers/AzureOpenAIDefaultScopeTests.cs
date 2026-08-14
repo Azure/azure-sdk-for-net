@@ -16,7 +16,8 @@ namespace Azure.Core.Tests.Identity.CredentialResolvers
     /// Verifies the AzureOpenAI default-scope quirk writes Scope at the root of the
     /// credential section for both the
     /// <see cref="ConfigurationExtensions.GetAzureClientSettings{T}(IConfiguration, string)"/>
-    /// path and the <see cref="ConfigurationExtensions.WithAzureCredential{T}(T)"/> path.
+    /// path and the <see cref="ConfigurationExtensions.AddAzureClient{TClient, TSettings}(IHostApplicationBuilder, string)"/>
+    /// path.
     /// </summary>
     public class AzureOpenAIDefaultScopeTests
     {
@@ -86,52 +87,6 @@ namespace Azure.Core.Tests.Identity.CredentialResolvers
             });
 
             _ = config.GetAzureClientSettings<TestSettings>("MyClient");
-
-            Assert.AreEqual("custom-scope", config["MyClient:Credential:Scope"]);
-        }
-
-        [Test]
-        public void WithAzureCredential_AzureOpenAIEndpoint_WritesScopeAtRoot()
-        {
-            IConfiguration config = BuildConfig(new Dictionary<string, string>
-            {
-                ["MyClient:Options:Endpoint"] = OpenAIEndpoint,
-                ["MyClient:Credential:CredentialSource"] = "AzureCliCredential",
-            });
-
-            _ = config.GetClientSettings<TestSettings>("MyClient").WithAzureCredential();
-
-            // WithAzureCredential writes Scope at the root of the credential section.
-            Assert.AreEqual(DefaultScope, config["MyClient:Credential:Scope"]);
-            Assert.IsNull(config["MyClient:Credential:AdditionalProperties:Scope"]);
-        }
-
-        [Test]
-        public void WithAzureCredential_NonAzureOpenAIEndpoint_DoesNotWriteScope()
-        {
-            IConfiguration config = BuildConfig(new Dictionary<string, string>
-            {
-                ["MyClient:Options:Endpoint"] = "https://example.com/",
-                ["MyClient:Credential:CredentialSource"] = "AzureCliCredential",
-            });
-
-            _ = config.GetClientSettings<TestSettings>("MyClient").WithAzureCredential();
-
-            Assert.IsNull(config["MyClient:Credential:Scope"]);
-            Assert.IsNull(config["MyClient:Credential:AdditionalProperties:Scope"]);
-        }
-
-        [Test]
-        public void WithAzureCredential_PreSetScopeAtRoot_NotOverwritten()
-        {
-            IConfiguration config = BuildConfig(new Dictionary<string, string>
-            {
-                ["MyClient:Options:Endpoint"] = OpenAIEndpoint,
-                ["MyClient:Credential:CredentialSource"] = "AzureCliCredential",
-                ["MyClient:Credential:Scope"] = "custom-scope",
-            });
-
-            _ = config.GetClientSettings<TestSettings>("MyClient").WithAzureCredential();
 
             Assert.AreEqual("custom-scope", config["MyClient:Credential:Scope"]);
         }

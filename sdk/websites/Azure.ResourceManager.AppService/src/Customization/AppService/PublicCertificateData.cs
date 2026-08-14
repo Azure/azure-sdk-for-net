@@ -3,11 +3,32 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.AppService
 {
+    [CodeGenSuppress("Blob")]
     public partial class PublicCertificateData
     {
+        // GA shipped byte[] for this blob property; TypeSpec `bytes` now emits as BinaryData.
+        // Restore byte[] for backward compatibility by converting on access.
+        /// <summary> Public Certificate byte array. </summary>
+        [WirePath("properties.blob")]
+        public byte[] Blob
+        {
+            get => Properties is null ? null : Properties.Blob?.ToArray();
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PublicCertificateProperties();
+                }
+                Properties.Blob = value is null ? null : BinaryData.FromBytes(value);
+            }
+        }
+
         /// <summary>
         /// Certificate Thumbprint
         /// <para>

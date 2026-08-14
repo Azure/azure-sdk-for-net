@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.Batch
                     yield break;
                 }
                 ListPoolsResult result = ListPoolsResult.FromResponse(response);
-                yield return Page<BatchAccountPoolData>.FromValues((IReadOnlyList<BatchAccountPoolData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<BatchAccountPoolData>.FromValues((IReadOnlyList<BatchAccountPoolData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

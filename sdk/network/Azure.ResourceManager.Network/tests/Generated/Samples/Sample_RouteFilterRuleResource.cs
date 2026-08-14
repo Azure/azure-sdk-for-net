@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
             RouteFilterRuleResource routeFilterRule = client.GetRouteFilterRuleResource(routeFilterRuleResourceId);
 
             // invoke the operation
-            await routeFilterRule.DeleteAsync(WaitUntil.Completed);
+            await routeFilterRule.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network.Samples
                 RouteFilterRuleType = RouteFilterRuleType.Community,
                 Communities = { "12076:5030", "12076:5040" },
             };
-            ArmOperation<RouteFilterRuleResource> lro = await routeFilterRule.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<RouteFilterRuleResource> lro = await routeFilterRule.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             RouteFilterRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

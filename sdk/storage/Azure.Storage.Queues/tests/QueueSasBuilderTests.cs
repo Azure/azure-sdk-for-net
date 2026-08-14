@@ -61,6 +61,29 @@ namespace Azure.Storage.Queues.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2026_02_06)]
+        public void GenerateUserDelegationSasUri_PreservesIdentityBinding()
+        {
+            // Arrange
+            var constants = TestConstants.Create(this);
+            string queueName = GetNewQueueName();
+            Uri queueUri = new Uri("https://" + constants.Sas.Account + ".queue.core.windows.net/" + queueName);
+            QueueClient queueClient = InstrumentClient(new QueueClient(queueUri, GetOptions()));
+            UserDelegationKey userDelegationKey = GetUserDelegationKey(constants);
+
+            QueueSasBuilder builder = BuildQueueSasBuilder(constants, queueName);
+
+            // Act
+            string viaClient = queueClient.GenerateUserDelegationSasUri(builder, userDelegationKey).Query.TrimStart('?');
+            string viaDirect = builder.ToSasQueryParameters(userDelegationKey, queueClient.AccountName).ToString();
+
+            // Assert
+            StringAssert.Contains(Constants.Sas.Parameters.DelegatedUserObjectId, viaDirect);
+            StringAssert.Contains(Constants.Sas.Parameters.DelegatedUserObjectId, viaClient);
+            Assert.AreEqual(viaDirect, viaClient);
+        }
+
+        [RecordedTest]
         public void QueueSasBuilder_ToSasQueryParameters_VersionTest()
         {
             // Arrange

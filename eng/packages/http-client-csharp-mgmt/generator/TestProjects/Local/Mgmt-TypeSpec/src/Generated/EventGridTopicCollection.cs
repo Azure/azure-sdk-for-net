@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(EventGridTopicResource.ResourceType, out string eventGridTopicApiVersion);
             _eventGridTopicsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", EventGridTopicResource.ResourceType.Namespace, Diagnostics);
-            _eventGridTopicsRestClient = new EventGridTopics(_eventGridTopicsClientDiagnostics, Pipeline, Endpoint, eventGridTopicApiVersion ?? "2024-05-01");
+            _eventGridTopicsRestClient = new EventGridTopics(_eventGridTopicsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventGridTopicApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _eventGridTopicsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, topicName, EventGridTopicData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<EventGridTopicResource> operation = new TestsArmOperation<EventGridTopicResource>(
-                    new EventGridTopicOperationSource(Client),
+                    new EventGridTopicResourceOperationSource(Client),
                     _eventGridTopicsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -153,7 +153,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _eventGridTopicsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, topicName, EventGridTopicData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<EventGridTopicResource> operation = new TestsArmOperation<EventGridTopicResource>(
-                    new EventGridTopicOperationSource(Client),
+                    new EventGridTopicResourceOperationSource(Client),
                     _eventGridTopicsClientDiagnostics,
                     Pipeline,
                     message.Request,

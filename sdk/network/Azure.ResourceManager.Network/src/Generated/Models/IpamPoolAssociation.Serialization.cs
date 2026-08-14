@@ -8,17 +8,62 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class IpamPoolAssociation : IUtf8JsonSerializable, IJsonModel<IpamPoolAssociation>
+    /// <summary> IpamPool association information. </summary>
+    public partial class IpamPoolAssociation : IJsonModel<IpamPoolAssociation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IpamPoolAssociation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="IpamPoolAssociation"/> for deserialization. </summary>
+        internal IpamPoolAssociation()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IpamPoolAssociation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IpamPoolAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIpamPoolAssociation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IpamPoolAssociation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IpamPoolAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(IpamPoolAssociation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IpamPoolAssociation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IpamPoolAssociation IPersistableModel<IpamPoolAssociation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IpamPoolAssociation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IpamPoolAssociation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +75,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IpamPoolAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IpamPoolAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IpamPoolAssociation)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
             if (Optional.IsDefined(PoolId))
@@ -52,8 +96,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("addressPrefixes"u8);
                 writer.WriteStartArray();
-                foreach (var item in AddressPrefixes)
+                foreach (string item in AddressPrefixes)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -62,8 +111,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("reservedPrefixes"u8);
                 writer.WriteStartArray();
-                foreach (var item in ReservedPrefixes)
+                foreach (string item in ReservedPrefixes)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -88,15 +142,15 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("reservationExpiresAt"u8);
                 writer.WriteStringValue(ReservationExpiresOn.Value, "O");
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -105,22 +159,27 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        IpamPoolAssociation IJsonModel<IpamPoolAssociation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IpamPoolAssociation IJsonModel<IpamPoolAssociation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IpamPoolAssociation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IpamPoolAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IpamPoolAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IpamPoolAssociation)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeIpamPoolAssociation(document.RootElement, options);
         }
 
-        internal static IpamPoolAssociation DeserializeIpamPoolAssociation(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static IpamPoolAssociation DeserializeIpamPoolAssociation(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -132,93 +191,105 @@ namespace Azure.ResourceManager.Network.Models
             IReadOnlyList<string> reservedPrefixes = default;
             string totalNumberOfIPAddresses = default;
             string numberOfReservedIPAddresses = default;
-            DateTimeOffset? createdAt = default;
-            DateTimeOffset? reservationExpiresAt = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? reservationExpiresOn = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"u8))
+                if (prop.NameEquals("resourceId"u8))
                 {
-                    resourceId = new ResourceIdentifier(property.Value.GetString());
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("poolId"u8))
+                if (prop.NameEquals("poolId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    poolId = new ResourceIdentifier(property.Value.GetString());
+                    poolId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("addressPrefixes"u8))
+                if (prop.NameEquals("addressPrefixes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     addressPrefixes = array;
                     continue;
                 }
-                if (property.NameEquals("reservedPrefixes"u8))
+                if (prop.NameEquals("reservedPrefixes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     reservedPrefixes = array;
                     continue;
                 }
-                if (property.NameEquals("totalNumberOfIPAddresses"u8))
+                if (prop.NameEquals("totalNumberOfIPAddresses"u8))
                 {
-                    totalNumberOfIPAddresses = property.Value.GetString();
+                    totalNumberOfIPAddresses = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("numberOfReservedIPAddresses"u8))
+                if (prop.NameEquals("numberOfReservedIPAddresses"u8))
                 {
-                    numberOfReservedIPAddresses = property.Value.GetString();
+                    numberOfReservedIPAddresses = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdAt"u8))
+                if (prop.NameEquals("createdAt"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    createdAt = property.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("reservationExpiresAt"u8))
+                if (prop.NameEquals("reservationExpiresAt"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    reservationExpiresAt = property.Value.GetDateTimeOffset("O");
+                    reservationExpiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new IpamPoolAssociation(
                 resourceId,
                 poolId,
@@ -227,260 +298,9 @@ namespace Azure.ResourceManager.Network.Models
                 reservedPrefixes ?? new ChangeTrackingList<string>(),
                 totalNumberOfIPAddresses,
                 numberOfReservedIPAddresses,
-                createdAt,
-                reservationExpiresAt,
-                serializedAdditionalRawData);
+                createdOn,
+                reservationExpiresOn,
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  resourceId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResourceId))
-                {
-                    builder.Append("  resourceId: ");
-                    builder.AppendLine($"'{ResourceId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PoolId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  poolId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PoolId))
-                {
-                    builder.Append("  poolId: ");
-                    builder.AppendLine($"'{PoolId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  description: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Description))
-                {
-                    builder.Append("  description: ");
-                    if (Description.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Description}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Description}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AddressPrefixes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  addressPrefixes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(AddressPrefixes))
-                {
-                    if (AddressPrefixes.Any())
-                    {
-                        builder.Append("  addressPrefixes: ");
-                        builder.AppendLine("[");
-                        foreach (var item in AddressPrefixes)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReservedPrefixes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  reservedPrefixes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ReservedPrefixes))
-                {
-                    if (ReservedPrefixes.Any())
-                    {
-                        builder.Append("  reservedPrefixes: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ReservedPrefixes)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TotalNumberOfIPAddresses), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  totalNumberOfIPAddresses: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TotalNumberOfIPAddresses))
-                {
-                    builder.Append("  totalNumberOfIPAddresses: ");
-                    if (TotalNumberOfIPAddresses.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{TotalNumberOfIPAddresses}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{TotalNumberOfIPAddresses}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfReservedIPAddresses), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  numberOfReservedIPAddresses: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NumberOfReservedIPAddresses))
-                {
-                    builder.Append("  numberOfReservedIPAddresses: ");
-                    if (NumberOfReservedIPAddresses.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{NumberOfReservedIPAddresses}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{NumberOfReservedIPAddresses}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  createdAt: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CreatedOn))
-                {
-                    builder.Append("  createdAt: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReservationExpiresOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  reservationExpiresAt: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ReservationExpiresOn))
-                {
-                    builder.Append("  reservationExpiresAt: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(ReservationExpiresOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<IpamPoolAssociation>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IpamPoolAssociation>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(IpamPoolAssociation)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        IpamPoolAssociation IPersistableModel<IpamPoolAssociation>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IpamPoolAssociation>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIpamPoolAssociation(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IpamPoolAssociation)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<IpamPoolAssociation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

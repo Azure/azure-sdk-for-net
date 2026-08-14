@@ -4,5 +4,13 @@ overrides:
   - filename: '**/sdk/azurestackhci/**/*'
     words:
       - Igvm
+      - EAPFAST
+      - EAPTLS
+      - EAPTTLS
+      - GPUP
+      - NTFS
+      - PEAP
       - Rdma
+      - TTLS
       - Unpurposed
+      - Vfat

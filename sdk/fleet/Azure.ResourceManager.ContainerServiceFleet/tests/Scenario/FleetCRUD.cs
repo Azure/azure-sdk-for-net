@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
                         PlacementType = ContainerServiceFleetPlacementType.PickAll
                     }
                 },
-                ManagedNamespaceProperties = new ManagedNamespaceProperties
+                ManagedNamespaceProperties = new ContainerServiceFleetManagedNamespaceProperties
                 {
                     DefaultResourceQuota = new ContainerServiceFleetResourceQuota
                     {
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             AutoUpgradeProfileData createAutoUpgradeProfileData = new AutoUpgradeProfileData()
             {
                 Channel = ContainerServiceFleetUpgradeChannel.TargetKubernetesVersion,
-                LongTermSupport = true,
+                IsLongTermSupport = true,
                 TargetKubernetesVersion = "1.30"
             };
             ArmOperation<AutoUpgradeProfileResource> createAutoUpgradeProfileLRO = await autoUpgradeProfileCollection.CreateOrUpdateAsync(WaitUntil.Completed, autoUpgradeProfileName, createAutoUpgradeProfileData, ifMatch: (string)null);

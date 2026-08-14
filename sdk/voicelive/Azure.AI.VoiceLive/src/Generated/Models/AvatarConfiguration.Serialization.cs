@@ -78,10 +78,10 @@ namespace Azure.AI.VoiceLive
             {
                 throw new FormatException($"The model {nameof(AvatarConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(AvatarKind))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(AvatarKind.Value.ToString());
             }
             if (Optional.IsCollectionDefined(IceServers))
             {
@@ -100,10 +100,10 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("style"u8);
                 writer.WriteStringValue(Style);
             }
-            if (Optional.IsDefined(Model))
+            if (Optional.IsDefined(BaseMode))
             {
                 writer.WritePropertyName("model"u8);
-                writer.WriteStringValue(Model.Value.ToString());
+                writer.WriteStringValue(BaseMode.Value.ToString());
             }
             writer.WritePropertyName("customized"u8);
             writer.WriteBooleanValue(Customized);
@@ -122,10 +122,10 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("output_protocol"u8);
                 writer.WriteStringValue(OutputProtocol.Value.ToString());
             }
-            if (Optional.IsDefined(OutputAuditAudio))
+            if (Optional.IsDefined(AuditOutputAudio))
             {
                 writer.WritePropertyName("output_audit_audio"u8);
-                writer.WriteBooleanValue(OutputAuditAudio.Value);
+                writer.WriteBooleanValue(AuditOutputAudio.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -169,16 +169,16 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            AvatarConfigTypes? @type = default;
+            AvatarConfigKind? avatarKind = default;
             IList<IceServer> iceServers = default;
             string character = default;
             string style = default;
-            PhotoAvatarBaseModes? model = default;
+            PhotoAvatarBaseMode? baseMode = default;
             bool customized = default;
             VideoParams video = default;
             SceneParams scene = default;
             AvatarOutputProtocol? outputProtocol = default;
-            bool? outputAuditAudio = default;
+            bool? auditOutputAudio = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -188,7 +188,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    @type = new AvatarConfigTypes(prop.Value.GetString());
+                    avatarKind = new AvatarConfigKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ice_servers"u8))
@@ -221,7 +221,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    model = new PhotoAvatarBaseModes(prop.Value.GetString());
+                    baseMode = new PhotoAvatarBaseMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("customized"u8))
@@ -262,7 +262,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    outputAuditAudio = prop.Value.GetBoolean();
+                    auditOutputAudio = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -271,16 +271,16 @@ namespace Azure.AI.VoiceLive
                 }
             }
             return new AvatarConfiguration(
-                @type,
+                avatarKind,
                 iceServers ?? new ChangeTrackingList<IceServer>(),
                 character,
                 style,
-                model,
+                baseMode,
                 customized,
                 video,
                 scene,
                 outputProtocol,
-                outputAuditAudio,
+                auditOutputAudio,
                 additionalBinaryDataProperties);
         }
     }

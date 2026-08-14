@@ -18,37 +18,56 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of <see cref="SharedGalleryImageVersionData"/>. </summary>
         internal SharedGalleryImageVersionData()
         {
-            ArtifactTags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SharedGalleryImageVersionData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="uniqueId"> The unique id of this shared gallery. </param>
-        /// <param name="publishedOn"> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        /// <param name="endOfLifeOn"> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
-        /// <param name="storageProfile"> Describes the storage profile of the image version. </param>
-        /// <param name="artifactTags"> The artifact tags of a shared gallery resource. </param>
-        internal SharedGalleryImageVersionData(string name, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile, IReadOnlyDictionary<string, string> artifactTags) : base(name, location, serializedAdditionalRawData, uniqueId)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="galleryIdentifier"> The identifier information of shared gallery. </param>
+        /// <param name="properties"> Describes the properties of a gallery image version. </param>
+        internal SharedGalleryImageVersionData(string name, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedGalleryIdentifier galleryIdentifier, SharedGalleryImageVersionProperties properties) : base(name, location, additionalBinaryDataProperties, galleryIdentifier)
         {
-            PublishedOn = publishedOn;
-            EndOfLifeOn = endOfLifeOn;
-            IsExcludedFromLatest = isExcludedFromLatest;
-            StorageProfile = storageProfile;
-            ArtifactTags = artifactTags;
+            Properties = properties;
         }
 
+        /// <summary> Describes the properties of a gallery image version. </summary>
+        internal SharedGalleryImageVersionProperties Properties { get; }
+
         /// <summary> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
-        public DateTimeOffset? PublishedOn { get; }
+        public DateTimeOffset? PublishedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublishedOn;
+            }
+        }
+
         /// <summary> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
-        public DateTimeOffset? EndOfLifeOn { get; }
+        public DateTimeOffset? EndOfLifeOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOfLifeOn;
+            }
+        }
+
         /// <summary> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </summary>
-        public bool? IsExcludedFromLatest { get; }
+        public bool? IsExcludedFromLatest
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsExcludedFromLatest;
+            }
+        }
+
         /// <summary> Describes the storage profile of the image version. </summary>
-        public SharedGalleryImageVersionStorageProfile StorageProfile { get; }
-        /// <summary> The artifact tags of a shared gallery resource. </summary>
-        public IReadOnlyDictionary<string, string> ArtifactTags { get; }
+        public SharedGalleryImageVersionStorageProfile StorageProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageProfile;
+            }
+        }
     }
 }

@@ -7,15 +7,28 @@ using Azure.Provisioning.KeyVault;
 
 namespace Azure.Projects;
 
+/// <summary>
+/// Represents a provisioning feature that emits an Azure KeyVault resource.
+/// </summary>
 public class KeyVaultFeature : AzureProjectFeature
 {
+    /// <summary>
+    /// Gets or sets the SKU for the KeyVault resource.
+    /// </summary>
     public KeyVaultSku Sku { get; set; }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="KeyVaultFeature"/> class with a standard SKU.
+    /// </summary>
     public KeyVaultFeature()
     {
         Sku = new KeyVaultSku { Name = KeyVaultSkuName.Standard, Family = KeyVaultSkuFamily.A };
     }
 
+    /// <summary>
+    /// Emits the provisioning constructs for the KeyVault resource into the specified infrastructure.
+    /// </summary>
+    /// <param name="infrastructure">The project infrastructure to emit constructs into.</param>
     protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         // Add a KeyVault to the infrastructure.

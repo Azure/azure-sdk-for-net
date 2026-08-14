@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ResourceType, out string containerAppJobApiVersion);
             _containerAppJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _containerAppJobsRestClient = new ContainerAppJobs(_containerAppJobsClientDiagnostics, Pipeline, Endpoint, containerAppJobApiVersion ?? "2025-10-02-preview");
+            _containerAppJobsRestClient = new ContainerAppJobs(_containerAppJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppJobApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _containerAppJobsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerAppJobPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<ContainerAppJobResource> operation = new AppContainersArmOperation<ContainerAppJobResource>(
-                    new ContainerAppJobOperationSource(Client),
+                    new ContainerAppJobResourceOperationSource(Client),
                     _containerAppJobsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _containerAppJobsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerAppJobPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<ContainerAppJobResource> operation = new AppContainersArmOperation<ContainerAppJobResource>(
-                    new ContainerAppJobOperationSource(Client),
+                    new ContainerAppJobResourceOperationSource(Client),
                     _containerAppJobsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _containerAppJobsRestClient.CreateResumeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<ContainerAppJobResource> operation = new AppContainersArmOperation<ContainerAppJobResource>(
-                    new ContainerAppJobOperationSource(Client),
+                    new ContainerAppJobResourceOperationSource(Client),
                     _containerAppJobsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _containerAppJobsRestClient.CreateResumeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<ContainerAppJobResource> operation = new AppContainersArmOperation<ContainerAppJobResource>(
-                    new ContainerAppJobOperationSource(Client),
+                    new ContainerAppJobResourceOperationSource(Client),
                     _containerAppJobsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -849,7 +849,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _containerAppJobsRestClient.CreateSuspendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<ContainerAppJobResource> operation = new AppContainersArmOperation<ContainerAppJobResource>(
-                    new ContainerAppJobOperationSource(Client),
+                    new ContainerAppJobResourceOperationSource(Client),
                     _containerAppJobsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -904,7 +904,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _containerAppJobsRestClient.CreateSuspendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<ContainerAppJobResource> operation = new AppContainersArmOperation<ContainerAppJobResource>(
-                    new ContainerAppJobOperationSource(Client),
+                    new ContainerAppJobResourceOperationSource(Client),
                     _containerAppJobsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The input definition information for a Bing custom search tool as used to configure an agent. </summary>
+    [Experimental("AAIP001")]
     public partial class ResponsesBingCustomSearchPreviewTool : ResponsesTool
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesBingCustomSearchPreviewTool"/>. </summary>
@@ -23,21 +25,11 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="ResponsesBingCustomSearchPreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>
-        internal ResponsesBingCustomSearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, ResponsesBingCustomSearchToolParameters bingCustomSearchPreview) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesBingCustomSearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesBingCustomSearchToolParameters bingCustomSearchPreview) : base(@type, additionalBinaryDataProperties)
         {
-            Name = name;
-            Description = description;
             BingCustomSearchPreview = bingCustomSearchPreview;
         }
-
-        /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
-
-        /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
 
         /// <summary> The bing custom search tool parameters. </summary>
         public ResponsesBingCustomSearchToolParameters BingCustomSearchPreview { get; set; }

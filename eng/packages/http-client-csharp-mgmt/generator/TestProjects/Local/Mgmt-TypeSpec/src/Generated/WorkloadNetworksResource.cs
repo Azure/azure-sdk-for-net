@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string workloadNetworksApiVersion);
             _workloadNetworksOpsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _workloadNetworksOpsRestClient = new WorkloadNetworksOps(_workloadNetworksOpsClientDiagnostics, Pipeline, Endpoint, workloadNetworksApiVersion ?? "2024-05-01");
+            _workloadNetworksOpsRestClient = new WorkloadNetworksOps(_workloadNetworksOpsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workloadNetworksApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -338,7 +338,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _workloadNetworksOpsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkloadNetworksData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<WorkloadNetworksResource> operation = new TestsArmOperation<WorkloadNetworksResource>(
-                    new WorkloadNetworksOperationSource(Client),
+                    new WorkloadNetworksResourceOperationSource(Client),
                     _workloadNetworksOpsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -398,7 +398,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _workloadNetworksOpsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkloadNetworksData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<WorkloadNetworksResource> operation = new TestsArmOperation<WorkloadNetworksResource>(
-                    new WorkloadNetworksOperationSource(Client),
+                    new WorkloadNetworksResourceOperationSource(Client),
                     _workloadNetworksOpsClientDiagnostics,
                     Pipeline,
                     message.Request,

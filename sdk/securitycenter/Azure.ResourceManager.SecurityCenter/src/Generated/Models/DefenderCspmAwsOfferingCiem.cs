@@ -10,40 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Defenders CSPM Cloud infrastructure entitlement management (CIEM) offering configurations. </summary>
+    /// <summary> Defenders CSPM Permissions Management offering configurations. </summary>
     public partial class DefenderCspmAwsOfferingCiem
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOfferingCiem"/>. </summary>
         public DefenderCspmAwsOfferingCiem()
@@ -51,31 +22,37 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOfferingCiem"/>. </summary>
-        /// <param name="ciemDiscovery"> Defender CSPM CIEM discovery configuration. </param>
-        /// <param name="ciemOidc"> Defender CSPM CIEM AWS OIDC (open id connect) configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DefenderCspmAwsOfferingCiem(DefenderCspmAwsOfferingCiemDiscovery ciemDiscovery, DefenderCspmAwsOfferingCiemOidc ciemOidc, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="ciemDiscovery"> Defender CSPM Permissions Management discovery configuration. </param>
+        /// <param name="ciemOidc"> AWS Defender CSPM Permissions Management OIDC (open id connect) connection configurations. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DefenderCspmAwsOfferingCiem(DefenderCspmAwsOfferingCiemCiemDiscovery ciemDiscovery, DefenderCspmAwsOfferingCiemCiemOidc ciemOidc, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CiemDiscovery = ciemDiscovery;
             CiemOidc = ciemOidc;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Defender CSPM CIEM discovery configuration. </summary>
-        internal DefenderCspmAwsOfferingCiemDiscovery CiemDiscovery { get; set; }
-        /// <summary> The cloud role ARN in AWS for CIEM discovery. </summary>
+        /// <summary> Defender CSPM Permissions Management discovery configuration. </summary>
+        internal DefenderCspmAwsOfferingCiemCiemDiscovery CiemDiscovery { get; set; }
+
+        /// <summary> AWS Defender CSPM Permissions Management OIDC (open id connect) connection configurations. </summary>
+        public DefenderCspmAwsOfferingCiemCiemOidc CiemOidc { get; set; }
+
+        /// <summary> The cloud role ARN in AWS for Permissions Management discovery. </summary>
         public string CiemDiscoveryCloudRoleArn
         {
-            get => CiemDiscovery is null ? default : CiemDiscovery.CloudRoleArn;
+            get
+            {
+                return CiemDiscovery is null ? default : CiemDiscovery.CloudRoleArn;
+            }
             set
             {
                 if (CiemDiscovery is null)
-                    CiemDiscovery = new DefenderCspmAwsOfferingCiemDiscovery();
+                {
+                    CiemDiscovery = new DefenderCspmAwsOfferingCiemCiemDiscovery();
+                }
                 CiemDiscovery.CloudRoleArn = value;
             }
         }
-
-        /// <summary> Defender CSPM CIEM AWS OIDC (open id connect) configuration. </summary>
-        public DefenderCspmAwsOfferingCiemOidc CiemOidc { get; set; }
     }
 }

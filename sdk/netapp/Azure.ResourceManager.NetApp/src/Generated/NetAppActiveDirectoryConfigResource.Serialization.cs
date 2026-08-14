@@ -5,35 +5,16 @@
 
 #nullable disable
 
-using System;
 using System.ClientModel.Primitives;
-using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary></summary>
-    public partial class NetAppActiveDirectoryConfigResource : IJsonModel<NetAppActiveDirectoryConfigData>
+    public partial class NetAppActiveDirectoryConfigResource : ArmResource, IJsonModel<NetAppActiveDirectoryConfigData>
     {
         private static IJsonModel<NetAppActiveDirectoryConfigData> s_dataDeserializationInstance;
 
         private static IJsonModel<NetAppActiveDirectoryConfigData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetAppActiveDirectoryConfigData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NetAppActiveDirectoryConfigData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppActiveDirectoryConfigData>)Data).Write(writer, options);
-
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NetAppActiveDirectoryConfigData IJsonModel<NetAppActiveDirectoryConfigData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NetAppActiveDirectoryConfigData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppActiveDirectoryConfigData>(Data, options, AzureResourceManagerNetAppContext.Default);
-
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NetAppActiveDirectoryConfigData IPersistableModel<NetAppActiveDirectoryConfigData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppActiveDirectoryConfigData>(data, options, AzureResourceManagerNetAppContext.Default);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NetAppActiveDirectoryConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -10,6 +10,7 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -17,12 +18,91 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 namespace Azure.Generator.Management.Visitors
 {
     /// <summary>
-    /// Repairs hidden model factory compatibility overloads after flattening changes the current model factory shape.
+    /// Repairs model factory constructor calls after visitors change the current model shape.
     /// Used from <see cref="ManagementClientGenerator.GetWriter(TypeProvider)"/> because some compatibility overloads are
     /// synthesized from LastContractView after normal visitors have finished.
     /// </summary>
     internal static class ModelFactoryBackwardCompatHelper
     {
+        internal static void FixModelFactoryConstructorCalls(IReadOnlyList<MethodProvider> methods)
+        {
+            foreach (var method in methods)
+            {
+                if (IsBackwardCompatMethod(method) || method.BodyStatements is null)
+                {
+                    continue;
+                }
+
+                var updatedBodyStatements = new List<MethodBodyStatement>();
+                var bodyUpdated = false;
+                foreach (var statement in method.BodyStatements)
+                {
+                    // Primary factory methods are created before later visitors may reset/reorder model constructors.
+                    // Rebuild direct constructor calls from the method signature so the public factory parameters
+                    // keep flowing into the final constructor slots.
+                    if (statement is ExpressionStatement { Expression: KeywordExpression { Expression: NewInstanceExpression newInstanceExpression } }
+                        && TryRebuildNewInstanceFromMethodSignature(method, newInstanceExpression, out var updatedArguments))
+                    {
+                        updatedBodyStatements.Add(Return(New.Instance(newInstanceExpression.Type!, updatedArguments)));
+                        bodyUpdated = true;
+                    }
+                    else
+                    {
+                        updatedBodyStatements.Add(statement);
+                    }
+                }
+
+                if (bodyUpdated)
+                {
+                    method.Update(signature: method.Signature, bodyStatements: updatedBodyStatements);
+                }
+            }
+        }
+
+        internal static void FixConstructorCalls(IReadOnlyList<MethodProvider> methods)
+        {
+            foreach (var method in methods)
+            {
+                if (method.BodyStatements is null || !method.Signature.Name.StartsWith("Deserialize", StringComparison.Ordinal))
+                {
+                    continue;
+                }
+
+                var updatedBodyStatements = new List<MethodBodyStatement>();
+                var bodyUpdated = false;
+                var unusedLocalVariables = new HashSet<VariableExpression>();
+                foreach (var statement in method.BodyStatements)
+                {
+                    if (statement is ExpressionStatement { Expression: KeywordExpression { Expression: NewInstanceExpression newInstanceExpression } }
+                        && TryRebuildNewInstanceFromNamedArguments(newInstanceExpression, out var updatedArguments, out var unusedArguments))
+                    {
+                        foreach (var unusedArgument in unusedArguments)
+                        {
+                            if (unusedArgument is VariableExpression unusedVariable)
+                            {
+                                unusedLocalVariables.Add(unusedVariable);
+                            }
+                        }
+                        updatedBodyStatements.Add(Return(New.Instance(newInstanceExpression.Type!, updatedArguments)));
+                        bodyUpdated = true;
+                    }
+                    else
+                    {
+                        updatedBodyStatements.Add(statement);
+                    }
+                }
+
+                if (bodyUpdated)
+                {
+                    if (unusedLocalVariables.Count > 0)
+                    {
+                        updatedBodyStatements.RemoveAll(statement => IsUnusedLocalDeclaration(statement, unusedLocalVariables));
+                    }
+                    method.Update(signature: method.Signature, bodyStatements: updatedBodyStatements);
+                }
+            }
+        }
+
         /// <summary>
         /// Updates hidden compatibility overload bodies so old parameters still flow into the current flattened model shape.
         /// Input is the complete model factory method list; output is in-place method body updates for repairable overloads.
@@ -65,10 +145,16 @@ namespace Azure.Generator.Management.Visitors
                         bodyUpdated = true;
                     }
                     else if (statement is ExpressionStatement { Expression: KeywordExpression { Expression: NewInstanceExpression newInstanceExpression } }
-                        && TryUpdateNewInstanceArguments(method, newInstanceExpression, out var updatedArguments, out var matchedParameters))
+                        && TryRebuildNewInstanceFromMethodSignature(method, newInstanceExpression, out var rebuiltArguments))
                     {
-                        updatedBodyStatements.RemoveAll(s => IsNullCoalescingAssignmentToMatchedParameter(s, matchedParameters, newInstanceExpression.Parameters));
-                        updatedBodyStatements.Add(Return(New.Instance(newInstanceExpression.Type!, updatedArguments)));
+                        updatedBodyStatements.Add(Return(New.Instance(newInstanceExpression.Type!, rebuiltArguments)));
+                        bodyUpdated = true;
+                    }
+                    else if (statement is ExpressionStatement { Expression: KeywordExpression { Expression: NewInstanceExpression fallbackNewInstanceExpression } }
+                        && TryUpdateNewInstanceArguments(method, fallbackNewInstanceExpression, out var updatedArguments, out var matchedParameters))
+                    {
+                        updatedBodyStatements.RemoveAll(s => IsNullCoalescingAssignmentToMatchedParameter(s, matchedParameters, fallbackNewInstanceExpression.Parameters));
+                        updatedBodyStatements.Add(Return(New.Instance(fallbackNewInstanceExpression.Type!, updatedArguments)));
                         bodyUpdated = true;
                     }
                     else
@@ -84,6 +170,54 @@ namespace Azure.Generator.Management.Visitors
             }
         }
 
+        private static bool TryRebuildNewInstanceFromMethodSignature(
+            MethodProvider method,
+            NewInstanceExpression newInstanceExpression,
+            [NotNullWhen(true)] out IReadOnlyList<ValueExpression>? updatedArguments)
+        {
+            updatedArguments = null;
+            if (newInstanceExpression.Type is null || !TryGetModelProvider(newInstanceExpression.Type, out var modelProvider))
+            {
+                return false;
+            }
+
+            var constructorParameters = modelProvider.FullConstructor.Signature.Parameters;
+            if (constructorParameters.Count == newInstanceExpression.Parameters.Count
+                && HasNamedArgumentMismatchingFullConstructor(newInstanceExpression.Parameters, constructorParameters))
+            {
+                // Named arguments targeting a different constructor shape usually mean custom code is involved.
+                // Leave those calls untouched rather than guessing and potentially corrupting custom factories.
+                return false;
+            }
+
+            var arguments = new List<ValueExpression>(constructorParameters.Count);
+            var changed = constructorParameters.Count != newInstanceExpression.Parameters.Count;
+            var unavailableDirectParameterNames = GetUnavailableDirectParameterNames(method, constructorParameters, newInstanceExpression.Parameters);
+            foreach (var constructorParameter in constructorParameters)
+            {
+                if (TryBuildCompatibilityArgument(method, constructorParameter, unavailableDirectParameterNames, out var argument))
+                {
+                    arguments.Add(argument.Argument);
+                    var index = arguments.Count - 1;
+                    if (!changed && !ReferenceEquals(argument.Argument, newInstanceExpression.Parameters[index]))
+                    {
+                        changed = true;
+                    }
+                }
+                else
+                {
+                    arguments.Add(GetDefaultArgument(constructorParameter));
+                    var index = arguments.Count - 1;
+                    if (!changed && !IsDefaultExpression(newInstanceExpression.Parameters[index]))
+                    {
+                        changed = true;
+                    }
+                }
+            }
+            updatedArguments = changed ? arguments : null;
+            return changed;
+        }
+
         /// <summary>
         /// Returns true when a method is a hidden backward-compatibility overload.
         /// Input is a method provider; output is whether it has <see cref="System.ComponentModel.EditorBrowsableAttribute"/>.
@@ -93,6 +227,61 @@ namespace Azure.Generator.Management.Visitors
         {
             return method.Signature.Attributes.Any(a =>
                 a.Type is { IsFrameworkType: true } && a.Type.FrameworkType == typeof(System.ComponentModel.EditorBrowsableAttribute));
+        }
+
+        internal static bool TryCreateBackwardCompatMethod(MethodProvider method, TypeProvider enclosingType, [NotNullWhen(true)] out MethodProvider? updatedMethod)
+        {
+            updatedMethod = null;
+            if (method.Signature.ReturnType is null || !TryGetModelProvider(method.Signature.ReturnType, out var modelProvider))
+            {
+                return false;
+            }
+
+            var constructorParameters = modelProvider.FullConstructor.Signature.Parameters;
+            var directParameterNames = constructorParameters
+                .Where(parameter => TryGetMethodParameter(method, parameter.Name, parameter.Type, parameter.Property, out _))
+                .Select(parameter => parameter.Name)
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+            var arguments = new List<ValueExpression>(constructorParameters.Count);
+            foreach (var constructorParameter in constructorParameters)
+            {
+                if (TryBuildCompatibilityArgument(method, constructorParameter, directParameterNames, out var argument))
+                {
+                    arguments.Add(argument.Argument);
+                }
+                else
+                {
+                    arguments.Add(GetDefaultArgument(constructorParameter));
+                }
+            }
+
+            updatedMethod = new MethodProvider(
+                CreateBackwardCompatSignature(method.Signature),
+                Return(New.Instance(method.Signature.ReturnType, arguments)),
+                enclosingType);
+            return true;
+        }
+
+        private static MethodSignature CreateBackwardCompatSignature(MethodSignature signature)
+        {
+            var attributes = signature.Attributes.Any(attribute =>
+                attribute.Type is { IsFrameworkType: true } && attribute.Type.FrameworkType == typeof(EditorBrowsableAttribute))
+                    ? signature.Attributes
+                    : [.. signature.Attributes, new AttributeStatement(typeof(EditorBrowsableAttribute), FrameworkEnumValue(EditorBrowsableState.Never))];
+
+            return new MethodSignature(
+                signature.Name,
+                signature.Description,
+                signature.Modifiers,
+                signature.ReturnType,
+                signature.ReturnDescription,
+                signature.Parameters,
+                attributes,
+                signature.GenericArguments,
+                signature.GenericParameterConstraints,
+                signature.ExplicitInterface,
+                signature.NonDocumentComment);
         }
 
         /// <summary>
@@ -151,7 +340,7 @@ namespace Azure.Generator.Management.Visitors
                 {
                     // Parameters added after the old overload was generated must remain defaulted, but we emit them as
                     // named positional references so the generated call remains stable if later parameters move again.
-                    newArgs.Add(Snippet.PositionalReference(primaryParams[i], primaryParams[i].DefaultValue ?? Default));
+                    newArgs.Add(Snippet.PositionalReference(primaryParams[i], GetDefaultArgument(primaryParams[i])));
                     changed = true;
                 }
             }
@@ -278,7 +467,7 @@ namespace Azure.Generator.Management.Visitors
             var result = GetParameterNamesUsedByOriginalArguments(method.Signature.Parameters, originalArguments);
             foreach (var constructorParameter in constructorParameters)
             {
-                if (TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type, out _))
+                if (TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type, constructorParameter.Property, out _))
                 {
                     result.Add(constructorParameter.Name);
                 }
@@ -309,9 +498,99 @@ namespace Azure.Generator.Management.Visitors
                     || invoke.Arguments.Any(argument => ReferencesParameter(argument, parameter)),
                 NewInstanceExpression newInstance => newInstance.Parameters.Any(argument => ReferencesParameter(argument, parameter)),
                 BinaryOperatorExpression binary => ReferencesParameter(binary.Left, parameter) || ReferencesParameter(binary.Right, parameter),
+                KeywordExpression keyword => keyword.Expression is not null && ReferencesParameter(keyword.Expression, parameter),
+                AssignmentExpression assignment => ReferencesParameter(assignment.Variable, parameter)
+                    || (assignment.Value is not null && ReferencesParameter(assignment.Value, parameter)),
                 _ => false
             };
         }
+
+        private static bool ReferencesParameter(MethodBodyStatement statement, ParameterProvider parameter)
+            => statement switch
+            {
+                ExpressionStatement { Expression: var expression } => ReferencesParameter(expression, parameter),
+                _ => false
+            };
+
+        private static bool IsUnusedLocalDeclaration(MethodBodyStatement statement, IReadOnlySet<VariableExpression> unusedLocalVariables)
+            => statement is ExpressionStatement { Expression: AssignmentExpression { Variable: DeclarationExpression declaration } }
+                && unusedLocalVariables.Contains(declaration.Variable);
+
+        private static bool TryRebuildNewInstanceFromNamedArguments(
+            NewInstanceExpression newInstanceExpression,
+            [NotNullWhen(true)] out IReadOnlyList<ValueExpression>? updatedArguments,
+            out IReadOnlyList<ValueExpression> unusedArguments)
+        {
+            updatedArguments = null;
+            unusedArguments = [];
+            if (newInstanceExpression.Type is null || !TryGetModelProvider(newInstanceExpression.Type, out var modelProvider))
+            {
+                return false;
+            }
+
+            var constructorParameters = modelProvider.FullConstructor.Signature.Parameters;
+            var argumentsByName = new Dictionary<string, ValueExpression>(StringComparer.Ordinal);
+            foreach (var argument in newInstanceExpression.Parameters)
+            {
+                if (!TryGetArgumentName(argument, out var argumentName))
+                {
+                    return false;
+                }
+
+                // Serialization bodies can be built before inherited duplicate properties are removed from the final
+                // constructor. Keep the first matching local for the current constructor slot and let stale duplicates drop.
+                argumentsByName.TryAdd(argumentName, argument);
+            }
+
+            var arguments = new List<ValueExpression>(constructorParameters.Count);
+            var usedArguments = new HashSet<ValueExpression>();
+            var changed = constructorParameters.Count != newInstanceExpression.Parameters.Count;
+            foreach (var constructorParameter in constructorParameters)
+            {
+                if (argumentsByName.TryGetValue(constructorParameter.Name, out var argument))
+                {
+                    arguments.Add(argument);
+                    usedArguments.Add(argument);
+                    var index = arguments.Count - 1;
+                    if (!changed && !ReferenceEquals(argument, newInstanceExpression.Parameters[index]))
+                    {
+                        changed = true;
+                    }
+                }
+                else
+                {
+                    arguments.Add(GetDefaultArgument(constructorParameter));
+                    changed = true;
+                }
+            }
+
+            unusedArguments = newInstanceExpression.Parameters.Where(argument => !usedArguments.Contains(argument)).ToArray();
+            updatedArguments = changed ? arguments : null;
+            return changed;
+        }
+
+        private static bool TryGetArgumentName(ValueExpression argument, [NotNullWhen(true)] out string? name)
+        {
+            switch (argument)
+            {
+                case VariableExpression variable:
+                    name = variable.Declaration.RequestedName;
+                    return true;
+                case PositionalParameterReferenceExpression positional:
+                    name = positional.ParameterName;
+                    return true;
+                case BinaryOperatorExpression binary:
+                    return TryGetArgumentName(binary.Left, out name);
+                default:
+                    name = null;
+                    return false;
+            }
+        }
+
+        private static ValueExpression GetDefaultArgument(ParameterProvider parameter)
+            // Emit typed defaults when a parameter has no explicit default. Bare `default` can become ambiguous
+            // when a generated model exposes multiple constructors with the same arity.
+            => parameter.DefaultValue ?? Default.CastTo(parameter.Type);
 
         private static bool TryBuildCompatibilityArgument(
             MethodProvider method,
@@ -321,7 +600,7 @@ namespace Azure.Generator.Management.Visitors
         {
             // Direct matching is only safe for the constructor slot currently being repaired. Recursive nested
             // resolution uses combined/contextual names to avoid stealing outer parameters with the same name.
-            if (TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type, out var directParameter))
+            if (TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type, constructorParameter.Property, out var directParameter))
             {
                 argument = new CompatibilityArgument(BuildParameterArgument(directParameter, constructorParameter.Type), [directParameter]);
                 return true;
@@ -381,7 +660,7 @@ namespace Azure.Generator.Management.Visitors
                 }
                 else
                 {
-                    nestedArguments.Add(nestedParameter.DefaultValue ?? Default);
+                    nestedArguments.Add(GetDefaultArgument(nestedParameter));
                 }
             }
 
@@ -423,7 +702,7 @@ namespace Azure.Generator.Management.Visitors
             if (parentProperty is not null && nestedParameter.Property is not null)
             {
                 var combinedName = PropertyHelpers.GetCombinedPropertyName(nestedParameter.Property, parentProperty).ToVariableName();
-                if (TryGetMethodParameter(method, combinedName, nestedParameter.Type, out var combinedParameter))
+                if (TryGetMethodParameter(method, combinedName, nestedParameter.Type, nestedParameter.Property, out var combinedParameter))
                 {
                     argument = new CompatibilityArgument(BuildParameterArgument(combinedParameter, nestedParameter.Type), [combinedParameter]);
                     return true;
@@ -444,7 +723,7 @@ namespace Azure.Generator.Management.Visitors
             // Fall back to the nested parameter's own name when it is not already consumed by an original non-default
             // constructor argument or exposed as a current top-level constructor parameter. Reusing such a parameter is
             // ambiguous because it likely belongs to that original slot.
-            if (TryGetMethodParameter(method, nestedParameter.Name, nestedParameter.Type, out var directParameter)
+            if (TryGetMethodParameter(method, nestedParameter.Name, nestedParameter.Type, nestedParameter.Property, out var directParameter)
                 && !unavailableDirectParameterNames.Contains(directParameter.Name))
             {
                 argument = new CompatibilityArgument(BuildParameterArgument(directParameter, nestedParameter.Type), [directParameter]);
@@ -459,11 +738,24 @@ namespace Azure.Generator.Management.Visitors
         /// Inputs are the old method, expected parameter name, and expected type; output is the matching parameter.
         /// Used whenever direct or nested compatibility repair needs to reuse an existing old overload argument.
         /// </summary>
-        private static bool TryGetMethodParameter(MethodProvider method, string name, CSharpType expectedType, [NotNullWhen(true)] out ParameterProvider? parameter)
+        private static bool TryGetMethodParameter(
+            MethodProvider method,
+            string name,
+            CSharpType expectedType,
+            PropertyProvider? expectedProperty,
+            [NotNullWhen(true)] out ParameterProvider? parameter)
         {
-            parameter = method.Signature.Parameters.SingleOrDefault(p =>
+            var matches = method.Signature.Parameters.Where(p =>
                 string.Equals(p.Name, name, StringComparison.OrdinalIgnoreCase)
-                && AreCompatibleParameterTypes(p.Type, expectedType));
+                && AreCompatibleParameterTypes(p.Type, expectedType)).ToArray();
+            if (matches.Length > 1 && expectedProperty is not null)
+            {
+                // Some generated factory methods can temporarily contain duplicate semantic parameter names before
+                // the writer disambiguates them. Prefer the parameter from the same source property when available.
+                matches = matches.Where(p => ReferenceEquals(p.Property, expectedProperty)).ToArray();
+            }
+
+            parameter = matches.Length == 1 ? matches[0] : null;
             return parameter is not null;
         }
 
@@ -578,6 +870,31 @@ namespace Azure.Generator.Management.Visitors
             {
                 modelProvider = model;
                 return true;
+            }
+            foreach (var mappedProvider in ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.Values)
+            {
+                if (mappedProvider is ModelProvider mappedModel && mappedModel.Type.AreNamesEqual(type))
+                {
+                    modelProvider = mappedModel;
+                    return true;
+                }
+            }
+            foreach (var inputModel in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
+            {
+                if (ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel) is { } inputModelProvider
+                    && inputModelProvider.Type.AreNamesEqual(type))
+                {
+                    modelProvider = inputModelProvider;
+                    return true;
+                }
+            }
+            foreach (var outputModel in ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ModelProvider>())
+            {
+                if (outputModel.Type.AreNamesEqual(type))
+                {
+                    modelProvider = outputModel;
+                    return true;
+                }
             }
             modelProvider = null;
             return false;

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Samples
             ApplicationGatewayWafDynamicManifestCollection collection = subscriptionResource.GetApplicationGatewayWafDynamicManifests(location);
 
             // invoke the operation
-            ApplicationGatewayWafDynamicManifestResource result = await collection.GetAsync();
+            ApplicationGatewayWafDynamicManifestResource result = await collection.GetAsync("default");
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network.Samples
             ApplicationGatewayWafDynamicManifestCollection collection = subscriptionResource.GetApplicationGatewayWafDynamicManifests(location);
 
             // invoke the operation
-            bool result = await collection.ExistsAsync();
+            bool result = await collection.ExistsAsync("default");
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Network.Samples
             ApplicationGatewayWafDynamicManifestCollection collection = subscriptionResource.GetApplicationGatewayWafDynamicManifests(location);
 
             // invoke the operation
-            NullableResponse<ApplicationGatewayWafDynamicManifestResource> response = await collection.GetIfExistsAsync();
+            NullableResponse<ApplicationGatewayWafDynamicManifestResource> response = await collection.GetIfExistsAsync("default");
             ApplicationGatewayWafDynamicManifestResource result = response.HasValue ? response.Value : null;
 
             if (result == null)

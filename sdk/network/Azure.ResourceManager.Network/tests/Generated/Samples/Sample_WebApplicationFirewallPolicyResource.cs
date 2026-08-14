@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             WebApplicationFirewallPolicyResource webApplicationFirewallPolicy = client.GetWebApplicationFirewallPolicyResource(webApplicationFirewallPolicyResourceId);
 
             // invoke the operation
-            await webApplicationFirewallPolicy.DeleteAsync(WaitUntil.Completed);
+            await webApplicationFirewallPolicy.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -123,7 +123,6 @@ Selector = null,
 }, WebApplicationFirewallOperator.IPMatch, new string[]{"192.168.1.0/24", "10.0.0.0/24"})
 }, WebApplicationFirewallAction.Block)
 {
-Name = "Rule1",
 }, new WebApplicationFirewallCustomRule(2, WebApplicationFirewallRuleType.MatchRule, new MatchCondition[]
 {
 new MatchCondition(new MatchVariable[]
@@ -142,7 +141,6 @@ Selector = "UserAgent",
 }, WebApplicationFirewallOperator.Contains, new string[]{"Windows"})
 }, WebApplicationFirewallAction.Block)
 {
-Name = "Rule2",
 }, new WebApplicationFirewallCustomRule(3, WebApplicationFirewallRuleType.RateLimitRule, new MatchCondition[]
 {
 new MatchCondition(new MatchVariable[]
@@ -157,7 +155,6 @@ NegationConditon = true,
 }
 }, WebApplicationFirewallAction.Block)
 {
-Name = "RateLimitRule3",
 RateLimitDuration = ApplicationGatewayFirewallRateLimitDuration.OneMin,
 RateLimitThreshold = 10,
 GroupByUserSession = {new GroupByUserSession(new GroupByVariable[]
@@ -182,7 +179,6 @@ Selector = "UserAgent",
 }, WebApplicationFirewallOperator.Contains, new string[]{"Bot"})
 }, WebApplicationFirewallAction.JSChallenge)
 {
-Name = "Rule4",
 }, new WebApplicationFirewallCustomRule(5, WebApplicationFirewallRuleType.MatchRule, new MatchCondition[]
 {
 new MatchCondition(new MatchVariable[]
@@ -207,7 +203,6 @@ NegationConditon = false,
 }
 }, WebApplicationFirewallAction.Captcha)
 {
-Name = "Rule5",
 State = WebApplicationFirewallState.Enabled,
 }},
                 ManagedRules = new ManagedRulesDefinition(new ManagedRuleSet[]
@@ -299,7 +294,7 @@ RuleGroups = {},
                 },
                 Location = new AzureLocation("WestUs"),
             };
-            ArmOperation<WebApplicationFirewallPolicyResource> lro = await webApplicationFirewallPolicy.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<WebApplicationFirewallPolicyResource> lro = await webApplicationFirewallPolicy.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             WebApplicationFirewallPolicyResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
