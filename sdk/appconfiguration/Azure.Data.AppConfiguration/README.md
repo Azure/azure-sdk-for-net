@@ -117,7 +117,7 @@ The following sections provide several code snippets covering some of the most c
 * [Retrieve a Feature Flag](#retrieve-a-feature-flag)
 * [Retrieve all Feature Flags](#retrieve-all-feature-flags)
 * [Delete a Feature Flag](#delete-a-feature-flag)
-* [Retrieve labels by resource type](#retrieve-labels-by-resource-type)
+* [Retrieve labels by resource type](#retrieve-feature-flag-labels)
 
 ### Create a Configuration Setting
 
