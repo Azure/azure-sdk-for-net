@@ -559,6 +559,42 @@ ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell 
 Console.WriteLine(response.GetOutputText());
 ```
 
+Hosted agent responses can be isolated per delegated user by sending the `x-ms-user-identity` header. To attribute responses to a specific identity, configure the response client with a policy that adds this header to each request.
+
+Create the policy, adding headers:
+
+```C# Snippet:Sample_IdentityHeader_HostedAgentIdentityIsolation
+internal class UserIdentityHeaderPolicy(string userIdentity) : PipelinePolicy
+{
+    private const string _imageDeploymentHeader = "x-ms-user-identity";
+
+    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+    {
+        message.Request.Headers.Add(_imageDeploymentHeader, userIdentity);
+        ProcessNext(message, pipeline, currentIndex);
+    }
+
+    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+    {
+        // Add your desired header name and value
+        message.Request.Headers.Add(_imageDeploymentHeader, userIdentity);
+        await ProcessNextAsync(message, pipeline, currentIndex);
+    }
+}
+```
+
+Get the response for specific user identity:
+
+```C# Snippet:Sample_GetResponseFromAgentEndpointUser1_HostedAgentIdentityIsolation_Async
+string userID1 = Guid.NewGuid().ToString();
+string userID2 = Guid.NewGuid().ToString();
+ProjectOpenAIClientOptions options = new();
+options.AddPolicy(new UserIdentityHeaderPolicy(userID1), PipelinePosition.PerCall);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: options);
+ResponseResult response = await responseClient.CreateResponseAsync("1 + 1 = ?");
+Console.WriteLine(response.GetOutputText());
+```
+
 
 ### Structured Output
 
