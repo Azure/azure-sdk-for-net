@@ -44,6 +44,20 @@ namespace Azure.Messaging.ServiceBus.Tests
             yield return new object[] { new HttpRequestException("dummy", new IOException()) };
             yield return new object[] { new AggregateException(new WebSocketException("dummy", new IOException())) };
 
+            // Mid-stream transport failures with a transient socket error stay retriable.  This chain has no
+            // HttpRequestException layer, which matches what ManagedWebSocket produces.
+
+            yield return new object[] { new WebSocketException("dummy", new IOException("dummy", new SocketException((int)SocketError.ConnectionReset))) };
+
+            // The same transient socket error stays retriable at the minimal depth of a single IOException wrapper.
+
+            yield return new object[] { new IOException("dummy", new SocketException((int)SocketError.ConnectionReset)) };
+
+            // An IOException with a non-socket inner exception keeps its own retriable classification.  FormatException
+            // is non-retriable on its own, so this case fails if IOException is ever unwrapped unconditionally.
+
+            yield return new object[] { new IOException("dummy", new FormatException()) };
+
             // Task/Operation Canceled should use the inner exception as the decision point.
 
             yield return new object[] { new TaskCanceledException("dummy", new ServiceBusException(true, null)) };
@@ -84,6 +98,20 @@ namespace Azure.Messaging.ServiceBus.Tests
             yield return new object[] { new WebSocketException("dummy", new HttpRequestException("dummy", new SocketException((int)SocketError.HostNotFound))) };
             yield return new object[] { new WebSocketException("dummy") };
             yield return new object[] { new HttpRequestException("dummy") };
+
+            // Mid-stream transport failures with a terminal socket error must stay non-retriable.  ManagedWebSocket
+            // wraps the stream IOException directly, so this chain has no HttpRequestException layer.
+
+            yield return new object[] { new WebSocketException("dummy", new IOException("dummy", new SocketException((int)SocketError.HostUnreachable))) };
+
+            // NetworkStream and SslStream produce this minimal shape, with no WebSocketException wrapper around it.
+
+            yield return new object[] { new IOException("dummy", new SocketException((int)SocketError.HostUnreachable)) };
+
+            // This case is a classifier contract case, not a chain that the runtime produces.  It pins the promise
+            // that a terminal socket error stays terminal at each supported depth.
+
+            yield return new object[] { new WebSocketException("dummy", new HttpRequestException("dummy", new IOException("dummy", new SocketException((int)SocketError.HostNotFound)))) };
 
             // Task/Operation Canceled should use the inner exception as the decision point.
 
