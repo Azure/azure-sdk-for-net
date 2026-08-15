@@ -61,22 +61,64 @@ import { resolveArmResources } from "./resolve-arm-resources-converter.js";
 import { AzureMgmtEmitterOptions } from "./options.js";
 import { getAllSdkClients, traverseClient } from "./sdk-client-utils.js";
 import { $lib } from "./lib/lib.js";
+import { ArmProviderSchemaSnapshots } from "./arm-provider-schema-snapshot.js";
+
+export interface ArmProviderSchemaUpdateResult extends ArmProviderSchemaSnapshots {
+  selected: ArmProviderSchema;
+}
 
 export function updateClients(
   codeModel: CodeModel,
   sdkContext: CSharpEmitterContext,
   options: AzureMgmtEmitterOptions
+): ArmProviderSchemaUpdateResult {
+  const legacy = buildArmProviderSchema(sdkContext, codeModel);
+  const resolveArmResourcesSchema = filterArmProviderSchemaToTcgcOutput(
+    resolveArmResources(sdkContext.program, sdkContext),
+    codeModel
+  );
+  const selected =
+    options?.["use-legacy-resource-detection"] === false
+      ? resolveArmResourcesSchema
+      : legacy;
+
+  applyArmProviderSchemaDecorator(codeModel, selected);
+  return {
+    legacy,
+    resolveArmResources: resolveArmResourcesSchema,
+    selected
+  };
+}
+
+export function filterArmProviderSchemaToTcgcOutput(
+  schema: ArmProviderSchema,
+  codeModel: CodeModel
 ): ArmProviderSchema {
-  let armProviderSchema: ArmProviderSchema;
+  const tcgcModelIds = new Set(
+    codeModel.models.map((model) => model.crossLanguageDefinitionId)
+  );
+  const tcgcMethodIds = new Set(
+    getAllClients(codeModel).flatMap((client) =>
+      client.methods.map((method) => method.crossLanguageDefinitionId)
+    )
+  );
 
-  if (options?.["use-legacy-resource-detection"] === false) {
-    armProviderSchema = resolveArmResources(sdkContext.program, sdkContext);
-  } else {
-    armProviderSchema = buildArmProviderSchema(sdkContext, codeModel);
-  }
-
-  applyArmProviderSchemaDecorator(codeModel, armProviderSchema);
-  return armProviderSchema;
+  return {
+    resources: schema.resources
+      .filter((resource) => tcgcModelIds.has(resource.resourceModelId))
+      .map((resource) => ({
+        ...resource,
+        metadata: {
+          ...resource.metadata,
+          methods: resource.metadata.methods.filter((method) =>
+            tcgcMethodIds.has(method.methodId)
+          )
+        }
+      })),
+    nonResourceMethods: schema.nonResourceMethods.filter((method) =>
+      tcgcMethodIds.has(method.methodId)
+    )
+  };
 }
 
 /**
@@ -527,11 +569,11 @@ function assignRemainingOperations(
       const scope = buildScopeInfoFromPath(operationPath);
       const isCollectionAction = isResourceCollectionAction(sdkMethod);
       const target = isCollectionAction
-        ? findCollectionActionTargetResource(
+        ? (findCollectionActionTargetResource(
             resources,
             operationPath,
             actionTarget
-          ) ?? actionTarget
+          ) ?? actionTarget)
         : actionTarget;
       target.metadata.methods.push({
         methodId,

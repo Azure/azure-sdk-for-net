@@ -1,0 +1,85 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.AlertsManagement.TenantActivityLogAlertResource",
+      "resourceIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.AlertsManagement/tenantActivityLogAlerts/{alertRuleName}",
+      "resourceType": "Microsoft.AlertsManagement/tenantActivityLogAlerts",
+      "methods": [
+        {
+          "methodId": "Microsoft.AlertsManagement.TenantActivityLogAlertResources.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.AlertsManagement/tenantActivityLogAlerts/{alertRuleName}",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.AlertsManagement/tenantActivityLogAlerts/{alertRuleName}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AlertsManagement.TenantActivityLogAlertResources.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.AlertsManagement/tenantActivityLogAlerts/{alertRuleName}",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.AlertsManagement/tenantActivityLogAlerts/{alertRuleName}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AlertsManagement.TenantActivityLogAlertResources.update",
+          "kind": "Update",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.AlertsManagement/tenantActivityLogAlerts/{alertRuleName}",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.AlertsManagement/tenantActivityLogAlerts/{alertRuleName}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AlertsManagement.TenantActivityLogAlertResources.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.AlertsManagement/tenantActivityLogAlerts/{alertRuleName}",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.AlertsManagement/tenantActivityLogAlerts/{alertRuleName}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AlertsManagement.TenantActivityLogAlertResources.listByManagementGroup",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.AlertsManagement/tenantActivityLogAlerts",
+          "scope": {
+            "kind": "ManagementGroup",
+            "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupName}",
+            "scopeResourceType": "Microsoft.Management/managementGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AlertsManagement.TenantActivityLogAlertResources.listByTenant",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.AlertsManagement/tenantActivityLogAlerts",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ManagementGroup",
+        "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupName}",
+        "scopeResourceType": "Microsoft.Management/managementGroups"
+      },
+      "resourceName": "ManagementGroupTenantActivityLogAlertResource",
+      "nameConstraints": {
+        "pattern": "^[-\\w\\._\\(\\)]+$"
+      },
+      "apiVersions": [
+        "2023-04-01-preview"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": []
+}
