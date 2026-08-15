@@ -448,10 +448,10 @@ if ($BaselineApiFilePath -and
         if ($optionalToRequired.Count -gt 0) {
             $parameterNames = ($optionalToRequired | ForEach-Object { "'$_'" }) -join ', '
             $violations.Add([NamingViolation]::new(
-                'OPTPARAM001', 'Error', 'Source Compatibility',
+                'OPTPARAM001', 'Warning', 'Source Compatibility Candidate',
                 $currentMethod.TypeName, $currentMethod.MemberName,
-                "Parameter(s) $parameterNames changed from optional to required on '$($currentMethod.MemberName)'. ApiCompat does not report this binary-compatible source break.",
-                "Restore the optional defaults from the stable API baseline.",
+                "Parameter(s) $parameterNames changed from optional to required on '$($currentMethod.MemberName)'. Review the complete overload set because another overload may preserve the stable call forms.",
+                "Treat this as blocking only after demonstrating a stable call that no longer compiles or becomes ambiguous; do not restore defaults that create overload ambiguity.",
                 $currentMethod.Line
             ))
         }
@@ -459,10 +459,10 @@ if ($BaselineApiFilePath -and
         if ($requiredToOptional.Count -gt 0) {
             $parameterNames = ($requiredToOptional | ForEach-Object { "'$_'" }) -join ', '
             $violations.Add([NamingViolation]::new(
-                'OPTPARAM002', 'Error', 'Source Compatibility',
+                'OPTPARAM002', 'Warning', 'Source Compatibility Candidate',
                 $currentMethod.TypeName, $currentMethod.MemberName,
-                "Parameter(s) $parameterNames changed from required to optional on '$($currentMethod.MemberName)'. This can introduce overload ambiguity that ApiCompat does not detect.",
-                "Remove the default values and preserve the stable API signature.",
+                "Parameter(s) $parameterNames changed from required to optional on '$($currentMethod.MemberName)'. Review the complete overload set because the change may introduce ambiguity or may be harmless.",
+                "Treat this as blocking only after demonstrating a stable call that becomes ambiguous or binds differently.",
                 $currentMethod.Line
             ))
         }
