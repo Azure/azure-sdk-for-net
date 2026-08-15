@@ -8,7 +8,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.Memory;
 
 namespace Azure.AI.Projects
 {
@@ -452,48 +451,6 @@ namespace Azure.AI.Projects
             }
         }
 
-        /// <summary> Returns the routines available in the current project. </summary>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit"> The maximum number of routines to return. </param>
-        /// <param name="after"> An opaque continuation token identifying where to resume the list. Prefer following the `next_link` returned by the previous response, which embeds this value. </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual CollectionResult<ProjectsRoutine> GetRoutines(FoundryFeaturesOptInKeys? foundryFeatures = default, int? limit = default, string after = default, MemoryStoreListOrder? order = default, CancellationToken cancellationToken = default)
-        {
-            return new AIProjectRoutinesGetRoutinesCollectionResultOfT(
-                this,
-                foundryFeatures?.ToSerialString(),
-                limit,
-                after,
-                order?.ToString(),
-                cancellationToken.ToRequestOptions());
-        }
-
-        /// <summary> Returns the routines available in the current project. </summary>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit"> The maximum number of routines to return. </param>
-        /// <param name="after"> An opaque continuation token identifying where to resume the list. Prefer following the `next_link` returned by the previous response, which embeds this value. </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual AsyncCollectionResult<ProjectsRoutine> GetRoutinesAsync(FoundryFeaturesOptInKeys? foundryFeatures = default, int? limit = default, string after = default, MemoryStoreListOrder? order = default, CancellationToken cancellationToken = default)
-        {
-            return new AIProjectRoutinesGetRoutinesAsyncCollectionResultOfT(
-                this,
-                foundryFeatures?.ToSerialString(),
-                limit,
-                after,
-                order?.ToString(),
-                cancellationToken.ToRequestOptions());
-        }
-
         /// <summary>
         /// [Protocol Method] Deletes the specified routine.
         /// <list type="bullet">
@@ -656,56 +613,6 @@ namespace Azure.AI.Projects
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Returns prior runs recorded for the specified routine. </summary>
-        /// <param name="routineName"> The unique name of the routine. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="filter"> An optional MLflow search-runs filter expression applied within the routine's experiment. </param>
-        /// <param name="limit"> The maximum number of runs to return. </param>
-        /// <param name="after"> An opaque continuation token identifying where to resume the list. Prefer following the `next_link` returned by the previous response, which embeds this value. </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual CollectionResult<RoutineRun> GetRoutineRuns(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, string filter = default, int? limit = default, string after = default, MemoryStoreListOrder? order = default, CancellationToken cancellationToken = default)
-        {
-            return new AIProjectRoutinesGetRoutineRunsCollectionResultOfT(
-                this,
-                routineName,
-                foundryFeatures?.ToSerialString(),
-                filter,
-                limit,
-                after,
-                order?.ToString(),
-                cancellationToken.ToRequestOptions());
-        }
-
-        /// <summary> Returns prior runs recorded for the specified routine. </summary>
-        /// <param name="routineName"> The unique name of the routine. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="filter"> An optional MLflow search-runs filter expression applied within the routine's experiment. </param>
-        /// <param name="limit"> The maximum number of runs to return. </param>
-        /// <param name="after"> An opaque continuation token identifying where to resume the list. Prefer following the `next_link` returned by the previous response, which embeds this value. </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual AsyncCollectionResult<RoutineRun> GetRoutineRunsAsync(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, string filter = default, int? limit = default, string after = default, MemoryStoreListOrder? order = default, CancellationToken cancellationToken = default)
-        {
-            return new AIProjectRoutinesGetRoutineRunsAsyncCollectionResultOfT(
-                this,
-                routineName,
-                foundryFeatures?.ToSerialString(),
-                filter,
-                limit,
-                after,
-                order?.ToString(),
-                cancellationToken.ToRequestOptions());
         }
 
         /// <summary>

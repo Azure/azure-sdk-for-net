@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,6 +10,10 @@ using Azure.AI.Projects.Memory;
 namespace Azure.AI.Projects;
 
 [Experimental("AAIP001")]
+[CodeGenSuppress("GetRoutineRuns", typeof(string), typeof(FoundryFeaturesOptInKeys?), typeof(string), typeof(int?), typeof(string), typeof(MemoryStoreListOrder?), typeof(CancellationToken))]
+[CodeGenSuppress("GetRoutineRunsAsync", typeof(string), typeof(FoundryFeaturesOptInKeys?), typeof(string), typeof(int?), typeof(string), typeof(MemoryStoreListOrder?), typeof(CancellationToken))]
+[CodeGenSuppress("GetRoutines", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(string), typeof(MemoryStoreListOrder?), typeof(CancellationToken))]
+[CodeGenSuppress("GetRoutinesAsync", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(string), typeof(MemoryStoreListOrder?), typeof(CancellationToken))]
 public partial class AIProjectRoutines
 {
     /// <summary> Returns prior runs recorded for the specified routine. </summary>
@@ -28,14 +31,17 @@ public partial class AIProjectRoutines
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual CollectionResult<RoutineRun> GetRoutineRuns(string routineName, string filter = default, int? limit = default, string after = default, MemoryStoreListOrder? order = default, CancellationToken cancellationToken = default)
     {
-        return GetRoutineRuns(
+        Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
+
+        return new AIProjectRoutinesGetRoutineRunsCollectionResultOfT(
+            client: this,
             routineName: routineName,
             foundryFeatures: default,
             filter: filter,
             limit: limit,
             after: after,
-            order: order,
-            cancellationToken: cancellationToken);
+            order: order?.ToString(),
+            options: cancellationToken.ToRequestOptions());
     }
 
     /// <summary> Returns prior runs recorded for the specified routine. </summary>
@@ -53,14 +59,17 @@ public partial class AIProjectRoutines
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual AsyncCollectionResult<RoutineRun> GetRoutineRunsAsync(string routineName, string filter = default, int? limit = default, string after = default, MemoryStoreListOrder? order = default, CancellationToken cancellationToken = default)
     {
-        return GetRoutineRunsAsync(
+        Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
+
+        return new AIProjectRoutinesGetRoutineRunsAsyncCollectionResultOfT(
+            client: this,
             routineName: routineName,
             foundryFeatures: default,
             filter: filter,
             limit: limit,
             after: after,
-            order: order,
-            cancellationToken: cancellationToken);
+            order: order?.ToString(),
+            options: cancellationToken.ToRequestOptions());
     }
 
     /// <summary> Returns the routines available in the current project. </summary>
@@ -74,12 +83,13 @@ public partial class AIProjectRoutines
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual CollectionResult<ProjectsRoutine> GetRoutines(int? limit = default, string after = default, MemoryStoreListOrder? order = default, CancellationToken cancellationToken = default)
     {
-        return GetRoutines(
-            foundryFeatures: default,
-            limit: limit,
-            after: after,
-            order: order,
-            cancellationToken: cancellationToken);
+        return new AIProjectRoutinesGetRoutinesCollectionResultOfT(
+                client: this,
+                foundryFeatures: default,
+                limit: limit,
+                after: after,
+                order: order?.ToString(),
+                options: cancellationToken.ToRequestOptions());
     }
 
     /// <summary> Returns the routines available in the current project. </summary>
@@ -93,12 +103,13 @@ public partial class AIProjectRoutines
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual AsyncCollectionResult<ProjectsRoutine> GetRoutinesAsync(int? limit = default, string after = default, MemoryStoreListOrder? order = default, CancellationToken cancellationToken = default)
     {
-        return GetRoutinesAsync(
-            foundryFeatures: default,
-            limit: limit,
-            after: after,
-            order: order,
-            cancellationToken: cancellationToken);
+        return new AIProjectRoutinesGetRoutinesAsyncCollectionResultOfT(
+                client: this,
+                foundryFeatures: default,
+                limit: limit,
+                after: after,
+                order: order?.ToString(),
+                options: cancellationToken.ToRequestOptions());
     }
 
     /// <summary> Create or update a routine. </summary>
