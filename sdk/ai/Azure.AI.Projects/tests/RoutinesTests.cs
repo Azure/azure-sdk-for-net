@@ -111,7 +111,8 @@ public class RoutinesTests : ProjectsClientTestBase
                 name: $"{ROUTINE_NAME_PREFIX}-{i}",
                 options: routineOptions);
         }
-        List<ProjectsRoutine> records = await projectClient.Routines.GetRoutinesAsync(limit: PAGE_SIZE, order: "asc").Where(x => x.Name.StartsWith(ROUTINE_NAME_PREFIX)).ToListAsync();
+        //.Where(x => x.Name.StartsWith(ROUTINE_NAME_PREFIX))
+        List<ProjectsRoutine> records = await projectClient.Routines.GetRoutinesAsync(limit: PAGE_SIZE, order: "asc").ToListAsync();
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
         //// Blocked by ADO work item 5337919.
         //// Go forward.
@@ -220,7 +221,7 @@ public class RoutinesTests : ProjectsClientTestBase
         while (DateTime.UtcNow < deadline)
         {
             await Delay(60000);
-            await foreach (RoutineRun run in projectClient.Routines.GetRoutineRunsAsync(name: created.Name))
+            await foreach (RoutineRun run in projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name))
             {
                 if (string.Equals(run.Status, "finished", StringComparison.InvariantCultureIgnoreCase) ||
                     string.Equals(run.Status, "failed", StringComparison.InvariantCultureIgnoreCase) ||
@@ -274,19 +275,19 @@ public class RoutinesTests : ProjectsClientTestBase
         while (DateTime.UtcNow < deadline)
         {
             await Delay(60000);
-            runs = await projectClient.Routines.GetRoutineRunsAsync(name: created.Name).ToListAsync();
+            runs = await projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name).ToListAsync();
             if (runs.Count > PAGE_SIZE)
             {
                 // When we have generated enough run, disable the routine and check pahgination.
                 await projectClient.Routines.DisableAsync(name: created.Name);
                 // Make sure, we have all the runs after the routine was disabled.
-                runs = await projectClient.Routines.GetRoutineRunsAsync(name: created.Name).ToListAsync();
+                runs = await projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name).ToListAsync();
                 break;
             }
         }
         Assert.That(runs, Has.Count.GreaterThan(PAGE_SIZE));
         // We cannot know, how many runs we have generated, so we set the new baseline here.
-        List<RoutineRun> records = await projectClient.Routines.GetRoutineRunsAsync(name: created.Name, limit: PAGE_SIZE, order: "asc").ToListAsync();
+        List<RoutineRun> records = await projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name, limit: PAGE_SIZE, order: "asc").ToListAsync();
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
         // Blocked by the ADO item 5337751
         // Go forward.
@@ -363,7 +364,7 @@ public class RoutinesTests : ProjectsClientTestBase
         while (DateTime.UtcNow < deadline)
         {
             await Delay(60000);
-            await foreach (RoutineRun run in projectClient.Routines.GetRoutineRunsAsync(name: created.Name))
+            await foreach (RoutineRun run in projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name))
             {
                 if (string.Equals(run.Status, "finished", StringComparison.InvariantCultureIgnoreCase) ||
                     string.Equals(run.Status, "failed", StringComparison.InvariantCultureIgnoreCase) ||
