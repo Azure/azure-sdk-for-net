@@ -8,7 +8,7 @@ tags:
   area: azsdk-common-sdk-release
   type: ci-gate
 
-config:
+defaults:
   runs: 1
   timeout: "90s"
   model: claude-opus-4.6
@@ -20,30 +20,45 @@ scoring:
 stimuli:
   - name: trigger-release-my-sdk-package
     prompt: "release my SDK package"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           required: ["azsdk-common-sdk-release"]
   - name: trigger-how-to-publish-a-new-sdk-version
     prompt: "how to publish a new SDK version"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           required: ["azsdk-common-sdk-release"]
   - name: trigger-walk-me-through-sdk-release-process
     prompt: "walk me through SDK release process"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           required: ["azsdk-common-sdk-release"]
   - name: trigger-release-a-new-version-of-azure-sdk
-    prompt: "release a new version of azure-sdk"
+    prompt: "trigger the Azure SDK release pipeline for a new package version"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           required: ["azsdk-common-sdk-release"]
   - name: trigger-sdk-release-checklist
     prompt: "SDK release checklist"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
@@ -51,31 +66,52 @@ stimuli:
 
   - name: anti-trigger-write-unit-tests
     prompt: "write unit tests"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           disallowed: ["azsdk-common-sdk-release"]
   - name: anti-trigger-fix-my-pipeline-build-error
     prompt: "fix my pipeline build error"
+    environment:
+      skills:
+        - ..
+        - ../../azsdk-common-pipeline-fixer
     graders:
       - type: skill-invocation
         config:
+          required: ["azsdk-common-pipeline-fixer"]
           disallowed: ["azsdk-common-sdk-release"]
   - name: anti-trigger-create-a-new-typespec-definition
-    prompt: "create a new TypeSpec definition"
+    prompt: "Author Azure TypeSpec by adding an optional color property to the WidgetSuite model in main.tsp."
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           disallowed: ["azsdk-common-sdk-release"]
   - name: anti-trigger-optimize-markdown-tokens
     prompt: "optimize markdown tokens"
+    environment:
+      skills:
+        - ..
+        - ../../markdown-token-optimizer
     graders:
       - type: skill-invocation
         config:
+          required: ["markdown-token-optimizer"]
           disallowed: ["azsdk-common-sdk-release"]
   - name: anti-trigger-resolve-apiview-feedback
     prompt: "resolve APIView feedback"
+    environment:
+      skills:
+        - ..
+        - ../../azsdk-common-apiview-feedback-resolution
     graders:
       - type: skill-invocation
         config:
+          required: ["azsdk-common-apiview-feedback-resolution"]
           disallowed: ["azsdk-common-sdk-release"]
