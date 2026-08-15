@@ -54,3 +54,5 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

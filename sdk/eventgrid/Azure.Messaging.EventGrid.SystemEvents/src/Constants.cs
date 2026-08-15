@@ -11,3 +11,5 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
