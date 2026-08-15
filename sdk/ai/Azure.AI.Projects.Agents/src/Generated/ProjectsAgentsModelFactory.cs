@@ -109,10 +109,17 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Container-based deployment configuration for a hosted agent. </summary>
         /// <param name="image"> The container image for the hosted agent. </param>
+        /// <param name="registryConnectionId">
+        /// The id (or name) of the Foundry project connection that provides the credentials used to
+        /// authenticate to the private container registry hosting `image`. The connection abstracts the
+        /// auth mechanism — for example a managed-identity-federated token exchange, or a username/token
+        /// secret — so registry credentials are never part of the agent definition. Omit for public images
+        /// or registries already reachable by the platform's default identity (for example, Azure Container Registry).
+        /// </param>
         /// <returns> A new <see cref="Agents.ContainerConfiguration"/> instance for mocking. </returns>
-        public static ContainerConfiguration ContainerConfiguration(string image = default)
+        public static ContainerConfiguration ContainerConfiguration(string image = default, string registryConnectionId = default)
         {
-            return new ContainerConfiguration(image, additionalBinaryDataProperties: null);
+            return new ContainerConfiguration(image, registryConnectionId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A record mapping for a single protocol and its version. </summary>
@@ -837,7 +844,11 @@ namespace Azure.AI.Projects.Agents
             return new StructuredInputDefinition(description, defaultValue, schema, isRequired, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The workflow agent definition. </summary>
+        /// <summary>
+        /// The workflow agent definition. Microsoft Foundry is retiring workflows on December 1, 2026.
+        /// If you're looking to build new workflows, use Microsoft Agent Framework. To migrate existing workflows,
+        /// see the [Migration guide](https://learn.microsoft.com/azure/foundry/agents/concepts/workflow#migration-guide).
+        /// </summary>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="workflowYaml"> The CSDL YAML definition of the workflow. </param>
         /// <returns> A new <see cref="Agents.WorkflowAgentDefinition"/> instance for mocking. </returns>
