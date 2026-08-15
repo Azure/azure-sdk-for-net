@@ -147,7 +147,9 @@ namespace Azure.Messaging.EventHubs.Core
         {
             // Transform the exception into a more relevant type, if possible.  Wrapper exceptions are
             // unwrapped one level at a time until an exception that can be classified is found.  The
-            // depth limit guards against a pathological or cyclic chain of inner exceptions.
+            // depth limit guards against a pathological or cyclic chain of inner exceptions.  An
+            // IOException is retriable on its own, so it is unwrapped only when it directly wraps a
+            // SocketException; the socket error code then decides whether the failure is terminal.
 
             for (var unwrapCount = 0; unwrapCount < MaximumUnwrapDepth; ++unwrapCount)
             {
@@ -158,6 +160,7 @@ namespace Azure.Messaging.EventHubs.Core
                     WebSocketException => exception?.InnerException ?? exception,
                     HttpRequestException => exception?.InnerException ?? exception,
                     AggregateException aggregateEx => aggregateEx?.Flatten().InnerException,
+                    IOException when exception.InnerException is SocketException => exception.InnerException,
                     _ => exception
                 };
 
