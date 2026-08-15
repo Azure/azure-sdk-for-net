@@ -1722,7 +1722,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     if (async)
                     {
-                        response = await AppendBlobRestClient.AppendBlockFromUrlAsync(
+                        response = await AppendBlobRestClient.AppendBlockFromUriAsync(
                             sourceUrl: sourceUri.AbsoluteUri,
                             contentLength: 0,
                             sourceRange: sourceRange.ToString(),
@@ -1750,7 +1750,7 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        response = AppendBlobRestClient.AppendBlockFromUrl(
+                        response = AppendBlobRestClient.AppendBlockFromUri(
                             sourceUrl: sourceUri.AbsoluteUri,
                             contentLength: 0,
                             sourceRange: sourceRange.ToString(),
