@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             writer.WriteObjectValue(Schedule, options);
             writer.WritePropertyName("notificationSettings"u8);
             writer.WriteStartArray();
-            foreach (NotificationSettings item in NotificationSettings)
+            foreach (ComputeScheduleNotificationSettings item in NotificationSettings)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 writer.WritePropertyName("resourceNotificationSettings"u8);
                 writer.WriteStartArray();
-                foreach (NotificationSettings item in ResourceNotificationSettings)
+                foreach (ComputeScheduleNotificationSettings item in ResourceNotificationSettings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -166,10 +166,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             DateTimeOffset startOn = default;
             DateTimeOffset? endOn = default;
             ScheduledActionsSchedule schedule = default;
-            IList<NotificationSettings> notificationSettings = default;
+            IList<ComputeScheduleNotificationSettings> notificationSettings = default;
             bool? disabled = default;
             ScheduledActionResourceProvisioningState? provisioningState = default;
-            IReadOnlyList<NotificationSettings> resourceNotificationSettings = default;
+            IReadOnlyList<ComputeScheduleNotificationSettings> resourceNotificationSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -204,10 +204,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
                 if (prop.NameEquals("notificationSettings"u8))
                 {
-                    List<NotificationSettings> array = new List<NotificationSettings>();
+                    List<ComputeScheduleNotificationSettings> array = new List<ComputeScheduleNotificationSettings>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.NotificationSettings.DeserializeNotificationSettings(item, options));
+                        array.Add(ComputeScheduleNotificationSettings.DeserializeComputeScheduleNotificationSettings(item, options));
                     }
                     notificationSettings = array;
                     continue;
@@ -236,10 +236,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    List<NotificationSettings> array = new List<NotificationSettings>();
+                    List<ComputeScheduleNotificationSettings> array = new List<ComputeScheduleNotificationSettings>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.NotificationSettings.DeserializeNotificationSettings(item, options));
+                        array.Add(ComputeScheduleNotificationSettings.DeserializeComputeScheduleNotificationSettings(item, options));
                     }
                     resourceNotificationSettings = array;
                     continue;
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 notificationSettings,
                 disabled,
                 provisioningState,
-                resourceNotificationSettings ?? new ChangeTrackingList<NotificationSettings>(),
+                resourceNotificationSettings ?? new ChangeTrackingList<ComputeScheduleNotificationSettings>(),
                 additionalBinaryDataProperties);
         }
     }

@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Gets all the API gateway config connections in the collection. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<ApiGatewayConfigConnectionResource> GetAllAsync(CancellationToken cancellationToken)
-            => GetAllAsync(default, default, cancellationToken);
+        public virtual AsyncPageable<ApiGatewayConfigConnectionResource> GetAllAsync(CancellationToken compatibilityCancellationToken)
+            => GetAllAsync(default, default, compatibilityCancellationToken);
 
         /// <summary> Gets all the API gateway config connections in the collection. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<ApiGatewayConfigConnectionResource> GetAll(CancellationToken cancellationToken)
-            => GetAll(default, default, cancellationToken);
+        public virtual Pageable<ApiGatewayConfigConnectionResource> GetAll(CancellationToken compatibilityCancellationToken)
+            => GetAll(default, default, compatibilityCancellationToken);
     }
 }

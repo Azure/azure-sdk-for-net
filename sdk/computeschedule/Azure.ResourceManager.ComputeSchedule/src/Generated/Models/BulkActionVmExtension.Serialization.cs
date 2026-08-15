@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 return null;
             }
             string name = default;
-            BulkActionVirtualMachineExtensionProperties properties = default;
+            ComputeScheduleBulkActionVirtualMachineExtensionProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    properties = BulkActionVirtualMachineExtensionProperties.DeserializeBulkActionVirtualMachineExtensionProperties(prop.Value, options);
+                    properties = ComputeScheduleBulkActionVirtualMachineExtensionProperties.DeserializeComputeScheduleBulkActionVirtualMachineExtensionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -13,9 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
     {
 #pragma warning disable CA1707
         /// <summary> Specifies if TLS 1.0 is supported. </summary>
-        public bool? IsTls1_0Enabled { get; set; }
+        public bool? IsTls1_0Enabled
+        {
+            get => IsTls10Enabled;
+            set => IsTls10Enabled = value;
+        }
         /// <summary> Specifies if TLS 1.1 is supported. </summary>
-        public bool? IsTls1_1Enabled { get; set; }
+        public bool? IsTls1_1Enabled
+        {
+            get => IsTls11Enabled;
+            set => IsTls11Enabled = value;
+        }
         /// <summary> Specifies if HTTP/2.0 is supported. </summary>
         public bool? IsHttp2_0Enabled { get; set; }
 #pragma warning restore CA1707

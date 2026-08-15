@@ -17,24 +17,26 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmComputeScheduleModelFactory
     {
+        // The legacy signature is retained for binary compatibility, but its parameters remain required to avoid
+        // ambiguity with the generated overload that adds another optional parameter.
         /// <summary> The details of a response from an operation on a resource. </summary>
-        /// <param name="operationId"> Operation identifier for the unique operation. </param>
-        /// <param name="resourceId"> Unique identifier for the resource involved in the operation, eg ArmId. </param>
-        /// <param name="opType"> Type of operation performed on the resources. </param>
-        /// <param name="subscriptionId"> Subscription id attached to the request. </param>
-        /// <param name="deadline"> Deadline for the operation. </param>
-        /// <param name="deadlineType"> Type of deadline of the operation. </param>
-        /// <param name="state"> Current state of the operation. </param>
-        /// <param name="timezone"> Timezone for the operation. </param>
-        /// <param name="operationTimezone"> Timezone for the operation. </param>
-        /// <param name="resourceOperationError"> Operation level errors if they exist. </param>
-        /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
+        /// <param name="compatibilityOperationId"> Operation identifier for the unique operation. </param>
+        /// <param name="compatibilityResourceId"> Unique identifier for the resource involved in the operation, eg ArmId. </param>
+        /// <param name="compatibilityOpType"> Type of operation performed on the resources. </param>
+        /// <param name="compatibilitySubscriptionId"> Subscription id attached to the request. </param>
+        /// <param name="compatibilityDeadline"> Deadline for the operation. </param>
+        /// <param name="compatibilityDeadlineType"> Type of deadline of the operation. </param>
+        /// <param name="compatibilityState"> Current state of the operation. </param>
+        /// <param name="compatibilityTimezone"> Timezone for the operation. </param>
+        /// <param name="compatibilityOperationTimezone"> Timezone for the operation. </param>
+        /// <param name="compatibilityResourceOperationError"> Operation level errors if they exist. </param>
+        /// <param name="compatibilityCompletedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <returns> A new <see cref="Models.ResourceOperationDetails"/> instance for mocking. </returns>
-        public static ResourceOperationDetails ResourceOperationDetails(string operationId, ResourceIdentifier resourceId, ResourceOperationType? opType, string subscriptionId, DateTimeOffset? deadline, ScheduledActionDeadlineType? deadlineType, ScheduledActionOperationState? state, string timezone, string operationTimezone, ResourceOperationError resourceOperationError, DateTimeOffset? completedOn, UserRequestRetryPolicy retryPolicy = default)
+        public static ResourceOperationDetails ResourceOperationDetails(string compatibilityOperationId, ResourceIdentifier compatibilityResourceId, ResourceOperationType? compatibilityOpType, string compatibilitySubscriptionId, DateTimeOffset? compatibilityDeadline, ScheduledActionDeadlineType? compatibilityDeadlineType, ScheduledActionOperationState? compatibilityState, string compatibilityTimezone, string compatibilityOperationTimezone, ResourceOperationError compatibilityResourceOperationError, DateTimeOffset? compatibilityCompletedOn, UserRequestRetryPolicy retryPolicy = default)
         {
             return ResourceOperationDetails(
-                operationId, resourceId, opType, subscriptionId, deadline, deadlineType, state, timezone, operationTimezone, resourceOperationError, null, completedOn, retryPolicy);
+                compatibilityOperationId, compatibilityResourceId, compatibilityOpType, compatibilitySubscriptionId, compatibilityDeadline, compatibilityDeadlineType, compatibilityState, compatibilityTimezone, compatibilityOperationTimezone, compatibilityResourceOperationError, null, compatibilityCompletedOn, retryPolicy);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceProvisionFlexPayload"/>. </summary>

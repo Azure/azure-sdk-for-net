@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Specifies if TLS 1.0 is supported. </summary>
         [WirePath("properties.tls10Enabled")]
-        public bool? Tls10Enabled
+        public bool? IsTls10Enabled
         {
             get
             {
-                return Properties is null ? default : Properties.Tls10Enabled;
+                return Properties is null ? default : Properties.IsTls10Enabled;
             }
             set
             {
@@ -109,17 +109,17 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new GatewayHostnameConfigurationContractProperties();
                 }
-                Properties.Tls10Enabled = value;
+                Properties.IsTls10Enabled = value;
             }
         }
 
         /// <summary> Specifies if TLS 1.1 is supported. </summary>
         [WirePath("properties.tls11Enabled")]
-        public bool? Tls11Enabled
+        public bool? IsTls11Enabled
         {
             get
             {
-                return Properties is null ? default : Properties.Tls11Enabled;
+                return Properties is null ? default : Properties.IsTls11Enabled;
             }
             set
             {
@@ -127,25 +127,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new GatewayHostnameConfigurationContractProperties();
                 }
-                Properties.Tls11Enabled = value;
-            }
-        }
-
-        /// <summary> Specifies if HTTP/2.0 is supported. </summary>
-        [WirePath("properties.http2Enabled")]
-        public bool? Http2Enabled
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Http2Enabled;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new GatewayHostnameConfigurationContractProperties();
-                }
-                Properties.Http2Enabled = value;
+                Properties.IsTls11Enabled = value;
             }
         }
     }

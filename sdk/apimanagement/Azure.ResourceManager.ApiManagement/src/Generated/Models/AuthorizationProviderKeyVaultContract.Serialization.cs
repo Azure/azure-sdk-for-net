@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 throw new FormatException($"The model {nameof(AuthorizationProviderKeyVaultContract)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (options.Format != "W" && Optional.IsDefined(Updated))
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated"u8);
-                writer.WriteStringValue(Updated.Value, "O");
+                writer.WriteStringValue(UpdatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastStatus))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             string secretIdentifier = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DateTimeOffset? updated = default;
+            DateTimeOffset? updatedOn = default;
             KeyVaultLastAccessStatusContractProperties lastStatus = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    updated = prop.Value.GetDateTimeOffset("O");
+                    updatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastStatus"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AuthorizationProviderKeyVaultContract(secretIdentifier, additionalBinaryDataProperties, updated, lastStatus);
+            return new AuthorizationProviderKeyVaultContract(secretIdentifier, additionalBinaryDataProperties, updatedOn, lastStatus);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="schedule"> The schedule the scheduled action is supposed to follow. </param>
         /// <param name="notificationSettings"> The notification settings for the scheduled action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> or <paramref name="notificationSettings"/> is null. </exception>
-        public ScheduledActionProperties(ScheduledActionResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startOn, ScheduledActionsSchedule schedule, IEnumerable<NotificationSettings> notificationSettings)
+        public ScheduledActionProperties(ScheduledActionResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startOn, ScheduledActionsSchedule schedule, IEnumerable<ComputeScheduleNotificationSettings> notificationSettings)
         {
             Argument.AssertNotNull(schedule, nameof(schedule));
             Argument.AssertNotNull(notificationSettings, nameof(notificationSettings));
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="disabled"> Tell if the scheduled action is disabled or not. </param>
         /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionProperties(ScheduledActionResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startOn, DateTimeOffset? endOn, ScheduledActionsSchedule schedule, IList<NotificationSettings> notificationSettings, bool? disabled, ScheduledActionResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledActionProperties(ScheduledActionResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startOn, DateTimeOffset? endOn, ScheduledActionsSchedule schedule, IList<ComputeScheduleNotificationSettings> notificationSettings, bool? disabled, ScheduledActionResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceType = resourceType;
             ActionType = actionType;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public ScheduledActionsSchedule Schedule { get; set; }
 
         /// <summary> The notification settings for the scheduled action. </summary>
-        public IList<NotificationSettings> NotificationSettings { get; }
+        public IList<ComputeScheduleNotificationSettings> NotificationSettings { get; }
 
         /// <summary> Tell if the scheduled action is disabled or not. </summary>
         public bool? Disabled { get; set; }

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            EventGridAndResourceGraph eventGridAndResourceGraph = default;
+            ComputeScheduleEventGridAndResourceGraph eventGridAndResourceGraph = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    eventGridAndResourceGraph = EventGridAndResourceGraph.DeserializeEventGridAndResourceGraph(prop.Value, options);
+                    eventGridAndResourceGraph = ComputeScheduleEventGridAndResourceGraph.DeserializeComputeScheduleEventGridAndResourceGraph(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

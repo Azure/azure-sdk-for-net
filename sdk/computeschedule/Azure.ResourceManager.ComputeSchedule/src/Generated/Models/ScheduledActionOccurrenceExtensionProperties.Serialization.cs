@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 writer.WritePropertyName("notificationSettings"u8);
                 writer.WriteStartArray();
-                foreach (NotificationSettings item in NotificationSettings)
+                foreach (ComputeScheduleNotificationSettings item in NotificationSettings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 return null;
             }
             ResourceIdentifier resourceId = default;
-            IList<NotificationSettings> notificationSettings = default;
+            IList<ComputeScheduleNotificationSettings> notificationSettings = default;
             DateTimeOffset scheduledOn = default;
             OccurrenceResourceProvisioningState? provisioningState = default;
             ResponseError errorDetails = default;
@@ -173,10 +173,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    List<NotificationSettings> array = new List<NotificationSettings>();
+                    List<ComputeScheduleNotificationSettings> array = new List<ComputeScheduleNotificationSettings>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.NotificationSettings.DeserializeNotificationSettings(item, options));
+                        array.Add(ComputeScheduleNotificationSettings.DeserializeComputeScheduleNotificationSettings(item, options));
                     }
                     notificationSettings = array;
                     continue;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
             return new ScheduledActionOccurrenceExtensionProperties(
                 resourceId,
-                notificationSettings ?? new ChangeTrackingList<NotificationSettings>(),
+                notificationSettings ?? new ChangeTrackingList<ComputeScheduleNotificationSettings>(),
                 scheduledOn,
                 provisioningState,
                 errorDetails,

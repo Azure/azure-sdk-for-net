@@ -482,60 +482,60 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 });
 
             // baseProfile: properties common to all VMs in the batch
-            var baseProfile = new BulkVmConfiguration
+            var baseProfile = new ComputeScheduleBulkVmConfiguration
             {
                 ResourceGroupName = rgName,
                 ComputeApiVersion = "2023-09-01",
-                Properties = new BulkActionVirtualMachineProperties
+                Properties = new ComputeScheduleBulkActionVirtualMachineProperties
                 {
-                    HardwareProfile = new VirtualMachineHardwareProfile { VmSize = "Standard_D2ads_v5" },
-                    StorageProfile = new VirtualMachineStorageProfile
+                    HardwareProfile = new ComputeScheduleVirtualMachineHardwareProfile { VmSize = "Standard_D2ads_v5" },
+                    StorageProfile = new ComputeScheduleVirtualMachineStorageProfile
                     {
-                        ImageReference = new ImageReference
+                        ImageReference = new ComputeScheduleImageReference
                         {
                             Publisher = "MicrosoftWindowsServer",
                             Offer = "WindowsServer",
                             Sku = "2022-datacenter-azure-edition",
                             Version = "latest"
                         },
-                        OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
+                        OSDisk = new ComputeScheduleVirtualMachineOSDisk(ComputeScheduleDiskCreateOptionType.FromImage)
                         {
-                            OSType = OperatingSystemType.Windows,
-                            Caching = CachingType.ReadWrite,
+                            OSType = ComputeScheduleOperatingSystemType.Windows,
+                            Caching = ComputeScheduleCachingType.ReadWrite,
                             ManagedDisk = new ComputeScheduleManagedDiskConfig
                             {
-                                StorageAccountType = StorageAccountType.StandardLRS
+                                StorageAccountType = ComputeScheduleStorageAccountType.StandardLRS
                             },
-                            DeleteOption = DiskDeleteOptionType.Delete,
+                            DeleteOption = ComputeScheduleDiskDeleteOptionType.Delete,
                             DiskSizeGB = 127
                         },
-                        DiskControllerType = DiskControllerType.SCSI
+                        DiskControllerType = ComputeScheduleDiskControllerType.SCSI
                     },
-                    NetworkProfile = new VirtualMachineNetworkProfile
+                    NetworkProfile = new ComputeScheduleVirtualMachineNetworkProfile
                     {
                         NetworkInterfaceConfigurations =
                         {
-                            new VirtualMachineNetworkInterfaceConfiguration("testflexnic")
+                            new ComputeScheduleVirtualMachineNetworkInterfaceConfiguration("testflexnic")
                             {
-                                Properties = new VirtualMachineNetworkInterfaceConfigurationProperties(
+                                Properties = new ComputeScheduleVirtualMachineNetworkInterfaceConfigurationProperties(
                                     new[]
                                     {
-                                        new VirtualMachineNetworkInterfaceIPConfiguration("testflexnic")
+                                        new ComputeScheduleVirtualMachineNetworkInterfaceIPConfiguration("testflexnic")
                                         {
-                                            Properties = new VirtualMachineNetworkInterfaceIPConfigurationProperties
+                                            Properties = new ComputeScheduleVirtualMachineNetworkInterfaceIPConfigurationProperties
                                             {
                                                 SubnetId = subnetId,
-                                                Primary = true,
+                                                IsPrimary = true,
                                             }
                                         }
                                     })
                                 {
-                                    Primary = true,
+                                    IsPrimary = true,
                                     EnableIPForwarding = true,
                                 }
                             }
                         },
-                        NetworkApiVersion = NetworkApiVersion._20201101
+                        NetworkApiVersion = ComputeScheduleNetworkApiVersion._20201101
                     }
                 }
             };
@@ -544,20 +544,20 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             baseProfile.Zones.Add("3");
 
             // resourceOverrides: per-VM properties (name, location, osProfile with credentials)
-            var vmOverride = new BulkVmConfiguration
+            var vmOverride = new ComputeScheduleBulkVmConfiguration
             {
                 Name = "testflexvm0",
-                Properties = new BulkActionVirtualMachineProperties
+                Properties = new ComputeScheduleBulkActionVirtualMachineProperties
                 {
-                    HardwareProfile = new VirtualMachineHardwareProfile { VmSize = "Standard_D2ads_v5" },
-                    OsProfile = new VirtualMachineOSProfile
+                    HardwareProfile = new ComputeScheduleVirtualMachineHardwareProfile { VmSize = "Standard_D2ads_v5" },
+                    OsProfile = new ComputeScheduleVirtualMachineOSProfile
                     {
                         ComputerName = "testflexvm",
                         AdminUsername = "testadmin",
                         AdminPassword = "TestPassword123!",
-                        WindowsConfiguration = new WindowsConfiguration
+                        WindowsConfiguration = new ComputeScheduleWindowsConfiguration
                         {
-                            ProvisionVmAgent = true,
+                            IsProvisionVmAgent = true,
                             IsAutomaticUpdatesEnabled = true
                         }
                     }
@@ -603,60 +603,60 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             };
 
             // baseProfile: properties common to all VMs in the batch
-            var baseProfile = new BulkVmConfiguration
+            var baseProfile = new ComputeScheduleBulkVmConfiguration
             {
                 ResourceGroupName = rgName,
                 ComputeApiVersion = "2023-09-01",
-                Properties = new BulkActionVirtualMachineProperties
+                Properties = new ComputeScheduleBulkActionVirtualMachineProperties
                 {
-                    HardwareProfile = new VirtualMachineHardwareProfile { VmSize = "Standard_D2ads_v5" },
-                    StorageProfile = new VirtualMachineStorageProfile
+                    HardwareProfile = new ComputeScheduleVirtualMachineHardwareProfile { VmSize = "Standard_D2ads_v5" },
+                    StorageProfile = new ComputeScheduleVirtualMachineStorageProfile
                     {
-                        ImageReference = new ImageReference
+                        ImageReference = new ComputeScheduleImageReference
                         {
                             Publisher = "MicrosoftWindowsServer",
                             Offer = "WindowsServer",
                             Sku = "2022-datacenter-azure-edition",
                             Version = "latest"
                         },
-                        OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
+                        OSDisk = new ComputeScheduleVirtualMachineOSDisk(ComputeScheduleDiskCreateOptionType.FromImage)
                         {
-                            OSType = OperatingSystemType.Windows,
-                            Caching = CachingType.ReadWrite,
+                            OSType = ComputeScheduleOperatingSystemType.Windows,
+                            Caching = ComputeScheduleCachingType.ReadWrite,
                             ManagedDisk = new ComputeScheduleManagedDiskConfig
                             {
-                                StorageAccountType = StorageAccountType.StandardLRS
+                                StorageAccountType = ComputeScheduleStorageAccountType.StandardLRS
                             },
-                            DeleteOption = DiskDeleteOptionType.Delete,
+                            DeleteOption = ComputeScheduleDiskDeleteOptionType.Delete,
                             DiskSizeGB = 127
                         },
-                        DiskControllerType = DiskControllerType.SCSI
+                        DiskControllerType = ComputeScheduleDiskControllerType.SCSI
                     },
-                    NetworkProfile = new VirtualMachineNetworkProfile
+                    NetworkProfile = new ComputeScheduleVirtualMachineNetworkProfile
                     {
                         NetworkInterfaceConfigurations =
                         {
-                            new VirtualMachineNetworkInterfaceConfiguration("testcreatenic")
+                            new ComputeScheduleVirtualMachineNetworkInterfaceConfiguration("testcreatenic")
                             {
-                                Properties = new VirtualMachineNetworkInterfaceConfigurationProperties(
+                                Properties = new ComputeScheduleVirtualMachineNetworkInterfaceConfigurationProperties(
                                     new[]
                                     {
-                                        new VirtualMachineNetworkInterfaceIPConfiguration("testcreatenic")
+                                        new ComputeScheduleVirtualMachineNetworkInterfaceIPConfiguration("testcreatenic")
                                         {
-                                            Properties = new VirtualMachineNetworkInterfaceIPConfigurationProperties
+                                            Properties = new ComputeScheduleVirtualMachineNetworkInterfaceIPConfigurationProperties
                                             {
                                                 SubnetId = subnetId,
-                                                Primary = true,
+                                                IsPrimary = true,
                                             }
                                         }
                                     })
                                 {
-                                    Primary = true,
+                                    IsPrimary = true,
                                     EnableIPForwarding = true,
                                 }
                             }
                         },
-                        NetworkApiVersion = NetworkApiVersion._20201101
+                        NetworkApiVersion = ComputeScheduleNetworkApiVersion._20201101
                     }
                 }
             };
@@ -665,20 +665,20 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             baseProfile.Zones.Add("3");
 
             // resourceOverrides: per-VM properties (name, location, osProfile with credentials)
-            var vmOverride = new BulkVmConfiguration
+            var vmOverride = new ComputeScheduleBulkVmConfiguration
             {
                 Name = "testcreatevm0",
-                Properties = new BulkActionVirtualMachineProperties
+                Properties = new ComputeScheduleBulkActionVirtualMachineProperties
                 {
-                    HardwareProfile = new VirtualMachineHardwareProfile { VmSize = "Standard_D2ads_v5" },
-                    OsProfile = new VirtualMachineOSProfile
+                    HardwareProfile = new ComputeScheduleVirtualMachineHardwareProfile { VmSize = "Standard_D2ads_v5" },
+                    OsProfile = new ComputeScheduleVirtualMachineOSProfile
                     {
                         ComputerName = "testcreatevm",
                         AdminUsername = "testadmin",
                         AdminPassword = "TestPassword123!",
-                        WindowsConfiguration = new WindowsConfiguration
+                        WindowsConfiguration = new ComputeScheduleWindowsConfiguration
                         {
-                            ProvisionVmAgent = true,
+                            IsProvisionVmAgent = true,
                             IsAutomaticUpdatesEnabled = true
                         }
                     }

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            BootDiagnostics bootDiagnostics = default;
+            ComputeScheduleBootDiagnostics bootDiagnostics = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    bootDiagnostics = BootDiagnostics.DeserializeBootDiagnostics(prop.Value, options);
+                    bootDiagnostics = ComputeScheduleBootDiagnostics.DeserializeComputeScheduleBootDiagnostics(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

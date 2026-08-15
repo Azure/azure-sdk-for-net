@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="license"> License information for the API. </param>
         /// <param name="mcpProperties"> Properties specific to MCP API type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiEntityBaseContract(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, McpProperties mcpProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiEntityBaseContract(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, ApiManagementMcpProperties mcpProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             AuthenticationSettings = authenticationSettings;
@@ -124,6 +124,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Properties specific to MCP API type. </summary>
         [WirePath("mcpProperties")]
-        public McpProperties McpProperties { get; set; }
+        public ApiManagementMcpProperties McpProperties { get; set; }
     }
 }

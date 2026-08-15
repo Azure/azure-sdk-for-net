@@ -15,11 +15,11 @@ using Azure.ResourceManager.ComputeSchedule;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> Describes the parameter of customer managed disk encryption set resource id that can be specified for disk. <b>Note:</b> The disk encryption set resource id can only be specified for managed disk. Please refer https://aka.ms/mdssewithcmkoverview for more details. </summary>
-    internal partial class ComputeScheduleDiskEncryptionSetConfig : SubResource, IJsonModel<ComputeScheduleDiskEncryptionSetConfig>
+    internal partial class ComputeScheduleDiskEncryptionSetConfig : ComputeScheduleSubResourceInfo, IJsonModel<ComputeScheduleDiskEncryptionSetConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SubResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ComputeScheduleSubResourceInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ComputeScheduleDiskEncryptionSetConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SubResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ComputeScheduleSubResourceInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ComputeScheduleDiskEncryptionSetConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

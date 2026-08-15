@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="SshConfiguration"/>. </summary>
         public SshConfiguration()
         {
-            PublicKeys = new ChangeTrackingList<SshPublicKeyConfiguration>();
+            PublicKeys = new ChangeTrackingList<ComputeScheduleSshPublicKeyConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SshConfiguration"/>. </summary>
         /// <param name="publicKeys"> The list of SSH public keys used to authenticate with linux based VMs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SshConfiguration(IList<SshPublicKeyConfiguration> publicKeys, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SshConfiguration(IList<ComputeScheduleSshPublicKeyConfiguration> publicKeys, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublicKeys = publicKeys;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of SSH public keys used to authenticate with linux based VMs. </summary>
-        public IList<SshPublicKeyConfiguration> PublicKeys { get; } = new ChangeTrackingList<SshPublicKeyConfiguration>();
+        public IList<ComputeScheduleSshPublicKeyConfiguration> PublicKeys { get; } = new ChangeTrackingList<ComputeScheduleSshPublicKeyConfiguration>();
     }
 }

@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="AuthorizationProviderKeyVaultContract"/>. </summary>
         /// <param name="secretIdentifier"> Key vault secret identifier for client secret. When provided, client secret will be retrieved from the provided key vault secret. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="updated"> When the secret was last updated in key vault. </param>
+        /// <param name="updatedOn"> When the secret was last updated in key vault. </param>
         /// <param name="lastStatus"> Last time sync and refresh of secret from key vault. </param>
-        internal AuthorizationProviderKeyVaultContract(string secretIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? updated, KeyVaultLastAccessStatusContractProperties lastStatus) : base(secretIdentifier, additionalBinaryDataProperties)
+        internal AuthorizationProviderKeyVaultContract(string secretIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? updatedOn, KeyVaultLastAccessStatusContractProperties lastStatus) : base(secretIdentifier, additionalBinaryDataProperties)
         {
-            Updated = updated;
+            UpdatedOn = updatedOn;
             LastStatus = lastStatus;
         }
 
         /// <summary> When the secret was last updated in key vault. </summary>
         [WirePath("updated")]
-        public DateTimeOffset? Updated { get; }
+        public DateTimeOffset? UpdatedOn { get; }
 
         /// <summary> Last time sync and refresh of secret from key vault. </summary>
         [WirePath("lastStatus")]

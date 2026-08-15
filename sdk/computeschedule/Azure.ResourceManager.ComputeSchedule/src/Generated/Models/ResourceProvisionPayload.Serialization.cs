@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 writer.WritePropertyName("virtualMachineOverrides"u8);
                 writer.WriteStartArray();
-                foreach (BulkVmConfiguration item in VirtualMachineOverrides)
+                foreach (ComputeScheduleBulkVmConfiguration item in VirtualMachineOverrides)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            BulkVmConfiguration virtualMachineBaseProfile = default;
-            IList<BulkVmConfiguration> virtualMachineOverrides = default;
+            ComputeScheduleBulkVmConfiguration virtualMachineBaseProfile = default;
+            IList<ComputeScheduleBulkVmConfiguration> virtualMachineOverrides = default;
             int resourceCount = default;
             string resourcePrefix = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    virtualMachineBaseProfile = BulkVmConfiguration.DeserializeBulkVmConfiguration(prop.Value, options);
+                    virtualMachineBaseProfile = ComputeScheduleBulkVmConfiguration.DeserializeComputeScheduleBulkVmConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("virtualMachineOverrides"u8))
@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    List<BulkVmConfiguration> array = new List<BulkVmConfiguration>();
+                    List<ComputeScheduleBulkVmConfiguration> array = new List<ComputeScheduleBulkVmConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BulkVmConfiguration.DeserializeBulkVmConfiguration(item, options));
+                        array.Add(ComputeScheduleBulkVmConfiguration.DeserializeComputeScheduleBulkVmConfiguration(item, options));
                     }
                     virtualMachineOverrides = array;
                     continue;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResourceProvisionPayload(virtualMachineBaseProfile, virtualMachineOverrides ?? new ChangeTrackingList<BulkVmConfiguration>(), resourceCount, resourcePrefix, additionalBinaryDataProperties);
+            return new ResourceProvisionPayload(virtualMachineBaseProfile, virtualMachineOverrides ?? new ChangeTrackingList<ComputeScheduleBulkVmConfiguration>(), resourceCount, resourcePrefix, additionalBinaryDataProperties);
         }
     }
 }

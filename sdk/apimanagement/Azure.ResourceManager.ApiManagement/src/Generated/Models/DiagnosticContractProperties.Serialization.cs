@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             SamplingSettings sampling = default;
             PipelineDiagnosticSettings frontend = default;
             PipelineDiagnosticSettings backend = default;
-            LLMDiagnosticSettings largeLanguageModel = default;
+            LlmDiagnosticSettings largeLanguageModel = default;
             bool? isLogClientIPEnabled = default;
             HttpCorrelationProtocol? httpCorrelationProtocol = default;
             TraceVerbosityLevel? verbosity = default;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    largeLanguageModel = LLMDiagnosticSettings.DeserializeLLMDiagnosticSettings(prop.Value, options);
+                    largeLanguageModel = LlmDiagnosticSettings.DeserializeLlmDiagnosticSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("logClientIp"u8))

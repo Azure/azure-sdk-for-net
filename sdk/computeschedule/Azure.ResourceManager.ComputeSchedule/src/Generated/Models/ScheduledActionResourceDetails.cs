@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             ResourceId = resourceId;
-            NotificationSettings = new ChangeTrackingList<NotificationSettings>();
+            NotificationSettings = new ChangeTrackingList<ComputeScheduleNotificationSettings>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionResourceDetails"/>. </summary>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// </param>
         /// <param name="notificationSettings"> The desired notification settings for the specified resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionResourceDetails(string name, ResourceIdentifier id, string @type, ResourceIdentifier resourceId, IList<NotificationSettings> notificationSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledActionResourceDetails(string name, ResourceIdentifier id, string @type, ResourceIdentifier resourceId, IList<ComputeScheduleNotificationSettings> notificationSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Id = id;
@@ -68,6 +68,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public ResourceIdentifier ResourceId { get; set; }
 
         /// <summary> The desired notification settings for the specified resource. </summary>
-        public IList<NotificationSettings> NotificationSettings { get; }
+        public IList<ComputeScheduleNotificationSettings> NotificationSettings { get; }
     }
 }
