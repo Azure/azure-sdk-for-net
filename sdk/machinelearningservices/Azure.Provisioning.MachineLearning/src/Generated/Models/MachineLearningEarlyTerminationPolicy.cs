@@ -12,7 +12,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Early termination policies enable canceling poor-performing runs before they complete
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BanditPolicy"/>, <see cref="MedianStoppingPolicy"/>, and <see cref="TruncationSelectionPolicy"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="BanditPolicy"/>, <see cref="MedianStoppingPolicy"/>, and <see cref="TruncationSelectionPolicy"/>.
     /// </summary>
     public partial class MachineLearningEarlyTerminationPolicy : ProvisionableConstruct
     {

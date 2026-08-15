@@ -775,8 +775,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="alertRulesCreatedByTemplateCount"> The number of alert rules that were created by this template. </param>
-        /// <param name="lastUpdatedOn"> The last time that this alert rule template has been updated. </param>
         /// <param name="createdOn"> The time that this alert rule template has been added. </param>
+        /// <param name="lastUpdatedOn"> The last time that this alert rule template has been updated. </param>
         /// <param name="description"> The description of the alert rule template. </param>
         /// <param name="displayName"> The display name for alert rule template. </param>
         /// <param name="requiredDataConnectors"> The required data sources for this template. </param>
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="productFilter"> The alerts' productName on which the cases will be generated. </param>
         /// <param name="severitiesFilter"> the alerts' severities on which the cases will be generated. </param>
         /// <returns> A new <see cref="Models.MicrosoftSecurityIncidentCreationAlertRuleTemplate"/> instance for mocking. </returns>
-        public static MicrosoftSecurityIncidentCreationAlertRuleTemplate MicrosoftSecurityIncidentCreationAlertRuleTemplate(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? alertRulesCreatedByTemplateCount = default, DateTimeOffset? lastUpdatedOn = default, DateTimeOffset? createdOn = default, string description = default, string displayName = default, IEnumerable<AlertRuleTemplateDataSource> requiredDataConnectors = default, SecurityInsightsAlertRuleTemplateStatus? status = default, IEnumerable<string> displayNamesFilter = default, IEnumerable<string> displayNamesExcludeFilter = default, MicrosoftSecurityProductName? productFilter = default, IEnumerable<SecurityInsightsAlertSeverity> severitiesFilter = default)
+        public static MicrosoftSecurityIncidentCreationAlertRuleTemplate MicrosoftSecurityIncidentCreationAlertRuleTemplate(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? alertRulesCreatedByTemplateCount = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastUpdatedOn = default, string description = default, string displayName = default, IEnumerable<AlertRuleTemplateDataSource> requiredDataConnectors = default, SecurityInsightsAlertRuleTemplateStatus? status = default, IEnumerable<string> displayNamesFilter = default, IEnumerable<string> displayNamesExcludeFilter = default, MicrosoftSecurityProductName? productFilter = default, IEnumerable<SecurityInsightsAlertSeverity> severitiesFilter = default)
         {
             return new MicrosoftSecurityIncidentCreationAlertRuleTemplate(
                 id,

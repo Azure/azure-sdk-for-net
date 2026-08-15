@@ -50,7 +50,7 @@ namespace Azure.Security.CodeTransparency.Tests
             byte[] coseSignature = ReadFileBytes("input_signed_claims");
             var body = BinaryData.FromBytes(coseSignature);
 
-            Response<BinaryData> createResponse = await Client.CreateEntryAsync(body, waitForCommit: false);
+            NullableResponse<BinaryData> createResponse = await Client.CreateEntryAsync(body, waitForCommit: false);
             int status = createResponse.GetRawResponse().Status;
             Assert.That(status, Is.EqualTo(200).Or.EqualTo(201), $"unexpected create status {status}");
 
@@ -89,7 +89,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             // waitForCommit=false: the client follows the async 303 and polls the pending 302 through to
             // the committed 200 receipt (a COSE_Sign1 receipt carrying the registration transaction id).
-            Response<BinaryData> createResponse = await Client.CreateEntryAsync(body, waitForCommit: false);
+            NullableResponse<BinaryData> createResponse = await Client.CreateEntryAsync(body, waitForCommit: false);
             int status = createResponse.GetRawResponse().Status;
 
             Assert.That(status, Is.EqualTo(200).Or.EqualTo(201));
@@ -109,7 +109,7 @@ namespace Azure.Security.CodeTransparency.Tests
             byte[] coseSignature = ReadFileBytes("input_signed_claims");
             var body = BinaryData.FromBytes(coseSignature);
 
-            Response<BinaryData> createResponse = await Client.CreateEntryAsync(body, waitForCommit: false);
+            NullableResponse<BinaryData> createResponse = await Client.CreateEntryAsync(body, waitForCommit: false);
 
             Assert.AreEqual(200, createResponse.GetRawResponse().Status, "async registration should return the committed receipt");
             Assert.IsNotNull(createResponse.Value);
@@ -136,7 +136,7 @@ namespace Azure.Security.CodeTransparency.Tests
         {
             string entryId = await CreateEntryAndGetEntryIdAsync();
 
-            Response<BinaryData> entryResponse = await Client.GetEntryAsync(entryId);
+            NullableResponse<BinaryData> entryResponse = await Client.GetEntryAsync(entryId);
 
             // Service may return 200 (entry ready) or 302 (redirect to receipt)
             Assert.That(entryResponse.GetRawResponse().Status,
@@ -192,7 +192,7 @@ namespace Azure.Security.CodeTransparency.Tests
             // waitForCommit=true asks the service to wait until the entry is committed before responding.
             // The convenience overload returns the committed receipt (201 directly, or 200 after a routing
             // redirect is followed).
-            Response<BinaryData> response = await Client.CreateEntryAsync(body, waitForCommit: true);
+            NullableResponse<BinaryData> response = await Client.CreateEntryAsync(body, waitForCommit: true);
             int status = response.GetRawResponse().Status;
 
             Assert.That(status, Is.EqualTo(200).Or.EqualTo(201));

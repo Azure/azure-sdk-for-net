@@ -6,17 +6,13 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Compute
 {
     /// <summary> This is the data disk image. </summary>
-    public partial class GalleryDataDiskImage : ProvisionableConstruct
+    public partial class GalleryDataDiskImage : GalleryDiskImage
     {
         private BicepValue<int> _lun;
-        private BicepValue<int> _sizeInGB;
-        private BicepValue<HostCaching> _hostCaching;
-        private GalleryDiskImageSource _gallerySource;
 
         /// <summary> Creates a new GalleryDataDiskImage. </summary>
         public GalleryDataDiskImage()
@@ -38,54 +34,11 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets the SizeInGB. </summary>
-        public BicepValue<int> SizeInGB
-        {
-            get
-            {
-                Initialize();
-                return _sizeInGB;
-            }
-        }
-
-        /// <summary> Gets or sets the HostCaching. </summary>
-        public BicepValue<HostCaching> HostCaching
-        {
-            get
-            {
-                Initialize();
-                return _hostCaching;
-            }
-            set
-            {
-                Initialize();
-                _hostCaching.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the GallerySource. </summary>
-        public GalleryDiskImageSource GallerySource
-        {
-            get
-            {
-                Initialize();
-                return _gallerySource;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _gallerySource, value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for GalleryDataDiskImage. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _lun = DefineProperty<int>(nameof(Lun), new string[] { "lun" }, isRequired: true);
-            _sizeInGB = DefineProperty<int>(nameof(SizeInGB), new string[] { "sizeInGB" }, isOutput: true);
-            _hostCaching = DefineProperty<HostCaching>(nameof(HostCaching), new string[] { "hostCaching" });
-            _gallerySource = DefineModelProperty<GalleryDiskImageSource>(nameof(GallerySource), new string[] { "source" });
             DefineAdditionalProperties();
         }
 

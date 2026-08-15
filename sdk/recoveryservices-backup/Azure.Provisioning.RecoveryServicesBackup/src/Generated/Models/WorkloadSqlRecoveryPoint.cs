@@ -7,10 +7,7 @@
 
 namespace Azure.Provisioning.RecoveryServicesBackup
 {
-    /// <summary>
-    /// SQL specific recoverypoint, specifically encapsulates full/diff recoverypoint along with extended info
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="WorkloadSqlPointInTimeRecoveryPoint"/>.
-    /// </summary>
+    /// <summary> SQL specific recoverypoint, specifically encapsulates full/diff recoverypoint along with extended info. </summary>
     public partial class WorkloadSqlRecoveryPoint : WorkloadRecoveryPoint
     {
         private WorkloadSqlRecoveryPointExtendedInfo _extendedInfo;
