@@ -94,6 +94,16 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
+            if (options.Format != "W" && Optional.IsDefined(PublicIpAddressV6))
+            {
+                writer.WritePropertyName("publicIpAddressV6"u8);
+                writer.WriteStringValue(PublicIpAddressV6);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PrivateIpAddressV6))
+            {
+                writer.WritePropertyName("privateIpAddressV6"u8);
+                writer.WriteStringValue(PrivateIpAddressV6);
+            }
             if (options.Format != "W" && Optional.IsDefined(InstanceName))
             {
                 writer.WritePropertyName("instanceName"u8);
@@ -145,6 +155,8 @@ namespace Azure.ResourceManager.Network.Models
             string name = default;
             string publicIPAddress = default;
             string privateIPAddress = default;
+            string publicIpAddressV6 = default;
+            string privateIpAddressV6 = default;
             string instanceName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -173,6 +185,16 @@ namespace Azure.ResourceManager.Network.Models
                     privateIPAddress = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("publicIpAddressV6"u8))
+                {
+                    publicIpAddressV6 = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("privateIpAddressV6"u8))
+                {
+                    privateIpAddressV6 = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("instanceName"u8))
                 {
                     instanceName = prop.Value.GetString();
@@ -188,6 +210,8 @@ namespace Azure.ResourceManager.Network.Models
                 name,
                 publicIPAddress,
                 privateIPAddress,
+                publicIpAddressV6,
+                privateIpAddressV6,
                 instanceName,
                 additionalBinaryDataProperties);
         }
