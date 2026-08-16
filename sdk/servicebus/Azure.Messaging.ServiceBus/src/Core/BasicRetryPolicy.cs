@@ -137,6 +137,8 @@ namespace Azure.Messaging.ServiceBus.Core
             // depth limit guards against a pathological or cyclic chain of inner exceptions.  An
             // IOException is retriable on its own, so it is unwrapped only when it directly wraps a
             // SocketException; the socket error code then decides whether the failure is terminal.
+            // Keep the unwrap loop and the classification switch in step with the copy in
+            // sdk/eventhub/Azure.Messaging.EventHubs.Shared/src/Core/BasicRetryPolicy.cs.
 
             for (var unwrapCount = 0; unwrapCount < MaximumUnwrapDepth; ++unwrapCount)
             {
