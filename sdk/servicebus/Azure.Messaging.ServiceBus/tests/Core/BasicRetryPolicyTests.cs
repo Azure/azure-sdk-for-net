@@ -44,6 +44,9 @@ namespace Azure.Messaging.ServiceBus.Tests
             yield return new object[] { new HttpRequestException("dummy", new IOException()) };
             yield return new object[] { new AggregateException(new WebSocketException("dummy", new IOException())) };
 
+            // ManagedWebSocket wraps a transport failure in a cancellation when an abort ends a pending receive.
+            yield return new object[] { new OperationCanceledException("dummy", new WebSocketException("dummy", new IOException())) };
+
             // Mid-stream transport failures with a transient socket error stay retriable.  This chain has no
             // HttpRequestException layer, which matches what ManagedWebSocket produces.
 
@@ -63,6 +66,9 @@ namespace Azure.Messaging.ServiceBus.Tests
             yield return new object[] { new TaskCanceledException("dummy", new ServiceBusException(true, null)) };
             yield return new object[] { new OperationCanceledException("dummy", new ServiceBusException(true, null)) };
 
+            // Since .NET 5, an HttpClient timeout arrives as a TaskCanceledException that wraps a TimeoutException.
+            yield return new object[] { new TaskCanceledException("dummy", new TimeoutException()) };
+
             // Aggregate should use the first inner exception as the decision point.
 
             yield return new object[]
@@ -73,6 +79,10 @@ namespace Azure.Messaging.ServiceBus.Tests
                     new ArgumentException()
                 })
             };
+
+            // Synthetic case; five wrappers reach the leaf and pin MaximumUnwrapDepth at 5.
+
+            yield return new object[] { new OperationCanceledException("dummy", new OperationCanceledException("dummy", new OperationCanceledException("dummy", new OperationCanceledException("dummy", new OperationCanceledException("dummy", new ServiceBusException(true, null)))))) };
         }
 
         /// <summary>
@@ -89,6 +99,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             yield return new object[] { new ObjectDisposedException("dummy") };
             yield return new object[] { new SocketException((int)SocketError.HostNotFound) };
             yield return new object[] { new SocketException((int)SocketError.HostUnreachable) };
+            yield return new object[] { new SocketException((int)SocketError.NoRecovery) };
 
             // WebSocketException should use the inner exception as the decision point.
             yield return new object[] { new WebSocketException("dummy", new ServiceBusException(false, null)) };
@@ -118,6 +129,9 @@ namespace Azure.Messaging.ServiceBus.Tests
             yield return new object[] { new TaskCanceledException("dummy", new ServiceBusException(false, null)) };
             yield return new object[] { new OperationCanceledException("dummy", new ServiceBusException(false, null)) };
 
+            // A caller cancellation has no inner exception, so it resolves to null and stays terminal.
+            yield return new object[] { new OperationCanceledException("dummy") };
+
             // Null is not retriable, even if it is a blessed type.
 
             yield return new object[] { (TimeoutException)null };
@@ -133,6 +147,10 @@ namespace Azure.Messaging.ServiceBus.Tests
                     new TimeoutException()
                 })
             };
+
+            // Synthetic case; a sixth wrapper exceeds MaximumUnwrapDepth and does not classify.
+
+            yield return new object[] { new OperationCanceledException("dummy", new OperationCanceledException("dummy", new OperationCanceledException("dummy", new OperationCanceledException("dummy", new OperationCanceledException("dummy", new OperationCanceledException("dummy", new ServiceBusException(true, null))))))) };
         }
 
         /// <summary>
