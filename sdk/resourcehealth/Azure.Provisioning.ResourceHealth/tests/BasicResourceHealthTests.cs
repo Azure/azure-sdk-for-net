@@ -1,0 +1,45 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Threading.Tasks;
+using Azure.Provisioning.Tests;
+using NUnit.Framework;
+
+namespace Azure.Provisioning.ResourceHealth.Tests;
+
+public class BasicResourceHealthTests
+{
+    internal static Trycep CreateResourceHealthEventTest()
+    {
+        return new Trycep().Define(
+            ctx =>
+            {
+                #region Snippet:ResourceHealthEventBasic
+                Infrastructure infra = new();
+
+                ResourceHealthEvent healthEvent = ResourceHealthEvent.FromExisting(nameof(healthEvent), ResourceHealthEvent.ResourceVersions.V2025_05_01);
+                healthEvent.Name = "eventTrackingId";
+                infra.Add(healthEvent);
+
+                infra.Add(new ProvisioningOutput("eventId", typeof(string)) { Value = healthEvent.Id });
+                #endregion
+
+                return infra;
+            });
+    }
+
+    [Test]
+    [Description("https://learn.microsoft.com/azure/templates/microsoft.resourcehealth/2025-05-01/events")]
+    public async Task ReferenceResourceHealthEvent()
+    {
+        await using Trycep test = CreateResourceHealthEventTest();
+        test.Compare(
+            """
+            resource healthEvent 'Microsoft.ResourceHealth/events@2025-05-01' existing = {
+              name: 'eventTrackingId'
+            }
+
+            output eventId string = healthEvent.id
+            """);
+    }
+}
