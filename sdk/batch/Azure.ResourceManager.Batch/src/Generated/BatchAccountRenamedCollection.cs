@@ -21,28 +21,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Batch
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BatchAccountResource"/> and their operations.
-    /// Each <see cref="BatchAccountResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="BatchAccountCollection"/> instance call the GetBatchAccounts method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="BatchAccountRenamedResource"/> and their operations.
+    /// Each <see cref="BatchAccountRenamedResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="BatchAccountRenamedCollection"/> instance call the GetBatchAccountRenameds method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class BatchAccountCollection : ArmCollection, IEnumerable<BatchAccountResource>, IAsyncEnumerable<BatchAccountResource>
+    public partial class BatchAccountRenamedCollection : ArmCollection, IEnumerable<BatchAccountRenamedResource>, IAsyncEnumerable<BatchAccountRenamedResource>
     {
         private readonly ClientDiagnostics _batchAccountClientDiagnostics;
         private readonly BatchAccount _batchAccountRestClient;
 
-        /// <summary> Initializes a new instance of BatchAccountCollection for mocking. </summary>
-        protected BatchAccountCollection()
+        /// <summary> Initializes a new instance of BatchAccountRenamedCollection for mocking. </summary>
+        protected BatchAccountRenamedCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchAccountCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountRenamedCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal BatchAccountCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal BatchAccountRenamedCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(BatchAccountResource.ResourceType, out string batchAccountApiVersion);
-            _batchAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Batch", BatchAccountResource.ResourceType.Namespace, Diagnostics);
-            _batchAccountRestClient = new BatchAccount(_batchAccountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, batchAccountApiVersion ?? "2025-06-01");
+            TryGetApiVersion(BatchAccountRenamedResource.ResourceType, out string batchAccountRenamedApiVersion);
+            _batchAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Batch", BatchAccountRenamedResource.ResourceType.Namespace, Diagnostics);
+            _batchAccountRestClient = new BatchAccount(_batchAccountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, batchAccountRenamedApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<BatchAccountResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string accountName, BatchAccountCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BatchAccountRenamedResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string accountName, BatchAccountCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountRenamedCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.Batch
                 };
                 HttpMessage message = _batchAccountRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, BatchAccountCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                BatchArmOperation<BatchAccountResource> operation = new BatchArmOperation<BatchAccountResource>(
-                    new BatchAccountResourceOperationSource(Client),
+                BatchArmOperation<BatchAccountRenamedResource> operation = new BatchArmOperation<BatchAccountRenamedResource>(
+                    new BatchAccountRenamedResourceOperationSource(Client),
                     _batchAccountClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -137,12 +137,12 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<BatchAccountResource> CreateOrUpdate(WaitUntil waitUntil, string accountName, BatchAccountCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BatchAccountRenamedResource> CreateOrUpdate(WaitUntil waitUntil, string accountName, BatchAccountCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountRenamedCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -152,8 +152,8 @@ namespace Azure.ResourceManager.Batch
                 };
                 HttpMessage message = _batchAccountRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, BatchAccountCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                BatchArmOperation<BatchAccountResource> operation = new BatchArmOperation<BatchAccountResource>(
-                    new BatchAccountResourceOperationSource(Client),
+                BatchArmOperation<BatchAccountRenamedResource> operation = new BatchArmOperation<BatchAccountRenamedResource>(
+                    new BatchAccountRenamedResourceOperationSource(Client),
                     _batchAccountClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<BatchAccountResource>> GetAsync(string accountName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BatchAccountRenamedResource>> GetAsync(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountCollection.Get");
+            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountRenamedCollection.Get");
             scope.Start();
             try
             {
@@ -207,12 +207,12 @@ namespace Azure.ResourceManager.Batch
                 };
                 HttpMessage message = _batchAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BatchAccountData> response = Response.FromValue(BatchAccountData.FromResponse(result), result);
+                Response<BatchAccountRenamedData> response = Response.FromValue(BatchAccountRenamedData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new BatchAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchAccountRenamedResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -242,11 +242,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<BatchAccountResource> Get(string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<BatchAccountRenamedResource> Get(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountCollection.Get");
+            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountRenamedCollection.Get");
             scope.Start();
             try
             {
@@ -256,12 +256,12 @@ namespace Azure.ResourceManager.Batch
                 };
                 HttpMessage message = _batchAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<BatchAccountData> response = Response.FromValue(BatchAccountData.FromResponse(result), result);
+                Response<BatchAccountRenamedData> response = Response.FromValue(BatchAccountRenamedData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new BatchAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchAccountRenamedResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -288,14 +288,14 @@ namespace Azure.ResourceManager.Batch
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BatchAccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BatchAccountResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BatchAccountRenamedResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BatchAccountRenamedResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BatchAccountData, BatchAccountResource>(new BatchAccountGetByResourceGroupAsyncCollectionResultOfT(_batchAccountRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "BatchAccountCollection.GetAll"), data => new BatchAccountResource(Client, data));
+            return new AsyncPageableWrapper<BatchAccountRenamedData, BatchAccountRenamedResource>(new BatchAccountGetByResourceGroupAsyncCollectionResultOfT(_batchAccountRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "BatchAccountRenamedCollection.GetAll"), data => new BatchAccountRenamedResource(Client, data));
         }
 
         /// <summary>
@@ -316,14 +316,14 @@ namespace Azure.ResourceManager.Batch
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BatchAccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BatchAccountResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BatchAccountRenamedResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BatchAccountRenamedResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BatchAccountData, BatchAccountResource>(new BatchAccountGetByResourceGroupCollectionResultOfT(_batchAccountRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "BatchAccountCollection.GetAll"), data => new BatchAccountResource(Client, data));
+            return new PageableWrapper<BatchAccountRenamedData, BatchAccountRenamedResource>(new BatchAccountGetByResourceGroupCollectionResultOfT(_batchAccountRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "BatchAccountRenamedCollection.GetAll"), data => new BatchAccountRenamedResource(Client, data));
         }
 
         /// <summary>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Batch
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountCollection.Exists");
+            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountRenamedCollection.Exists");
             scope.Start();
             try
             {
@@ -362,14 +362,14 @@ namespace Azure.ResourceManager.Batch
                 HttpMessage message = _batchAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<BatchAccountData> response = default;
+                Response<BatchAccountRenamedData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(BatchAccountData.FromResponse(result), result);
+                        response = Response.FromValue(BatchAccountRenamedData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((BatchAccountData)null, result);
+                        response = Response.FromValue((BatchAccountRenamedData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Batch
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountCollection.Exists");
+            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountRenamedCollection.Exists");
             scope.Start();
             try
             {
@@ -419,14 +419,14 @@ namespace Azure.ResourceManager.Batch
                 HttpMessage message = _batchAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<BatchAccountData> response = default;
+                Response<BatchAccountRenamedData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(BatchAccountData.FromResponse(result), result);
+                        response = Response.FromValue(BatchAccountRenamedData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((BatchAccountData)null, result);
+                        response = Response.FromValue((BatchAccountRenamedData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -461,11 +461,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<BatchAccountResource>> GetIfExistsAsync(string accountName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<BatchAccountRenamedResource>> GetIfExistsAsync(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountCollection.GetIfExists");
+            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountRenamedCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -476,23 +476,23 @@ namespace Azure.ResourceManager.Batch
                 HttpMessage message = _batchAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<BatchAccountData> response = default;
+                Response<BatchAccountRenamedData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(BatchAccountData.FromResponse(result), result);
+                        response = Response.FromValue(BatchAccountRenamedData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((BatchAccountData)null, result);
+                        response = Response.FromValue((BatchAccountRenamedData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<BatchAccountResource>(response.GetRawResponse());
+                    return new NoValueResponse<BatchAccountRenamedResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new BatchAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchAccountRenamedResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -522,11 +522,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<BatchAccountResource> GetIfExists(string accountName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<BatchAccountRenamedResource> GetIfExists(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountCollection.GetIfExists");
+            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountRenamedCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -537,23 +537,23 @@ namespace Azure.ResourceManager.Batch
                 HttpMessage message = _batchAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<BatchAccountData> response = default;
+                Response<BatchAccountRenamedData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(BatchAccountData.FromResponse(result), result);
+                        response = Response.FromValue(BatchAccountRenamedData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((BatchAccountData)null, result);
+                        response = Response.FromValue((BatchAccountRenamedData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<BatchAccountResource>(response.GetRawResponse());
+                    return new NoValueResponse<BatchAccountRenamedResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new BatchAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchAccountRenamedResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        IEnumerator<BatchAccountResource> IEnumerable<BatchAccountResource>.GetEnumerator()
+        IEnumerator<BatchAccountRenamedResource> IEnumerable<BatchAccountRenamedResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<BatchAccountResource> IAsyncEnumerable<BatchAccountResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<BatchAccountRenamedResource> IAsyncEnumerable<BatchAccountRenamedResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

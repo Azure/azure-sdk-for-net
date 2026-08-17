@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="accountEndpoint"> The account endpoint used to interact with the Batch service. </param>
         /// <param name="nodeManagementEndpoint"> The endpoint used by compute node to connect to the Batch node management service. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
@@ -43,18 +45,18 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="activeJobAndJobScheduleQuota"> The active job and job schedule quota for the Batch account. </param>
         /// <param name="allowedAuthenticationModes"> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </param>
         /// <param name="identity"> The identity of the Batch account. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="Batch.BatchAccountData"/> instance for mocking. </returns>
-        public static BatchAccountData BatchAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string accountEndpoint = default, string nodeManagementEndpoint = default, BatchProvisioningState? provisioningState = default, BatchAccountPoolAllocationMode? poolAllocationMode = default, BatchKeyVaultReference keyVaultReference = default, BatchPublicNetworkAccess? publicNetworkAccess = default, BatchNetworkProfile networkProfile = default, IEnumerable<BatchPrivateEndpointConnectionData> privateEndpointConnections = default, BatchAccountAutoStorageConfiguration autoStorage = default, BatchAccountEncryptionConfiguration encryption = default, int? dedicatedCoreQuota = default, int? lowPriorityCoreQuota = default, IEnumerable<BatchVmFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily = default, bool? isDedicatedCoreQuotaPerVmFamilyEnforced = default, int? poolQuota = default, int? activeJobAndJobScheduleQuota = default, IEnumerable<BatchAuthenticationMode> allowedAuthenticationModes = default, ManagedServiceIdentity identity = default, IReadOnlyDictionary<string, string> tags = default, AzureLocation? location = default)
+        /// <returns> A new <see cref="Batch.BatchAccountRenamedData"/> instance for mocking. </returns>
+        public static BatchAccountRenamedData BatchAccountRenamedData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string accountEndpoint = default, string nodeManagementEndpoint = default, BatchProvisioningState? provisioningState = default, BatchAccountPoolAllocationMode? poolAllocationMode = default, BatchKeyVaultReference keyVaultReference = default, BatchPublicNetworkAccess? publicNetworkAccess = default, BatchNetworkProfile networkProfile = default, IEnumerable<BatchPrivateEndpointConnectionData> privateEndpointConnections = default, BatchAccountAutoStorageConfiguration autoStorage = default, BatchAccountEncryptionConfiguration encryption = default, int? dedicatedCoreQuota = default, int? lowPriorityCoreQuota = default, IEnumerable<BatchVmFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily = default, bool? isDedicatedCoreQuotaPerVmFamilyEnforced = default, int? poolQuota = default, int? activeJobAndJobScheduleQuota = default, IEnumerable<BatchAuthenticationMode> allowedAuthenticationModes = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new BatchAccountData(
+            return new BatchAccountRenamedData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 accountEndpoint is null && nodeManagementEndpoint is null && provisioningState is null && poolAllocationMode is null && keyVaultReference is null && publicNetworkAccess is null && networkProfile is null && privateEndpointConnections is null && autoStorage is null && encryption is null && dedicatedCoreQuota is null && lowPriorityCoreQuota is null && dedicatedCoreQuotaPerVmFamily is null && isDedicatedCoreQuotaPerVmFamilyEnforced is null && poolQuota is null && activeJobAndJobScheduleQuota is null && allowedAuthenticationModes is null ? default : new BatchAccountProperties(
                     accountEndpoint,
                     nodeManagementEndpoint,
@@ -75,8 +77,6 @@ namespace Azure.ResourceManager.Batch.Models
                     (allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>()).ToList(),
                     default),
                 identity,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 default);
         }
 
@@ -222,12 +222,12 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="publicNetworkAccess"> The network access type for operating on the resources in the Batch account. </param>
         /// <param name="networkProfile"> The network profile only takes effect when publicNetworkAccess is enabled. </param>
         /// <param name="identity"> The identity of the Batch account. </param>
-        /// <returns> A new <see cref="Models.BatchAccountPatch"/> instance for mocking. </returns>
-        public static BatchAccountPatch BatchAccountPatch(IDictionary<string, string> tags = default, BatchAccountAutoStorageBaseConfiguration autoStorage = default, BatchAccountEncryptionConfiguration encryption = default, IEnumerable<BatchAuthenticationMode> allowedAuthenticationModes = default, BatchPublicNetworkAccess? publicNetworkAccess = default, BatchNetworkProfile networkProfile = default, ManagedServiceIdentity identity = default)
+        /// <returns> A new <see cref="Models.BatchAccountRenamedPatch"/> instance for mocking. </returns>
+        public static BatchAccountRenamedPatch BatchAccountRenamedPatch(IDictionary<string, string> tags = default, BatchAccountAutoStorageBaseConfiguration autoStorage = default, BatchAccountEncryptionConfiguration encryption = default, IEnumerable<BatchAuthenticationMode> allowedAuthenticationModes = default, BatchPublicNetworkAccess? publicNetworkAccess = default, BatchNetworkProfile networkProfile = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new BatchAccountPatch(tags ?? new ChangeTrackingDictionary<string, string>(), autoStorage is null && encryption is null && allowedAuthenticationModes is null && publicNetworkAccess is null && networkProfile is null ? default : new BatchAccountUpdateProperties(
+            return new BatchAccountRenamedPatch(tags ?? new ChangeTrackingDictionary<string, string>(), autoStorage is null && encryption is null && allowedAuthenticationModes is null && publicNetworkAccess is null && networkProfile is null ? default : new BatchAccountUpdateProperties(
                 autoStorage,
                 encryption,
                 (allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>()).ToList(),
@@ -1129,65 +1129,6 @@ namespace Azure.ResourceManager.Batch.Models
         public static BatchNameAvailabilityResult BatchNameAvailabilityResult(bool? isNameAvailable = default, BatchNameUnavailableReason? reason = default, string message = default)
         {
             return new BatchNameAvailabilityResult(isNameAvailable, reason, message, default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Batch.BatchAccountData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="identity"> The identity of the Batch account. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
-        /// <param name="accountEndpoint"> The account endpoint used to interact with the Batch service. </param>
-        /// <param name="nodeManagementEndpoint"> The endpoint used by compute node to connect to the Batch node management service. </param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <param name="poolAllocationMode"> The allocation mode for creating pools in the Batch account. </param>
-        /// <param name="keyVaultReference"> Identifies the Azure key vault associated with a Batch account. </param>
-        /// <param name="publicNetworkAccess"> The network access type for operating on the resources in the Batch account. </param>
-        /// <param name="networkProfile"> The network profile only takes effect when publicNetworkAccess is enabled. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the Batch account. </param>
-        /// <param name="autoStorage"> Contains information about the auto-storage account associated with a Batch account. </param>
-        /// <param name="encryption"> Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead. </param>
-        /// <param name="dedicatedCoreQuota"> For accounts with PoolAllocationMode set to UserSubscription, quota is managed on the subscription so this value is not returned. </param>
-        /// <param name="lowPriorityCoreQuota"> For accounts with PoolAllocationMode set to UserSubscription, quota is managed on the subscription so this value is not returned. </param>
-        /// <param name="dedicatedCoreQuotaPerVmFamily"> A list of the dedicated core quota per Virtual Machine family for the Batch account. For accounts with PoolAllocationMode set to UserSubscription, quota is managed on the subscription so this value is not returned. </param>
-        /// <param name="isDedicatedCoreQuotaPerVmFamilyEnforced"> If this flag is true, dedicated core quota is enforced via both the dedicatedCoreQuotaPerVMFamily and dedicatedCoreQuota properties on the account. If this flag is false, dedicated core quota is enforced only via the dedicatedCoreQuota property on the account and does not consider Virtual Machine family. </param>
-        /// <param name="poolQuota"> The pool quota for the Batch account. </param>
-        /// <param name="activeJobAndJobScheduleQuota"> The active job and job schedule quota for the Batch account. </param>
-        /// <param name="allowedAuthenticationModes"> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <param name="tags"> The tags of the resource. </param>
-        /// <returns> A new <see cref="Batch.BatchAccountData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BatchAccountData BatchAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedServiceIdentity identity = default, string accountEndpoint = default, string nodeManagementEndpoint = default, BatchProvisioningState? provisioningState = default, BatchAccountPoolAllocationMode? poolAllocationMode = default, BatchKeyVaultReference keyVaultReference = default, BatchPublicNetworkAccess? publicNetworkAccess = default, BatchNetworkProfile networkProfile = default, IEnumerable<BatchPrivateEndpointConnectionData> privateEndpointConnections = default, BatchAccountAutoStorageConfiguration autoStorage = default, BatchAccountEncryptionConfiguration encryption = default, int? dedicatedCoreQuota = default, int? lowPriorityCoreQuota = default, IEnumerable<BatchVmFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily = default, bool? isDedicatedCoreQuotaPerVmFamilyEnforced = default, int? poolQuota = default, int? activeJobAndJobScheduleQuota = default, IEnumerable<BatchAuthenticationMode> allowedAuthenticationModes = default, AzureLocation? location = default, IReadOnlyDictionary<string, string> tags = default)
-        {
-            return new BatchAccountData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                accountEndpoint is null && nodeManagementEndpoint is null && provisioningState is null && poolAllocationMode is null && keyVaultReference is null && publicNetworkAccess is null && networkProfile is null && privateEndpointConnections is null && autoStorage is null && encryption is null && dedicatedCoreQuota is null && lowPriorityCoreQuota is null && dedicatedCoreQuotaPerVmFamily is null && isDedicatedCoreQuotaPerVmFamilyEnforced is null && poolQuota is null && activeJobAndJobScheduleQuota is null && allowedAuthenticationModes is null ? default : new BatchAccountProperties(
-                    accountEndpoint,
-                    nodeManagementEndpoint,
-                    provisioningState,
-                    poolAllocationMode,
-                    keyVaultReference,
-                    publicNetworkAccess,
-                    networkProfile,
-                    (privateEndpointConnections ?? new ChangeTrackingList<BatchPrivateEndpointConnectionData>()).ToList(),
-                    autoStorage,
-                    encryption,
-                    dedicatedCoreQuota,
-                    lowPriorityCoreQuota,
-                    (dedicatedCoreQuotaPerVmFamily ?? new ChangeTrackingList<BatchVmFamilyCoreQuota>()).ToList(),
-                    isDedicatedCoreQuotaPerVmFamilyEnforced,
-                    poolQuota,
-                    activeJobAndJobScheduleQuota,
-                    (allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>()).ToList(),
-                    default),
-                identity,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Batch.BatchPrivateEndpointConnectionData"/>. </summary>

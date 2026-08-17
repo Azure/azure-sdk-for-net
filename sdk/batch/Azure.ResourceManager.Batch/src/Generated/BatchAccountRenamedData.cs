@@ -14,44 +14,39 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Batch
 {
     /// <summary> Contains information about an Azure Batch account. </summary>
-    public partial class BatchAccountData : ResourceData
+    public partial class BatchAccountRenamedData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchAccountData"/>. </summary>
-        public BatchAccountData()
+        /// <summary> Initializes a new instance of <see cref="BatchAccountRenamedData"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        internal BatchAccountRenamedData(AzureLocation location) : base(location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchAccountData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountRenamedData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="identity"> The identity of the Batch account. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The properties associated with the account. </param>
+        /// <param name="identity"> The identity of the Batch account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BatchAccountProperties properties, ManagedServiceIdentity identity, IReadOnlyDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal BatchAccountRenamedData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BatchAccountProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Identity = identity;
-            Tags = tags;
-            Location = location;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        internal BatchAccountProperties Properties { get; set; }
+        /// <summary> The properties associated with the account. </summary>
+        internal BatchAccountProperties Properties { get; }
 
         /// <summary> The identity of the Batch account. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
-
-        /// <summary> The geo-location where the resource lives. </summary>
-        public AzureLocation? Location { get; set; }
+        public ManagedServiceIdentity Identity { get; }
 
         /// <summary> The account endpoint used to interact with the Batch service. </summary>
         public string AccountEndpoint
@@ -105,14 +100,6 @@ namespace Azure.ResourceManager.Batch
             {
                 return Properties is null ? default : Properties.PublicNetworkAccess;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new BatchAccountProperties();
-                }
-                Properties.PublicNetworkAccess = value;
-            }
         }
 
         /// <summary> The network profile only takes effect when publicNetworkAccess is enabled. </summary>
@@ -122,14 +109,6 @@ namespace Azure.ResourceManager.Batch
             {
                 return Properties is null ? default : Properties.NetworkProfile;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new BatchAccountProperties();
-                }
-                Properties.NetworkProfile = value;
-            }
         }
 
         /// <summary> List of private endpoint connections associated with the Batch account. </summary>
@@ -137,11 +116,7 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new BatchAccountProperties();
-                }
-                return Properties.PrivateEndpointConnections;
+                return Properties is null ? default : Properties.PrivateEndpointConnections;
             }
         }
 
@@ -186,11 +161,7 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new BatchAccountProperties();
-                }
-                return Properties.DedicatedCoreQuotaPerVmFamily;
+                return Properties is null ? default : Properties.DedicatedCoreQuotaPerVmFamily;
             }
         }
 
@@ -226,11 +197,7 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new BatchAccountProperties();
-                }
-                return Properties.AllowedAuthenticationModes;
+                return Properties is null ? default : Properties.AllowedAuthenticationModes;
             }
         }
     }

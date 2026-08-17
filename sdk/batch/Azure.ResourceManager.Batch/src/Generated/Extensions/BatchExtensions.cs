@@ -39,21 +39,21 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BatchAccountResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="BatchAccountRenamedResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBatchArmClient.GetBatchAccountResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBatchArmClient.GetBatchAccountRenamedResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BatchAccountResource"/> object. </returns>
-        public static BatchAccountResource GetBatchAccountResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BatchAccountRenamedResource"/> object. </returns>
+        public static BatchAccountRenamedResource GetBatchAccountRenamedResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableBatchArmClient(client).GetBatchAccountResource(id);
+            return GetMockableBatchArmClient(client).GetBatchAccountRenamedResource(id);
         }
 
         /// <summary>
@@ -183,27 +183,27 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary>
-        /// Gets a collection of BatchAccounts in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of BatchAccountRenameds in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBatchResourceGroupResource.GetBatchAccounts()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBatchResourceGroupResource.GetBatchAccountRenameds()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of BatchAccounts and their operations over a BatchAccountResource. </returns>
-        public static BatchAccountCollection GetBatchAccounts(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of BatchAccountRenameds and their operations over a BatchAccountRenamedResource. </returns>
+        public static BatchAccountRenamedCollection GetBatchAccountRenameds(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableBatchResourceGroupResource(resourceGroupResource).GetBatchAccounts();
+            return GetMockableBatchResourceGroupResource(resourceGroupResource).GetBatchAccountRenameds();
         }
 
         /// <summary>
         /// Gets information about the specified Batch account.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBatchResourceGroupResource.GetBatchAccountAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBatchResourceGroupResource.GetBatchAccountRenamedAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -211,18 +211,18 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<BatchAccountResource>> GetBatchAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
+        public static async Task<Response<BatchAccountRenamedResource>> GetBatchAccountRenamedAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableBatchResourceGroupResource(resourceGroupResource).GetBatchAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableBatchResourceGroupResource(resourceGroupResource).GetBatchAccountRenamedAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets information about the specified Batch account.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBatchResourceGroupResource.GetBatchAccount(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBatchResourceGroupResource.GetBatchAccountRenamed(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -230,47 +230,47 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<BatchAccountResource> GetBatchAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
+        public static Response<BatchAccountRenamedResource> GetBatchAccountRenamed(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableBatchResourceGroupResource(resourceGroupResource).GetBatchAccount(accountName, cancellationToken);
+            return GetMockableBatchResourceGroupResource(resourceGroupResource).GetBatchAccountRenamed(accountName, cancellationToken);
         }
 
         /// <summary>
         /// Gets information about the Batch accounts associated with the subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBatchSubscriptionResource.GetBatchAccountsAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBatchSubscriptionResource.GetBatchAccountRenamedsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="BatchAccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BatchAccountResource> GetBatchAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BatchAccountRenamedResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<BatchAccountRenamedResource> GetBatchAccountRenamedsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableBatchSubscriptionResource(subscriptionResource).GetBatchAccountsAsync(cancellationToken);
+            return GetMockableBatchSubscriptionResource(subscriptionResource).GetBatchAccountRenamedsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Gets information about the Batch accounts associated with the subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBatchSubscriptionResource.GetBatchAccounts(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBatchSubscriptionResource.GetBatchAccountRenameds(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="BatchAccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BatchAccountResource> GetBatchAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BatchAccountRenamedResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<BatchAccountRenamedResource> GetBatchAccountRenameds(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableBatchSubscriptionResource(subscriptionResource).GetBatchAccounts(cancellationToken);
+            return GetMockableBatchSubscriptionResource(subscriptionResource).GetBatchAccountRenameds(cancellationToken);
         }
 
         /// <summary>

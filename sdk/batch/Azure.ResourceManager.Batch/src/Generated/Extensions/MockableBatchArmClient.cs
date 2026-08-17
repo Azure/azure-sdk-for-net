@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.Batch.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="BatchAccountResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="BatchAccountRenamedResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BatchAccountResource"/> object. </returns>
-        public virtual BatchAccountResource GetBatchAccountResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BatchAccountRenamedResource"/> object. </returns>
+        public virtual BatchAccountRenamedResource GetBatchAccountRenamedResource(ResourceIdentifier id)
         {
-            BatchAccountResource.ValidateResourceId(id);
-            return new BatchAccountResource(Client, id);
+            BatchAccountRenamedResource.ValidateResourceId(id);
+            return new BatchAccountRenamedResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="BatchAccountDetectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>

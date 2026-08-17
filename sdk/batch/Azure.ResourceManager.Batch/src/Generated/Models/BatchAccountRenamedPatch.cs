@@ -13,23 +13,23 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Parameters for updating an Azure Batch account. </summary>
-    public partial class BatchAccountPatch
+    public partial class BatchAccountRenamedPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchAccountPatch"/>. </summary>
-        public BatchAccountPatch()
+        /// <summary> Initializes a new instance of <see cref="BatchAccountRenamedPatch"/>. </summary>
+        public BatchAccountRenamedPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchAccountPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountRenamedPatch"/>. </summary>
         /// <param name="tags"> The user-specified tags associated with the account. </param>
         /// <param name="properties"> The properties of the account. </param>
         /// <param name="identity"> The identity of the Batch account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchAccountPatch(IDictionary<string, string> tags, BatchAccountUpdateProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchAccountRenamedPatch(IDictionary<string, string> tags, BatchAccountUpdateProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;
@@ -77,6 +77,19 @@ namespace Azure.ResourceManager.Batch.Models
                     Properties = new BatchAccountUpdateProperties();
                 }
                 Properties.Encryption = value;
+            }
+        }
+
+        /// <summary> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </summary>
+        public IList<BatchAuthenticationMode> AllowedAuthenticationModes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountUpdateProperties();
+                }
+                return Properties.AllowedAuthenticationModes;
             }
         }
 

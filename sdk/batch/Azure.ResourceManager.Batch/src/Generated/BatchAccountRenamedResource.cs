@@ -20,40 +20,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Batch
 {
     /// <summary>
-    /// A class representing a BatchAccount along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BatchAccountResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetBatchAccounts method.
+    /// A class representing a BatchAccountRenamed along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BatchAccountRenamedResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetBatchAccountRenameds method.
     /// </summary>
-    public partial class BatchAccountResource : ArmResource
+    public partial class BatchAccountRenamedResource : ArmResource
     {
         private readonly ClientDiagnostics _batchAccountClientDiagnostics;
         private readonly BatchAccount _batchAccountRestClient;
-        private readonly BatchAccountData _data;
+        private readonly BatchAccountRenamedData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Batch/batchAccounts";
 
-        /// <summary> Initializes a new instance of BatchAccountResource for mocking. </summary>
-        protected BatchAccountResource()
+        /// <summary> Initializes a new instance of BatchAccountRenamedResource for mocking. </summary>
+        protected BatchAccountRenamedResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountRenamedResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BatchAccountResource(ArmClient client, BatchAccountData data) : this(client, data.Id)
+        internal BatchAccountRenamedResource(ArmClient client, BatchAccountRenamedData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountRenamedResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal BatchAccountResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal BatchAccountRenamedResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string batchAccountApiVersion);
+            TryGetApiVersion(ResourceType, out string batchAccountRenamedApiVersion);
             _batchAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Batch", ResourceType.Namespace, Diagnostics);
-            _batchAccountRestClient = new BatchAccount(_batchAccountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, batchAccountApiVersion ?? "2025-06-01");
+            _batchAccountRestClient = new BatchAccount(_batchAccountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, batchAccountRenamedApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Batch
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual BatchAccountData Data
+        public virtual BatchAccountRenamedData Data
         {
             get
             {
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BatchAccountResource"/>. </description>
+        /// <description> <see cref="BatchAccountRenamedResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BatchAccountResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BatchAccountRenamedResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountResource.Get");
+            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountRenamedResource.Get");
             scope.Start();
             try
             {
@@ -127,12 +127,12 @@ namespace Azure.ResourceManager.Batch
                 };
                 HttpMessage message = _batchAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BatchAccountData> response = Response.FromValue(BatchAccountData.FromResponse(result), result);
+                Response<BatchAccountRenamedData> response = Response.FromValue(BatchAccountRenamedData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new BatchAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchAccountRenamedResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BatchAccountResource"/>. </description>
+        /// <description> <see cref="BatchAccountRenamedResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BatchAccountResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<BatchAccountRenamedResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountResource.Get");
+            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountRenamedResource.Get");
             scope.Start();
             try
             {
@@ -175,12 +175,12 @@ namespace Azure.ResourceManager.Batch
                 };
                 HttpMessage message = _batchAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<BatchAccountData> response = Response.FromValue(BatchAccountData.FromResponse(result), result);
+                Response<BatchAccountRenamedData> response = Response.FromValue(BatchAccountRenamedData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new BatchAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchAccountRenamedResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,18 +206,18 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BatchAccountResource"/>. </description>
+        /// <description> <see cref="BatchAccountRenamedResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Additional parameters for account update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<BatchAccountResource>> UpdateAsync(BatchAccountPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BatchAccountRenamedResource>> UpdateAsync(BatchAccountRenamedPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountResource.Update");
+            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountRenamedResource.Update");
             scope.Start();
             try
             {
@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.Batch
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _batchAccountRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BatchAccountPatch.ToRequestContent(patch), context);
+                HttpMessage message = _batchAccountRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BatchAccountRenamedPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BatchAccountData> response = Response.FromValue(BatchAccountData.FromResponse(result), result);
+                Response<BatchAccountRenamedData> response = Response.FromValue(BatchAccountRenamedData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new BatchAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchAccountRenamedResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -258,18 +258,18 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BatchAccountResource"/>. </description>
+        /// <description> <see cref="BatchAccountRenamedResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Additional parameters for account update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<BatchAccountResource> Update(BatchAccountPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<BatchAccountRenamedResource> Update(BatchAccountRenamedPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountResource.Update");
+            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountRenamedResource.Update");
             scope.Start();
             try
             {
@@ -277,14 +277,14 @@ namespace Azure.ResourceManager.Batch
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _batchAccountRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BatchAccountPatch.ToRequestContent(patch), context);
+                HttpMessage message = _batchAccountRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BatchAccountRenamedPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<BatchAccountData> response = Response.FromValue(BatchAccountData.FromResponse(result), result);
+                Response<BatchAccountRenamedData> response = Response.FromValue(BatchAccountRenamedData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new BatchAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BatchAccountRenamedResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BatchAccountResource"/>. </description>
+        /// <description> <see cref="BatchAccountRenamedResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountResource.Delete");
+            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountRenamedResource.Delete");
             scope.Start();
             try
             {
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BatchAccountResource"/>. </description>
+        /// <description> <see cref="BatchAccountRenamedResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountResource.Delete");
+            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountRenamedResource.Delete");
             scope.Start();
             try
             {
@@ -408,14 +408,14 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BatchAccountResource"/>. </description>
+        /// <description> <see cref="BatchAccountRenamedResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BatchAccountKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountResource.GetKeys");
+            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountRenamedResource.GetKeys");
             scope.Start();
             try
             {
@@ -456,14 +456,14 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BatchAccountResource"/>. </description>
+        /// <description> <see cref="BatchAccountRenamedResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BatchAccountKeys> GetKeys(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountResource.GetKeys");
+            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountRenamedResource.GetKeys");
             scope.Start();
             try
             {
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BatchAccountResource"/>. </description>
+        /// <description> <see cref="BatchAccountRenamedResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Batch
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "BatchAccountResource.GetOutboundNetworkDependenciesEndpoints");
+                "BatchAccountRenamedResource.GetOutboundNetworkDependenciesEndpoints");
         }
 
         /// <summary>
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BatchAccountResource"/>. </description>
+        /// <description> <see cref="BatchAccountRenamedResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.Batch
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "BatchAccountResource.GetOutboundNetworkDependenciesEndpoints");
+                "BatchAccountRenamedResource.GetOutboundNetworkDependenciesEndpoints");
         }
 
         /// <summary>
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BatchAccountResource"/>. </description>
+        /// <description> <see cref="BatchAccountRenamedResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.Batch
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountResource.RegenerateKey");
+            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountRenamedResource.RegenerateKey");
             scope.Start();
             try
             {
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BatchAccountResource"/>. </description>
+        /// <description> <see cref="BatchAccountRenamedResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.Batch
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountResource.RegenerateKey");
+            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountRenamedResource.RegenerateKey");
             scope.Start();
             try
             {
@@ -684,14 +684,14 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BatchAccountResource"/>. </description>
+        /// <description> <see cref="BatchAccountRenamedResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> SynchronizeAutoStorageKeysAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountResource.SynchronizeAutoStorageKeys");
+            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountRenamedResource.SynchronizeAutoStorageKeys");
             scope.Start();
             try
             {
@@ -727,14 +727,14 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BatchAccountResource"/>. </description>
+        /// <description> <see cref="BatchAccountRenamedResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response SynchronizeAutoStorageKeys(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountResource.SynchronizeAutoStorageKeys");
+            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountRenamedResource.SynchronizeAutoStorageKeys");
             scope.Start();
             try
             {
@@ -758,12 +758,12 @@ namespace Azure.ResourceManager.Batch
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<BatchAccountResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BatchAccountRenamedResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountResource.AddTag");
+            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountRenamedResource.AddTag");
             scope.Start();
             try
             {
@@ -778,19 +778,19 @@ namespace Azure.ResourceManager.Batch
                     };
                     HttpMessage message = _batchAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<BatchAccountData> response = Response.FromValue(BatchAccountData.FromResponse(result), result);
-                    return Response.FromValue(new BatchAccountResource(Client, response.Value), response.GetRawResponse());
+                    Response<BatchAccountRenamedData> response = Response.FromValue(BatchAccountRenamedData.FromResponse(result), result);
+                    return Response.FromValue(new BatchAccountRenamedResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    BatchAccountData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BatchAccountPatch patch = new BatchAccountPatch();
+                    BatchAccountRenamedData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BatchAccountRenamedPatch patch = new BatchAccountRenamedPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<BatchAccountResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<BatchAccountRenamedResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -806,12 +806,12 @@ namespace Azure.ResourceManager.Batch
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<BatchAccountResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<BatchAccountRenamedResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountResource.AddTag");
+            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountRenamedResource.AddTag");
             scope.Start();
             try
             {
@@ -826,19 +826,19 @@ namespace Azure.ResourceManager.Batch
                     };
                     HttpMessage message = _batchAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<BatchAccountData> response = Response.FromValue(BatchAccountData.FromResponse(result), result);
-                    return Response.FromValue(new BatchAccountResource(Client, response.Value), response.GetRawResponse());
+                    Response<BatchAccountRenamedData> response = Response.FromValue(BatchAccountRenamedData.FromResponse(result), result);
+                    return Response.FromValue(new BatchAccountRenamedResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    BatchAccountData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BatchAccountPatch patch = new BatchAccountPatch();
+                    BatchAccountRenamedData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BatchAccountRenamedPatch patch = new BatchAccountRenamedPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<BatchAccountResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<BatchAccountRenamedResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -853,11 +853,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<BatchAccountResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BatchAccountRenamedResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountResource.SetTags");
+            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountRenamedResource.SetTags");
             scope.Start();
             try
             {
@@ -873,15 +873,15 @@ namespace Azure.ResourceManager.Batch
                     };
                     HttpMessage message = _batchAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<BatchAccountData> response = Response.FromValue(BatchAccountData.FromResponse(result), result);
-                    return Response.FromValue(new BatchAccountResource(Client, response.Value), response.GetRawResponse());
+                    Response<BatchAccountRenamedData> response = Response.FromValue(BatchAccountRenamedData.FromResponse(result), result);
+                    return Response.FromValue(new BatchAccountRenamedResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    BatchAccountData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BatchAccountPatch patch = new BatchAccountPatch();
+                    BatchAccountRenamedData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BatchAccountRenamedPatch patch = new BatchAccountRenamedPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<BatchAccountResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<BatchAccountRenamedResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -896,11 +896,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<BatchAccountResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<BatchAccountRenamedResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountResource.SetTags");
+            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountRenamedResource.SetTags");
             scope.Start();
             try
             {
@@ -916,15 +916,15 @@ namespace Azure.ResourceManager.Batch
                     };
                     HttpMessage message = _batchAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<BatchAccountData> response = Response.FromValue(BatchAccountData.FromResponse(result), result);
-                    return Response.FromValue(new BatchAccountResource(Client, response.Value), response.GetRawResponse());
+                    Response<BatchAccountRenamedData> response = Response.FromValue(BatchAccountRenamedData.FromResponse(result), result);
+                    return Response.FromValue(new BatchAccountRenamedResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    BatchAccountData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BatchAccountPatch patch = new BatchAccountPatch();
+                    BatchAccountRenamedData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BatchAccountRenamedPatch patch = new BatchAccountRenamedPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<BatchAccountResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<BatchAccountRenamedResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -939,11 +939,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<BatchAccountResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BatchAccountRenamedResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountResource.RemoveTag");
+            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountRenamedResource.RemoveTag");
             scope.Start();
             try
             {
@@ -958,19 +958,19 @@ namespace Azure.ResourceManager.Batch
                     };
                     HttpMessage message = _batchAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<BatchAccountData> response = Response.FromValue(BatchAccountData.FromResponse(result), result);
-                    return Response.FromValue(new BatchAccountResource(Client, response.Value), response.GetRawResponse());
+                    Response<BatchAccountRenamedData> response = Response.FromValue(BatchAccountRenamedData.FromResponse(result), result);
+                    return Response.FromValue(new BatchAccountRenamedResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    BatchAccountData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BatchAccountPatch patch = new BatchAccountPatch();
+                    BatchAccountRenamedData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BatchAccountRenamedPatch patch = new BatchAccountRenamedPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<BatchAccountResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<BatchAccountRenamedResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -985,11 +985,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<BatchAccountResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<BatchAccountRenamedResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountResource.RemoveTag");
+            using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountRenamedResource.RemoveTag");
             scope.Start();
             try
             {
@@ -1004,19 +1004,19 @@ namespace Azure.ResourceManager.Batch
                     };
                     HttpMessage message = _batchAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<BatchAccountData> response = Response.FromValue(BatchAccountData.FromResponse(result), result);
-                    return Response.FromValue(new BatchAccountResource(Client, response.Value), response.GetRawResponse());
+                    Response<BatchAccountRenamedData> response = Response.FromValue(BatchAccountRenamedData.FromResponse(result), result);
+                    return Response.FromValue(new BatchAccountRenamedResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    BatchAccountData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BatchAccountPatch patch = new BatchAccountPatch();
+                    BatchAccountRenamedData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BatchAccountRenamedPatch patch = new BatchAccountRenamedPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<BatchAccountResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<BatchAccountRenamedResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1027,7 +1027,7 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        /// <summary> Gets a collection of BatchAccountDetectors in the <see cref="BatchAccountResource"/>. </summary>
+        /// <summary> Gets a collection of BatchAccountDetectors in the <see cref="BatchAccountRenamedResource"/>. </summary>
         /// <returns> An object representing collection of BatchAccountDetectors and their operations over a BatchAccountDetectorResource. </returns>
         public virtual BatchAccountDetectorCollection GetBatchAccountDetectors()
         {
@@ -1060,7 +1060,7 @@ namespace Azure.ResourceManager.Batch
             return GetBatchAccountDetectors().Get(detectorId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BatchApplications in the <see cref="BatchAccountResource"/>. </summary>
+        /// <summary> Gets a collection of BatchApplications in the <see cref="BatchAccountRenamedResource"/>. </summary>
         /// <returns> An object representing collection of BatchApplications and their operations over a BatchApplicationResource. </returns>
         public virtual BatchApplicationCollection GetBatchApplications()
         {
@@ -1093,7 +1093,7 @@ namespace Azure.ResourceManager.Batch
             return GetBatchApplications().Get(applicationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BatchPrivateLinkResources in the <see cref="BatchAccountResource"/>. </summary>
+        /// <summary> Gets a collection of BatchPrivateLinkResources in the <see cref="BatchAccountRenamedResource"/>. </summary>
         /// <returns> An object representing collection of BatchPrivateLinkResources and their operations over a BatchPrivateLinkResource. </returns>
         public virtual BatchPrivateLinkResourceCollection GetBatchPrivateLinkResources()
         {
@@ -1126,7 +1126,7 @@ namespace Azure.ResourceManager.Batch
             return GetBatchPrivateLinkResources().Get(privateLinkResourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BatchPrivateEndpointConnections in the <see cref="BatchAccountResource"/>. </summary>
+        /// <summary> Gets a collection of BatchPrivateEndpointConnections in the <see cref="BatchAccountRenamedResource"/>. </summary>
         /// <returns> An object representing collection of BatchPrivateEndpointConnections and their operations over a BatchPrivateEndpointConnectionResource. </returns>
         public virtual BatchPrivateEndpointConnectionCollection GetBatchPrivateEndpointConnections()
         {
@@ -1159,7 +1159,7 @@ namespace Azure.ResourceManager.Batch
             return GetBatchPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BatchAccountPools in the <see cref="BatchAccountResource"/>. </summary>
+        /// <summary> Gets a collection of BatchAccountPools in the <see cref="BatchAccountRenamedResource"/>. </summary>
         /// <returns> An object representing collection of BatchAccountPools and their operations over a BatchAccountPoolResource. </returns>
         public virtual BatchAccountPoolCollection GetBatchAccountPools()
         {
@@ -1192,7 +1192,7 @@ namespace Azure.ResourceManager.Batch
             return GetBatchAccountPools().Get(poolName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkSecurityPerimeterConfigurations in the <see cref="BatchAccountResource"/>. </summary>
+        /// <summary> Gets a collection of NetworkSecurityPerimeterConfigurations in the <see cref="BatchAccountRenamedResource"/>. </summary>
         /// <returns> An object representing collection of NetworkSecurityPerimeterConfigurations and their operations over a NetworkSecurityPerimeterConfigurationResource. </returns>
         public virtual NetworkSecurityPerimeterConfigurationCollection GetNetworkSecurityPerimeterConfigurations()
         {

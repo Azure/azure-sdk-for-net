@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Batch
 {
     /// <summary>
     /// A class representing a collection of <see cref="BatchAccountPoolResource"/> and their operations.
-    /// Each <see cref="BatchAccountPoolResource"/> in the collection will belong to the same instance of <see cref="BatchAccountResource"/>.
-    /// To get a <see cref="BatchAccountPoolCollection"/> instance call the GetBatchAccountPools method from an instance of <see cref="BatchAccountResource"/>.
+    /// Each <see cref="BatchAccountPoolResource"/> in the collection will belong to the same instance of <see cref="BatchAccountRenamedResource"/>.
+    /// To get a <see cref="BatchAccountPoolCollection"/> instance call the GetBatchAccountPools method from an instance of <see cref="BatchAccountRenamedResource"/>.
     /// </summary>
     public partial class BatchAccountPoolCollection : ArmCollection, IEnumerable<BatchAccountPoolResource>, IAsyncEnumerable<BatchAccountPoolResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Batch
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != BatchAccountResource.ResourceType)
+            if (id.ResourceType != BatchAccountRenamedResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BatchAccountResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BatchAccountRenamedResource.ResourceType), nameof(id));
             }
         }
 

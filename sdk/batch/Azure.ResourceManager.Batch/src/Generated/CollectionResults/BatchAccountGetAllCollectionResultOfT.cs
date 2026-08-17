@@ -14,7 +14,7 @@ using Azure.ResourceManager.Batch.Models;
 
 namespace Azure.ResourceManager.Batch
 {
-    internal partial class BatchAccountGetAllCollectionResultOfT : Pageable<BatchAccountData>
+    internal partial class BatchAccountGetAllCollectionResultOfT : Pageable<BatchAccountRenamedData>
     {
         private readonly BatchAccount _client;
         private readonly Guid _subscriptionId;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of BatchAccountGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<BatchAccountData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<BatchAccountRenamedData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Batch
                 }
                 BatchAccountListResult result = BatchAccountListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<BatchAccountData>.FromValues((IReadOnlyList<BatchAccountData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<BatchAccountRenamedData>.FromValues((IReadOnlyList<BatchAccountRenamedData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

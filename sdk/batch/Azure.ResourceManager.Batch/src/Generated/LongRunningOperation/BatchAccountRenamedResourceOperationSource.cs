@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Batch
 {
     /// <summary></summary>
-    internal partial class BatchAccountResourceOperationSource : IOperationSource<BatchAccountResource>
+    internal partial class BatchAccountRenamedResourceOperationSource : IOperationSource<BatchAccountRenamedResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal BatchAccountResourceOperationSource(ArmClient client)
+        internal BatchAccountRenamedResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Batch
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        BatchAccountResource IOperationSource<BatchAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        BatchAccountRenamedResource IOperationSource<BatchAccountRenamedResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            BatchAccountData data = BatchAccountData.DeserializeBatchAccountData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new BatchAccountResource(_client, data);
+            BatchAccountRenamedData data = BatchAccountRenamedData.DeserializeBatchAccountRenamedData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new BatchAccountRenamedResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<BatchAccountResource> IOperationSource<BatchAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<BatchAccountRenamedResource> IOperationSource<BatchAccountRenamedResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            BatchAccountData data = BatchAccountData.DeserializeBatchAccountData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new BatchAccountResource(_client, data);
+            BatchAccountRenamedData data = BatchAccountRenamedData.DeserializeBatchAccountRenamedData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new BatchAccountRenamedResource(_client, data);
         }
     }
 }
