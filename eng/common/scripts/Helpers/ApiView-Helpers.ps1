@@ -65,6 +65,10 @@ function Process-ReviewStatusCode($statusCode, $packageName, $apiApprovalStatus)
   $apiApprovalDetails = "API Review is not approved for package $($packageName). Release pipeline will fail if API review is not approved for a GA version release. You can check http://aka.ms/azsdk/engsys/apireview/faq for more details on API Approval."
   $apiApprovalDetails += " Once your API is approved, re-trigger the release pipeline again."
 
+  # 200 API approved (and package name approved - legacy, now handled at spec PR level)
+  # 201 API review is not approved (package name approved - legacy)
+  # 202 API review is not approved (package name not approved - legacy)
+
   switch ($statusCode)
   {
     200
@@ -72,9 +76,13 @@ function Process-ReviewStatusCode($statusCode, $packageName, $apiApprovalStatus)
       $apiApprovalDetails = "API Review is approved for package $($packageName)"
       $apiApproved = $true
     }
-    { $_ -in 201, 202 }
+    201
     {
-      # API not approved
+      # API not approved, but package name was approved (legacy distinction)
+    }
+    202
+    {
+      # API not approved, package name not approved (legacy distinction)
     }
     default
     {
