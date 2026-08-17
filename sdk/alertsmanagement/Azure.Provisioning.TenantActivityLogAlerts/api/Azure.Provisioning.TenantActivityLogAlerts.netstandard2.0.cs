@@ -30,13 +30,10 @@ namespace Azure.Provisioning.TenantActivityLogAlerts
         public Azure.Provisioning.BicepDictionary<string> WebhookProperties { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class TenantActivityLogAlertAnyOfOrLeafCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class TenantActivityLogAlertAnyOfOrLeafCondition : Azure.Provisioning.TenantActivityLogAlerts.TenantActivityLogAlertLeafCondition
     {
         public TenantActivityLogAlertAnyOfOrLeafCondition() { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.TenantActivityLogAlerts.TenantActivityLogAlertLeafCondition> AnyOf { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> ContainsAny { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> EqualTo { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Field { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class TenantActivityLogAlertLeafCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
