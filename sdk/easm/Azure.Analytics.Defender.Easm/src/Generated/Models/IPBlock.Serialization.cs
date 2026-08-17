@@ -12,52 +12,52 @@ using System.Text.Json;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    /// <summary> The IpBlock. </summary>
-    public partial class IpBlock : IJsonModel<IpBlock>
+    /// <summary> The IPBlock. </summary>
+    public partial class IPBlock : IJsonModel<IPBlock>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IpBlock PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual IPBlock PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpBlock>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPBlock>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIpBlock(document.RootElement, options);
+                        return DeserializeIPBlock(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IpBlock)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPBlock)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpBlock>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPBlock>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IpBlock)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPBlock)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IpBlock>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IPBlock>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IpBlock IPersistableModel<IpBlock>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        IPBlock IPersistableModel<IPBlock>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IpBlock>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IPBlock>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IpBlock>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IPBlock>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -68,15 +68,15 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpBlock>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPBlock>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IpBlock)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IPBlock)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IpBlockName))
+            if (Optional.IsDefined(IPBlockName))
             {
                 writer.WritePropertyName("ipBlock"u8);
-                writer.WriteStringValue(IpBlockName);
+                writer.WriteStringValue(IPBlockName);
             }
             if (Optional.IsCollectionDefined(Sources))
             {
@@ -127,24 +127,24 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IpBlock IJsonModel<IpBlock>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        IPBlock IJsonModel<IPBlock>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IpBlock JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual IPBlock JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpBlock>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPBlock>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IpBlock)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IPBlock)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIpBlock(document.RootElement, options);
+            return DeserializeIPBlock(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static IpBlock DeserializeIpBlock(JsonElement element, ModelReaderWriterOptions options)
+        internal static IPBlock DeserializeIPBlock(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -219,7 +219,7 @@ namespace Azure.Analytics.Defender.Easm
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IpBlock(
+            return new IPBlock(
                 ipBlockName,
                 sources ?? new ChangeTrackingList<SourceDetails>(),
                 firstSeen,
