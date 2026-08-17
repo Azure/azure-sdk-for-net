@@ -40,6 +40,7 @@ resource appConfiguration_projectIdentity_AppConfigurationDataOwner 'Microsoft.A
 resource aiservices 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
   name: 'cm0c420d2f21084cd'
   location: location
+  kind: 'AIServices'
   properties: {
     customSubDomainName: 'cm0c420d2f21084cd'
     networkAcls: {
@@ -48,7 +49,6 @@ resource aiservices 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
     publicNetworkAccess: 'Enabled'
     disableLocalAuth: true
   }
-  kind: 'AIServices'
   sku: {
     name: 'S0'
   }

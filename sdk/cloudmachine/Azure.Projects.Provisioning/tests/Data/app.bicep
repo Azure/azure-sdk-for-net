@@ -85,11 +85,11 @@ resource keyVault_projectIdentity_KeyVaultAdministrator 'Microsoft.Authorization
 resource openai 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
   name: 'cm0c420d2f21084cd'
   location: location
+  kind: 'OpenAI'
   properties: {
     customSubDomainName: 'cm0c420d2f21084cd'
     publicNetworkAccess: 'Enabled'
   }
-  kind: 'OpenAI'
   sku: {
     name: 'S0'
   }
