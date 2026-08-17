@@ -201,12 +201,6 @@
       "valueSource": "serviceDirectory",
       "valueTransform": "ServiceNameLowerForm"
     },
-    "ServiceNameCapitalCase": {
-      "type": "derived",
-      "datatype": "text",
-      "valueSource": "serviceDirectory",
-      "valueTransform": "firstUpperCase"
-    },
     "ServiceDirectoryPath": {
       "type": "generated",
       "generator": "join",
@@ -340,25 +334,6 @@
         "separator": ""
       },
       "replaces": "ServiceDirectory: template"
-    },
-    "AzureResourceProviderNamespace": {
-      "type": "generated",
-      "generator": "join",
-      "parameters": {
-        "symbols": [
-          {
-            "type": "const",
-            "value": "Microsoft"
-          },
-          {
-            "type": "ref",
-            "value": "ServiceNameCapitalCase"
-          }
-        ],
-        "separator": ".",
-        "removeEmptyValues": true
-      },
-      "replaces": "Microsoft.Template"
     },
     "securityTypes": {
       "type": "generated",

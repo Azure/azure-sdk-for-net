@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Datadog.Models;
 using Azure.ResourceManager.Models;
 
@@ -72,6 +73,7 @@ namespace Azure.ResourceManager.Datadog
     [ModelReaderWriterBuildable(typeof(MonitoringTagRuleProperties))]
     [ModelReaderWriterBuildable(typeof(MonitoringTagRulesListResponse))]
     [ModelReaderWriterBuildable(typeof(PartnerBillingEntity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ResubscribeOrganizationContent))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
