@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MigrationDiscoverySap;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
     public readonly partial struct SapInstanceType : IEquatable<SapInstanceType>
     {
         private readonly string _value;
+        /// <summary> The type of Sap Instance- ASCS. </summary>
+        private const string AscsValue = "ASCS";
+        /// <summary> The type of Sap Instance- DB. </summary>
+        private const string DBValue = "DB";
+        /// <summary> The type of Sap Instance- APP. </summary>
+        private const string AppValue = "APP";
+        /// <summary> The type of Sap Instance- SCS. </summary>
+        private const string ScsValue = "SCS";
+        /// <summary> The type of Sap Instance- WEBDISP. </summary>
+        private const string WebdispValue = "WEBDISP";
 
         /// <summary> Initializes a new instance of <see cref="SapInstanceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SapInstanceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AscsValue = "ASCS";
-        private const string DBValue = "DB";
-        private const string AppValue = "APP";
-        private const string ScsValue = "SCS";
-        private const string WebdispValue = "WEBDISP";
+            _value = value;
+        }
 
         /// <summary> The type of Sap Instance- ASCS. </summary>
         public static SapInstanceType Ascs { get; } = new SapInstanceType(AscsValue);
+
         /// <summary> The type of Sap Instance- DB. </summary>
         public static SapInstanceType DB { get; } = new SapInstanceType(DBValue);
+
         /// <summary> The type of Sap Instance- APP. </summary>
         public static SapInstanceType App { get; } = new SapInstanceType(AppValue);
+
         /// <summary> The type of Sap Instance- SCS. </summary>
         public static SapInstanceType Scs { get; } = new SapInstanceType(ScsValue);
+
         /// <summary> The type of Sap Instance- WEBDISP. </summary>
         public static SapInstanceType Webdisp { get; } = new SapInstanceType(WebdispValue);
+
         /// <summary> Determines if two <see cref="SapInstanceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SapInstanceType left, SapInstanceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SapInstanceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SapInstanceType left, SapInstanceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SapInstanceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SapInstanceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SapInstanceType(string value) => new SapInstanceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SapInstanceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SapInstanceType?(string value) => value == null ? null : new SapInstanceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SapInstanceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SapInstanceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
