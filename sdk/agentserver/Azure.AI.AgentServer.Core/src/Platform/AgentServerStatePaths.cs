@@ -27,4 +27,7 @@ internal static class AgentServerStatePaths
 
     /// <summary>Resolves the <c>streams</c> storage root under the shared state root.</summary>
     public static string StreamsRoot() => Path.Combine(StateRoot(), "streams");
+
+    /// <summary>Resolves the <c>state_stores</c> storage root under the shared state root.</summary>
+    public static string StateStoresRoot() => Path.Combine(StateRoot(), "state_stores");
 }

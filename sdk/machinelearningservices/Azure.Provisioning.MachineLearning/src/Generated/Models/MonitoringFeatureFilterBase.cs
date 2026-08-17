@@ -11,7 +11,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// The MonitoringFeatureFilterBase.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningAllFeatures"/>, <see cref="FeatureSubset"/>, and <see cref="TopNFeaturesByAttribution"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MachineLearningAllFeatures"/>, <see cref="FeatureSubset"/>, and <see cref="TopNFeaturesByAttribution"/>.
     /// </summary>
     public partial class MonitoringFeatureFilterBase : ProvisionableConstruct
     {

@@ -93,6 +93,32 @@ namespace Azure.Provisioning.Cdn
             }
         }
 
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<FrontDoorProvisioningState> ProvisioningState
+        {
+            get
+            {
+                if (SecretProperties is null)
+                {
+                    SecretProperties = new CdnSecretProperties();
+                }
+                return SecretProperties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Gets the DeploymentStatus. </summary>
+        public BicepValue<FrontDoorDeploymentStatus> DeploymentStatus
+        {
+            get
+            {
+                if (SecretProperties is null)
+                {
+                    SecretProperties = new CdnSecretProperties();
+                }
+                return SecretProperties.DeploymentStatus;
+            }
+        }
+
         /// <summary> Gets the ProfileName. </summary>
         public BicepValue<string> ProfileName
         {
@@ -120,32 +146,6 @@ namespace Azure.Provisioning.Cdn
                     SecretProperties = new CdnSecretProperties();
                 }
                 SecretProperties.Properties = value;
-            }
-        }
-
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<FrontDoorProvisioningState> ProvisioningState
-        {
-            get
-            {
-                if (SecretProperties is null)
-                {
-                    SecretProperties = new CdnSecretProperties();
-                }
-                return SecretProperties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Gets the DeploymentStatus. </summary>
-        public BicepValue<FrontDoorDeploymentStatus> DeploymentStatus
-        {
-            get
-            {
-                if (SecretProperties is null)
-                {
-                    SecretProperties = new CdnSecretProperties();
-                }
-                return SecretProperties.DeploymentStatus;
             }
         }
 

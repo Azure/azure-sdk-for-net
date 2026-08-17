@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StandbyPool.Models;
 
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.StandbyPool
     [ModelReaderWriterBuildable(typeof(DynamicSizing))]
     [ModelReaderWriterBuildable(typeof(PoolContainerGroupStateCount))]
     [ModelReaderWriterBuildable(typeof(PoolVirtualMachineStateCount))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StandbyContainerGroupPoolData))]
     [ModelReaderWriterBuildable(typeof(StandbyContainerGroupPoolElasticityProfile))]
     [ModelReaderWriterBuildable(typeof(StandbyContainerGroupPoolForecastValues))]

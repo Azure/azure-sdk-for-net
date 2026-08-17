@@ -16,18 +16,18 @@
 
 ## Summary
 
-- Total libraries: 445
-- Management Plane (MPG): 260
+- Total libraries: 448
+- Management Plane (MPG): 261
   - Autorest/Swagger: 43
-  - New Emitter (TypeSpec): 217
+  - New Emitter (TypeSpec): 218
   - Old TypeSpec: 0
-- Data Plane (DPG): 129
+- Data Plane (DPG): 130
   - Autorest/Swagger: 30
-  - New Emitter (TypeSpec): 52
+  - New Emitter (TypeSpec): 53
   - Old TypeSpec: 0
-- Provisioning: 56
+- Provisioning: 57
   - Reflection-based generator: 25
-  - TypeSpec-based generator: 29
+  - TypeSpec-based generator: 30
   - No generator: 2
 - No generator: 47
 
@@ -36,7 +36,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 52 / 52 (100%)
+**Migration Status**: 53 / 53 (100%)
 
 | Service | Library | New Emitter | Using SCM |
 | ------- | ------- | ----------- | --------- |
@@ -62,6 +62,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | contentunderstanding | Azure.AI.ContentUnderstanding | ✅ |  |
 | devcenter | Azure.Developer.DevCenter | ✅ |  |
 | deviceupdate | Azure.IoT.DeviceUpdate | ✅ |  |
+| discovery | Azure.AI.Discovery | ✅ |  |
 | documentintelligence | Azure.AI.DocumentIntelligence | ✅ |  |
 | easm | Azure.Analytics.Defender.Easm | ✅ |  |
 | eventgrid | Azure.Messaging.EventGrid.Namespaces | ✅ |  |
@@ -136,7 +137,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 30
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 217 / 217 (100%)
+**Migration Status**: 218 / 218 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -178,6 +179,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | cloudhealth | Azure.ResourceManager.CloudHealth | ✅ |
 | cognitiveservices | Azure.ResourceManager.CognitiveServices | ✅ |
 | communication | Azure.ResourceManager.Communication | ✅ |
+| commvaultcontentstore | Azure.ResourceManager.CommvaultContentStore | ✅ |
 | compute | Azure.ResourceManager.Compute | ✅ |
 | compute | Azure.ResourceManager.Compute.BulkActions | ✅ |
 | computebulkactions | Azure.ResourceManager.ComputeBulkActions | ✅ |
@@ -414,7 +416,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 43
 
 Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
 
-**Migration Status**: 29 / 56 migrated to TypeSpec-based generator
+**Migration Status**: 30 / 57 migrated to TypeSpec-based generator
 
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
@@ -458,6 +460,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | provisioning | Azure.Provisioning | Azure.ResourceManager<br>Azure.ResourceManager.Resources<br>Azure.ResourceManager.Authorization ✅<br>Azure.ResourceManager.ManagedServiceIdentities ✅ | Reflection |
 | provisioning | Azure.Provisioning.Deployment | Azure.ResourceManager<br>Azure.ResourceManager.Resources | None |
 | recoveryservices | Azure.Provisioning.RecoveryServices | Azure.ResourceManager.RecoveryServices ✅ | TypeSpec ✅ |
+| recoveryservices-backup | Azure.Provisioning.RecoveryServicesBackup | Azure.ResourceManager.RecoveryServicesBackup ✅ | TypeSpec ✅ |
 | redis | Azure.Provisioning.Redis | Azure.ResourceManager.Redis ✅ | TypeSpec ✅ |
 | redisenterprise | Azure.Provisioning.RedisEnterprise | Azure.ResourceManager.RedisEnterprise ✅ | Reflection |
 | resourcegraph | Azure.Provisioning.ResourceGraph | Azure.ResourceManager.ResourceGraph ✅ | TypeSpec ✅ |
