@@ -59,6 +59,8 @@
     "@typespec/http-specs": "0.1.0-alpha.40",
     "@typespec/openapi": "1.14.0",
     "@typespec/rest": "0.84.0",
+    "@typespec/spec-api": "0.1.0-alpha.15",
+    "@typespec/spector": "0.1.0-alpha.26",
     "@typespec/sse": "0.84.0",
     "@typespec/streams": "0.84.0",
     "@typespec/tspd": "0.76.0",
@@ -87,6 +89,7 @@
     "@azure-tools/typespec-liftr-base",
     "@typespec/compiler",
     "@typespec/http",
+    "@typespec/http-client-csharp",
     "@typespec/openapi",
     "@typespec/rest",
     "@typespec/versioning"

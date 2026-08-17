@@ -24,6 +24,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners
         private static string poisonQueueSuffix = "-poison";
 
         private readonly QueueClient _queue;
+        private readonly QueueClient _rawQueue;
         private readonly QueueClient _poisonQueue;
         private readonly QueuesOptions _queueOptions;
         private readonly IWebJobsExceptionHandler _exceptionHandler;
@@ -39,6 +40,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners
         public QueueListenerFactory(
             QueueServiceClient queueServiceClient,
             QueueClient queue,
+            QueueClient rawQueue,
             QueuesOptions queueOptions,
             IWebJobsExceptionHandler exceptionHandler,
             SharedQueueWatcher messageEnqueuedWatcherSetter,
@@ -51,6 +53,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners
             IDrainModeManager drainModeManager)
         {
             _queue = queue ?? throw new ArgumentNullException(nameof(queue));
+            _rawQueue = rawQueue ?? throw new ArgumentNullException(nameof(rawQueue));
             _queueOptions = queueOptions ?? throw new ArgumentNullException(nameof(queueOptions));
             _exceptionHandler = exceptionHandler ?? throw new ArgumentNullException(nameof(exceptionHandler));
             _messageEnqueuedWatcherSetter = messageEnqueuedWatcherSetter ?? throw new ArgumentNullException(nameof(messageEnqueuedWatcherSetter));
@@ -82,6 +85,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners
                 queueProcessor,
                 _descriptor,
                 _concurrencyManager,
+                rawQueue: _rawQueue,
                 drainModeManager: _drainModeManager);
 
             return Task.FromResult(listener);
