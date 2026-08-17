@@ -15,61 +15,61 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Request to configure source scan for a protected item. </summary>
-    public partial class BackupProtectedItemConfigureSourceScanContent : IJsonModel<BackupProtectedItemConfigureSourceScanContent>
+    public partial class ProtectedItemConfigureSourceScanRequest : IJsonModel<ProtectedItemConfigureSourceScanRequest>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BackupProtectedItemConfigureSourceScanContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ProtectedItemConfigureSourceScanRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupProtectedItemConfigureSourceScanContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectedItemConfigureSourceScanRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBackupProtectedItemConfigureSourceScanContent(document.RootElement, options);
+                        return DeserializeProtectedItemConfigureSourceScanRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupProtectedItemConfigureSourceScanContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtectedItemConfigureSourceScanRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupProtectedItemConfigureSourceScanContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectedItemConfigureSourceScanRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BackupProtectedItemConfigureSourceScanContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtectedItemConfigureSourceScanRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BackupProtectedItemConfigureSourceScanContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ProtectedItemConfigureSourceScanRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BackupProtectedItemConfigureSourceScanContent IPersistableModel<BackupProtectedItemConfigureSourceScanContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ProtectedItemConfigureSourceScanRequest IPersistableModel<ProtectedItemConfigureSourceScanRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BackupProtectedItemConfigureSourceScanContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProtectedItemConfigureSourceScanRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="backupProtectedItemConfigureSourceScanContent"> The <see cref="BackupProtectedItemConfigureSourceScanContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(BackupProtectedItemConfigureSourceScanContent backupProtectedItemConfigureSourceScanContent)
+        /// <param name="protectedItemConfigureSourceScanRequest"> The <see cref="ProtectedItemConfigureSourceScanRequest"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ProtectedItemConfigureSourceScanRequest protectedItemConfigureSourceScanRequest)
         {
-            if (backupProtectedItemConfigureSourceScanContent == null)
+            if (protectedItemConfigureSourceScanRequest == null)
             {
                 return null;
             }
-            return RequestContent.Create(backupProtectedItemConfigureSourceScanContent, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(protectedItemConfigureSourceScanRequest, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BackupProtectedItemConfigureSourceScanContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProtectedItemConfigureSourceScanRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupProtectedItemConfigureSourceScanContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectedItemConfigureSourceScanRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupProtectedItemConfigureSourceScanContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtectedItemConfigureSourceScanRequest)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(SourceScanAction))
             {
@@ -109,24 +109,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BackupProtectedItemConfigureSourceScanContent IJsonModel<BackupProtectedItemConfigureSourceScanContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ProtectedItemConfigureSourceScanRequest IJsonModel<ProtectedItemConfigureSourceScanRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BackupProtectedItemConfigureSourceScanContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ProtectedItemConfigureSourceScanRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupProtectedItemConfigureSourceScanContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectedItemConfigureSourceScanRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupProtectedItemConfigureSourceScanContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtectedItemConfigureSourceScanRequest)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBackupProtectedItemConfigureSourceScanContent(document.RootElement, options);
+            return DeserializeProtectedItemConfigureSourceScanRequest(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BackupProtectedItemConfigureSourceScanContent DeserializeBackupProtectedItemConfigureSourceScanContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static ProtectedItemConfigureSourceScanRequest DeserializeProtectedItemConfigureSourceScanRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BackupProtectedItemConfigureSourceScanContent(sourceScanAction, additionalBinaryDataProperties);
+            return new ProtectedItemConfigureSourceScanRequest(sourceScanAction, additionalBinaryDataProperties);
         }
     }
 }
