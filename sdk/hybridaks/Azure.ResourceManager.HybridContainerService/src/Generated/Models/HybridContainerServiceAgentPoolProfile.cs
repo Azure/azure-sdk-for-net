@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -15,6 +16,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="HybridContainerServiceAgentPoolProfile"/>. </summary>
+        public HybridContainerServiceAgentPoolProfile()
+        {
+            NodeLabels = new ChangeTrackingDictionary<string, string>();
+            NodeTaints = new ChangeTrackingList<string>();
+        }
 
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceAgentPoolProfile"/>. </summary>
         /// <param name="osType"> The particular KubernetesVersion Image OS Type (Linux, Windows). </param>
@@ -39,10 +47,28 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The particular KubernetesVersion Image OS Type (Linux, Windows). </summary>
+        public HybridContainerServiceOSType? OSType { get; set; }
+
+        /// <summary> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </summary>
+        public HybridContainerServiceOSSku? OSSku { get; set; }
+
         /// <summary> The node labels to be persisted across all nodes in agent pool. </summary>
         public IDictionary<string, string> NodeLabels { get; }
 
         /// <summary> Taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </summary>
         public IList<string> NodeTaints { get; }
+
+        /// <summary> The maximum number of nodes for auto-scaling. </summary>
+        public int? MaxCount { get; set; }
+
+        /// <summary> The minimum number of nodes for auto-scaling. </summary>
+        public int? MinCount { get; set; }
+
+        /// <summary> Whether to enable auto-scaler. Default value is false. </summary>
+        public bool? EnableAutoScaling { get; set; }
+
+        /// <summary> The maximum number of pods that can run on a node. </summary>
+        public int? MaxPods { get; set; }
     }
 }

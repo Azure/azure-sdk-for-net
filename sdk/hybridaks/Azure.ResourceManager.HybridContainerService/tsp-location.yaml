@@ -1,4 +1,4 @@
 directory: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/HybridContainerService
-commit: b11fc13e7627be6df797e8392333cf22c49f42cb
+commit: 843af27a9a29025147b6af1486f88bb915af3cf4
 repo: cxznmhdcxz/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
