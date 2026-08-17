@@ -13,7 +13,7 @@ namespace Azure.Provisioning.AlertProcessingRules
 {
     /// <summary>
     /// Recurrence object.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DailyRecurrence"/>, <see cref="AlertProcessingRuleWeeklyRecurrence"/>, and <see cref="AlertProcessingRuleMonthlyRecurrence"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="DailyRecurrence"/>, <see cref="AlertProcessingRuleWeeklyRecurrence"/>, and <see cref="AlertProcessingRuleMonthlyRecurrence"/>.
     /// </summary>
     public partial class AlertProcessingRuleRecurrence : ProvisionableConstruct
     {

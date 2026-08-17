@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AlertProcessingRules
 {
     /// <summary>
     /// Action to be applied.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AlertProcessingRuleAddGroupsAction"/> and <see cref="AlertProcessingRuleRemoveAllGroupsAction"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AlertProcessingRuleAddGroupsAction"/> and <see cref="AlertProcessingRuleRemoveAllGroupsAction"/>.
     /// </summary>
     public partial class AlertProcessingRuleAction : ProvisionableConstruct
     {

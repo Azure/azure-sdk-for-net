@@ -6,7 +6,6 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.TenantActivityLogAlerts
 {
@@ -19,12 +18,9 @@ namespace Azure.Provisioning.TenantActivityLogAlerts
     /// * __AnyOf Condition -__ must contain __only__ 'anyOf' (which is an array of Leaf Conditions).
     /// _Please note, 'field', 'equals' and 'containsAny' should __not__ be set in an AnyOf Condition._
     /// </summary>
-    public partial class TenantActivityLogAlertAnyOfOrLeafCondition : ProvisionableConstruct
+    public partial class TenantActivityLogAlertAnyOfOrLeafCondition : TenantActivityLogAlertLeafCondition
     {
         private BicepList<TenantActivityLogAlertLeafCondition> _anyOf;
-        private BicepValue<string> _field;
-        private BicepValue<string> _equalTo;
-        private BicepList<string> _containsAny;
 
         /// <summary> Creates a new TenantActivityLogAlertAnyOfOrLeafCondition. </summary>
         public TenantActivityLogAlertAnyOfOrLeafCondition()
@@ -46,59 +42,11 @@ namespace Azure.Provisioning.TenantActivityLogAlerts
             }
         }
 
-        /// <summary> Gets or sets the Field. </summary>
-        public BicepValue<string> Field
-        {
-            get
-            {
-                Initialize();
-                return _field;
-            }
-            set
-            {
-                Initialize();
-                _field.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the EqualTo. </summary>
-        public BicepValue<string> EqualTo
-        {
-            get
-            {
-                Initialize();
-                return _equalTo;
-            }
-            set
-            {
-                Initialize();
-                _equalTo.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the ContainsAny. </summary>
-        public BicepList<string> ContainsAny
-        {
-            get
-            {
-                Initialize();
-                return _containsAny;
-            }
-            set
-            {
-                Initialize();
-                _containsAny.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for TenantActivityLogAlertAnyOfOrLeafCondition. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _anyOf = DefineListProperty<TenantActivityLogAlertLeafCondition>(nameof(AnyOf), new string[] { "anyOf" });
-            _field = DefineProperty<string>(nameof(Field), new string[] { "field" });
-            _equalTo = DefineProperty<string>(nameof(EqualTo), new string[] { "equals" });
-            _containsAny = DefineListProperty<string>(nameof(ContainsAny), new string[] { "containsAny" });
             DefineAdditionalProperties();
         }
 
