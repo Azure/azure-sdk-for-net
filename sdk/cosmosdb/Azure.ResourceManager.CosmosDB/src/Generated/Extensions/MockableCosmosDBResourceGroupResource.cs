@@ -10,10 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB;
-using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB.Mocking
@@ -21,9 +19,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableCosmosDBResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _softDeletedDatabaseAccountsClientDiagnostics;
-        private SoftDeletedDatabaseAccounts _softDeletedDatabaseAccountsRestClient;
-
         /// <summary> Initializes a new instance of MockableCosmosDBResourceGroupResource for mocking. </summary>
         protected MockableCosmosDBResourceGroupResource()
         {
@@ -35,10 +30,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         internal MockableCosmosDBResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
-
-        private ClientDiagnostics SoftDeletedDatabaseAccountsClientDiagnostics => _softDeletedDatabaseAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private SoftDeletedDatabaseAccounts SoftDeletedDatabaseAccountsRestClient => _softDeletedDatabaseAccountsRestClient ??= new SoftDeletedDatabaseAccounts(SoftDeletedDatabaseAccountsClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
 
         /// <summary> Gets a collection of CosmosDBAccounts in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of CosmosDBAccounts and their operations over a CosmosDBAccountResource. </returns>
@@ -60,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -89,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -103,138 +94,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             return GetCosmosDBAccounts().Get(accountName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of GarnetClusters in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of GarnetClusters and their operations over a GarnetClusterResource. </returns>
-        public virtual GarnetClusterCollection GetGarnetClusters()
-        {
-            return GetCachedClient(client => new GarnetClusterCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get the properties of a Garnet cache cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/garnetClusters/{clusterName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> GarnetClusters_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="clusterName"> The name of the GarnetClusterResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<GarnetClusterResource>> GetGarnetClusterAsync(string clusterName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-
-            return await GetGarnetClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the properties of a Garnet cache cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/garnetClusters/{clusterName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> GarnetClusters_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="clusterName"> The name of the GarnetClusterResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<GarnetClusterResource> GetGarnetCluster(string clusterName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-
-            return GetGarnetClusters().Get(clusterName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SoftDeletedDatabaseAccountGetResults in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of SoftDeletedDatabaseAccountGetResults and their operations over a SoftDeletedDatabaseAccountGetResultResource. </returns>
-        public virtual SoftDeletedDatabaseAccountGetResultCollection GetSoftDeletedDatabaseAccountGetResults()
-        {
-            return GetCachedClient(client => new SoftDeletedDatabaseAccountGetResultCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieves the properties of a soft-deleted Azure Cosmos DB database account by location and accountName. This call requires 'Microsoft.DocumentDB/locations/softDeletedDatabaseAccounts/read' permission.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/locations/{location}/softDeletedDatabaseAccounts/{accountName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SoftDeletedDatabaseAccounts_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="accountName"> Cosmos DB database account name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SoftDeletedDatabaseAccountGetResultResource>> GetSoftDeletedDatabaseAccountGetResultAsync(AzureLocation location, string accountName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-
-            return await GetSoftDeletedDatabaseAccountGetResults().GetAsync(location, accountName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves the properties of a soft-deleted Azure Cosmos DB database account by location and accountName. This call requires 'Microsoft.DocumentDB/locations/softDeletedDatabaseAccounts/read' permission.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/locations/{location}/softDeletedDatabaseAccounts/{accountName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SoftDeletedDatabaseAccounts_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="accountName"> Cosmos DB database account name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SoftDeletedDatabaseAccountGetResultResource> GetSoftDeletedDatabaseAccountGetResult(AzureLocation location, string accountName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-
-            return GetSoftDeletedDatabaseAccountGetResults().Get(location, accountName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CassandraClusters in the <see cref="ResourceGroupResource"/>. </summary>
@@ -257,7 +116,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,7 +145,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,71 +159,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             return GetCassandraClusters().Get(clusterName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of CosmosDBThroughputPools in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of CosmosDBThroughputPools and their operations over a CosmosDBThroughputPoolResource. </returns>
-        public virtual CosmosDBThroughputPoolCollection GetCosmosDBThroughputPools()
-        {
-            return GetCachedClient(client => new CosmosDBThroughputPoolCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieves the properties of an existing Azure Cosmos DB Throughput Pool
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ThroughputPoolResources_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="throughputPoolName"> Cosmos DB Throughput Pool name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="throughputPoolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="throughputPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CosmosDBThroughputPoolResource>> GetCosmosDBThroughputPoolAsync(string throughputPoolName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(throughputPoolName, nameof(throughputPoolName));
-
-            return await GetCosmosDBThroughputPools().GetAsync(throughputPoolName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves the properties of an existing Azure Cosmos DB Throughput Pool
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ThroughputPoolResources_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="throughputPoolName"> Cosmos DB Throughput Pool name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="throughputPoolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="throughputPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CosmosDBThroughputPoolResource> GetCosmosDBThroughputPool(string throughputPoolName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(throughputPoolName, nameof(throughputPoolName));
-
-            return GetCosmosDBThroughputPools().Get(throughputPoolName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CosmosDBFleets in the <see cref="ResourceGroupResource"/>. </summary>
@@ -387,7 +181,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -416,7 +210,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -430,304 +224,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
 
             return GetCosmosDBFleets().Get(fleetName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the soft-deleted Azure Cosmos DB database accounts available under the given resource group and in a region. This call requires 'Microsoft.DocumentDB/locations/softDeletedDatabaseAccounts/read' permission.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/locations/{location}/softDeletedDatabaseAccounts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SoftDeletedDatabaseAccounts_ListByResourceGroupAndLocation. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SoftDeletedDatabaseAccountsListResult>> GetByResourceGroupAndLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = SoftDeletedDatabaseAccountsClientDiagnostics.CreateScope("MockableCosmosDBResourceGroupResource.GetByResourceGroupAndLocation");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = SoftDeletedDatabaseAccountsRestClient.CreateGetByResourceGroupAndLocationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SoftDeletedDatabaseAccountsListResult> response = Response.FromValue(SoftDeletedDatabaseAccountsListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Lists all the soft-deleted Azure Cosmos DB database accounts available under the given resource group and in a region. This call requires 'Microsoft.DocumentDB/locations/softDeletedDatabaseAccounts/read' permission.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/locations/{location}/softDeletedDatabaseAccounts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SoftDeletedDatabaseAccounts_ListByResourceGroupAndLocation. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SoftDeletedDatabaseAccountsListResult> GetByResourceGroupAndLocation(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = SoftDeletedDatabaseAccountsClientDiagnostics.CreateScope("MockableCosmosDBResourceGroupResource.GetByResourceGroupAndLocation");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = SoftDeletedDatabaseAccountsRestClient.CreateGetByResourceGroupAndLocationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<SoftDeletedDatabaseAccountsListResult> response = Response.FromValue(SoftDeletedDatabaseAccountsListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Restores a soft-deleted Azure Cosmos DB database account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/locations/{location}/softDeletedDatabaseAccounts/{accountName}?softDeleteActionKind=RestoreSoftDeletedResource. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SoftDeletedDatabaseAccounts_Restore. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="accountName"> Cosmos DB database account name. </param>
-        /// <param name="softDeleteActionKind"> The kind of soft delete action to perform. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation> RestoreAsync(WaitUntil waitUntil, AzureLocation location, string accountName, SoftDeleteActionKind? softDeleteActionKind = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-
-            using DiagnosticScope scope = SoftDeletedDatabaseAccountsClientDiagnostics.CreateScope("MockableCosmosDBResourceGroupResource.Restore");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = SoftDeletedDatabaseAccountsRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, accountName, softDeleteActionKind?.ToString(), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CosmosDBArmOperation operation = new CosmosDBArmOperation(SoftDeletedDatabaseAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Restores a soft-deleted Azure Cosmos DB database account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/locations/{location}/softDeletedDatabaseAccounts/{accountName}?softDeleteActionKind=RestoreSoftDeletedResource. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SoftDeletedDatabaseAccounts_Restore. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="accountName"> Cosmos DB database account name. </param>
-        /// <param name="softDeleteActionKind"> The kind of soft delete action to perform. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation Restore(WaitUntil waitUntil, AzureLocation location, string accountName, SoftDeleteActionKind? softDeleteActionKind = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-
-            using DiagnosticScope scope = SoftDeletedDatabaseAccountsClientDiagnostics.CreateScope("MockableCosmosDBResourceGroupResource.Restore");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = SoftDeletedDatabaseAccountsRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, accountName, softDeleteActionKind?.ToString(), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                CosmosDBArmOperation operation = new CosmosDBArmOperation(SoftDeletedDatabaseAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Permanently deletes (purges) a soft-deleted Azure Cosmos DB database account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/locations/{location}/softDeletedDatabaseAccounts/{accountName}?softDeleteActionKind=PermanentDeleteResource. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SoftDeletedDatabaseAccounts_Purge. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="accountName"> Cosmos DB database account name. </param>
-        /// <param name="softDeleteActionKind"> The kind of soft delete action to perform. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation> PurgeAsync(WaitUntil waitUntil, AzureLocation location, string accountName, SoftDeleteActionKind? softDeleteActionKind = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-
-            using DiagnosticScope scope = SoftDeletedDatabaseAccountsClientDiagnostics.CreateScope("MockableCosmosDBResourceGroupResource.Purge");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = SoftDeletedDatabaseAccountsRestClient.CreatePurgeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, accountName, softDeleteActionKind?.ToString(), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CosmosDBArmOperation operation = new CosmosDBArmOperation(SoftDeletedDatabaseAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Permanently deletes (purges) a soft-deleted Azure Cosmos DB database account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/locations/{location}/softDeletedDatabaseAccounts/{accountName}?softDeleteActionKind=PermanentDeleteResource. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SoftDeletedDatabaseAccounts_Purge. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="accountName"> Cosmos DB database account name. </param>
-        /// <param name="softDeleteActionKind"> The kind of soft delete action to perform. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation Purge(WaitUntil waitUntil, AzureLocation location, string accountName, SoftDeleteActionKind? softDeleteActionKind = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-
-            using DiagnosticScope scope = SoftDeletedDatabaseAccountsClientDiagnostics.CreateScope("MockableCosmosDBResourceGroupResource.Purge");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = SoftDeletedDatabaseAccountsRestClient.CreatePurgeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, accountName, softDeleteActionKind?.ToString(), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                CosmosDBArmOperation operation = new CosmosDBArmOperation(SoftDeletedDatabaseAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

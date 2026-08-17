@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(ResourceType, out string defenderForAISettingApiVersion);
             _defenderForAISettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _defenderForAISettingsRestClient = new DefenderForAISettings(_defenderForAISettingsClientDiagnostics, Pipeline, Endpoint, defenderForAISettingApiVersion ?? "2026-05-15-preview");
+            _defenderForAISettingsRestClient = new DefenderForAISettings(_defenderForAISettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, defenderForAISettingApiVersion ?? "2026-05-15-preview");
             ValidateResourceId(id);
         }
 

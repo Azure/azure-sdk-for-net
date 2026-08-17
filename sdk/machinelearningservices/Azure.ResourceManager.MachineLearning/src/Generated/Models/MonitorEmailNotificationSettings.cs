@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The email recipient list which has a limitation of 499 characters in total. </summary>
         [WirePath("emails")]
-        public IList<string> Emails { get; set; }
+        public IList<string> Emails { get; } = new ChangeTrackingList<string>();
     }
 }

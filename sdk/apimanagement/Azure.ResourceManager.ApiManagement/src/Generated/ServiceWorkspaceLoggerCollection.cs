@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ServiceWorkspaceLoggerResource.ResourceType, out string serviceWorkspaceLoggerApiVersion);
             _workspaceLoggerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceLoggerResource.ResourceType.Namespace, Diagnostics);
-            _workspaceLoggerRestClient = new WorkspaceLogger(_workspaceLoggerClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceLoggerApiVersion ?? "2025-09-01-preview");
+            _workspaceLoggerRestClient = new WorkspaceLogger(_workspaceLoggerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceWorkspaceLoggerApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

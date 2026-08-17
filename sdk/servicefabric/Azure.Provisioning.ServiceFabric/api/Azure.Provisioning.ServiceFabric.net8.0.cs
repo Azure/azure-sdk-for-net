@@ -276,9 +276,9 @@ namespace Azure.Provisioning.ServiceFabric
     public partial class ClusterVersionDetails : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ClusterVersionDetails() { }
-        public Azure.Provisioning.BicepValue<string> CodeVersion { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabric.ClusterEnvironment> Environment { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> SupportExpireOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> CodeVersion { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabric.ClusterEnvironment> Environment { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> SupportExpireOn { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class DiagnosticsStorageAccountConfig : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -525,19 +525,24 @@ namespace Azure.Provisioning.ServiceFabric
         public ServicePlacementPolicyDescription() { }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class ServiceResourceProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class ServiceResourceProperties : Azure.Provisioning.ServiceFabric.ServiceResourcePropertiesBase
     {
         public ServiceResourceProperties() { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabric.ServiceCorrelationDescription> CorrelationScheme { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabric.ApplicationMoveCost> DefaultMoveCost { get { throw null; } set { } }
         public Azure.Provisioning.ServiceFabric.PartitionSchemeDescription PartitionDescription { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> PlacementConstraints { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ServiceDnsName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabric.ServiceLoadMetricDescription> ServiceLoadMetrics { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabric.ArmServicePackageActivationMode> ServicePackageActivationMode { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabric.ServicePlacementPolicyDescription> ServicePlacementPolicies { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ServiceTypeName { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ServiceResourcePropertiesBase : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ServiceResourcePropertiesBase() { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabric.ServiceCorrelationDescription> CorrelationScheme { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabric.ApplicationMoveCost> DefaultMoveCost { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> PlacementConstraints { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabric.ServiceLoadMetricDescription> ServiceLoadMetrics { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabric.ServicePlacementPolicyDescription> ServicePlacementPolicies { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ServiceTypeDeltaHealthPolicy : Azure.Provisioning.Primitives.ProvisionableConstruct

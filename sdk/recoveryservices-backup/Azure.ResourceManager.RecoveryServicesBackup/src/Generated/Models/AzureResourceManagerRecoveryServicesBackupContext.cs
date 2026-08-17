@@ -347,6 +347,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     [ModelReaderWriterBuildable(typeof(WorkloadSqlRecoveryPointExtendedInfo))]
     [ModelReaderWriterBuildable(typeof(WorkloadSqlRestoreContent))]
     [ModelReaderWriterBuildable(typeof(WorkloadSqlRestoreWithRehydrateContent))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     [ModelReaderWriterBuildable(typeof(YearlyRetentionSchedule))]
     public partial class AzureResourceManagerRecoveryServicesBackupContext : ModelReaderWriterContext
     {

@@ -11,18 +11,18 @@ namespace Azure.Provisioning.TrafficManager
     public enum TrafficManagerEndpointMonitorStatus
     {
         /// <summary> CheckingEndpoint. </summary>
-        CheckingEndpoint,
+        CheckingEndpoint = 0,
         /// <summary> Online. </summary>
-        Online,
+        Online = 1,
         /// <summary> Degraded. </summary>
-        Degraded,
+        Degraded = 2,
         /// <summary> Disabled. </summary>
-        Disabled,
+        Disabled = 3,
         /// <summary> Inactive. </summary>
-        Inactive,
+        Inactive = 4,
         /// <summary> Stopped. </summary>
-        Stopped,
+        Stopped = 5,
         /// <summary> Unmonitored. </summary>
-        Unmonitored
+        Unmonitored = 6
     }
 }

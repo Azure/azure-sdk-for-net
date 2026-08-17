@@ -41,38 +41,22 @@ namespace Azure.Security.CodeTransparency.Tests
         }
 
         /// <summary>
-        /// Creates an entry and returns the entryId.
-        /// Handles both 201 (pending, parse OperationId from CBOR body) and
-        /// 303 (already committed, extract entryId from Location header).
+        /// Creates an entry (async, waitForCommit=false) and returns its entryId. The client follows the
+        /// async 303, polls the pending 302, and returns the committed 200 receipt; the entry id
+        /// (registration transaction id) is carried by that receipt.
         /// </summary>
         private async Task<string> CreateEntryAndGetEntryIdAsync()
         {
             byte[] coseSignature = ReadFileBytes("input_signed_claims");
             var body = BinaryData.FromBytes(coseSignature);
 
-            Response<BinaryData> createResponse = await Client.CreateEntryAsync(body, waitForCommit: false);
+            NullableResponse<BinaryData> createResponse = await Client.CreateEntryAsync(body, waitForCommit: false);
             int status = createResponse.GetRawResponse().Status;
+            Assert.That(status, Is.EqualTo(200).Or.EqualTo(201), $"unexpected create status {status}");
 
-            if (status == 303)
-            {
-                // Already committed — extract entryId from Location header
-                // Location format: https://host/entries/{entryId}
-                createResponse.GetRawResponse().Headers.TryGetValue("Location", out string location);
-                Assert.IsNotNull(location, "303 response must include Location header");
-                var uri = new Uri(location);
-                string entryId = uri.Segments.Last();
-                Assert.IsNotEmpty(entryId);
-                return entryId;
-            }
-            else
-            {
-                // 201 — entry accepted, parse OperationId and poll
-                Assert.AreEqual(201, status);
-                string operationId = CborUtils.GetStringValueFromCborMapByKey(
-                    createResponse.Value.ToArray(), "OperationId");
-                Assert.IsNotEmpty(operationId);
-                return operationId;
-            }
+            string entryId = CcfReceipt.GetRegistrationTransactionId(createResponse.Value.ToArray());
+            Assert.IsNotEmpty(entryId);
+            return entryId;
         }
 
         [RecordedTest]
@@ -103,24 +87,34 @@ namespace Azure.Security.CodeTransparency.Tests
             byte[] coseSignature = ReadFileBytes("input_signed_claims");
             var body = BinaryData.FromBytes(coseSignature);
 
-            Response<BinaryData> createResponse = await Client.CreateEntryAsync(body, waitForCommit: false);
+            // waitForCommit=false: the client follows the async 303 and polls the pending 302 through to
+            // the committed 200 receipt (a COSE_Sign1 receipt carrying the registration transaction id).
+            NullableResponse<BinaryData> createResponse = await Client.CreateEntryAsync(body, waitForCommit: false);
             int status = createResponse.GetRawResponse().Status;
 
-            Assert.That(status, Is.EqualTo(201).Or.EqualTo(303));
+            Assert.That(status, Is.EqualTo(200).Or.EqualTo(201));
+            Assert.IsNotNull(createResponse.Value);
+            Assert.IsTrue(createResponse.Value.ToMemory().Length > 0);
+            Assert.IsNotEmpty(CcfReceipt.GetRegistrationTransactionId(createResponse.Value.ToArray()));
+        }
 
-            if (status == 303)
-            {
-                createResponse.GetRawResponse().Headers.TryGetValue("Location", out string location);
-                Assert.IsNotNull(location, "303 must include Location header");
-                Assert.That(location, Does.Contain("/entries/"));
-            }
-            else
-            {
-                Assert.IsNotNull(createResponse.Value);
-                string operationId = CborUtils.GetStringValueFromCborMapByKey(
-                    createResponse.Value.ToArray(), "OperationId");
-                Assert.IsNotEmpty(operationId);
-            }
+        [RecordedTest]
+        [LiveOnly]
+        public async Task CreateEntry_AsyncRegistration_PollsPending302_ReturnsCommittedReceipt()
+        {
+            // Async registration (waitForCommit=false), the scenario this fix targets: the write is
+            // answered with 303 See Other; the client follows it to GET /entries/{id} with the
+            // api-version preserved, then polls the pending 302 Found (entry not yet committed/indexed)
+            // through to the committed 200 receipt.
+            byte[] coseSignature = ReadFileBytes("input_signed_claims");
+            var body = BinaryData.FromBytes(coseSignature);
+
+            NullableResponse<BinaryData> createResponse = await Client.CreateEntryAsync(body, waitForCommit: false);
+
+            Assert.AreEqual(200, createResponse.GetRawResponse().Status, "async registration should return the committed receipt");
+            Assert.IsNotNull(createResponse.Value);
+            Assert.IsTrue(createResponse.Value.ToMemory().Length > 0, "receipt content should be non-empty");
+            Assert.IsNotEmpty(CcfReceipt.GetRegistrationTransactionId(createResponse.Value.ToArray()), "receipt should carry a registration transaction id");
         }
 
         [RecordedTest]
@@ -142,7 +136,7 @@ namespace Azure.Security.CodeTransparency.Tests
         {
             string entryId = await CreateEntryAndGetEntryIdAsync();
 
-            Response<BinaryData> entryResponse = await Client.GetEntryAsync(entryId);
+            NullableResponse<BinaryData> entryResponse = await Client.GetEntryAsync(entryId);
 
             // Service may return 200 (entry ready) or 302 (redirect to receipt)
             Assert.That(entryResponse.GetRawResponse().Status,
@@ -195,12 +189,15 @@ namespace Azure.Security.CodeTransparency.Tests
             byte[] coseSignature = ReadFileBytes("input_signed_claims");
             var body = BinaryData.FromBytes(coseSignature);
 
-            // waitForCommit=true tells the service to wait until the entry is committed
-            // before responding. Expects 201 with committed entry.
-            Response<BinaryData> response = await Client.CreateEntryAsync(body, waitForCommit: true);
+            // waitForCommit=true asks the service to wait until the entry is committed before responding.
+            // The convenience overload returns the committed receipt (201 directly, or 200 after a routing
+            // redirect is followed).
+            NullableResponse<BinaryData> response = await Client.CreateEntryAsync(body, waitForCommit: true);
             int status = response.GetRawResponse().Status;
 
-            Assert.That(status, Is.EqualTo(201).Or.EqualTo(303));
+            Assert.That(status, Is.EqualTo(200).Or.EqualTo(201));
+            Assert.IsNotNull(response.Value);
+            Assert.IsTrue(response.Value.ToMemory().Length > 0);
         }
     }
 }

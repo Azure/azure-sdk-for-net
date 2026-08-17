@@ -14,54 +14,54 @@ namespace Azure.Provisioning.KeyVault
     {
         /// <summary> All. </summary>
         [DataMember(Name = "all")]
-        All,
+        All = 0,
         /// <summary> Get. </summary>
         [DataMember(Name = "get")]
-        Get,
+        Get = 1,
         /// <summary> List. </summary>
         [DataMember(Name = "list")]
-        List,
+        List = 2,
         /// <summary> Delete. </summary>
         [DataMember(Name = "delete")]
-        Delete,
+        Delete = 3,
         /// <summary> Create. </summary>
         [DataMember(Name = "create")]
-        Create,
+        Create = 4,
         /// <summary> Import. </summary>
         [DataMember(Name = "import")]
-        Import,
+        Import = 5,
         /// <summary> Update. </summary>
         [DataMember(Name = "update")]
-        Update,
+        Update = 6,
         /// <summary> ManageContacts. </summary>
         [DataMember(Name = "managecontacts")]
-        ManageContacts,
+        ManageContacts = 7,
         /// <summary> GetIssuers. </summary>
         [DataMember(Name = "getissuers")]
-        GetIssuers,
+        GetIssuers = 8,
         /// <summary> ListIssuers. </summary>
         [DataMember(Name = "listissuers")]
-        ListIssuers,
+        ListIssuers = 9,
         /// <summary> SetIssuers. </summary>
         [DataMember(Name = "setissuers")]
-        SetIssuers,
+        SetIssuers = 10,
         /// <summary> DeleteIssuers. </summary>
         [DataMember(Name = "deleteissuers")]
-        DeleteIssuers,
+        DeleteIssuers = 11,
         /// <summary> ManageIssuers. </summary>
         [DataMember(Name = "manageissuers")]
-        ManageIssuers,
+        ManageIssuers = 12,
         /// <summary> Recover. </summary>
         [DataMember(Name = "recover")]
-        Recover,
+        Recover = 13,
         /// <summary> Purge. </summary>
         [DataMember(Name = "purge")]
-        Purge,
+        Purge = 14,
         /// <summary> Backup. </summary>
         [DataMember(Name = "backup")]
-        Backup,
+        Backup = 15,
         /// <summary> Restore. </summary>
         [DataMember(Name = "restore")]
-        Restore
+        Restore = 16
     }
 }

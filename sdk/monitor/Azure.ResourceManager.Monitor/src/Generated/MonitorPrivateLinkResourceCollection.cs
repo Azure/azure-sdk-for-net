@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor
         {
             TryGetApiVersion(MonitorPrivateLinkResource.ResourceType, out string monitorPrivateLinkResourceApiVersion);
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", MonitorPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, monitorPrivateLinkResourceApiVersion ?? "2023-06-01-preview");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, monitorPrivateLinkResourceApiVersion ?? "2023-06-01-preview");
             ValidateResourceId(id);
         }
 

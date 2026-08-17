@@ -14,9 +14,9 @@ namespace Azure.Provisioning.CostManagement
     {
         /// <summary> True. </summary>
         [DataMember(Name = "true")]
-        True,
+        True = 0,
         /// <summary> False. </summary>
         [DataMember(Name = "false")]
-        False
+        False = 1
     }
 }

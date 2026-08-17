@@ -775,8 +775,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="alertRulesCreatedByTemplateCount"> The number of alert rules that were created by this template. </param>
-        /// <param name="lastUpdatedOn"> The last time that this alert rule template has been updated. </param>
         /// <param name="createdOn"> The time that this alert rule template has been added. </param>
+        /// <param name="lastUpdatedOn"> The last time that this alert rule template has been updated. </param>
         /// <param name="description"> The description of the alert rule template. </param>
         /// <param name="displayName"> The display name for alert rule template. </param>
         /// <param name="requiredDataConnectors"> The required data sources for this template. </param>
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="productFilter"> The alerts' productName on which the cases will be generated. </param>
         /// <param name="severitiesFilter"> the alerts' severities on which the cases will be generated. </param>
         /// <returns> A new <see cref="Models.MicrosoftSecurityIncidentCreationAlertRuleTemplate"/> instance for mocking. </returns>
-        public static MicrosoftSecurityIncidentCreationAlertRuleTemplate MicrosoftSecurityIncidentCreationAlertRuleTemplate(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? alertRulesCreatedByTemplateCount = default, DateTimeOffset? lastUpdatedOn = default, DateTimeOffset? createdOn = default, string description = default, string displayName = default, IEnumerable<AlertRuleTemplateDataSource> requiredDataConnectors = default, SecurityInsightsAlertRuleTemplateStatus? status = default, IEnumerable<string> displayNamesFilter = default, IEnumerable<string> displayNamesExcludeFilter = default, MicrosoftSecurityProductName? productFilter = default, IEnumerable<SecurityInsightsAlertSeverity> severitiesFilter = default)
+        public static MicrosoftSecurityIncidentCreationAlertRuleTemplate MicrosoftSecurityIncidentCreationAlertRuleTemplate(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? alertRulesCreatedByTemplateCount = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastUpdatedOn = default, string description = default, string displayName = default, IEnumerable<AlertRuleTemplateDataSource> requiredDataConnectors = default, SecurityInsightsAlertRuleTemplateStatus? status = default, IEnumerable<string> displayNamesFilter = default, IEnumerable<string> displayNamesExcludeFilter = default, MicrosoftSecurityProductName? productFilter = default, IEnumerable<SecurityInsightsAlertSeverity> severitiesFilter = default)
         {
             return new MicrosoftSecurityIncidentCreationAlertRuleTemplate(
                 id,
@@ -2596,13 +2596,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 tenantId is null && lookbackPeriodOn is null && isRequiredSKUsPresent is null && dataTypesConnectorState is null ? default : new PremiumMdtiDataConnectorProperties(tenantId.GetValueOrDefault(), default, lookbackPeriodOn.GetValueOrDefault(), isRequiredSKUsPresent, new PremiumMdtiDataConnectorDataTypes(new PremiumMdtiDataConnectorDataTypesConnector(dataTypesConnectorState.GetValueOrDefault(), default), default)));
         }
 
-        /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        /// <returns> A new <see cref="Models.PremiumMdtiDataConnectorDataTypesConnector"/> instance for mocking. </returns>
-        public static PremiumMdtiDataConnectorDataTypesConnector PremiumMdtiDataConnectorDataTypesConnector(SecurityInsightsDataTypeConnectionState state = default)
-        {
-            return new PremiumMdtiDataConnectorDataTypesConnector(state, default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -2631,20 +2624,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static MtpDataConnectorDataTypes MtpDataConnectorDataTypes(SecurityInsightsDataTypeConnectionState incidentsState = default, SecurityInsightsDataTypeConnectionState? alertsState = default)
         {
             return new MtpDataConnectorDataTypes(new MtpDataConnectorDataTypesIncidents(incidentsState, default), alertsState is null ? default : new MtpDataConnectorDataTypesAlerts(alertsState.GetValueOrDefault(), default), default);
-        }
-
-        /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        /// <returns> A new <see cref="Models.MtpDataConnectorDataTypesIncidents"/> instance for mocking. </returns>
-        public static MtpDataConnectorDataTypesIncidents MtpDataConnectorDataTypesIncidents(SecurityInsightsDataTypeConnectionState state = default)
-        {
-            return new MtpDataConnectorDataTypesIncidents(state, default);
-        }
-
-        /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        /// <returns> A new <see cref="Models.MtpDataConnectorDataTypesAlerts"/> instance for mocking. </returns>
-        public static MtpDataConnectorDataTypesAlerts MtpDataConnectorDataTypesAlerts(SecurityInsightsDataTypeConnectionState state = default)
-        {
-            return new MtpDataConnectorDataTypesAlerts(state, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2710,13 +2689,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 awsRoleArn is null && logsState is null ? default : new AwsCloudTrailDataConnectorProperties(awsRoleArn, new AwsCloudTrailDataConnectorDataTypes(new AwsCloudTrailDataConnectorDataTypesLogs(logsState.GetValueOrDefault(), default), default), default));
         }
 
-        /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        /// <returns> A new <see cref="Models.AwsCloudTrailDataConnectorDataTypesLogs"/> instance for mocking. </returns>
-        public static AwsCloudTrailDataConnectorDataTypesLogs AwsCloudTrailDataConnectorDataTypesLogs(SecurityInsightsDataTypeConnectionState state = default)
-        {
-            return new AwsCloudTrailDataConnectorDataTypesLogs(state, default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -2738,13 +2710,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 eTag,
                 default,
                 destinationTable is null && sqsUrls is null && roleArn is null && dataTypesLogsState is null ? default : new AwsS3DataConnectorProperties(destinationTable, (sqsUrls ?? new ChangeTrackingList<string>()).ToList(), roleArn, new AwsS3DataConnectorDataTypes(new AwsS3DataConnectorDataTypesLogs(dataTypesLogsState.GetValueOrDefault(), default), default), default));
-        }
-
-        /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        /// <returns> A new <see cref="Models.AwsS3DataConnectorDataTypesLogs"/> instance for mocking. </returns>
-        public static AwsS3DataConnectorDataTypesLogs AwsS3DataConnectorDataTypesLogs(SecurityInsightsDataTypeConnectionState state = default)
-        {
-            return new AwsS3DataConnectorDataTypesLogs(state, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3157,13 +3122,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 tenantId is null && dataTypesDynamics365CdsActivitiesState is null ? default : new Dynamics365DataConnectorProperties(tenantId.GetValueOrDefault(), default, new Dynamics365DataConnectorDataTypes(new Dynamics365DataConnectorDataTypesDynamics365CdsActivities(dataTypesDynamics365CdsActivitiesState.GetValueOrDefault(), default), default)));
         }
 
-        /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        /// <returns> A new <see cref="Models.Dynamics365DataConnectorDataTypesDynamics365CdsActivities"/> instance for mocking. </returns>
-        public static Dynamics365DataConnectorDataTypesDynamics365CdsActivities Dynamics365DataConnectorDataTypesDynamics365CdsActivities(SecurityInsightsDataTypeConnectionState state = default)
-        {
-            return new Dynamics365DataConnectorDataTypesDynamics365CdsActivities(state, default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -3206,13 +3164,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 tenantId is null && dataTypesLogsState is null ? default : new MicrosoftPurviewInformationProtectionDataConnectorProperties(tenantId.GetValueOrDefault(), default, new MicrosoftPurviewInformationProtectionConnectorDataTypes(new MicrosoftPurviewInformationProtectionConnectorDataTypesLogs(dataTypesLogsState.GetValueOrDefault(), default), default)));
         }
 
-        /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        /// <returns> A new <see cref="Models.MicrosoftPurviewInformationProtectionConnectorDataTypesLogs"/> instance for mocking. </returns>
-        public static MicrosoftPurviewInformationProtectionConnectorDataTypesLogs MicrosoftPurviewInformationProtectionConnectorDataTypesLogs(SecurityInsightsDataTypeConnectionState state = default)
-        {
-            return new MicrosoftPurviewInformationProtectionConnectorDataTypesLogs(state, default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -3234,13 +3185,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 tenantId is null && dataTypesLogsState is null ? default : new Office365ProjectDataConnectorProperties(tenantId.GetValueOrDefault(), default, new Office365ProjectConnectorDataTypes(new Office365ProjectConnectorDataTypesLogs(dataTypesLogsState.GetValueOrDefault(), default), default)));
         }
 
-        /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        /// <returns> A new <see cref="Models.Office365ProjectConnectorDataTypesLogs"/> instance for mocking. </returns>
-        public static Office365ProjectConnectorDataTypesLogs Office365ProjectConnectorDataTypesLogs(SecurityInsightsDataTypeConnectionState state = default)
-        {
-            return new Office365ProjectConnectorDataTypesLogs(state, default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -3260,13 +3204,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 eTag,
                 default,
                 tenantId is null && dataTypesLogsState is null ? default : new OfficePowerBiDataConnectorProperties(tenantId.GetValueOrDefault(), default, new OfficePowerBiConnectorDataTypes(new OfficePowerBiConnectorDataTypesLogs(dataTypesLogsState.GetValueOrDefault(), default), default)));
-        }
-
-        /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        /// <returns> A new <see cref="Models.OfficePowerBiConnectorDataTypesLogs"/> instance for mocking. </returns>
-        public static OfficePowerBiConnectorDataTypesLogs OfficePowerBiConnectorDataTypesLogs(SecurityInsightsDataTypeConnectionState state = default)
-        {
-            return new OfficePowerBiConnectorDataTypesLogs(state, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3297,13 +3234,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     sourceType,
                     dcrConfig,
                     new PurviewAuditConnectorDataTypes(new PurviewAuditConnectorDataTypesLogs(dataTypesLogsState.GetValueOrDefault(), default), default)));
-        }
-
-        /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        /// <returns> A new <see cref="Models.PurviewAuditConnectorDataTypesLogs"/> instance for mocking. </returns>
-        public static PurviewAuditConnectorDataTypesLogs PurviewAuditConnectorDataTypesLogs(SecurityInsightsDataTypeConnectionState state = default)
-        {
-            return new PurviewAuditConnectorDataTypesLogs(state, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3400,13 +3330,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 tenantId is null && tipLookbackOn is null && indicatorsState is null ? default : new TiDataConnectorProperties(tenantId.GetValueOrDefault(), default, tipLookbackOn, new TiDataConnectorDataTypes(new TiDataConnectorDataTypesIndicators(indicatorsState.GetValueOrDefault(), default), default)));
         }
 
-        /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        /// <returns> A new <see cref="Models.TiDataConnectorDataTypesIndicators"/> instance for mocking. </returns>
-        public static TiDataConnectorDataTypesIndicators TiDataConnectorDataTypesIndicators(SecurityInsightsDataTypeConnectionState state = default)
-        {
-            return new TiDataConnectorDataTypesIndicators(state, default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -3445,13 +3368,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     taxiiLookbackPeriod,
                     pollingFrequency,
                     new TiTaxiiDataConnectorDataTypes(new TiTaxiiDataConnectorDataTypesTaxiiClientInfo(dataTypesTaxiiClientState.GetValueOrDefault(), default), default)));
-        }
-
-        /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        /// <returns> A new <see cref="Models.TiTaxiiDataConnectorDataTypesTaxiiClientInfo"/> instance for mocking. </returns>
-        public static TiTaxiiDataConnectorDataTypesTaxiiClientInfo TiTaxiiDataConnectorDataTypesTaxiiClientInfo(SecurityInsightsDataTypeConnectionState state = default)
-        {
-            return new TiTaxiiDataConnectorDataTypesTaxiiClientInfo(state, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

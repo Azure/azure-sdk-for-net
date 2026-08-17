@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             TryGetApiVersion(SecurityInsightsEntityQueryTemplateResource.ResourceType, out string securityInsightsEntityQueryTemplateApiVersion);
             _entityQueryTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsEntityQueryTemplateResource.ResourceType.Namespace, Diagnostics);
-            _entityQueryTemplatesRestClient = new EntityQueryTemplates(_entityQueryTemplatesClientDiagnostics, Pipeline, Endpoint, securityInsightsEntityQueryTemplateApiVersion ?? "2025-07-01-preview");
+            _entityQueryTemplatesRestClient = new EntityQueryTemplates(_entityQueryTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsEntityQueryTemplateApiVersion ?? "2025-07-01-preview");
             ValidateResourceId(id);
         }
 

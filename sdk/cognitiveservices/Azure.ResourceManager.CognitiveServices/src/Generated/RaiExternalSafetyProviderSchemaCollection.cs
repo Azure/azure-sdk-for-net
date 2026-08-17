@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(RaiExternalSafetyProviderSchemaResource.ResourceType, out string raiExternalSafetyProviderSchemaApiVersion);
             _raiExternalSafetyProviderSchemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", RaiExternalSafetyProviderSchemaResource.ResourceType.Namespace, Diagnostics);
-            _raiExternalSafetyProviderSchemasRestClient = new RaiExternalSafetyProviderSchemas(_raiExternalSafetyProviderSchemasClientDiagnostics, Pipeline, Endpoint, raiExternalSafetyProviderSchemaApiVersion ?? "2026-05-15-preview");
+            _raiExternalSafetyProviderSchemasRestClient = new RaiExternalSafetyProviderSchemas(_raiExternalSafetyProviderSchemasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, raiExternalSafetyProviderSchemaApiVersion ?? "2026-05-15-preview");
             ValidateResourceId(id);
         }
 

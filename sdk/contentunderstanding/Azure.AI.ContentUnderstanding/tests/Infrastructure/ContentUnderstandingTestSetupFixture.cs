@@ -20,7 +20,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
     /// </summary>
     /// <remarks>
     /// This fixture runs once per test assembly before any tests execute. It configures the required
-    /// model deployments (gpt-4.1, gpt-4.1-mini, text-embedding-3-large) if they are not already configured.
+    /// model deployments (gpt-5.2, text-embedding-3-large) if they are not already configured.
     /// This setup is only performed in Live mode; in Playback mode, the recorded defaults are used.
     /// </remarks>
     [SetUpFixture]
@@ -47,24 +47,27 @@ namespace Azure.AI.ContentUnderstanding.Tests
         private async Task ConfigureDefaultsAsync()
         {
             // Check if model deployments are configured in test environment
-            string? gpt41Deployment = Environment.Gpt41Deployment;
-            string? gpt41MiniDeployment = Environment.Gpt41MiniDeployment;
-            string? textEmbeddingDeployment = Environment.TextEmbedding3LargeDeployment;
+            string completionModel = Environment.CompletionModel;
+            string? completionModelDeployment = Environment.CompletionModelDeployment;
+            string? completionMiniDeployment = Environment.CompletionMiniDeployment;
+            string? embeddingDeployment = Environment.EmbeddingDeployment;
 
-            if (string.IsNullOrEmpty(gpt41Deployment) || string.IsNullOrEmpty(gpt41MiniDeployment) || string.IsNullOrEmpty(textEmbeddingDeployment))
+            if (string.IsNullOrEmpty(completionModelDeployment) ||
+                string.IsNullOrEmpty(completionMiniDeployment) ||
+                string.IsNullOrEmpty(embeddingDeployment))
             {
                 var missingDeployments = new List<string>();
-                if (string.IsNullOrEmpty(gpt41Deployment))
+                if (string.IsNullOrEmpty(completionModelDeployment))
                 {
-                    missingDeployments.Add("GPT_4_1_DEPLOYMENT");
+                    missingDeployments.Add("CU_COMPLETION_MODEL_DEPLOYMENT");
                 }
-                if (string.IsNullOrEmpty(gpt41MiniDeployment))
+                if (string.IsNullOrEmpty(completionMiniDeployment))
                 {
-                    missingDeployments.Add("GPT_4_1_MINI_DEPLOYMENT");
+                    missingDeployments.Add("CU_COMPLETION_MINI_DEPLOYMENT");
                 }
-                if (string.IsNullOrEmpty(textEmbeddingDeployment))
+                if (string.IsNullOrEmpty(embeddingDeployment))
                 {
-                    missingDeployments.Add("TEXT_EMBEDDING_3_LARGE_DEPLOYMENT");
+                    missingDeployments.Add("CU_EMBEDDING_DEPLOYMENT");
                 }
 
                 var errorMessage = $"Content Understanding test setup failed: Required model deployment environment variables are not configured. Missing: {string.Join(", ", missingDeployments)}. " +
@@ -79,40 +82,62 @@ namespace Azure.AI.ContentUnderstanding.Tests
             try
             {
                 var endpoint = new Uri(Environment.Endpoint);
-                var credential = Environment.Credential;
-                var client = new ContentUnderstandingClient(endpoint, credential);
+                var client = new ContentUnderstandingClient(
+                    endpoint,
+                    Environment.Credential,
+                    new ContentUnderstandingClientOptions(ContentUnderstandingClientOptions.ServiceVersion.V2025_11_01));
+
+                TestContext.WriteLine($"Configuring defaults against {endpoint} (mode={Environment.Mode}).");
 
                 // Check if defaults are already configured
-                Response<ContentUnderstandingDefaults> currentDefaults = await client.GetDefaultsAsync();
                 bool needsConfiguration = false;
+                Response<ContentUnderstandingDefaults>? currentDefaults = null;
 
-                if (currentDefaults.Value.ModelDeployments == null || currentDefaults.Value.ModelDeployments.Count == 0)
+                try
+                {
+                    currentDefaults = await client.GetDefaultsAsync();
+                }
+                catch (RequestFailedException ex) when (ex.Status == 400 && ex.ErrorCode == "InvalidRequest" && ex.Message.Contains("DefaultsNotSet", StringComparison.Ordinal))
+                {
+                    // Fresh resources can return DefaultsNotSet before any PATCH /defaults.
+                    needsConfiguration = true;
+                }
+
+                IDictionary<string, string>? existingModelDeployments = currentDefaults?.Value.ModelDeployments;
+
+                if (!needsConfiguration && (existingModelDeployments == null || existingModelDeployments.Count == 0))
                 {
                     needsConfiguration = true;
                 }
-                else
+                else if (!needsConfiguration)
                 {
                     // Check if all required models are configured
-                    needsConfiguration = !currentDefaults.Value.ModelDeployments.ContainsKey("gpt-4.1") ||
-                                        !currentDefaults.Value.ModelDeployments.ContainsKey("gpt-4.1-mini") ||
-                                        !currentDefaults.Value.ModelDeployments.ContainsKey("text-embedding-3-large") ||
-                                        currentDefaults.Value.ModelDeployments["gpt-4.1"] != gpt41Deployment ||
-                                        currentDefaults.Value.ModelDeployments["gpt-4.1-mini"] != gpt41MiniDeployment ||
-                                        currentDefaults.Value.ModelDeployments["text-embedding-3-large"] != textEmbeddingDeployment;
+                    needsConfiguration = !existingModelDeployments!.ContainsKey(completionModel) ||
+                                        !existingModelDeployments.ContainsKey("text-embedding-3-large") ||
+                                        !existingModelDeployments.ContainsKey("prebuilt-analyzer-completion") ||
+                                        !existingModelDeployments.ContainsKey("prebuilt-analyzer-completion-mini") ||
+                                        !existingModelDeployments.ContainsKey("prebuilt-analyzer-embedding") ||
+                                        existingModelDeployments[completionModel] != completionModelDeployment ||
+                                        existingModelDeployments["text-embedding-3-large"] != embeddingDeployment ||
+                                        existingModelDeployments["prebuilt-analyzer-completion"] != completionModelDeployment ||
+                                        existingModelDeployments["prebuilt-analyzer-completion-mini"] != completionMiniDeployment ||
+                                        existingModelDeployments["prebuilt-analyzer-embedding"] != embeddingDeployment;
                 }
 
                 if (needsConfiguration)
                 {
                     TestContext.WriteLine("Configuring Content Understanding service defaults...");
-                    var nonNullGpt41Deployment = gpt41Deployment ?? throw new InvalidOperationException("gpt41Deployment must be configured for test setup.");
-                    var nonNullGpt41MiniDeployment = gpt41MiniDeployment ?? throw new InvalidOperationException("gpt41MiniDeployment must be configured for test setup.");
-                    var nonNullTextEmbeddingDeployment = textEmbeddingDeployment ?? throw new InvalidOperationException("textEmbeddingDeployment must be configured for test setup.");
+                    var nonNullCompletionModelDeployment = completionModelDeployment ?? throw new InvalidOperationException("completionModelDeployment must be configured for test setup.");
+                    var nonNullCompletionMiniDeployment = completionMiniDeployment ?? throw new InvalidOperationException("completionMiniDeployment must be configured for test setup.");
+                    var nonNullEmbeddingDeployment = embeddingDeployment ?? throw new InvalidOperationException("embeddingDeployment must be configured for test setup.");
 
                     var modelDeployments = new Dictionary<string, string>
                     {
-                        ["gpt-4.1"] = nonNullGpt41Deployment,
-                        ["gpt-4.1-mini"] = nonNullGpt41MiniDeployment,
-                        ["text-embedding-3-large"] = nonNullTextEmbeddingDeployment
+                        [completionModel] = nonNullCompletionModelDeployment,
+                        ["text-embedding-3-large"] = nonNullEmbeddingDeployment,
+                        ["prebuilt-analyzer-completion"] = nonNullCompletionModelDeployment,
+                        ["prebuilt-analyzer-completion-mini"] = nonNullCompletionMiniDeployment,
+                        ["prebuilt-analyzer-embedding"] = nonNullEmbeddingDeployment
                     };
 
                     Response<ContentUnderstandingDefaults> response = await client.UpdateDefaultsAsync(modelDeployments);

@@ -204,6 +204,58 @@ namespace Azure.Generator.Provisioning.Tests
             Assert.That(type.BaseType, Is.EqualTo(new CSharpType(typeof(ProvisionableConstruct))));
         }
 
+        [TestCase(null)]
+        [TestCase("derived")]
+        public void UnreachableModelIsNotCreated(string? discriminatorValue)
+        {
+            var input = CreateDerivedModel("UnreachableModel", discriminatorValue, _regularModel);
+
+            var provider = _factory.CreateModel(input);
+
+            Assert.That(provider, Is.Null);
+        }
+
+        [Test]
+        public void DiscriminatedBaseModelDescriptionListsDerivedModels()
+        {
+            var discriminator = CreateProperty("kind", InputPrimitiveType.String, isDiscriminator: true);
+            var baseModel = new InputModelType(
+                "BaseModel",
+                "Sample.Models",
+                "Sample.Models.BaseModel",
+                "public",
+                null,
+                string.Empty,
+                "Base model.",
+                InputModelTypeUsage.Input | InputModelTypeUsage.Output,
+                [discriminator],
+                null,
+                [],
+                null,
+                discriminator,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
+            var firstDerivedModel = CreateDerivedModel("FirstDerivedModel", "first", baseModel);
+            var secondDerivedModel = CreateDerivedModel("SecondDerivedModel", "second", baseModel);
+            var discriminatedSubtypes = (IDictionary<string, InputModelType>)baseModel.DiscriminatedSubtypes;
+            discriminatedSubtypes.Add("first", firstDerivedModel);
+            discriminatedSubtypes.Add("second", secondDerivedModel);
+            var factory = ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [baseModel, firstDerivedModel, secondDerivedModel],
+                armProviderSchema: () => new ArmProviderSchema([], []))
+                .Object.TypeFactory;
+
+            var provider = factory.CreateModel(baseModel);
+
+            Assert.That(provider, Is.Not.Null);
+            Assert.That(provider!.Description.ToString(), Does.StartWith("Base model.\nPlease note this is the base class."));
+            Assert.That(provider.Description.ToString(), Does.Contain("FirstDerivedModel"));
+            Assert.That(provider.Description.ToString(), Does.Contain("SecondDerivedModel"));
+        }
+
         [Test]
         public void ArrayOfKnownModelTypeIsConvertedToBicepListOfModel()
         {
@@ -359,7 +411,28 @@ namespace Azure.Generator.Provisioning.Tests
                 new InputSerializationOptions(),
                 false);
 
-        private static InputModelProperty CreateProperty(string name, InputType type)
+        private static InputModelType CreateDerivedModel(string name, string? discriminatorValue, InputModelType baseModel)
+            => new(
+                name,
+                "Sample.Models",
+                $"Sample.Models.{name}",
+                "public",
+                null,
+                string.Empty,
+                $"{name} model.",
+                InputModelTypeUsage.Input | InputModelTypeUsage.Output,
+                [],
+                baseModel,
+                [],
+                discriminatorValue,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
+
+        private static InputModelProperty CreateProperty(string name, InputType type, bool isDiscriminator = false)
             => new(
                 name: name,
                 summary: null,
@@ -371,7 +444,7 @@ namespace Azure.Generator.Provisioning.Tests
                 defaultValue: null,
                 isHttpMetadata: false,
                 access: null,
-                isDiscriminator: false,
+                isDiscriminator: isDiscriminator,
                 serializedName: name,
                 serializationOptions: new(json: new(name)));
 
@@ -387,7 +460,7 @@ namespace Azure.Generator.Provisioning.Tests
             return new ArmResourceMetadata(
                 path,
                 model.Name,
-                resourceType,
+                new ResourceTypePattern(resourceType),
                 model,
                 new ArmScopeInfo(scope, RequestPathPattern.GetFromScope(scope, path), null),
                 methods,

@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DomainRegistration
         }
 
         /// <summary> Azure DNS Zone to use. </summary>
-        public string DnsZoneId
+        public ResourceIdentifier DnsZoneId
         {
             get
             {

@@ -15,6 +15,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Agents;
+using Azure.AI.Projects.Agents.Custom.Internal;
 using Microsoft.Extensions.Options;
 using OpenAI;
 
@@ -88,7 +89,11 @@ public partial class AgentAdministrationClient
             }
         };
         _endpoint = endpoint;
-        Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly), new BearerTokenPolicy(tokenProvider, _flows) }, Array.Empty<PipelinePolicy>());
+        Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] {
+            new UserAgentPolicy(typeof(InternalProjectsClient).Assembly),
+            new BearerTokenPolicy(tokenProvider, _flows),
+            new FoundryFeaturesPolicy("MemoryStores=V1Preview,ContainerAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,AgentsOptimization=V2Preview,Routines=V1Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview"),
+        }, Array.Empty<PipelinePolicy>());
         _apiVersion = options.Version;
         ClientDiagnostics = new ClientDiagnostics(options, true);
     }
@@ -797,7 +802,9 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult StopSession(string agentName, string sessionId, CancellationToken cancellationToken = default)
     {
-        return StopSession(agentName, sessionId, cancellationToken);
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(agentName, nameof(sessionId));
+        return StopSession(agentName, sessionId, cancellationToken.ToRequestOptions());
     }
 
     /// <summary>
@@ -812,7 +819,9 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult> StopSessionAsync(string agentName, string sessionId, CancellationToken cancellationToken = default)
     {
-        return await StopSessionAsync(agentName, sessionId, cancellationToken).ConfigureAwait(false);
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(agentName, nameof(sessionId));
+        return await StopSessionAsync(agentName, sessionId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
     }
 
     /// <summary>

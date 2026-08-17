@@ -135,10 +135,24 @@ public sealed class DistributedTracingProtocolTests : IDisposable
             System.Text.Encoding.UTF8, "application/json");
         await _client.PostAsync("/responses", content);
 
-        Assert.That(_stoppedActivities, Is.Not.Empty);
-        var activity = _stoppedActivities[^1];
-        var streamingBaggage = activity.Baggage.FirstOrDefault(b => b.Key == ResponsesTracingConstants.Baggage.Streaming);
+        // The ASP.NET Core request activity stops server-side after the SSE response fully
+        // flushes and the pipeline unwinds — which can lag slightly behind the client-side
+        // PostAsync completion (and more so under parallel test load). Poll briefly for the
+        // ActivityStopped callback rather than asserting synchronously (see class remarks).
+        var activity = await WaitForStoppedActivityAsync();
+        Assert.That(activity, Is.Not.Null);
+        var streamingBaggage = activity!.Baggage.FirstOrDefault(b => b.Key == ResponsesTracingConstants.Baggage.Streaming);
         Assert.That(streamingBaggage.Value, Is.EqualTo("True"));
+    }
+
+    private async Task<Activity?> WaitForStoppedActivityAsync()
+    {
+        for (var i = 0; i < 50 && _stoppedActivities.Count == 0; i++)
+        {
+            await Task.Delay(20);
+        }
+
+        return _stoppedActivities.Count > 0 ? _stoppedActivities[^1] : null;
     }
 
     // --- US4: X-Request-Id (T021-T023) ---

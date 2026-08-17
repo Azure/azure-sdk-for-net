@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using Azure.Security.CodeTransparency.Receipt;
 using NUnit.Framework;
 
 namespace Azure.Security.CodeTransparency.Tests
@@ -145,7 +144,7 @@ namespace Azure.Security.CodeTransparency.Tests
             BinaryData content = BinaryData.FromStream(fileStream);
 #endif
             bool waitForCommit = true;
-            Response<BinaryData> receiptResponse = await client.CreateEntryAsync(content, waitForCommit);
+            NullableResponse<BinaryData> receiptResponse = await client.CreateEntryAsync(content, waitForCommit);
             #endregion Snippet:CodeTransparencySubmissionSyncReceipt
 
             #region Snippet:CodeTransparencySample1_CreateStatement

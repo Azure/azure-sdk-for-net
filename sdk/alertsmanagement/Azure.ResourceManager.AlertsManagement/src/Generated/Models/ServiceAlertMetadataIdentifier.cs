@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     internal readonly partial struct ServiceAlertMetadataIdentifier : IEquatable<ServiceAlertMetadataIdentifier>
     {
         private readonly string _value;
+        /// <summary> MonitorServiceList. </summary>
+        private const string MonitorServiceListValue = "MonitorServiceList";
 
         /// <summary> Initializes a new instance of <see cref="ServiceAlertMetadataIdentifier"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceAlertMetadataIdentifier(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MonitorServiceListValue = "MonitorServiceList";
+            _value = value;
+        }
 
         /// <summary> MonitorServiceList. </summary>
         public static ServiceAlertMetadataIdentifier MonitorServiceList { get; } = new ServiceAlertMetadataIdentifier(MonitorServiceListValue);
+
         /// <summary> Determines if two <see cref="ServiceAlertMetadataIdentifier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceAlertMetadataIdentifier left, ServiceAlertMetadataIdentifier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceAlertMetadataIdentifier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceAlertMetadataIdentifier left, ServiceAlertMetadataIdentifier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceAlertMetadataIdentifier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceAlertMetadataIdentifier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceAlertMetadataIdentifier(string value) => new ServiceAlertMetadataIdentifier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceAlertMetadataIdentifier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceAlertMetadataIdentifier?(string value) => value == null ? null : new ServiceAlertMetadataIdentifier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceAlertMetadataIdentifier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceAlertMetadataIdentifier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,381 +7,630 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> Error codes returned by the service. </summary>
+    /// <summary> Error codes returned by the Azure Blob Storage service. </summary>
     public readonly partial struct BlobErrorCode : IEquatable<BlobErrorCode>
     {
         private readonly string _value;
+        /// <summary> Account already exists. </summary>
+        private const string AccountAlreadyExistsValue = "AccountAlreadyExists";
+        /// <summary> Account is being created. </summary>
+        private const string AccountBeingCreatedValue = "AccountBeingCreated";
+        /// <summary> Account is disabled. </summary>
+        private const string AccountIsDisabledValue = "AccountIsDisabled";
+        /// <summary> Authentication failed. </summary>
+        private const string AuthenticationFailedValue = "AuthenticationFailed";
+        /// <summary> Authorization failure. </summary>
+        private const string AuthorizationFailureValue = "AuthorizationFailure";
+        /// <summary> Condition headers not supported. </summary>
+        private const string ConditionHeadersNotSupportedValue = "ConditionHeadersNotSupported";
+        /// <summary> Condition not met. </summary>
+        private const string ConditionNotMetValue = "ConditionNotMet";
+        /// <summary> Empty metadata key. </summary>
+        private const string EmptyMetadataKeyValue = "EmptyMetadataKey";
+        /// <summary> Incremental copy of an earlier snapshot is not allowed. </summary>
+        private const string IncrementalCopyOfEarlierSnapshotNotAllowedValue = "IncrementalCopyOfEarlierSnapshotNotAllowed";
+        /// <summary> Insufficient account permissions. </summary>
+        private const string InsufficientAccountPermissionsValue = "InsufficientAccountPermissions";
+        /// <summary> Internal error. </summary>
+        private const string InternalErrorValue = "InternalError";
+        /// <summary> Invalid authentication information. </summary>
+        private const string InvalidAuthenticationInfoValue = "InvalidAuthenticationInfo";
+        /// <summary> Invalid header value. </summary>
+        private const string InvalidHeaderValueValue = "InvalidHeaderValue";
+        /// <summary> Invalid HTTP verb. </summary>
+        private const string InvalidHttpVerbValue = "InvalidHttpVerb";
+        /// <summary> Invalid input. </summary>
+        private const string InvalidInputValue = "InvalidInput";
+        /// <summary> Invalid MD5. </summary>
+        private const string InvalidMd5Value = "InvalidMd5";
+        /// <summary> Invalid metadata. </summary>
+        private const string InvalidMetadataValue = "InvalidMetadata";
+        /// <summary> Invalid query parameter value. </summary>
+        private const string InvalidQueryParameterValueValue = "InvalidQueryParameterValue";
+        /// <summary> Invalid range. </summary>
+        private const string InvalidRangeValue = "InvalidRange";
+        /// <summary> Invalid request URL. </summary>
+        private const string InvalidRequestUrlValue = "InvalidRequestUrl";
+        /// <summary> Invalid resource name. </summary>
+        private const string InvalidResourceNameValue = "InvalidResourceName";
+        /// <summary> Invalid URI. </summary>
+        private const string InvalidUriValue = "InvalidUri";
+        /// <summary> Invalid XML document. </summary>
+        private const string InvalidXmlDocumentValue = "InvalidXmlDocument";
+        /// <summary> Invalid XML node value. </summary>
+        private const string InvalidXmlNodeValueValue = "InvalidXmlNodeValue";
+        /// <summary> MD5 mismatch. </summary>
+        private const string Md5MismatchValue = "Md5Mismatch";
+        /// <summary> Metadata too large. </summary>
+        private const string MetadataTooLargeValue = "MetadataTooLarge";
+        /// <summary> Missing content length header. </summary>
+        private const string MissingContentLengthHeaderValue = "MissingContentLengthHeader";
+        /// <summary> Missing required XML node. </summary>
+        private const string MissingRequiredXmlNodeValue = "MissingRequiredXmlNode";
+        /// <summary> Missing required header. </summary>
+        private const string MissingRequiredHeaderValue = "MissingRequiredHeader";
+        /// <summary> Missing required query parameter. </summary>
+        private const string MissingRequiredQueryParameterValue = "MissingRequiredQueryParameter";
+        /// <summary> Multiple condition headers not supported. </summary>
+        private const string MultipleConditionHeadersNotSupportedValue = "MultipleConditionHeadersNotSupported";
+        /// <summary> No authentication information. </summary>
+        private const string NoAuthenticationInformationValue = "NoAuthenticationInformation";
+        /// <summary> Operation timed out. </summary>
+        private const string OperationTimedOutValue = "OperationTimedOut";
+        /// <summary> Out of range input. </summary>
+        private const string OutOfRangeInputValue = "OutOfRangeInput";
+        /// <summary> Out of range query parameter value. </summary>
+        private const string OutOfRangeQueryParameterValueValue = "OutOfRangeQueryParameterValue";
+        /// <summary> Request body too large. </summary>
+        private const string RequestBodyTooLargeValue = "RequestBodyTooLarge";
+        /// <summary> Resource type mismatch. </summary>
+        private const string ResourceTypeMismatchValue = "ResourceTypeMismatch";
+        /// <summary> Request URL failed to parse. </summary>
+        private const string RequestUrlFailedToParseValue = "RequestUrlFailedToParse";
+        /// <summary> Resource already exists. </summary>
+        private const string ResourceAlreadyExistsValue = "ResourceAlreadyExists";
+        /// <summary> Resource not found. </summary>
+        private const string ResourceNotFoundValue = "ResourceNotFound";
+        /// <summary> Server busy. </summary>
+        private const string ServerBusyValue = "ServerBusy";
+        /// <summary> Unsupported header. </summary>
+        private const string UnsupportedHeaderValue = "UnsupportedHeader";
+        /// <summary> Unsupported XML node. </summary>
+        private const string UnsupportedXmlNodeValue = "UnsupportedXmlNode";
+        /// <summary> Unsupported query parameter. </summary>
+        private const string UnsupportedQueryParameterValue = "UnsupportedQueryParameter";
+        /// <summary> Unsupported HTTP verb. </summary>
+        private const string UnsupportedHttpVerbValue = "UnsupportedHttpVerb";
+        /// <summary> Append position condition not met. </summary>
+        private const string AppendPositionConditionNotMetValue = "AppendPositionConditionNotMet";
+        /// <summary> Blob already exists. </summary>
+        private const string BlobAlreadyExistsValue = "BlobAlreadyExists";
+        /// <summary> Blob is immutable due to policy. </summary>
+        private const string BlobImmutableDueToPolicyValue = "BlobImmutableDueToPolicy";
+        /// <summary> Blob not found. </summary>
+        private const string BlobNotFoundValue = "BlobNotFound";
+        /// <summary> Blob overwritten. </summary>
+        private const string BlobOverwrittenValue = "BlobOverwritten";
+        /// <summary> Blob tier inadequate for content length. </summary>
+        private const string BlobTierInadequateForContentLengthValue = "BlobTierInadequateForContentLength";
+        /// <summary> Blob uses customer specified encryption. </summary>
+        private const string BlobUsesCustomerSpecifiedEncryptionValue = "BlobUsesCustomerSpecifiedEncryption";
+        /// <summary> Block count exceeds limit. </summary>
+        private const string BlockCountExceedsLimitValue = "BlockCountExceedsLimit";
+        /// <summary> Block list too long. </summary>
+        private const string BlockListTooLongValue = "BlockListTooLong";
+        /// <summary> Cannot change to lower tier. </summary>
+        private const string CannotChangeToLowerTierValue = "CannotChangeToLowerTier";
+        /// <summary> Cannot verify copy source. </summary>
+        private const string CannotVerifyCopySourceValue = "CannotVerifyCopySource";
+        /// <summary> Container already exists. </summary>
+        private const string ContainerAlreadyExistsValue = "ContainerAlreadyExists";
+        /// <summary> Container being deleted. </summary>
+        private const string ContainerBeingDeletedValue = "ContainerBeingDeleted";
+        /// <summary> Container disabled. </summary>
+        private const string ContainerDisabledValue = "ContainerDisabled";
+        /// <summary> Container not found. </summary>
+        private const string ContainerNotFoundValue = "ContainerNotFound";
+        /// <summary> Content length larger than tier limit. </summary>
+        private const string ContentLengthLargerThanTierLimitValue = "ContentLengthLargerThanTierLimit";
+        /// <summary> Copy across accounts not supported. </summary>
+        private const string CopyAcrossAccountsNotSupportedValue = "CopyAcrossAccountsNotSupported";
+        /// <summary> Copy ID mismatch. </summary>
+        private const string CopyIdMismatchValue = "CopyIdMismatch";
+        /// <summary> Feature version mismatch. </summary>
+        private const string FeatureVersionMismatchValue = "FeatureVersionMismatch";
+        /// <summary> Incremental copy blob mismatch. </summary>
+        private const string IncrementalCopyBlobMismatchValue = "IncrementalCopyBlobMismatch";
+        /// <summary> Incremental copy source must be snapshot. </summary>
+        private const string IncrementalCopySourceMustBeSnapshotValue = "IncrementalCopySourceMustBeSnapshot";
+        /// <summary> Infinite lease duration required. </summary>
+        private const string InfiniteLeaseDurationRequiredValue = "InfiniteLeaseDurationRequired";
+        /// <summary> Invalid blob or block. </summary>
+        private const string InvalidBlobOrBlockValue = "InvalidBlobOrBlock";
+        /// <summary> Invalid blob tier. </summary>
+        private const string InvalidBlobTierValue = "InvalidBlobTier";
+        /// <summary> Invalid blob type. </summary>
+        private const string InvalidBlobTypeValue = "InvalidBlobType";
+        /// <summary> Invalid block ID. </summary>
+        private const string InvalidBlockIdValue = "InvalidBlockId";
+        /// <summary> Invalid block list. </summary>
+        private const string InvalidBlockListValue = "InvalidBlockList";
+        /// <summary> Invalid operation. </summary>
+        private const string InvalidOperationValue = "InvalidOperation";
+        /// <summary> Invalid page range. </summary>
+        private const string InvalidPageRangeValue = "InvalidPageRange";
+        /// <summary> Invalid source blob type. </summary>
+        private const string InvalidSourceBlobTypeValue = "InvalidSourceBlobType";
+        /// <summary> Invalid source blob URL. </summary>
+        private const string InvalidSourceBlobUrlValue = "InvalidSourceBlobUrl";
+        /// <summary> Invalid version for page blob operation. </summary>
+        private const string InvalidVersionForPageBlobOperationValue = "InvalidVersionForPageBlobOperation";
+        /// <summary> Lease already present. </summary>
+        private const string LeaseAlreadyPresentValue = "LeaseAlreadyPresent";
+        /// <summary> Lease already broken. </summary>
+        private const string LeaseAlreadyBrokenValue = "LeaseAlreadyBroken";
+        /// <summary> Lease ID mismatch with blob operation. </summary>
+        private const string LeaseIdMismatchWithBlobOperationValue = "LeaseIdMismatchWithBlobOperation";
+        /// <summary> Lease ID mismatch with container operation. </summary>
+        private const string LeaseIdMismatchWithContainerOperationValue = "LeaseIdMismatchWithContainerOperation";
+        /// <summary> Lease ID mismatch with lease operation. </summary>
+        private const string LeaseIdMismatchWithLeaseOperationValue = "LeaseIdMismatchWithLeaseOperation";
+        /// <summary> Lease ID missing. </summary>
+        private const string LeaseIdMissingValue = "LeaseIdMissing";
+        /// <summary> Lease is breaking and cannot be acquired. </summary>
+        private const string LeaseIsBreakingAndCannotBeAcquiredValue = "LeaseIsBreakingAndCannotBeAcquired";
+        /// <summary> Lease is breaking and cannot be changed. </summary>
+        private const string LeaseIsBreakingAndCannotBeChangedValue = "LeaseIsBreakingAndCannotBeChanged";
+        /// <summary> Lease is broken and cannot be renewed. </summary>
+        private const string LeaseIsBrokenAndCannotBeRenewedValue = "LeaseIsBrokenAndCannotBeRenewed";
+        /// <summary> Lease lost. </summary>
+        private const string LeaseLostValue = "LeaseLost";
+        /// <summary> Lease not present with blob operation. </summary>
+        private const string LeaseNotPresentWithBlobOperationValue = "LeaseNotPresentWithBlobOperation";
+        /// <summary> Lease not present with container operation. </summary>
+        private const string LeaseNotPresentWithContainerOperationValue = "LeaseNotPresentWithContainerOperation";
+        /// <summary> Lease not present with lease operation. </summary>
+        private const string LeaseNotPresentWithLeaseOperationValue = "LeaseNotPresentWithLeaseOperation";
+        /// <summary> Maximum blob size condition not met. </summary>
+        private const string MaxBlobSizeConditionNotMetValue = "MaxBlobSizeConditionNotMet";
+        /// <summary> No pending copy operation. </summary>
+        private const string NoPendingCopyOperationValue = "NoPendingCopyOperation";
+        /// <summary> Operation not allowed on incremental copy blob. </summary>
+        private const string OperationNotAllowedOnIncrementalCopyBlobValue = "OperationNotAllowedOnIncrementalCopyBlob";
+        /// <summary> Pending copy operation. </summary>
+        private const string PendingCopyOperationValue = "PendingCopyOperation";
+        /// <summary> Previous snapshot not found. </summary>
+        private const string PreviousSnapshotNotFoundValue = "PreviousSnapshotNotFound";
+        /// <summary> Previous snapshot operation not supported. </summary>
+        private const string PreviousSnapshotOperationNotSupportedValue = "PreviousSnapshotOperationNotSupported";
+        /// <summary> Previous snapshot cannot be newer. </summary>
+        private const string PreviousSnapshotCannotBeNewerValue = "PreviousSnapshotCannotBeNewer";
+        /// <summary> Sequence number condition not met. </summary>
+        private const string SequenceNumberConditionNotMetValue = "SequenceNumberConditionNotMet";
+        /// <summary> Sequence number increment too large. </summary>
+        private const string SequenceNumberIncrementTooLargeValue = "SequenceNumberIncrementTooLarge";
+        /// <summary> Snapshot count exceeded. </summary>
+        private const string SnapshotCountExceededValue = "SnapshotCountExceeded";
+        /// <summary> Snapshot operation rate exceeded. </summary>
+        private const string SnapshotOperationRateExceededValue = "SnapshotOperationRateExceeded";
+        /// <summary> Snapshots present. </summary>
+        private const string SnapshotsPresentValue = "SnapshotsPresent";
+        /// <summary> Source condition not met. </summary>
+        private const string SourceConditionNotMetValue = "SourceConditionNotMet";
+        /// <summary> System in use. </summary>
+        private const string SystemInUseValue = "SystemInUse";
+        /// <summary> Target condition not met. </summary>
+        private const string TargetConditionNotMetValue = "TargetConditionNotMet";
+        /// <summary> Unauthorized blob overwrite. </summary>
+        private const string UnauthorizedBlobOverwriteValue = "UnauthorizedBlobOverwrite";
+        /// <summary> Blob being rehydrated. </summary>
+        private const string BlobBeingRehydratedValue = "BlobBeingRehydrated";
+        /// <summary> Blob archived. </summary>
+        private const string BlobArchivedValue = "BlobArchived";
+        /// <summary> Blob not archived. </summary>
+        private const string BlobNotArchivedValue = "BlobNotArchived";
+        /// <summary> Authorization source IP mismatch. </summary>
+        private const string AuthorizationSourceIPMismatchValue = "AuthorizationSourceIPMismatch";
+        /// <summary> Authorization protocol mismatch. </summary>
+        private const string AuthorizationProtocolMismatchValue = "AuthorizationProtocolMismatch";
+        /// <summary> Authorization permission mismatch. </summary>
+        private const string AuthorizationPermissionMismatchValue = "AuthorizationPermissionMismatch";
+        /// <summary> Authorization service mismatch. </summary>
+        private const string AuthorizationServiceMismatchValue = "AuthorizationServiceMismatch";
+        /// <summary> Authorization resource type mismatch. </summary>
+        private const string AuthorizationResourceTypeMismatchValue = "AuthorizationResourceTypeMismatch";
+        /// <summary> Blob access tier not supported for account type. </summary>
+        private const string BlobAccessTierNotSupportedForAccountTypeValue = "BlobAccessTierNotSupportedForAccountType";
 
         /// <summary> Initializes a new instance of <see cref="BlobErrorCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BlobErrorCode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string AccountAlreadyExistsValue = "AccountAlreadyExists";
-        private const string AccountBeingCreatedValue = "AccountBeingCreated";
-        private const string AccountIsDisabledValue = "AccountIsDisabled";
-        private const string AuthenticationFailedValue = "AuthenticationFailed";
-        private const string AuthorizationFailureValue = "AuthorizationFailure";
-        private const string ConditionHeadersNotSupportedValue = "ConditionHeadersNotSupported";
-        private const string ConditionNotMetValue = "ConditionNotMet";
-        private const string EmptyMetadataKeyValue = "EmptyMetadataKey";
-        private const string InsufficientAccountPermissionsValue = "InsufficientAccountPermissions";
-        private const string InternalErrorValue = "InternalError";
-        private const string InvalidAuthenticationInfoValue = "InvalidAuthenticationInfo";
-        private const string InvalidHeaderValueValue = "InvalidHeaderValue";
-        private const string InvalidHttpVerbValue = "InvalidHttpVerb";
-        private const string InvalidInputValue = "InvalidInput";
-        private const string InvalidMd5Value = "InvalidMd5";
-        private const string InvalidMetadataValue = "InvalidMetadata";
-        private const string InvalidQueryParameterValueValue = "InvalidQueryParameterValue";
-        private const string InvalidRangeValue = "InvalidRange";
-        private const string InvalidResourceNameValue = "InvalidResourceName";
-        private const string InvalidUriValue = "InvalidUri";
-        private const string InvalidXmlDocumentValue = "InvalidXmlDocument";
-        private const string InvalidXmlNodeValueValue = "InvalidXmlNodeValue";
-        private const string Md5MismatchValue = "Md5Mismatch";
-        private const string MetadataTooLargeValue = "MetadataTooLarge";
-        private const string MissingContentLengthHeaderValue = "MissingContentLengthHeader";
-        private const string MissingRequiredQueryParameterValue = "MissingRequiredQueryParameter";
-        private const string MissingRequiredHeaderValue = "MissingRequiredHeader";
-        private const string MissingRequiredXmlNodeValue = "MissingRequiredXmlNode";
-        private const string MultipleConditionHeadersNotSupportedValue = "MultipleConditionHeadersNotSupported";
-        private const string OperationTimedOutValue = "OperationTimedOut";
-        private const string OutOfRangeInputValue = "OutOfRangeInput";
-        private const string OutOfRangeQueryParameterValueValue = "OutOfRangeQueryParameterValue";
-        private const string RequestBodyTooLargeValue = "RequestBodyTooLarge";
-        private const string ResourceTypeMismatchValue = "ResourceTypeMismatch";
-        private const string RequestUrlFailedToParseValue = "RequestUrlFailedToParse";
-        private const string ResourceAlreadyExistsValue = "ResourceAlreadyExists";
-        private const string ResourceNotFoundValue = "ResourceNotFound";
-        private const string ServerBusyValue = "ServerBusy";
-        private const string UnsupportedHeaderValue = "UnsupportedHeader";
-        private const string UnsupportedXmlNodeValue = "UnsupportedXmlNode";
-        private const string UnsupportedQueryParameterValue = "UnsupportedQueryParameter";
-        private const string UnsupportedHttpVerbValue = "UnsupportedHttpVerb";
-        private const string AppendPositionConditionNotMetValue = "AppendPositionConditionNotMet";
-        private const string BlobAlreadyExistsValue = "BlobAlreadyExists";
-        private const string BlobImmutableDueToPolicyValue = "BlobImmutableDueToPolicy";
-        private const string BlobNotFoundValue = "BlobNotFound";
-        private const string BlobOverwrittenValue = "BlobOverwritten";
-        private const string BlobTierInadequateForContentLengthValue = "BlobTierInadequateForContentLength";
-        private const string BlobUsesCustomerSpecifiedEncryptionValue = "BlobUsesCustomerSpecifiedEncryption";
-        private const string BlockCountExceedsLimitValue = "BlockCountExceedsLimit";
-        private const string BlockListTooLongValue = "BlockListTooLong";
-        private const string CannotChangeToLowerTierValue = "CannotChangeToLowerTier";
-        private const string CannotVerifyCopySourceValue = "CannotVerifyCopySource";
-        private const string ContainerAlreadyExistsValue = "ContainerAlreadyExists";
-        private const string ContainerBeingDeletedValue = "ContainerBeingDeleted";
-        private const string ContainerDisabledValue = "ContainerDisabled";
-        private const string ContainerNotFoundValue = "ContainerNotFound";
-        private const string ContentLengthLargerThanTierLimitValue = "ContentLengthLargerThanTierLimit";
-        private const string CopyAcrossAccountsNotSupportedValue = "CopyAcrossAccountsNotSupported";
-        private const string CopyIdMismatchValue = "CopyIdMismatch";
-        private const string FeatureVersionMismatchValue = "FeatureVersionMismatch";
-        private const string IncrementalCopyBlobMismatchValue = "IncrementalCopyBlobMismatch";
-        private const string IncrementalCopyOfEarlierSnapshotNotAllowedValue = "IncrementalCopyOfEarlierSnapshotNotAllowed";
-        private const string IncrementalCopySourceMustBeSnapshotValue = "IncrementalCopySourceMustBeSnapshot";
-        private const string InfiniteLeaseDurationRequiredValue = "InfiniteLeaseDurationRequired";
-        private const string InvalidBlobOrBlockValue = "InvalidBlobOrBlock";
-        private const string InvalidBlobTierValue = "InvalidBlobTier";
-        private const string InvalidBlobTypeValue = "InvalidBlobType";
-        private const string InvalidBlockIdValue = "InvalidBlockId";
-        private const string InvalidBlockListValue = "InvalidBlockList";
-        private const string InvalidOperationValue = "InvalidOperation";
-        private const string InvalidPageRangeValue = "InvalidPageRange";
-        private const string InvalidSourceBlobTypeValue = "InvalidSourceBlobType";
-        private const string InvalidSourceBlobUrlValue = "InvalidSourceBlobUrl";
-        private const string InvalidVersionForPageBlobOperationValue = "InvalidVersionForPageBlobOperation";
-        private const string LeaseAlreadyPresentValue = "LeaseAlreadyPresent";
-        private const string LeaseAlreadyBrokenValue = "LeaseAlreadyBroken";
-        private const string LeaseIdMismatchWithBlobOperationValue = "LeaseIdMismatchWithBlobOperation";
-        private const string LeaseIdMismatchWithContainerOperationValue = "LeaseIdMismatchWithContainerOperation";
-        private const string LeaseIdMismatchWithLeaseOperationValue = "LeaseIdMismatchWithLeaseOperation";
-        private const string LeaseIdMissingValue = "LeaseIdMissing";
-        private const string LeaseIsBreakingAndCannotBeAcquiredValue = "LeaseIsBreakingAndCannotBeAcquired";
-        private const string LeaseIsBreakingAndCannotBeChangedValue = "LeaseIsBreakingAndCannotBeChanged";
-        private const string LeaseIsBrokenAndCannotBeRenewedValue = "LeaseIsBrokenAndCannotBeRenewed";
-        private const string LeaseLostValue = "LeaseLost";
-        private const string LeaseNotPresentWithBlobOperationValue = "LeaseNotPresentWithBlobOperation";
-        private const string LeaseNotPresentWithContainerOperationValue = "LeaseNotPresentWithContainerOperation";
-        private const string LeaseNotPresentWithLeaseOperationValue = "LeaseNotPresentWithLeaseOperation";
-        private const string MaxBlobSizeConditionNotMetValue = "MaxBlobSizeConditionNotMet";
-        private const string NoAuthenticationInformationValue = "NoAuthenticationInformation";
-        private const string NoPendingCopyOperationValue = "NoPendingCopyOperation";
-        private const string OperationNotAllowedOnIncrementalCopyBlobValue = "OperationNotAllowedOnIncrementalCopyBlob";
-        private const string PendingCopyOperationValue = "PendingCopyOperation";
-        private const string PreviousSnapshotCannotBeNewerValue = "PreviousSnapshotCannotBeNewer";
-        private const string PreviousSnapshotNotFoundValue = "PreviousSnapshotNotFound";
-        private const string PreviousSnapshotOperationNotSupportedValue = "PreviousSnapshotOperationNotSupported";
-        private const string SequenceNumberConditionNotMetValue = "SequenceNumberConditionNotMet";
-        private const string SequenceNumberIncrementTooLargeValue = "SequenceNumberIncrementTooLarge";
-        private const string SnapshotCountExceededValue = "SnapshotCountExceeded";
-        private const string SnapshotOperationRateExceededValue = "SnapshotOperationRateExceeded";
-        private const string SnapshotsPresentValue = "SnapshotsPresent";
-        private const string SourceConditionNotMetValue = "SourceConditionNotMet";
-        private const string SystemInUseValue = "SystemInUse";
-        private const string TargetConditionNotMetValue = "TargetConditionNotMet";
-        private const string UnauthorizedBlobOverwriteValue = "UnauthorizedBlobOverwrite";
-        private const string BlobBeingRehydratedValue = "BlobBeingRehydrated";
-        private const string BlobArchivedValue = "BlobArchived";
-        private const string BlobNotArchivedValue = "BlobNotArchived";
-        private const string AuthorizationSourceIPMismatchValue = "AuthorizationSourceIPMismatch";
-        private const string AuthorizationProtocolMismatchValue = "AuthorizationProtocolMismatch";
-        private const string AuthorizationPermissionMismatchValue = "AuthorizationPermissionMismatch";
-        private const string AuthorizationServiceMismatchValue = "AuthorizationServiceMismatch";
-        private const string AuthorizationResourceTypeMismatchValue = "AuthorizationResourceTypeMismatch";
-        private const string BlobAccessTierNotSupportedForAccountTypeValue = "BlobAccessTierNotSupportedForAccountType";
-
-        /// <summary> AccountAlreadyExists. </summary>
+        /// <summary> Account already exists. </summary>
         public static BlobErrorCode AccountAlreadyExists { get; } = new BlobErrorCode(AccountAlreadyExistsValue);
-        /// <summary> AccountBeingCreated. </summary>
+
+        /// <summary> Account is being created. </summary>
         public static BlobErrorCode AccountBeingCreated { get; } = new BlobErrorCode(AccountBeingCreatedValue);
-        /// <summary> AccountIsDisabled. </summary>
+
+        /// <summary> Account is disabled. </summary>
         public static BlobErrorCode AccountIsDisabled { get; } = new BlobErrorCode(AccountIsDisabledValue);
-        /// <summary> AuthenticationFailed. </summary>
+
+        /// <summary> Authentication failed. </summary>
         public static BlobErrorCode AuthenticationFailed { get; } = new BlobErrorCode(AuthenticationFailedValue);
-        /// <summary> AuthorizationFailure. </summary>
+
+        /// <summary> Authorization failure. </summary>
         public static BlobErrorCode AuthorizationFailure { get; } = new BlobErrorCode(AuthorizationFailureValue);
-        /// <summary> ConditionHeadersNotSupported. </summary>
+
+        /// <summary> Condition headers not supported. </summary>
         public static BlobErrorCode ConditionHeadersNotSupported { get; } = new BlobErrorCode(ConditionHeadersNotSupportedValue);
-        /// <summary> ConditionNotMet. </summary>
+
+        /// <summary> Condition not met. </summary>
         public static BlobErrorCode ConditionNotMet { get; } = new BlobErrorCode(ConditionNotMetValue);
-        /// <summary> EmptyMetadataKey. </summary>
+
+        /// <summary> Empty metadata key. </summary>
         public static BlobErrorCode EmptyMetadataKey { get; } = new BlobErrorCode(EmptyMetadataKeyValue);
-        /// <summary> InsufficientAccountPermissions. </summary>
-        public static BlobErrorCode InsufficientAccountPermissions { get; } = new BlobErrorCode(InsufficientAccountPermissionsValue);
-        /// <summary> InternalError. </summary>
-        public static BlobErrorCode InternalError { get; } = new BlobErrorCode(InternalErrorValue);
-        /// <summary> InvalidAuthenticationInfo. </summary>
-        public static BlobErrorCode InvalidAuthenticationInfo { get; } = new BlobErrorCode(InvalidAuthenticationInfoValue);
-        /// <summary> InvalidHeaderValue. </summary>
-        public static BlobErrorCode InvalidHeaderValue { get; } = new BlobErrorCode(InvalidHeaderValueValue);
-        /// <summary> InvalidHttpVerb. </summary>
-        public static BlobErrorCode InvalidHttpVerb { get; } = new BlobErrorCode(InvalidHttpVerbValue);
-        /// <summary> InvalidInput. </summary>
-        public static BlobErrorCode InvalidInput { get; } = new BlobErrorCode(InvalidInputValue);
-        /// <summary> InvalidMd5. </summary>
-        public static BlobErrorCode InvalidMd5 { get; } = new BlobErrorCode(InvalidMd5Value);
-        /// <summary> InvalidMetadata. </summary>
-        public static BlobErrorCode InvalidMetadata { get; } = new BlobErrorCode(InvalidMetadataValue);
-        /// <summary> InvalidQueryParameterValue. </summary>
-        public static BlobErrorCode InvalidQueryParameterValue { get; } = new BlobErrorCode(InvalidQueryParameterValueValue);
-        /// <summary> InvalidRange. </summary>
-        public static BlobErrorCode InvalidRange { get; } = new BlobErrorCode(InvalidRangeValue);
-        /// <summary> InvalidResourceName. </summary>
-        public static BlobErrorCode InvalidResourceName { get; } = new BlobErrorCode(InvalidResourceNameValue);
-        /// <summary> InvalidUri. </summary>
-        public static BlobErrorCode InvalidUri { get; } = new BlobErrorCode(InvalidUriValue);
-        /// <summary> InvalidXmlDocument. </summary>
-        public static BlobErrorCode InvalidXmlDocument { get; } = new BlobErrorCode(InvalidXmlDocumentValue);
-        /// <summary> InvalidXmlNodeValue. </summary>
-        public static BlobErrorCode InvalidXmlNodeValue { get; } = new BlobErrorCode(InvalidXmlNodeValueValue);
-        /// <summary> Md5Mismatch. </summary>
-        public static BlobErrorCode Md5Mismatch { get; } = new BlobErrorCode(Md5MismatchValue);
-        /// <summary> MetadataTooLarge. </summary>
-        public static BlobErrorCode MetadataTooLarge { get; } = new BlobErrorCode(MetadataTooLargeValue);
-        /// <summary> MissingContentLengthHeader. </summary>
-        public static BlobErrorCode MissingContentLengthHeader { get; } = new BlobErrorCode(MissingContentLengthHeaderValue);
-        /// <summary> MissingRequiredQueryParameter. </summary>
-        public static BlobErrorCode MissingRequiredQueryParameter { get; } = new BlobErrorCode(MissingRequiredQueryParameterValue);
-        /// <summary> MissingRequiredHeader. </summary>
-        public static BlobErrorCode MissingRequiredHeader { get; } = new BlobErrorCode(MissingRequiredHeaderValue);
-        /// <summary> MissingRequiredXmlNode. </summary>
-        public static BlobErrorCode MissingRequiredXmlNode { get; } = new BlobErrorCode(MissingRequiredXmlNodeValue);
-        /// <summary> MultipleConditionHeadersNotSupported. </summary>
-        public static BlobErrorCode MultipleConditionHeadersNotSupported { get; } = new BlobErrorCode(MultipleConditionHeadersNotSupportedValue);
-        /// <summary> OperationTimedOut. </summary>
-        public static BlobErrorCode OperationTimedOut { get; } = new BlobErrorCode(OperationTimedOutValue);
-        /// <summary> OutOfRangeInput. </summary>
-        public static BlobErrorCode OutOfRangeInput { get; } = new BlobErrorCode(OutOfRangeInputValue);
-        /// <summary> OutOfRangeQueryParameterValue. </summary>
-        public static BlobErrorCode OutOfRangeQueryParameterValue { get; } = new BlobErrorCode(OutOfRangeQueryParameterValueValue);
-        /// <summary> RequestBodyTooLarge. </summary>
-        public static BlobErrorCode RequestBodyTooLarge { get; } = new BlobErrorCode(RequestBodyTooLargeValue);
-        /// <summary> ResourceTypeMismatch. </summary>
-        public static BlobErrorCode ResourceTypeMismatch { get; } = new BlobErrorCode(ResourceTypeMismatchValue);
-        /// <summary> RequestUrlFailedToParse. </summary>
-        public static BlobErrorCode RequestUrlFailedToParse { get; } = new BlobErrorCode(RequestUrlFailedToParseValue);
-        /// <summary> ResourceAlreadyExists. </summary>
-        public static BlobErrorCode ResourceAlreadyExists { get; } = new BlobErrorCode(ResourceAlreadyExistsValue);
-        /// <summary> ResourceNotFound. </summary>
-        public static BlobErrorCode ResourceNotFound { get; } = new BlobErrorCode(ResourceNotFoundValue);
-        /// <summary> ServerBusy. </summary>
-        public static BlobErrorCode ServerBusy { get; } = new BlobErrorCode(ServerBusyValue);
-        /// <summary> UnsupportedHeader. </summary>
-        public static BlobErrorCode UnsupportedHeader { get; } = new BlobErrorCode(UnsupportedHeaderValue);
-        /// <summary> UnsupportedXmlNode. </summary>
-        public static BlobErrorCode UnsupportedXmlNode { get; } = new BlobErrorCode(UnsupportedXmlNodeValue);
-        /// <summary> UnsupportedQueryParameter. </summary>
-        public static BlobErrorCode UnsupportedQueryParameter { get; } = new BlobErrorCode(UnsupportedQueryParameterValue);
-        /// <summary> UnsupportedHttpVerb. </summary>
-        public static BlobErrorCode UnsupportedHttpVerb { get; } = new BlobErrorCode(UnsupportedHttpVerbValue);
-        /// <summary> AppendPositionConditionNotMet. </summary>
-        public static BlobErrorCode AppendPositionConditionNotMet { get; } = new BlobErrorCode(AppendPositionConditionNotMetValue);
-        /// <summary> BlobAlreadyExists. </summary>
-        public static BlobErrorCode BlobAlreadyExists { get; } = new BlobErrorCode(BlobAlreadyExistsValue);
-        /// <summary> BlobImmutableDueToPolicy. </summary>
-        public static BlobErrorCode BlobImmutableDueToPolicy { get; } = new BlobErrorCode(BlobImmutableDueToPolicyValue);
-        /// <summary> BlobNotFound. </summary>
-        public static BlobErrorCode BlobNotFound { get; } = new BlobErrorCode(BlobNotFoundValue);
-        /// <summary> BlobOverwritten. </summary>
-        public static BlobErrorCode BlobOverwritten { get; } = new BlobErrorCode(BlobOverwrittenValue);
-        /// <summary> BlobTierInadequateForContentLength. </summary>
-        public static BlobErrorCode BlobTierInadequateForContentLength { get; } = new BlobErrorCode(BlobTierInadequateForContentLengthValue);
-        /// <summary> BlobUsesCustomerSpecifiedEncryption. </summary>
-        public static BlobErrorCode BlobUsesCustomerSpecifiedEncryption { get; } = new BlobErrorCode(BlobUsesCustomerSpecifiedEncryptionValue);
-        /// <summary> BlockCountExceedsLimit. </summary>
-        public static BlobErrorCode BlockCountExceedsLimit { get; } = new BlobErrorCode(BlockCountExceedsLimitValue);
-        /// <summary> BlockListTooLong. </summary>
-        public static BlobErrorCode BlockListTooLong { get; } = new BlobErrorCode(BlockListTooLongValue);
-        /// <summary> CannotChangeToLowerTier. </summary>
-        public static BlobErrorCode CannotChangeToLowerTier { get; } = new BlobErrorCode(CannotChangeToLowerTierValue);
-        /// <summary> CannotVerifyCopySource. </summary>
-        public static BlobErrorCode CannotVerifyCopySource { get; } = new BlobErrorCode(CannotVerifyCopySourceValue);
-        /// <summary> ContainerAlreadyExists. </summary>
-        public static BlobErrorCode ContainerAlreadyExists { get; } = new BlobErrorCode(ContainerAlreadyExistsValue);
-        /// <summary> ContainerBeingDeleted. </summary>
-        public static BlobErrorCode ContainerBeingDeleted { get; } = new BlobErrorCode(ContainerBeingDeletedValue);
-        /// <summary> ContainerDisabled. </summary>
-        public static BlobErrorCode ContainerDisabled { get; } = new BlobErrorCode(ContainerDisabledValue);
-        /// <summary> ContainerNotFound. </summary>
-        public static BlobErrorCode ContainerNotFound { get; } = new BlobErrorCode(ContainerNotFoundValue);
-        /// <summary> ContentLengthLargerThanTierLimit. </summary>
-        public static BlobErrorCode ContentLengthLargerThanTierLimit { get; } = new BlobErrorCode(ContentLengthLargerThanTierLimitValue);
-        /// <summary> CopyAcrossAccountsNotSupported. </summary>
-        public static BlobErrorCode CopyAcrossAccountsNotSupported { get; } = new BlobErrorCode(CopyAcrossAccountsNotSupportedValue);
-        /// <summary> CopyIdMismatch. </summary>
-        public static BlobErrorCode CopyIdMismatch { get; } = new BlobErrorCode(CopyIdMismatchValue);
-        /// <summary> FeatureVersionMismatch. </summary>
-        public static BlobErrorCode FeatureVersionMismatch { get; } = new BlobErrorCode(FeatureVersionMismatchValue);
-        /// <summary> IncrementalCopyBlobMismatch. </summary>
-        public static BlobErrorCode IncrementalCopyBlobMismatch { get; } = new BlobErrorCode(IncrementalCopyBlobMismatchValue);
-        /// <summary> IncrementalCopyOfEarlierSnapshotNotAllowed. </summary>
+
+        /// <summary> Incremental copy of an earlier snapshot is not allowed. </summary>
         public static BlobErrorCode IncrementalCopyOfEarlierSnapshotNotAllowed { get; } = new BlobErrorCode(IncrementalCopyOfEarlierSnapshotNotAllowedValue);
-        /// <summary> IncrementalCopySourceMustBeSnapshot. </summary>
-        public static BlobErrorCode IncrementalCopySourceMustBeSnapshot { get; } = new BlobErrorCode(IncrementalCopySourceMustBeSnapshotValue);
-        /// <summary> InfiniteLeaseDurationRequired. </summary>
-        public static BlobErrorCode InfiniteLeaseDurationRequired { get; } = new BlobErrorCode(InfiniteLeaseDurationRequiredValue);
-        /// <summary> InvalidBlobOrBlock. </summary>
-        public static BlobErrorCode InvalidBlobOrBlock { get; } = new BlobErrorCode(InvalidBlobOrBlockValue);
-        /// <summary> InvalidBlobTier. </summary>
-        public static BlobErrorCode InvalidBlobTier { get; } = new BlobErrorCode(InvalidBlobTierValue);
-        /// <summary> InvalidBlobType. </summary>
-        public static BlobErrorCode InvalidBlobType { get; } = new BlobErrorCode(InvalidBlobTypeValue);
-        /// <summary> InvalidBlockId. </summary>
-        public static BlobErrorCode InvalidBlockId { get; } = new BlobErrorCode(InvalidBlockIdValue);
-        /// <summary> InvalidBlockList. </summary>
-        public static BlobErrorCode InvalidBlockList { get; } = new BlobErrorCode(InvalidBlockListValue);
-        /// <summary> InvalidOperation. </summary>
-        public static BlobErrorCode InvalidOperation { get; } = new BlobErrorCode(InvalidOperationValue);
-        /// <summary> InvalidPageRange. </summary>
-        public static BlobErrorCode InvalidPageRange { get; } = new BlobErrorCode(InvalidPageRangeValue);
-        /// <summary> InvalidSourceBlobType. </summary>
-        public static BlobErrorCode InvalidSourceBlobType { get; } = new BlobErrorCode(InvalidSourceBlobTypeValue);
-        /// <summary> InvalidSourceBlobUrl. </summary>
-        public static BlobErrorCode InvalidSourceBlobUrl { get; } = new BlobErrorCode(InvalidSourceBlobUrlValue);
-        /// <summary> InvalidVersionForPageBlobOperation. </summary>
-        public static BlobErrorCode InvalidVersionForPageBlobOperation { get; } = new BlobErrorCode(InvalidVersionForPageBlobOperationValue);
-        /// <summary> LeaseAlreadyPresent. </summary>
-        public static BlobErrorCode LeaseAlreadyPresent { get; } = new BlobErrorCode(LeaseAlreadyPresentValue);
-        /// <summary> LeaseAlreadyBroken. </summary>
-        public static BlobErrorCode LeaseAlreadyBroken { get; } = new BlobErrorCode(LeaseAlreadyBrokenValue);
-        /// <summary> LeaseIdMismatchWithBlobOperation. </summary>
-        public static BlobErrorCode LeaseIdMismatchWithBlobOperation { get; } = new BlobErrorCode(LeaseIdMismatchWithBlobOperationValue);
-        /// <summary> LeaseIdMismatchWithContainerOperation. </summary>
-        public static BlobErrorCode LeaseIdMismatchWithContainerOperation { get; } = new BlobErrorCode(LeaseIdMismatchWithContainerOperationValue);
-        /// <summary> LeaseIdMismatchWithLeaseOperation. </summary>
-        public static BlobErrorCode LeaseIdMismatchWithLeaseOperation { get; } = new BlobErrorCode(LeaseIdMismatchWithLeaseOperationValue);
-        /// <summary> LeaseIdMissing. </summary>
-        public static BlobErrorCode LeaseIdMissing { get; } = new BlobErrorCode(LeaseIdMissingValue);
-        /// <summary> LeaseIsBreakingAndCannotBeAcquired. </summary>
-        public static BlobErrorCode LeaseIsBreakingAndCannotBeAcquired { get; } = new BlobErrorCode(LeaseIsBreakingAndCannotBeAcquiredValue);
-        /// <summary> LeaseIsBreakingAndCannotBeChanged. </summary>
-        public static BlobErrorCode LeaseIsBreakingAndCannotBeChanged { get; } = new BlobErrorCode(LeaseIsBreakingAndCannotBeChangedValue);
-        /// <summary> LeaseIsBrokenAndCannotBeRenewed. </summary>
-        public static BlobErrorCode LeaseIsBrokenAndCannotBeRenewed { get; } = new BlobErrorCode(LeaseIsBrokenAndCannotBeRenewedValue);
-        /// <summary> LeaseLost. </summary>
-        public static BlobErrorCode LeaseLost { get; } = new BlobErrorCode(LeaseLostValue);
-        /// <summary> LeaseNotPresentWithBlobOperation. </summary>
-        public static BlobErrorCode LeaseNotPresentWithBlobOperation { get; } = new BlobErrorCode(LeaseNotPresentWithBlobOperationValue);
-        /// <summary> LeaseNotPresentWithContainerOperation. </summary>
-        public static BlobErrorCode LeaseNotPresentWithContainerOperation { get; } = new BlobErrorCode(LeaseNotPresentWithContainerOperationValue);
-        /// <summary> LeaseNotPresentWithLeaseOperation. </summary>
-        public static BlobErrorCode LeaseNotPresentWithLeaseOperation { get; } = new BlobErrorCode(LeaseNotPresentWithLeaseOperationValue);
-        /// <summary> MaxBlobSizeConditionNotMet. </summary>
-        public static BlobErrorCode MaxBlobSizeConditionNotMet { get; } = new BlobErrorCode(MaxBlobSizeConditionNotMetValue);
-        /// <summary> NoAuthenticationInformation. </summary>
+
+        /// <summary> Insufficient account permissions. </summary>
+        public static BlobErrorCode InsufficientAccountPermissions { get; } = new BlobErrorCode(InsufficientAccountPermissionsValue);
+
+        /// <summary> Internal error. </summary>
+        public static BlobErrorCode InternalError { get; } = new BlobErrorCode(InternalErrorValue);
+
+        /// <summary> Invalid authentication information. </summary>
+        public static BlobErrorCode InvalidAuthenticationInfo { get; } = new BlobErrorCode(InvalidAuthenticationInfoValue);
+
+        /// <summary> Invalid header value. </summary>
+        public static BlobErrorCode InvalidHeaderValue { get; } = new BlobErrorCode(InvalidHeaderValueValue);
+
+        /// <summary> Invalid HTTP verb. </summary>
+        public static BlobErrorCode InvalidHttpVerb { get; } = new BlobErrorCode(InvalidHttpVerbValue);
+
+        /// <summary> Invalid input. </summary>
+        public static BlobErrorCode InvalidInput { get; } = new BlobErrorCode(InvalidInputValue);
+
+        /// <summary> Invalid MD5. </summary>
+        public static BlobErrorCode InvalidMd5 { get; } = new BlobErrorCode(InvalidMd5Value);
+
+        /// <summary> Invalid metadata. </summary>
+        public static BlobErrorCode InvalidMetadata { get; } = new BlobErrorCode(InvalidMetadataValue);
+
+        /// <summary> Invalid query parameter value. </summary>
+        public static BlobErrorCode InvalidQueryParameterValue { get; } = new BlobErrorCode(InvalidQueryParameterValueValue);
+
+        /// <summary> Invalid range. </summary>
+        public static BlobErrorCode InvalidRange { get; } = new BlobErrorCode(InvalidRangeValue);
+
+        /// <summary> Invalid request URL. </summary>
+        public static BlobErrorCode InvalidRequestUrl { get; } = new BlobErrorCode(InvalidRequestUrlValue);
+
+        /// <summary> Invalid resource name. </summary>
+        public static BlobErrorCode InvalidResourceName { get; } = new BlobErrorCode(InvalidResourceNameValue);
+
+        /// <summary> Invalid URI. </summary>
+        public static BlobErrorCode InvalidUri { get; } = new BlobErrorCode(InvalidUriValue);
+
+        /// <summary> Invalid XML document. </summary>
+        public static BlobErrorCode InvalidXmlDocument { get; } = new BlobErrorCode(InvalidXmlDocumentValue);
+
+        /// <summary> Invalid XML node value. </summary>
+        public static BlobErrorCode InvalidXmlNodeValue { get; } = new BlobErrorCode(InvalidXmlNodeValueValue);
+
+        /// <summary> MD5 mismatch. </summary>
+        public static BlobErrorCode Md5Mismatch { get; } = new BlobErrorCode(Md5MismatchValue);
+
+        /// <summary> Metadata too large. </summary>
+        public static BlobErrorCode MetadataTooLarge { get; } = new BlobErrorCode(MetadataTooLargeValue);
+
+        /// <summary> Missing content length header. </summary>
+        public static BlobErrorCode MissingContentLengthHeader { get; } = new BlobErrorCode(MissingContentLengthHeaderValue);
+
+        /// <summary> Missing required XML node. </summary>
+        public static BlobErrorCode MissingRequiredXmlNode { get; } = new BlobErrorCode(MissingRequiredXmlNodeValue);
+
+        /// <summary> Missing required header. </summary>
+        public static BlobErrorCode MissingRequiredHeader { get; } = new BlobErrorCode(MissingRequiredHeaderValue);
+
+        /// <summary> Missing required query parameter. </summary>
+        public static BlobErrorCode MissingRequiredQueryParameter { get; } = new BlobErrorCode(MissingRequiredQueryParameterValue);
+
+        /// <summary> Multiple condition headers not supported. </summary>
+        public static BlobErrorCode MultipleConditionHeadersNotSupported { get; } = new BlobErrorCode(MultipleConditionHeadersNotSupportedValue);
+
+        /// <summary> No authentication information. </summary>
         public static BlobErrorCode NoAuthenticationInformation { get; } = new BlobErrorCode(NoAuthenticationInformationValue);
-        /// <summary> NoPendingCopyOperation. </summary>
+
+        /// <summary> Operation timed out. </summary>
+        public static BlobErrorCode OperationTimedOut { get; } = new BlobErrorCode(OperationTimedOutValue);
+
+        /// <summary> Out of range input. </summary>
+        public static BlobErrorCode OutOfRangeInput { get; } = new BlobErrorCode(OutOfRangeInputValue);
+
+        /// <summary> Out of range query parameter value. </summary>
+        public static BlobErrorCode OutOfRangeQueryParameterValue { get; } = new BlobErrorCode(OutOfRangeQueryParameterValueValue);
+
+        /// <summary> Request body too large. </summary>
+        public static BlobErrorCode RequestBodyTooLarge { get; } = new BlobErrorCode(RequestBodyTooLargeValue);
+
+        /// <summary> Resource type mismatch. </summary>
+        public static BlobErrorCode ResourceTypeMismatch { get; } = new BlobErrorCode(ResourceTypeMismatchValue);
+
+        /// <summary> Request URL failed to parse. </summary>
+        public static BlobErrorCode RequestUrlFailedToParse { get; } = new BlobErrorCode(RequestUrlFailedToParseValue);
+
+        /// <summary> Resource already exists. </summary>
+        public static BlobErrorCode ResourceAlreadyExists { get; } = new BlobErrorCode(ResourceAlreadyExistsValue);
+
+        /// <summary> Resource not found. </summary>
+        public static BlobErrorCode ResourceNotFound { get; } = new BlobErrorCode(ResourceNotFoundValue);
+
+        /// <summary> Server busy. </summary>
+        public static BlobErrorCode ServerBusy { get; } = new BlobErrorCode(ServerBusyValue);
+
+        /// <summary> Unsupported header. </summary>
+        public static BlobErrorCode UnsupportedHeader { get; } = new BlobErrorCode(UnsupportedHeaderValue);
+
+        /// <summary> Unsupported XML node. </summary>
+        public static BlobErrorCode UnsupportedXmlNode { get; } = new BlobErrorCode(UnsupportedXmlNodeValue);
+
+        /// <summary> Unsupported query parameter. </summary>
+        public static BlobErrorCode UnsupportedQueryParameter { get; } = new BlobErrorCode(UnsupportedQueryParameterValue);
+
+        /// <summary> Unsupported HTTP verb. </summary>
+        public static BlobErrorCode UnsupportedHttpVerb { get; } = new BlobErrorCode(UnsupportedHttpVerbValue);
+
+        /// <summary> Append position condition not met. </summary>
+        public static BlobErrorCode AppendPositionConditionNotMet { get; } = new BlobErrorCode(AppendPositionConditionNotMetValue);
+
+        /// <summary> Blob already exists. </summary>
+        public static BlobErrorCode BlobAlreadyExists { get; } = new BlobErrorCode(BlobAlreadyExistsValue);
+
+        /// <summary> Blob is immutable due to policy. </summary>
+        public static BlobErrorCode BlobImmutableDueToPolicy { get; } = new BlobErrorCode(BlobImmutableDueToPolicyValue);
+
+        /// <summary> Blob not found. </summary>
+        public static BlobErrorCode BlobNotFound { get; } = new BlobErrorCode(BlobNotFoundValue);
+
+        /// <summary> Blob overwritten. </summary>
+        public static BlobErrorCode BlobOverwritten { get; } = new BlobErrorCode(BlobOverwrittenValue);
+
+        /// <summary> Blob tier inadequate for content length. </summary>
+        public static BlobErrorCode BlobTierInadequateForContentLength { get; } = new BlobErrorCode(BlobTierInadequateForContentLengthValue);
+
+        /// <summary> Blob uses customer specified encryption. </summary>
+        public static BlobErrorCode BlobUsesCustomerSpecifiedEncryption { get; } = new BlobErrorCode(BlobUsesCustomerSpecifiedEncryptionValue);
+
+        /// <summary> Block count exceeds limit. </summary>
+        public static BlobErrorCode BlockCountExceedsLimit { get; } = new BlobErrorCode(BlockCountExceedsLimitValue);
+
+        /// <summary> Block list too long. </summary>
+        public static BlobErrorCode BlockListTooLong { get; } = new BlobErrorCode(BlockListTooLongValue);
+
+        /// <summary> Cannot change to lower tier. </summary>
+        public static BlobErrorCode CannotChangeToLowerTier { get; } = new BlobErrorCode(CannotChangeToLowerTierValue);
+
+        /// <summary> Cannot verify copy source. </summary>
+        public static BlobErrorCode CannotVerifyCopySource { get; } = new BlobErrorCode(CannotVerifyCopySourceValue);
+
+        /// <summary> Container already exists. </summary>
+        public static BlobErrorCode ContainerAlreadyExists { get; } = new BlobErrorCode(ContainerAlreadyExistsValue);
+
+        /// <summary> Container being deleted. </summary>
+        public static BlobErrorCode ContainerBeingDeleted { get; } = new BlobErrorCode(ContainerBeingDeletedValue);
+
+        /// <summary> Container disabled. </summary>
+        public static BlobErrorCode ContainerDisabled { get; } = new BlobErrorCode(ContainerDisabledValue);
+
+        /// <summary> Container not found. </summary>
+        public static BlobErrorCode ContainerNotFound { get; } = new BlobErrorCode(ContainerNotFoundValue);
+
+        /// <summary> Content length larger than tier limit. </summary>
+        public static BlobErrorCode ContentLengthLargerThanTierLimit { get; } = new BlobErrorCode(ContentLengthLargerThanTierLimitValue);
+
+        /// <summary> Copy across accounts not supported. </summary>
+        public static BlobErrorCode CopyAcrossAccountsNotSupported { get; } = new BlobErrorCode(CopyAcrossAccountsNotSupportedValue);
+
+        /// <summary> Copy ID mismatch. </summary>
+        public static BlobErrorCode CopyIdMismatch { get; } = new BlobErrorCode(CopyIdMismatchValue);
+
+        /// <summary> Feature version mismatch. </summary>
+        public static BlobErrorCode FeatureVersionMismatch { get; } = new BlobErrorCode(FeatureVersionMismatchValue);
+
+        /// <summary> Incremental copy blob mismatch. </summary>
+        public static BlobErrorCode IncrementalCopyBlobMismatch { get; } = new BlobErrorCode(IncrementalCopyBlobMismatchValue);
+
+        /// <summary> Incremental copy source must be snapshot. </summary>
+        public static BlobErrorCode IncrementalCopySourceMustBeSnapshot { get; } = new BlobErrorCode(IncrementalCopySourceMustBeSnapshotValue);
+
+        /// <summary> Infinite lease duration required. </summary>
+        public static BlobErrorCode InfiniteLeaseDurationRequired { get; } = new BlobErrorCode(InfiniteLeaseDurationRequiredValue);
+
+        /// <summary> Invalid blob or block. </summary>
+        public static BlobErrorCode InvalidBlobOrBlock { get; } = new BlobErrorCode(InvalidBlobOrBlockValue);
+
+        /// <summary> Invalid blob tier. </summary>
+        public static BlobErrorCode InvalidBlobTier { get; } = new BlobErrorCode(InvalidBlobTierValue);
+
+        /// <summary> Invalid blob type. </summary>
+        public static BlobErrorCode InvalidBlobType { get; } = new BlobErrorCode(InvalidBlobTypeValue);
+
+        /// <summary> Invalid block ID. </summary>
+        public static BlobErrorCode InvalidBlockId { get; } = new BlobErrorCode(InvalidBlockIdValue);
+
+        /// <summary> Invalid block list. </summary>
+        public static BlobErrorCode InvalidBlockList { get; } = new BlobErrorCode(InvalidBlockListValue);
+
+        /// <summary> Invalid operation. </summary>
+        public static BlobErrorCode InvalidOperation { get; } = new BlobErrorCode(InvalidOperationValue);
+
+        /// <summary> Invalid page range. </summary>
+        public static BlobErrorCode InvalidPageRange { get; } = new BlobErrorCode(InvalidPageRangeValue);
+
+        /// <summary> Invalid source blob type. </summary>
+        public static BlobErrorCode InvalidSourceBlobType { get; } = new BlobErrorCode(InvalidSourceBlobTypeValue);
+
+        /// <summary> Invalid source blob URL. </summary>
+        public static BlobErrorCode InvalidSourceBlobUrl { get; } = new BlobErrorCode(InvalidSourceBlobUrlValue);
+
+        /// <summary> Invalid version for page blob operation. </summary>
+        public static BlobErrorCode InvalidVersionForPageBlobOperation { get; } = new BlobErrorCode(InvalidVersionForPageBlobOperationValue);
+
+        /// <summary> Lease already present. </summary>
+        public static BlobErrorCode LeaseAlreadyPresent { get; } = new BlobErrorCode(LeaseAlreadyPresentValue);
+
+        /// <summary> Lease already broken. </summary>
+        public static BlobErrorCode LeaseAlreadyBroken { get; } = new BlobErrorCode(LeaseAlreadyBrokenValue);
+
+        /// <summary> Lease ID mismatch with blob operation. </summary>
+        public static BlobErrorCode LeaseIdMismatchWithBlobOperation { get; } = new BlobErrorCode(LeaseIdMismatchWithBlobOperationValue);
+
+        /// <summary> Lease ID mismatch with container operation. </summary>
+        public static BlobErrorCode LeaseIdMismatchWithContainerOperation { get; } = new BlobErrorCode(LeaseIdMismatchWithContainerOperationValue);
+
+        /// <summary> Lease ID mismatch with lease operation. </summary>
+        public static BlobErrorCode LeaseIdMismatchWithLeaseOperation { get; } = new BlobErrorCode(LeaseIdMismatchWithLeaseOperationValue);
+
+        /// <summary> Lease ID missing. </summary>
+        public static BlobErrorCode LeaseIdMissing { get; } = new BlobErrorCode(LeaseIdMissingValue);
+
+        /// <summary> Lease is breaking and cannot be acquired. </summary>
+        public static BlobErrorCode LeaseIsBreakingAndCannotBeAcquired { get; } = new BlobErrorCode(LeaseIsBreakingAndCannotBeAcquiredValue);
+
+        /// <summary> Lease is breaking and cannot be changed. </summary>
+        public static BlobErrorCode LeaseIsBreakingAndCannotBeChanged { get; } = new BlobErrorCode(LeaseIsBreakingAndCannotBeChangedValue);
+
+        /// <summary> Lease is broken and cannot be renewed. </summary>
+        public static BlobErrorCode LeaseIsBrokenAndCannotBeRenewed { get; } = new BlobErrorCode(LeaseIsBrokenAndCannotBeRenewedValue);
+
+        /// <summary> Lease lost. </summary>
+        public static BlobErrorCode LeaseLost { get; } = new BlobErrorCode(LeaseLostValue);
+
+        /// <summary> Lease not present with blob operation. </summary>
+        public static BlobErrorCode LeaseNotPresentWithBlobOperation { get; } = new BlobErrorCode(LeaseNotPresentWithBlobOperationValue);
+
+        /// <summary> Lease not present with container operation. </summary>
+        public static BlobErrorCode LeaseNotPresentWithContainerOperation { get; } = new BlobErrorCode(LeaseNotPresentWithContainerOperationValue);
+
+        /// <summary> Lease not present with lease operation. </summary>
+        public static BlobErrorCode LeaseNotPresentWithLeaseOperation { get; } = new BlobErrorCode(LeaseNotPresentWithLeaseOperationValue);
+
+        /// <summary> Maximum blob size condition not met. </summary>
+        public static BlobErrorCode MaxBlobSizeConditionNotMet { get; } = new BlobErrorCode(MaxBlobSizeConditionNotMetValue);
+
+        /// <summary> No pending copy operation. </summary>
         public static BlobErrorCode NoPendingCopyOperation { get; } = new BlobErrorCode(NoPendingCopyOperationValue);
-        /// <summary> OperationNotAllowedOnIncrementalCopyBlob. </summary>
+
+        /// <summary> Operation not allowed on incremental copy blob. </summary>
         public static BlobErrorCode OperationNotAllowedOnIncrementalCopyBlob { get; } = new BlobErrorCode(OperationNotAllowedOnIncrementalCopyBlobValue);
-        /// <summary> PendingCopyOperation. </summary>
+
+        /// <summary> Pending copy operation. </summary>
         public static BlobErrorCode PendingCopyOperation { get; } = new BlobErrorCode(PendingCopyOperationValue);
-        /// <summary> PreviousSnapshotCannotBeNewer. </summary>
-        public static BlobErrorCode PreviousSnapshotCannotBeNewer { get; } = new BlobErrorCode(PreviousSnapshotCannotBeNewerValue);
-        /// <summary> PreviousSnapshotNotFound. </summary>
+
+        /// <summary> Previous snapshot not found. </summary>
         public static BlobErrorCode PreviousSnapshotNotFound { get; } = new BlobErrorCode(PreviousSnapshotNotFoundValue);
-        /// <summary> PreviousSnapshotOperationNotSupported. </summary>
+
+        /// <summary> Previous snapshot operation not supported. </summary>
         public static BlobErrorCode PreviousSnapshotOperationNotSupported { get; } = new BlobErrorCode(PreviousSnapshotOperationNotSupportedValue);
-        /// <summary> SequenceNumberConditionNotMet. </summary>
+
+        /// <summary> Previous snapshot cannot be newer. </summary>
+        public static BlobErrorCode PreviousSnapshotCannotBeNewer { get; } = new BlobErrorCode(PreviousSnapshotCannotBeNewerValue);
+
+        /// <summary> Sequence number condition not met. </summary>
         public static BlobErrorCode SequenceNumberConditionNotMet { get; } = new BlobErrorCode(SequenceNumberConditionNotMetValue);
-        /// <summary> SequenceNumberIncrementTooLarge. </summary>
+
+        /// <summary> Sequence number increment too large. </summary>
         public static BlobErrorCode SequenceNumberIncrementTooLarge { get; } = new BlobErrorCode(SequenceNumberIncrementTooLargeValue);
-        /// <summary> SnapshotCountExceeded. </summary>
+
+        /// <summary> Snapshot count exceeded. </summary>
         public static BlobErrorCode SnapshotCountExceeded { get; } = new BlobErrorCode(SnapshotCountExceededValue);
-        /// <summary> SnapshotOperationRateExceeded. </summary>
+
+        /// <summary> Snapshot operation rate exceeded. </summary>
         public static BlobErrorCode SnapshotOperationRateExceeded { get; } = new BlobErrorCode(SnapshotOperationRateExceededValue);
-        /// <summary> SnapshotsPresent. </summary>
+
+        /// <summary> Snapshots present. </summary>
         public static BlobErrorCode SnapshotsPresent { get; } = new BlobErrorCode(SnapshotsPresentValue);
-        /// <summary> SourceConditionNotMet. </summary>
+
+        /// <summary> Source condition not met. </summary>
         public static BlobErrorCode SourceConditionNotMet { get; } = new BlobErrorCode(SourceConditionNotMetValue);
-        /// <summary> SystemInUse. </summary>
+
+        /// <summary> System in use. </summary>
         public static BlobErrorCode SystemInUse { get; } = new BlobErrorCode(SystemInUseValue);
-        /// <summary> TargetConditionNotMet. </summary>
+
+        /// <summary> Target condition not met. </summary>
         public static BlobErrorCode TargetConditionNotMet { get; } = new BlobErrorCode(TargetConditionNotMetValue);
-        /// <summary> UnauthorizedBlobOverwrite. </summary>
+
+        /// <summary> Unauthorized blob overwrite. </summary>
         public static BlobErrorCode UnauthorizedBlobOverwrite { get; } = new BlobErrorCode(UnauthorizedBlobOverwriteValue);
-        /// <summary> BlobBeingRehydrated. </summary>
+
+        /// <summary> Blob being rehydrated. </summary>
         public static BlobErrorCode BlobBeingRehydrated { get; } = new BlobErrorCode(BlobBeingRehydratedValue);
-        /// <summary> BlobArchived. </summary>
+
+        /// <summary> Blob archived. </summary>
         public static BlobErrorCode BlobArchived { get; } = new BlobErrorCode(BlobArchivedValue);
-        /// <summary> BlobNotArchived. </summary>
+
+        /// <summary> Blob not archived. </summary>
         public static BlobErrorCode BlobNotArchived { get; } = new BlobErrorCode(BlobNotArchivedValue);
-        /// <summary> AuthorizationSourceIPMismatch. </summary>
+
+        /// <summary> Authorization source IP mismatch. </summary>
         public static BlobErrorCode AuthorizationSourceIPMismatch { get; } = new BlobErrorCode(AuthorizationSourceIPMismatchValue);
-        /// <summary> AuthorizationProtocolMismatch. </summary>
+
+        /// <summary> Authorization protocol mismatch. </summary>
         public static BlobErrorCode AuthorizationProtocolMismatch { get; } = new BlobErrorCode(AuthorizationProtocolMismatchValue);
-        /// <summary> AuthorizationPermissionMismatch. </summary>
+
+        /// <summary> Authorization permission mismatch. </summary>
         public static BlobErrorCode AuthorizationPermissionMismatch { get; } = new BlobErrorCode(AuthorizationPermissionMismatchValue);
-        /// <summary> AuthorizationServiceMismatch. </summary>
+
+        /// <summary> Authorization service mismatch. </summary>
         public static BlobErrorCode AuthorizationServiceMismatch { get; } = new BlobErrorCode(AuthorizationServiceMismatchValue);
-        /// <summary> AuthorizationResourceTypeMismatch. </summary>
+
+        /// <summary> Authorization resource type mismatch. </summary>
         public static BlobErrorCode AuthorizationResourceTypeMismatch { get; } = new BlobErrorCode(AuthorizationResourceTypeMismatchValue);
-        /// <summary> BlobAccessTierNotSupportedForAccountType. </summary>
+
+        /// <summary> Blob access tier not supported for account type. </summary>
         public static BlobErrorCode BlobAccessTierNotSupportedForAccountType { get; } = new BlobErrorCode(BlobAccessTierNotSupportedForAccountTypeValue);
+
         /// <summary> Determines if two <see cref="BlobErrorCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BlobErrorCode left, BlobErrorCode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BlobErrorCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BlobErrorCode left, BlobErrorCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BlobErrorCode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BlobErrorCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BlobErrorCode(string value) => new BlobErrorCode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BlobErrorCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BlobErrorCode?(string value) => value == null ? null : new BlobErrorCode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BlobErrorCode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BlobErrorCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

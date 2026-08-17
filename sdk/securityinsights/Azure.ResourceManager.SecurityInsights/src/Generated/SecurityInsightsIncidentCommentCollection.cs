@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             TryGetApiVersion(SecurityInsightsIncidentCommentResource.ResourceType, out string securityInsightsIncidentCommentApiVersion);
             _incidentCommentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsIncidentCommentResource.ResourceType.Namespace, Diagnostics);
-            _incidentCommentsRestClient = new IncidentComments(_incidentCommentsClientDiagnostics, Pipeline, Endpoint, securityInsightsIncidentCommentApiVersion ?? "2025-07-01-preview");
+            _incidentCommentsRestClient = new IncidentComments(_incidentCommentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsIncidentCommentApiVersion ?? "2025-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -280,12 +280,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </list>
         /// </summary>
         /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
-        /// <param name="orderby"> Sorts the results. Optional. </param>
+        /// <param name="orderBy"> Sorts the results. Optional. </param>
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityInsightsIncidentCommentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityInsightsIncidentCommentResource> GetAllAsync(string filter = default, string @orderby = default, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecurityInsightsIncidentCommentResource> GetAllAsync(string filter = default, string orderBy = default, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 Id.Parent.Name,
                 Id.Name,
                 filter,
-                @orderby,
+                orderBy,
                 top,
                 skipToken,
                 context,
@@ -323,12 +323,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </list>
         /// </summary>
         /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
-        /// <param name="orderby"> Sorts the results. Optional. </param>
+        /// <param name="orderBy"> Sorts the results. Optional. </param>
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityInsightsIncidentCommentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityInsightsIncidentCommentResource> GetAll(string filter = default, string @orderby = default, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SecurityInsightsIncidentCommentResource> GetAll(string filter = default, string orderBy = default, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 Id.Parent.Name,
                 Id.Name,
                 filter,
-                @orderby,
+                orderBy,
                 top,
                 skipToken,
                 context,

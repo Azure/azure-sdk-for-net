@@ -823,7 +823,10 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        /// <summary> Flag indicating whether subvolume operations are enabled on the volume. </summary>
+        /// <summary>
+        /// Flag indicating whether subvolume operations are enabled on the volume
+        /// Deprecated. Subvolume operations and this flag will be removed in a future API version.
+        /// </summary>
         public EnableNetAppSubvolume? EnableSubvolumes
         {
             get

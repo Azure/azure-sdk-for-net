@@ -67,8 +67,7 @@ namespace Azure.Generator.Visitors
                 return base.Visit(client, clientProvider);
             }
 
-            bool hasExistingProperty = clientProvider.CanonicalView.Properties
-                    .Any(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
+            bool hasExistingProperty = clientProvider.CanonicalView.Properties.Any(IsClientDiagnosticsProperty);
             if (hasExistingProperty)
             {
                 return base.Visit(client, clientProvider);
@@ -372,14 +371,14 @@ namespace Azure.Generator.Visitors
             return true;
         }
 
-        private static bool IsClientDiagnosticsProperty(PropertyProvider property)
-            => property.Name == ClientDiagnosticsPropertyName || property.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true;
+        private bool IsClientDiagnosticsProperty(PropertyProvider property)
+            => property.Type.Equals(ClientDiagnosticsType);
 
-        private static bool ShouldSkipType(TypeProvider typeProvider)
+        private bool ShouldSkipType(TypeProvider typeProvider)
         {
             return typeProvider is not ClientProvider ||
                 !typeProvider.CanonicalView.Properties
-                    .Any(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
+                    .Any(IsClientDiagnosticsProperty);
         }
 
         private static void UpdatePagingMethodWithScope(ScmMethodProvider method)

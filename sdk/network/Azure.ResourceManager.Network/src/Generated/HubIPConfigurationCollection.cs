@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(HubIPConfigurationResource.ResourceType, out string hubIPConfigurationApiVersion);
             _virtualHubIpConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", HubIPConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _virtualHubIpConfigurationRestClient = new VirtualHubIpConfiguration(_virtualHubIpConfigurationClientDiagnostics, Pipeline, Endpoint, hubIPConfigurationApiVersion ?? "2025-07-01");
+            _virtualHubIpConfigurationRestClient = new VirtualHubIpConfiguration(_virtualHubIpConfigurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hubIPConfigurationApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

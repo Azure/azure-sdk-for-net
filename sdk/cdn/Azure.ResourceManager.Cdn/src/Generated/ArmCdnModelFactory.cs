@@ -1606,16 +1606,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 default);
         }
 
-        /// <param name="provisioningState"> Provisioning status. </param>
-        /// <param name="deploymentStatus"></param>
-        /// <param name="profileName"> The name of the profile which holds the security policy. </param>
-        /// <param name="properties"> object which contains security policy parameters. </param>
-        /// <returns> A new <see cref="Models.CdnSecurityPolicyProperties"/> instance for mocking. </returns>
-        public static CdnSecurityPolicyProperties CdnSecurityPolicyProperties(FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, string profileName = default, SecurityPolicyProperties properties = default)
-        {
-            return new CdnSecurityPolicyProperties(provisioningState, deploymentStatus, default, profileName, properties);
-        }
-
         /// <param name="policyType"> The type of the Security policy to create. </param>
         /// <returns> A new <see cref="Models.SecurityPolicyProperties"/> instance for mocking. </returns>
         public static SecurityPolicyProperties SecurityPolicyProperties(string policyType = default)
@@ -1883,16 +1873,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 systemData,
                 provisioningState is null && deploymentStatus is null && profileName is null && properties is null ? default : new CdnSecretProperties(provisioningState, deploymentStatus, default, profileName, properties),
                 default);
-        }
-
-        /// <param name="provisioningState"> Provisioning status. </param>
-        /// <param name="deploymentStatus"></param>
-        /// <param name="profileName"> The name of the profile which holds the secret. </param>
-        /// <param name="properties"> object which contains secret parameters. </param>
-        /// <returns> A new <see cref="Models.CdnSecretProperties"/> instance for mocking. </returns>
-        public static CdnSecretProperties CdnSecretProperties(FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, string profileName = default, FrontDoorSecretProperties properties = default)
-        {
-            return new CdnSecretProperties(provisioningState, deploymentStatus, default, profileName, properties);
         }
 
         /// <param name="secretType"> The type of the secret resource. </param>
@@ -3466,51 +3446,6 @@ namespace Azure.ResourceManager.Cdn.Models
                     resourceState,
                     provisioningState),
                 default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CanMigrateResult"/>. </summary>
-        /// <param name="id">
-        /// Resource ID, String.
-        ///             Serialized Name: CanMigrateResult.id
-        /// </param>
-        /// <param name="canMigrateResultType">
-        /// Resource type.
-        ///             Serialized Name: CanMigrateResult.type
-        /// </param>
-        /// <param name="canMigrate">
-        /// Flag that says if the profile can be migrated
-        ///             Serialized Name: CanMigrateResult.properties.canMigrate
-        /// </param>
-        /// <param name="defaultSku">
-        /// Recommended sku for the migration
-        ///             Serialized Name: CanMigrateResult.properties.defaultSku
-        /// </param>
-        /// <param name="errors"> Serialized Name: CanMigrateResult.properties.errors. </param>
-        /// <returns> A new <see cref="Models.CanMigrateResult"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CanMigrateResult CanMigrateResult(string id = default, string canMigrateResultType = default, bool? canMigrate = default, CanMigrateDefaultSku? defaultSku = default, IEnumerable<MigrationErrorType> errors = default)
-        {
-            return new CanMigrateResult(default, canMigrateResultType, canMigrate is null && defaultSku is null && errors is null ? default : new CanMigrateProperties(canMigrate, defaultSku, (errors ?? new ChangeTrackingList<MigrationErrorType>()).ToList(), default), default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MigrateResult"/>. </summary>
-        /// <param name="id">
-        /// Resource ID.
-        ///             Serialized Name: MigrateResult.id
-        /// </param>
-        /// <param name="migrateResultType">
-        /// Resource type.
-        ///             Serialized Name: MigrateResult.type
-        /// </param>
-        /// <param name="migratedProfileResourceIdId">
-        /// Arm resource id of the migrated profile
-        ///             Serialized Name: MigrateResult.properties.migratedProfileResourceId
-        /// </param>
-        /// <returns> A new <see cref="Models.MigrateResult"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MigrateResult MigrateResult(string id = default, string migrateResultType = default, ResourceIdentifier migratedProfileResourceIdId = default)
-        {
-            return new MigrateResult(default, migrateResultType, migratedProfileResourceIdId is null ? default : new MigrateResultProperties(new CdnResourceReference(migratedProfileResourceIdId, default), default), default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.ProfileData"/>. </summary>

@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ServiceFabric
     public enum ClusterEnvironment
     {
         /// <summary> Windows operating system. </summary>
-        Windows,
+        Windows = 0,
         /// <summary> Linux operating system. </summary>
-        Linux
+        Linux = 1
     }
 }

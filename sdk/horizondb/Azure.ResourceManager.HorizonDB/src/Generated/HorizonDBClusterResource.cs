@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             TryGetApiVersion(ResourceType, out string horizonDBClusterApiVersion);
             _horizonDBClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", ResourceType.Namespace, Diagnostics);
-            _horizonDBClustersRestClient = new HorizonDBClusters(_horizonDBClustersClientDiagnostics, Pipeline, Endpoint, horizonDBClusterApiVersion ?? "2026-01-20-preview");
+            _horizonDBClustersRestClient = new HorizonDBClusters(_horizonDBClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, horizonDBClusterApiVersion ?? "2026-01-20-preview");
             ValidateResourceId(id);
         }
 

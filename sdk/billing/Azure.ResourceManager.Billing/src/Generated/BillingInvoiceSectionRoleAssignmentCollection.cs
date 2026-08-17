@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(BillingInvoiceSectionRoleAssignmentResource.ResourceType, out string billingInvoiceSectionRoleAssignmentApiVersion);
             _billingRoleAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingInvoiceSectionRoleAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _billingRoleAssignmentsRestClient = new BillingRoleAssignments(_billingRoleAssignmentsClientDiagnostics, Pipeline, Endpoint, billingInvoiceSectionRoleAssignmentApiVersion ?? "2024-04-01");
+            _billingRoleAssignmentsRestClient = new BillingRoleAssignments(_billingRoleAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingInvoiceSectionRoleAssignmentApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -170,11 +170,11 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
-        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="top"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
         /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingInvoiceSectionRoleAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingInvoiceSectionRoleAssignmentResource> GetAllAsync(string filter = default, long? maxCount = default, long? skip = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BillingInvoiceSectionRoleAssignmentResource> GetAllAsync(string filter = default, long? top = default, long? skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Billing
                 Id.Parent.Name,
                 Id.Name,
                 filter,
-                maxCount,
+                top,
                 skip,
                 context,
                 "BillingInvoiceSectionRoleAssignmentCollection.GetAll"), data => new BillingInvoiceSectionRoleAssignmentResource(Client, data));
@@ -210,11 +210,11 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
-        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="top"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
         /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingInvoiceSectionRoleAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingInvoiceSectionRoleAssignmentResource> GetAll(string filter = default, long? maxCount = default, long? skip = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BillingInvoiceSectionRoleAssignmentResource> GetAll(string filter = default, long? top = default, long? skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Billing
                 Id.Parent.Name,
                 Id.Name,
                 filter,
-                maxCount,
+                top,
                 skip,
                 context,
                 "BillingInvoiceSectionRoleAssignmentCollection.GetAll"), data => new BillingInvoiceSectionRoleAssignmentResource(Client, data));

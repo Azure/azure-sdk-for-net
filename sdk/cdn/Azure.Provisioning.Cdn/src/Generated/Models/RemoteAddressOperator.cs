@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Cdn
     public enum RemoteAddressOperator
     {
         /// <summary> Any. </summary>
-        Any,
+        Any = 0,
         /// <summary> IPMatch. </summary>
-        IPMatch,
+        IPMatch = 1,
         /// <summary> GeoMatch. </summary>
-        GeoMatch
+        GeoMatch = 2
     }
 }
