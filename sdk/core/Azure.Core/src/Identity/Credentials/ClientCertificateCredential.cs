@@ -42,7 +42,9 @@ namespace Azure.Identity
 
         internal MsalConfidentialClient Client { get; }
 
-        internal MsalConfidentialClient PopClient { get; }
+        private readonly Lazy<MsalConfidentialClient> _popClient;
+
+        internal MsalConfidentialClient PopClient => _popClient.Value;
 
         private readonly CredentialPipeline _pipeline;
 
@@ -191,6 +193,7 @@ namespace Azure.Identity
             ClientCertificateProvider = certificateProvider;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             ClientCertificateCredentialOptions certCredOptions = options as ClientCertificateCredentialOptions;
+            bool sendCertificateChain = certCredOptions?.SendCertificateChain ?? false;
 
             Client = client ??
                      new MsalConfidentialClient(
@@ -198,18 +201,31 @@ namespace Azure.Identity
                          tenantId,
                          clientId,
                          certificateProvider,
-                         certCredOptions?.SendCertificateChain ?? false,
+                         sendCertificateChain,
                          options);
 
-            PopClient = popClient ?? client ??
-                        new MsalConfidentialClient(
-                            _pipeline,
-                            tenantId,
-                            clientId,
-                            certificateProvider,
-                            certCredOptions?.SendCertificateChain ?? false,
-                            options,
-                            enableMtlsProofOfPossession: true);
+            // mTLS proof-of-possession for the certificate credential is only enabled when the caller
+            // opts in via SendCertificateChain (subject name / issuer). When it is not enabled, the PoP
+            // client is the standard client, so proof-of-possession requests fall back to a regular
+            // bearer token instead of attempting an mTLS PoP handshake.
+            //
+            // The PoP client is created lazily on first use, but all input parameters are captured here
+            // at construction time so the client's state is locked in regardless of when it is materialized.
+            MsalConfidentialClient capturedClient = client;
+            MsalConfidentialClient capturedPopClient = popClient;
+            MsalConfidentialClient standardClient = Client;
+            _popClient = new Lazy<MsalConfidentialClient>(() =>
+                capturedPopClient ?? capturedClient ??
+                (sendCertificateChain
+                    ? new MsalConfidentialClient(
+                        _pipeline,
+                        tenantId,
+                        clientId,
+                        certificateProvider,
+                        sendCertificateChain,
+                        options,
+                        enableMtlsProofOfPossession: true)
+                    : standardClient));
 
             TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);

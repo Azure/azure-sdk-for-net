@@ -335,6 +335,26 @@ namespace Azure.Core.Tests.Identity
         }
 
         [Test]
+        public void DoesNotEnableMtlsProofOfPossessionWhenSendCertificateChainDisabled()
+        {
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+#if NET9_0_OR_GREATER
+            using var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
+            using var mockCert = new X509Certificate2(certificatePath);
+#endif
+            var options = new ClientCertificateCredentialOptions { SendCertificateChain = false };
+
+            var credential = new ClientCertificateCredential(TenantId, ClientId, mockCert, options);
+
+            // Without SendCertificateChain the mTLS PoP path is not enabled, so the PoP client is the
+            // standard client and proof-of-possession requests fall back to a regular bearer token.
+            Assert.AreSame(credential.Client, credential.PopClient);
+            Assert.False(credential.Client._enableMtlsProofOfPossession);
+            Assert.False(credential.PopClient._enableMtlsProofOfPossession);
+        }
+
+        [Test]
         public void VerifyMsalClientRegionalAuthority()
         {
             string[] authorities = { null, ConfidentialClientApplication.AttemptRegionDiscovery, "westus" };
