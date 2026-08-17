@@ -64,14 +64,14 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BatchAccountRenamedResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BatchAccountRenamedResource> GetBatchAccountRenamedsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BatchAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BatchAccountResource> GetBatchAccountsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BatchAccountRenamedData, BatchAccountRenamedResource>(new BatchAccountGetAllAsyncCollectionResultOfT(BatchAccountRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBatchSubscriptionResource.GetBatchAccountRenameds"), data => new BatchAccountRenamedResource(Client, data));
+            return new AsyncPageableWrapper<BatchAccountData, BatchAccountResource>(new BatchAccountGetAllAsyncCollectionResultOfT(BatchAccountRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBatchSubscriptionResource.GetBatchAccounts"), data => new BatchAccountResource(Client, data));
         }
 
         /// <summary>
@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BatchAccountRenamedResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BatchAccountRenamedResource> GetBatchAccountRenameds(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BatchAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BatchAccountResource> GetBatchAccounts(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BatchAccountRenamedData, BatchAccountRenamedResource>(new BatchAccountGetAllCollectionResultOfT(BatchAccountRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBatchSubscriptionResource.GetBatchAccountRenameds"), data => new BatchAccountRenamedResource(Client, data));
+            return new PageableWrapper<BatchAccountData, BatchAccountResource>(new BatchAccountGetAllCollectionResultOfT(BatchAccountRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBatchSubscriptionResource.GetBatchAccounts"), data => new BatchAccountResource(Client, data));
         }
 
         /// <summary>

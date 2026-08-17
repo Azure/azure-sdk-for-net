@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Batch
     /// <summary>
     /// A class representing a BatchAccountDetector along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BatchAccountDetectorResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BatchAccountRenamedResource"/> using the GetBatchAccountDetectors method.
+    /// Otherwise you can get one from its parent resource <see cref="BatchAccountResource"/> using the GetBatchAccountDetectors method.
     /// </summary>
     public partial class BatchAccountDetectorResource : ArmResource
     {

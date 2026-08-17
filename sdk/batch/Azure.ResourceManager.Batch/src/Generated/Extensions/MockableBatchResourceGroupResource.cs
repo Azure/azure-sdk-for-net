@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Batch.Mocking
         {
         }
 
-        /// <summary> Gets a collection of BatchAccountRenameds in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of BatchAccountRenameds and their operations over a BatchAccountRenamedResource. </returns>
-        public virtual BatchAccountRenamedCollection GetBatchAccountRenameds()
+        /// <summary> Gets a collection of BatchAccounts in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of BatchAccounts and their operations over a BatchAccountResource. </returns>
+        public virtual BatchAccountCollection GetBatchAccounts()
         {
-            return GetCachedClient(client => new BatchAccountRenamedCollection(client, Id));
+            return GetCachedClient(client => new BatchAccountCollection(client, Id));
         }
 
         /// <summary>
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BatchAccountRenamedResource>> GetBatchAccountRenamedAsync(string accountName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BatchAccountResource>> GetBatchAccountAsync(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            return await GetBatchAccountRenameds().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetBatchAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BatchAccountRenamedResource> GetBatchAccountRenamed(string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<BatchAccountResource> GetBatchAccount(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            return GetBatchAccountRenameds().Get(accountName, cancellationToken);
+            return GetBatchAccounts().Get(accountName, cancellationToken);
         }
     }
 }

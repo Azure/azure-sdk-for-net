@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Batch
     /// <summary>
     /// A class representing a BatchPrivateLinkResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BatchPrivateLinkResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BatchAccountRenamedResource"/> using the GetBatchPrivateLinkResources method.
+    /// Otherwise you can get one from its parent resource <see cref="BatchAccountResource"/> using the GetBatchPrivateLinkResources method.
     /// </summary>
     public partial class BatchPrivateLinkResource : ArmResource
     {

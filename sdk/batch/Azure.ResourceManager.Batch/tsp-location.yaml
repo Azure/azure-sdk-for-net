@@ -1,4 +1,4 @@
 directory: specification/batch/resource-manager/Microsoft.Batch/Batch
-commit: 1e21899908a9793e98e254262a869ef2671bfb61
+commit: 23ee2317340c52ce5080df55aa71833c6eeb8211
 repo: ArcturusZhang/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

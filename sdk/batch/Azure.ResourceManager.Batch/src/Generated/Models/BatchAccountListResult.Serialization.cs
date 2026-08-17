@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (BatchAccountRenamedData item in Value)
+            foreach (BatchAccountData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            IList<BatchAccountRenamedData> value = default;
+            IList<BatchAccountData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<BatchAccountRenamedData> array = new List<BatchAccountRenamedData>();
+                    List<BatchAccountData> array = new List<BatchAccountData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BatchAccountRenamedData.DeserializeBatchAccountRenamedData(item, options));
+                        array.Add(BatchAccountData.DeserializeBatchAccountData(item, options));
                     }
                     value = array;
                     continue;

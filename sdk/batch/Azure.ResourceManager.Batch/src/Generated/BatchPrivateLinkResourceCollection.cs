@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Batch
 {
     /// <summary>
     /// A class representing a collection of <see cref="BatchPrivateLinkResource"/> and their operations.
-    /// Each <see cref="BatchPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="BatchAccountRenamedResource"/>.
-    /// To get a <see cref="BatchPrivateLinkResourceCollection"/> instance call the GetBatchPrivateLinkResources method from an instance of <see cref="BatchAccountRenamedResource"/>.
+    /// Each <see cref="BatchPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="BatchAccountResource"/>.
+    /// To get a <see cref="BatchPrivateLinkResourceCollection"/> instance call the GetBatchPrivateLinkResources method from an instance of <see cref="BatchAccountResource"/>.
     /// </summary>
     public partial class BatchPrivateLinkResourceCollection : ArmCollection, IEnumerable<BatchPrivateLinkResource>, IAsyncEnumerable<BatchPrivateLinkResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Batch
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != BatchAccountRenamedResource.ResourceType)
+            if (id.ResourceType != BatchAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BatchAccountRenamedResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BatchAccountResource.ResourceType), nameof(id));
             }
         }
 
