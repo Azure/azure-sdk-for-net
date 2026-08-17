@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Request to configure source scan for a protected item. </summary>
-    public partial class ProtectedItemConfigureSourceScanRequest
+    public partial class BackupProtectedItemConfigureSourceScanContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProtectedItemConfigureSourceScanRequest"/>. </summary>
-        public ProtectedItemConfigureSourceScanRequest()
+        /// <summary> Initializes a new instance of <see cref="BackupProtectedItemConfigureSourceScanContent"/>. </summary>
+        public BackupProtectedItemConfigureSourceScanContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProtectedItemConfigureSourceScanRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupProtectedItemConfigureSourceScanContent"/>. </summary>
         /// <param name="sourceScanAction"> Source scan action to perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProtectedItemConfigureSourceScanRequest(SourceScanAction? sourceScanAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupProtectedItemConfigureSourceScanContent(SourceScanAction? sourceScanAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceScanAction = sourceScanAction;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

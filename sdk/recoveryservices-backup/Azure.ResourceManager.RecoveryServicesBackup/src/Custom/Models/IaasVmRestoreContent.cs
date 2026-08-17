@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             get => SecuredVMDetails?.SecuredVmOSDiskEncryptionSetId;
             set
             {
-                SecuredVMDetails ??= new SecuredVMDetails();
+                SecuredVMDetails ??= new SecuredVmDetails();
                 SecuredVMDetails.SecuredVmOSDiskEncryptionSetId = value;
             }
         }

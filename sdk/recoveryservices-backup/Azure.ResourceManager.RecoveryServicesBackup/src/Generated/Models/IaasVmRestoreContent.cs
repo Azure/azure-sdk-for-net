@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// </param>
         /// <param name="securedVMDetails"> Stores Secured VM Details. </param>
         /// <param name="targetDiskNetworkAccessSettings"> Specifies target network access settings for disks of VM to be restored,. </param>
-        internal IaasVmRestoreContent(string objectType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, string recoveryPointId, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, ResourceIdentifier targetVirtualMachineId, ResourceIdentifier targetResourceGroupId, ResourceIdentifier storageAccountId, ResourceIdentifier virtualNetworkId, ResourceIdentifier subnetId, ResourceIdentifier targetDomainNameId, AzureLocation? region, string affinityGroup, bool? doesCreateNewCloudService, bool? originalStorageAccountOption, VmEncryptionDetails encryptionDetails, IList<int> restoreDiskLunList, bool? doesRestoreWithManagedDisks, string diskEncryptionSetId, IList<string> zones, BackupIdentityInfo identityInfo, IdentityBasedRestoreDetails identityBasedRestoreDetails, ExtendedLocation extendedLocation, SecuredVMDetails securedVMDetails, BackupTargetDiskNetworkAccessSettings targetDiskNetworkAccessSettings) : base(objectType, resourceGuardOperationRequests, additionalBinaryDataProperties)
+        internal IaasVmRestoreContent(string objectType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, string recoveryPointId, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, ResourceIdentifier targetVirtualMachineId, ResourceIdentifier targetResourceGroupId, ResourceIdentifier storageAccountId, ResourceIdentifier virtualNetworkId, ResourceIdentifier subnetId, ResourceIdentifier targetDomainNameId, AzureLocation? region, string affinityGroup, bool? doesCreateNewCloudService, bool? originalStorageAccountOption, VmEncryptionDetails encryptionDetails, IList<int> restoreDiskLunList, bool? doesRestoreWithManagedDisks, string diskEncryptionSetId, IList<string> zones, BackupIdentityInfo identityInfo, IdentityBasedRestoreDetails identityBasedRestoreDetails, ExtendedLocation extendedLocation, SecuredVmDetails securedVMDetails, BackupTargetDiskNetworkAccessSettings targetDiskNetworkAccessSettings) : base(objectType, resourceGuardOperationRequests, additionalBinaryDataProperties)
         {
             RecoveryPointId = recoveryPointId;
             RecoveryType = recoveryType;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> Stores Secured VM Details. </summary>
-        public SecuredVMDetails SecuredVMDetails { get; set; }
+        public SecuredVmDetails SecuredVMDetails { get; set; }
 
         /// <summary> Specifies target network access settings for disks of VM to be restored,. </summary>
         public BackupTargetDiskNetworkAccessSettings TargetDiskNetworkAccessSettings { get; set; }

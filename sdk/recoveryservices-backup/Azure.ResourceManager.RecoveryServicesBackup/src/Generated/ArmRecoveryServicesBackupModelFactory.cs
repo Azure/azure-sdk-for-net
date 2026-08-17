@@ -787,19 +787,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <param name="oldestRecoverOn"> The oldest backup copy available for this backup item across all tiers. </param>
-        /// <param name="oldestRecoverOnInVault"> The oldest backup copy available for this backup item in vault tier. </param>
-        /// <param name="oldestRecoverOnInArchive"> The oldest backup copy available for this backup item in archive tier. </param>
-        /// <param name="newestRecoverOnInArchive"> The latest backup copy available for this backup item in archive tier. </param>
+        /// <param name="oldestRecoveryPointInVaultOn"> The oldest backup copy available for this backup item in vault tier. </param>
+        /// <param name="oldestRecoveryPointInArchiveOn"> The oldest backup copy available for this backup item in archive tier. </param>
+        /// <param name="newestRecoveryPointInArchiveOn"> The latest backup copy available for this backup item in archive tier. </param>
         /// <param name="recoveryPointCount"> Number of backup copies available for this backup item. </param>
         /// <param name="isPolicyInconsistent"> Specifies if backup policy associated with the backup item is inconsistent. </param>
         /// <returns> A new <see cref="Models.IaasVmProtectedItemExtendedInfo"/> instance for mocking. </returns>
-        public static IaasVmProtectedItemExtendedInfo IaasVmProtectedItemExtendedInfo(DateTimeOffset? oldestRecoverOn = default, DateTimeOffset? oldestRecoverOnInVault = default, DateTimeOffset? oldestRecoverOnInArchive = default, DateTimeOffset? newestRecoverOnInArchive = default, int? recoveryPointCount = default, bool? isPolicyInconsistent = default)
+        public static IaasVmProtectedItemExtendedInfo IaasVmProtectedItemExtendedInfo(DateTimeOffset? oldestRecoverOn = default, DateTimeOffset? oldestRecoveryPointInVaultOn = default, DateTimeOffset? oldestRecoveryPointInArchiveOn = default, DateTimeOffset? newestRecoveryPointInArchiveOn = default, int? recoveryPointCount = default, bool? isPolicyInconsistent = default)
         {
             return new IaasVmProtectedItemExtendedInfo(
                 oldestRecoverOn,
-                oldestRecoverOnInVault,
-                oldestRecoverOnInArchive,
-                newestRecoverOnInArchive,
+                oldestRecoveryPointInVaultOn,
+                oldestRecoveryPointInArchiveOn,
+                newestRecoveryPointInArchiveOn,
                 recoveryPointCount,
                 isPolicyInconsistent,
                 default);
@@ -1058,20 +1058,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <param name="oldestRecoverOn"> The oldest backup copy available for this backup item across all tiers. </param>
-        /// <param name="oldestRecoverOnInVault"> The oldest backup copy available for this backup item in vault tier. </param>
-        /// <param name="oldestRecoverOnInArchive"> The oldest backup copy available for this backup item in archive tier. </param>
-        /// <param name="newestRecoverOnInArchive"> The latest backup copy available for this backup item in archive tier. </param>
+        /// <param name="oldestRecoveryPointInVaultOn"> The oldest backup copy available for this backup item in vault tier. </param>
+        /// <param name="oldestRecoveryPointInArchiveOn"> The oldest backup copy available for this backup item in archive tier. </param>
+        /// <param name="newestRecoveryPointInArchiveOn"> The latest backup copy available for this backup item in archive tier. </param>
         /// <param name="recoveryPointCount"> Number of backup copies available for this backup item. </param>
         /// <param name="policyState"> Indicates consistency of policy object and policy applied to this backup item. </param>
         /// <param name="recoveryModel"> Indicates consistency of policy object and policy applied to this backup item. </param>
         /// <returns> A new <see cref="Models.VmWorkloadProtectedItemExtendedInfo"/> instance for mocking. </returns>
-        public static VmWorkloadProtectedItemExtendedInfo VmWorkloadProtectedItemExtendedInfo(DateTimeOffset? oldestRecoverOn = default, DateTimeOffset? oldestRecoverOnInVault = default, DateTimeOffset? oldestRecoverOnInArchive = default, DateTimeOffset? newestRecoverOnInArchive = default, int? recoveryPointCount = default, string policyState = default, string recoveryModel = default)
+        public static VmWorkloadProtectedItemExtendedInfo VmWorkloadProtectedItemExtendedInfo(DateTimeOffset? oldestRecoverOn = default, DateTimeOffset? oldestRecoveryPointInVaultOn = default, DateTimeOffset? oldestRecoveryPointInArchiveOn = default, DateTimeOffset? newestRecoveryPointInArchiveOn = default, int? recoveryPointCount = default, string policyState = default, string recoveryModel = default)
         {
             return new VmWorkloadProtectedItemExtendedInfo(
                 oldestRecoverOn,
-                oldestRecoverOnInVault,
-                oldestRecoverOnInArchive,
-                newestRecoverOnInArchive,
+                oldestRecoveryPointInVaultOn,
+                oldestRecoveryPointInArchiveOn,
+                newestRecoveryPointInArchiveOn,
                 recoveryPointCount,
                 policyState,
                 recoveryModel,
@@ -1698,10 +1698,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <param name="sourceScanAction"> Source scan action to perform. </param>
-        /// <returns> A new <see cref="Models.ProtectedItemConfigureSourceScanRequest"/> instance for mocking. </returns>
-        public static ProtectedItemConfigureSourceScanRequest ProtectedItemConfigureSourceScanRequest(SourceScanAction? sourceScanAction = default)
+        /// <returns> A new <see cref="Models.BackupProtectedItemConfigureSourceScanContent"/> instance for mocking. </returns>
+        public static BackupProtectedItemConfigureSourceScanContent BackupProtectedItemConfigureSourceScanContent(SourceScanAction? sourceScanAction = default)
         {
-            return new ProtectedItemConfigureSourceScanRequest(sourceScanAction, default);
+            return new BackupProtectedItemConfigureSourceScanContent(sourceScanAction, default);
         }
 
         /// <param name="objectType"> Gets the class type. </param>
@@ -3712,7 +3712,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="securedVMDetails"> Stores Secured VM Details. </param>
         /// <param name="targetDiskNetworkAccessSettings"> Specifies target network access settings for disks of VM to be restored,. </param>
         /// <returns> A new <see cref="Models.IaasVmRestoreContent"/> instance for mocking. </returns>
-        public static IaasVmRestoreContent IaasVmRestoreContent(IEnumerable<string> resourceGuardOperationRequests = default, string recoveryPointId = default, FileShareRecoveryType? recoveryType = default, ResourceIdentifier sourceResourceId = default, ResourceIdentifier targetVirtualMachineId = default, ResourceIdentifier targetResourceGroupId = default, ResourceIdentifier storageAccountId = default, ResourceIdentifier virtualNetworkId = default, ResourceIdentifier subnetId = default, ResourceIdentifier targetDomainNameId = default, AzureLocation? region = default, string affinityGroup = default, bool? doesCreateNewCloudService = default, bool? originalStorageAccountOption = default, VmEncryptionDetails encryptionDetails = default, IEnumerable<int> restoreDiskLunList = default, bool? doesRestoreWithManagedDisks = default, string diskEncryptionSetId = default, IEnumerable<string> zones = default, BackupIdentityInfo identityInfo = default, IdentityBasedRestoreDetails identityBasedRestoreDetails = default, ExtendedLocation extendedLocation = default, SecuredVMDetails securedVMDetails = default, BackupTargetDiskNetworkAccessSettings targetDiskNetworkAccessSettings = default)
+        public static IaasVmRestoreContent IaasVmRestoreContent(IEnumerable<string> resourceGuardOperationRequests = default, string recoveryPointId = default, FileShareRecoveryType? recoveryType = default, ResourceIdentifier sourceResourceId = default, ResourceIdentifier targetVirtualMachineId = default, ResourceIdentifier targetResourceGroupId = default, ResourceIdentifier storageAccountId = default, ResourceIdentifier virtualNetworkId = default, ResourceIdentifier subnetId = default, ResourceIdentifier targetDomainNameId = default, AzureLocation? region = default, string affinityGroup = default, bool? doesCreateNewCloudService = default, bool? originalStorageAccountOption = default, VmEncryptionDetails encryptionDetails = default, IEnumerable<int> restoreDiskLunList = default, bool? doesRestoreWithManagedDisks = default, string diskEncryptionSetId = default, IEnumerable<string> zones = default, BackupIdentityInfo identityInfo = default, IdentityBasedRestoreDetails identityBasedRestoreDetails = default, ExtendedLocation extendedLocation = default, SecuredVmDetails securedVMDetails = default, BackupTargetDiskNetworkAccessSettings targetDiskNetworkAccessSettings = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
             restoreDiskLunList ??= new ChangeTrackingList<int>();
@@ -3774,10 +3774,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="securedVmOSDiskEncryptionSetId"> Gets or Sets Disk Encryption Set Id for Secured VM OS Disk. </param>
         /// <param name="dataDiskEncryptionSettings"> Data disk encryption settings for Secured VM. This will be used to provide Disk Encryption Set Id for each data disk. </param>
-        /// <returns> A new <see cref="Models.SecuredVMDetails"/> instance for mocking. </returns>
-        public static SecuredVMDetails SecuredVMDetails(ResourceIdentifier securedVmOSDiskEncryptionSetId = default, DataDiskEncryptionSettings dataDiskEncryptionSettings = default)
+        /// <returns> A new <see cref="Models.SecuredVmDetails"/> instance for mocking. </returns>
+        public static SecuredVmDetails SecuredVmDetails(ResourceIdentifier securedVmOSDiskEncryptionSetId = default, DataDiskEncryptionSettings dataDiskEncryptionSettings = default)
         {
-            return new SecuredVMDetails(securedVmOSDiskEncryptionSetId, dataDiskEncryptionSettings, default);
+            return new SecuredVmDetails(securedVmOSDiskEncryptionSetId, dataDiskEncryptionSettings, default);
         }
 
         /// <param name="perDiskEncryptionSetIds"> Per Disk Encryption Set Ids for Secured VM Data Disks. This will be used to provide Disk Encryption Set Id for each data disk. </param>
@@ -3855,7 +3855,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="targetDiskNetworkAccessSettings"> Specifies target network access settings for disks of VM to be restored,. </param>
         /// <param name="recoveryPointRehydrationInfo"> RP Rehydration Info. </param>
         /// <returns> A new <see cref="Models.IaasVmRestoreWithRehydrationContent"/> instance for mocking. </returns>
-        public static IaasVmRestoreWithRehydrationContent IaasVmRestoreWithRehydrationContent(IEnumerable<string> resourceGuardOperationRequests = default, string recoveryPointId = default, FileShareRecoveryType? recoveryType = default, ResourceIdentifier sourceResourceId = default, ResourceIdentifier targetVirtualMachineId = default, ResourceIdentifier targetResourceGroupId = default, ResourceIdentifier storageAccountId = default, ResourceIdentifier virtualNetworkId = default, ResourceIdentifier subnetId = default, ResourceIdentifier targetDomainNameId = default, AzureLocation? region = default, string affinityGroup = default, bool? doesCreateNewCloudService = default, bool? originalStorageAccountOption = default, VmEncryptionDetails encryptionDetails = default, IEnumerable<int> restoreDiskLunList = default, bool? doesRestoreWithManagedDisks = default, string diskEncryptionSetId = default, IEnumerable<string> zones = default, BackupIdentityInfo identityInfo = default, IdentityBasedRestoreDetails identityBasedRestoreDetails = default, ExtendedLocation extendedLocation = default, SecuredVMDetails securedVMDetails = default, BackupTargetDiskNetworkAccessSettings targetDiskNetworkAccessSettings = default, RecoveryPointRehydrationInfo recoveryPointRehydrationInfo = default)
+        public static IaasVmRestoreWithRehydrationContent IaasVmRestoreWithRehydrationContent(IEnumerable<string> resourceGuardOperationRequests = default, string recoveryPointId = default, FileShareRecoveryType? recoveryType = default, ResourceIdentifier sourceResourceId = default, ResourceIdentifier targetVirtualMachineId = default, ResourceIdentifier targetResourceGroupId = default, ResourceIdentifier storageAccountId = default, ResourceIdentifier virtualNetworkId = default, ResourceIdentifier subnetId = default, ResourceIdentifier targetDomainNameId = default, AzureLocation? region = default, string affinityGroup = default, bool? doesCreateNewCloudService = default, bool? originalStorageAccountOption = default, VmEncryptionDetails encryptionDetails = default, IEnumerable<int> restoreDiskLunList = default, bool? doesRestoreWithManagedDisks = default, string diskEncryptionSetId = default, IEnumerable<string> zones = default, BackupIdentityInfo identityInfo = default, IdentityBasedRestoreDetails identityBasedRestoreDetails = default, ExtendedLocation extendedLocation = default, SecuredVmDetails securedVMDetails = default, BackupTargetDiskNetworkAccessSettings targetDiskNetworkAccessSettings = default, RecoveryPointRehydrationInfo recoveryPointRehydrationInfo = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
             restoreDiskLunList ??= new ChangeTrackingList<int>();
