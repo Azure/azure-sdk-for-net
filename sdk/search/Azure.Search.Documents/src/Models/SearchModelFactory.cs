@@ -652,11 +652,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. </param>
         /// <param name="oversampling"> Oversampling factor. </param>
         /// <param name="weight"> Relative weight of the vector query when compared to other vector query and/or the text query within the same search request. </param>
-        /// <param name="filterOverride"> The OData filter expression to apply to this specific vector query. </param>
+        /// <param name="kind"> Type of query. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VectorQuery VectorQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, string filterOverride)
+        public static VectorQuery VectorQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, string kind)
         {
-            return VectorQuery(kNearestNeighborsCount: kNearestNeighborsCount, fieldsRaw: fieldsRaw, exhaustive: exhaustive, oversampling: oversampling, weight: weight, threshold: default, filterOverride: filterOverride);
+            return VectorQuery(kNearestNeighborsCount: kNearestNeighborsCount, fieldsRaw: fieldsRaw, exhaustive: exhaustive, oversampling: oversampling, weight: weight, threshold: default, filterOverride: default, perDocumentVectorLimit: default, kind: kind);
         }
 
         /// <summary> Initializes a new instance of KnowledgeBaseActivityRecord. </summary>
