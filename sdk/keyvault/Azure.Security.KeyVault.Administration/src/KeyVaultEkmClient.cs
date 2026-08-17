@@ -286,6 +286,7 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary>
         /// Gets an existing External Key Manager (EKM) proxy private endpoint. This operation requires <c>ekm/read</c> permission.
+        /// Only available with service version <see cref="KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview"/> and newer.
         /// </summary>
         /// <param name="peName">The name of the private endpoint to get.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -307,6 +308,7 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary>
         /// Gets an existing External Key Manager (EKM) proxy private endpoint. This operation requires <c>ekm/read</c> permission.
+        /// Only available with service version <see cref="KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview"/> and newer.
         /// </summary>
         /// <param name="peName">The name of the private endpoint to get.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -328,6 +330,7 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary>
         /// Lists all External Key Manager (EKM) proxy private endpoints on the pool. This operation requires <c>ekm/read</c> permission.
+        /// Only available with service version <see cref="KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview"/> and newer.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code.</exception>
@@ -345,6 +348,7 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary>
         /// Lists all External Key Manager (EKM) proxy private endpoints on the pool. This operation requires <c>ekm/read</c> permission.
+        /// Only available with service version <see cref="KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview"/> and newer.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code.</exception>
@@ -362,6 +366,7 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary>
         /// Creates an External Key Manager (EKM) proxy private endpoint. A pool may have up to two private endpoints. This operation requires <c>ekm/write</c> permission.
+        /// Only available with service version <see cref="KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview"/> and newer.
         /// </summary>
         /// <param name="waitUntil"><see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="peName">The name of the private endpoint. Must be 1-24 characters, start and end with an alphanumeric character, and contain only alphanumeric characters and hyphens.</param>
@@ -387,6 +392,7 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary>
         /// Creates an External Key Manager (EKM) proxy private endpoint. A pool may have up to two private endpoints. This operation requires <c>ekm/write</c> permission.
+        /// Only available with service version <see cref="KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview"/> and newer.
         /// </summary>
         /// <param name="waitUntil"><see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="peName">The name of the private endpoint. Must be 1-24 characters, start and end with an alphanumeric character, and contain only alphanumeric characters and hyphens.</param>
@@ -412,6 +418,7 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary>
         /// Deletes an existing External Key Manager (EKM) proxy private endpoint. The operation is rejected while an EKM connection still references the private endpoint. This operation requires <c>ekm/write</c> permission.
+        /// Only available with service version <see cref="KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview"/> and newer.
         /// </summary>
         /// <param name="waitUntil"><see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="peName">The name of the private endpoint to delete.</param>
@@ -434,6 +441,7 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary>
         /// Deletes an existing External Key Manager (EKM) proxy private endpoint. The operation is rejected while an EKM connection still references the private endpoint. This operation requires <c>ekm/write</c> permission.
+        /// Only available with service version <see cref="KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview"/> and newer.
         /// </summary>
         /// <param name="waitUntil"><see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="peName">The name of the private endpoint to delete.</param>
@@ -456,6 +464,7 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary>
         /// Gets the status of an External Key Manager (EKM) proxy private endpoint create or delete operation. This operation requires <c>ekm/read</c> permission.
+        /// Only available with service version <see cref="KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview"/> and newer.
         /// </summary>
         /// <param name="jobId">The identifier of the private endpoint operation.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -477,6 +486,7 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary>
         /// Gets the status of an External Key Manager (EKM) proxy private endpoint create or delete operation. This operation requires <c>ekm/read</c> permission.
+        /// Only available with service version <see cref="KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview"/> and newer.
         /// </summary>
         /// <param name="jobId">The identifier of the private endpoint operation.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
