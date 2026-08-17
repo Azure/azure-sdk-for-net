@@ -7,7 +7,7 @@
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> Settings for SMB protocol. </summary>
+    /// <summary> Settings for NFS protocol. </summary>
     public partial class ShareNfsSettings
     {
         /// <summary> Initializes a new instance of <see cref="ShareNfsSettings"/>. </summary>
