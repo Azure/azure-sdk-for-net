@@ -37,6 +37,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AuthBaseInfo"/>. </summary>
+        protected AuthBaseInfo() : this(default)
+        {
+        }
+
         /// <summary> The authentication type. </summary>
         internal LinkerAuthType AuthType { get; set; }
 

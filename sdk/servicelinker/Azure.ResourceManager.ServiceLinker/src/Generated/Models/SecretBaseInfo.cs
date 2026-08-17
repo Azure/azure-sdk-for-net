@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SecretBaseInfo"/>. </summary>
+        protected SecretBaseInfo() : this(default)
+        {
+        }
+
         /// <summary> The secret type. </summary>
         internal LinkerSecretType SecretType { get; set; }
     }

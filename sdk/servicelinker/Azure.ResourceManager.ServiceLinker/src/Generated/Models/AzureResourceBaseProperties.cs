@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureResourceBaseProperties"/>. </summary>
+        protected AzureResourceBaseProperties() : this(default)
+        {
+        }
+
         /// <summary> The azure resource type. </summary>
         internal AzureResourceType Type { get; set; }
     }

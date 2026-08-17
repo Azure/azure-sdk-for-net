@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="TargetServiceBaseInfo"/>. </summary>
+        protected TargetServiceBaseInfo() : this(default)
+        {
+        }
+
         /// <summary> The target service type. </summary>
         internal TargetServiceType Type { get; set; }
     }
