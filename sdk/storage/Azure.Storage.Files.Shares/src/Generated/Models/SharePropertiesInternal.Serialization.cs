@@ -258,6 +258,12 @@ namespace Azure.Storage.Files.Shares.Models
                 writer.WriteValue(EnableSmbDirectoryLease.Value);
                 writer.WriteEndElement();
             }
+            if (Optional.IsDefined(CreationTime))
+            {
+                writer.WriteStartElement("Creation-Time");
+                writer.WriteStringValue(CreationTime.Value, "R");
+                writer.WriteEndElement();
+            }
         }
 
         /// <param name="element"> The xml element to deserialize. </param>
@@ -296,6 +302,7 @@ namespace Azure.Storage.Files.Shares.Models
             DateTimeOffset? nextAllowedProvisionedIopsDowngradeTime = default;
             DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeTime = default;
             bool? enableSmbDirectoryLease = default;
+            DateTimeOffset? creationTime = default;
 
             foreach (var child in element.Elements())
             {
@@ -435,6 +442,11 @@ namespace Azure.Storage.Files.Shares.Models
                     enableSmbDirectoryLease = (bool?)child;
                     continue;
                 }
+                if (localName == "Creation-Time")
+                {
+                    creationTime = child.GetDateTimeOffset("R");
+                    continue;
+                }
             }
             return new SharePropertiesInternal(
                 lastModified,
@@ -463,7 +475,8 @@ namespace Azure.Storage.Files.Shares.Models
                 maxBurstCreditsForIops,
                 nextAllowedProvisionedIopsDowngradeTime,
                 nextAllowedProvisionedBandwidthDowngradeTime,
-                enableSmbDirectoryLease);
+                enableSmbDirectoryLease,
+                creationTime);
         }
 
         /// <param name="writer"> The XML writer. </param>

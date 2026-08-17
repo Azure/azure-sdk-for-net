@@ -1261,6 +1261,21 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2027_03_07)]
+        public async Task GetPropertiesAsync_CreatedOn()
+        {
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareClient share = test.Share;
+
+            // Act
+            Response<ShareProperties> response = await share.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.Value.ETag);
+            Assert.IsNotNull(response.Value.CreatedOn);
+        }
+
+        [RecordedTest]
         public async Task SetMetadataAsync()
         {
             await using DisposingShare test = await GetTestShareAsync();

@@ -780,6 +780,7 @@ namespace Azure.Storage.Files.Shares
                 NextAllowedProvisionedIopsDowngradeTime = response.Headers.TryGetValue("x-ms-share-next-allowed-provisioned-iops-downgrade-time", out DateTimeOffset? nextIopsDowngrade) ? nextIopsDowngrade : null,
                 NextAllowedProvisionedBandwidthDowngradeTime = response.Headers.TryGetValue("x-ms-share-next-allowed-provisioned-bandwidth-downgrade-time", out DateTimeOffset? nextBwDowngrade) ? nextBwDowngrade : null,
                 //EnableDirectoryLease = response.Headers.EnableSmbDirectoryLease,
+                CreatedOn = response.Headers.TryGetValue("x-ms-share-creation-time", out DateTimeOffset? creationTime) ? creationTime : null,
             };
         }
 
@@ -862,6 +863,7 @@ namespace Azure.Storage.Files.Shares
                 NextAllowedProvisionedIopsDowngradeTime = sharePropertiesInternal.NextAllowedProvisionedIopsDowngradeTime,
                 NextAllowedProvisionedBandwidthDowngradeTime = sharePropertiesInternal.NextAllowedProvisionedBandwidthDowngradeTime,
                 //EnableDirectoryLease = sharePropertiesInternal.EnableSmbDirectoryLease,
+                CreatedOn = sharePropertiesInternal.CreationTime
             };
         }
 
