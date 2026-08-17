@@ -29,7 +29,6 @@
 - Total libraries: 442
 - Management Plane (MPG): 260
   - Autorest/Swagger: 42
->>>>>>> 7f06338fe68 (update iventory)
   - New Emitter (TypeSpec): 218
 >>>>>>> 16f4f884029 (update iventory)
   - Old TypeSpec: 0
