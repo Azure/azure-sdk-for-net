@@ -156,7 +156,11 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
                 {
                     try
                     {
-                        await DispatchAsync(session, message, cancellationToken).ConfigureAwait(false);
+                        await DispatchAsync(
+                            session,
+                            message,
+                            connectionContext,
+                            cancellationToken).ConfigureAwait(false);
                     }
                     catch (OperationCanceledException exception)
                         when (exception.CancellationToken == cancellationToken &&
@@ -230,7 +234,20 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
         return outcome with { CleanupException = cleanupException };
     }
 
-    private Task DispatchAsync(
+    private async Task DispatchAsync(
+        VoiceSession session,
+        VoiceInboundMessage message,
+        ActivityContext connectionContext,
+        CancellationToken cancellationToken)
+    {
+        using var callbackTrace = VoiceCallbackTrace.Start(
+            connectionContext,
+            message.MessageType);
+        using var callbackScope = callbackTrace.Activate();
+        await DispatchCallbackAsync(session, message, cancellationToken).ConfigureAwait(false);
+    }
+
+    private Task DispatchCallbackAsync(
         VoiceSession session,
         VoiceInboundMessage message,
         CancellationToken cancellationToken) => message switch

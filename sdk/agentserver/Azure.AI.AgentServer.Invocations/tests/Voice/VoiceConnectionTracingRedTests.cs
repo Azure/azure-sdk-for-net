@@ -76,26 +76,106 @@ public class VoiceConnectionTracingRedTests
             traceId,
             parentSpanId);
         var connectionObserved = await exporter.TryWaitForAsync(IsSemanticConnection, ObservationTimeout);
+        var callbackObserved = await exporter.TryWaitForAsync(IsCallbackDispatch, ObservationTimeout);
         var targetObserved = await exporter.TryWaitForAsync(IsTargetTurn, ObservationTimeout);
         var customerObserved = await exporter.TryWaitForAsync(IsTargetCustomerSpan, ObservationTimeout);
 
         var activities = exporter.GetFinishedActivities();
         var connection = activities.SingleOrDefault(IsSemanticConnection);
+        var callback = activities.SingleOrDefault(IsCallbackDispatch);
         var target = activities.SingleOrDefault(IsTargetTurn);
         var customer = activities.SingleOrDefault(IsTargetCustomerSpan);
         Assert.Multiple(() =>
         {
             Assert.That(connectionObserved, Is.True);
+            Assert.That(callbackObserved, Is.True);
             Assert.That(targetObserved, Is.True);
             Assert.That(customerObserved, Is.True);
             Assert.That(connection?.TraceId, Is.EqualTo(traceId));
             Assert.That(connection?.ParentSpanId, Is.EqualTo(parentSpanId));
+            Assert.That(callback?.TraceId, Is.EqualTo(traceId));
+            Assert.That(callback?.ParentSpanId, Is.EqualTo(connection?.SpanId));
+            Assert.That(callback?.GetTagItem("voice.event.type"), Is.EqualTo("session.start"));
             Assert.That(target?.TraceId, Is.EqualTo(traceId));
             Assert.That(target?.ParentSpanId, Is.EqualTo(connection?.SpanId));
             Assert.That(customer?.TraceId, Is.EqualTo(traceId));
             Assert.That(customer?.ParentSpanId, Is.EqualTo(target?.SpanId));
             Assert.That(target?.GetTagItem("bridge.outcome"), Is.EqualTo("none"));
             Assert.That(activities.Any(IsGenericWebSocketRequest), Is.False);
+        });
+    }
+
+    [Test]
+    public async Task DirectCallbackSpan_ExportsThroughDedicatedCallbackParent()
+    {
+        var exporter = new CapturingActivityExporter();
+        await using var server = await StartVoiceServerAsync<DirectCallbackSpanVoiceHandler>(exporter);
+        var traceId = ActivityTraceId.CreateRandom();
+        var parentSpanId = ActivitySpanId.CreateRandom();
+
+        await ConnectSendAndCloseAsync(
+            server.WebSocketUri,
+            SessionStartPayload,
+            traceId,
+            parentSpanId);
+        var connectionObserved = await exporter.TryWaitForAsync(IsSemanticConnection, ObservationTimeout);
+        var callbackObserved = await exporter.TryWaitForAsync(IsCallbackDispatch, ObservationTimeout);
+        var customerObserved = await exporter.TryWaitForAsync(
+            IsDirectCallbackCustomerSpan,
+            ObservationTimeout);
+
+        var activities = exporter.GetFinishedActivities();
+        var connection = activities.SingleOrDefault(IsSemanticConnection);
+        var callback = activities.SingleOrDefault(IsCallbackDispatch);
+        var customer = activities.SingleOrDefault(IsDirectCallbackCustomerSpan);
+        Assert.Multiple(() =>
+        {
+            Assert.That(connectionObserved, Is.True);
+            Assert.That(callbackObserved, Is.True,
+                "Voice must export a dedicated parent for spans created directly in callbacks.");
+            Assert.That(customerObserved, Is.True);
+            Assert.That(callback?.TraceId, Is.EqualTo(traceId));
+            Assert.That(callback?.ParentSpanId, Is.EqualTo(connection?.SpanId));
+            Assert.That(callback?.GetTagItem("voice.event.type"), Is.EqualTo("session.start"));
+            Assert.That(callback?.TagObjects.Select(tag => tag.Key),
+                Is.EquivalentTo(new[] { "voice.event.type" }));
+            Assert.That(customer?.TraceId, Is.EqualTo(traceId));
+            Assert.That(customer?.ParentSpanId, Is.EqualTo(callback?.SpanId));
+            Assert.That(activities.Any(IsGenericWebSocketRequest), Is.False);
+        });
+    }
+
+    [Test]
+    public async Task AsyncAndBackgroundCallbackSpans_RetainExportedCallbackParent()
+    {
+        AsyncCallbackSpanVoiceHandler.Reset();
+        var exporter = new CapturingActivityExporter();
+        await using var server = await StartVoiceServerAsync<AsyncCallbackSpanVoiceHandler>(exporter);
+
+        await ConnectSendAndCloseAsync(server.WebSocketUri, SessionStartPayload);
+        await AsyncCallbackSpanVoiceHandler.BackgroundCompleted.Task.WaitAsync(TestTimeout);
+        var callbackObserved = await exporter.TryWaitForAsync(IsCallbackDispatch, ObservationTimeout);
+        var asyncObserved = await exporter.TryWaitForAsync(
+            activity => activity.OperationName == "customer.callback.async",
+            ObservationTimeout);
+        var backgroundObserved = await exporter.TryWaitForAsync(
+            activity => activity.OperationName == "customer.callback.background",
+            ObservationTimeout);
+
+        var activities = exporter.GetFinishedActivities();
+        var callback = activities.SingleOrDefault(IsCallbackDispatch);
+        var asyncCustomer = activities.SingleOrDefault(
+            activity => activity.OperationName == "customer.callback.async");
+        var backgroundCustomer = activities.SingleOrDefault(
+            activity => activity.OperationName == "customer.callback.background");
+        Assert.Multiple(() =>
+        {
+            Assert.That(callbackObserved, Is.True);
+            Assert.That(asyncObserved, Is.True);
+            Assert.That(backgroundObserved, Is.True);
+            Assert.That(callback?.Duration, Is.Not.EqualTo(default(TimeSpan)));
+            Assert.That(asyncCustomer?.ParentSpanId, Is.EqualTo(callback?.SpanId));
+            Assert.That(backgroundCustomer?.ParentSpanId, Is.EqualTo(callback?.SpanId));
         });
     }
 
@@ -608,14 +688,65 @@ public class VoiceConnectionTracingRedTests
         await ContaminatingVoiceHandler.Contaminated.Task.WaitAsync(TestTimeout);
         var observed = await exporter.TryWaitForSemanticCountAsync(1, ObservationTimeout);
 
-        var connection = exporter.GetFinishedActivities().SingleOrDefault(IsSemanticConnection);
+        var activities = exporter.GetFinishedActivities();
+        var connection = activities.SingleOrDefault(IsSemanticConnection);
+        var callback = activities.SingleOrDefault(IsCallbackDispatch);
         Assert.Multiple(() =>
         {
             Assert.That(observed, Is.True);
+            Assert.That(callback, Is.Not.Null);
+            Assert.That(callback?.ParentSpanId, Is.EqualTo(connection?.SpanId));
             Assert.That(connection?.Baggage.Any(item => item.Key == "customer-secret"), Is.False);
             Assert.That(connection?.GetTagItem("customer-secret"), Is.Null);
             Assert.That(connection?.Events.Any(activityEvent => activityEvent.Name == "customer-secret"), Is.False);
             Assert.That(logs.CloseEventBaggageKeys, Does.Not.Contain("customer-secret"));
+        });
+    }
+
+    [TestCase(CallbackActivityFailureTarget.Started)]
+    [TestCase(CallbackActivityFailureTarget.Stopped)]
+    public async Task CallbackActivityListenerFailure_DoesNotChangeWireOrNextCallback(
+        CallbackActivityFailureTarget failureTarget)
+    {
+        var exporter = new CapturingActivityExporter();
+        await using var server = await StartVoiceServerAsync<DirectCallbackSpanVoiceHandler>(exporter);
+        var failureCount = 0;
+        void InjectFailure(Activity activity)
+        {
+            if (IsCallbackDispatch(activity) &&
+                Interlocked.CompareExchange(ref failureCount, 1, 0) == 0)
+            {
+                Activity.Current = null;
+                throw new InvalidOperationException("injected callback Activity listener failure");
+            }
+        }
+        using var listener = new ActivityListener
+        {
+            ShouldListenTo = static source => source.Name == InvocationsSourceName,
+            Sample = (ref ActivityCreationOptions<ActivityContext> _) =>
+                ActivitySamplingResult.AllDataAndRecorded,
+            ActivityStarted = failureTarget == CallbackActivityFailureTarget.Started
+                ? InjectFailure
+                : null,
+            ActivityStopped = failureTarget == CallbackActivityFailureTarget.Stopped
+                ? InjectFailure
+                : null,
+        };
+        ActivitySource.AddActivityListener(listener);
+
+        var firstCloseCode = await ConnectSendAndCloseAsync(server.WebSocketUri, SessionStartPayload);
+        var secondCloseCode = await ConnectSendAndCloseAsync(server.WebSocketUri, SessionStartPayload);
+        var callbacks = exporter.GetFinishedActivities().Where(IsCallbackDispatch).ToArray();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(firstCloseCode, Is.EqualTo(1000));
+            Assert.That(secondCloseCode, Is.EqualTo(1000));
+            Assert.That(failureCount, Is.EqualTo(1));
+            Assert.That(callbacks, Has.Length.EqualTo(2));
+            Assert.That(callbacks.Select(activity => activity.Duration),
+                Is.All.Not.EqualTo(default(TimeSpan)));
+            Assert.That(callbacks.Select(activity => activity.TraceId).Distinct().Count(), Is.EqualTo(2));
         });
     }
 
@@ -1818,9 +1949,17 @@ public class VoiceConnectionTracingRedTests
         activity.Source.Name == InvocationsSourceName &&
         activity.OperationName == "invoke_agent";
 
+    private static bool IsCallbackDispatch(Activity activity) =>
+        activity.Source.Name == InvocationsSourceName &&
+        activity.OperationName == "voice.callback";
+
     private static bool IsTargetCustomerSpan(Activity activity) =>
         activity.Source.Name == TargetTurnCustomerSourceName &&
         activity.OperationName == "customer.model";
+
+    private static bool IsDirectCallbackCustomerSpan(Activity activity) =>
+        activity.Source.Name == TargetTurnCustomerSourceName &&
+        activity.OperationName == "customer.callback";
 
     private static IDisposable UseTraceContextPropagator()
     {
@@ -1856,6 +1995,47 @@ public class VoiceConnectionTracingRedTests
             }
             turn.Complete(new VoiceTurnResult(VoiceTurnOutcome.None, outputItemCount: 0));
             return Task.CompletedTask;
+        }
+    }
+
+    private sealed class DirectCallbackSpanVoiceHandler : VoiceHandler
+    {
+        private static readonly ActivitySource s_customerSource = new(TargetTurnCustomerSourceName);
+
+        protected override Task OnSessionStartAsync(
+            VoiceSession session,
+            VoiceSessionStartEvent start,
+            CancellationToken cancellationToken)
+        {
+            using var activity = s_customerSource.StartActivity("customer.callback");
+            return Task.CompletedTask;
+        }
+    }
+
+    private sealed class AsyncCallbackSpanVoiceHandler : VoiceHandler
+    {
+        private static readonly ActivitySource s_customerSource = new(TargetTurnCustomerSourceName);
+
+        public static TaskCompletionSource BackgroundCompleted { get; private set; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public static void Reset() =>
+            BackgroundCompleted = new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        protected override async Task OnSessionStartAsync(
+            VoiceSession session,
+            VoiceSessionStartEvent start,
+            CancellationToken cancellationToken)
+        {
+            await Task.Yield();
+            using (var activity = s_customerSource.StartActivity("customer.callback.async"))
+            {
+            }
+            _ = Task.Run(() =>
+            {
+                using var activity = s_customerSource.StartActivity("customer.callback.background");
+                BackgroundCompleted.TrySetResult();
+            });
         }
     }
 
@@ -2211,6 +2391,12 @@ public class VoiceConnectionTracingRedTests
     {
         Begin,
         Dispose,
+    }
+
+    public enum CallbackActivityFailureTarget
+    {
+        Started,
+        Stopped,
     }
 
     private sealed class AcceptFailureFeatureDecorator
