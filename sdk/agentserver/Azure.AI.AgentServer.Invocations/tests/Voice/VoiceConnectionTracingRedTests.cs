@@ -214,8 +214,8 @@ public class VoiceConnectionTracingRedTests
         var activities = exporter.GetFinishedActivities();
         Assert.Multiple(() =>
         {
-            Assert.That(applicationFilterCalls, Is.GreaterThan(0),
-                "Voice filtering must compose rather than overwrite the application filter.");
+            Assert.That(applicationFilterCalls, Is.EqualTo(1),
+                "Voice filtering must evaluate the application filter exactly once.");
             Assert.That(activities.Any(IsSemanticConnection), Is.True);
             Assert.That(activities.Any(IsGenericWebSocketRequest), Is.False);
         });
@@ -301,6 +301,205 @@ public class VoiceConnectionTracingRedTests
             Assert.That(observed, Is.True,
                 "A request rejected before WebSocket admission must retain the generic ASP.NET span.");
             Assert.That(exporter.GetFinishedActivities().Any(IsSemanticConnection), Is.False);
+        });
+    }
+
+    [Test]
+    public async Task MiddlewareRejection_WithoutTraceparent_CreatesTrueRootSpan()
+    {
+        var exporter = new CapturingActivityExporter();
+        await using var server = await StartVoiceServerAsync(
+            exporter,
+            configureApplication: app => app.Run(context =>
+            {
+                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                return Task.CompletedTask;
+            }));
+        using var client = new HttpClient();
+        using var request = CreateWebSocketCandidateRequest(
+            server.HttpUri,
+            Convert.ToBase64String(new byte[16]));
+
+        using var response = await client.SendAsync(request).WaitAsync(TestTimeout);
+        var observed = await exporter.TryWaitForAsync(
+            activity => activity.Source.Name == InvocationsSourceName &&
+                activity.OperationName == "GET /invocations_ws",
+            ObservationTimeout);
+        var rejection = exporter.GetFinishedActivities().SingleOrDefault(activity =>
+            activity.Source.Name == InvocationsSourceName &&
+            activity.OperationName == "GET /invocations_ws");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
+            Assert.That(observed, Is.True);
+            Assert.That(rejection, Is.Not.Null);
+            Assert.That(rejection?.ParentSpanId, Is.EqualTo(default(ActivitySpanId)),
+                "A parentless rejection must not inherit the suppressed ASP.NET request Activity.");
+        });
+    }
+
+    [Test]
+    public async Task MiddlewareRejection_ActivityStartedFailure_StopsActivityAndNextRequestSucceeds()
+    {
+        var exporter = new CapturingActivityExporter();
+        await using var server = await StartVoiceServerAsync(
+            exporter,
+            configureApplication: app => app.Run(context =>
+            {
+                context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                return Task.CompletedTask;
+            }));
+        Activity? failedActivity = null;
+        using var listener = new ActivityListener
+        {
+            ShouldListenTo = static source => source.Name == InvocationsSourceName,
+            Sample = (ref ActivityCreationOptions<ActivityContext> _) =>
+                ActivitySamplingResult.AllDataAndRecorded,
+            ActivityStarted = activity =>
+            {
+                if (activity.OperationName == "GET /invocations_ws" && failedActivity is null)
+                {
+                    failedActivity = activity;
+                    Activity.Current = null;
+                    throw new InvalidOperationException("injected rejection ActivityStarted failure");
+                }
+            },
+        };
+        ActivitySource.AddActivityListener(listener);
+        using var client = new HttpClient();
+        var firstTraceId = ActivityTraceId.CreateRandom();
+        var secondTraceId = ActivityTraceId.CreateRandom();
+
+        using (var firstRequest = CreateWebSocketCandidateRequest(
+            server.HttpUri,
+            Convert.ToBase64String(new byte[16])))
+        {
+            firstRequest.Headers.TryAddWithoutValidation(
+                "traceparent",
+                $"00-{firstTraceId}-{ActivitySpanId.CreateRandom()}-01");
+            using var firstResponse = await client.SendAsync(firstRequest).WaitAsync(TestTimeout);
+            Assert.That(firstResponse.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
+        }
+
+        using (var secondRequest = CreateWebSocketCandidateRequest(
+            server.HttpUri,
+            Convert.ToBase64String(new byte[16])))
+        {
+            secondRequest.Headers.TryAddWithoutValidation(
+                "traceparent",
+                $"00-{secondTraceId}-{ActivitySpanId.CreateRandom()}-01");
+            using var secondResponse = await client.SendAsync(secondRequest).WaitAsync(TestTimeout);
+            Assert.That(secondResponse.StatusCode, Is.EqualTo(HttpStatusCode.Forbidden));
+        }
+        var secondObserved = await exporter.TryWaitForAsync(
+            activity => IsRejectedVoiceRequest(activity, secondTraceId),
+            ObservationTimeout);
+        var rejections = exporter.GetFinishedActivities()
+            .Where(activity =>
+                activity.Source.Name == InvocationsSourceName &&
+                activity.OperationName == "GET /invocations_ws")
+            .ToArray();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(failedActivity, Is.Not.Null);
+            Assert.That(failedActivity?.Duration, Is.Not.EqualTo(default(TimeSpan)),
+                "A listener failure must not abandon an already-started rejection Activity.");
+            Assert.That(secondObserved, Is.True,
+                "A listener failure must not pollute the following rejection request.");
+            Assert.That(rejections, Has.Length.EqualTo(2));
+            Assert.That(rejections.Select(activity => activity.TraceId),
+                Is.EquivalentTo(new[] { firstTraceId, secondTraceId }));
+        });
+    }
+
+    [TestCase(StatusCodes.Status401Unauthorized, ActivityStatusCode.Unset, null)]
+    [TestCase(StatusCodes.Status403Forbidden, ActivityStatusCode.Unset, null)]
+    [TestCase(StatusCodes.Status429TooManyRequests, ActivityStatusCode.Unset, null)]
+    [TestCase(StatusCodes.Status500InternalServerError, ActivityStatusCode.Error, "500")]
+    public async Task MiddlewareRejection_ExportsParentedRequestSpan_AndNextConnectionSucceeds(
+        int rejectionStatusCode,
+        ActivityStatusCode expectedActivityStatus,
+        string? expectedErrorType)
+    {
+        var rejectNextRequest = 1;
+        var exporter = new CapturingActivityExporter();
+        int actualRejectionStatusCode;
+        bool rejectionObserved;
+        int? closeCode;
+        bool connectionObserved;
+        var rejectedTraceId = ActivityTraceId.CreateRandom();
+        var rejectedParentSpanId = ActivitySpanId.CreateRandom();
+        const string rejectedTraceState = "vendor=value";
+        var successfulTraceId = ActivityTraceId.CreateRandom();
+        var successfulParentSpanId = ActivitySpanId.CreateRandom();
+        await using (var server = await StartVoiceServerAsync(
+            exporter,
+            configureApplication: app => app.Use(async (context, next) =>
+            {
+                if (Interlocked.Exchange(ref rejectNextRequest, 0) == 1)
+                {
+                    context.Response.StatusCode = rejectionStatusCode;
+                    return;
+                }
+                await next();
+            })))
+        {
+            using var client = new HttpClient();
+            using var request = CreateWebSocketCandidateRequest(
+                server.HttpUri,
+                Convert.ToBase64String(new byte[16]));
+            request.Headers.TryAddWithoutValidation(
+                "traceparent",
+                $"00-{rejectedTraceId}-{rejectedParentSpanId}-01");
+            request.Headers.TryAddWithoutValidation("tracestate", rejectedTraceState);
+
+            using var response = await client.SendAsync(request).WaitAsync(TestTimeout);
+            actualRejectionStatusCode = (int)response.StatusCode;
+            rejectionObserved = await exporter.TryWaitForAsync(
+                activity => IsRejectedVoiceRequest(activity, rejectedTraceId),
+                ObservationTimeout);
+
+            closeCode = await ConnectAndCloseAsync(
+                server.WebSocketUri,
+                successfulTraceId,
+                successfulParentSpanId);
+            connectionObserved = await exporter.TryWaitForSemanticCountAsync(1, ObservationTimeout);
+        }
+        var activities = exporter.GetFinishedActivities();
+        var rejection = activities.SingleOrDefault(
+            activity => IsRejectedVoiceRequest(activity, rejectedTraceId));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(actualRejectionStatusCode, Is.EqualTo(rejectionStatusCode));
+            Assert.That(rejectionObserved, Is.True,
+                "A middleware rejection must retain an exported request trace.");
+            Assert.That(rejection?.ParentSpanId, Is.EqualTo(rejectedParentSpanId));
+            Assert.That(rejection?.Kind, Is.EqualTo(ActivityKind.Server));
+            Assert.That(rejection?.ActivityTraceFlags, Is.EqualTo(ActivityTraceFlags.Recorded));
+            Assert.That(rejection?.TraceStateString, Is.EqualTo(rejectedTraceState));
+            Assert.That(rejection?.GetTagItem("http.response.status_code"), Is.EqualTo(rejectionStatusCode));
+            Assert.That(rejection?.GetTagItem("error.type"), Is.EqualTo(expectedErrorType));
+            Assert.That(rejection?.Status, Is.EqualTo(expectedActivityStatus));
+            Assert.That(
+                activities.Any(activity =>
+                    IsSemanticConnection(activity) && activity.TraceId == rejectedTraceId),
+                Is.False);
+            Assert.That(closeCode, Is.EqualTo(1000));
+            Assert.That(connectionObserved, Is.True);
+            Assert.That(
+                activities.Count(activity =>
+                    IsSemanticConnection(activity) && activity.TraceId == successfulTraceId),
+                Is.EqualTo(1));
+            Assert.That(
+                activities.Any(activity => IsRejectedVoiceRequest(activity, successfulTraceId)),
+                Is.False);
+            Assert.That(
+                activities.Any(activity =>
+                    IsGenericWebSocketRequest(activity) && activity.TraceId == successfulTraceId),
+                Is.False);
         });
     }
 
@@ -754,15 +953,20 @@ public class VoiceConnectionTracingRedTests
         var acceptFailure = new InvalidOperationException("injected accept failure");
         var featureDecorator = new AcceptFailureFeatureDecorator(acceptFailure);
         var exporter = new CapturingActivityExporter();
-        await using var server = await StartVoiceServerAsync<PassiveVoiceHandler>(
+        Exception observedFailure;
+        int? retryCloseCode;
+        bool observed;
+        await using (var server = await StartVoiceServerAsync<PassiveVoiceHandler>(
             exporter,
-            decorateWebSocketFeature: featureDecorator.Decorate);
+            decorateWebSocketFeature: featureDecorator.Decorate))
+        {
+            observedFailure = await ConnectAndCaptureFailureAsync(server.WebSocketUri);
+            retryCloseCode = await ConnectAndCloseAsync(server.WebSocketUri);
+            observed = await exporter.TryWaitForSemanticCountAsync(2, ObservationTimeout);
+        }
 
-        var observedFailure = await ConnectAndCaptureFailureAsync(server.WebSocketUri);
-        var retryCloseCode = await ConnectAndCloseAsync(server.WebSocketUri);
-        var observed = await exporter.TryWaitForSemanticCountAsync(2, ObservationTimeout);
-
-        var connections = exporter.GetFinishedActivities().Where(IsSemanticConnection).ToArray();
+        var activities = exporter.GetFinishedActivities();
+        var connections = activities.Where(IsSemanticConnection).ToArray();
         Assert.Multiple(() =>
         {
             Assert.That(observedFailure, Is.Not.Null);
@@ -777,6 +981,12 @@ public class VoiceConnectionTracingRedTests
             Assert.That(
                 connections.Select(activity => activity.GetTagItem(InvocationsWebSocketConstants.AttrSpanCloseCode)),
                 Is.EqualTo(new object?[] { 1011, 1000 }));
+            Assert.That(
+                activities.Any(activity =>
+                    activity.Source.Name == InvocationsSourceName &&
+                    activity.OperationName == "GET /invocations_ws"),
+                Is.False,
+                "Endpoint admission must suppress rejection compensation even when accept fails.");
         });
     }
 
@@ -1302,7 +1512,7 @@ public class VoiceConnectionTracingRedTests
         Assert.Multiple(() =>
         {
             Assert.That(closeCode, Is.EqualTo(1000));
-            Assert.That(applicationFilterCalls, Is.GreaterThan(0));
+            Assert.That(applicationFilterCalls, Is.EqualTo(1));
             Assert.That(observed, Is.True,
                 "Application suppression of the generic ASP.NET span must not suppress the Voice semantic span.");
             Assert.That(exporter.GetFinishedActivities().Any(IsGenericWebSocketRequest), Is.False);
@@ -1598,6 +1808,11 @@ public class VoiceConnectionTracingRedTests
     private static bool IsGenericRequestFor(Activity activity, string path) =>
         activity.Source.Name == "Microsoft.AspNetCore" &&
         activity.GetTagItem("url.path") as string == path;
+
+    private static bool IsRejectedVoiceRequest(Activity activity, ActivityTraceId traceId) =>
+        activity.Source.Name == InvocationsSourceName &&
+        activity.OperationName == "GET /invocations_ws" &&
+        activity.TraceId == traceId;
 
     private static bool IsTargetTurn(Activity activity) =>
         activity.Source.Name == InvocationsSourceName &&

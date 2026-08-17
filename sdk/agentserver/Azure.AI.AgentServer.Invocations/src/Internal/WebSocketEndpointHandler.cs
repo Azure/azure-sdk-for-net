@@ -88,7 +88,7 @@ internal sealed class WebSocketEndpointHandler
             httpContext.Response.Headers[SessionIdResponseHeader] = sessionId;
         }
 
-        var lifecycle = webSocketHandler.CreateEndpointLifecycle(httpContext.Request.Headers);
+        var lifecycle = webSocketHandler.CreateEndpointLifecycle(httpContext);
 
         // Propagate invocation/session/x-request-id baggage onto the current request
         // Activity for downstream correlation. Reuses the same helper the HTTP

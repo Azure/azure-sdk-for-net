@@ -32,8 +32,11 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
     }
 
     internal sealed override IInvocationsWebSocketEndpointLifecycle CreateEndpointLifecycle(
-        Microsoft.AspNetCore.Http.IHeaderDictionary headers) =>
-        VoiceWebSocketLifecycle.Start(this, headers);
+        Microsoft.AspNetCore.Http.HttpContext httpContext)
+    {
+        VoiceTracingRegistration.MarkEndpointEntered(httpContext);
+        return VoiceWebSocketLifecycle.Start(this, httpContext.Request.Headers);
+    }
 
     internal sealed override Task<InvocationsWebSocketCloseResult?> HandleWebSocketWithOutcomeAsync(
         WebSocket webSocket,
