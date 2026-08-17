@@ -64,7 +64,10 @@ namespace Azure.Security.KeyVault.Secrets
             HttpPipeline pipeline = HttpPipelineBuilder.Build(
                 options,
                 perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
-                perRetryPolicies: [new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification)],
+                perRetryPolicies: [new ChallengeBasedAuthenticationPolicy(
+                    credential,
+                    options.DisableChallengeResourceVerification,
+                    ChallengeBasedAuthenticationPolicy.SupportsProofOfPossession(options.Transport))],
                 transportOptions: new HttpPipelineTransportOptions(),
                 responseClassifier: null);
 

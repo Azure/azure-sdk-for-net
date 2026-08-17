@@ -15,7 +15,9 @@ namespace Azure.Security.KeyVault
     {
         private const string KeyVaultStashedContentKey = "KeyVaultContent";
         private const string TokenBoundAuthHeaderName = "x-ms-tokenboundauth";
+        private static readonly Type[] s_updateParameterTypes = [typeof(HttpPipelineTransportOptions)];
         private readonly bool _verifyChallengeResource;
+        private readonly bool _enableProofOfPossession;
 
         /// <summary>
         /// Challenges are cached using the Key Vault or Managed HSM endpoint URI authority as the key.
@@ -23,10 +25,14 @@ namespace Azure.Security.KeyVault
         private static readonly ConcurrentDictionary<string, ChallengeParameters> s_challengeCache = new();
         private ChallengeParameters _challenge;
 
-        public ChallengeBasedAuthenticationPolicy(TokenCredential credential, bool disableChallengeResourceVerification) : base(credential, Array.Empty<string>())
+        public ChallengeBasedAuthenticationPolicy(TokenCredential credential, bool disableChallengeResourceVerification, bool enableProofOfPossession = true) : base(credential, Array.Empty<string>())
         {
             _verifyChallengeResource = !disableChallengeResourceVerification;
+            _enableProofOfPossession = enableProofOfPossession;
         }
+
+        internal static bool SupportsProofOfPossession(HttpPipelineTransport transport)
+            => transport.GetType().GetMethod(nameof(HttpPipelineTransport.Update), s_updateParameterTypes)?.DeclaringType != typeof(HttpPipelineTransport);
 
         /// <inheritdoc cref="BearerTokenAuthenticationPolicy.AuthorizeRequestAsync(Azure.Core.HttpMessage)" />
         protected override ValueTask AuthorizeRequestAsync(HttpMessage message)
@@ -58,7 +64,7 @@ namespace Azure.Security.KeyVault
                     parentRequestId: message.Request.ClientRequestId,
                     tenantId: _challenge.TenantId,
                     isCaeEnabled: true,
-                    isProofOfPossessionEnabled: true,
+                    isProofOfPossessionEnabled: _enableProofOfPossession,
                     requestUri: message.Request.Uri.ToUri(),
                     requestMethod: message.Request.Method.ToString());
                 AddTokenBoundAuthHeader(message, context);
@@ -195,7 +201,7 @@ namespace Azure.Security.KeyVault
                 tenantId: _challenge.TenantId,
                 isCaeEnabled: true,
                 claims: claims,
-                isProofOfPossessionEnabled: true,
+                isProofOfPossessionEnabled: _enableProofOfPossession,
                 requestUri: message.Request.Uri.ToUri(),
                 requestMethod: message.Request.Method.ToString());
             AddTokenBoundAuthHeader(message, context);

@@ -85,6 +85,39 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             Assert.AreEqual(new Uri("https://test.vault.azure.net/secrets/test-secret?api-version=2025-07-01"), credential.LastRequestContext.ResourceRequestUri);
         }
 
+        [Test]
+        public async Task DoesNotRequestProofOfPossessionTokenForCustomTransportWithoutUpdateSupport()
+        {
+            bool sawAuthorizedVaultRequest = false;
+            MockTransportBuilder builder = new MockTransportBuilder();
+            builder.Request += (_, args) =>
+            {
+                if (args.Request.Uri.Host == VaultHost &&
+                    args.Request.Headers.TryGetValue("Authorization", out string _))
+                {
+                    sawAuthorizedVaultRequest = true;
+                    Assert.IsFalse(args.Request.Headers.TryGetValue(TokenBoundAuthHeader, out string _));
+                }
+            };
+
+            MockTransport transport = builder.Build();
+            MockCredential credential = new MockCredential(transport);
+            SecretClient client = new SecretClient(
+                VaultUri,
+                credential,
+                new SecretClientOptions
+                {
+                    Transport = new NonUpdatingTransport(transport),
+                });
+
+            KeyVaultSecret secret = await client.GetSecretAsync("test-secret").ConfigureAwait(false);
+
+            Assert.AreEqual("secret-value", secret.Value);
+            Assert.IsTrue(sawAuthorizedVaultRequest);
+            Assert.IsNotNull(credential.LastRequestContext);
+            Assert.IsFalse(credential.LastRequestContext.IsProofOfPossessionEnabled);
+        }
+
         // Test concurrent authentication requests with immediate, fast, and slow network simulations.
         [TestCase(10, 0, 0)]
         [TestCase(10, 20, 200)]
@@ -358,6 +391,22 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             }
 
             public MockRequest Request { get; }
+        }
+
+        private class NonUpdatingTransport : HttpPipelineTransport
+        {
+            private readonly MockTransport _inner;
+
+            public NonUpdatingTransport(MockTransport inner)
+            {
+                _inner = inner;
+            }
+
+            public override Request CreateRequest() => _inner.CreateRequest();
+
+            public override void Process(HttpMessage message) => _inner.Process(message);
+
+            public override ValueTask ProcessAsync(HttpMessage message) => _inner.ProcessAsync(message);
         }
 
         private class MockCredential : TokenCredential
