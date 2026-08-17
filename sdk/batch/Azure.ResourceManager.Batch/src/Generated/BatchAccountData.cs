@@ -20,8 +20,11 @@ namespace Azure.ResourceManager.Batch
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchAccountData"/>. </summary>
-        public BatchAccountData()
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public BatchAccountData(AzureLocation location)
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
+            Location = location;
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchAccountData"/>. </summary>
@@ -31,12 +34,21 @@ namespace Azure.ResourceManager.Batch
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The properties associated with the account. </param>
         /// <param name="identity"> The identity of the Batch account. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BatchAccountProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal BatchAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BatchAccountProperties properties, ManagedServiceIdentity identity, IDictionary<string, string> tags, AzureLocation location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Identity = identity;
+            Tags = tags;
+            Location = location;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchAccountData"/>. </summary>
+        public BatchAccountData() : this(default)
+        {
         }
 
         /// <summary> The properties associated with the account. </summary>
@@ -44,6 +56,12 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary> The identity of the Batch account. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+
+        /// <summary> The geo-location where the resource lives. </summary>
+        public AzureLocation Location { get; set; }
 
         /// <summary> The account endpoint used to interact with the Batch service. </summary>
         public string AccountEndpoint
