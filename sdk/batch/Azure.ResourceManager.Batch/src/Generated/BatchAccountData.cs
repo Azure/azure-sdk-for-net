@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary> Initializes a new instance of <see cref="BatchAccountData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal BatchAccountData(AzureLocation location) : base(location)
+        public BatchAccountData(AzureLocation location) : base(location)
         {
         }
 
@@ -43,15 +43,15 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchAccountData"/>. </summary>
-        public BatchAccountData()
+        public BatchAccountData() : this(default)
         {
         }
 
         /// <summary> The properties associated with the account. </summary>
-        internal BatchAccountProperties Properties { get; }
+        internal BatchAccountProperties Properties { get; set; }
 
         /// <summary> The identity of the Batch account. </summary>
-        public ManagedServiceIdentity Identity { get; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The account endpoint used to interact with the Batch service. </summary>
         public string AccountEndpoint
@@ -105,6 +105,14 @@ namespace Azure.ResourceManager.Batch
             {
                 return Properties is null ? default : Properties.PublicNetworkAccess;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
+                Properties.PublicNetworkAccess = value;
+            }
         }
 
         /// <summary> The network profile only takes effect when publicNetworkAccess is enabled. </summary>
@@ -114,6 +122,14 @@ namespace Azure.ResourceManager.Batch
             {
                 return Properties is null ? default : Properties.NetworkProfile;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
+                Properties.NetworkProfile = value;
+            }
         }
 
         /// <summary> List of private endpoint connections associated with the Batch account. </summary>
@@ -121,7 +137,11 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                return Properties is null ? default : Properties.PrivateEndpointConnections;
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
+                return Properties.PrivateEndpointConnections;
             }
         }
 
@@ -166,7 +186,11 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                return Properties is null ? default : Properties.DedicatedCoreQuotaPerVmFamily;
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
+                return Properties.DedicatedCoreQuotaPerVmFamily;
             }
         }
 
@@ -202,7 +226,11 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
-                return Properties is null ? default : Properties.AllowedAuthenticationModes;
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountProperties();
+                }
+                return Properties.AllowedAuthenticationModes;
             }
         }
     }
