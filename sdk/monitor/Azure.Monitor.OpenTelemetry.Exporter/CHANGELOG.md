@@ -3,6 +3,8 @@
 ## 1.9.0-beta.1 (Unreleased)
 
 ### Features Added
+- Add support for project id attributes propagation
+  ([#62052](https://github.com/Azure/azure-sdk-for-net/pull/62052))
 
 ### Breaking Changes
 
