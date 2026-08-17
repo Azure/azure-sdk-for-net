@@ -9,14 +9,79 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Security.ConfidentialLedger;
 
 namespace Azure.Security.ConfidentialLedger.Models
 {
-    public partial class LedgerEntry : IUtf8JsonSerializable, IJsonModel<LedgerEntry>
+    /// <summary> An entry in the ledger. </summary>
+    public partial class LedgerEntry : IJsonModel<LedgerEntry>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LedgerEntry>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="LedgerEntry"/> for deserialization. </summary>
+        internal LedgerEntry()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LedgerEntry PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LedgerEntry>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLedgerEntry(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LedgerEntry)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LedgerEntry>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSecurityConfidentialLedgerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LedgerEntry)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LedgerEntry>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LedgerEntry IPersistableModel<LedgerEntry>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LedgerEntry>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="ledgerEntry"> The <see cref="LedgerEntry"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(LedgerEntry ledgerEntry)
+        {
+            if (ledgerEntry == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(ledgerEntry, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LedgerEntry"/> from. </param>
+        public static explicit operator LedgerEntry(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeLedgerEntry(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LedgerEntry>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +93,11 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LedgerEntry>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LedgerEntry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LedgerEntry)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("contents"u8);
             writer.WriteStringValue(Contents);
             if (options.Format != "W" && Optional.IsDefined(CollectionId))
@@ -50,7 +114,7 @@ namespace Azure.Security.ConfidentialLedger.Models
             {
                 writer.WritePropertyName("preHooks"u8);
                 writer.WriteStartArray();
-                foreach (var item in PreHooks)
+                foreach (UserDefinedFunctionHook item in PreHooks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -60,21 +124,21 @@ namespace Azure.Security.ConfidentialLedger.Models
             {
                 writer.WritePropertyName("postHooks"u8);
                 writer.WriteStartArray();
-                foreach (var item in PostHooks)
+                foreach (UserDefinedFunctionHook item in PostHooks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -83,22 +147,27 @@ namespace Azure.Security.ConfidentialLedger.Models
             }
         }
 
-        LedgerEntry IJsonModel<LedgerEntry>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LedgerEntry IJsonModel<LedgerEntry>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LedgerEntry JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LedgerEntry>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LedgerEntry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LedgerEntry)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeLedgerEntry(document.RootElement, options);
         }
 
-        internal static LedgerEntry DeserializeLedgerEntry(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static LedgerEntry DeserializeLedgerEntry(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -108,47 +177,46 @@ namespace Azure.Security.ConfidentialLedger.Models
             string transactionId = default;
             IList<UserDefinedFunctionHook> preHooks = default;
             IList<UserDefinedFunctionHook> postHooks = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("contents"u8))
+                if (prop.NameEquals("contents"u8))
                 {
-                    contents = property.Value.GetString();
+                    contents = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("collectionId"u8))
+                if (prop.NameEquals("collectionId"u8))
                 {
-                    collectionId = property.Value.GetString();
+                    collectionId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("transactionId"u8))
+                if (prop.NameEquals("transactionId"u8))
                 {
-                    transactionId = property.Value.GetString();
+                    transactionId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("preHooks"u8))
+                if (prop.NameEquals("preHooks"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<UserDefinedFunctionHook> array = new List<UserDefinedFunctionHook>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(UserDefinedFunctionHook.DeserializeUserDefinedFunctionHook(item, options));
                     }
                     preHooks = array;
                     continue;
                 }
-                if (property.NameEquals("postHooks"u8))
+                if (prop.NameEquals("postHooks"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<UserDefinedFunctionHook> array = new List<UserDefinedFunctionHook>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(UserDefinedFunctionHook.DeserializeUserDefinedFunctionHook(item, options));
                     }
@@ -157,64 +225,16 @@ namespace Azure.Security.ConfidentialLedger.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new LedgerEntry(
                 contents,
                 collectionId,
                 transactionId,
                 preHooks ?? new ChangeTrackingList<UserDefinedFunctionHook>(),
                 postHooks ?? new ChangeTrackingList<UserDefinedFunctionHook>(),
-                serializedAdditionalRawData);
-        }
-
-        BinaryData IPersistableModel<LedgerEntry>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LedgerEntry>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSecurityConfidentialLedgerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(LedgerEntry)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        LedgerEntry IPersistableModel<LedgerEntry>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LedgerEntry>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeLedgerEntry(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LedgerEntry)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<LedgerEntry>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static LedgerEntry FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeLedgerEntry(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+                additionalBinaryDataProperties);
         }
     }
 }

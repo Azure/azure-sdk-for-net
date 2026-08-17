@@ -1,0 +1,1130 @@
+{
+  "name": "Streaming.Sse",
+  "apiVersions": [],
+  "enums": [],
+  "constants": [
+    {
+      "$id": "1",
+      "kind": "constant",
+      "name": "ReceiveResponseContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "text/event-stream",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "3",
+      "kind": "constant",
+      "name": "ReceiveResponseContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "4",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "text/event-stream",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "5",
+      "kind": "constant",
+      "name": "ReceiveResponseContentType2",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "6",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "text/event-stream",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "7",
+      "kind": "constant",
+      "name": "Receive",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "8",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "[DONE]",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "9",
+      "kind": "constant",
+      "name": "ReceiveResponseContentType3",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "10",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "text/event-stream",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "11",
+      "kind": "constant",
+      "name": "StreamContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "12",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "13",
+      "kind": "constant",
+      "name": "ReceiveResponseContentType4",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "14",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "text/event-stream",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "15",
+      "kind": "constant",
+      "name": "Receive1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "16",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "[DONE]",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "17",
+      "kind": "constant",
+      "name": "ReceiveResponseContentType5",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "18",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "text/event-stream",
+      "decorators": [],
+      "isExactName": false
+    }
+  ],
+  "models": [
+    {
+      "$id": "19",
+      "kind": "model",
+      "name": "Info",
+      "namespace": "Streaming.Sse.Unnamed",
+      "crossLanguageDefinitionId": "Streaming.Sse.Unnamed.Info",
+      "usage": "Output,Json",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Info"
+        }
+      },
+      "isExactName": false,
+      "properties": [
+        {
+          "$id": "20",
+          "kind": "property",
+          "name": "desc",
+          "serializedName": "desc",
+          "type": {
+            "$id": "21",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Streaming.Sse.Unnamed.Info.desc",
+          "serializationOptions": {
+            "json": {
+              "name": "desc"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    },
+    {
+      "$id": "22",
+      "kind": "model",
+      "name": "ResponseCreated",
+      "namespace": "Streaming.Sse.Named",
+      "crossLanguageDefinitionId": "Streaming.Sse.Named.ResponseCreated",
+      "usage": "Output,Json",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ResponseCreated"
+        }
+      },
+      "isExactName": false,
+      "properties": [
+        {
+          "$id": "23",
+          "kind": "property",
+          "name": "id",
+          "serializedName": "id",
+          "type": {
+            "$id": "24",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Streaming.Sse.Named.ResponseCreated.id",
+          "serializationOptions": {
+            "json": {
+              "name": "id"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    },
+    {
+      "$id": "25",
+      "kind": "model",
+      "name": "ResponseDelta",
+      "namespace": "Streaming.Sse.Named",
+      "crossLanguageDefinitionId": "Streaming.Sse.Named.ResponseDelta",
+      "usage": "Output,Json",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ResponseDelta"
+        }
+      },
+      "isExactName": false,
+      "properties": [
+        {
+          "$id": "26",
+          "kind": "property",
+          "name": "delta",
+          "serializedName": "delta",
+          "type": {
+            "$id": "27",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Streaming.Sse.Named.ResponseDelta.delta",
+          "serializationOptions": {
+            "json": {
+              "name": "delta"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    },
+    {
+      "$id": "28",
+      "kind": "model",
+      "name": "RetrievalRequest",
+      "namespace": "Streaming.Sse.Retrieve",
+      "crossLanguageDefinitionId": "Streaming.Sse.Retrieve.RetrievalRequest",
+      "usage": "Input,Json",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "RetrievalRequest"
+        }
+      },
+      "isExactName": false,
+      "properties": [
+        {
+          "$id": "29",
+          "kind": "property",
+          "name": "query",
+          "serializedName": "query",
+          "type": {
+            "$id": "30",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Streaming.Sse.Retrieve.RetrievalRequest.query",
+          "serializationOptions": {
+            "json": {
+              "name": "query"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    },
+    {
+      "$id": "31",
+      "kind": "model",
+      "name": "PartialResult",
+      "namespace": "Streaming.Sse.Retrieve",
+      "crossLanguageDefinitionId": "Streaming.Sse.Retrieve.PartialResult",
+      "usage": "Output,Json",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "PartialResult"
+        }
+      },
+      "isExactName": false,
+      "properties": [
+        {
+          "$id": "32",
+          "kind": "property",
+          "name": "text",
+          "serializedName": "text",
+          "type": {
+            "$id": "33",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Streaming.Sse.Retrieve.PartialResult.text",
+          "serializationOptions": {
+            "json": {
+              "name": "text"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    },
+    {
+      "$id": "34",
+      "kind": "model",
+      "name": "FinalResult",
+      "namespace": "Streaming.Sse.Retrieve",
+      "crossLanguageDefinitionId": "Streaming.Sse.Retrieve.FinalResult",
+      "usage": "Output,Json",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "FinalResult"
+        }
+      },
+      "isExactName": false,
+      "properties": [
+        {
+          "$id": "35",
+          "kind": "property",
+          "name": "references",
+          "serializedName": "references",
+          "type": {
+            "$id": "36",
+            "kind": "array",
+            "name": "Array",
+            "valueType": {
+              "$id": "37",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string",
+              "decorators": []
+            },
+            "crossLanguageDefinitionId": "TypeSpec.Array",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Streaming.Sse.Retrieve.FinalResult.references",
+          "serializationOptions": {
+            "json": {
+              "name": "references"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "$id": "38",
+      "kind": "client",
+      "name": "SseClient",
+      "isExactName": false,
+      "namespace": "Streaming.Sse",
+      "doc": "Test of server-sent events (SSE) streaming.",
+      "methods": [],
+      "parameters": [
+        {
+          "$id": "39",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "40",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "41",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "http://localhost:3000"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Streaming.Sse.endpoint",
+          "isExactName": false
+        }
+      ],
+      "initializedBy": 1,
+      "decorators": [],
+      "crossLanguageDefinitionId": "Streaming.Sse",
+      "apiVersions": [],
+      "children": [
+        {
+          "$id": "42",
+          "kind": "client",
+          "name": "Unnamed",
+          "isExactName": false,
+          "namespace": "Streaming.Sse.Unnamed",
+          "methods": [
+            {
+              "$id": "43",
+              "kind": "basic",
+              "name": "receive",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "44",
+                "name": "receive",
+                "isExactName": false,
+                "resourceName": "Unnamed",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "45",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "1"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Streaming.Sse.Unnamed.receive.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "46",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "1"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Streaming.Sse.Unnamed.receive.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$id": "47",
+                      "kind": "streaming",
+                      "name": "SSEStreamUnnamedEvents",
+                      "valueType": {
+                        "$id": "48",
+                        "kind": "union",
+                        "name": "UnnamedEvents",
+                        "variantTypes": [
+                          {
+                            "$ref": "19"
+                          }
+                        ],
+                        "namespace": "Streaming.Sse.Unnamed",
+                        "decorators": [],
+                        "isExactName": false
+                      },
+                      "streamKind": "sse",
+                      "contentTypes": [
+                        "text/event-stream"
+                      ],
+                      "crossLanguageDefinitionId": "TypeSpec.SSE.SSEStream"
+                    },
+                    "headers": [
+                      {
+                        "name": "contentType",
+                        "nameInResponse": "content-type",
+                        "type": {
+                          "$ref": "3"
+                        }
+                      }
+                    ],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "text/event-stream"
+                    ],
+                    "serializationOptions": {}
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/streaming/sse/unnamed/receive",
+                "bufferResponse": false,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Streaming.Sse.Unnamed.receive",
+                "decorators": [],
+                "namespace": "Streaming.Sse.Unnamed"
+              },
+              "parameters": [
+                {
+                  "$ref": "46"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$id": "49",
+                  "kind": "streaming",
+                  "name": "SSEStreamUnnamedEvents",
+                  "valueType": {
+                    "$ref": "48"
+                  },
+                  "streamKind": "sse",
+                  "contentTypes": [
+                    "text/event-stream"
+                  ],
+                  "crossLanguageDefinitionId": "TypeSpec.SSE.SSEStream"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Streaming.Sse.Unnamed.receive"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "50",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "51",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "52",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "http://localhost:3000"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Streaming.Sse.Unnamed.endpoint",
+              "isExactName": false
+            }
+          ],
+          "initializedBy": 0,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Streaming.Sse.Unnamed",
+          "apiVersions": [],
+          "parent": {
+            "$ref": "38"
+          },
+          "isMultiServiceClient": false
+        },
+        {
+          "$id": "53",
+          "kind": "client",
+          "name": "Named",
+          "isExactName": false,
+          "namespace": "Streaming.Sse.Named",
+          "methods": [
+            {
+              "$id": "54",
+              "kind": "basic",
+              "name": "receive",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "55",
+                "name": "receive",
+                "isExactName": false,
+                "resourceName": "Named",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "56",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "5"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Streaming.Sse.Named.receive.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "57",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "5"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Streaming.Sse.Named.receive.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$id": "58",
+                      "kind": "streaming",
+                      "name": "SSEStreamResponseEvents",
+                      "valueType": {
+                        "$id": "59",
+                        "kind": "union",
+                        "name": "ResponseEvents",
+                        "variantTypes": [
+                          {
+                            "$ref": "22"
+                          },
+                          {
+                            "$ref": "25"
+                          },
+                          {
+                            "$ref": "7"
+                          }
+                        ],
+                        "namespace": "Streaming.Sse.Named",
+                        "decorators": [],
+                        "isExactName": false
+                      },
+                      "streamKind": "sse",
+                      "contentTypes": [
+                        "text/event-stream"
+                      ],
+                      "terminalEventValue": "[DONE]",
+                      "crossLanguageDefinitionId": "TypeSpec.SSE.SSEStream"
+                    },
+                    "headers": [
+                      {
+                        "name": "contentType",
+                        "nameInResponse": "content-type",
+                        "type": {
+                          "$ref": "9"
+                        }
+                      }
+                    ],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "text/event-stream"
+                    ],
+                    "serializationOptions": {}
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/streaming/sse/named/receive",
+                "bufferResponse": false,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Streaming.Sse.Named.receive",
+                "decorators": [],
+                "namespace": "Streaming.Sse.Named"
+              },
+              "parameters": [
+                {
+                  "$ref": "57"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$id": "60",
+                  "kind": "streaming",
+                  "name": "SSEStreamResponseEvents",
+                  "valueType": {
+                    "$ref": "59"
+                  },
+                  "streamKind": "sse",
+                  "contentTypes": [
+                    "text/event-stream"
+                  ],
+                  "terminalEventValue": "[DONE]",
+                  "crossLanguageDefinitionId": "TypeSpec.SSE.SSEStream"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Streaming.Sse.Named.receive"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "61",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "62",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "63",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "http://localhost:3000"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Streaming.Sse.Named.endpoint",
+              "isExactName": false
+            }
+          ],
+          "initializedBy": 0,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Streaming.Sse.Named",
+          "apiVersions": [],
+          "parent": {
+            "$ref": "38"
+          },
+          "isMultiServiceClient": false
+        },
+        {
+          "$id": "64",
+          "kind": "client",
+          "name": "Retrieve",
+          "isExactName": false,
+          "namespace": "Streaming.Sse.Retrieve",
+          "methods": [
+            {
+              "$id": "65",
+              "kind": "basic",
+              "name": "stream",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "66",
+                "name": "stream",
+                "isExactName": false,
+                "resourceName": "Retrieve",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "67",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "11"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Streaming.Sse.Retrieve.stream.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "68",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "11"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Streaming.Sse.Retrieve.stream.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "69",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "13"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Streaming.Sse.Retrieve.stream.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "70",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "13"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Streaming.Sse.Retrieve.stream.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "71",
+                    "kind": "body",
+                    "name": "request",
+                    "serializedName": "request",
+                    "type": {
+                      "$ref": "28"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Streaming.Sse.Retrieve.stream.request",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "72",
+                        "kind": "method",
+                        "name": "request",
+                        "serializedName": "request",
+                        "type": {
+                          "$ref": "28"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Streaming.Sse.Retrieve.stream.request",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "request"
+                      }
+                    }
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$id": "73",
+                      "kind": "streaming",
+                      "name": "SSEStreamRetrievalEvents",
+                      "valueType": {
+                        "$id": "74",
+                        "kind": "union",
+                        "name": "RetrievalEvents",
+                        "variantTypes": [
+                          {
+                            "$ref": "31"
+                          },
+                          {
+                            "$ref": "34"
+                          },
+                          {
+                            "$ref": "15"
+                          }
+                        ],
+                        "namespace": "Streaming.Sse.Retrieve",
+                        "decorators": [],
+                        "isExactName": false
+                      },
+                      "streamKind": "sse",
+                      "contentTypes": [
+                        "text/event-stream"
+                      ],
+                      "terminalEventValue": "[DONE]",
+                      "crossLanguageDefinitionId": "TypeSpec.SSE.SSEStream"
+                    },
+                    "headers": [
+                      {
+                        "name": "contentType",
+                        "nameInResponse": "content-type",
+                        "type": {
+                          "$ref": "17"
+                        }
+                      }
+                    ],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "text/event-stream"
+                    ],
+                    "serializationOptions": {}
+                  }
+                ],
+                "httpMethod": "POST",
+                "uri": "{endpoint}",
+                "path": "/streaming/sse/retrieve/stream",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": false,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Streaming.Sse.Retrieve.stream",
+                "decorators": [],
+                "namespace": "Streaming.Sse.Retrieve"
+              },
+              "parameters": [
+                {
+                  "$ref": "72"
+                },
+                {
+                  "$ref": "68"
+                },
+                {
+                  "$ref": "70"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$id": "75",
+                  "kind": "streaming",
+                  "name": "SSEStreamRetrievalEvents",
+                  "valueType": {
+                    "$ref": "74"
+                  },
+                  "streamKind": "sse",
+                  "contentTypes": [
+                    "text/event-stream"
+                  ],
+                  "terminalEventValue": "[DONE]",
+                  "crossLanguageDefinitionId": "TypeSpec.SSE.SSEStream"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Streaming.Sse.Retrieve.stream"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "76",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "77",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "78",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "http://localhost:3000"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Streaming.Sse.Retrieve.endpoint",
+              "isExactName": false
+            }
+          ],
+          "initializedBy": 0,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Streaming.Sse.Retrieve",
+          "apiVersions": [],
+          "parent": {
+            "$ref": "38"
+          },
+          "isMultiServiceClient": false
+        }
+      ],
+      "isMultiServiceClient": false
+    }
+  ]
+}
