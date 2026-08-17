@@ -7,10 +7,13 @@ overrides:
   - filename: '**/sdk/containerservice/Azure.ResourceManager.ContainerService/**/*.cs'
     words:
       - aksadvancednetworking
+      - distros
       - dranet
       - iloveyou
       - inodes
       - karpenter
+      - krustlet
+      - kubeconfig
       - kubeletidentity
       - millicores
       - numa
