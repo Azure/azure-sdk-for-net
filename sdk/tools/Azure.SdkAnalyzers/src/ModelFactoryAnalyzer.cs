@@ -18,6 +18,7 @@ namespace Azure.SdkAnalyzers
 
         private const string AzureNamespace = "Azure";
         private const string SystemClientModelNamespace = "System.ClientModel";
+        private const string SystemNetServerSentEventsNamespace = "System.Net.ServerSentEvents";
         private const string SystemNamespace = "System";
         private const string PageableTypeName = "Pageable";
         private const string AsyncPageableTypeName = "AsyncPageable";
@@ -28,6 +29,8 @@ namespace Azure.SdkAnalyzers
         private const string ClientResultTypeName = "ClientResult";
         private const string CollectionResultTypeName = "CollectionResult";
         private const string AsyncCollectionResultTypeName = "AsyncCollectionResult";
+        private const string AsyncStreamingClientResultTypeName = "AsyncStreamingClientResult";
+        private const string SseItemTypeName = "SseItem";
         private const string PageableOperationTypeName = "PageableOperation";
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = ImmutableArray.Create(
@@ -76,7 +79,10 @@ namespace Azure.SdkAnalyzers
                     continue;
                 }
 
-                if (!modelFactoryMethods.Contains(outputModel))
+                // An open generic factory method is recorded by its original definition, which a
+                // constructed output model only matches after the same normalization.
+                if (!modelFactoryMethods.Contains(outputModel) &&
+                    !modelFactoryMethods.Contains(outputModel.OriginalDefinition))
                 {
                     // Find a location to report the diagnostic - use the first location of the type
                     var location = outputModel.Locations.FirstOrDefault();
@@ -138,6 +144,16 @@ namespace Azure.SdkAnalyzers
                 {
                     // Add the return type of the factory method
                     modelFactoryMethods.Add(method.ReturnType);
+
+                    // A generic factory method's return type is constructed from the method's own
+                    // type parameters (Foo<TMethod>), a different symbol than the output model's
+                    // construction (Foo<Bar>); both normalize to the same original definition.
+                    // Non-generic methods keep only their exact (possibly closed) return type so a
+                    // factory for Foo<string> still fails to satisfy Foo<int>.
+                    if (method.IsGenericMethod)
+                    {
+                        modelFactoryMethods.Add(method.ReturnType.OriginalDefinition);
+                    }
                 }
             }
         }
@@ -152,7 +168,8 @@ namespace Azure.SdkAnalyzers
                 namedType.Name == TaskTypeName)
             {
                 unwrappedType = namedType.TypeArguments.FirstOrDefault();
-                if (unwrappedType == null) return null;
+                if (unwrappedType == null)
+                    return null;
             }
 
             ITypeSymbol modelType = null;
@@ -166,12 +183,23 @@ namespace Azure.SdkAnalyzers
                 IsOrImplements(unwrappedType, AsyncPageableTypeName, AzureNamespace) ||
                 IsOrImplements(unwrappedType, CollectionResultTypeName, SystemClientModelNamespace) ||
                 IsOrImplements(unwrappedType, AsyncCollectionResultTypeName, SystemClientModelNamespace) ||
+                IsOrImplements(unwrappedType, AsyncStreamingClientResultTypeName, SystemClientModelNamespace) ||
                 IsOrImplements(unwrappedType, PageableOperationTypeName, AzureNamespace))
             {
                 if (unwrappedType is INamedTypeSymbol genericType && genericType.IsGenericType)
                 {
                     modelType = genericType.TypeArguments.FirstOrDefault();
                 }
+            }
+
+            if (modelType is INamedTypeSymbol envelopeType &&
+                envelopeType.IsGenericType &&
+                IsOrImplements(
+                    envelopeType,
+                    SseItemTypeName,
+                    SystemNetServerSentEventsNamespace))
+            {
+                modelType = envelopeType.TypeArguments.FirstOrDefault();
             }
 
             // Only return user-defined types, not built-in types

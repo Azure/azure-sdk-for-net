@@ -20,6 +20,11 @@ public static class Azd
     private const string MainBicepName = "main";
     private const string ResourceGroupVersion = "2024-03-01";
 
+    /// <summary>
+    /// Generates Bicep infrastructure files and a main deployment template in the specified directory.
+    /// </summary>
+    /// <param name="infra">The project infrastructure to generate Bicep from.</param>
+    /// <param name="infraDirectory">The output directory for generated files. Defaults to <c>./infra</c>.</param>
     public static void Init(ProjectInfrastructure infra, string? infraDirectory = default)
     {
         if (infraDirectory == default)
@@ -61,6 +66,11 @@ public static class Azd
         WriteMainParametersFile(infraDirectory);
     }
 
+    /// <summary>
+    /// Generates the <c>azure.yaml</c> deployment descriptor for the Azure Developer CLI.
+    /// </summary>
+    /// <param name="infra">The project infrastructure to generate the deployment descriptor from.</param>
+    /// <param name="webProjectName">The name or path of the web project to deploy. If <see langword="null"/>, uses the current directory.</param>
     public static void InitDeployment(ProjectInfrastructure infra, string? webProjectName)
     {
         var webCsproj = webProjectName switch

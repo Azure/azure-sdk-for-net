@@ -27,7 +27,7 @@ namespace Azure.Messaging
         }
 
         /// <summary>
-        /// For inheriting types that have a string ContentType property, this property should be overriden to forward
+        /// For inheriting types that have a string ContentType property, this property should be overridden to forward
         /// the <see cref="ContentType"/> property into the inheriting type's string property, and vice versa.
         /// For types that have a <see cref="Azure.Core.ContentType"/> ContentType property, it is not necessary to override this member.
         /// </summary>
@@ -36,7 +36,7 @@ namespace Azure.Messaging
 
         /// <summary>
         /// Gets whether the message is read only or not. This
-        /// can be overriden by inheriting classes to specify whether or
+        /// can be overridden by inheriting classes to specify whether or
         /// not the message can be modified.
         /// </summary>
         public virtual bool IsReadOnly { get; }

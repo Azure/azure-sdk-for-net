@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> List of Unique Route Distinguisher addresses. </summary>
-        public IReadOnlyList<string> UniqueRds { get; }
+        public IReadOnlyList<string> UniqueRds { get; } = new ChangeTrackingList<string>();
     }
 }

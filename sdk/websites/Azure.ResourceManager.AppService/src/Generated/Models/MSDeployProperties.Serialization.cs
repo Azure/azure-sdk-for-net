@@ -14,7 +14,7 @@ using Azure.ResourceManager.AppService;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MSDeploy ARM PUT information properties. </summary>
-    public partial class MSDeployProperties : MSDeployCore, IJsonModel<MSDeployProperties>
+    internal partial class MSDeployProperties : MSDeployCore, IJsonModel<MSDeployProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

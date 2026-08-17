@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         }
 
         /// <summary> The disk configuration for the db volume. For HANA, Required volumes are: ['hana/data', 'hana/log', hana/shared', 'usr/sap', 'os'], Optional volume : ['backup']. </summary>
-        public IDictionary<string, DiskVolumeConfiguration> DiskVolumeConfigurations { get; }
+        public IDictionary<string, DiskVolumeConfiguration> DiskVolumeConfigurations { get; } = new ChangeTrackingDictionary<string, DiskVolumeConfiguration>();
     }
 }

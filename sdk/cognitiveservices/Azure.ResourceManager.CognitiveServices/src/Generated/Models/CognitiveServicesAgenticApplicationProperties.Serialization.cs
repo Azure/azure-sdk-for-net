@@ -160,8 +160,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             IList<CognitiveServicesAgentReferenceProperties> agents = default;
             CognitiveServicesAssignedIdentity agentIdentityBlueprint = default;
             CognitiveServicesAssignedIdentity defaultInstanceIdentity = default;
-            ApplicationAuthorizationPolicy authorizationPolicy = default;
-            ApplicationTrafficRoutingPolicy trafficRoutingPolicy = default;
+            CognitiveServicesApplicationAuthorizationPolicy authorizationPolicy = default;
+            CognitiveServicesApplicationTrafficRoutingPolicy trafficRoutingPolicy = default;
             CognitiveServicesAgenticApplicationProvisioningState? provisioningState = default;
             bool? isEnabled = default;
             foreach (var prop in element.EnumerateObject())
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         authorizationPolicy = null;
                         continue;
                     }
-                    authorizationPolicy = ApplicationAuthorizationPolicy.DeserializeApplicationAuthorizationPolicy(prop.Value, options);
+                    authorizationPolicy = CognitiveServicesApplicationAuthorizationPolicy.DeserializeCognitiveServicesApplicationAuthorizationPolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("trafficRoutingPolicy"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         trafficRoutingPolicy = null;
                         continue;
                     }
-                    trafficRoutingPolicy = ApplicationTrafficRoutingPolicy.DeserializeApplicationTrafficRoutingPolicy(prop.Value, options);
+                    trafficRoutingPolicy = CognitiveServicesApplicationTrafficRoutingPolicy.DeserializeCognitiveServicesApplicationTrafficRoutingPolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

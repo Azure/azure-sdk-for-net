@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
 
         private ClientDiagnostics WebPubSubResourcesClientDiagnostics => _webPubSubResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private WebPubSubResources WebPubSubResourcesRestClient => _webPubSubResourcesRestClient ??= new WebPubSubResources(WebPubSubResourcesClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
+        private WebPubSubResources WebPubSubResourcesRestClient => _webPubSubResourcesRestClient ??= new WebPubSubResources(WebPubSubResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
 
         private ClientDiagnostics WebPubSubOperationGroupClientDiagnostics => _webPubSubOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private WebPubSubOperationGroup WebPubSubOperationGroupRestClient => _webPubSubOperationGroupRestClient ??= new WebPubSubOperationGroup(WebPubSubOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
+        private WebPubSubOperationGroup WebPubSubOperationGroupRestClient => _webPubSubOperationGroupRestClient ??= new WebPubSubOperationGroup(WebPubSubOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
 
         private ClientDiagnostics UsagesOperationGroupClientDiagnostics => _usagesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private UsagesOperationGroup UsagesOperationGroupRestClient => _usagesOperationGroupRestClient ??= new UsagesOperationGroup(UsagesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
+        private UsagesOperationGroup UsagesOperationGroupRestClient => _usagesOperationGroupRestClient ??= new UsagesOperationGroup(UsagesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
 
         /// <summary>
         /// Handles requests to list all resources in a subscription.

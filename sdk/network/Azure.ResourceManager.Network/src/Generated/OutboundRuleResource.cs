@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string outboundRuleApiVersion);
             _loadBalancerOutboundRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _loadBalancerOutboundRulesRestClient = new LoadBalancerOutboundRules(_loadBalancerOutboundRulesClientDiagnostics, Pipeline, Endpoint, outboundRuleApiVersion ?? "2025-07-01");
+            _loadBalancerOutboundRulesRestClient = new LoadBalancerOutboundRules(_loadBalancerOutboundRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, outboundRuleApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

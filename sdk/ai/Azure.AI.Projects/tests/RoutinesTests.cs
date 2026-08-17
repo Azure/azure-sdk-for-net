@@ -4,10 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects.Agents;
+using Azure.AI.Projects.Memory;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Tests;
 #pragma warning disable AAIP001
@@ -22,7 +26,8 @@ public class RoutinesTests : ProjectsClientTestBase
     {
         Schedule,
         Timer,
-        ManualDispatch
+        ManualDispatch,
+        GitHubEvent,
     }
     public RoutinesTests(bool isAsync) : base(isAsync)
     {
@@ -91,15 +96,13 @@ public class RoutinesTests : ProjectsClientTestBase
         {
             AgentName = agentVersion.Name
         };
-        CustomRoutineTrigger trigger = new(
-            provider: "sample-provider",
-            parameters: new Dictionary<string, BinaryData>
+        CustomRoutineTrigger trigger = new CustomRoutineTrigger(provider: "teams", parameters: new Dictionary<string, BinaryData>()
             {
-                ["source"] = BinaryData.FromString("\"sample_routines_crud\"")
-            })
-        {
-            EventName = "sample-event"
-        };
+                { "connection_id", BinaryData.FromString(JsonSerializer.Serialize(TestEnvironment.TEAMS_CONNECTION_NAME)) },
+                { "thread_type", BinaryData.FromString(JsonSerializer.Serialize("channel")) },
+                { "group_id", BinaryData.FromString(JsonSerializer.Serialize(TestEnvironment.TEAMS_GROUP_ID))},
+                { "channel_id", BinaryData.FromString(JsonSerializer.Serialize(TestEnvironment.TEAMS_CHANNEL_ID))},
+            });
         for (int i=0; i< PAGE_SIZE + 1; i++)
         {
             ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine created by unit test.", enabled: false);
@@ -110,8 +113,8 @@ public class RoutinesTests : ProjectsClientTestBase
         }
         List<ProjectsRoutine> records = await projectClient.Routines.GetRoutinesAsync(limit: PAGE_SIZE, order: "asc").Where(x => x.Name.StartsWith(ROUTINE_NAME_PREFIX)).ToListAsync();
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
-        // Blocked by ADO work item 5337919.
-        // Go forward.
+        //// Blocked by ADO work item 5337919.
+        //// Go forward.
         //List<ProjectsRoutine> forward = await projectClient.Routines.GetRoutinesAsync(order: "asc", after: records[0].Name, limit: PAGE_SIZE).Where(x => x.Name.StartsWith(ROUTINE_NAME_PREFIX)).ToListAsync();
         //Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
         //Assert.That(forward[0].Name, Is.EqualTo(records[1].Name));
@@ -138,6 +141,7 @@ public class RoutinesTests : ProjectsClientTestBase
     [TestCase(TriggerType.Timer)]
     [TestCase(TriggerType.Schedule)]
     [TestCase(TriggerType.ManualDispatch)]
+    [TestCase(TriggerType.GitHubEvent)]
     [RecordedTest]
     public async Task TestRoutineE2E(TriggerType triggerType)
     {
@@ -171,7 +175,24 @@ public class RoutinesTests : ProjectsClientTestBase
         }
         else if (triggerType == TriggerType.ManualDispatch)
         {
-            trigger = new CustomRoutineTrigger(provider: "manual", parameters: new Dictionary<string, BinaryData>());
+            trigger = new CustomRoutineTrigger(provider: "teams", parameters: new Dictionary<string, BinaryData>()
+                {
+                    { "connection_id", BinaryData.FromString(JsonSerializer.Serialize(TestEnvironment.TEAMS_CONNECTION_NAME)) },
+                    { "thread_type", BinaryData.FromString(JsonSerializer.Serialize("channel")) },
+                    { "group_id", BinaryData.FromString(JsonSerializer.Serialize(TestEnvironment.TEAMS_GROUP_ID))},
+                    { "channel_id", BinaryData.FromString(JsonSerializer.Serialize(TestEnvironment.TEAMS_CHANNEL_ID))},
+                });
+        }
+        else if (triggerType == TriggerType.GitHubEvent)
+        {
+            // When re recording this test please create the issue on the GitHub
+            // and assign it to yourself.
+            trigger = new GitHubIssueRoutineTrigger(
+                connectionId: TestEnvironment.GITHUB_CONNECTION_NAME,
+                owner: TestEnvironment.GITHUB_USERNAME,
+                repository: TestEnvironment.GITHUB_REPOSITORY,
+                issueEvent: GitHubIssueEvent.Opened
+            );
         }
         else
         {
@@ -269,27 +290,98 @@ public class RoutinesTests : ProjectsClientTestBase
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
         // Blocked by the ADO item 5337751
         // Go forward.
-        //List<RoutineRun> forward = await projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name, order: "asc", after: records[0].Id, limit: PAGE_SIZE).ToListAsync();
+        //List<RoutineRun> forward = await projectClient.Routines.GetRoutineRunsAsync(name: created.Name, order: "asc", after: records[0].Id, limit: PAGE_SIZE).ToListAsync();
         //Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
         //Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         //Assert.That(forward[forward.Count - 1].Id, Is.EqualTo(records[records.Count - 1].Id));
         ////// Two limits:
         //// Pagination via before is not supported.
-        //forward = await projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name, order: "asc", after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE).ToListAsync();
+        //forward = await projectClient.Routines.GetRoutineRunsAsync(name: created.Name, order: "asc", after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE).ToListAsync();
         //Assert.That(forward.Count, Is.EqualTo(2));
         //Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         //Assert.That(forward[1].Id, Is.EqualTo(records[2].Id));
         //// Go backwards.
-        //List<RoutineRun> backwards = await projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name, order: "desc", after: records[3].Id, limit: PAGE_SIZE).ToListAsync();
+        //List<RoutineRun> backwards = await projectClient.Routines.GetRoutineRunsAsync(name: created.Name, order: "desc", after: records[3].Id, limit: PAGE_SIZE).ToListAsync();
         //Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
         //Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
         //Assert.That(backwards[backwards.Count - 1].Id, Is.EqualTo(records[0].Id));
         ////// Two limits.
         //// Pagination via before is not supported.
-        //backwards = await projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name, order: "desc", after: records[records.Count - 1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).ToListAsync();
+        //backwards = await projectClient.Routines.GetRoutineRunsAsync(name: created.Name, order: "desc", after: records[records.Count - 1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).ToListAsync();
         //Assert.That(backwards.Count, Is.EqualTo(2));
         //Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
         //Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
+    }
+
+    [RecordedTest]
+    public async Task TestRoutineToolboxes()
+    {
+        // To re-record this test please use the hosted agent, created in the sample Sample42_CodeAgentReminderTool.md from Azure.AI.Extensions.OpenAI package.
+        AIProjectClient projectClient = GetTestProjectClient();
+        ProjectsAgentRecord agentRecord = await projectClient.AgentAdministrationClient.GetAgentAsync("myCodeAgentReminderTool");
+        ProjectOpenAIClientOptions responsesOptions = CreateTestProjectOpenAIClientOptions(
+            apiVersion: "v1"
+        );
+        ProjectResponsesClient responseClient = CreateProxyFromClient(projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentRecord.Name, options: responsesOptions));
+
+        ResponseResult response = await responseClient.CreateResponseAsync("Please remind me to go to lunch after one minute.");
+        Console.WriteLine("Response items:");
+        bool functionCallMet = false, functionCallOutMet = false;
+        foreach (ResponseItem item in response.OutputItems)
+        {
+            if (item is FunctionCallOutputResponseItem)
+            {
+                functionCallOutMet = true;
+            }
+            else if (item is FunctionCallResponseItem)
+            {
+                functionCallMet = true;
+            }
+        }
+        Assert.That(functionCallMet, Is.True);
+        Assert.That(functionCallOutMet, Is.True);
+        Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
+        ProjectsRoutine created = null;
+        await foreach (ProjectsRoutine routine in projectClient.Routines.GetRoutinesAsync(order: MemoryStoreListOrder.Descending, limit: 1))
+        {
+            // The routine created no earlier than response and not later than one minute after response.
+            if (routine.CreatedAt >= response.CreatedAt && routine.CreatedAt < response.CreatedAt.AddMinutes(1))
+            {
+                created = routine;
+                break;
+            }
+            // If the latest routine was created before the response, our routine was not created.
+            else if (routine.CreatedAt < response.CreatedAt)
+            {
+                break;
+            }
+        }
+        Assert.That(created, Is.Not.Null);
+        int minutesWait = 10;
+        DateTime deadline = DateTime.UtcNow + TimeSpan.FromMinutes(minutesWait);
+        RoutineRun completedRun = null;
+        while (DateTime.UtcNow < deadline)
+        {
+            await Delay(60000);
+            await foreach (RoutineRun run in projectClient.Routines.GetRoutineRunsAsync(name: created.Name))
+            {
+                if (string.Equals(run.Status, "finished", StringComparison.InvariantCultureIgnoreCase) ||
+                    string.Equals(run.Status, "failed", StringComparison.InvariantCultureIgnoreCase) ||
+                    string.Equals(run.Status, "killed", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    completedRun = run;
+                }
+            }
+            if (completedRun is not null)
+            {
+                break;
+            }
+        }
+        Assert.That(completedRun, Is.Not.Null, $"The run did not complete within {minutesWait} minutes.");
+        Assert.That(completedRun.Status.ToLower(), Is.Not.EqualTo("killed"), "The run was forcefully stopped.");
+        Assert.That(completedRun.Status.ToLower(), Is.Not.EqualTo("failed"), $"The run has failed with the error. Type: {completedRun.ErrorType} Message: {completedRun.ErrorMessage}.");
+        Assert.That(completedRun.Status.ToLower(), Is.EqualTo("finished"));
+        Assert.That(completedRun.ResponseId, Is.Not.Null);
     }
 
     #region Helpers

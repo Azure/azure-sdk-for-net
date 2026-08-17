@@ -14,7 +14,7 @@ namespace Azure.Provisioning.CostManagement
 {
     /// <summary>
     /// Setting definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TagInheritanceSetting"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="TagInheritanceSetting"/>.
     /// </summary>
     public partial class CostManagementSetting : ProvisionableResource
     {
@@ -40,13 +40,18 @@ namespace Azure.Provisioning.CostManagement
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 

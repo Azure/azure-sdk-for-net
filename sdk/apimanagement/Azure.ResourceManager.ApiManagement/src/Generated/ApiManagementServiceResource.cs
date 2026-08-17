@@ -85,39 +85,39 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string apiManagementServiceApiVersion);
             _apiManagementServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _apiManagementServiceRestClient = new ApiManagementService(_apiManagementServiceClientDiagnostics, Pipeline, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
+            _apiManagementServiceRestClient = new ApiManagementService(_apiManagementServiceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
             _apiExportClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _apiExportRestClient = new ApiExport(_apiExportClientDiagnostics, Pipeline, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
+            _apiExportRestClient = new ApiExport(_apiExportClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
             _policyRestrictionValidationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _policyRestrictionValidationsRestClient = new PolicyRestrictionValidations(_policyRestrictionValidationsClientDiagnostics, Pipeline, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
+            _policyRestrictionValidationsRestClient = new PolicyRestrictionValidations(_policyRestrictionValidationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
             _apiManagementServiceSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _apiManagementServiceSkusRestClient = new ApiManagementServiceSkus(_apiManagementServiceSkusClientDiagnostics, Pipeline, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
+            _apiManagementServiceSkusRestClient = new ApiManagementServiceSkus(_apiManagementServiceSkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
             _reportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _reportsRestClient = new Reports(_reportsClientDiagnostics, Pipeline, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
+            _reportsRestClient = new Reports(_reportsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
             _networkStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _networkStatusRestClient = new NetworkStatus(_networkStatusClientDiagnostics, Pipeline, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
+            _networkStatusRestClient = new NetworkStatus(_networkStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
             _allPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _allPoliciesRestClient = new AllPolicies(_allPoliciesClientDiagnostics, Pipeline, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
+            _allPoliciesRestClient = new AllPolicies(_allPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
             _apiClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _apiRestClient = new Api(_apiClientDiagnostics, Pipeline, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
+            _apiRestClient = new Api(_apiClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
             _outboundNetworkDependenciesEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _outboundNetworkDependenciesEndpointsRestClient = new OutboundNetworkDependenciesEndpoints(_outboundNetworkDependenciesEndpointsClientDiagnostics, Pipeline, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
+            _outboundNetworkDependenciesEndpointsRestClient = new OutboundNetworkDependenciesEndpoints(_outboundNetworkDependenciesEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
             _apiManagementServiceResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _apiManagementServiceResourcesRestClient = new ApiManagementServiceResources(_apiManagementServiceResourcesClientDiagnostics, Pipeline, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
+            _apiManagementServiceResourcesRestClient = new ApiManagementServiceResources(_apiManagementServiceResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
             _policyDescriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _policyDescriptionRestClient = new PolicyDescription(_policyDescriptionClientDiagnostics, Pipeline, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
+            _policyDescriptionRestClient = new PolicyDescription(_policyDescriptionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
             _portalSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _portalSettingsRestClient = new PortalSettings(_portalSettingsClientDiagnostics, Pipeline, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
+            _portalSettingsRestClient = new PortalSettings(_portalSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
             _productClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _productRestClient = new Product(_productClientDiagnostics, Pipeline, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
+            _productRestClient = new Product(_productClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
             _quotaByCounterKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _quotaByCounterKeysRestClient = new QuotaByCounterKeys(_quotaByCounterKeysClientDiagnostics, Pipeline, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
+            _quotaByCounterKeysRestClient = new QuotaByCounterKeys(_quotaByCounterKeysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
             _quotaByPeriodKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _quotaByPeriodKeysRestClient = new QuotaByPeriodKeys(_quotaByPeriodKeysClientDiagnostics, Pipeline, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
+            _quotaByPeriodKeysRestClient = new QuotaByPeriodKeys(_quotaByPeriodKeysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
             _regionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _regionRestClient = new Region(_regionClientDiagnostics, Pipeline, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
+            _regionRestClient = new Region(_regionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
             _tagResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _tagResourceRestClient = new TagResource(_tagResourceClientDiagnostics, Pipeline, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
+            _tagResourceRestClient = new TagResource(_tagResourceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServiceApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -1115,12 +1115,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReportRecordContract> GetReportsByApiAsync(string filter, int? top = default, int? skip = default, string @orderby = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReportRecordContract> GetReportsByApiAsync(string filter, int? top = default, int? skip = default, string orderBy = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
@@ -1136,7 +1136,7 @@ namespace Azure.ResourceManager.ApiManagement
                 filter,
                 top,
                 skip,
-                @orderby,
+                orderBy,
                 context,
                 "ApiManagementServiceResource.GetReportsByApi");
         }
@@ -1165,12 +1165,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReportRecordContract> GetReportsByApi(string filter, int? top = default, int? skip = default, string @orderby = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReportRecordContract> GetReportsByApi(string filter, int? top = default, int? skip = default, string orderBy = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
@@ -1186,7 +1186,7 @@ namespace Azure.ResourceManager.ApiManagement
                 filter,
                 top,
                 skip,
-                @orderby,
+                orderBy,
                 context,
                 "ApiManagementServiceResource.GetReportsByApi");
         }
@@ -1417,12 +1417,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | select, filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReportRecordContract> GetReportsByOperationAsync(string filter, int? top = default, int? skip = default, string @orderby = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReportRecordContract> GetReportsByOperationAsync(string filter, int? top = default, int? skip = default, string orderBy = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
@@ -1438,7 +1438,7 @@ namespace Azure.ResourceManager.ApiManagement
                 filter,
                 top,
                 skip,
-                @orderby,
+                orderBy,
                 context,
                 "ApiManagementServiceResource.GetReportsByOperation");
         }
@@ -1467,12 +1467,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | select, filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReportRecordContract> GetReportsByOperation(string filter, int? top = default, int? skip = default, string @orderby = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReportRecordContract> GetReportsByOperation(string filter, int? top = default, int? skip = default, string orderBy = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
@@ -1488,7 +1488,7 @@ namespace Azure.ResourceManager.ApiManagement
                 filter,
                 top,
                 skip,
-                @orderby,
+                orderBy,
                 context,
                 "ApiManagementServiceResource.GetReportsByOperation");
         }
@@ -1517,12 +1517,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | select, filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReportRecordContract> GetReportsByProductAsync(string filter, int? top = default, int? skip = default, string @orderby = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReportRecordContract> GetReportsByProductAsync(string filter, int? top = default, int? skip = default, string orderBy = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
@@ -1538,7 +1538,7 @@ namespace Azure.ResourceManager.ApiManagement
                 filter,
                 top,
                 skip,
-                @orderby,
+                orderBy,
                 context,
                 "ApiManagementServiceResource.GetReportsByProduct");
         }
@@ -1567,12 +1567,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | filter | eq |     | &lt;/br&gt;| productId | select, filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReportRecordContract> GetReportsByProduct(string filter, int? top = default, int? skip = default, string @orderby = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReportRecordContract> GetReportsByProduct(string filter, int? top = default, int? skip = default, string orderBy = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
@@ -1588,7 +1588,7 @@ namespace Azure.ResourceManager.ApiManagement
                 filter,
                 top,
                 skip,
-                @orderby,
+                orderBy,
                 context,
                 "ApiManagementServiceResource.GetReportsByProduct");
         }
@@ -1789,12 +1789,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| productId | select, filter | eq |     | &lt;/br&gt;| subscriptionId | select, filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReportRecordContract> GetReportsBySubscriptionAsync(string filter, int? top = default, int? skip = default, string @orderby = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReportRecordContract> GetReportsBySubscriptionAsync(string filter, int? top = default, int? skip = default, string orderBy = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
@@ -1810,7 +1810,7 @@ namespace Azure.ResourceManager.ApiManagement
                 filter,
                 top,
                 skip,
-                @orderby,
+                orderBy,
                 context,
                 "ApiManagementServiceResource.GetReportsBySubscription");
         }
@@ -1839,12 +1839,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| productId | select, filter | eq |     | &lt;/br&gt;| subscriptionId | select, filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReportRecordContract> GetReportsBySubscription(string filter, int? top = default, int? skip = default, string @orderby = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReportRecordContract> GetReportsBySubscription(string filter, int? top = default, int? skip = default, string orderBy = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
@@ -1860,7 +1860,7 @@ namespace Azure.ResourceManager.ApiManagement
                 filter,
                 top,
                 skip,
-                @orderby,
+                orderBy,
                 context,
                 "ApiManagementServiceResource.GetReportsBySubscription");
         }
@@ -1982,12 +1982,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="interval"> By time interval. Interval must be multiple of 15 minutes and may not be zero. The value should be in ISO  8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations).This code can be used to convert TimeSpan to a valid interval string: XmlConvert.ToString(new TimeSpan(hours, minutes, seconds)). </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReportRecordContract> GetReportsByTimeAsync(string filter, TimeSpan interval, int? top = default, int? skip = default, string @orderby = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReportRecordContract> GetReportsByTimeAsync(string filter, TimeSpan interval, int? top = default, int? skip = default, string orderBy = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
@@ -2004,7 +2004,7 @@ namespace Azure.ResourceManager.ApiManagement
                 interval,
                 top,
                 skip,
-                @orderby,
+                orderBy,
                 context,
                 "ApiManagementServiceResource.GetReportsByTime");
         }
@@ -2034,12 +2034,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="interval"> By time interval. Interval must be multiple of 15 minutes and may not be zero. The value should be in ISO  8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations).This code can be used to convert TimeSpan to a valid interval string: XmlConvert.ToString(new TimeSpan(hours, minutes, seconds)). </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReportRecordContract> GetReportsByTime(string filter, TimeSpan interval, int? top = default, int? skip = default, string @orderby = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReportRecordContract> GetReportsByTime(string filter, TimeSpan interval, int? top = default, int? skip = default, string orderBy = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
@@ -2056,7 +2056,7 @@ namespace Azure.ResourceManager.ApiManagement
                 interval,
                 top,
                 skip,
-                @orderby,
+                orderBy,
                 context,
                 "ApiManagementServiceResource.GetReportsByTime");
         }
@@ -2085,12 +2085,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReportRecordContract> GetReportsByUserAsync(string filter, int? top = default, int? skip = default, string @orderby = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReportRecordContract> GetReportsByUserAsync(string filter, int? top = default, int? skip = default, string orderBy = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
@@ -2106,7 +2106,7 @@ namespace Azure.ResourceManager.ApiManagement
                 filter,
                 top,
                 skip,
-                @orderby,
+                orderBy,
                 context,
                 "ApiManagementServiceResource.GetReportsByUser");
         }
@@ -2135,12 +2135,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |   Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| timestamp | filter | ge, le |     | &lt;/br&gt;| displayName | select, orderBy |     |     | &lt;/br&gt;| userId | select, filter | eq |     | &lt;/br&gt;| apiRegion | filter | eq |     | &lt;/br&gt;| productId | filter | eq |     | &lt;/br&gt;| subscriptionId | filter | eq |     | &lt;/br&gt;| apiId | filter | eq |     | &lt;/br&gt;| operationId | filter | eq |     | &lt;/br&gt;| callCountSuccess | select, orderBy |     |     | &lt;/br&gt;| callCountBlocked | select, orderBy |     |     | &lt;/br&gt;| callCountFailed | select, orderBy |     |     | &lt;/br&gt;| callCountOther | select, orderBy |     |     | &lt;/br&gt;| callCountTotal | select, orderBy |     |     | &lt;/br&gt;| bandwidth | select, orderBy |     |     | &lt;/br&gt;| cacheHitsCount | select |     |     | &lt;/br&gt;| cacheMissCount | select |     |     | &lt;/br&gt;| apiTimeAvg | select, orderBy |     |     | &lt;/br&gt;| apiTimeMin | select |     |     | &lt;/br&gt;| apiTimeMax | select |     |     | &lt;/br&gt;| serviceTimeAvg | select |     |     | &lt;/br&gt;| serviceTimeMin | select |     |     | &lt;/br&gt;| serviceTimeMax | select |     |     | &lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReportRecordContract> GetReportsByUser(string filter, int? top = default, int? skip = default, string @orderby = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReportRecordContract> GetReportsByUser(string filter, int? top = default, int? skip = default, string orderBy = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
@@ -2156,7 +2156,7 @@ namespace Azure.ResourceManager.ApiManagement
                 filter,
                 top,
                 skip,
-                @orderby,
+                orderBy,
                 context,
                 "ApiManagementServiceResource.GetReportsByUser");
         }

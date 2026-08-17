@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.PlanetaryComputer
 {
-    internal partial class IngestionClientGetOperationsAsyncCollectionResultOfT : AsyncPageable<LongRunningOperation>
+    internal partial class IngestionClientGetOperationsAsyncCollectionResultOfT : AsyncPageable<PlanetaryComputerOperation>
     {
         private readonly IngestionClient _client;
         private readonly int? _maxCount;
@@ -47,7 +47,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of IngestionClientGetOperationsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<LongRunningOperation>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<PlanetaryComputerOperation>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -59,7 +59,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 OperationPagedResponse result = (OperationPagedResponse)response;
                 nextPage = result.NextLink;
-                yield return Page<LongRunningOperation>.FromValues((IReadOnlyList<LongRunningOperation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<PlanetaryComputerOperation>.FromValues((IReadOnlyList<PlanetaryComputerOperation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

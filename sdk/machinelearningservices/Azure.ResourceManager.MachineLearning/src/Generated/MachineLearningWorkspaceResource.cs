@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.MachineLearning
         {
             TryGetApiVersion(ResourceType, out string machineLearningWorkspaceApiVersion);
             _workspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Endpoint, machineLearningWorkspaceApiVersion ?? "2026-03-15-preview");
+            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningWorkspaceApiVersion ?? "2026-03-15-preview");
             _connectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _connectionRestClient = new Connection(_connectionClientDiagnostics, Pipeline, Endpoint, machineLearningWorkspaceApiVersion ?? "2026-03-15-preview");
+            _connectionRestClient = new Connection(_connectionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningWorkspaceApiVersion ?? "2026-03-15-preview");
             _endpointDeploymentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _endpointDeploymentRestClient = new EndpointDeployment(_endpointDeploymentClientDiagnostics, Pipeline, Endpoint, machineLearningWorkspaceApiVersion ?? "2026-03-15-preview");
+            _endpointDeploymentRestClient = new EndpointDeployment(_endpointDeploymentClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningWorkspaceApiVersion ?? "2026-03-15-preview");
             _workspaceFeaturesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _workspaceFeaturesRestClient = new WorkspaceFeatures(_workspaceFeaturesClientDiagnostics, Pipeline, Endpoint, machineLearningWorkspaceApiVersion ?? "2026-03-15-preview");
+            _workspaceFeaturesRestClient = new WorkspaceFeatures(_workspaceFeaturesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningWorkspaceApiVersion ?? "2026-03-15-preview");
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, machineLearningWorkspaceApiVersion ?? "2026-03-15-preview");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningWorkspaceApiVersion ?? "2026-03-15-preview");
             _managedNetworkProvisionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _managedNetworkProvisionsRestClient = new ManagedNetworkProvisions(_managedNetworkProvisionsClientDiagnostics, Pipeline, Endpoint, machineLearningWorkspaceApiVersion ?? "2026-03-15-preview");
+            _managedNetworkProvisionsRestClient = new ManagedNetworkProvisions(_managedNetworkProvisionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningWorkspaceApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 

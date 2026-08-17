@@ -4,11 +4,20 @@
 
 ### Features Added
 
+- Added distributed tracing support.
+
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed listing of Agent Optimization Jobs.
+- Fixed the `StopSession` and `StopSessionAsync` calls.
 
 ### Other Changes
+
+### Sample Updates
+- Added sample demonstrating disabling and enabling Hosted Agent.
+- Added samples for Agent optimization jobs.
+- Added sample for creating Agent version drafts.
 
 ## 2.1.0-beta.4 (2026-06-30)
 

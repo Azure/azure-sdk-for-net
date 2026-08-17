@@ -14,6 +14,6 @@ namespace Azure.Provisioning.Cdn
     {
         /// <summary> KeyVaultSigningKey. </summary>
         [DataMember(Name = "KeyVaultSigningKeyParameters")]
-        KeyVaultSigningKey
+        KeyVaultSigningKey = 0
     }
 }

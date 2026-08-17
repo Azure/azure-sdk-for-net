@@ -12,6 +12,10 @@
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <IncludeSystemClientModelSharedSourceForTracing>true</IncludeSystemClientModelSharedSourceForTracing>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Storage.Blobs" />
@@ -27,8 +31,5 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)Multipart\MultipartContent.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)Multipart\MultipartFormDataContent.cs" LinkBase="Shared" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Custom\EvaluationRules\" />
   </ItemGroup>
 </Project>

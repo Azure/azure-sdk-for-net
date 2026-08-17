@@ -200,13 +200,16 @@ namespace Azure.AI.Extensions.OpenAI
         public static Azure.AI.Extensions.OpenAI.AgentReference get_Agent(OpenAI.Responses.ResponseResult response) { throw null; }
         public static string get_AgentConversationId(OpenAI.Responses.CreateResponseOptions options) { throw null; }
         public static string get_AgentConversationId(OpenAI.Responses.ResponseResult response) { throw null; }
+        public static string get_SessionId(OpenAI.Responses.CreateResponseOptions options) { throw null; }
         public static void set_Agent(OpenAI.Responses.CreateResponseOptions options, Azure.AI.Extensions.OpenAI.AgentReference value) { }
         public static void set_AgentConversationId(OpenAI.Responses.CreateResponseOptions options, string value) { }
+        public static void set_SessionId(OpenAI.Responses.CreateResponseOptions options, string value) { }
         public sealed partial class <G>$9441C364D6D7BED1E759B10623E362FD
         {
             internal <G>$9441C364D6D7BED1E759B10623E362FD() { }
             public Azure.AI.Extensions.OpenAI.AgentReference Agent { get { throw null; } set { } }
             public string AgentConversationId { get { throw null; } set { } }
+            public string SessionId { get { throw null; } set { } }
             public static partial class <M>$CF4B939802E692FD9BEF27F36FABED87
             {
                 public static void <Extension>$(OpenAI.Responses.CreateResponseOptions options) { }

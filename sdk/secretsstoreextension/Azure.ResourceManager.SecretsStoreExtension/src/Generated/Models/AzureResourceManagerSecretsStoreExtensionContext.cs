@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SecretsStoreExtension.Models;
@@ -25,7 +24,6 @@ namespace Azure.ResourceManager.SecretsStoreExtension
     [ModelReaderWriterBuildable(typeof(KeyVaultSecretProviderClassProperties))]
     [ModelReaderWriterBuildable(typeof(KeyVaultSecretProviderClassResource))]
     [ModelReaderWriterBuildable(typeof(KubernetesSecretObjectMapping))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SecretSyncCondition))]
     [ModelReaderWriterBuildable(typeof(SecretSyncData))]
     [ModelReaderWriterBuildable(typeof(SecretSyncListResult))]

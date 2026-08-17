@@ -5,104 +5,105 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.ScVmm;
 
 namespace Azure.ResourceManager.ScVmm.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableScVmmSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _scVmmServerVmmServersClientDiagnostics;
-        private VmmServersRestOperations _scVmmServerVmmServersRestClient;
-        private ClientDiagnostics _scVmmCloudCloudsClientDiagnostics;
-        private CloudsRestOperations _scVmmCloudCloudsRestClient;
-        private ClientDiagnostics _scVmmVirtualNetworkVirtualNetworksClientDiagnostics;
-        private VirtualNetworksRestOperations _scVmmVirtualNetworkVirtualNetworksRestClient;
-        private ClientDiagnostics _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics;
-        private VirtualMachineTemplatesRestOperations _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient;
-        private ClientDiagnostics _scVmmAvailabilitySetAvailabilitySetsClientDiagnostics;
-        private AvailabilitySetsRestOperations _scVmmAvailabilitySetAvailabilitySetsRestClient;
+        private ClientDiagnostics _vmmServersClientDiagnostics;
+        private VmmServers _vmmServersRestClient;
+        private ClientDiagnostics _cloudsClientDiagnostics;
+        private Clouds _cloudsRestClient;
+        private ClientDiagnostics _virtualNetworksClientDiagnostics;
+        private VirtualNetworks _virtualNetworksRestClient;
+        private ClientDiagnostics _virtualMachineTemplatesClientDiagnostics;
+        private VirtualMachineTemplates _virtualMachineTemplatesRestClient;
+        private ClientDiagnostics _availabilitySetsClientDiagnostics;
+        private AvailabilitySets _availabilitySetsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableScVmmSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableScVmmSubscriptionResource for mocking. </summary>
         protected MockableScVmmSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableScVmmSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableScVmmSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableScVmmSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics ScVmmServerVmmServersClientDiagnostics => _scVmmServerVmmServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScVmm", ScVmmServerResource.ResourceType.Namespace, Diagnostics);
-        private VmmServersRestOperations ScVmmServerVmmServersRestClient => _scVmmServerVmmServersRestClient ??= new VmmServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ScVmmServerResource.ResourceType));
-        private ClientDiagnostics ScVmmCloudCloudsClientDiagnostics => _scVmmCloudCloudsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScVmm", ScVmmCloudResource.ResourceType.Namespace, Diagnostics);
-        private CloudsRestOperations ScVmmCloudCloudsRestClient => _scVmmCloudCloudsRestClient ??= new CloudsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ScVmmCloudResource.ResourceType));
-        private ClientDiagnostics ScVmmVirtualNetworkVirtualNetworksClientDiagnostics => _scVmmVirtualNetworkVirtualNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScVmm", ScVmmVirtualNetworkResource.ResourceType.Namespace, Diagnostics);
-        private VirtualNetworksRestOperations ScVmmVirtualNetworkVirtualNetworksRestClient => _scVmmVirtualNetworkVirtualNetworksRestClient ??= new VirtualNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ScVmmVirtualNetworkResource.ResourceType));
-        private ClientDiagnostics ScVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics => _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScVmm", ScVmmVirtualMachineTemplateResource.ResourceType.Namespace, Diagnostics);
-        private VirtualMachineTemplatesRestOperations ScVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient => _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient ??= new VirtualMachineTemplatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ScVmmVirtualMachineTemplateResource.ResourceType));
-        private ClientDiagnostics ScVmmAvailabilitySetAvailabilitySetsClientDiagnostics => _scVmmAvailabilitySetAvailabilitySetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScVmm", ScVmmAvailabilitySetResource.ResourceType.Namespace, Diagnostics);
-        private AvailabilitySetsRestOperations ScVmmAvailabilitySetAvailabilitySetsRestClient => _scVmmAvailabilitySetAvailabilitySetsRestClient ??= new AvailabilitySetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ScVmmAvailabilitySetResource.ResourceType));
+        private ClientDiagnostics VmmServersClientDiagnostics => _vmmServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScVmm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private VmmServers VmmServersRestClient => _vmmServersRestClient ??= new VmmServers(VmmServersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-13");
+
+        private ClientDiagnostics CloudsClientDiagnostics => _cloudsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScVmm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Clouds CloudsRestClient => _cloudsRestClient ??= new Clouds(CloudsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-13");
+
+        private ClientDiagnostics VirtualNetworksClientDiagnostics => _virtualNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScVmm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private VirtualNetworks VirtualNetworksRestClient => _virtualNetworksRestClient ??= new VirtualNetworks(VirtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-13");
+
+        private ClientDiagnostics VirtualMachineTemplatesClientDiagnostics => _virtualMachineTemplatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScVmm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private VirtualMachineTemplates VirtualMachineTemplatesRestClient => _virtualMachineTemplatesRestClient ??= new VirtualMachineTemplates(VirtualMachineTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-13");
+
+        private ClientDiagnostics AvailabilitySetsClientDiagnostics => _availabilitySetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScVmm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private AvailabilitySets AvailabilitySetsRestClient => _availabilitySetsRestClient ??= new AvailabilitySets(AvailabilitySetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-13");
 
         /// <summary>
         /// List of VmmServers in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/vmmServers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/vmmServers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VmmServers_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> VmmServers_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmServerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScVmmServerResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ScVmmServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScVmmServerResource> GetScVmmServersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmServerVmmServersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmServerVmmServersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmServerResource(Client, ScVmmServerData.DeserializeScVmmServerData(e)), ScVmmServerVmmServersClientDiagnostics, Pipeline, "MockableScVmmSubscriptionResource.GetScVmmServers", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ScVmmServerData, ScVmmServerResource>(new VmmServersGetBySubscriptionAsyncCollectionResultOfT(VmmServersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmServers"), data => new ScVmmServerResource(Client, data));
         }
 
         /// <summary>
         /// List of VmmServers in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/vmmServers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/vmmServers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VmmServers_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> VmmServers_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmServerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -110,59 +111,55 @@ namespace Azure.ResourceManager.ScVmm.Mocking
         /// <returns> A collection of <see cref="ScVmmServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScVmmServerResource> GetScVmmServers(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmServerVmmServersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmServerVmmServersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmServerResource(Client, ScVmmServerData.DeserializeScVmmServerData(e)), ScVmmServerVmmServersClientDiagnostics, Pipeline, "MockableScVmmSubscriptionResource.GetScVmmServers", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ScVmmServerData, ScVmmServerResource>(new VmmServersGetBySubscriptionCollectionResultOfT(VmmServersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmServers"), data => new ScVmmServerResource(Client, data));
         }
 
         /// <summary>
         /// List of Clouds in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/clouds</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/clouds. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clouds_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clouds_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmCloudResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScVmmCloudResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ScVmmCloudResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScVmmCloudResource> GetScVmmCloudsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmCloudCloudsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmCloudCloudsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmCloudResource(Client, ScVmmCloudData.DeserializeScVmmCloudData(e)), ScVmmCloudCloudsClientDiagnostics, Pipeline, "MockableScVmmSubscriptionResource.GetScVmmClouds", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ScVmmCloudData, ScVmmCloudResource>(new CloudsGetBySubscriptionAsyncCollectionResultOfT(CloudsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmClouds"), data => new ScVmmCloudResource(Client, data));
         }
 
         /// <summary>
         /// List of Clouds in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/clouds</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/clouds. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clouds_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clouds_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmCloudResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,59 +167,55 @@ namespace Azure.ResourceManager.ScVmm.Mocking
         /// <returns> A collection of <see cref="ScVmmCloudResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScVmmCloudResource> GetScVmmClouds(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmCloudCloudsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmCloudCloudsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmCloudResource(Client, ScVmmCloudData.DeserializeScVmmCloudData(e)), ScVmmCloudCloudsClientDiagnostics, Pipeline, "MockableScVmmSubscriptionResource.GetScVmmClouds", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ScVmmCloudData, ScVmmCloudResource>(new CloudsGetBySubscriptionCollectionResultOfT(CloudsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmClouds"), data => new ScVmmCloudResource(Client, data));
         }
 
         /// <summary>
         /// List of VirtualNetworks in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualNetworks</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualNetworks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualNetworks_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworks_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmVirtualNetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScVmmVirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ScVmmVirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScVmmVirtualNetworkResource> GetScVmmVirtualNetworksAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmVirtualNetworkVirtualNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmVirtualNetworkVirtualNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualNetworkResource(Client, ScVmmVirtualNetworkData.DeserializeScVmmVirtualNetworkData(e)), ScVmmVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, "MockableScVmmSubscriptionResource.GetScVmmVirtualNetworks", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ScVmmVirtualNetworkData, ScVmmVirtualNetworkResource>(new VirtualNetworksGetBySubscriptionAsyncCollectionResultOfT(VirtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmVirtualNetworks"), data => new ScVmmVirtualNetworkResource(Client, data));
         }
 
         /// <summary>
         /// List of VirtualNetworks in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualNetworks</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualNetworks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualNetworks_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworks_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmVirtualNetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -230,59 +223,55 @@ namespace Azure.ResourceManager.ScVmm.Mocking
         /// <returns> A collection of <see cref="ScVmmVirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScVmmVirtualNetworkResource> GetScVmmVirtualNetworks(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmVirtualNetworkVirtualNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmVirtualNetworkVirtualNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualNetworkResource(Client, ScVmmVirtualNetworkData.DeserializeScVmmVirtualNetworkData(e)), ScVmmVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, "MockableScVmmSubscriptionResource.GetScVmmVirtualNetworks", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ScVmmVirtualNetworkData, ScVmmVirtualNetworkResource>(new VirtualNetworksGetBySubscriptionCollectionResultOfT(VirtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmVirtualNetworks"), data => new ScVmmVirtualNetworkResource(Client, data));
         }
 
         /// <summary>
         /// List of VirtualMachineTemplates in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualMachineTemplates</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualMachineTemplates. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineTemplates_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineTemplates_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmVirtualMachineTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScVmmVirtualMachineTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ScVmmVirtualMachineTemplateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScVmmVirtualMachineTemplateResource> GetScVmmVirtualMachineTemplatesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualMachineTemplateResource(Client, ScVmmVirtualMachineTemplateData.DeserializeScVmmVirtualMachineTemplateData(e)), ScVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, "MockableScVmmSubscriptionResource.GetScVmmVirtualMachineTemplates", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ScVmmVirtualMachineTemplateData, ScVmmVirtualMachineTemplateResource>(new VirtualMachineTemplatesGetBySubscriptionAsyncCollectionResultOfT(VirtualMachineTemplatesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmVirtualMachineTemplates"), data => new ScVmmVirtualMachineTemplateResource(Client, data));
         }
 
         /// <summary>
         /// List of VirtualMachineTemplates in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualMachineTemplates</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualMachineTemplates. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineTemplates_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineTemplates_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmVirtualMachineTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,59 +279,55 @@ namespace Azure.ResourceManager.ScVmm.Mocking
         /// <returns> A collection of <see cref="ScVmmVirtualMachineTemplateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScVmmVirtualMachineTemplateResource> GetScVmmVirtualMachineTemplates(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualMachineTemplateResource(Client, ScVmmVirtualMachineTemplateData.DeserializeScVmmVirtualMachineTemplateData(e)), ScVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics, Pipeline, "MockableScVmmSubscriptionResource.GetScVmmVirtualMachineTemplates", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ScVmmVirtualMachineTemplateData, ScVmmVirtualMachineTemplateResource>(new VirtualMachineTemplatesGetBySubscriptionCollectionResultOfT(VirtualMachineTemplatesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmVirtualMachineTemplates"), data => new ScVmmVirtualMachineTemplateResource(Client, data));
         }
 
         /// <summary>
         /// List of AvailabilitySets in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/availabilitySets</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/availabilitySets. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvailabilitySets_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> AvailabilitySets_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmAvailabilitySetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScVmmAvailabilitySetResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ScVmmAvailabilitySetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScVmmAvailabilitySetResource> GetScVmmAvailabilitySetsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmAvailabilitySetAvailabilitySetsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmAvailabilitySetAvailabilitySetsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmAvailabilitySetResource(Client, ScVmmAvailabilitySetData.DeserializeScVmmAvailabilitySetData(e)), ScVmmAvailabilitySetAvailabilitySetsClientDiagnostics, Pipeline, "MockableScVmmSubscriptionResource.GetScVmmAvailabilitySets", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ScVmmAvailabilitySetData, ScVmmAvailabilitySetResource>(new AvailabilitySetsGetBySubscriptionAsyncCollectionResultOfT(AvailabilitySetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmAvailabilitySets"), data => new ScVmmAvailabilitySetResource(Client, data));
         }
 
         /// <summary>
         /// List of AvailabilitySets in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/availabilitySets</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/availabilitySets. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvailabilitySets_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> AvailabilitySets_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-07</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScVmmAvailabilitySetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-13. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -350,9 +335,11 @@ namespace Azure.ResourceManager.ScVmm.Mocking
         /// <returns> A collection of <see cref="ScVmmAvailabilitySetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScVmmAvailabilitySetResource> GetScVmmAvailabilitySets(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmAvailabilitySetAvailabilitySetsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmAvailabilitySetAvailabilitySetsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmAvailabilitySetResource(Client, ScVmmAvailabilitySetData.DeserializeScVmmAvailabilitySetData(e)), ScVmmAvailabilitySetAvailabilitySetsClientDiagnostics, Pipeline, "MockableScVmmSubscriptionResource.GetScVmmAvailabilitySets", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ScVmmAvailabilitySetData, ScVmmAvailabilitySetResource>(new AvailabilitySetsGetBySubscriptionCollectionResultOfT(AvailabilitySetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableScVmmSubscriptionResource.GetScVmmAvailabilitySets"), data => new ScVmmAvailabilitySetResource(Client, data));
         }
     }
 }

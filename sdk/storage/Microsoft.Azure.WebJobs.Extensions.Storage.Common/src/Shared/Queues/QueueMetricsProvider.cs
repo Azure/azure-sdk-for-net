@@ -24,7 +24,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         /// Instantiates a QueueMetricsProvider.
         /// </summary>
         /// <param name="functionId">The function id to make scale decisions for.</param>
-        /// <param name="queue">The QueueClient to use for metrics polling.</param>
+        /// <param name="queue">
+        /// The QueueClient to use for metrics polling. Its PeekMessages must not be subject to
+        /// decode filtering, otherwise an empty peek is ambiguous between "nothing is visible" and
+        /// "messages are present but undecodable" - two opposite scaling decisions. Use a
+        /// <see cref="QueueMessageEncoding.None"/> client, or one whose producer and consumer
+        /// always agree on the encoding.
+        /// </param>
         /// <param name="loggerFactory">Used to create an ILogger instance.</param>
         public QueueMetricsProvider(string functionId, QueueClient queue, ILoggerFactory loggerFactory)
         {
@@ -81,18 +87,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
                 if (queueLength > 0)
                 {
                     PeekedMessage message = (await _queue.PeekMessagesAsync(1).ConfigureAwait(false)).Value.FirstOrDefault();
-                    if (message != null && message.InsertedOn.HasValue)
+                    if (message == null)
+                    {
+                        // Nothing is visible even though ApproximateMessagesCount is non-zero: the messages
+                        // are scheduled with a visibility delay, are in-flight on another worker, or the count
+                        // is stale after a drain. None of those can be dequeued now, so allocating workers for
+                        // them cannot reduce the backlog. Undecodable messages cannot reach this branch given
+                        // the encoding requirement on the client - see the constructor remarks.
+                        queueLength = 0;
+                    }
+                    else if (message.InsertedOn.HasValue)
                     {
                         queueTime = DateTime.UtcNow.Subtract(message.InsertedOn.Value.DateTime);
                     }
-                    // If peek returns null (e.g. message encoding mismatch where
-                    // MessageDecodingFailed handler silently filters out un-decodable
-                    // messages), we preserve ApproximateMessagesCount as the queue length.
-                    // Trade-off: ApproximateMessagesCount may briefly be stale after
-                    // a queue is fully drained, causing a transient over-count for one
-                    // poll cycle (~10s). This is preferable to the previous behavior
-                    // which permanently reported QueueLength=0 when messages existed
-                    // but couldn't be peeked.
                 }
             }
             catch (RequestFailedException ex)

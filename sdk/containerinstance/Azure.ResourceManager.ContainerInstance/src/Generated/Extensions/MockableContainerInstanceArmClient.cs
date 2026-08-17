@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
 
         private ClientDiagnostics SubnetServiceAssociationLinkClientDiagnostics => _subnetServiceAssociationLinkClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SubnetServiceAssociationLink SubnetServiceAssociationLinkRestClient => _subnetServiceAssociationLinkRestClient ??= new SubnetServiceAssociationLink(SubnetServiceAssociationLinkClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private SubnetServiceAssociationLink SubnetServiceAssociationLinkRestClient => _subnetServiceAssociationLinkRestClient ??= new SubnetServiceAssociationLink(SubnetServiceAssociationLinkClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         /// <summary> Gets an object representing a <see cref="ContainerGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
