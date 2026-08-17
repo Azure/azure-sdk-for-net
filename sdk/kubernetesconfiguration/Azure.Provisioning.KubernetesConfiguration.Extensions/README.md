@@ -1,0 +1,48 @@
+# Azure Provisioning KubernetesConfiguration Extensions client library for .NET
+
+Azure.Provisioning.KubernetesConfiguration.Extensions simplifies declarative resource provisioning in .NET.
+
+## Getting started
+
+### Install the package
+
+Install the client library for .NET with [NuGet](https://www.nuget.org/):
+
+```dotnetcli
+dotnet add package Azure.Provisioning.KubernetesConfiguration.Extensions --prerelease
+```
+
+### Prerequisites
+
+> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
+
+## Key concepts
+
+This library allows you to specify Kubernetes configuration extension infrastructure in a declarative style using .NET. You can then use azd to deploy your infrastructure to Azure without writing or maintaining Bicep or ARM templates.
+
+## Examples
+
+### Create a Kubernetes cluster extension
+
+```C# Snippet:KubernetesConfigurationExtensionsBasic
+Infrastructure infra = new();
+
+KubernetesClusterExtension extension =
+    new(nameof(extension), KubernetesClusterExtension.ResourceVersions.V2025_03_01)
+    {
+        ExtensionType = "microsoft.flux",
+    };
+infra.Add(extension);
+```
+
+## Troubleshooting
+
+- File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
+- Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on Stack Overflow using Azure and .NET tags.
+
+## Contributing
+
+For details on contributing to this repository, see the [contributing guide][cg].
+
+<!-- LINKS -->
+[cg]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
