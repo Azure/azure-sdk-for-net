@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#if AZURE_SEARCH_PREVIEW
-
 using System;
 using System.Reflection;
 using Azure.Search.Documents.Models;
@@ -30,5 +28,3 @@ namespace Azure.Search.Documents.Tests.Models
         }
     }
 }
-
-#endif
