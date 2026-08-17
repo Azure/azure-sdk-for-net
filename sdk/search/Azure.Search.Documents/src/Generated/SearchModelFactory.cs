@@ -304,7 +304,7 @@ namespace Azure.Search.Documents.Models
                 threshold,
                 filterOverride,
                 perDocumentVectorLimit,
-                VectorQueryKind.ImageUrl,
+                VectorQueryKind.ImageUri,
                 additionalBinaryDataProperties: null,
                 url);
         }
