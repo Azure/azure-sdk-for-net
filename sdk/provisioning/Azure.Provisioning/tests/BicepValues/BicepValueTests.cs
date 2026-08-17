@@ -4,8 +4,10 @@
 using System;
 using System.Globalization;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using NUnit.Framework;
 
@@ -116,6 +118,160 @@ public class BicepValueTests
     }
 
     [Test]
+    public void ValidateBinaryDataJsonPrimitiveBicepValues()
+    {
+        TestHelpers.AssertExpression("'plain string'", new BicepValue<BinaryData>(BinaryData.FromString("\"plain string\"")));
+        TestHelpers.AssertExpression("'string with \\'single quote\\''", new BicepValue<BinaryData>(BinaryData.FromObjectAsJson("string with 'single quote'")));
+        TestHelpers.AssertExpression("'AQIDBA=='", new BicepValue<BinaryData>(BinaryData.FromString("\"AQIDBA==\"")));
+        TestHelpers.AssertExpression("true", new BicepValue<BinaryData>(BinaryData.FromString("true")));
+        TestHelpers.AssertExpression("false", new BicepValue<BinaryData>(BinaryData.FromString("false")));
+        TestHelpers.AssertExpression("null", new BicepValue<BinaryData>(BinaryData.FromString("null")));
+        TestHelpers.AssertExpression("42", new BicepValue<BinaryData>(BinaryData.FromString("42")));
+        TestHelpers.AssertExpression("-42", new BicepValue<BinaryData>(BinaryData.FromString("-42")));
+        TestHelpers.AssertExpression("2147483647", new BicepValue<BinaryData>(BinaryData.FromString("2147483647")));
+        TestHelpers.AssertExpression("json('2147483648')", new BicepValue<BinaryData>(BinaryData.FromString("2147483648")));
+        TestHelpers.AssertExpression("-2147483648", new BicepValue<BinaryData>(BinaryData.FromString("-2147483648")));
+        TestHelpers.AssertExpression("json('-2147483649')", new BicepValue<BinaryData>(BinaryData.FromString("-2147483649")));
+        TestHelpers.AssertExpression("json('3.14')", new BicepValue<BinaryData>(BinaryData.FromString("3.14")));
+        TestHelpers.AssertExpression("json('-3.14')", new BicepValue<BinaryData>(BinaryData.FromString("-3.14")));
+    }
+
+    [Test]
+    public void ValidateBinaryDataJsonArrayBicepValue()
+    {
+        TestHelpers.AssertExpression(
+            """
+            [
+              'alpha'
+              42
+              false
+              null
+              {
+                nested: 'value'
+              }
+              [
+                1
+                2
+              ]
+            ]
+            """,
+            new BicepValue<BinaryData>(BinaryData.FromString(
+                """
+                ["alpha",42,false,null,{"nested":"value"},[1,2]]
+                """)));
+    }
+
+    [Test]
+    public void ValidateBinaryDataJsonObjectBicepValue()
+    {
+        TestHelpers.AssertExpression(
+            """
+            {
+              accountName: 'mystorageaccount'
+              queueName: 'myqueue'
+              queueLength: 1
+              enabled: true
+              metadata: {
+                kind: 'queue'
+                empty: { }
+              }
+              values: [
+                'a'
+                'b'
+              ]
+              nothing: null
+            }
+            """,
+            new BicepValue<BinaryData>(BinaryData.FromObjectAsJson(new
+            {
+                accountName = "mystorageaccount",
+                queueName = "myqueue",
+                queueLength = 1,
+                enabled = true,
+                metadata = new
+                {
+                    kind = "queue",
+                    empty = new { }
+                },
+                values = new[] { "a", "b" },
+                nothing = (string?)null
+            })));
+    }
+
+    [Test]
+    public void ValidateBinaryDataJsonObjectWithQuotedPropertyNames()
+    {
+        TestHelpers.AssertExpression(
+            """
+            {
+              'hyphen-name': 'quoted property name'
+              'space name': 'also quoted'
+              normalName: 'not quoted'
+            }
+            """,
+            new BicepValue<BinaryData>(BinaryData.FromString(
+                """
+                {"hyphen-name":"quoted property name","space name":"also quoted","normalName":"not quoted"}
+                """)));
+    }
+
+    [Test]
+    public void ValidateBinaryDataJsonFromObjectAsJsonBicepValue()
+    {
+        BinaryData metadata = BinaryData.FromObjectAsJson(new
+        {
+            accountName = "mystorageaccount",
+            queueName = "myqueue",
+            queueLength = 1
+        });
+
+        TestHelpers.AssertExpression(
+            """
+            {
+              accountName: 'mystorageaccount'
+              queueName: 'myqueue'
+              queueLength: 1
+            }
+            """,
+            new BicepValue<BinaryData>(metadata));
+    }
+
+    [Test]
+    public void ValidateNonJsonBinaryDataThrowsJsonException()
+    {
+        Assert.Catch<JsonException>(() => new BicepValue<BinaryData>(BinaryData.FromString("plain string")).Compile());
+        Assert.Catch<JsonException>(() => new BicepValue<BinaryData>(BinaryData.FromString("AQIDBA==")).Compile());
+        Assert.Catch<JsonException>(() => new BicepValue<BinaryData>(BinaryData.FromBytes([1, 2, 3, 4])).Compile());
+    }
+
+    [Test]
+    public void ValidateBinaryDataJsonExceptionIncludesPosition()
+    {
+        JsonException? exception = Assert.Catch<JsonException>(
+            () => new BicepValue<BinaryData>(BinaryData.FromString("")).Compile());
+
+        Assert.That(exception!.Message, Does.Contain("LineNumber: 0"));
+        Assert.That(exception.Message, Does.Contain("BytePositionInLine: 0"));
+    }
+
+    [Test]
+    public void ValidateBinaryDataWithBase64FormatCompilesToBase64String()
+    {
+        BinaryDataResource resource = new("resource");
+        resource.Blob = BinaryData.FromString("\"not-json-anymore\"");
+        TestHelpers.AssertExpression("'Im5vdC1qc29uLWFueW1vcmUi'", resource.Blob);
+
+        resource.Blob = BinaryData.FromString("""{"name":"value"}""");
+        TestHelpers.AssertExpression("'eyJuYW1lIjoidmFsdWUifQ=='", resource.Blob);
+
+        resource.Blob = BinaryData.FromString("AQIDBA==");
+        TestHelpers.AssertExpression("'QVFJREJBPT0='", resource.Blob);
+
+        resource.Blob = BinaryData.FromBytes([1, 2, 3, 4]);
+        TestHelpers.AssertExpression("'AQIDBA=='", resource.Blob);
+    }
+
+    [Test]
     public async Task ValidateTimeSpanPropertyWithFormat()
     {
         await using Trycep test = new();
@@ -148,5 +304,27 @@ public class BicepValueTests
                   }
                 }
                 """);
+    }
+
+    private class BinaryDataResource : ProvisionableResource
+    {
+        private BicepValue<BinaryData>? _blob;
+
+        public BicepValue<BinaryData> Blob
+        {
+            get { Initialize(); return _blob!; }
+            set { Initialize(); _blob!.Assign(value); }
+        }
+
+        public BinaryDataResource(string bicepIdentifier)
+            : base(bicepIdentifier, "Test.Provider/binaryDataResources", "2024-01-01")
+        {
+        }
+
+        protected override void DefineProvisionableProperties()
+        {
+            base.DefineProvisionableProperties();
+            _blob = DefineProperty<BinaryData>("Blob", ["properties", "blob"], format: "base64");
+        }
     }
 }
