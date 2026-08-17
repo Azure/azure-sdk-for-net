@@ -16,6 +16,8 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - Fixed a bug where `EventHubBufferedProducerClient` could get stuck during `FlushAsync` or `CloseAsync` until `MaximumWaitTime` elapsed.
 
+- Fixed a bug where consumer retries waited for the maximum event wait time instead of the configured retry delay.
+
 ### Other Changes
 
 ## 5.12.2 (2025-06-12)
