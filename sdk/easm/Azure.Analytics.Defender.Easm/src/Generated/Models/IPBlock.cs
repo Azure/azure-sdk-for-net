@@ -10,19 +10,19 @@ using System.Collections.Generic;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    /// <summary> The IpBlock. </summary>
-    public partial class IpBlock
+    /// <summary> The IPBlock. </summary>
+    public partial class IPBlock
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IpBlock"/>. </summary>
-        internal IpBlock()
+        /// <summary> Initializes a new instance of <see cref="IPBlock"/>. </summary>
+        internal IPBlock()
         {
             Sources = new ChangeTrackingList<SourceDetails>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IpBlock"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPBlock"/>. </summary>
         /// <param name="ipBlockName"></param>
         /// <param name="sources"></param>
         /// <param name="firstSeen"></param>
@@ -30,9 +30,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="count"></param>
         /// <param name="recent"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IpBlock(string ipBlockName, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IPBlock(string ipBlockName, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpBlockName = ipBlockName;
+            IPBlockName = ipBlockName;
             Sources = sources;
             FirstSeen = firstSeen;
             LastSeen = lastSeen;
@@ -41,8 +41,8 @@ namespace Azure.Analytics.Defender.Easm
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the IpBlockName. </summary>
-        public string IpBlockName { get; }
+        /// <summary> Gets the IPBlockName. </summary>
+        public string IPBlockName { get; }
 
         /// <summary> Gets the Sources. </summary>
         public IList<SourceDetails> Sources { get; }
