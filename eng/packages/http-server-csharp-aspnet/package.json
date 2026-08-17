@@ -39,7 +39,7 @@
     "@typespec/http-client-csharp": "1.0.0-alpha.20260813.6"
   },
   "devDependencies": {
-    "@eslint/js": "^9.2.0",
+    "@eslint/js": "^10.0.1",
     "@types/node": "~22.12.0",
     "@typespec/compiler": "1.15.0",
     "@typespec/http": "1.15.0",
@@ -52,11 +52,11 @@
     "@vitest/coverage-v8": "^4.1.10",
     "@vitest/ui": "^4.1.10",
     "c8": "^10.1.2",
-    "eslint": "^8.57.0",
+    "eslint": "^10.8.1",
     "prettier": "~3.9.5",
     "rimraf": "~6.0.1",
     "typescript": "~7.0.2",
-    "typescript-eslint": "^7.8.0",
+    "typescript-eslint": "^8.67.0",
     "vitest": "^4.1.10"
   },
   "azure-sdk/emitter-package-json-pinning": [
