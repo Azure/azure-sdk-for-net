@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Batch
                 writer.WriteEndObject();
             }
             writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
+            SerializeLocation(writer, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -162,8 +162,8 @@ namespace Azure.ResourceManager.Batch
             SystemData systemData = default;
             BatchAccountProperties properties = default;
             ManagedServiceIdentity identity = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            AzureLocation? location = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
