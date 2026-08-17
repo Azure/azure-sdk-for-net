@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -278,6 +279,10 @@ namespace Azure.ResourceManager.Cdn
     [ModelReaderWriterBuildable(typeof(ProfileProperties))]
     [ModelReaderWriterBuildable(typeof(ProfilePropertiesUpdateParameters))]
     [ModelReaderWriterBuildable(typeof(ProfileResource))]
+    [ModelReaderWriterBuildable(typeof(ProfileResourceGetLogAnalyticsMetricsOptions))]
+    [ModelReaderWriterBuildable(typeof(ProfileResourceGetLogAnalyticsRankingsOptions))]
+    [ModelReaderWriterBuildable(typeof(ProfileResourceGetWafLogAnalyticsMetricsOptions))]
+    [ModelReaderWriterBuildable(typeof(ProfileResourceGetWafLogAnalyticsRankingsOptions))]
     [ModelReaderWriterBuildable(typeof(ProfileScrubbingRules))]
     [ModelReaderWriterBuildable(typeof(ProfileUpgradeContent))]
     [ModelReaderWriterBuildable(typeof(PurgeContent))]
@@ -301,6 +306,7 @@ namespace Azure.ResourceManager.Cdn
     [ModelReaderWriterBuildable(typeof(ResourcesResponseEndpointsPropertiesItemsItem))]
     [ModelReaderWriterBuildable(typeof(ResourceUsageListResult))]
     [ModelReaderWriterBuildable(typeof(ResponseBasedOriginErrorDetectionSettings))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RouteCacheCompressionSettings))]
     [ModelReaderWriterBuildable(typeof(RouteConfigurationOverrideActionProperties))]
     [ModelReaderWriterBuildable(typeof(RouteListResult))]

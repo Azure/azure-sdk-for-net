@@ -13,7 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ContainerService
 {
     /// <summary> Properties for the container service agent pool profile. </summary>
-    internal partial class ManagedClusterAgentPoolProfileProperties : ProvisionableConstruct
+    public partial class ManagedClusterAgentPoolProfileProperties : ProvisionableConstruct
     {
         private BicepValue<ETag> _eTag;
         private BicepValue<int> _count;

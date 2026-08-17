@@ -6,17 +6,14 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CostManagement
 {
     /// <summary> Target resources for cost allocation. </summary>
-    public partial class TargetCostAllocationEntity : ProvisionableConstruct
+    public partial class TargetCostAllocationEntity : CostAllocationEntity
     {
         private BicepList<CostAllocationProportion> _values;
         private BicepValue<CostAllocationPolicyType> _policyType;
-        private BicepValue<CostAllocationResourceType> _resourceType;
-        private BicepValue<string> _name;
 
         /// <summary> Creates a new TargetCostAllocationEntity. </summary>
         public TargetCostAllocationEntity()
@@ -53,44 +50,12 @@ namespace Azure.Provisioning.CostManagement
             }
         }
 
-        /// <summary> Gets or sets the ResourceType. </summary>
-        public BicepValue<CostAllocationResourceType> ResourceType
-        {
-            get
-            {
-                Initialize();
-                return _resourceType;
-            }
-            set
-            {
-                Initialize();
-                _resourceType.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Name. </summary>
-        public BicepValue<string> Name
-        {
-            get
-            {
-                Initialize();
-                return _name;
-            }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for TargetCostAllocationEntity. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _values = DefineListProperty<CostAllocationProportion>(nameof(Values), new string[] { "values" }, isRequired: true);
             _policyType = DefineProperty<CostAllocationPolicyType>(nameof(PolicyType), new string[] { "policyType" }, isRequired: true);
-            _resourceType = DefineProperty<CostAllocationResourceType>(nameof(ResourceType), new string[] { "resourceType" }, isRequired: true);
-            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

@@ -102,6 +102,31 @@ The SDK also caches the latest primary node URL from redirect responses and reus
 
 No additional configuration is required to enable this behavior.
 
+### Read failover and retry behavior
+
+The client discovers failover ledgers through the configured confidential ledger Identity Service. Failover is limited to the synchronous and asynchronous `GetLedgerEntry` and `GetCurrentLedgerEntry` methods. Writes, receipts, governance operations, transaction status, ranged queries, and all other `GET` operations remain on the primary ledger.
+
+Failover occurs for HTTP 408, 429, and 5xx responses and for retryable transport failures such as connection failures and network timeouts. The primary endpoint first consumes its normal `Retry.MaxRetries` budget. Each discovered failover endpoint then receives a fresh, independent retry budget. Caller-requested cancellation stops immediately and never triggers discovery or failover. If discovery is unavailable, metadata is malformed, or every failover fails, the original primary response or exception is surfaced.
+
+```C#
+var options = new ConfidentialLedgerClientOptions
+{
+    Failover = ConfidentialLedgerClientOptions.FailoverSelection.Ordered,
+    FailoverNetworkTimeout = TimeSpan.FromSeconds(30),
+};
+options.Retry.MaxRetries = 3;
+
+var ledgerClient = new ConfidentialLedgerClient(ledgerEndpoint, credential, options);
+```
+
+`Ordered` uses the Identity Service order. `Random` shuffles candidates independently for each request. `FailoverNetworkTimeout`, when set, replaces the network timeout for each failover endpoint attempt; it does not create an overall operation deadline. Use the request `CancellationToken` for an overall deadline.
+
+`GetLedgerEntry` automatically re-polls a successful response whose state is `Loading`. The configured `Retry.MaxRetries` bounds the additional loading polls and `Retry.Delay` controls their spacing.
+
+Collection pruning can remove the live value while retaining its history. Archived fallback is enabled by default, so `GetCurrentLedgerEntry` handles a collection-specific 404 by querying history and returning the latest retained entry, including tags, without additional caller logic or configuration. A missing collection still surfaces the original 404 when history contains no entry. Set `EnableArchivedCollectionFallback = false` only to restore the legacy 404 behavior for pruned collections.
+
+Each endpoint uses its own transport pipeline and the TLS identity certificate returned by the independently validated Identity Service is pinned specifically to that endpoint's ledger id. A certificate trusted for one ledger is not accepted for another ledger, including during concurrent failover. Custom transports remain in use; their TLS behavior remains the custom transport owner's responsibility. Do not disable `VerifyConnection` in production.
+
 #### Receipts
 
 State changes to the a confidential ledger are saved in a data structure called a Merkle tree. To cryptographically verify that writes were correctly saved, a Merkle proof, or receipt, can be retrieved for any transaction id.
