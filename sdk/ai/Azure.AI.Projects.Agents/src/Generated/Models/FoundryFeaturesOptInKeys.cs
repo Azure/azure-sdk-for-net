@@ -15,7 +15,7 @@ namespace Azure.AI.Projects.Agents
         private const string RedTeamsV1PreviewValue = "RedTeams=V1Preview";
         private const string InsightsV1PreviewValue = "Insights=V1Preview";
         private const string MemoryStoresV1PreviewValue = "MemoryStores=V1Preview";
-        private const string RoutinesV1PreviewValue = "Routines=V1Preview";
+        private const string RoutinesV2PreviewValue = "Routines=V2Preview";
         private const string SkillsV1PreviewValue = "Skills=V1Preview";
         private const string DataGenerationJobsV1PreviewValue = "DataGenerationJobs=V1Preview";
         private const string ModelsV1PreviewValue = "Models=V1Preview";
@@ -43,8 +43,8 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Gets the MemoryStoresV1Preview. </summary>
         public static FoundryFeaturesOptInKeys MemoryStoresV1Preview { get; } = new FoundryFeaturesOptInKeys(MemoryStoresV1PreviewValue);
 
-        /// <summary> Gets the RoutinesV1Preview. </summary>
-        public static FoundryFeaturesOptInKeys RoutinesV1Preview { get; } = new FoundryFeaturesOptInKeys(RoutinesV1PreviewValue);
+        /// <summary> Gets the RoutinesV2Preview. </summary>
+        public static FoundryFeaturesOptInKeys RoutinesV2Preview { get; } = new FoundryFeaturesOptInKeys(RoutinesV2PreviewValue);
 
         /// <summary> Gets the SkillsV1Preview. </summary>
         public static FoundryFeaturesOptInKeys SkillsV1Preview { get; } = new FoundryFeaturesOptInKeys(SkillsV1PreviewValue);
