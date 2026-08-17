@@ -386,7 +386,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 43
 | hybridaks | Azure.ResourceManager.HybridContainerService |
 | iot | Azure.ResourceManager.IotFirmwareDefense |
 | iotcentral | Azure.ResourceManager.IotCentral |
-| kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration |
 | labservices | Azure.ResourceManager.LabServices |
 | logic | Azure.ResourceManager.Logic |
 | machinelearningcompute | Azure.ResourceManager.MachineLearningCompute |
