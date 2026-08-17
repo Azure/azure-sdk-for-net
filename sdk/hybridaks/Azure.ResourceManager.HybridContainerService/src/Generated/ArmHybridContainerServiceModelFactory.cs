@@ -275,6 +275,24 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new HybridContainerServiceCredential(name, value, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="controlPlaneProfile"> The list of available kubernetes version upgrades for the control plane. </param>
+        /// <returns> A new <see cref="HybridContainerService.ProvisionedClusterUpgradeProfileData"/> instance for mocking. </returns>
+        public static ProvisionedClusterUpgradeProfileData ProvisionedClusterUpgradeProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HybridContainerServiceResourceProvisioningState? provisioningState = default, ProvisionedClusterPoolUpgradeProfile controlPlaneProfile = default)
+        {
+            return new ProvisionedClusterUpgradeProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && controlPlaneProfile is null ? default : new ProvisionedClusterUpgradeProfileProperties(provisioningState, controlPlaneProfile, default),
+                default);
+        }
+
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="osType"> The particular KubernetesVersion Image OS Type (Linux, Windows). </param>
         /// <param name="upgrades"> List of available kubernetes versions for upgrade. </param>
@@ -708,26 +726,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public static ProvisionedClusterStatus ProvisionedClusterStatus(IEnumerable<ProvisionedClusterAddonStatusProfile> controlPlaneStatus = default, HybridContainerServiceResourceProvisioningState? currentState = default, string errorMessage = default)
         {
             return new ProvisionedClusterStatus((controlPlaneStatus ?? new ChangeTrackingList<ProvisionedClusterAddonStatusProfile>()).ToList(), currentState, default, errorMessage, default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HybridContainerService.ProvisionedClusterUpgradeProfileData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="controlPlaneProfile"> The list of available kubernetes version upgrades for the control plane. </param>
-        /// <returns> A new <see cref="HybridContainerService.ProvisionedClusterUpgradeProfileData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ProvisionedClusterUpgradeProfileData ProvisionedClusterUpgradeProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HybridContainerServiceResourceProvisioningState? provisioningState = default, ProvisionedClusterPoolUpgradeProfile controlPlaneProfile = default)
-        {
-            return new ProvisionedClusterUpgradeProfileData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && controlPlaneProfile is null ? default : new ProvisionedClusterUpgradeProfileProperties(provisioningState, controlPlaneProfile, default),
-                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridContainerService.HybridContainerServiceAgentPoolData"/>. </summary>

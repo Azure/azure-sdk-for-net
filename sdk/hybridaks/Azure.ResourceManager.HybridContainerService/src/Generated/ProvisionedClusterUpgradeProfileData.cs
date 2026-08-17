@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HybridContainerService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterUpgradeProfileData"/>. </summary>
-        internal ProvisionedClusterUpgradeProfileData()
+        public ProvisionedClusterUpgradeProfileData()
         {
         }
 
@@ -37,12 +37,32 @@ namespace Azure.ResourceManager.HybridContainerService
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal ProvisionedClusterUpgradeProfileProperties Properties { get; set; }
+
         /// <summary> Provisioning state of the resource. </summary>
         public HybridContainerServiceResourceProvisioningState? ProvisioningState
         {
             get
             {
                 return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The list of available kubernetes version upgrades for the control plane. </summary>
+        public ProvisionedClusterPoolUpgradeProfile ControlPlaneProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ControlPlaneProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProvisionedClusterUpgradeProfileProperties();
+                }
+                Properties.ControlPlaneProfile = value;
             }
         }
     }

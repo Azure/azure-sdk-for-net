@@ -7,9 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
+    /// <summary> Control plane and agent pool upgrade profiles. </summary>
     internal partial class ProvisionedClusterUpgradeProfileProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -17,8 +19,11 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterUpgradeProfileProperties"/>. </summary>
         /// <param name="controlPlaneProfile"> The list of available kubernetes version upgrades for the control plane. </param>
-        internal ProvisionedClusterUpgradeProfileProperties(ProvisionedClusterPoolUpgradeProfile controlPlaneProfile)
+        /// <exception cref="ArgumentNullException"> <paramref name="controlPlaneProfile"/> is null. </exception>
+        public ProvisionedClusterUpgradeProfileProperties(ProvisionedClusterPoolUpgradeProfile controlPlaneProfile)
         {
+            Argument.AssertNotNull(controlPlaneProfile, nameof(controlPlaneProfile));
+
             ControlPlaneProfile = controlPlaneProfile;
         }
 
@@ -35,5 +40,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         /// <summary> Provisioning state of the resource. </summary>
         public HybridContainerServiceResourceProvisioningState? ProvisioningState { get; }
+
+        /// <summary> The list of available kubernetes version upgrades for the control plane. </summary>
+        public ProvisionedClusterPoolUpgradeProfile ControlPlaneProfile { get; set; }
     }
 }

@@ -13,6 +13,7 @@ using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
+    /// <summary> Control plane and agent pool upgrade profiles. </summary>
     internal partial class ProvisionedClusterUpgradeProfileProperties : IJsonModel<ProvisionedClusterUpgradeProfileProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterUpgradeProfileProperties"/> for deserialization. </summary>
