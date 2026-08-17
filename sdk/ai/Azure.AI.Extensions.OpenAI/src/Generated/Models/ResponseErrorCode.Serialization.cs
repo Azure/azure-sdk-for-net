@@ -18,7 +18,7 @@ namespace Azure.AI.Extensions.OpenAI
             ResponseErrorCode.InvalidImage => "invalid_image",
             ResponseErrorCode.InvalidImageFormat => "invalid_image_format",
             ResponseErrorCode.InvalidBase64Image => "invalid_base64_image",
-            ResponseErrorCode.InvalidImageUrl => "invalid_image_url",
+            ResponseErrorCode.InvalidImageUri => "invalid_image_url",
             ResponseErrorCode.ImageTooLarge => "image_too_large",
             ResponseErrorCode.ImageTooSmall => "image_too_small",
             ResponseErrorCode.ImageParseError => "image_parse_error",
@@ -65,7 +65,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "invalid_image_url"))
             {
-                return ResponseErrorCode.InvalidImageUrl;
+                return ResponseErrorCode.InvalidImageUri;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "image_too_large"))
             {
