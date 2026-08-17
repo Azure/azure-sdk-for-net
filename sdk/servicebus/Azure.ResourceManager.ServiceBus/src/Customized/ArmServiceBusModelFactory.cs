@@ -4,13 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    // Suppress the new string-dictionary overload because it would be ambiguous with the optional
-    // compatibility overload when called without arguments.
-    [CodeGenSuppress("ServiceBusCorrelationFilter", typeof(IDictionary<string, string>), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(bool?))]
     public static partial class ArmServiceBusModelFactory
     {
         // Preserve the previously shipped model-factory signature for source and binary compatibility.
@@ -24,10 +20,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="replyToSessionId"> Session identifier to reply to. </param>
         /// <param name="contentType"> Content type of the message. </param>
         /// <param name="requiresPreprocessing"> Value that indicates whether the rule action requires preprocessing. </param>
-        /// <returns> A new <see cref="ServiceBusCorrelationFilter"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.ResourceManager.ServiceBus.Models.ServiceBusCorrelationFilter"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This overload is obsolete and will be removed in a future release. Create a ServiceBusCorrelationFilter and populate Properties instead.")]
-        public static ServiceBusCorrelationFilter ServiceBusCorrelationFilter(IDictionary<string, object> applicationProperties = default, string correlationId = default, string messageId = default, string sendTo = default, string replyTo = default, string subject = default, string sessionId = default, string replyToSessionId = default, string contentType = default, bool? requiresPreprocessing = default)
+        public static ServiceBusCorrelationFilter ServiceBusCorrelationFilter(IDictionary<string, object> applicationProperties, string correlationId = default, string messageId = default, string sendTo = default, string replyTo = default, string subject = default, string sessionId = default, string replyToSessionId = default, string contentType = default, bool? requiresPreprocessing = default)
         {
             var result = new ServiceBusCorrelationFilter
             {
