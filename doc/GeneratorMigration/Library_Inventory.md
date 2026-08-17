@@ -16,10 +16,10 @@
 
 ## Summary
 
-- Total libraries: 447
-- Management Plane (MPG): 260
+- Total libraries: 448
+- Management Plane (MPG): 261
   - Autorest/Swagger: 43
-  - New Emitter (TypeSpec): 217
+  - New Emitter (TypeSpec): 218
   - Old TypeSpec: 0
 - Data Plane (DPG): 130
   - Autorest/Swagger: 30
@@ -137,7 +137,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 30
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 217 / 217 (100%)
+**Migration Status**: 218 / 218 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -179,6 +179,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | cloudhealth | Azure.ResourceManager.CloudHealth | ✅ |
 | cognitiveservices | Azure.ResourceManager.CognitiveServices | ✅ |
 | communication | Azure.ResourceManager.Communication | ✅ |
+| commvaultcontentstore | Azure.ResourceManager.CommvaultContentStore | ✅ |
 | compute | Azure.ResourceManager.Compute | ✅ |
 | compute | Azure.ResourceManager.Compute.BulkActions | ✅ |
 | computebulkactions | Azure.ResourceManager.ComputeBulkActions | ✅ |
