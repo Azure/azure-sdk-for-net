@@ -8,9 +8,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> A set of index resources used by the `azure_ai_search` tool. </summary>
     public partial class AzureAISearchToolResource : IJsonModel<AzureAISearchToolResource>
@@ -44,7 +44,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(AzureAISearchToolResource)} does not support writing '{options.Format}' format.");
             }
@@ -77,16 +77,6 @@ namespace Azure.AI.AgentServer.Responses.Models
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureAISearchToolResource)} does not support writing '{format}' format.");
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("indexes"u8);
             writer.WriteStartArray();
@@ -137,22 +127,10 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            string name = default;
-            string description = default;
             IList<AISearchIndexResource> indexes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("indexes"u8))
                 {
                     List<AISearchIndexResource> array = new List<AISearchIndexResource>();
@@ -168,7 +146,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureAISearchToolResource(name, description, indexes, additionalBinaryDataProperties);
+            return new AzureAISearchToolResource(indexes, additionalBinaryDataProperties);
         }
     }
 }

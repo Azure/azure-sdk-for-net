@@ -8,9 +8,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Reasoning. </summary>
     public partial class Reasoning : IJsonModel<Reasoning>
@@ -39,7 +39,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(Reasoning)} does not support writing '{options.Format}' format.");
             }
@@ -130,9 +130,9 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            CreateResponseReasoningEffort? effort = default;
-            CreateResponseReasoningSummary? summary = default;
-            CreateResponseReasoningGenerateSummary? generateSummary = default;
+            PromptAgentDefinitionReasoningEffort? effort = default;
+            PromptAgentDefinitionReasoningSummary? summary = default;
+            PromptAgentDefinitionReasoningGenerateSummary? generateSummary = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -143,7 +143,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                         effort = null;
                         continue;
                     }
-                    effort = prop.Value.GetString().ToCreateResponseReasoningEffort();
+                    effort = prop.Value.GetString().ToPromptAgentDefinitionReasoningEffort();
                     continue;
                 }
                 if (prop.NameEquals("summary"u8))
@@ -153,7 +153,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                         summary = null;
                         continue;
                     }
-                    summary = prop.Value.GetString().ToCreateResponseReasoningSummary();
+                    summary = prop.Value.GetString().ToPromptAgentDefinitionReasoningSummary();
                     continue;
                 }
                 if (prop.NameEquals("generate_summary"u8))
@@ -163,7 +163,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                         generateSummary = null;
                         continue;
                     }
-                    generateSummary = prop.Value.GetString().ToCreateResponseReasoningGenerateSummary();
+                    generateSummary = prop.Value.GetString().ToPromptAgentDefinitionReasoningGenerateSummary();
                     continue;
                 }
                 if (options.Format != "W")

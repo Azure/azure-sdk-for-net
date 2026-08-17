@@ -6,8 +6,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Local shell tool. </summary>
     public partial class LocalShellToolParam : Tool
@@ -15,23 +16,29 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="LocalShellToolParam"/>. </summary>
         public LocalShellToolParam() : base(ToolType.LocalShell)
         {
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LocalShellToolParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        internal LocalShellToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description) : base(@type, additionalBinaryDataProperties)
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        internal LocalShellToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
+            ToolConfigs = toolConfigs;
         }
 
-        /// <summary> Optional user-defined name for this tool or configuration. </summary>
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
         public string Name { get; set; }
 
-        /// <summary> Optional user-defined description for this tool or configuration. </summary>
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
         public string Description { get; set; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
     }
 }

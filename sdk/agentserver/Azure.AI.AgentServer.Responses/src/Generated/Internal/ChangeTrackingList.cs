@@ -9,7 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.AI.AgentServer.Responses
+namespace Azure.AI.Agents.Contracts.V2
 {
     internal partial class ChangeTrackingList<T> : IList<T>, IReadOnlyList<T>
     {

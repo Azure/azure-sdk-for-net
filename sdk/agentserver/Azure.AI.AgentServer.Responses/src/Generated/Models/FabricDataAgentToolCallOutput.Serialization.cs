@@ -8,9 +8,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> The output of a Fabric data agent tool call. </summary>
     public partial class FabricDataAgentToolCallOutput : OutputItem, IJsonModel<FabricDataAgentToolCallOutput>
@@ -44,7 +44,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(FabricDataAgentToolCallOutput)} does not support writing '{options.Format}' format.");
             }
@@ -95,8 +95,6 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToSerialString());
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -125,6 +123,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             OutputItemType @type = default;
+            string id = default;
             BinaryData createdBy = default;
             AgentReference agentReference = default;
             string responseId = default;
@@ -132,12 +131,16 @@ namespace Azure.AI.AgentServer.Responses.Models
             string callId = default;
             BinaryData output = default;
             ToolCallStatus status = default;
-            string id = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new OutputItemType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("created_by"u8))
@@ -182,11 +185,6 @@ namespace Azure.AI.AgentServer.Responses.Models
                     status = prop.Value.GetString().ToToolCallStatus();
                     continue;
                 }
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -194,14 +192,14 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             return new FabricDataAgentToolCallOutput(
                 @type,
+                id,
                 createdBy,
                 agentReference,
                 responseId,
                 additionalBinaryDataProperties,
                 callId,
                 output,
-                status,
-                id);
+                status);
         }
     }
 }

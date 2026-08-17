@@ -6,35 +6,34 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> ResponseQueuedEvent. </summary>
     public partial class ResponseQueuedEvent : ResponseStreamEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseQueuedEvent"/>. </summary>
-        /// <param name="sequenceNumber"></param>
         /// <param name="response"> The full response object that is queued. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="response"/> is null. </exception>
-        public ResponseQueuedEvent(long sequenceNumber, ResponseObject response) : base(ResponseStreamEventType.ResponseQueued, sequenceNumber)
+        /// <param name="sequenceNumber"> The sequence number for this event. </param>
+        internal ResponseQueuedEvent(ResponseObject response, long sequenceNumber) : base(ResponseStreamEventType.ResponseQueued, sequenceNumber)
         {
-            Argument.AssertNotNull(response, nameof(response));
-
             Response = response;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponseQueuedEvent"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="sequenceNumber"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="response"> The full response object that is queued. </param>
-        internal ResponseQueuedEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseObject response) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="sequenceNumber"> The sequence number for this event. </param>
+        internal ResponseQueuedEvent(ResponseStreamEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseObject response, long sequenceNumber) : base(@type, sequenceNumber, additionalBinaryDataProperties)
         {
             Response = response;
         }
 
         /// <summary> The full response object that is queued. </summary>
-        public ResponseObject Response { get; set; }
+        public ResponseObject Response { get; }
+
+        /// <summary> The sequence number for this event. </summary>
+        public override long SequenceNumber { get; }
     }
 }

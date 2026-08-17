@@ -6,24 +6,19 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> ResponseMCPCallArgumentsDeltaEvent. </summary>
     public partial class ResponseMCPCallArgumentsDeltaEvent : ResponseStreamEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseMCPCallArgumentsDeltaEvent"/>. </summary>
-        /// <param name="sequenceNumber"></param>
         /// <param name="outputIndex"> The index of the output item in the response's output array. </param>
         /// <param name="itemId"> The unique identifier of the MCP tool call item being processed. </param>
         /// <param name="delta"> A JSON string containing the partial update to the arguments for the MCP tool call. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> or <paramref name="delta"/> is null. </exception>
-        public ResponseMCPCallArgumentsDeltaEvent(long sequenceNumber, long outputIndex, string itemId, string delta) : base(ResponseStreamEventType.ResponseMcpCallArgumentsDelta, sequenceNumber)
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
+        internal ResponseMCPCallArgumentsDeltaEvent(long outputIndex, string itemId, string delta, long sequenceNumber) : base(ResponseStreamEventType.ResponseMcpCallArgumentsDelta, sequenceNumber)
         {
-            Argument.AssertNotNull(itemId, nameof(itemId));
-            Argument.AssertNotNull(delta, nameof(delta));
-
             OutputIndex = outputIndex;
             ItemId = itemId;
             Delta = delta;
@@ -31,12 +26,12 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ResponseMCPCallArgumentsDeltaEvent"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="sequenceNumber"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="outputIndex"> The index of the output item in the response's output array. </param>
         /// <param name="itemId"> The unique identifier of the MCP tool call item being processed. </param>
         /// <param name="delta"> A JSON string containing the partial update to the arguments for the MCP tool call. </param>
-        internal ResponseMCPCallArgumentsDeltaEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, long outputIndex, string itemId, string delta) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
+        internal ResponseMCPCallArgumentsDeltaEvent(ResponseStreamEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long outputIndex, string itemId, string delta, long sequenceNumber) : base(@type, sequenceNumber, additionalBinaryDataProperties)
         {
             OutputIndex = outputIndex;
             ItemId = itemId;
@@ -44,12 +39,15 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The index of the output item in the response's output array. </summary>
-        public long OutputIndex { get; set; }
+        public long OutputIndex { get; }
 
         /// <summary> The unique identifier of the MCP tool call item being processed. </summary>
-        public string ItemId { get; set; }
+        public string ItemId { get; }
 
         /// <summary> A JSON string containing the partial update to the arguments for the MCP tool call. </summary>
-        public string Delta { get; set; }
+        public string Delta { get; }
+
+        /// <summary> The sequence number of this event. </summary>
+        public override long SequenceNumber { get; }
     }
 }

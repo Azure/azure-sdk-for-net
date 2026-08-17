@@ -8,9 +8,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Search configuration for Bing Grounding. </summary>
     public partial class BingGroundingSearchConfiguration : IJsonModel<BingGroundingSearchConfiguration>
@@ -44,7 +44,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(BingGroundingSearchConfiguration)} does not support writing '{options.Format}' format.");
             }
@@ -77,16 +77,6 @@ namespace Azure.AI.AgentServer.Responses.Models
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BingGroundingSearchConfiguration)} does not support writing '{format}' format.");
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("project_connection_id"u8);
             writer.WriteStringValue(ProjectConnectionId);
@@ -152,8 +142,6 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            string name = default;
-            string description = default;
             string projectConnectionId = default;
             string market = default;
             string setLang = default;
@@ -162,16 +150,6 @@ namespace Azure.AI.AgentServer.Responses.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("project_connection_id"u8))
                 {
                     projectConnectionId = prop.Value.GetString();
@@ -207,8 +185,6 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
             }
             return new BingGroundingSearchConfiguration(
-                name,
-                description,
                 projectConnectionId,
                 market,
                 setLang,

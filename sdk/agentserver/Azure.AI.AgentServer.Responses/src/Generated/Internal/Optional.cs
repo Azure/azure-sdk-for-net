@@ -4,12 +4,28 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.AI.AgentServer.Responses
+namespace Azure.AI.Agents.Contracts.V2
 {
     internal static partial class Optional
     {
+        public static bool IsCollectionDefined<T>(IEnumerable<T> collection)
+        {
+            return !(collection is ChangeTrackingList<T> changeTrackingList && changeTrackingList.IsUndefined);
+        }
+
+        public static bool IsCollectionDefined<TKey, TValue>(IDictionary<TKey, TValue> collection)
+        {
+            return !(collection is ChangeTrackingDictionary<TKey, TValue> changeTrackingDictionary && changeTrackingDictionary.IsUndefined);
+        }
+
+        public static bool IsCollectionDefined<TKey, TValue>(IReadOnlyDictionary<TKey, TValue> collection)
+        {
+            return !(collection is ChangeTrackingDictionary<TKey, TValue> changeTrackingDictionary && changeTrackingDictionary.IsUndefined);
+        }
+
         public static bool IsDefined<T>(T? value)
             where T : struct
         {

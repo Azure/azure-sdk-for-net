@@ -6,9 +6,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Realtime MCP tool execution error. </summary>
     public partial class RealtimeMCPToolExecutionError : RealtimeMCPError

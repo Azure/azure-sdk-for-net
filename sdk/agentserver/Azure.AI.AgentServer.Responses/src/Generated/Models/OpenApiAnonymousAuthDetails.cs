@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Security details for OpenApi anonymous authentication. </summary>
     public partial class OpenApiAnonymousAuthDetails : OpenApiAuthDetails

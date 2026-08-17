@@ -8,12 +8,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
-    /// <summary> ResponseCustomToolCallOutputItem. </summary>
-    public partial class OutputItemCustomToolCallOutput : OutputItem, IJsonModel<OutputItemCustomToolCallOutput>
+    /// <summary> Custom tool call output. </summary>
+    public partial class OutputItemCustomToolCallOutput : Item, IJsonModel<OutputItemCustomToolCallOutput>
     {
         /// <summary> Initializes a new instance of <see cref="OutputItemCustomToolCallOutput"/> for deserialization. </summary>
         internal OutputItemCustomToolCallOutput()
@@ -22,7 +22,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OutputItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override Item PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OutputItemCustomToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -44,7 +44,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(OutputItemCustomToolCallOutput)} does not support writing '{options.Format}' format.");
             }
@@ -95,13 +95,6 @@ namespace Azure.AI.AgentServer.Responses.Models
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
 #endif
-            writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToSerialString());
-            if (Optional.IsDefined(CreatedBy))
-            {
-                writer.WritePropertyName("created_by"u8);
-                writer.WriteRawValue(CreatedBy);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -110,7 +103,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OutputItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override Item JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OutputItemCustomToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -129,34 +122,16 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            OutputItemType @type = default;
-            AgentReference agentReference = default;
-            string responseId = default;
+            ItemType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string callId = default;
             BinaryData output = default;
-            FunctionCallOutputStatusEnum status = default;
-            BinaryData createdBy = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new OutputItemType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("agent_reference"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("response_id"u8))
-                {
-                    responseId = prop.Value.GetString();
+                    @type = new ItemType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("id"u8))
@@ -174,31 +149,12 @@ namespace Azure.AI.AgentServer.Responses.Models
                     output = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (prop.NameEquals("status"u8))
-                {
-                    status = prop.Value.GetString().ToFunctionCallOutputStatusEnum();
-                    continue;
-                }
-                if (prop.NameEquals("created_by"u8))
-                {
-                    createdBy = BinaryData.FromString(prop.Value.GetRawText());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OutputItemCustomToolCallOutput(
-                @type,
-                agentReference,
-                responseId,
-                additionalBinaryDataProperties,
-                id,
-                callId,
-                output,
-                status,
-                createdBy);
+            return new OutputItemCustomToolCallOutput(@type, additionalBinaryDataProperties, id, callId, output);
         }
     }
 }

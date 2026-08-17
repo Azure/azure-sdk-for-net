@@ -7,9 +7,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> File search tool call. </summary>
     public partial class OutputItemFileSearchToolCall : OutputItem
@@ -21,13 +21,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         ///   `searching`, `incomplete` or `failed`,
         /// </param>
         /// <param name="queries"> The queries used to search for files. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="queries"/> is null. </exception>
-        public OutputItemFileSearchToolCall(string id, ItemFileSearchToolCallStatus status, IEnumerable<string> queries) : base(OutputItemType.FileSearchCall)
+        internal OutputItemFileSearchToolCall(string id, ItemFileSearchToolCallStatus status, IEnumerable<string> queries) : base(OutputItemType.FileSearchCall)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(queries, nameof(queries));
-
-            Id = id;
+            _id = id;
             Status = status;
             Queries = queries.ToList();
             Results = new ChangeTrackingList<FileSearchToolCallResults>();
@@ -46,27 +42,26 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </param>
         /// <param name="queries"> The queries used to search for files. </param>
         /// <param name="results"></param>
-        internal OutputItemFileSearchToolCall(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, ItemFileSearchToolCallStatus status, IList<string> queries, IList<FileSearchToolCallResults> results) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
+        internal OutputItemFileSearchToolCall(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, ItemFileSearchToolCallStatus status, IList<string> queries, IList<FileSearchToolCallResults> results) : base(@type, id, createdBy, agentReference, responseId, additionalBinaryDataProperties)
         {
-            Id = id;
             Status = status;
             Queries = queries;
             Results = results;
         }
 
         /// <summary> The unique ID of the file search tool call. </summary>
-        public string Id { get; set; }
+        public new string Id => _id ?? default;
 
         /// <summary>
         /// The status of the file search tool call. One of `in_progress`,
         ///   `searching`, `incomplete` or `failed`,
         /// </summary>
-        public ItemFileSearchToolCallStatus Status { get; set; }
+        public ItemFileSearchToolCallStatus Status { get; }
 
         /// <summary> The queries used to search for files. </summary>
         public IList<string> Queries { get; }
 
-        /// <summary> Gets or sets the Results. </summary>
-        public IList<FileSearchToolCallResults> Results { get; set; }
+        /// <summary> Gets the Results. </summary>
+        public IList<FileSearchToolCallResults> Results { get; }
     }
 }

@@ -6,9 +6,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary>
     /// A logprob is the logarithmic probability that the model assigns to producing
@@ -23,11 +23,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="ResponseLogProb"/>. </summary>
         /// <param name="token"> A possible text token. </param>
         /// <param name="logprob"> The log probability of this token. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="token"/> is null. </exception>
-        public ResponseLogProb(string token, double logprob)
+        internal ResponseLogProb(string token, double logprob)
         {
-            Argument.AssertNotNull(token, nameof(token));
-
             Token = token;
             Logprob = logprob;
             TopLogprobs = new ChangeTrackingList<ResponseLogProbTopLogprobs>();
@@ -47,10 +44,10 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> A possible text token. </summary>
-        public string Token { get; set; }
+        public string Token { get; }
 
         /// <summary> The log probability of this token. </summary>
-        public double Logprob { get; set; }
+        public double Logprob { get; }
 
         /// <summary> The log probability of the top 20 most likely tokens. </summary>
         public IList<ResponseLogProbTopLogprobs> TopLogprobs { get; }

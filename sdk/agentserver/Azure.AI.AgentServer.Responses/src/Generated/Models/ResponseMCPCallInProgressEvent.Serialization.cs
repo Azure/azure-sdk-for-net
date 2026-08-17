@@ -9,9 +9,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> ResponseMCPCallInProgressEvent. </summary>
     public partial class ResponseMCPCallInProgressEvent : ResponseStreamEvent, IJsonModel<ResponseMCPCallInProgressEvent>
@@ -45,7 +45,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResponseMCPCallInProgressEvent)} does not support writing '{options.Format}' format.");
             }
@@ -88,6 +88,8 @@ namespace Azure.AI.AgentServer.Responses.Models
                 throw new FormatException($"The model {nameof(ResponseMCPCallInProgressEvent)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("sequence_number"u8);
+            writer.WriteNumberValue(SequenceNumber);
             writer.WritePropertyName("output_index"u8);
             writer.WriteNumberValue(OutputIndex);
             writer.WritePropertyName("item_id"u8);
@@ -120,8 +122,8 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             ResponseStreamEventType @type = default;
-            long sequenceNumber = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            long sequenceNumber = default;
             long outputIndex = default;
             string itemId = default;
             foreach (var prop in element.EnumerateObject())
@@ -151,7 +153,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponseMCPCallInProgressEvent(@type, sequenceNumber, additionalBinaryDataProperties, outputIndex, itemId);
+            return new ResponseMCPCallInProgressEvent(@type, additionalBinaryDataProperties, sequenceNumber, outputIndex, itemId);
         }
     }
 }

@@ -6,25 +6,20 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Emitted when a new reasoning summary part is added. </summary>
     public partial class ResponseReasoningSummaryPartAddedEvent : ResponseStreamEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseReasoningSummaryPartAddedEvent"/>. </summary>
-        /// <param name="sequenceNumber"></param>
         /// <param name="itemId"> The ID of the item this summary part is associated with. </param>
         /// <param name="outputIndex"> The index of the output item this summary part is associated with. </param>
         /// <param name="summaryIndex"> The index of the summary part within the reasoning summary. </param>
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
         /// <param name="part"> The summary part that was added. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> or <paramref name="part"/> is null. </exception>
-        public ResponseReasoningSummaryPartAddedEvent(long sequenceNumber, string itemId, long outputIndex, long summaryIndex, ResponseReasoningSummaryPartAddedEventPart part) : base(ResponseStreamEventType.ResponseReasoningSummaryPartAdded, sequenceNumber)
+        internal ResponseReasoningSummaryPartAddedEvent(string itemId, long outputIndex, long summaryIndex, long sequenceNumber, ResponseReasoningSummaryPartAddedEventPart part) : base(ResponseStreamEventType.ResponseReasoningSummaryPartAdded, sequenceNumber)
         {
-            Argument.AssertNotNull(itemId, nameof(itemId));
-            Argument.AssertNotNull(part, nameof(part));
-
             ItemId = itemId;
             OutputIndex = outputIndex;
             SummaryIndex = summaryIndex;
@@ -33,13 +28,13 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ResponseReasoningSummaryPartAddedEvent"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="sequenceNumber"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The ID of the item this summary part is associated with. </param>
         /// <param name="outputIndex"> The index of the output item this summary part is associated with. </param>
         /// <param name="summaryIndex"> The index of the summary part within the reasoning summary. </param>
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
         /// <param name="part"> The summary part that was added. </param>
-        internal ResponseReasoningSummaryPartAddedEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, long outputIndex, long summaryIndex, ResponseReasoningSummaryPartAddedEventPart part) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        internal ResponseReasoningSummaryPartAddedEvent(ResponseStreamEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, long outputIndex, long summaryIndex, long sequenceNumber, ResponseReasoningSummaryPartAddedEventPart part) : base(@type, sequenceNumber, additionalBinaryDataProperties)
         {
             ItemId = itemId;
             OutputIndex = outputIndex;
@@ -48,15 +43,18 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The ID of the item this summary part is associated with. </summary>
-        public string ItemId { get; set; }
+        public string ItemId { get; }
 
         /// <summary> The index of the output item this summary part is associated with. </summary>
-        public long OutputIndex { get; set; }
+        public long OutputIndex { get; }
 
         /// <summary> The index of the summary part within the reasoning summary. </summary>
-        public long SummaryIndex { get; set; }
+        public long SummaryIndex { get; }
+
+        /// <summary> The sequence number of this event. </summary>
+        public override long SequenceNumber { get; }
 
         /// <summary> The summary part that was added. </summary>
-        public ResponseReasoningSummaryPartAddedEventPart Part { get; set; }
+        public ResponseReasoningSummaryPartAddedEventPart Part { get; }
     }
 }

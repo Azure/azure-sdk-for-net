@@ -8,9 +8,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> A memory item specifically containing user profile information extracted from conversations, such as preferences, interests, and personal details. </summary>
     public partial class UserProfileMemoryItem : MemoryItem, IJsonModel<UserProfileMemoryItem>
@@ -44,7 +44,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(UserProfileMemoryItem)} does not support writing '{options.Format}' format.");
             }

@@ -6,23 +6,19 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Emitted when an error occurs. </summary>
     public partial class ResponseErrorEvent : ResponseStreamEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseErrorEvent"/>. </summary>
-        /// <param name="sequenceNumber"></param>
         /// <param name="code"></param>
         /// <param name="message"> The error message. </param>
         /// <param name="param"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        public ResponseErrorEvent(long sequenceNumber, string code, string message, string @param) : base(ResponseStreamEventType.Error, sequenceNumber)
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
+        internal ResponseErrorEvent(string code, string message, string @param, long sequenceNumber) : base(ResponseStreamEventType.Error, sequenceNumber)
         {
-            Argument.AssertNotNull(message, nameof(message));
-
             Code = code;
             Message = message;
             Param = @param;
@@ -30,25 +26,28 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ResponseErrorEvent"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="sequenceNumber"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="code"></param>
         /// <param name="message"> The error message. </param>
         /// <param name="param"></param>
-        internal ResponseErrorEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, string code, string message, string @param) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
+        internal ResponseErrorEvent(ResponseStreamEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string code, string message, string @param, long sequenceNumber) : base(@type, sequenceNumber, additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
             Param = @param;
         }
 
-        /// <summary> Gets or sets the Code. </summary>
-        public string Code { get; set; }
+        /// <summary> Gets the Code. </summary>
+        public string Code { get; }
 
         /// <summary> The error message. </summary>
-        public string Message { get; set; }
+        public string Message { get; }
 
-        /// <summary> Gets or sets the Param. </summary>
-        public string Param { get; set; }
+        /// <summary> Gets the Param. </summary>
+        public string Param { get; }
+
+        /// <summary> The sequence number of this event. </summary>
+        public override long SequenceNumber { get; }
     }
 }

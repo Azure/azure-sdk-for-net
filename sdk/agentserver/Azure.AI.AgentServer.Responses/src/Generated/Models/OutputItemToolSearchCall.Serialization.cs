@@ -8,9 +8,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> The OutputItemToolSearchCall. </summary>
     public partial class OutputItemToolSearchCall : OutputItem, IJsonModel<OutputItemToolSearchCall>
@@ -44,7 +44,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(OutputItemToolSearchCall)} does not support writing '{options.Format}' format.");
             }
@@ -106,7 +106,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("created_by"u8);
-                writer.WriteRawValue(CreatedBy);
+                writer.WriteStringValue(CreatedBy);
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             ToolSearchExecutionType execution = default;
             BinaryData arguments = default;
             FunctionCallStatus status = default;
-            BinaryData createdBy = default;
+            string createdBy = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -198,7 +198,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("created_by"u8))
                 {
-                    createdBy = BinaryData.FromString(prop.Value.GetRawText());
+                    createdBy = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

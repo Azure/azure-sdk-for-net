@@ -9,9 +9,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> ResponseOutputTextAnnotationAddedEvent. </summary>
     public partial class ResponseOutputTextAnnotationAddedEvent : ResponseStreamEvent, IJsonModel<ResponseOutputTextAnnotationAddedEvent>
@@ -45,7 +45,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResponseOutputTextAnnotationAddedEvent)} does not support writing '{options.Format}' format.");
             }
@@ -96,6 +96,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteNumberValue(ContentIndex);
             writer.WritePropertyName("annotation_index"u8);
             writer.WriteNumberValue(AnnotationIndex);
+            writer.WritePropertyName("sequence_number"u8);
+            writer.WriteNumberValue(SequenceNumber);
             writer.WritePropertyName("annotation"u8);
             writer.WriteObjectValue(Annotation, options);
         }
@@ -126,23 +128,18 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             ResponseStreamEventType @type = default;
-            long sequenceNumber = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string itemId = default;
             long outputIndex = default;
             long contentIndex = default;
             long annotationIndex = default;
+            long sequenceNumber = default;
             Annotation annotation = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ResponseStreamEventType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("sequence_number"u8))
-                {
-                    sequenceNumber = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("item_id"u8))
@@ -165,6 +162,11 @@ namespace Azure.AI.AgentServer.Responses.Models
                     annotationIndex = prop.Value.GetInt64();
                     continue;
                 }
+                if (prop.NameEquals("sequence_number"u8))
+                {
+                    sequenceNumber = prop.Value.GetInt64();
+                    continue;
+                }
                 if (prop.NameEquals("annotation"u8))
                 {
                     annotation = Annotation.DeserializeAnnotation(prop.Value, options);
@@ -177,12 +179,12 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             return new ResponseOutputTextAnnotationAddedEvent(
                 @type,
-                sequenceNumber,
                 additionalBinaryDataProperties,
                 itemId,
                 outputIndex,
                 contentIndex,
                 annotationIndex,
+                sequenceNumber,
                 annotation);
         }
     }

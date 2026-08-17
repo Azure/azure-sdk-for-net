@@ -7,23 +7,26 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Emitted when the audio response is complete. </summary>
     public partial class ResponseAudioDoneEvent : ResponseStreamEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseAudioDoneEvent"/>. </summary>
-        /// <param name="sequenceNumber"></param>
-        public ResponseAudioDoneEvent(long sequenceNumber) : base(ResponseStreamEventType.ResponseAudioDone, sequenceNumber)
+        /// <param name="sequenceNumber"> The sequence number of the delta. </param>
+        internal ResponseAudioDoneEvent(long sequenceNumber) : base(ResponseStreamEventType.ResponseAudioDone, sequenceNumber)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponseAudioDoneEvent"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="sequenceNumber"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseAudioDoneEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="sequenceNumber"> The sequence number of the delta. </param>
+        internal ResponseAudioDoneEvent(ResponseStreamEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long sequenceNumber) : base(@type, sequenceNumber, additionalBinaryDataProperties)
         {
         }
+
+        /// <summary> The sequence number of the delta. </summary>
+        public override long SequenceNumber { get; }
     }
 }

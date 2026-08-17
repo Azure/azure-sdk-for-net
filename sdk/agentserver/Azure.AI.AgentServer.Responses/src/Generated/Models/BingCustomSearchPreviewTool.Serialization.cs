@@ -8,9 +8,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> The input definition information for a Bing custom search tool as used to configure an agent. </summary>
     public partial class BingCustomSearchPreviewTool : Tool, IJsonModel<BingCustomSearchPreviewTool>
@@ -44,7 +44,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(BingCustomSearchPreviewTool)} does not support writing '{options.Format}' format.");
             }
@@ -79,16 +79,6 @@ namespace Azure.AI.AgentServer.Responses.Models
                 throw new FormatException($"The model {nameof(BingCustomSearchPreviewTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
             writer.WritePropertyName("bing_custom_search_preview"u8);
             writer.WriteObjectValue(BingCustomSearchPreview, options);
         }
@@ -120,24 +110,12 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string name = default;
-            string description = default;
             BingCustomSearchToolParameters bingCustomSearchPreview = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ToolType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("bing_custom_search_preview"u8))
@@ -150,7 +128,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BingCustomSearchPreviewTool(@type, additionalBinaryDataProperties, name, description, bingCustomSearchPreview);
+            return new BingCustomSearchPreviewTool(@type, additionalBinaryDataProperties, bingCustomSearchPreview);
         }
     }
 }

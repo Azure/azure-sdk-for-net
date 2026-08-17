@@ -7,9 +7,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> MCP list tools. </summary>
     public partial class OutputItemMcpListTools : OutputItem
@@ -18,14 +17,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="id"> The unique ID of the list. </param>
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <param name="tools"> The tools available on the server. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="serverLabel"/> or <paramref name="tools"/> is null. </exception>
-        public OutputItemMcpListTools(string id, string serverLabel, IEnumerable<MCPListToolsTool> tools) : base(OutputItemType.McpListTools)
+        internal OutputItemMcpListTools(string id, string serverLabel, IEnumerable<MCPListToolsTool> tools) : base(OutputItemType.McpListTools)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(serverLabel, nameof(serverLabel));
-            Argument.AssertNotNull(tools, nameof(tools));
-
-            Id = id;
+            _id = id;
             ServerLabel = serverLabel;
             Tools = tools.ToList();
         }
@@ -40,24 +34,23 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <param name="tools"> The tools available on the server. </param>
         /// <param name="error"></param>
-        internal OutputItemMcpListTools(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, IList<MCPListToolsTool> tools, RealtimeMCPError error) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
+        internal OutputItemMcpListTools(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, IList<MCPListToolsTool> tools, RealtimeMCPError error) : base(@type, id, createdBy, agentReference, responseId, additionalBinaryDataProperties)
         {
-            Id = id;
             ServerLabel = serverLabel;
             Tools = tools;
             Error = error;
         }
 
         /// <summary> The unique ID of the list. </summary>
-        public string Id { get; set; }
+        public new string Id => _id ?? default;
 
         /// <summary> The label of the MCP server. </summary>
-        public string ServerLabel { get; set; }
+        public string ServerLabel { get; }
 
         /// <summary> The tools available on the server. </summary>
         public IList<MCPListToolsTool> Tools { get; }
 
-        /// <summary> Gets or sets the Error. </summary>
-        public RealtimeMCPError Error { get; set; }
+        /// <summary> Gets the Error. </summary>
+        public RealtimeMCPError Error { get; }
     }
 }

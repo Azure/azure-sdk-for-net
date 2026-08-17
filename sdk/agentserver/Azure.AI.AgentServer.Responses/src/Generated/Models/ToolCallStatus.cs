@@ -4,7 +4,7 @@
 
 #nullable disable
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> The status of a tool call. </summary>
     public enum ToolCallStatus

@@ -7,14 +7,14 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Shell call exit outcome. </summary>
     public partial class FunctionShellCallOutputExitOutcome : FunctionShellCallOutputOutcome
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallOutputExitOutcome"/>. </summary>
         /// <param name="exitCode"> Exit code from the shell process. </param>
-        public FunctionShellCallOutputExitOutcome(long exitCode) : base(FunctionShellCallOutputOutcomeType.Exit)
+        internal FunctionShellCallOutputExitOutcome(long exitCode) : base(FunctionShellCallOutputOutcomeType.Exit)
         {
             ExitCode = exitCode;
         }
@@ -29,6 +29,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> Exit code from the shell process. </summary>
-        public long ExitCode { get; set; }
+        public long ExitCode { get; }
     }
 }

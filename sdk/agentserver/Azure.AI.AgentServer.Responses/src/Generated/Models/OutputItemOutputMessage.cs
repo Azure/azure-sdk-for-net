@@ -8,9 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
-    internal partial class OutputItemOutputMessage : OutputItem
+    /// <summary> Output message. </summary>
+    public partial class OutputItemOutputMessage : OutputItem
     {
         /// <summary> Initializes a new instance of <see cref="OutputItemOutputMessage"/>. </summary>
         /// <param name="id"> The unique ID of the output message. </param>
@@ -19,9 +20,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </param>
-        public OutputItemOutputMessage(string id, IEnumerable<OutputMessageContent> content, ItemOutputMessageStatus status) : base(OutputItemType.OutputMessage)
+        internal OutputItemOutputMessage(string id, IEnumerable<OutputMessageContent> content, ItemOutputMessageStatus status) : base(OutputItemType.OutputMessage)
         {
-            Id = id;
+            _id = id;
             Content = content.ToList();
             Status = status;
         }
@@ -40,9 +41,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </param>
-        internal OutputItemOutputMessage(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string role, IList<OutputMessageContent> content, MessagePhase? phase, ItemOutputMessageStatus status) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
+        internal OutputItemOutputMessage(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string role, IList<OutputMessageContent> content, MessagePhase? phase, ItemOutputMessageStatus status) : base(@type, id, createdBy, agentReference, responseId, additionalBinaryDataProperties)
         {
-            Id = id;
             Role = role;
             Content = content;
             Phase = phase;
@@ -50,7 +50,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The unique ID of the output message. </summary>
-        public string Id { get; set; }
+        public new string Id => _id ?? default;
 
         /// <summary> The role of the output message. Always `assistant`. </summary>
         public string Role { get; } = "assistant";
@@ -58,13 +58,13 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> The content of the output message. </summary>
         public IList<OutputMessageContent> Content { get; }
 
-        /// <summary> Gets or sets the Phase. </summary>
-        public MessagePhase? Phase { get; set; }
+        /// <summary> Gets the Phase. </summary>
+        public MessagePhase? Phase { get; }
 
         /// <summary>
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </summary>
-        public ItemOutputMessageStatus Status { get; set; }
+        public ItemOutputMessageStatus Status { get; }
     }
 }

@@ -6,15 +6,20 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
-    internal partial class OutputMessageContentRefusalContent : OutputMessageContent
+    /// <summary> Refusal. </summary>
+    public partial class OutputMessageContentRefusalContent : OutputMessageContent
     {
         /// <summary> Initializes a new instance of <see cref="OutputMessageContentRefusalContent"/>. </summary>
         /// <param name="refusal"> The refusal explanation from the model. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="refusal"/> is null. </exception>
         public OutputMessageContentRefusalContent(string refusal) : base(OutputMessageContentType.Refusal)
         {
+            Argument.AssertNotNull(refusal, nameof(refusal));
+
             Refusal = refusal;
         }
 

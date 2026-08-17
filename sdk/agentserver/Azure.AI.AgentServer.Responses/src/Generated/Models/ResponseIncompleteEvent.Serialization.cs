@@ -9,9 +9,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> An event that is emitted when a response finishes as incomplete. </summary>
     public partial class ResponseIncompleteEvent : ResponseStreamEvent, IJsonModel<ResponseIncompleteEvent>
@@ -45,7 +45,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResponseIncompleteEvent)} does not support writing '{options.Format}' format.");
             }
@@ -90,6 +90,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("response"u8);
             writer.WriteObjectValue(Response, options);
+            writer.WritePropertyName("sequence_number"u8);
+            writer.WriteNumberValue(SequenceNumber);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -118,9 +120,9 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             ResponseStreamEventType @type = default;
-            long sequenceNumber = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResponseObject response = default;
+            long sequenceNumber = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -128,14 +130,14 @@ namespace Azure.AI.AgentServer.Responses.Models
                     @type = new ResponseStreamEventType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("sequence_number"u8))
-                {
-                    sequenceNumber = prop.Value.GetInt64();
-                    continue;
-                }
                 if (prop.NameEquals("response"u8))
                 {
                     response = ResponseObject.DeserializeResponseObject(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("sequence_number"u8))
+                {
+                    sequenceNumber = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
@@ -143,7 +145,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponseIncompleteEvent(@type, sequenceNumber, additionalBinaryDataProperties, response);
+            return new ResponseIncompleteEvent(@type, additionalBinaryDataProperties, response, sequenceNumber);
         }
     }
 }

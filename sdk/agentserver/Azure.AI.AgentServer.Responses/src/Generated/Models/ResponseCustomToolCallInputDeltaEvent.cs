@@ -6,24 +6,19 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> ResponseCustomToolCallInputDelta. </summary>
     public partial class ResponseCustomToolCallInputDeltaEvent : ResponseStreamEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseCustomToolCallInputDeltaEvent"/>. </summary>
-        /// <param name="sequenceNumber"></param>
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
         /// <param name="outputIndex"> The index of the output this delta applies to. </param>
         /// <param name="itemId"> Unique identifier for the API item associated with this event. </param>
         /// <param name="delta"> The incremental input data (delta) for the custom tool call. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> or <paramref name="delta"/> is null. </exception>
-        public ResponseCustomToolCallInputDeltaEvent(long sequenceNumber, long outputIndex, string itemId, string delta) : base(ResponseStreamEventType.ResponseCustomToolCallInputDelta, sequenceNumber)
+        internal ResponseCustomToolCallInputDeltaEvent(long sequenceNumber, long outputIndex, string itemId, string delta) : base(ResponseStreamEventType.ResponseCustomToolCallInputDelta, sequenceNumber)
         {
-            Argument.AssertNotNull(itemId, nameof(itemId));
-            Argument.AssertNotNull(delta, nameof(delta));
-
             OutputIndex = outputIndex;
             ItemId = itemId;
             Delta = delta;
@@ -31,25 +26,28 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ResponseCustomToolCallInputDeltaEvent"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="sequenceNumber"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
         /// <param name="outputIndex"> The index of the output this delta applies to. </param>
         /// <param name="itemId"> Unique identifier for the API item associated with this event. </param>
         /// <param name="delta"> The incremental input data (delta) for the custom tool call. </param>
-        internal ResponseCustomToolCallInputDeltaEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, long outputIndex, string itemId, string delta) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        internal ResponseCustomToolCallInputDeltaEvent(ResponseStreamEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long sequenceNumber, long outputIndex, string itemId, string delta) : base(@type, sequenceNumber, additionalBinaryDataProperties)
         {
             OutputIndex = outputIndex;
             ItemId = itemId;
             Delta = delta;
         }
 
+        /// <summary> The sequence number of this event. </summary>
+        public override long SequenceNumber { get; }
+
         /// <summary> The index of the output this delta applies to. </summary>
-        public long OutputIndex { get; set; }
+        public long OutputIndex { get; }
 
         /// <summary> Unique identifier for the API item associated with this event. </summary>
-        public string ItemId { get; set; }
+        public string ItemId { get; }
 
         /// <summary> The incremental input data (delta) for the custom tool call. </summary>
-        public string Delta { get; set; }
+        public string Delta { get; }
     }
 }

@@ -9,9 +9,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> The result of a delete response operation. </summary>
     public partial class DeleteResponseResult : IJsonModel<DeleteResponseResult>
@@ -45,7 +45,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeleteResponseResult)} does not support writing '{options.Format}' format.");
             }
@@ -89,10 +89,10 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
+            writer.WritePropertyName("object"u8);
+            writer.WriteStringValue(Object.ToSerialString());
             writer.WritePropertyName("deleted"u8);
             writer.WriteBooleanValue(Deleted);
-            writer.WritePropertyName("object"u8);
-            writer.WriteStringValue(Object);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -136,8 +136,8 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             string id = default;
+            ResponseObjectType @object = default;
             bool deleted = default;
-            string @object = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,14 +146,14 @@ namespace Azure.AI.AgentServer.Responses.Models
                     id = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("object"u8))
+                {
+                    @object = prop.Value.GetString().ToResponseObjectType();
+                    continue;
+                }
                 if (prop.NameEquals("deleted"u8))
                 {
                     deleted = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("object"u8))
-                {
-                    @object = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -161,7 +161,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeleteResponseResult(id, deleted, @object, additionalBinaryDataProperties);
+            return new DeleteResponseResult(id, @object, deleted, additionalBinaryDataProperties);
         }
     }
 }

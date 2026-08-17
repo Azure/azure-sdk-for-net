@@ -6,25 +6,20 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Emitted when there is a partial refusal text. </summary>
     public partial class ResponseRefusalDeltaEvent : ResponseStreamEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseRefusalDeltaEvent"/>. </summary>
-        /// <param name="sequenceNumber"></param>
         /// <param name="itemId"> The ID of the output item that the refusal text is added to. </param>
         /// <param name="outputIndex"> The index of the output item that the refusal text is added to. </param>
         /// <param name="contentIndex"> The index of the content part that the refusal text is added to. </param>
         /// <param name="delta"> The refusal text that is added. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> or <paramref name="delta"/> is null. </exception>
-        public ResponseRefusalDeltaEvent(long sequenceNumber, string itemId, long outputIndex, long contentIndex, string delta) : base(ResponseStreamEventType.ResponseRefusalDelta, sequenceNumber)
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
+        internal ResponseRefusalDeltaEvent(string itemId, long outputIndex, long contentIndex, string delta, long sequenceNumber) : base(ResponseStreamEventType.ResponseRefusalDelta, sequenceNumber)
         {
-            Argument.AssertNotNull(itemId, nameof(itemId));
-            Argument.AssertNotNull(delta, nameof(delta));
-
             ItemId = itemId;
             OutputIndex = outputIndex;
             ContentIndex = contentIndex;
@@ -33,13 +28,13 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ResponseRefusalDeltaEvent"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="sequenceNumber"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The ID of the output item that the refusal text is added to. </param>
         /// <param name="outputIndex"> The index of the output item that the refusal text is added to. </param>
         /// <param name="contentIndex"> The index of the content part that the refusal text is added to. </param>
         /// <param name="delta"> The refusal text that is added. </param>
-        internal ResponseRefusalDeltaEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, long outputIndex, long contentIndex, string delta) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
+        internal ResponseRefusalDeltaEvent(ResponseStreamEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, long outputIndex, long contentIndex, string delta, long sequenceNumber) : base(@type, sequenceNumber, additionalBinaryDataProperties)
         {
             ItemId = itemId;
             OutputIndex = outputIndex;
@@ -48,15 +43,18 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The ID of the output item that the refusal text is added to. </summary>
-        public string ItemId { get; set; }
+        public string ItemId { get; }
 
         /// <summary> The index of the output item that the refusal text is added to. </summary>
-        public long OutputIndex { get; set; }
+        public long OutputIndex { get; }
 
         /// <summary> The index of the content part that the refusal text is added to. </summary>
-        public long ContentIndex { get; set; }
+        public long ContentIndex { get; }
 
         /// <summary> The refusal text that is added. </summary>
-        public string Delta { get; set; }
+        public string Delta { get; }
+
+        /// <summary> The sequence number of this event. </summary>
+        public override long SequenceNumber { get; }
     }
 }

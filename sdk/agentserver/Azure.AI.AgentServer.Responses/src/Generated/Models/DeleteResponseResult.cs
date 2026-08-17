@@ -6,9 +6,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> The result of a delete response operation. </summary>
     public partial class DeleteResponseResult
@@ -18,34 +17,31 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="DeleteResponseResult"/>. </summary>
         /// <param name="id"> The operation ID. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public DeleteResponseResult(string id)
+        internal DeleteResponseResult(string id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
             Id = id;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeleteResponseResult"/>. </summary>
         /// <param name="id"> The operation ID. </param>
+        /// <param name="object"> Always return 'response'. </param>
         /// <param name="deleted"> Always return true. </param>
-        /// <param name="object"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeleteResponseResult(string id, bool deleted, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeleteResponseResult(string id, ResponseObjectType @object, bool deleted, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Deleted = deleted;
             Object = @object;
+            Deleted = deleted;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The operation ID. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
+
+        /// <summary> Always return 'response'. </summary>
+        public ResponseObjectType Object { get; } = "response";
 
         /// <summary> Always return true. </summary>
         public bool Deleted { get; } = true;
-
-        /// <summary> Gets the Object. </summary>
-        public string Object { get; } = "response";
     }
 }

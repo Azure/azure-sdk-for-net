@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> The OpenApiFunctionDefinitionFunction. </summary>
     public partial class OpenApiFunctionDefinitionFunction

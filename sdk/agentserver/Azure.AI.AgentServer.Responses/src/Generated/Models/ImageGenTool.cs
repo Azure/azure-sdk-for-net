@@ -6,8 +6,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Image generation tool. </summary>
     public partial class ImageGenTool : Tool
@@ -15,6 +16,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="ImageGenTool"/>. </summary>
         public ImageGenTool() : base(ToolType.ImageGeneration)
         {
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageGenTool"/>. </summary>
@@ -46,9 +48,10 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </param>
         /// <param name="partialImages"> Number of partial images to generate in streaming mode, from 0 (default value) to 3. </param>
         /// <param name="action"> Whether to generate a new image or edit an existing image. Default: `auto`. </param>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        internal ImageGenTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImageGenToolModel? model, ImageGenToolQuality? quality, ImageGenToolSize? size, ImageGenToolOutputFormat? outputFormat, long? outputCompression, ImageGenToolModeration? moderation, ImageGenToolBackground? background, InputFidelity? inputFidelity, ImageGenToolInputImageMask inputImageMask, long? partialImages, ImageGenActionEnum? action, string name, string description) : base(@type, additionalBinaryDataProperties)
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        internal ImageGenTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImageGenToolModel? model, ImageGenToolQuality? quality, ImageGenToolSize? size, ImageGenToolOutputFormat? outputFormat, long? outputCompression, ImageGenToolModeration? moderation, ImageGenToolBackground? background, InputFidelity? inputFidelity, ImageGenToolInputImageMask inputImageMask, long? partialImages, ImageGenActionEnum? action, string name, string description, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
             Model = model;
             Quality = quality;
@@ -63,6 +66,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             Action = action;
             Name = name;
             Description = description;
+            ToolConfigs = toolConfigs;
         }
 
         /// <summary> Gets or sets the Model. </summary>
@@ -113,10 +117,13 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Whether to generate a new image or edit an existing image. Default: `auto`. </summary>
         public ImageGenActionEnum? Action { get; set; }
 
-        /// <summary> Optional user-defined name for this tool or configuration. </summary>
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
         public string Name { get; set; }
 
-        /// <summary> Optional user-defined description for this tool or configuration. </summary>
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
         public string Description { get; set; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
     }
 }

@@ -6,7 +6,7 @@
 
 using System;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     internal static partial class ComputerEnvironmentExtensions
     {

@@ -8,11 +8,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
-    internal partial class OutputItemOutputMessage : OutputItem, IJsonModel<OutputItemOutputMessage>
+    /// <summary> Output message. </summary>
+    public partial class OutputItemOutputMessage : OutputItem, IJsonModel<OutputItemOutputMessage>
     {
         /// <summary> Initializes a new instance of <see cref="OutputItemOutputMessage"/> for deserialization. </summary>
         internal OutputItemOutputMessage()
@@ -43,7 +44,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(OutputItemOutputMessage)} does not support writing '{options.Format}' format.");
             }

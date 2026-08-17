@@ -9,9 +9,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> ResponseImageGenCallPartialImageEvent. </summary>
     public partial class ResponseImageGenCallPartialImageEvent : ResponseStreamEvent, IJsonModel<ResponseImageGenCallPartialImageEvent>
@@ -45,7 +45,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResponseImageGenCallPartialImageEvent)} does not support writing '{options.Format}' format.");
             }
@@ -92,6 +92,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteNumberValue(OutputIndex);
             writer.WritePropertyName("item_id"u8);
             writer.WriteStringValue(ItemId);
+            writer.WritePropertyName("sequence_number"u8);
+            writer.WriteNumberValue(SequenceNumber);
             writer.WritePropertyName("partial_image_index"u8);
             writer.WriteNumberValue(PartialImageIndex);
             writer.WritePropertyName("partial_image_b64"u8);
@@ -124,10 +126,10 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             ResponseStreamEventType @type = default;
-            long sequenceNumber = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             long outputIndex = default;
             string itemId = default;
+            long sequenceNumber = default;
             long partialImageIndex = default;
             string partialImageB64 = default;
             foreach (var prop in element.EnumerateObject())
@@ -135,11 +137,6 @@ namespace Azure.AI.AgentServer.Responses.Models
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ResponseStreamEventType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("sequence_number"u8))
-                {
-                    sequenceNumber = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("output_index"u8))
@@ -150,6 +147,11 @@ namespace Azure.AI.AgentServer.Responses.Models
                 if (prop.NameEquals("item_id"u8))
                 {
                     itemId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("sequence_number"u8))
+                {
+                    sequenceNumber = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("partial_image_index"u8))
@@ -169,10 +171,10 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             return new ResponseImageGenCallPartialImageEvent(
                 @type,
-                sequenceNumber,
                 additionalBinaryDataProperties,
                 outputIndex,
                 itemId,
+                sequenceNumber,
                 partialImageIndex,
                 partialImageB64);
         }

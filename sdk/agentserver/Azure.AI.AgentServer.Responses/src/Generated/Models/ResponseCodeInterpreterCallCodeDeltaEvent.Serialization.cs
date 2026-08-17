@@ -9,9 +9,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Emitted when a partial code snippet is streamed by the code interpreter. </summary>
     public partial class ResponseCodeInterpreterCallCodeDeltaEvent : ResponseStreamEvent, IJsonModel<ResponseCodeInterpreterCallCodeDeltaEvent>
@@ -45,7 +45,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResponseCodeInterpreterCallCodeDeltaEvent)} does not support writing '{options.Format}' format.");
             }
@@ -94,6 +94,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteStringValue(ItemId);
             writer.WritePropertyName("delta"u8);
             writer.WriteStringValue(Delta);
+            writer.WritePropertyName("sequence_number"u8);
+            writer.WriteNumberValue(SequenceNumber);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -122,21 +124,16 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             ResponseStreamEventType @type = default;
-            long sequenceNumber = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             long outputIndex = default;
             string itemId = default;
             string delta = default;
+            long sequenceNumber = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ResponseStreamEventType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("sequence_number"u8))
-                {
-                    sequenceNumber = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("output_index"u8))
@@ -154,6 +151,11 @@ namespace Azure.AI.AgentServer.Responses.Models
                     delta = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("sequence_number"u8))
+                {
+                    sequenceNumber = prop.Value.GetInt64();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -161,11 +163,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             return new ResponseCodeInterpreterCallCodeDeltaEvent(
                 @type,
-                sequenceNumber,
                 additionalBinaryDataProperties,
                 outputIndex,
                 itemId,
-                delta);
+                delta,
+                sequenceNumber);
         }
     }
 }

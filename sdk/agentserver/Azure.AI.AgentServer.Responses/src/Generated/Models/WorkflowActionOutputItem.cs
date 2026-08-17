@@ -6,9 +6,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> The WorkflowActionOutputItem. </summary>
     public partial class WorkflowActionOutputItem : OutputItem
@@ -17,22 +16,16 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="kind"> The kind of CSDL action (e.g., 'SetVariable', 'InvokeAzureAgent'). </param>
         /// <param name="actionId"> Unique identifier for the action. </param>
         /// <param name="status"> Status of the action (e.g., 'in_progress', 'completed', 'failed', 'cancelled'). </param>
-        /// <param name="id"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="kind"/>, <paramref name="actionId"/> or <paramref name="id"/> is null. </exception>
-        public WorkflowActionOutputItem(string kind, string actionId, WorkflowActionOutputItemStatus status, string id) : base(OutputItemType.WorkflowAction)
+        internal WorkflowActionOutputItem(string kind, string actionId, WorkflowActionOutputItemStatus status) : base(OutputItemType.WorkflowAction)
         {
-            Argument.AssertNotNull(kind, nameof(kind));
-            Argument.AssertNotNull(actionId, nameof(actionId));
-            Argument.AssertNotNull(id, nameof(id));
-
             Kind = kind;
             ActionId = actionId;
             Status = status;
-            Id = id;
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowActionOutputItem"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="id"></param>
         /// <param name="createdBy"> The information about the creator of the item. </param>
         /// <param name="agentReference"> The agent that created the item. </param>
         /// <param name="responseId"> The response on which the item is created. </param>
@@ -42,33 +35,28 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="parentActionId"> ID of the parent action if this is a nested action. </param>
         /// <param name="previousActionId"> ID of the previous action if this action follows another. </param>
         /// <param name="status"> Status of the action (e.g., 'in_progress', 'completed', 'failed', 'cancelled'). </param>
-        /// <param name="id"></param>
-        internal WorkflowActionOutputItem(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string kind, string actionId, string parentActionId, string previousActionId, WorkflowActionOutputItemStatus status, string id) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
+        internal WorkflowActionOutputItem(OutputItemType @type, string id, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string kind, string actionId, string parentActionId, string previousActionId, WorkflowActionOutputItemStatus status) : base(@type, id, createdBy, agentReference, responseId, additionalBinaryDataProperties)
         {
             Kind = kind;
             ActionId = actionId;
             ParentActionId = parentActionId;
             PreviousActionId = previousActionId;
             Status = status;
-            Id = id;
         }
 
         /// <summary> The kind of CSDL action (e.g., 'SetVariable', 'InvokeAzureAgent'). </summary>
-        public string Kind { get; set; }
+        public string Kind { get; }
 
         /// <summary> Unique identifier for the action. </summary>
-        public string ActionId { get; set; }
+        public string ActionId { get; }
 
         /// <summary> ID of the parent action if this is a nested action. </summary>
-        public string ParentActionId { get; set; }
+        public string ParentActionId { get; }
 
         /// <summary> ID of the previous action if this action follows another. </summary>
-        public string PreviousActionId { get; set; }
+        public string PreviousActionId { get; }
 
         /// <summary> Status of the action (e.g., 'in_progress', 'completed', 'failed', 'cancelled'). </summary>
-        public WorkflowActionOutputItemStatus Status { get; set; }
-
-        /// <summary> Gets or sets the Id. </summary>
-        public string Id { get; set; }
+        public WorkflowActionOutputItemStatus Status { get; }
     }
 }

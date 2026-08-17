@@ -6,9 +6,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> The input definition information for an Azure Function Tool, as used to configure an Agent. </summary>
     public partial class AzureFunctionTool : Tool
@@ -20,17 +20,23 @@ namespace Azure.AI.AgentServer.Responses.Models
         {
             Argument.AssertNotNull(azureFunction, nameof(azureFunction));
 
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             AzureFunction = azureFunction;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureFunctionTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="azureFunction"> The Azure Function Tool definition. </param>
-        internal AzureFunctionTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureFunctionDefinition azureFunction) : base(@type, additionalBinaryDataProperties)
+        internal AzureFunctionTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, ToolConfig> toolConfigs, AzureFunctionDefinition azureFunction) : base(@type, additionalBinaryDataProperties)
         {
+            ToolConfigs = toolConfigs;
             AzureFunction = azureFunction;
         }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> The Azure Function Tool definition. </summary>
         public AzureFunctionDefinition AzureFunction { get; set; }

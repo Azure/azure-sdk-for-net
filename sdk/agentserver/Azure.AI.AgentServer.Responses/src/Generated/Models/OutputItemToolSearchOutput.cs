@@ -7,9 +7,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> The OutputItemToolSearchOutput. </summary>
     public partial class OutputItemToolSearchOutput : OutputItem
@@ -20,13 +19,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="execution"> Whether tool search was executed by the server or by the client. </param>
         /// <param name="tools"> The loaded tool definitions returned by tool search. </param>
         /// <param name="status"> The status of the tool search output item that was recorded. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="tools"/> is null. </exception>
-        public OutputItemToolSearchOutput(string id, string callId, ToolSearchExecutionType execution, IEnumerable<Tool> tools, FunctionCallOutputStatusEnum status) : base(OutputItemType.ToolSearchOutput)
+        internal OutputItemToolSearchOutput(string id, string callId, ToolSearchExecutionType execution, IEnumerable<Tool> tools, FunctionCallOutputStatusEnum status) : base(OutputItemType.ToolSearchOutput)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(tools, nameof(tools));
-
-            Id = id;
+            _id = id;
             CallId = callId;
             Execution = execution;
             Tools = tools.ToList();
@@ -44,9 +39,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="tools"> The loaded tool definitions returned by tool search. </param>
         /// <param name="status"> The status of the tool search output item that was recorded. </param>
         /// <param name="createdBy"> The identifier of the actor that created the item. </param>
-        internal OutputItemToolSearchOutput(OutputItemType @type, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ToolSearchExecutionType execution, IList<Tool> tools, FunctionCallOutputStatusEnum status, BinaryData createdBy) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
+        internal OutputItemToolSearchOutput(OutputItemType @type, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ToolSearchExecutionType execution, IList<Tool> tools, FunctionCallOutputStatusEnum status, string createdBy) : base(@type, id, createdBy, agentReference, responseId, additionalBinaryDataProperties)
         {
-            Id = id;
             CallId = callId;
             Execution = execution;
             Tools = tools;
@@ -54,19 +48,21 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The unique ID of the tool search output item. </summary>
-        public string Id { get; set; }
+        public new string Id => _id ?? default;
 
-        /// <summary> Gets or sets the CallId. </summary>
-        public string CallId { get; set; }
+        /// <summary> Gets the CallId. </summary>
+        public string CallId { get; }
 
         /// <summary> Whether tool search was executed by the server or by the client. </summary>
-        public ToolSearchExecutionType Execution { get; set; }
+        public ToolSearchExecutionType Execution { get; }
 
         /// <summary> The loaded tool definitions returned by tool search. </summary>
         public IList<Tool> Tools { get; }
 
         /// <summary> The status of the tool search output item that was recorded. </summary>
-        public FunctionCallOutputStatusEnum Status { get; set; }
+        public FunctionCallOutputStatusEnum Status { get; }
 
+        /// <summary> The identifier of the actor that created the item. </summary>
+        public new string CreatedBy => _createdBy ?? default;
     }
 }

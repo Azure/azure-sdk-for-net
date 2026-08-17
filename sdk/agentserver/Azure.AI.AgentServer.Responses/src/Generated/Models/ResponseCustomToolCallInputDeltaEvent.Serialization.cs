@@ -9,9 +9,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> ResponseCustomToolCallInputDelta. </summary>
     public partial class ResponseCustomToolCallInputDeltaEvent : ResponseStreamEvent, IJsonModel<ResponseCustomToolCallInputDeltaEvent>
@@ -45,7 +45,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResponseCustomToolCallInputDeltaEvent)} does not support writing '{options.Format}' format.");
             }
@@ -88,6 +88,8 @@ namespace Azure.AI.AgentServer.Responses.Models
                 throw new FormatException($"The model {nameof(ResponseCustomToolCallInputDeltaEvent)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("sequence_number"u8);
+            writer.WriteNumberValue(SequenceNumber);
             writer.WritePropertyName("output_index"u8);
             writer.WriteNumberValue(OutputIndex);
             writer.WritePropertyName("item_id"u8);
@@ -122,8 +124,8 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             ResponseStreamEventType @type = default;
-            long sequenceNumber = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            long sequenceNumber = default;
             long outputIndex = default;
             string itemId = default;
             string delta = default;
@@ -161,8 +163,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             return new ResponseCustomToolCallInputDeltaEvent(
                 @type,
-                sequenceNumber,
                 additionalBinaryDataProperties,
+                sequenceNumber,
                 outputIndex,
                 itemId,
                 delta);

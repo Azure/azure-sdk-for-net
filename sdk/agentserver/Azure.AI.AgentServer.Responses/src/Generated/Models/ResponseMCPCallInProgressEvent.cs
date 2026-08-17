@@ -6,42 +6,41 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> ResponseMCPCallInProgressEvent. </summary>
     public partial class ResponseMCPCallInProgressEvent : ResponseStreamEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseMCPCallInProgressEvent"/>. </summary>
-        /// <param name="sequenceNumber"></param>
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
         /// <param name="outputIndex"> The index of the output item in the response's output array. </param>
         /// <param name="itemId"> The unique identifier of the MCP tool call item being processed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> is null. </exception>
-        public ResponseMCPCallInProgressEvent(long sequenceNumber, long outputIndex, string itemId) : base(ResponseStreamEventType.ResponseMcpCallInProgress, sequenceNumber)
+        internal ResponseMCPCallInProgressEvent(long sequenceNumber, long outputIndex, string itemId) : base(ResponseStreamEventType.ResponseMcpCallInProgress, sequenceNumber)
         {
-            Argument.AssertNotNull(itemId, nameof(itemId));
-
             OutputIndex = outputIndex;
             ItemId = itemId;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponseMCPCallInProgressEvent"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="sequenceNumber"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
         /// <param name="outputIndex"> The index of the output item in the response's output array. </param>
         /// <param name="itemId"> The unique identifier of the MCP tool call item being processed. </param>
-        internal ResponseMCPCallInProgressEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, long outputIndex, string itemId) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        internal ResponseMCPCallInProgressEvent(ResponseStreamEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long sequenceNumber, long outputIndex, string itemId) : base(@type, sequenceNumber, additionalBinaryDataProperties)
         {
             OutputIndex = outputIndex;
             ItemId = itemId;
         }
 
+        /// <summary> The sequence number of this event. </summary>
+        public override long SequenceNumber { get; }
+
         /// <summary> The index of the output item in the response's output array. </summary>
-        public long OutputIndex { get; set; }
+        public long OutputIndex { get; }
 
         /// <summary> The unique identifier of the MCP tool call item being processed. </summary>
-        public string ItemId { get; set; }
+        public string ItemId { get; }
     }
 }

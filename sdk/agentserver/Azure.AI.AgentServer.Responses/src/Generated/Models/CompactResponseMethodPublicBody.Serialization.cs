@@ -9,9 +9,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> The CompactResponseMethodPublicBody. </summary>
     public partial class CompactResponseMethodPublicBody : IJsonModel<CompactResponseMethodPublicBody>
@@ -45,7 +45,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(CompactResponseMethodPublicBody)} does not support writing '{options.Format}' format.");
             }
@@ -89,15 +89,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 throw new FormatException($"The model {nameof(CompactResponseMethodPublicBody)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Model))
-            {
-                writer.WritePropertyName("model"u8);
-                writer.WriteStringValue(Model.Value.ToString());
-            }
-            else
-            {
-                writer.WriteNull("model"u8);
-            }
+            writer.WritePropertyName("model"u8);
+            writer.WriteStringValue(Model);
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
@@ -167,7 +160,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            ModelIdsCompaction? model = default;
+            string model = default;
             BinaryData input = default;
             string previousResponseId = default;
             string instructions = default;
@@ -177,12 +170,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 if (prop.NameEquals("model"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        model = null;
-                        continue;
-                    }
-                    model = new ModelIdsCompaction(prop.Value.GetString());
+                    model = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("input"u8))

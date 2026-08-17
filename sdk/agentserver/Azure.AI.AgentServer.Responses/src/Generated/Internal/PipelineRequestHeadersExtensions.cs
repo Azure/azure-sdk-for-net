@@ -8,7 +8,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.AI.AgentServer.Responses
+namespace Azure.AI.Agents.Contracts.V2
 {
     internal static partial class PipelineRequestHeadersExtensions
     {

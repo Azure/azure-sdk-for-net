@@ -9,7 +9,7 @@ using System.ClientModel;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.AI.AgentServer.Responses
+namespace Azure.AI.Agents.Contracts.V2
 {
     internal static partial class BinaryContentHelper
     {

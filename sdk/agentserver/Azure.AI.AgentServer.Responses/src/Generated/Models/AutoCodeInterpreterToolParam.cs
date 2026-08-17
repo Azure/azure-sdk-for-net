@@ -6,9 +6,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Automatic Code Interpreter Tool Parameters. </summary>
     public partial class AutoCodeInterpreterToolParam

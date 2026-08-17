@@ -7,8 +7,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Code interpreter. </summary>
     public partial class CodeInterpreterTool : Tool
@@ -16,31 +17,37 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="CodeInterpreterTool"/>. </summary>
         public CodeInterpreterTool() : base(ToolType.CodeInterpreter)
         {
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CodeInterpreterTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="container">
         /// The code interpreter container. Can be a container ID or an object that
         /// specifies uploaded file IDs to make available to your code, along with an
         /// optional `memory_limit` setting.
         /// If not provided, the service assumes auto.
         /// </param>
-        internal CodeInterpreterTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, BinaryData container) : base(@type, additionalBinaryDataProperties)
+        internal CodeInterpreterTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, BinaryData container) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
+            ToolConfigs = toolConfigs;
             Container = container;
         }
 
-        /// <summary> Optional user-defined name for this tool or configuration. </summary>
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
         public string Name { get; set; }
 
-        /// <summary> Optional user-defined description for this tool or configuration. </summary>
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
         public string Description { get; set; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary>
         /// The code interpreter container. Can be a container ID or an object that

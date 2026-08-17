@@ -7,9 +7,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> The OutputItemToolSearchCall. </summary>
     public partial class OutputItemToolSearchCall : OutputItem
@@ -20,13 +19,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="execution"> Whether tool search was executed by the server or by the client. </param>
         /// <param name="arguments"> Arguments used for the tool search call. </param>
         /// <param name="status"> The status of the tool search call item that was recorded. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="arguments"/> is null. </exception>
-        public OutputItemToolSearchCall(string id, string callId, ToolSearchExecutionType execution, BinaryData arguments, FunctionCallStatus status) : base(OutputItemType.ToolSearchCall)
+        internal OutputItemToolSearchCall(string id, string callId, ToolSearchExecutionType execution, BinaryData arguments, FunctionCallStatus status) : base(OutputItemType.ToolSearchCall)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(arguments, nameof(arguments));
-
-            Id = id;
+            _id = id;
             CallId = callId;
             Execution = execution;
             Arguments = arguments;
@@ -44,9 +39,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="arguments"> Arguments used for the tool search call. </param>
         /// <param name="status"> The status of the tool search call item that was recorded. </param>
         /// <param name="createdBy"> The identifier of the actor that created the item. </param>
-        internal OutputItemToolSearchCall(OutputItemType @type, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ToolSearchExecutionType execution, BinaryData arguments, FunctionCallStatus status, BinaryData createdBy) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
+        internal OutputItemToolSearchCall(OutputItemType @type, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ToolSearchExecutionType execution, BinaryData arguments, FunctionCallStatus status, string createdBy) : base(@type, id, createdBy, agentReference, responseId, additionalBinaryDataProperties)
         {
-            Id = id;
             CallId = callId;
             Execution = execution;
             Arguments = arguments;
@@ -54,13 +48,13 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The unique ID of the tool search call item. </summary>
-        public string Id { get; set; }
+        public new string Id => _id ?? default;
 
-        /// <summary> Gets or sets the CallId. </summary>
-        public string CallId { get; set; }
+        /// <summary> Gets the CallId. </summary>
+        public string CallId { get; }
 
         /// <summary> Whether tool search was executed by the server or by the client. </summary>
-        public ToolSearchExecutionType Execution { get; set; }
+        public ToolSearchExecutionType Execution { get; }
 
         /// <summary>
         /// Arguments used for the tool search call.
@@ -88,10 +82,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Arguments { get; set; }
+        public BinaryData Arguments { get; }
 
         /// <summary> The status of the tool search call item that was recorded. </summary>
-        public FunctionCallStatus Status { get; set; }
+        public FunctionCallStatus Status { get; }
 
+        /// <summary> The identifier of the actor that created the item. </summary>
+        public new string CreatedBy => _createdBy ?? default;
     }
 }

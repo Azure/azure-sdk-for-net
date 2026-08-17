@@ -6,24 +6,19 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Emitted when a partial code snippet is streamed by the code interpreter. </summary>
     public partial class ResponseCodeInterpreterCallCodeDeltaEvent : ResponseStreamEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseCodeInterpreterCallCodeDeltaEvent"/>. </summary>
-        /// <param name="sequenceNumber"></param>
         /// <param name="outputIndex"> The index of the output item in the response for which the code is being streamed. </param>
         /// <param name="itemId"> The unique identifier of the code interpreter tool call item. </param>
         /// <param name="delta"> The partial code snippet being streamed by the code interpreter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> or <paramref name="delta"/> is null. </exception>
-        public ResponseCodeInterpreterCallCodeDeltaEvent(long sequenceNumber, long outputIndex, string itemId, string delta) : base(ResponseStreamEventType.ResponseCodeInterpreterCallCodeDelta, sequenceNumber)
+        /// <param name="sequenceNumber"> The sequence number of this event, used to order streaming events. </param>
+        internal ResponseCodeInterpreterCallCodeDeltaEvent(long outputIndex, string itemId, string delta, long sequenceNumber) : base(ResponseStreamEventType.ResponseCodeInterpreterCallCodeDelta, sequenceNumber)
         {
-            Argument.AssertNotNull(itemId, nameof(itemId));
-            Argument.AssertNotNull(delta, nameof(delta));
-
             OutputIndex = outputIndex;
             ItemId = itemId;
             Delta = delta;
@@ -31,12 +26,12 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ResponseCodeInterpreterCallCodeDeltaEvent"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="sequenceNumber"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="outputIndex"> The index of the output item in the response for which the code is being streamed. </param>
         /// <param name="itemId"> The unique identifier of the code interpreter tool call item. </param>
         /// <param name="delta"> The partial code snippet being streamed by the code interpreter. </param>
-        internal ResponseCodeInterpreterCallCodeDeltaEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, long outputIndex, string itemId, string delta) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="sequenceNumber"> The sequence number of this event, used to order streaming events. </param>
+        internal ResponseCodeInterpreterCallCodeDeltaEvent(ResponseStreamEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long outputIndex, string itemId, string delta, long sequenceNumber) : base(@type, sequenceNumber, additionalBinaryDataProperties)
         {
             OutputIndex = outputIndex;
             ItemId = itemId;
@@ -44,12 +39,15 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The index of the output item in the response for which the code is being streamed. </summary>
-        public long OutputIndex { get; set; }
+        public long OutputIndex { get; }
 
         /// <summary> The unique identifier of the code interpreter tool call item. </summary>
-        public string ItemId { get; set; }
+        public string ItemId { get; }
 
         /// <summary> The partial code snippet being streamed by the code interpreter. </summary>
-        public string Delta { get; set; }
+        public string Delta { get; }
+
+        /// <summary> The sequence number of this event, used to order streaming events. </summary>
+        public override long SequenceNumber { get; }
     }
 }

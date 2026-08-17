@@ -7,12 +7,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
+    /// <summary>
+    /// The OutputMessageContent.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OutputMessageContentOutputTextContent"/> and <see cref="OutputMessageContentRefusalContent"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownOutputMessageContent))]
-    internal abstract partial class OutputMessageContent : IJsonModel<OutputMessageContent>
+    public abstract partial class OutputMessageContent : IJsonModel<OutputMessageContent>
     {
         /// <summary> Initializes a new instance of <see cref="OutputMessageContent"/> for deserialization. </summary>
         internal OutputMessageContent()
@@ -43,7 +47,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(OutputMessageContent)} does not support writing '{options.Format}' format.");
             }

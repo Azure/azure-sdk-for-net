@@ -8,9 +8,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> A AI Search Index resource. </summary>
     public partial class AISearchIndexResource : IJsonModel<AISearchIndexResource>
@@ -39,7 +39,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(AISearchIndexResource)} does not support writing '{options.Format}' format.");
             }
@@ -82,16 +82,6 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 writer.WritePropertyName("index_name"u8);
                 writer.WriteStringValue(IndexName);
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(QueryType))
             {
@@ -157,8 +147,6 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             string projectConnectionId = default;
             string indexName = default;
-            string name = default;
-            string description = default;
             AzureAISearchQueryType? queryType = default;
             int? topK = default;
             string filter = default;
@@ -174,16 +162,6 @@ namespace Azure.AI.AgentServer.Responses.Models
                 if (prop.NameEquals("index_name"u8))
                 {
                     indexName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("query_type"u8))
@@ -222,8 +200,6 @@ namespace Azure.AI.AgentServer.Responses.Models
             return new AISearchIndexResource(
                 projectConnectionId,
                 indexName,
-                name,
-                description,
                 queryType,
                 topK,
                 filter,

@@ -6,20 +6,16 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Container Reference. </summary>
     public partial class ContainerReferenceResource : FunctionShellCallEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="ContainerReferenceResource"/>. </summary>
         /// <param name="containerId"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerId"/> is null. </exception>
-        public ContainerReferenceResource(string containerId) : base(FunctionShellCallEnvironmentType.ContainerReference)
+        internal ContainerReferenceResource(string containerId) : base(FunctionShellCallEnvironmentType.ContainerReference)
         {
-            Argument.AssertNotNull(containerId, nameof(containerId));
-
             ContainerId = containerId;
         }
 
@@ -32,7 +28,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             ContainerId = containerId;
         }
 
-        /// <summary> Gets or sets the ContainerId. </summary>
-        public string ContainerId { get; set; }
+        /// <summary> Gets the ContainerId. </summary>
+        public string ContainerId { get; }
     }
 }

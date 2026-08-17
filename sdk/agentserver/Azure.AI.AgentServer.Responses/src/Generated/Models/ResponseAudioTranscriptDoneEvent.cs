@@ -7,23 +7,26 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Emitted when the full audio transcript is completed. </summary>
     public partial class ResponseAudioTranscriptDoneEvent : ResponseStreamEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseAudioTranscriptDoneEvent"/>. </summary>
-        /// <param name="sequenceNumber"></param>
-        public ResponseAudioTranscriptDoneEvent(long sequenceNumber) : base(ResponseStreamEventType.ResponseAudioTranscriptDone, sequenceNumber)
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
+        internal ResponseAudioTranscriptDoneEvent(long sequenceNumber) : base(ResponseStreamEventType.ResponseAudioTranscriptDone, sequenceNumber)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponseAudioTranscriptDoneEvent"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="sequenceNumber"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseAudioTranscriptDoneEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
+        internal ResponseAudioTranscriptDoneEvent(ResponseStreamEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long sequenceNumber) : base(@type, sequenceNumber, additionalBinaryDataProperties)
         {
         }
+
+        /// <summary> The sequence number of this event. </summary>
+        public override long SequenceNumber { get; }
     }
 }

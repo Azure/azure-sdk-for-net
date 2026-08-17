@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> The ResponseUsageOutputTokensDetails. </summary>
     public partial class ResponseUsageOutputTokensDetails
@@ -17,7 +17,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ResponseUsageOutputTokensDetails"/>. </summary>
         /// <param name="reasoningTokens"></param>
-        public ResponseUsageOutputTokensDetails(long reasoningTokens)
+        internal ResponseUsageOutputTokensDetails(long reasoningTokens)
         {
             ReasoningTokens = reasoningTokens;
         }
@@ -31,7 +31,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the ReasoningTokens. </summary>
-        public long ReasoningTokens { get; set; }
+        /// <summary> Gets the ReasoningTokens. </summary>
+        public long ReasoningTokens { get; }
     }
 }

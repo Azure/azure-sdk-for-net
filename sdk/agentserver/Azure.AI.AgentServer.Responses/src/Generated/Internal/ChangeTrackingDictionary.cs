@@ -8,7 +8,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Azure.AI.AgentServer.Responses
+namespace Azure.AI.Agents.Contracts.V2
 {
     internal partial class ChangeTrackingDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IReadOnlyDictionary<TKey, TValue>
         where TKey : notnull

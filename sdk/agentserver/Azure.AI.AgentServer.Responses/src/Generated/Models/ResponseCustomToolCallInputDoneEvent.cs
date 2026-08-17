@@ -6,24 +6,19 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> ResponseCustomToolCallInputDone. </summary>
     public partial class ResponseCustomToolCallInputDoneEvent : ResponseStreamEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseCustomToolCallInputDoneEvent"/>. </summary>
-        /// <param name="sequenceNumber"></param>
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
         /// <param name="outputIndex"> The index of the output this event applies to. </param>
         /// <param name="itemId"> Unique identifier for the API item associated with this event. </param>
         /// <param name="input"> The complete input data for the custom tool call. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> or <paramref name="input"/> is null. </exception>
-        public ResponseCustomToolCallInputDoneEvent(long sequenceNumber, long outputIndex, string itemId, string input) : base(ResponseStreamEventType.ResponseCustomToolCallInputDone, sequenceNumber)
+        internal ResponseCustomToolCallInputDoneEvent(long sequenceNumber, long outputIndex, string itemId, string input) : base(ResponseStreamEventType.ResponseCustomToolCallInputDone, sequenceNumber)
         {
-            Argument.AssertNotNull(itemId, nameof(itemId));
-            Argument.AssertNotNull(input, nameof(input));
-
             OutputIndex = outputIndex;
             ItemId = itemId;
             Input = input;
@@ -31,25 +26,28 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ResponseCustomToolCallInputDoneEvent"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="sequenceNumber"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
         /// <param name="outputIndex"> The index of the output this event applies to. </param>
         /// <param name="itemId"> Unique identifier for the API item associated with this event. </param>
         /// <param name="input"> The complete input data for the custom tool call. </param>
-        internal ResponseCustomToolCallInputDoneEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, long outputIndex, string itemId, string input) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        internal ResponseCustomToolCallInputDoneEvent(ResponseStreamEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long sequenceNumber, long outputIndex, string itemId, string input) : base(@type, sequenceNumber, additionalBinaryDataProperties)
         {
             OutputIndex = outputIndex;
             ItemId = itemId;
             Input = input;
         }
 
+        /// <summary> The sequence number of this event. </summary>
+        public override long SequenceNumber { get; }
+
         /// <summary> The index of the output this event applies to. </summary>
-        public long OutputIndex { get; set; }
+        public long OutputIndex { get; }
 
         /// <summary> Unique identifier for the API item associated with this event. </summary>
-        public string ItemId { get; set; }
+        public string ItemId { get; }
 
         /// <summary> The complete input data for the custom tool call. </summary>
-        public string Input { get; set; }
+        public string Input { get; }
     }
 }

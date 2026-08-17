@@ -6,26 +6,20 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Emitted when function-call arguments are finalized. </summary>
     public partial class ResponseFunctionCallArgumentsDoneEvent : ResponseStreamEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseFunctionCallArgumentsDoneEvent"/>. </summary>
-        /// <param name="sequenceNumber"></param>
         /// <param name="itemId"> The ID of the item. </param>
         /// <param name="name"> The name of the function that was called. </param>
         /// <param name="outputIndex"> The index of the output item. </param>
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
         /// <param name="arguments"> The function-call arguments. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemId"/>, <paramref name="name"/> or <paramref name="arguments"/> is null. </exception>
-        public ResponseFunctionCallArgumentsDoneEvent(long sequenceNumber, string itemId, string name, long outputIndex, string arguments) : base(ResponseStreamEventType.ResponseFunctionCallArgumentsDone, sequenceNumber)
+        internal ResponseFunctionCallArgumentsDoneEvent(string itemId, string name, long outputIndex, long sequenceNumber, string arguments) : base(ResponseStreamEventType.ResponseFunctionCallArgumentsDone, sequenceNumber)
         {
-            Argument.AssertNotNull(itemId, nameof(itemId));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(arguments, nameof(arguments));
-
             ItemId = itemId;
             Name = name;
             OutputIndex = outputIndex;
@@ -34,13 +28,13 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ResponseFunctionCallArgumentsDoneEvent"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="sequenceNumber"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The ID of the item. </param>
         /// <param name="name"> The name of the function that was called. </param>
         /// <param name="outputIndex"> The index of the output item. </param>
+        /// <param name="sequenceNumber"> The sequence number of this event. </param>
         /// <param name="arguments"> The function-call arguments. </param>
-        internal ResponseFunctionCallArgumentsDoneEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, string name, long outputIndex, string arguments) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        internal ResponseFunctionCallArgumentsDoneEvent(ResponseStreamEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, string name, long outputIndex, long sequenceNumber, string arguments) : base(@type, sequenceNumber, additionalBinaryDataProperties)
         {
             ItemId = itemId;
             Name = name;
@@ -49,15 +43,18 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The ID of the item. </summary>
-        public string ItemId { get; set; }
+        public string ItemId { get; }
 
         /// <summary> The name of the function that was called. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> The index of the output item. </summary>
-        public long OutputIndex { get; set; }
+        public long OutputIndex { get; }
+
+        /// <summary> The sequence number of this event. </summary>
+        public override long SequenceNumber { get; }
 
         /// <summary> The function-call arguments. </summary>
-        public string Arguments { get; set; }
+        public string Arguments { get; }
     }
 }

@@ -8,9 +8,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> A tool for integrating memories into the agent. </summary>
     public partial class MemorySearchPreviewTool : Tool, IJsonModel<MemorySearchPreviewTool>
@@ -44,7 +44,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(MemorySearchPreviewTool)} does not support writing '{options.Format}' format.");
             }
@@ -79,16 +79,6 @@ namespace Azure.AI.AgentServer.Responses.Models
                 throw new FormatException($"The model {nameof(MemorySearchPreviewTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
             writer.WritePropertyName("memory_store_name"u8);
             writer.WriteStringValue(MemoryStoreName);
             writer.WritePropertyName("scope"u8);
@@ -132,8 +122,6 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string name = default;
-            string description = default;
             string memoryStoreName = default;
             string scope = default;
             MemorySearchOptions searchOptions = default;
@@ -143,16 +131,6 @@ namespace Azure.AI.AgentServer.Responses.Models
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ToolType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("memory_store_name"u8))
@@ -191,8 +169,6 @@ namespace Azure.AI.AgentServer.Responses.Models
             return new MemorySearchPreviewTool(
                 @type,
                 additionalBinaryDataProperties,
-                name,
-                description,
                 memoryStoreName,
                 scope,
                 searchOptions,

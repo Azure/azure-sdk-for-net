@@ -6,42 +6,41 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Emitted when a web search call is completed. </summary>
     public partial class ResponseWebSearchCallCompletedEvent : ResponseStreamEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseWebSearchCallCompletedEvent"/>. </summary>
-        /// <param name="sequenceNumber"></param>
         /// <param name="outputIndex"> The index of the output item that the web search call is associated with. </param>
         /// <param name="itemId"> Unique ID for the output item associated with the web search call. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> is null. </exception>
-        public ResponseWebSearchCallCompletedEvent(long sequenceNumber, long outputIndex, string itemId) : base(ResponseStreamEventType.ResponseWebSearchCallCompleted, sequenceNumber)
+        /// <param name="sequenceNumber"> The sequence number of the web search call being processed. </param>
+        internal ResponseWebSearchCallCompletedEvent(long outputIndex, string itemId, long sequenceNumber) : base(ResponseStreamEventType.ResponseWebSearchCallCompleted, sequenceNumber)
         {
-            Argument.AssertNotNull(itemId, nameof(itemId));
-
             OutputIndex = outputIndex;
             ItemId = itemId;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponseWebSearchCallCompletedEvent"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="sequenceNumber"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="outputIndex"> The index of the output item that the web search call is associated with. </param>
         /// <param name="itemId"> Unique ID for the output item associated with the web search call. </param>
-        internal ResponseWebSearchCallCompletedEvent(ResponseStreamEventType @type, long sequenceNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, long outputIndex, string itemId) : base(@type, sequenceNumber, additionalBinaryDataProperties)
+        /// <param name="sequenceNumber"> The sequence number of the web search call being processed. </param>
+        internal ResponseWebSearchCallCompletedEvent(ResponseStreamEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long outputIndex, string itemId, long sequenceNumber) : base(@type, sequenceNumber, additionalBinaryDataProperties)
         {
             OutputIndex = outputIndex;
             ItemId = itemId;
         }
 
         /// <summary> The index of the output item that the web search call is associated with. </summary>
-        public long OutputIndex { get; set; }
+        public long OutputIndex { get; }
 
         /// <summary> Unique ID for the output item associated with the web search call. </summary>
-        public string ItemId { get; set; }
+        public string ItemId { get; }
+
+        /// <summary> The sequence number of the web search call being processed. </summary>
+        public override long SequenceNumber { get; }
     }
 }

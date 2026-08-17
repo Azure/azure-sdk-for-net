@@ -8,9 +8,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
     public partial class BrowserAutomationPreviewTool : Tool, IJsonModel<BrowserAutomationPreviewTool>
@@ -44,7 +44,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(BrowserAutomationPreviewTool)} does not support writing '{options.Format}' format.");
             }
@@ -79,16 +79,6 @@ namespace Azure.AI.AgentServer.Responses.Models
                 throw new FormatException($"The model {nameof(BrowserAutomationPreviewTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
             writer.WritePropertyName("browser_automation_preview"u8);
             writer.WriteObjectValue(BrowserAutomationPreview, options);
         }
@@ -120,24 +110,12 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string name = default;
-            string description = default;
             BrowserAutomationToolParameters browserAutomationPreview = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ToolType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("browser_automation_preview"u8))
@@ -150,7 +128,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BrowserAutomationPreviewTool(@type, additionalBinaryDataProperties, name, description, browserAutomationPreview);
+            return new BrowserAutomationPreviewTool(@type, additionalBinaryDataProperties, browserAutomationPreview);
         }
     }
 }

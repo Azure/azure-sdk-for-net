@@ -6,9 +6,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> The ResponseReasoningSummaryPartDoneEventPart. </summary>
     public partial class ResponseReasoningSummaryPartDoneEventPart
@@ -18,11 +17,8 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ResponseReasoningSummaryPartDoneEventPart"/>. </summary>
         /// <param name="text"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public ResponseReasoningSummaryPartDoneEventPart(string text)
+        internal ResponseReasoningSummaryPartDoneEventPart(string text)
         {
-            Argument.AssertNotNull(text, nameof(text));
-
             Text = text;
         }
 
@@ -40,7 +36,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Gets the Type. </summary>
         public string Type { get; } = "summary_text";
 
-        /// <summary> Gets or sets the Text. </summary>
-        public string Text { get; set; }
+        /// <summary> Gets the Text. </summary>
+        public string Text { get; }
     }
 }

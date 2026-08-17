@@ -8,9 +8,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Message. </summary>
     public partial class ItemFieldMessage : ItemField, IJsonModel<ItemFieldMessage>
@@ -44,7 +44,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(ItemFieldMessage)} does not support writing '{options.Format}' format.");
             }
@@ -79,10 +79,6 @@ namespace Azure.AI.AgentServer.Responses.Models
                 throw new FormatException($"The model {nameof(ItemFieldMessage)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
-            writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToSerialString());
             writer.WritePropertyName("role"u8);
             writer.WriteStringValue(Role.ToSerialString());
             writer.WritePropertyName("content"u8);
@@ -96,6 +92,16 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 writer.WritePropertyName("phase"u8);
                 writer.WriteStringValue(Phase.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
         }
 
@@ -126,26 +132,16 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             ItemFieldType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string id = default;
-            MessageStatus status = default;
             MessageRole role = default;
             IList<MessageContent> content = default;
             MessagePhase? phase = default;
+            string id = default;
+            MessageStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ItemFieldType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("status"u8))
-                {
-                    status = prop.Value.GetString().ToMessageStatus();
                     continue;
                 }
                 if (prop.NameEquals("role"u8))
@@ -173,6 +169,20 @@ namespace Azure.AI.AgentServer.Responses.Models
                     phase = prop.Value.GetString().ToMessagePhase();
                     continue;
                 }
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("status"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    status = prop.Value.GetString().ToMessageStatus();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -181,11 +191,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             return new ItemFieldMessage(
                 @type,
                 additionalBinaryDataProperties,
-                id,
-                status,
                 role,
                 content,
-                phase);
+                phase,
+                id,
+                status);
         }
     }
 }

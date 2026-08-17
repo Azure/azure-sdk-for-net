@@ -6,9 +6,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Security details for OpenApi project connection authentication. </summary>
     public partial class OpenApiProjectConnectionAuthDetails : OpenApiAuthDetails

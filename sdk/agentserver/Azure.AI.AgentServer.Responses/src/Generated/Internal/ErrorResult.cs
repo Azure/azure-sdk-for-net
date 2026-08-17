@@ -7,7 +7,7 @@
 using System.ClientModel;
 using System.ClientModel.Primitives;
 
-namespace Azure.AI.AgentServer.Responses
+namespace Azure.AI.Agents.Contracts.V2
 {
     internal partial class ErrorResult<T> : ClientResult<T>
     {

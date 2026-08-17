@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Custom tool call output. </summary>
     public partial class ItemFieldCustomToolCallOutput : ItemField

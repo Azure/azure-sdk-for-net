@@ -8,16 +8,17 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary>
     /// The OutputItem.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StructuredOutputsOutputItem"/>, <see cref="WorkflowActionOutputItem"/>, <see cref="OAuthConsentRequestOutputItem"/>, <see cref="MemorySearchToolCallItemResource"/>, <see cref="BingGroundingToolCall"/>, <see cref="BingGroundingToolCallOutput"/>, <see cref="SharepointGroundingToolCall"/>, <see cref="SharepointGroundingToolCallOutput"/>, <see cref="AzureAISearchToolCall"/>, <see cref="AzureAISearchToolCallOutput"/>, <see cref="BingCustomSearchToolCall"/>, <see cref="BingCustomSearchToolCallOutput"/>, <see cref="OpenApiToolCall"/>, <see cref="OpenApiToolCallOutput"/>, <see cref="BrowserAutomationToolCall"/>, <see cref="BrowserAutomationToolCallOutput"/>, <see cref="FabricDataAgentToolCall"/>, <see cref="FabricDataAgentToolCallOutput"/>, <see cref="AzureFunctionToolCall"/>, <see cref="AzureFunctionToolCallOutput"/>, <see cref="A2AToolCall"/>, <see cref="A2AToolCallOutput"/>, <see cref="OutputItemCustomToolCall"/>, <see cref="OutputItemCustomToolCallOutput"/>, <see cref="OutputItemFileSearchToolCall"/>, <see cref="OutputItemFunctionToolCall"/>, <see cref="OutputItemFunctionToolCallOutput"/>, <see cref="OutputItemWebSearchToolCall"/>, <see cref="OutputItemComputerToolCall"/>, <see cref="OutputItemComputerToolCallOutput"/>, <see cref="OutputItemReasoningItem"/>, <see cref="OutputItemToolSearchCall"/>, <see cref="OutputItemToolSearchOutput"/>, <see cref="OutputItemCompactionBody"/>, <see cref="OutputItemImageGenToolCall"/>, <see cref="OutputItemCodeInterpreterToolCall"/>, <see cref="OutputItemLocalShellToolCall"/>, <see cref="OutputItemLocalShellToolCallOutput"/>, <see cref="OutputItemFunctionShellCall"/>, <see cref="OutputItemFunctionShellCallOutput"/>, <see cref="OutputItemApplyPatchToolCall"/>, <see cref="OutputItemApplyPatchToolCallOutput"/>, <see cref="OutputItemMcpToolCall"/>, <see cref="OutputItemMcpListTools"/>, <see cref="OutputItemMcpApprovalRequest"/>, <see cref="OutputItemMcpApprovalResponseResource"/>, and <see cref="OutputItemMessage"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OutputItemRemoteToolCall"/>, <see cref="OutputItemRemoteToolCallOutput"/>, <see cref="OutputItemReference"/>, <see cref="StructuredOutputsOutputItem"/>, <see cref="WorkflowActionOutputItem"/>, <see cref="OAuthConsentRequestOutputItem"/>, <see cref="BingGroundingToolCall"/>, <see cref="BingGroundingToolCallOutput"/>, <see cref="SharepointGroundingToolCall"/>, <see cref="SharepointGroundingToolCallOutput"/>, <see cref="AzureAISearchToolCall"/>, <see cref="AzureAISearchToolCallOutput"/>, <see cref="BingCustomSearchToolCall"/>, <see cref="BingCustomSearchToolCallOutput"/>, <see cref="OpenApiToolCall"/>, <see cref="OpenApiToolCallOutput"/>, <see cref="BrowserAutomationToolCall"/>, <see cref="BrowserAutomationToolCallOutput"/>, <see cref="FabricDataAgentToolCall"/>, <see cref="FabricDataAgentToolCallOutput"/>, <see cref="AzureFunctionToolCall"/>, <see cref="AzureFunctionToolCallOutput"/>, <see cref="A2AToolCall"/>, <see cref="A2AToolCallOutput"/>, <see cref="MemorySearchToolCall"/>, <see cref="MemoryCommandToolCall"/>, <see cref="MemoryCommandToolCallOutput"/>, <see cref="CustomToolCallResource"/>, <see cref="CustomToolCallOutputResource"/>, <see cref="OutputItemOutputMessage"/>, <see cref="OutputItemFileSearchToolCall"/>, <see cref="OutputItemFunctionToolCall"/>, <see cref="OutputItemFunctionToolCallOutput"/>, <see cref="OutputItemWebSearchToolCall"/>, <see cref="OutputItemComputerToolCall"/>, <see cref="OutputItemComputerToolCallOutput"/>, <see cref="OutputItemReasoningItem"/>, <see cref="OutputItemToolSearchCall"/>, <see cref="OutputItemToolSearchOutput"/>, <see cref="OutputItemCompactionBody"/>, <see cref="OutputItemImageGenToolCall"/>, <see cref="OutputItemCodeInterpreterToolCall"/>, <see cref="OutputItemLocalShellToolCall"/>, <see cref="OutputItemLocalShellToolCallOutput"/>, <see cref="OutputItemFunctionShellCall"/>, <see cref="OutputItemFunctionShellCallOutput"/>, <see cref="OutputItemApplyPatchToolCall"/>, <see cref="OutputItemApplyPatchToolCallOutput"/>, <see cref="OutputItemMcpToolCall"/>, <see cref="OutputItemMcpListTools"/>, <see cref="OutputItemMcpApprovalRequest"/>, <see cref="OutputItemMcpApprovalResponseResource"/>, and <see cref="OutputItemMessage"/>.
     /// </summary>
     public abstract partial class OutputItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected string _id;
         private protected BinaryData _createdBy;
 
         /// <summary> Initializes a new instance of <see cref="OutputItem"/>. </summary>
@@ -29,13 +30,15 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="OutputItem"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="id"></param>
         /// <param name="createdBy"> The information about the creator of the item. </param>
         /// <param name="agentReference"> The agent that created the item. </param>
         /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OutputItem(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OutputItem(OutputItemType @type, string id, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
+            Id = id;
             CreatedBy = createdBy;
             AgentReference = agentReference;
             ResponseId = responseId;
@@ -44,6 +47,9 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Gets or sets the Type. </summary>
         internal OutputItemType Type { get; set; }
+
+        /// <summary> Gets the Id. </summary>
+        public string Id { get; }
 
         /// <summary>
         /// The information about the creator of the item
@@ -84,12 +90,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData CreatedBy { get; set; }
+        public BinaryData CreatedBy { get; }
 
         /// <summary> The agent that created the item. </summary>
-        public AgentReference AgentReference { get; set; }
+        public AgentReference AgentReference { get; }
 
         /// <summary> The response on which the item is created. </summary>
-        public string ResponseId { get; set; }
+        public string ResponseId { get; }
     }
 }

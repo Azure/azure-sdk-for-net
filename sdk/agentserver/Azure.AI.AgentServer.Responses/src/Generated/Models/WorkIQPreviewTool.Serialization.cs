@@ -8,9 +8,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.Agents.Contracts.V2;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> A WorkIQ server-side tool. </summary>
     public partial class WorkIQPreviewTool : Tool, IJsonModel<WorkIQPreviewTool>
@@ -44,7 +44,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsContractsV2Context.Default);
                 default:
                     throw new FormatException($"The model {nameof(WorkIQPreviewTool)} does not support writing '{options.Format}' format.");
             }
@@ -79,8 +79,8 @@ namespace Azure.AI.AgentServer.Responses.Models
                 throw new FormatException($"The model {nameof(WorkIQPreviewTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("work_iq_preview"u8);
-            writer.WriteObjectValue(WorkIqPreview, options);
+            writer.WritePropertyName("project_connection_id"u8);
+            writer.WriteStringValue(ProjectConnectionId);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -110,7 +110,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            WorkIQPreviewToolParameters workIqPreview = default;
+            string projectConnectionId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -118,9 +118,9 @@ namespace Azure.AI.AgentServer.Responses.Models
                     @type = new ToolType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("work_iq_preview"u8))
+                if (prop.NameEquals("project_connection_id"u8))
                 {
-                    workIqPreview = WorkIQPreviewToolParameters.DeserializeWorkIQPreviewToolParameters(prop.Value, options);
+                    projectConnectionId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -128,7 +128,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WorkIQPreviewTool(@type, additionalBinaryDataProperties, workIqPreview);
+            return new WorkIQPreviewTool(@type, additionalBinaryDataProperties, projectConnectionId);
         }
     }
 }

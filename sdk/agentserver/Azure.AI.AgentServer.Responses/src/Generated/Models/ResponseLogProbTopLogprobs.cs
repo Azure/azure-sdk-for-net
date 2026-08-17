@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> The ResponseLogProbTopLogprobs. </summary>
     public partial class ResponseLogProbTopLogprobs
@@ -16,7 +16,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResponseLogProbTopLogprobs"/>. </summary>
-        public ResponseLogProbTopLogprobs()
+        internal ResponseLogProbTopLogprobs()
         {
         }
 
@@ -31,10 +31,10 @@ namespace Azure.AI.AgentServer.Responses.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the Token. </summary>
-        public string Token { get; set; }
+        /// <summary> Gets the Token. </summary>
+        public string Token { get; }
 
-        /// <summary> Gets or sets the Logprob. </summary>
-        public double? Logprob { get; set; }
+        /// <summary> Gets the Logprob. </summary>
+        public double? Logprob { get; }
     }
 }

@@ -4,7 +4,7 @@
 
 #nullable disable
 
-namespace Azure.AI.AgentServer.Responses.Models
+namespace Azure.AI.Agents.Contracts.V2.Models
 {
     /// <summary> Status values reported for shell tool calls. </summary>
     public enum FunctionShellCallItemStatus
