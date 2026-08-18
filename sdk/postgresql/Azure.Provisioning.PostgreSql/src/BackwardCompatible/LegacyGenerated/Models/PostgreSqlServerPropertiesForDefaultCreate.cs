@@ -11,6 +11,8 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// The properties used to create a new server.
 /// </summary>
+[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+[System.Obsolete("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
 public partial class PostgreSqlServerPropertiesForDefaultCreate : PostgreSqlServerPropertiesForCreate
 {
     /// <summary>

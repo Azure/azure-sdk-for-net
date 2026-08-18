@@ -10,6 +10,16 @@ namespace Azure.Provisioning.PostgreSql;
 
 public partial class PostgreSqlFlexibleServersPrivateEndpointConnection
 {
+    public static partial class ResourceVersions
+    {
+        /// <summary> API version "2024-08-01". </summary>
+        public static readonly string V2024_08_01 = "2024-08-01";
+        /// <summary> API version "2022-12-01". </summary>
+        public static readonly string V2022_12_01 = "2022-12-01";
+        /// <summary> API version "2021-06-01". </summary>
+        public static readonly string V2021_06_01 = "2021-06-01";
+    }
+
     private PostgreSqlFlexibleServersPrivateLinkServiceConnectionState _connectionState;
     private BicepValue<PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState> _provisioningState;
 

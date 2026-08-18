@@ -6,6 +6,8 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// Specifies the state of the policy, whether it is enabled or disabled.
 /// </summary>
+[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+[System.Obsolete("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
 public enum PostgreSqlServerSecurityAlertPolicyState
 {
     /// <summary>

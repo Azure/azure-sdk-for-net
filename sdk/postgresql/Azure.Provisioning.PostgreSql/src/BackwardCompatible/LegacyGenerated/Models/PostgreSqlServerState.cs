@@ -6,6 +6,8 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// A state of a server that is visible to user.
 /// </summary>
+[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+[System.Obsolete("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
 public enum PostgreSqlServerState
 {
     /// <summary>

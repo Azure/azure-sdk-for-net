@@ -12,6 +12,8 @@ namespace Azure.Provisioning.PostgreSql;
 /// The properties used to create a new server by restoring to a different
 /// region from a geo replicated backup.
 /// </summary>
+[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+[System.Obsolete("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
 public partial class PostgreSqlServerPropertiesForGeoRestore : PostgreSqlServerPropertiesForCreate
 {
     /// <summary>

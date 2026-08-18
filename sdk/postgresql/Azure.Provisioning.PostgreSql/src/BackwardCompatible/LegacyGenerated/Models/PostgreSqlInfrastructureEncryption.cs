@@ -8,6 +8,8 @@ namespace Azure.Provisioning.PostgreSql;
 /// algorithm which gives additional data protection. Value is optional but if
 /// passed in, must be &apos;Disabled&apos; or &apos;Enabled&apos;.
 /// </summary>
+[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+[System.Obsolete("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
 public enum PostgreSqlInfrastructureEncryption
 {
     /// <summary>
