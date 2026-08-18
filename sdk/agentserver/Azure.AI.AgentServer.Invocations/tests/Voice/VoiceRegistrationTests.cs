@@ -3,6 +3,7 @@
 
 using System.Net.WebSockets;
 using System.Text;
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Invocations.Voice;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,6 +39,98 @@ public class VoiceRegistrationTests
         Assert.That(
             () => services.AddVoice<TestVoiceHandler>(),
             Throws.TypeOf<InvalidOperationException>());
+    }
+
+    [TestCase(InvocationsRegistration.Generic)]
+    [TestCase(InvocationsRegistration.Instance)]
+    [TestCase(InvocationsRegistration.Factory)]
+    public void AddVoiceThenAddInvocationsRejectsBeforeMutatingServices(
+        InvocationsRegistration registration)
+    {
+        var builder = AgentHost.CreateBuilder();
+        builder.AddVoice<TestVoiceHandler>();
+        var servicesBeforeConflict = builder.Services.ToArray();
+
+        Assert.That(
+            () => RegisterInvocations(builder, registration),
+            Throws.TypeOf<InvalidOperationException>());
+        Assert.That(
+            builder.Services.ToArray(),
+            Is.EqualTo(servicesBeforeConflict),
+            "Rejected protocol composition must not leave partial service registrations.");
+    }
+
+    [TestCase(InvocationsRegistration.Generic)]
+    [TestCase(InvocationsRegistration.Instance)]
+    [TestCase(InvocationsRegistration.Factory)]
+    public void AddInvocationsThenAddVoiceRejectsBeforeMutatingServices(
+        InvocationsRegistration registration)
+    {
+        var builder = AgentHost.CreateBuilder();
+        RegisterInvocations(builder, registration);
+        var servicesBeforeConflict = builder.Services.ToArray();
+
+        Assert.That(
+            () => builder.AddVoice<TestVoiceHandler>(),
+            Throws.TypeOf<InvalidOperationException>());
+        Assert.That(
+            builder.Services.ToArray(),
+            Is.EqualTo(servicesBeforeConflict),
+            "Rejected protocol composition must not leave partial service registrations.");
+    }
+
+    [Test]
+    public void AddInvocationsDoesNotRejectNonVoiceHandlerRegistration()
+    {
+        var builder = AgentHost.CreateBuilder();
+        builder.Services.AddScoped<InvocationHandler, RawHandler>();
+
+        Assert.That(
+            () => builder.AddInvocations<RawHandler>(),
+            Throws.Nothing);
+    }
+
+    [Test]
+    public async Task RejectedInvocationsCompositionLeavesVoiceEndpointRunnable()
+    {
+        RouteSelectedVoiceHandler.Reset();
+        var builder = AgentHost.CreateBuilder();
+        builder.WebApplicationBuilder.WebHost.UseTestServer();
+        builder.AddVoice<RouteSelectedVoiceHandler>();
+        Assert.That(
+            () => builder.AddInvocations<RawHandler>(),
+            Throws.TypeOf<InvalidOperationException>());
+
+        await using var app = builder.Build().App;
+        await app.StartAsync();
+        using var webSocket = await ConnectAsync(app);
+        await SendSessionStartAsync(webSocket);
+        await RouteSelectedVoiceHandler.Selected.Task.WaitAsync(TestTimeout);
+        await webSocket.CloseOutputAsync(
+            WebSocketCloseStatus.NormalClosure,
+            "done",
+            CancellationToken.None);
+    }
+
+    [Test]
+    public async Task RejectedVoiceCompositionLeavesInvocationsEndpointRunnable()
+    {
+        var builder = AgentHost.CreateBuilder();
+        builder.WebApplicationBuilder.WebHost.UseTestServer();
+        builder.AddInvocations(new RawHandler());
+        Assert.That(
+            () => builder.AddVoice<TestVoiceHandler>(),
+            Throws.TypeOf<InvalidOperationException>());
+
+        await using var app = builder.Build().App;
+        await app.StartAsync();
+        using var response = await app.GetTestClient().PostAsync(
+            "/invocations",
+            new StringContent("{}"));
+
+        Assert.That(
+            response.StatusCode,
+            Is.EqualTo(System.Net.HttpStatusCode.OK));
     }
 
     [Test]
@@ -143,6 +236,33 @@ public class VoiceRegistrationTests
         }
         app.MapInvocationsServer();
         return app;
+    }
+
+    private static void RegisterInvocations(
+        AgentHostBuilder builder,
+        InvocationsRegistration registration)
+    {
+        switch (registration)
+        {
+            case InvocationsRegistration.Generic:
+                builder.AddInvocations<RawHandler>();
+                break;
+            case InvocationsRegistration.Instance:
+                builder.AddInvocations(new RawHandler());
+                break;
+            case InvocationsRegistration.Factory:
+                builder.AddInvocations(_ => new RawHandler());
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(registration));
+        }
+    }
+
+    public enum InvocationsRegistration
+    {
+        Generic,
+        Instance,
+        Factory,
     }
 
     private static async Task<WebSocket> ConnectAsync(

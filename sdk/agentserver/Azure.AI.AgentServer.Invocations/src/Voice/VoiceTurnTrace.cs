@@ -283,14 +283,10 @@ public class VoiceTurnTrace : IDisposable
             activity.SetTag("gen_ai.response.id", result.ResponseId);
         }
 
-        if (result.Outcome is VoiceTurnOutcome.Response or
-            VoiceTurnOutcome.None or
-            VoiceTurnOutcome.Cancelled or
-            VoiceTurnOutcome.EndCall)
-        {
-            activity.SetStatus(ActivityStatusCode.Ok);
-        }
-        else
+        if (result.Outcome is not VoiceTurnOutcome.Response and
+            not VoiceTurnOutcome.None and
+            not VoiceTurnOutcome.Cancelled and
+            not VoiceTurnOutcome.EndCall)
         {
             activity.SetStatus(ActivityStatusCode.Error);
             activity.SetTag("error.type", outcome);

@@ -112,7 +112,54 @@ public class VoiceTurnTracingRedTests
             Assert.That(activity.GetTagItem("bridge.outcome"), Is.EqualTo("response"));
             Assert.That(activity.GetTagItem("bridge.output.item_count"), Is.EqualTo(2));
             Assert.That(activity.GetTagItem("gen_ai.response.id"), Is.EqualTo("response_real"));
-            Assert.That(activity.Status, Is.EqualTo(ActivityStatusCode.Ok));
+            Assert.That(activity.Status, Is.EqualTo(ActivityStatusCode.Unset));
+        });
+    }
+
+    [TestCase(VoiceTurnOutcome.Response)]
+    [TestCase(VoiceTurnOutcome.None)]
+    [TestCase(VoiceTurnOutcome.Cancelled)]
+    [TestCase(VoiceTurnOutcome.EndCall)]
+    public void SuccessfulCompletion_DoesNotOverwriteExistingErrorStatus(
+        VoiceTurnOutcome outcome)
+    {
+        var stopped = new ConcurrentQueue<Activity>();
+        using var listener = CreateListener(stoppedActivities: stopped);
+        var session = CreateSession(CreateConnectionContext(recorded: true));
+        using var turn = session.StartTurn(VoiceTurnOrigin.User, inputCount: 1);
+
+        using (turn.Activate())
+        {
+            Assert.That(Activity.Current?.OperationName, Is.EqualTo("invoke_agent"));
+            Activity.Current!.SetStatus(
+                ActivityStatusCode.Error,
+                "downstream instrumentation failure");
+        }
+        var result = outcome switch
+        {
+            VoiceTurnOutcome.Response => new VoiceTurnResult(outcome, 1, "response_after_error"),
+            VoiceTurnOutcome.None => new VoiceTurnResult(outcome, 0),
+            _ => new VoiceTurnResult(outcome),
+        };
+        turn.Complete(result);
+        var expectedOutcome = outcome switch
+        {
+            VoiceTurnOutcome.Response => "response",
+            VoiceTurnOutcome.None => "none",
+            VoiceTurnOutcome.Cancelled => "cancelled",
+            VoiceTurnOutcome.EndCall => "end_call",
+            _ => throw new ArgumentOutOfRangeException(nameof(outcome)),
+        };
+
+        var activity = stopped.Single(IsTargetTurn);
+        Assert.Multiple(() =>
+        {
+            Assert.That(stopped.Count(IsTargetTurn), Is.EqualTo(1));
+            Assert.That(activity.Status, Is.EqualTo(ActivityStatusCode.Error));
+            Assert.That(
+                activity.StatusDescription,
+                Is.EqualTo("downstream instrumentation failure"));
+            Assert.That(activity.GetTagItem("bridge.outcome"), Is.EqualTo(expectedOutcome));
         });
     }
 
