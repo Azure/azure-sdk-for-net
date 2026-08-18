@@ -45,22 +45,5 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> The resource-specific properties for this resource. </summary>
         internal DBSystemUpdateProperties Properties { get; set; }
-
-        /// <summary> The source of the database for creating a new database. </summary>
-        public DBSystemSourceType? DBSystemUpdateSource
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Source;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DBSystemUpdateProperties();
-                }
-                Properties.Source = value;
-            }
-        }
     }
 }

@@ -22,9 +22,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceConnectivityEndpoints"/>. </summary>
+        /// <param name="publicIPAddress"> Public IP Address of this ComputeInstance. </param>
+        /// <param name="privateIPAddress"> Private IP Address of this ComputeInstance (local to the VNET in which the compute instance is deployed). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningComputeInstanceConnectivityEndpoints(IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineLearningComputeInstanceConnectivityEndpoints(string publicIPAddress, string privateIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            PublicIPAddress = publicIPAddress;
+            PrivateIPAddress = privateIPAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
     }

@@ -74,6 +74,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningComputeInstanceConnectivityEndpoints)} does not support writing '{format}' format.");
             }
+            if (options.Format != "W" && Optional.IsDefined(PublicIPAddress))
+            {
+                writer.WritePropertyName("publicIpAddress"u8);
+                writer.WriteStringValue(PublicIPAddress);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
+            {
+                writer.WritePropertyName("privateIpAddress"u8);
+                writer.WriteStringValue(PrivateIPAddress);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -116,15 +126,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            string publicIPAddress = default;
+            string privateIPAddress = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("publicIpAddress"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        publicIPAddress = null;
+                        continue;
+                    }
+                    publicIPAddress = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("privateIpAddress"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        privateIPAddress = null;
+                        continue;
+                    }
+                    privateIPAddress = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MachineLearningComputeInstanceConnectivityEndpoints(additionalBinaryDataProperties);
+            return new MachineLearningComputeInstanceConnectivityEndpoints(publicIPAddress, privateIPAddress, additionalBinaryDataProperties);
         }
     }
 }

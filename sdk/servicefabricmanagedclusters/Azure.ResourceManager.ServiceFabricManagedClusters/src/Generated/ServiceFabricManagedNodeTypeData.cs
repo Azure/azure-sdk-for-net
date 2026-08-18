@@ -844,22 +844,5 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 Properties.IsOutboundOnly = value;
             }
         }
-
-        /// <summary> Specifies whether the node type should use a resilient ephemeral OS disk when using a supported SKU size. A resilient ephemeral OS disk provides improved reliability for ephemeral OS disks by enabling full caching. </summary>
-        public bool? EnableResilientEphemeralOSDisk
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EnableResilientEphemeralOSDisk;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ServiceFabricManagedNodeTypeProperties();
-                }
-                Properties.EnableResilientEphemeralOSDisk = value;
-            }
-        }
     }
 }
