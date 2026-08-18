@@ -13,52 +13,52 @@ using Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Models
 {
-    /// <summary> Properties for HelmRelease objects. </summary>
-    public partial class HelmReleaseProperties : IJsonModel<HelmReleaseProperties>
+    /// <summary> Parameters to reconcile to the Bucket source kind type. </summary>
+    public partial class FluxBucket : IJsonModel<FluxBucket>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HelmReleaseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual FluxBucket PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HelmReleaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FluxBucket>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHelmReleaseProperties(document.RootElement, options);
+                        return DeserializeFluxBucket(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HelmReleaseProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FluxBucket)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HelmReleaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FluxBucket>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerKubernetesConfigurationFluxConfigurationsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HelmReleaseProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FluxBucket)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HelmReleaseProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FluxBucket>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HelmReleaseProperties IPersistableModel<HelmReleaseProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        FluxBucket IPersistableModel<FluxBucket>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HelmReleaseProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FluxBucket>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HelmReleaseProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FluxBucket>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,35 +69,45 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HelmReleaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FluxBucket>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HelmReleaseProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FluxBucket)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(LastRevisionApplied))
+            if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("lastRevisionApplied"u8);
-                writer.WriteNumberValue(LastRevisionApplied.Value);
+                writer.WritePropertyName("url"u8);
+                writer.WriteStringValue(Uri);
             }
-            if (Optional.IsDefined(HelmChartRef))
+            if (Optional.IsDefined(BucketName))
             {
-                writer.WritePropertyName("helmChartRef"u8);
-                writer.WriteObjectValue(HelmChartRef, options);
+                writer.WritePropertyName("bucketName"u8);
+                writer.WriteStringValue(BucketName);
             }
-            if (Optional.IsDefined(FailureCount))
+            if (Optional.IsDefined(IsInsecure))
             {
-                writer.WritePropertyName("failureCount"u8);
-                writer.WriteNumberValue(FailureCount.Value);
+                writer.WritePropertyName("insecure"u8);
+                writer.WriteBooleanValue(IsInsecure.Value);
             }
-            if (Optional.IsDefined(InstallFailureCount))
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
-                writer.WritePropertyName("installFailureCount"u8);
-                writer.WriteNumberValue(InstallFailureCount.Value);
+                writer.WritePropertyName("timeoutInSeconds"u8);
+                writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
-            if (Optional.IsDefined(UpgradeFailureCount))
+            if (Optional.IsDefined(SyncIntervalInSeconds))
             {
-                writer.WritePropertyName("upgradeFailureCount"u8);
-                writer.WriteNumberValue(UpgradeFailureCount.Value);
+                writer.WritePropertyName("syncIntervalInSeconds"u8);
+                writer.WriteNumberValue(SyncIntervalInSeconds.Value);
+            }
+            if (Optional.IsDefined(AccessKey))
+            {
+                writer.WritePropertyName("accessKey"u8);
+                writer.WriteStringValue(AccessKey);
+            }
+            if (Optional.IsDefined(LocalAuthRef))
+            {
+                writer.WritePropertyName("localAuthRef"u8);
+                writer.WriteStringValue(LocalAuthRef);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -118,84 +128,96 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HelmReleaseProperties IJsonModel<HelmReleaseProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        FluxBucket IJsonModel<FluxBucket>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HelmReleaseProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual FluxBucket JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HelmReleaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FluxBucket>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HelmReleaseProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FluxBucket)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHelmReleaseProperties(document.RootElement, options);
+            return DeserializeFluxBucket(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HelmReleaseProperties DeserializeHelmReleaseProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static FluxBucket DeserializeFluxBucket(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            long? lastRevisionApplied = default;
-            FluxObjectReference helmChartRef = default;
-            long? failureCount = default;
-            long? installFailureCount = default;
-            long? upgradeFailureCount = default;
+            string uri = default;
+            string bucketName = default;
+            bool? isInsecure = default;
+            long? timeoutInSeconds = default;
+            long? syncIntervalInSeconds = default;
+            string accessKey = default;
+            string localAuthRef = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("lastRevisionApplied"u8))
+                if (prop.NameEquals("url"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        lastRevisionApplied = null;
-                        continue;
-                    }
-                    lastRevisionApplied = prop.Value.GetInt64();
+                    uri = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("helmChartRef"u8))
+                if (prop.NameEquals("bucketName"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    helmChartRef = FluxObjectReference.DeserializeFluxObjectReference(prop.Value, options);
+                    bucketName = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("failureCount"u8))
+                if (prop.NameEquals("insecure"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        failureCount = null;
                         continue;
                     }
-                    failureCount = prop.Value.GetInt64();
+                    isInsecure = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("installFailureCount"u8))
+                if (prop.NameEquals("timeoutInSeconds"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        installFailureCount = null;
+                        timeoutInSeconds = null;
                         continue;
                     }
-                    installFailureCount = prop.Value.GetInt64();
+                    timeoutInSeconds = prop.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("upgradeFailureCount"u8))
+                if (prop.NameEquals("syncIntervalInSeconds"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        upgradeFailureCount = null;
+                        syncIntervalInSeconds = null;
                         continue;
                     }
-                    upgradeFailureCount = prop.Value.GetInt64();
+                    syncIntervalInSeconds = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("accessKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        accessKey = null;
+                        continue;
+                    }
+                    accessKey = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("localAuthRef"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        localAuthRef = null;
+                        continue;
+                    }
+                    localAuthRef = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -203,12 +225,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HelmReleaseProperties(
-                lastRevisionApplied,
-                helmChartRef,
-                failureCount,
-                installFailureCount,
-                upgradeFailureCount,
+            return new FluxBucket(
+                uri,
+                bucketName,
+                isInsecure,
+                timeoutInSeconds,
+                syncIntervalInSeconds,
+                accessKey,
+                localAuthRef,
                 additionalBinaryDataProperties);
         }
     }

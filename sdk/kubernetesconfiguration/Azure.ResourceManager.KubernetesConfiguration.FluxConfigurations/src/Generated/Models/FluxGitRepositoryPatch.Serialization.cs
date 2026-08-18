@@ -13,52 +13,52 @@ using Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Models
 {
-    /// <summary> Parameters to reconcile to the OCIRepository source kind type. </summary>
-    public partial class OciRepository : IJsonModel<OciRepository>
+    /// <summary> Parameters to reconcile to the GitRepository source kind type. </summary>
+    public partial class FluxGitRepositoryPatch : IJsonModel<FluxGitRepositoryPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OciRepository PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual FluxGitRepositoryPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OciRepository>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FluxGitRepositoryPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOciRepository(document.RootElement, options);
+                        return DeserializeFluxGitRepositoryPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OciRepository)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FluxGitRepositoryPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OciRepository>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FluxGitRepositoryPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerKubernetesConfigurationFluxConfigurationsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OciRepository)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FluxGitRepositoryPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OciRepository>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FluxGitRepositoryPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OciRepository IPersistableModel<OciRepository>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        FluxGitRepositoryPatch IPersistableModel<FluxGitRepositoryPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OciRepository>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FluxGitRepositoryPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OciRepository>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FluxGitRepositoryPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OciRepository>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FluxGitRepositoryPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OciRepository)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FluxGitRepositoryPatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Uri.AbsoluteUri);
+                writer.WriteStringValue(Uri);
             }
             if (Optional.IsDefined(TimeoutInSeconds))
             {
@@ -94,40 +94,30 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 writer.WritePropertyName("repositoryRef"u8);
                 writer.WriteObjectValue(RepositoryRef, options);
             }
-            if (Optional.IsDefined(LayerSelector))
+            if (Optional.IsDefined(SshKnownHosts))
             {
-                writer.WritePropertyName("layerSelector"u8);
-                writer.WriteObjectValue(LayerSelector, options);
+                writer.WritePropertyName("sshKnownHosts"u8);
+                writer.WriteStringValue(SshKnownHosts);
             }
-            if (Optional.IsDefined(Verify))
+            if (Optional.IsDefined(HttpsUser))
             {
-                writer.WritePropertyName("verify"u8);
-                writer.WriteObjectValue(Verify, options);
+                writer.WritePropertyName("httpsUser"u8);
+                writer.WriteStringValue(HttpsUser);
             }
-            if (Optional.IsDefined(IsInsecure))
+            if (Optional.IsDefined(HttpsCACert))
             {
-                writer.WritePropertyName("insecure"u8);
-                writer.WriteBooleanValue(IsInsecure.Value);
-            }
-            if (Optional.IsDefined(UseWorkloadIdentity))
-            {
-                writer.WritePropertyName("useWorkloadIdentity"u8);
-                writer.WriteBooleanValue(UseWorkloadIdentity.Value);
-            }
-            if (Optional.IsDefined(ServiceAccountName))
-            {
-                writer.WritePropertyName("serviceAccountName"u8);
-                writer.WriteStringValue(ServiceAccountName);
-            }
-            if (Optional.IsDefined(TlsConfig))
-            {
-                writer.WritePropertyName("tlsConfig"u8);
-                writer.WriteObjectValue(TlsConfig, options);
+                writer.WritePropertyName("httpsCACert"u8);
+                writer.WriteStringValue(HttpsCACert);
             }
             if (Optional.IsDefined(LocalAuthRef))
             {
                 writer.WritePropertyName("localAuthRef"u8);
                 writer.WriteStringValue(LocalAuthRef);
+            }
+            if (Optional.IsDefined(Provider))
+            {
+                writer.WritePropertyName("provider"u8);
+                writer.WriteStringValue(Provider.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -148,40 +138,38 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OciRepository IJsonModel<OciRepository>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        FluxGitRepositoryPatch IJsonModel<FluxGitRepositoryPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OciRepository JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual FluxGitRepositoryPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OciRepository>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FluxGitRepositoryPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OciRepository)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FluxGitRepositoryPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOciRepository(document.RootElement, options);
+            return DeserializeFluxGitRepositoryPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OciRepository DeserializeOciRepository(JsonElement element, ModelReaderWriterOptions options)
+        internal static FluxGitRepositoryPatch DeserializeFluxGitRepositoryPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Uri uri = default;
+            string uri = default;
             long? timeoutInSeconds = default;
             long? syncIntervalInSeconds = default;
-            OciRepositoryRef repositoryRef = default;
-            FluxLayerSelector layerSelector = default;
-            OciRepositoryVerify verify = default;
-            bool? isInsecure = default;
-            bool? useWorkloadIdentity = default;
-            string serviceAccountName = default;
-            FluxTlsConfig tlsConfig = default;
+            FluxRepositoryReference repositoryRef = default;
+            string sshKnownHosts = default;
+            string httpsUser = default;
+            string httpsCACert = default;
             string localAuthRef = default;
+            FluxConfigurationProviderType? provider = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -192,7 +180,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                         uri = null;
                         continue;
                     }
-                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    uri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("timeoutInSeconds"u8))
@@ -221,62 +209,37 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    repositoryRef = OciRepositoryRef.DeserializeOciRepositoryRef(prop.Value, options);
+                    repositoryRef = FluxRepositoryReference.DeserializeFluxRepositoryReference(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("layerSelector"u8))
+                if (prop.NameEquals("sshKnownHosts"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        sshKnownHosts = null;
                         continue;
                     }
-                    layerSelector = FluxLayerSelector.DeserializeFluxLayerSelector(prop.Value, options);
+                    sshKnownHosts = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("verify"u8))
+                if (prop.NameEquals("httpsUser"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        httpsUser = null;
                         continue;
                     }
-                    verify = OciRepositoryVerify.DeserializeOciRepositoryVerify(prop.Value, options);
+                    httpsUser = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("insecure"u8))
+                if (prop.NameEquals("httpsCACert"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        httpsCACert = null;
                         continue;
                     }
-                    isInsecure = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("useWorkloadIdentity"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    useWorkloadIdentity = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("serviceAccountName"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        serviceAccountName = null;
-                        continue;
-                    }
-                    serviceAccountName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("tlsConfig"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    tlsConfig = FluxTlsConfig.DeserializeFluxTlsConfig(prop.Value, options);
+                    httpsCACert = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("localAuthRef"u8))
@@ -289,23 +252,31 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     localAuthRef = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("provider"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        provider = null;
+                        continue;
+                    }
+                    provider = new FluxConfigurationProviderType(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OciRepository(
+            return new FluxGitRepositoryPatch(
                 uri,
                 timeoutInSeconds,
                 syncIntervalInSeconds,
                 repositoryRef,
-                layerSelector,
-                verify,
-                isInsecure,
-                useWorkloadIdentity,
-                serviceAccountName,
-                tlsConfig,
+                sshKnownHosts,
+                httpsUser,
+                httpsCACert,
                 localAuthRef,
+                provider,
                 additionalBinaryDataProperties);
         }
     }
