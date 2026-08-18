@@ -12,7 +12,7 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> IP configuration type. </summary>
-    public readonly partial struct IpInterfaceType : IEquatable<IpInterfaceType>
+    public readonly partial struct IPInterfaceType : IEquatable<IPInterfaceType>
     {
         private readonly string _value;
         /// <summary> DHCP configuration. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Static configuration. </summary>
         private const string StaticValue = "Static";
 
-        /// <summary> Initializes a new instance of <see cref="IpInterfaceType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPInterfaceType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public IpInterfaceType(string value)
+        public IPInterfaceType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> DHCP configuration. </summary>
-        public static IpInterfaceType Dhcp { get; } = new IpInterfaceType(DhcpValue);
+        public static IPInterfaceType Dhcp { get; } = new IPInterfaceType(DhcpValue);
 
         /// <summary> Static configuration. </summary>
-        public static IpInterfaceType Static { get; } = new IpInterfaceType(StaticValue);
+        public static IPInterfaceType Static { get; } = new IPInterfaceType(StaticValue);
 
-        /// <summary> Determines if two <see cref="IpInterfaceType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="IPInterfaceType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(IpInterfaceType left, IpInterfaceType right) => left.Equals(right);
+        public static bool operator ==(IPInterfaceType left, IPInterfaceType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="IpInterfaceType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="IPInterfaceType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(IpInterfaceType left, IpInterfaceType right) => !left.Equals(right);
+        public static bool operator !=(IPInterfaceType left, IPInterfaceType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="IpInterfaceType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="IPInterfaceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IpInterfaceType(string value) => new IpInterfaceType(value);
+        public static implicit operator IPInterfaceType(string value) => new IPInterfaceType(value);
 
-        /// <summary> Converts a string to a <see cref="IpInterfaceType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="IPInterfaceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IpInterfaceType?(string value) => value == null ? null : new IpInterfaceType(value);
+        public static implicit operator IPInterfaceType?(string value) => value == null ? null : new IPInterfaceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is IpInterfaceType other && Equals(other);
+        public override bool Equals(object obj) => obj is IPInterfaceType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(IpInterfaceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(IPInterfaceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

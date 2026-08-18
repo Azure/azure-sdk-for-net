@@ -12,23 +12,23 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Represents properties of a os image resource. </summary>
-    public partial class OsImageProperties
+    public partial class OSImageProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OsImageProperties"/>. </summary>
-        internal OsImageProperties()
+        /// <summary> Initializes a new instance of <see cref="OSImageProperties"/>. </summary>
+        internal OSImageProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OsImageProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSImageProperties"/>. </summary>
         /// <param name="validatedSolutionRecipeVersion"> Represents validated solution recipe version of a os image. </param>
         /// <param name="composedImageVersion"> Represents composed image version of a os image. </param>
         /// <param name="composedImageIsoUri"> Represents composed image iso download url of a os image. </param>
         /// <param name="composedImageIsoHash"> Represents composed image iso hash of a os image. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OsImageProperties(string validatedSolutionRecipeVersion, string composedImageVersion, string composedImageIsoUri, string composedImageIsoHash, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OSImageProperties(string validatedSolutionRecipeVersion, string composedImageVersion, string composedImageIsoUri, string composedImageIsoHash, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ValidatedSolutionRecipeVersion = validatedSolutionRecipeVersion;
             ComposedImageVersion = composedImageVersion;

@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="target"> Target operating system to support polymorphic resource. </param>
         /// <param name="osProfile"> Operating system profile. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="osProfile"/> is null. </exception>
-        public ProvisioningContent(ProvisioningOsType target, OsProvisionProfile osProfile)
+        public ProvisioningContent(ProvisioningOSType target, OSProvisionProfile osProfile)
         {
             Argument.AssertNotNull(osProfile, nameof(osProfile));
 
             Target = target;
-            OsProfile = osProfile;
+            OSProfile = osProfile;
             UserDetails = new ChangeTrackingList<HciUserDetails>();
         }
 
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deviceConfiguration"> Device configuration. </param>
         /// <param name="customConfiguration"> Base64 encoded custom configuration for CAPI to use. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProvisioningContent(ProvisioningOsType target, OsProvisionProfile osProfile, IList<HciUserDetails> userDetails, OnboardingConfiguration onboardingConfiguration, TargetDeviceConfiguration deviceConfiguration, string customConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProvisioningContent(ProvisioningOSType target, OSProvisionProfile osProfile, IList<HciUserDetails> userDetails, OnboardingConfiguration onboardingConfiguration, TargetDeviceConfiguration deviceConfiguration, string customConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Target = target;
-            OsProfile = osProfile;
+            OSProfile = osProfile;
             UserDetails = userDetails;
             OnboardingConfiguration = onboardingConfiguration;
             DeviceConfiguration = deviceConfiguration;
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Target operating system to support polymorphic resource. </summary>
         [WirePath("target")]
-        public ProvisioningOsType Target { get; set; }
+        public ProvisioningOSType Target { get; set; }
 
         /// <summary> Operating system profile. </summary>
         [WirePath("osProfile")]
-        public OsProvisionProfile OsProfile { get; set; }
+        public OSProvisionProfile OSProfile { get; set; }
 
         /// <summary> User configuration. </summary>
         [WirePath("userDetails")]
