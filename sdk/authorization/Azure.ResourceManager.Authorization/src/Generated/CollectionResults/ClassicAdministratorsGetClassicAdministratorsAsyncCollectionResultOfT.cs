@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Authorization
     internal partial class ClassicAdministratorsGetClassicAdministratorsAsyncCollectionResultOfT : AsyncPageable<AuthorizationClassicAdministrator>
     {
         private readonly ClassicAdministrators _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ClassicAdministratorsGetClassicAdministratorsAsyncCollectionResultOfT(ClassicAdministrators client, string subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ClassicAdministratorsGetClassicAdministratorsAsyncCollectionResultOfT(ClassicAdministrators client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
