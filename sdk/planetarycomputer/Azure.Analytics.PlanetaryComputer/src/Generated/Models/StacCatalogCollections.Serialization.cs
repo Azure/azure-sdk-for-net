@@ -98,7 +98,7 @@ namespace Azure.Analytics.PlanetaryComputer
             writer.WriteEndArray();
             writer.WritePropertyName("collections"u8);
             writer.WriteStartArray();
-            foreach (StacCollectionResource item in Collections)
+            foreach (StacCollection item in Collections)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -146,7 +146,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 return null;
             }
             IList<StacLink> links = default;
-            IList<StacCollectionResource> collections = default;
+            IList<StacCollection> collections = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -162,10 +162,10 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("collections"u8))
                 {
-                    List<StacCollectionResource> array = new List<StacCollectionResource>();
+                    List<StacCollection> array = new List<StacCollection>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(StacCollectionResource.DeserializeStacCollectionResource(item, options));
+                        array.Add(StacCollection.DeserializeStacCollection(item, options));
                     }
                     collections = array;
                     continue;

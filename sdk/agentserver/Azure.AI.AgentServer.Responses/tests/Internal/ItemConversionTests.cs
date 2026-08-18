@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Internal;
@@ -580,5 +582,47 @@ public class ItemConversionTests
         Assert.That(msg2Out.Id, Is.Not.EqualTo(msg1Out.Id));
         XAssert.StartsWith("msg_", msg1Out.Id);
         XAssert.StartsWith("msg_", msg2Out.Id);
+    }
+
+    [Test]
+    public void ToOutputItem_StripsClientInjectedInternalMetadata()
+    {
+        var message = new ItemMessage(MessageRole.User, BinaryData.FromObjectAsJson("hello"));
+        var raw = ModelReaderWriter.Write(message, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
+        var node = JsonNode.Parse(raw.ToString())!;
+        node["internal_metadata"] = JsonNode.Parse("""{"trace":"client"}""");
+
+        var mutatedInput = ModelReaderWriter.Read<Item>(
+            BinaryData.FromString(node.ToJsonString()),
+            ModelReaderWriterOptions.Json,
+            AzureAIAgentServerResponsesContext.Default);
+
+        var converted = ItemConversion.ToOutputItem(mutatedInput, PartitionKeyHint);
+        var convertedJson = ModelReaderWriter.Write(converted!, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default).ToString();
+
+        Assert.That(convertedJson, Does.Not.Contain("internal_metadata"));
+    }
+
+    [Test]
+    public void ToItem_StripsPersistedInternalMetadataBeforeIngress()
+    {
+        var output = new OutputItemMessage(
+            "msg_1",
+            MessageStatus.Completed,
+            MessageRole.Assistant,
+            Array.Empty<MessageContent>());
+        var raw = ModelReaderWriter.Write(output, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
+        var node = JsonNode.Parse(raw.ToString())!;
+        node["internal_metadata"] = JsonNode.Parse("""{"trace":"persisted"}""");
+
+        var mutatedOutput = ModelReaderWriter.Read<OutputItem>(
+            BinaryData.FromString(node.ToJsonString()),
+            ModelReaderWriterOptions.Json,
+            AzureAIAgentServerResponsesContext.Default);
+
+        var converted = ItemConversion.ToItem(mutatedOutput)!;
+        var convertedJson = ModelReaderWriter.Write(converted, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default).ToString();
+
+        Assert.That(convertedJson, Does.Not.Contain("internal_metadata"));
     }
 }

@@ -316,7 +316,7 @@ public class Sample_ScheduledEvaluations : EvaluationSampleBase
             foreach (ResponseTool agentTool in agentDefinition.Tools)
             {
                 ToolDescription tool = new();
-                if (agentTool is OpenAPITool openAPITool)
+                if (agentTool is OpenApiTool openAPITool)
                 {
                     tool.Name = openAPITool.FunctionDefinition.Name;
                     tool.Description = string.IsNullOrEmpty(openAPITool.FunctionDefinition.Description) ? "No description provided" : openAPITool.FunctionDefinition.Description;

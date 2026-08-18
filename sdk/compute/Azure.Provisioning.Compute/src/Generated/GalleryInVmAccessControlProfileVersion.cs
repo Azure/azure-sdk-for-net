@@ -126,57 +126,6 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the Mode. </summary>
-        public BicepValue<GalleryInVmAccessControlRulesMode> Mode
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Mode;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
-                }
-                Properties.Mode = value;
-            }
-        }
-
-        /// <summary> Gets or sets the DefaultAccess. </summary>
-        public BicepValue<ComputeGalleryEndpointAccess> DefaultAccess
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DefaultAccess;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
-                }
-                Properties.DefaultAccess = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Rules. </summary>
-        public GalleryInVmAccessControlRules Rules
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Rules;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
-                }
-                Properties.Rules = value;
-            }
-        }
-
         /// <summary> Gets or sets the TargetLocations. </summary>
         public BicepList<TargetRegion> TargetLocations
         {
@@ -243,6 +192,57 @@ namespace Azure.Provisioning.Compute
             get
             {
                 return Properties is null ? default : Properties.ReplicationStatus;
+            }
+        }
+
+        /// <summary> Gets or sets the Mode. </summary>
+        public BicepValue<GalleryInVmAccessControlRulesMode> Mode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Mode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
+                }
+                Properties.Mode = value;
+            }
+        }
+
+        /// <summary> Gets or sets the DefaultAccess. </summary>
+        public BicepValue<ComputeGalleryEndpointAccess> DefaultAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
+                }
+                Properties.DefaultAccess = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Rules. </summary>
+        public GalleryInVmAccessControlRules Rules
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Rules;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
+                }
+                Properties.Rules = value;
             }
         }
 

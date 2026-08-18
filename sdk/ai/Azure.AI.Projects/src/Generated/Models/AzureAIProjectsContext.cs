@@ -455,6 +455,12 @@ namespace Azure.AI.Projects
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.PagedRedTeam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(PagedRedTeam))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.PagedRedTeam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.PagedResultWithNextLinkRoutine is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(PagedResultWithNextLinkRoutine))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.PagedResultWithNextLinkRoutine is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.PagedResultWithNextLinkRoutineRun is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(PagedResultWithNextLinkRoutineRun))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.PagedResultWithNextLinkRoutineRun is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.PagedSchedule is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(PagedSchedule))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.PagedSchedule is experimental and may change in future versions.
@@ -551,13 +557,13 @@ namespace Azure.AI.Projects
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.SimpleQnADataGenerationJobOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SimpleQnADataGenerationJobOptions))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.SimpleQnADataGenerationJobOptions is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.SimulationSeedDataGenerationJobOptions is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(SimulationSeedDataGenerationJobOptions))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.SimulationSeedDataGenerationJobOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SummaryTextContent))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.TargetConfig is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(TargetConfig))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.TargetConfig is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.TaskGenerationDataGenerationJobOptions is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(TaskGenerationDataGenerationJobOptions))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.TaskGenerationDataGenerationJobOptions is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.TaxonomyCategory is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(TaxonomyCategory))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.TaxonomyCategory is experimental and may change in future versions.

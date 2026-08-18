@@ -34,14 +34,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="name"> Name of the queryable field. </param>
         /// <param name="definition"> Metadata for the queryable field. </param>
         /// <param name="createIndex"> Whether to create a database index for this field. </param>
-        /// <param name="dataType"> Data type of the queryable field. </param>
+        /// <param name="dataKind"> Data type of the queryable field. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacQueryable(string name, IDictionary<string, BinaryData> definition, bool? createIndex, StacQueryableDefinitionDataType? dataType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacQueryable(string name, IDictionary<string, BinaryData> definition, bool? createIndex, StacQueryableDefinitionDataKind? dataKind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Definition = definition;
             CreateIndex = createIndex;
-            DataType = dataType;
+            DataKind = dataKind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -80,6 +80,6 @@ namespace Azure.Analytics.PlanetaryComputer
         public bool? CreateIndex { get; set; }
 
         /// <summary> Data type of the queryable field. </summary>
-        public StacQueryableDefinitionDataType? DataType { get; set; }
+        public StacQueryableDefinitionDataKind? DataKind { get; set; }
     }
 }

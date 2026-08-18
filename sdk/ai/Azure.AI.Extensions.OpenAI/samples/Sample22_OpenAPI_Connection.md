@@ -26,13 +26,13 @@ string filePath = GetFile();
 AIProjectConnection tripadvisorConnection = projectClient.Connections.GetConnection("tripadvisor");
 OpenApiFunctionDefinition toolDefinition = new(
     name: "tripadvisor",
-    specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+    specification: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
     authentication: new OpenApiProjectConnectionAuthenticationDetails(new OpenApiProjectConnectionSecurityScheme(
         projectConnectionId: tripadvisorConnection.Id
     ))
 );
 toolDefinition.Description = "Trip Advisor API to get travel information.";
-OpenAPITool openapiTool = new(toolDefinition);
+OpenApiTool openapiTool = new(toolDefinition);
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
@@ -50,13 +50,13 @@ string filePath = GetFile();
 AIProjectConnection tripadvisorConnection = await projectClient.Connections.GetConnectionAsync("tripadvisor");
 OpenApiFunctionDefinition toolDefinition = new(
     name: "tripadvisor",
-    specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+    specification: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
     authentication: new OpenApiProjectConnectionAuthenticationDetails(new OpenApiProjectConnectionSecurityScheme(
         projectConnectionId: tripadvisorConnection.Id
     ))
 );
 toolDefinition.Description = "Trip Advisor API to get travel information.";
-OpenAPITool openapiTool = new(toolDefinition);
+OpenApiTool openapiTool = new(toolDefinition);
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {

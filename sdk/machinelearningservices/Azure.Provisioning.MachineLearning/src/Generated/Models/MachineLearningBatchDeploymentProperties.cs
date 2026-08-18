@@ -6,12 +6,11 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary> Batch inference settings per deployment. </summary>
-    public partial class MachineLearningBatchDeploymentProperties : ProvisionableConstruct
+    public partial class MachineLearningBatchDeploymentProperties : MachineLearningEndpointDeploymentProperties
     {
         private BicepValue<string> _compute;
         private BatchDeploymentConfiguration _deploymentConfiguration;
@@ -25,11 +24,6 @@ namespace Azure.Provisioning.MachineLearning
         private BicepValue<MachineLearningDeploymentProvisioningState> _provisioningState;
         private MachineLearningDeploymentResourceConfiguration _resources;
         private MachineLearningBatchRetrySettings _retrySettings;
-        private MachineLearningCodeConfiguration _codeConfiguration;
-        private BicepValue<string> _description;
-        private BicepValue<string> _environmentId;
-        private BicepDictionary<string> _environmentVariables;
-        private BicepDictionary<string> _properties;
 
         /// <summary> Creates a new MachineLearningBatchDeploymentProperties. </summary>
         public MachineLearningBatchDeploymentProperties()
@@ -211,81 +205,6 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
-        /// <summary> Gets or sets the CodeConfiguration. </summary>
-        public MachineLearningCodeConfiguration CodeConfiguration
-        {
-            get
-            {
-                Initialize();
-                return _codeConfiguration;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _codeConfiguration, value);
-            }
-        }
-
-        /// <summary> Gets or sets the Description. </summary>
-        public BicepValue<string> Description
-        {
-            get
-            {
-                Initialize();
-                return _description;
-            }
-            set
-            {
-                Initialize();
-                _description.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the EnvironmentId. </summary>
-        public BicepValue<string> EnvironmentId
-        {
-            get
-            {
-                Initialize();
-                return _environmentId;
-            }
-            set
-            {
-                Initialize();
-                _environmentId.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the EnvironmentVariables. </summary>
-        public BicepDictionary<string> EnvironmentVariables
-        {
-            get
-            {
-                Initialize();
-                return _environmentVariables;
-            }
-            set
-            {
-                Initialize();
-                _environmentVariables.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Properties. </summary>
-        public BicepDictionary<string> Properties
-        {
-            get
-            {
-                Initialize();
-                return _properties;
-            }
-            set
-            {
-                Initialize();
-                _properties.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for MachineLearningBatchDeploymentProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -302,11 +221,6 @@ namespace Azure.Provisioning.MachineLearning
             _provisioningState = DefineProperty<MachineLearningDeploymentProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _resources = DefineModelProperty<MachineLearningDeploymentResourceConfiguration>(nameof(Resources), new string[] { "resources" });
             _retrySettings = DefineModelProperty<MachineLearningBatchRetrySettings>(nameof(RetrySettings), new string[] { "retrySettings" });
-            _codeConfiguration = DefineModelProperty<MachineLearningCodeConfiguration>(nameof(CodeConfiguration), new string[] { "codeConfiguration" });
-            _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
-            _environmentId = DefineProperty<string>(nameof(EnvironmentId), new string[] { "environmentId" });
-            _environmentVariables = DefineDictionaryProperty<string>(nameof(EnvironmentVariables), new string[] { "environmentVariables" });
-            _properties = DefineDictionaryProperty<string>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }
 

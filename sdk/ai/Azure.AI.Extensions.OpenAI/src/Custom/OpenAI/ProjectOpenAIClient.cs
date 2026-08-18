@@ -129,7 +129,7 @@ public partial class ProjectOpenAIClient : OpenAIClient
     public virtual ProjectResponsesClient GetProjectResponsesClient()
     {
         return Volatile.Read(ref _cachedResponseClient)
-            ?? Interlocked.CompareExchange(ref _cachedResponseClient, new ProjectResponsesClient(Pipeline, _options, defaultAgent: null, defaultConversationId: null), null)
+            ?? Interlocked.CompareExchange(ref _cachedResponseClient, new ProjectResponsesClient(Pipeline, ProjectResponsesClientOptions.ToProjectResponsesClientOptions(_options), defaultAgent: null, defaultConversationId: null), null)
             ?? _cachedResponseClient;
     }
 
@@ -143,7 +143,7 @@ public partial class ProjectOpenAIClient : OpenAIClient
         Argument.AssertNotNull(defaultAgent, nameof(defaultAgent));
         return new ProjectResponsesClient(
             Pipeline,
-            _options,
+            ProjectResponsesClientOptions.ToProjectResponsesClientOptions(_options),
             defaultAgent,
             defaultConversationId);
     }
@@ -168,7 +168,7 @@ public partial class ProjectOpenAIClient : OpenAIClient
         ClientPipeline endpointPipeline = CreatePipeline(CreateAuthenticationPolicy(options.TokenProvider, options), options);
         return new ProjectResponsesClient(
             pipeline: endpointPipeline,
-            options: options,
+            options: ProjectResponsesClientOptions.ToProjectResponsesClientOptions(options),
             defaultAgent: null,
             defaultConversationId: defaultConversationId
         );
@@ -184,7 +184,7 @@ public partial class ProjectOpenAIClient : OpenAIClient
         Argument.AssertNotNullOrEmpty(defaultModel, nameof(defaultModel));
         return new ProjectResponsesClient(
             Pipeline,
-            _options,
+            ProjectResponsesClientOptions.ToProjectResponsesClientOptions(_options),
             new AgentReference($"model:{defaultModel}"),
             defaultConversationId);
     }
@@ -205,7 +205,7 @@ public partial class ProjectOpenAIClient : OpenAIClient
         }
         PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "User-Agent", $"{prefix} {telemetryDetails.UserAgent}");
         PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "x-ms-client-request-id", () => Guid.NewGuid().ToString().ToLowerInvariant());
-        PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "Foundry-Features", "MemoryStores=V1Preview,ContainerAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,AgentsOptimization=V2Preview,Routines=V1Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview");
+        PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "Foundry-Features", "MemoryStores=V1Preview,ContainerAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,AgentsOptimization=V2Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview");
         PipelinePolicyHelpers.OpenAI.AddResponseItemInputTransformPolicy(options);
         PipelinePolicyHelpers.OpenAI.AddErrorTransformPolicy(options);
         PipelinePolicyHelpers.OpenAI.AddAzureFinetuningParityPolicy(options);

@@ -25,7 +25,7 @@ Use the client library for Azure Planetary Computer to:
 Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.Analytics.PlanetaryComputer --prerelease
+dotnet add package Azure.Analytics.PlanetaryComputer
 ```
 
 ### Prerequisites
@@ -73,9 +73,9 @@ The `StacClient` provides operations for managing STAC collections and items:
 - **API Conformance**: Retrieve STAC API conformance classes and landing page information
 - **Collection Configuration**: Configure render options, mosaics, tile settings, and queryables
 
-### TilerClient
+### DataClient
 
-The `TilerClient` provides operations for data visualization and tiling:
+The `DataClient` provides operations for data visualization and tiling:
 
 - **Tile Generation**: Generate map tiles (XYZ, TileJSON, WMTS) from collections, items, and mosaics
 - **Data Visualization**: Create preview images, crop by GeoJSON or bounding box, extract point values
@@ -92,9 +92,9 @@ The `IngestionClient` provides operations for data ingestion management:
 - **Ingestion Runs**: Create and monitor ingestion runs with detailed operation tracking
 - **Managed Identities**: List and manage Azure Managed Identities for secure access
 
-### SharedAccessSignatureClient
+### ManagedStorageSharedAccessSignatureClient
 
-The `SharedAccessSignatureClient` provides operations for secure access:
+The `ManagedStorageSharedAccessSignatureClient` provides operations for secure access:
 
 - **Token Generation**: Generate SAS tokens with configurable duration for collections
 - **Asset Signing**: Sign asset HREFs for secure downloads of managed storage assets
@@ -134,7 +134,7 @@ Response<StacCatalogCollections> response = await stacClient.GetCollectionsAsync
 StacCatalogCollections collections = response.Value;
 
 Console.WriteLine($"Found {collections.Collections.Count} collections:");
-foreach (StacCollectionResource collection in collections.Collections)
+foreach (StacCollection collection in collections.Collections)
 {
     Console.WriteLine($"  - {collection.Id}: {collection.Title}");
 }
@@ -182,11 +182,11 @@ searchParams.Filter["args"] = BinaryData.FromObjectAsJson(new object[]
 
 searchParams.Limit = 10;
 
-Response<StacItemCollectionResource> response = await stacClient.SearchAsync(searchParams);
-StacItemCollectionResource results = response.Value;
+Response<StacItemCollection> response = await stacClient.SearchAsync(searchParams);
+StacItemCollection results = response.Value;
 
 Console.WriteLine($"Found {results.Features.Count} items in the specified area");
-foreach (StacItemResource item in results.Features)
+foreach (StacItem item in results.Features)
 {
     Console.WriteLine($"  Item: {item.Id}");
 }
@@ -209,8 +209,8 @@ StacClient stacClient = client.GetStacClient();
 string collectionId = "naip";
 string itemId = "tx_m_2609719_se_14_060_20201216";
 
-Response<StacItemResource> response = await stacClient.GetItemAsync(collectionId, itemId);
-StacItemResource item = response.Value;
+Response<StacItem> response = await stacClient.GetItemAsync(collectionId, itemId);
+StacItem item = response.Value;
 
 Console.WriteLine($"Item ID: {item.Id}");
 Console.WriteLine($"Collection: {item.Collection}");
@@ -252,7 +252,7 @@ var temporalExtent = new StacCollectionTemporalExtent(
 var extent = new StacExtensionExtent(spatialExtent, temporalExtent);
 
 // Create collection resource
-var collection = new StacCollectionResource(
+var collection = new StacCollection(
     id: collectionId,
     description: "Test collection for demonstration",
     links: new List<StacLink>(),
@@ -261,7 +261,7 @@ var collection = new StacCollectionResource(
 {
     StacVersion = "1.0.0",
     Title = "Test Collection",
-    Type = "Collection"
+    Kind = "Collection"
 };
 
 // Start collection creation (asynchronous operation)
@@ -291,21 +291,115 @@ string collectionId = "naip";
 string itemId = "tx_m_2609719_se_14_060_20201216";
 
 // Get a specific tile
-Response<BinaryData> response = await dataClient.GetTileAsync(
-    collectionId: collectionId,
-    itemId: itemId,
-    tileMatrixSetId: "WebMercatorQuad",
-    z: 14,
-    x: 4349,
-    y: 6564,
-    scale: 1,
-    format: "png",
-    assets: new[] { "image" },
-    assetBandIndices: "image|1,2,3"
+Response response = await dataClient.GetTileByScaleAndFormatAsync(new GetTileByScaleAndFormatOptions(collectionId, itemId, "WebMercatorQuad", 14, 4349, 6564, 1, "png")
+{
+    Assets = { "image" },
+    AssetBandIndices = { "image|1,2,3" }
+});
+
+byte[] tileImage = response.Content.ToArray();
+Console.WriteLine($"Tile image: {tileImage.Length} bytes");
+```
+
+### Extract Point Values
+
+Query pixel values at specific geographic coordinates:
+
+```csharp
+Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
+PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
+DataClient dataClient = client.GetDataClient();
+
+string collectionId = "naip";
+string itemId = "ga_m_3308421_se_16_060_20211114";
+
+// Get point values at specific coordinates using options bag
+var options = new GetItemPointOptions(collectionId, itemId, longitude: -84.41f, latitude: 33.65f)
+{
+    Assets = { "image" }
+};
+Response<TilerCoreModelsResponsesPoint> response = await dataClient.GetItemPointAsync(options);
+
+TilerCoreModelsResponsesPoint pointData = response.Value;
+Console.WriteLine($"Coordinates: {pointData.Coordinates}");
+Console.WriteLine($"Band names: {string.Join(", ", pointData.BandNames)}");
+Console.WriteLine($"Values: {string.Join(", ", pointData.Values)}");
+```
+
+### Configure Collection Visualization
+
+Set up render options and tile settings for collection visualization:
+
+```csharp
+Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
+PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
+StacClient stacClient = client.GetStacClient();
+
+string collectionId = "my-collection";
+
+// Add a render option for visualizing data
+var renderOption = new RenderConfiguration(id: "true-color", name: "True Color")
+{
+    Kind = RenderOptionKind.RasterTile,
+    Options = "assets=image&asset_bidx=image|1,2,3&rescale=0,255"
+};
+await stacClient.CreateRenderOptionAsync(collectionId, renderOption);
+
+// Configure tile settings
+var tileSettings = new TileSettings(minZoom: 6, maxItemsPerTile: 10);
+await stacClient.ReplaceTileSettingsAsync(collectionId, tileSettings);
+
+// List all render options for a collection
+Response<IReadOnlyList<RenderConfiguration>> options = await stacClient.GetRenderOptionsAsync(collectionId);
+foreach (RenderConfiguration option in options.Value)
+{
+    Console.WriteLine($"Render option: {option.Id} - {option.Name}");
+}
+```
+
+### Map Legends
+
+Retrieve categorical and continuous map legends:
+
+```csharp
+Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
+PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
+DataClient dataClient = client.GetDataClient();
+
+// Get a class map legend (categorical color map)
+Response<ClassMapLegendResult> classMapResponse = await dataClient.GetClassMapLegendAsync("mtbs-severity");
+Console.WriteLine($"Legend entries: {classMapResponse.Value.Legend.Count}");
+
+// Get an interval legend (continuous color map)
+Response<IReadOnlyList<IList<IList<long>>>> intervalResponse = await dataClient.GetIntervalLegendAsync("modis-64A1");
+Console.WriteLine($"Interval ranges: {intervalResponse.Value.Count}");
+
+// Get a legend as a PNG image
+Response legendImage = await dataClient.GetLegendAsync("rdylgn");
+byte[] legendBytes = legendImage.Content.ToArray();
+Console.WriteLine($"Legend image: {legendBytes.Length} bytes");
+```
+
+### Set Up Ingestion Sources
+
+Configure ingestion sources for data import:
+
+```csharp
+Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
+PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
+IngestionClient ingestionClient = client.GetIngestionClient();
+
+// Create a Managed Identity ingestion source
+var source = new ManagedIdentityIngestionSource(
+    id: Guid.NewGuid(),
+    connectionInfo: new ManagedIdentityConnection(
+        containerUri: new Uri("https://mystorage.blob.core.windows.net/geospatial-data"),
+        objectId: Guid.Parse("00000000-0000-0000-0000-000000000000")
+    )
 );
 
-byte[] tileImage = response.Value.ToArray();
-Console.WriteLine($"Tile image: {tileImage.Length} bytes");
+Response<IngestionSource> response = await ingestionClient.CreateSourceAsync(source);
+Console.WriteLine($"Created source: {response.Value.Id}");
 ```
 
 ### Data Ingestion Management
@@ -328,7 +422,7 @@ string sourceCatalogUrl = "https://example.com/catalog.json";
 var ingestionDefinition = new IngestionInformation("StaticCatalog")
 {
     DisplayName = "My Dataset Ingestion",
-    SourceCatalogUrl = new Uri(sourceCatalogUrl),
+    SourceCatalogUri = new Uri(sourceCatalogUrl),
     KeepOriginalAssets = true,
     SkipExistingItems = true
 };
@@ -397,7 +491,7 @@ StacClient stacClient = client.GetStacClient();
 
 try
 {
-    Response<StacCollectionResource> response = await stacClient.GetCollectionAsync(
+    Response<StacCollection> response = await stacClient.GetCollectionAsync(
         "nonexistent-collection");
 }
 catch (RequestFailedException ex) when (ex.Status == 404)

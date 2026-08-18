@@ -20,5 +20,3 @@ public partial class ProjectsAgentRecord
 [CodeGenType("AgentVersionStatus ")] public partial struct AgentVersionStatus { }
 [CodeGenType("FoundryFeaturesOptInKeys")] internal partial struct FoundryFeaturesOptInKeys { }
 [CodeGenType("AgentObjectVersions")] public partial class AgentObjectVersions { }
-// This class is being internalized because of the ADO item 5522213.
-[CodeGenType("AzureFunctionDefinitionFunction")] internal partial class InternalAzureFunctionDefinitionFunction { }

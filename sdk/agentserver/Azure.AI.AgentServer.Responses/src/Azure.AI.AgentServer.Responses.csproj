@@ -5,7 +5,7 @@
     <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <RootNamespace>Azure.AI.AgentServer.Responses</RootNamespace>
-    <Version>1.0.0-beta.7</Version>
+    <Version>1.0.0-beta.8</Version>
     <Description>An SDK for building ASP.NET Core servers that implement the Azure AI Responses API.</Description>
     <PackageTags>Microsoft Azure AI Agent Server Responses API SSE Streaming</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -19,12 +19,10 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="OpenAI" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.AI.AgentServer.Core\src\Azure.AI.AgentServer.Core.csproj" />
-    <ProjectReference Include="..\..\..\ai\Azure.AI.Extensions.OpenAI\src\Azure.AI.Extensions.OpenAI.csproj" />
   </ItemGroup>
 
   <!-- Exclude TypeSpec compilation output (used only for copy to Generated/) -->

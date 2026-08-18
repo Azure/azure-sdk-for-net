@@ -20,17 +20,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="IngestionRunInformation"/>. </summary>
         /// <param name="id"> Operation id. </param>
         /// <param name="status"> Operation status. </param>
-        /// <param name="creationTime"> The UTC time at which the operation was created. </param>
+        /// <param name="createdOn"> The UTC time at which the operation was created. </param>
         /// <param name="statusHistory"> The history of the operation status in time. </param>
         /// <param name="totalItems"> The number of total items to be processed. </param>
         /// <param name="totalPendingItems"> The number of items pending to be processed. </param>
         /// <param name="totalSuccessfulItems"> The number of items successfully processed. </param>
         /// <param name="totalFailedItems"> The number of items that have failed to be processed. </param>
-        internal IngestionRunInformation(Guid id, OperationStatus status, DateTimeOffset creationTime, IEnumerable<OperationStatusHistoryItem> statusHistory, int totalItems, int totalPendingItems, int totalSuccessfulItems, int totalFailedItems)
+        internal IngestionRunInformation(Guid id, PlanetaryComputerOperationStatus status, DateTimeOffset createdOn, IEnumerable<PlanetaryComputerOperationStatusHistoryItem> statusHistory, int totalItems, int totalPendingItems, int totalSuccessfulItems, int totalFailedItems)
         {
             Id = id;
             Status = status;
-            CreationTime = creationTime;
+            CreatedOn = createdOn;
             StatusHistory = statusHistory.ToList();
             TotalItems = totalItems;
             TotalPendingItems = totalPendingItems;
@@ -41,23 +41,23 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="IngestionRunInformation"/>. </summary>
         /// <param name="id"> Operation id. </param>
         /// <param name="status"> Operation status. </param>
-        /// <param name="creationTime"> The UTC time at which the operation was created. </param>
+        /// <param name="createdOn"> The UTC time at which the operation was created. </param>
         /// <param name="statusHistory"> The history of the operation status in time. </param>
-        /// <param name="startTime"> The UTC time at which the operation was started. </param>
-        /// <param name="finishTime"> The UTC time at which the operation finished its execution. </param>
+        /// <param name="startedOn"> The UTC time at which the operation was started. </param>
+        /// <param name="finishedOn"> The UTC time at which the operation finished its execution. </param>
         /// <param name="totalItems"> The number of total items to be processed. </param>
         /// <param name="totalPendingItems"> The number of items pending to be processed. </param>
         /// <param name="totalSuccessfulItems"> The number of items successfully processed. </param>
         /// <param name="totalFailedItems"> The number of items that have failed to be processed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IngestionRunInformation(Guid id, OperationStatus status, DateTimeOffset creationTime, IList<OperationStatusHistoryItem> statusHistory, DateTimeOffset? startTime, DateTimeOffset? finishTime, int totalItems, int totalPendingItems, int totalSuccessfulItems, int totalFailedItems, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IngestionRunInformation(Guid id, PlanetaryComputerOperationStatus status, DateTimeOffset createdOn, IList<PlanetaryComputerOperationStatusHistoryItem> statusHistory, DateTimeOffset? startedOn, DateTimeOffset? finishedOn, int totalItems, int totalPendingItems, int totalSuccessfulItems, int totalFailedItems, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;
-            CreationTime = creationTime;
+            CreatedOn = createdOn;
             StatusHistory = statusHistory;
-            StartTime = startTime;
-            FinishTime = finishTime;
+            StartedOn = startedOn;
+            FinishedOn = finishedOn;
             TotalItems = totalItems;
             TotalPendingItems = totalPendingItems;
             TotalSuccessfulItems = totalSuccessfulItems;
@@ -69,19 +69,19 @@ namespace Azure.Analytics.PlanetaryComputer
         public Guid Id { get; }
 
         /// <summary> Operation status. </summary>
-        public OperationStatus Status { get; }
+        public PlanetaryComputerOperationStatus Status { get; }
 
         /// <summary> The UTC time at which the operation was created. </summary>
-        public DateTimeOffset CreationTime { get; }
+        public DateTimeOffset CreatedOn { get; }
 
         /// <summary> The history of the operation status in time. </summary>
-        public IList<OperationStatusHistoryItem> StatusHistory { get; }
+        public IList<PlanetaryComputerOperationStatusHistoryItem> StatusHistory { get; }
 
         /// <summary> The UTC time at which the operation was started. </summary>
-        public DateTimeOffset? StartTime { get; }
+        public DateTimeOffset? StartedOn { get; }
 
         /// <summary> The UTC time at which the operation finished its execution. </summary>
-        public DateTimeOffset? FinishTime { get; }
+        public DateTimeOffset? FinishedOn { get; }
 
         /// <summary> The number of total items to be processed. </summary>
         public int TotalItems { get; }

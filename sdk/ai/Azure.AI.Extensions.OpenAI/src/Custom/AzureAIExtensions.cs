@@ -18,8 +18,6 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI;
 
-//#pragma warning disable SCME0001
-
 /// <summary>
 /// The class containing various extension methods.
 /// </summary>
