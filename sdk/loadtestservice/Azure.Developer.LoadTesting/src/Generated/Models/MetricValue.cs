@@ -22,18 +22,18 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricValue"/>. </summary>
-        /// <param name="timestamp"> The timestamp for the metric value in RFC 3339 format. </param>
+        /// <param name="on"> The timestamp for the metric value in RFC 3339 format. </param>
         /// <param name="value"> The metric value. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricValue(DateTimeOffset? timestamp, double? value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricValue(DateTimeOffset? @on, double? value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Timestamp = timestamp;
+            On = @on;
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The timestamp for the metric value in RFC 3339 format. </summary>
-        public DateTimeOffset? Timestamp { get; }
+        public DateTimeOffset? On { get; }
 
         /// <summary> The metric value. </summary>
         public double? Value { get; }

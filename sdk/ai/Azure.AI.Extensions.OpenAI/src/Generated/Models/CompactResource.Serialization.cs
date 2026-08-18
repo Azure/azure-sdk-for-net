@@ -96,7 +96,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             writer.WriteEndArray();
             writer.WritePropertyName("created_at"u8);
-            writer.WriteNumberValue(CreatedAt, "U");
+            writer.WriteNumberValue(CreatedOn, "U");
             writer.WritePropertyName("usage"u8);
             writer.WriteObjectValue(Usage, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -144,7 +144,7 @@ namespace Azure.AI.Extensions.OpenAI
             string id = default;
             string @object = default;
             IList<ItemField> output = default;
-            DateTimeOffset createdAt = default;
+            DateTimeOffset createdOn = default;
             ResponseUsage usage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -171,7 +171,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("created_at"u8))
                 {
-                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    createdOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("usage"u8))
@@ -188,7 +188,7 @@ namespace Azure.AI.Extensions.OpenAI
                 id,
                 @object,
                 output,
-                createdAt,
+                createdOn,
                 usage,
                 additionalBinaryDataProperties);
         }

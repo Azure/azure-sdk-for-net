@@ -130,12 +130,12 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteValue(ClientName);
             writer.WriteEndElement();
             writer.WriteStartElement("OpenTime");
-            writer.WriteStringValue(OpenTime, "R");
+            writer.WriteStringValue(OpenOn, "R");
             writer.WriteEndElement();
-            if (Optional.IsDefined(LastReconnectTime))
+            if (Optional.IsDefined(LastReconnectOn))
             {
                 writer.WriteStartElement("LastReconnectTime");
-                writer.WriteStringValue(LastReconnectTime.Value, "R");
+                writer.WriteStringValue(LastReconnectOn.Value, "R");
                 writer.WriteEndElement();
             }
             if (Optional.IsCollectionDefined(AccessRightList))
@@ -167,8 +167,8 @@ namespace Azure.Storage.Files.Shares.Models
             string sessionId = default;
             string clientIP = default;
             string clientName = default;
-            DateTimeOffset openTime = default;
-            DateTimeOffset? lastReconnectTime = default;
+            DateTimeOffset openOn = default;
+            DateTimeOffset? lastReconnectOn = default;
             IList<AccessRight> accessRightList = default;
 
             foreach (var child in element.Elements())
@@ -211,12 +211,12 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 if (localName == "OpenTime")
                 {
-                    openTime = child.GetDateTimeOffset("R");
+                    openOn = child.GetDateTimeOffset("R");
                     continue;
                 }
                 if (localName == "LastReconnectTime")
                 {
-                    lastReconnectTime = child.GetDateTimeOffset("R");
+                    lastReconnectOn = child.GetDateTimeOffset("R");
                     continue;
                 }
                 if (localName == "AccessRightList")
@@ -238,8 +238,8 @@ namespace Azure.Storage.Files.Shares.Models
                 sessionId,
                 clientIP,
                 clientName,
-                openTime,
-                lastReconnectTime,
+                openOn,
+                lastReconnectOn,
                 accessRightList ?? new ChangeTrackingList<AccessRight>());
         }
 

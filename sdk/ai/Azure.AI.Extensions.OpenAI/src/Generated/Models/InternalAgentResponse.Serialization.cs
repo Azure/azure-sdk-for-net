@@ -197,11 +197,11 @@ namespace OpenAI
                 writer.WriteStringValue(Status.Value.ToString());
             }
             writer.WritePropertyName("created_at"u8);
-            writer.WriteNumberValue(CreatedAt, "U");
-            if (Optional.IsDefined(CompletedAt))
+            writer.WriteNumberValue(CreatedOn, "U");
+            if (Optional.IsDefined(CompletedOn))
             {
                 writer.WritePropertyName("completed_at"u8);
-                writer.WriteNumberValue(CompletedAt.Value, "U");
+                writer.WriteNumberValue(CompletedOn.Value, "U");
             }
             if (Optional.IsDefined(Error))
             {
@@ -345,8 +345,8 @@ namespace OpenAI
             string id = default;
             string @object = default;
             InternalAgentResponseStatus? status = default;
-            DateTimeOffset createdAt = default;
-            DateTimeOffset? completedAt = default;
+            DateTimeOffset createdOn = default;
+            DateTimeOffset? completedOn = default;
             InternalAgentResponseError error = default;
             ResponseIncompleteDetails incompleteDetails = default;
             IList<AgentResponseItem> output = default;
@@ -562,17 +562,17 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("created_at"u8))
                 {
-                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    createdOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("completed_at"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        completedAt = null;
+                        completedOn = null;
                         continue;
                     }
-                    completedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    completedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("error"u8))
@@ -702,8 +702,8 @@ namespace OpenAI
                 id,
                 @object,
                 status,
-                createdAt,
-                completedAt,
+                createdOn,
+                completedOn,
                 error,
                 incompleteDetails,
                 output,

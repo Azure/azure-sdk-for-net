@@ -88,15 +88,15 @@ namespace Azure.AI.AnomalyDetector
                 writer.WritePropertyName("effectiveCount"u8);
                 writer.WriteNumberValue(EffectiveCount.Value);
             }
-            if (Optional.IsDefined(FirstTimestamp))
+            if (Optional.IsDefined(FirstOn))
             {
                 writer.WritePropertyName("firstTimestamp"u8);
-                writer.WriteStringValue(FirstTimestamp.Value, "O");
+                writer.WriteStringValue(FirstOn.Value, "O");
             }
-            if (Optional.IsDefined(LastTimestamp))
+            if (Optional.IsDefined(LastOn))
             {
                 writer.WritePropertyName("lastTimestamp"u8);
-                writer.WriteStringValue(LastTimestamp.Value, "O");
+                writer.WriteStringValue(LastOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -143,8 +143,8 @@ namespace Azure.AI.AnomalyDetector
             string variable = default;
             float? filledNARatio = default;
             int? effectiveCount = default;
-            DateTimeOffset? firstTimestamp = default;
-            DateTimeOffset? lastTimestamp = default;
+            DateTimeOffset? firstOn = default;
+            DateTimeOffset? lastOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -177,7 +177,7 @@ namespace Azure.AI.AnomalyDetector
                     {
                         continue;
                     }
-                    firstTimestamp = prop.Value.GetDateTimeOffset("O");
+                    firstOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastTimestamp"u8))
@@ -186,7 +186,7 @@ namespace Azure.AI.AnomalyDetector
                     {
                         continue;
                     }
-                    lastTimestamp = prop.Value.GetDateTimeOffset("O");
+                    lastOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -198,8 +198,8 @@ namespace Azure.AI.AnomalyDetector
                 variable,
                 filledNARatio,
                 effectiveCount,
-                firstTimestamp,
-                lastTimestamp,
+                firstOn,
+                lastOn,
                 additionalBinaryDataProperties);
         }
     }
