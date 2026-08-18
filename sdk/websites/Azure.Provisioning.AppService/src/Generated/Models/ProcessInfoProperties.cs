@@ -11,7 +11,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppService
 {
-    /// <summary> ProcessInfo resource specific properties. </summary>
     internal partial class ProcessInfoProperties : ProvisionableConstruct
     {
         private BicepValue<int> _identifier;
@@ -21,7 +20,6 @@ namespace Azure.Provisioning.AppService
         private BicepValue<bool> _isProfileRunning;
         private BicepValue<bool> _isIisProfileRunning;
         private BicepValue<double> _iisProfileTimeoutInSeconds;
-        private BicepValue<string> _parent;
         private BicepList<string> _children;
         private BicepList<WebAppProcessThreadProperties> _processThreads;
         private BicepList<string> _openFileHandles;
@@ -123,16 +121,6 @@ namespace Azure.Provisioning.AppService
             {
                 Initialize();
                 return _iisProfileTimeoutInSeconds;
-            }
-        }
-
-        /// <summary> Gets the Parent. </summary>
-        public BicepValue<string> Parent
-        {
-            get
-            {
-                Initialize();
-                return _parent;
             }
         }
 
@@ -427,7 +415,6 @@ namespace Azure.Provisioning.AppService
             _isProfileRunning = DefineProperty<bool>(nameof(IsProfileRunning), new string[] { "is_profile_running" });
             _isIisProfileRunning = DefineProperty<bool>(nameof(IsIisProfileRunning), new string[] { "is_iis_profile_running" });
             _iisProfileTimeoutInSeconds = DefineProperty<double>(nameof(IisProfileTimeoutInSeconds), new string[] { "iis_profile_timeout_in_seconds" });
-            _parent = DefineProperty<string>(nameof(Parent), new string[] { "parent" });
             _children = DefineListProperty<string>(nameof(Children), new string[] { "children" });
             _processThreads = DefineListProperty<WebAppProcessThreadProperties>(nameof(ProcessThreads), new string[] { "threads" });
             _openFileHandles = DefineListProperty<string>(nameof(OpenFileHandles), new string[] { "open_file_handles" });

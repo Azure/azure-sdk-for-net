@@ -10,7 +10,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppService
 {
-    /// <summary> Description of an App Service Environment. </summary>
     internal partial class AppServiceEnvironmentProperties : ProvisionableConstruct
     {
         private BicepValue<ProvisioningState> _provisioningState;

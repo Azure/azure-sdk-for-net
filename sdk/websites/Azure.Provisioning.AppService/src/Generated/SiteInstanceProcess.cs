@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.AppService
 {
@@ -160,15 +161,6 @@ namespace Azure.Provisioning.AppService
             get
             {
                 return Properties.IisProfileTimeoutInSeconds;
-            }
-        }
-
-        /// <summary> Gets the Parent. </summary>
-        public BicepValue<string> Parent
-        {
-            get
-            {
-                return Properties.Parent;
             }
         }
 
@@ -421,6 +413,16 @@ namespace Azure.Provisioning.AppService
             get
             {
                 return Properties.Description;
+            }
+        }
+
+        /// <summary> Gets the ParentProcess. </summary>
+        [CodeGenMember("Parent")]
+        public BicepValue<string> ParentProcess
+        {
+            get
+            {
+                return Properties.ParentProcess;
             }
         }
 

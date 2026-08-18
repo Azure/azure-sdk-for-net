@@ -13,19 +13,19 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppService
 {
     /// <summary> Slot Config names azure resource. </summary>
-    public partial class SlotConfigNamesResource : ProvisionableResource
+    public partial class SlotConfigNames : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
-        private SlotConfigNames _properties;
+        private SlotConfigNamesProperties _properties;
         private BicepValue<string> _kind;
         private ResourceReference<WebSite> _parent;
 
-        /// <summary> Creates a new SlotConfigNamesResource. </summary>
+        /// <summary> Creates a new SlotConfigNames. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public SlotConfigNamesResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Web/sites/config", resourceVersion ?? "2025-03-01")
+        public SlotConfigNames(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Web/sites/config", resourceVersion ?? "2025-03-01")
         {
         }
 
@@ -60,7 +60,7 @@ namespace Azure.Provisioning.AppService
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        internal SlotConfigNames Properties
+        internal SlotConfigNamesProperties Properties
         {
             get
             {
@@ -115,7 +115,7 @@ namespace Azure.Provisioning.AppService
             {
                 if (Properties is null)
                 {
-                    Properties = new SlotConfigNames();
+                    Properties = new SlotConfigNamesProperties();
                 }
                 Properties.ConnectionStringNames = value;
             }
@@ -132,7 +132,7 @@ namespace Azure.Provisioning.AppService
             {
                 if (Properties is null)
                 {
-                    Properties = new SlotConfigNames();
+                    Properties = new SlotConfigNamesProperties();
                 }
                 Properties.AppSettingNames = value;
             }
@@ -149,45 +149,36 @@ namespace Azure.Provisioning.AppService
             {
                 if (Properties is null)
                 {
-                    Properties = new SlotConfigNames();
+                    Properties = new SlotConfigNamesProperties();
                 }
                 Properties.AzureStorageConfigNames = value;
             }
         }
 
-        /// <summary> Gets the Name. </summary>
-        public BicepValue<string> Name
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Name;
-            }
-        }
-
-        /// <summary> Define all the provisionable properties for SlotConfigNamesResource. </summary>
+        /// <summary> Define all the provisionable properties for SlotConfigNames. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true, defaultValue: "slotConfigNames");
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _properties = DefineModelProperty<SlotConfigNames>(nameof(Properties), new string[] { "properties" });
+            _properties = DefineModelProperty<SlotConfigNamesProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
             _parent = DefineResource<WebSite>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing SlotConfigNamesResource. </summary>
+        /// <summary> Creates a reference to an existing SlotConfigNames. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static SlotConfigNamesResource FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static SlotConfigNames FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            SlotConfigNamesResource result = new SlotConfigNamesResource(bicepIdentifier, resourceVersion);
+            SlotConfigNames result = new SlotConfigNames(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for SlotConfigNamesResource that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for SlotConfigNames that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

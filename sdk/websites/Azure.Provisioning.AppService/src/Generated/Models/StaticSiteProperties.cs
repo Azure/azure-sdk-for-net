@@ -11,7 +11,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppService
 {
-    /// <summary> A static site. </summary>
     internal partial class StaticSiteProperties : ProvisionableConstruct
     {
         private BicepValue<string> _defaultHostname;

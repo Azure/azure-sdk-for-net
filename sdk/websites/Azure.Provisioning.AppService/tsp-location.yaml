@@ -1,4 +1,4 @@
 directory: specification/web/resource-manager/Microsoft.Web/AppService
-commit: edf46adda02
+commit: 71fccc2f96f
 repo: ArcturusZhang/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json"

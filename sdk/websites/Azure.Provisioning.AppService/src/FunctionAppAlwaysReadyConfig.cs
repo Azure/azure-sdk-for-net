@@ -3,7 +3,6 @@
 
 #nullable enable
 
-using System;
 using System.ComponentModel;
 using Azure.Provisioning.Primitives;
 
@@ -23,4 +22,9 @@ public partial class FunctionAppAlwaysReadyConfig : ProvisionableConstruct
         set { Initialize(); _instanceCount!.Assign(value); }
     }
     private BicepValue<float>? _instanceCount;
+
+    partial void DefineAdditionalProperties()
+    {
+        _instanceCount = DefineProperty<float>(nameof(InstanceCount), new string[] { "instanceCount" });
+    }
 }

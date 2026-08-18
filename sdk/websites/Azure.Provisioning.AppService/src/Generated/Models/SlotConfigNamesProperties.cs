@@ -15,14 +15,14 @@ namespace Azure.Provisioning.AppService
     /// identifiers to be marked as sticky to the deployment slot and not moved during a swap operation.
     /// This is valid for all deployment slots in an app.
     /// </summary>
-    public partial class SlotConfigNames : ProvisionableResource
+    internal partial class SlotConfigNamesProperties : ProvisionableConstruct
     {
         private BicepList<string> _connectionStringNames;
         private BicepList<string> _appSettingNames;
         private BicepList<string> _azureStorageConfigNames;
 
-        /// <summary> Creates a new SlotConfigNames. </summary>
-        public SlotConfigNames()
+        /// <summary> Creates a new SlotConfigNamesProperties. </summary>
+        public SlotConfigNamesProperties()
         {
         }
 
@@ -71,7 +71,7 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Define all the provisionable properties for SlotConfigNames. </summary>
+        /// <summary> Define all the provisionable properties for SlotConfigNamesProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -81,7 +81,7 @@ namespace Azure.Provisioning.AppService
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for SlotConfigNames that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for SlotConfigNamesProperties that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }
