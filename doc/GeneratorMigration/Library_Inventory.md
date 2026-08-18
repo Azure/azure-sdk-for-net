@@ -16,12 +16,12 @@
 
 ## Summary
 
-- Total libraries: 450
+- Total libraries: 444
 - Management Plane (MPG): 261
   - Autorest/Swagger: 43
   - New Emitter (TypeSpec): 218
   - Old TypeSpec: 0
-- Data Plane (DPG): 130
+- Data Plane (DPG): 124
   - Autorest/Swagger: 30
   - New Emitter (TypeSpec): 53
   - Old TypeSpec: 0
@@ -29,7 +29,7 @@
   - Reflection-based generator: 24
   - TypeSpec-based generator: 33
   - No generator: 2
-- No generator: 47
+- No generator: 41
 
 
 ## Data Plane Libraries (DPG) - Migrated to New Emitter
@@ -483,19 +483,13 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 
 ## Libraries with No Generator
 
-Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 47
+Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 41
 
 | Service | Library |
 | ------- | ------- |
 | agentserver | Azure.AI.AgentServer.Core |
 | agentserver | Azure.AI.AgentServer.Invocations |
 | ai | Azure.AI.Inference |
-| cloudmachine | Azure.Projects |
-| cloudmachine | Azure.Projects.AI |
-| cloudmachine | Azure.Projects.AI.Foundry |
-| cloudmachine | Azure.Projects.Provisioning |
-| cloudmachine | Azure.Projects.Tsp |
-| cloudmachine | Azure.Projects.Web |
 | communication | Azure.Communication.Common |
 | core | Azure.Core |
 | core | Azure.Core.Amqp |
