@@ -24,7 +24,7 @@ namespace Azure.Provisioning.AppService
         /// <summary> Creates a new WorkflowRun. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal WorkflowRun(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Web/sites/hostruntime/webhooks/api/workflows/runs", resourceVersion ?? "2026-07-15")
+        internal WorkflowRun(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Web/sites/hostruntime/webhooks/api/workflows/runs", resourceVersion ?? "2025-03-01")
         {
         }
 
@@ -208,12 +208,6 @@ namespace Azure.Provisioning.AppService
         /// <summary></summary>
         public static partial class ResourceVersions
         {
-            /// <summary> API version "2026-07-15". </summary>
-            public static readonly string V2026_07_15 = "2026-07-15";
-            /// <summary> API version "2026-03-15". </summary>
-            public static readonly string V2026_03_15 = "2026-03-15";
-            /// <summary> API version "2025-05-01". </summary>
-            public static readonly string V2025_05_01 = "2025-05-01";
             /// <summary> API version "2025-03-01". </summary>
             public static readonly string V2025_03_01 = "2025-03-01";
         }

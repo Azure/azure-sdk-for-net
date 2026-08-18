@@ -29,7 +29,7 @@ namespace Azure.Provisioning.AppService
         /// <summary> Creates a new WebSite. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public WebSite(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Web/sites", resourceVersion ?? "2026-07-15")
+        public WebSite(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Web/sites", resourceVersion ?? "2025-03-01")
         {
         }
 
@@ -224,23 +224,6 @@ namespace Azure.Provisioning.AppService
                     Properties = new SiteProperties();
                 }
                 Properties.IsEnabled = value;
-            }
-        }
-
-        /// <summary> Gets or sets the IsSiteScopedCertificatesEnabled. </summary>
-        public BicepValue<bool> IsSiteScopedCertificatesEnabled
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IsSiteScopedCertificatesEnabled;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new SiteProperties();
-                }
-                Properties.IsSiteScopedCertificatesEnabled = value;
             }
         }
 
@@ -450,23 +433,6 @@ namespace Azure.Provisioning.AppService
                     Properties = new SiteProperties();
                 }
                 Properties.DaprConfig = value;
-            }
-        }
-
-        /// <summary> Gets or sets the AiIntegration. </summary>
-        public AiIntegration AiIntegration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AiIntegration;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new SiteProperties();
-                }
-                Properties.AiIntegration = value;
             }
         }
 
@@ -1064,40 +1030,6 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets or sets the PlatformReleaseChannel. </summary>
-        public BicepValue<PlatformReleaseChannel> PlatformReleaseChannel
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PlatformReleaseChannel;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new SiteProperties();
-                }
-                Properties.PlatformReleaseChannel = value;
-            }
-        }
-
-        /// <summary> Gets or sets the MaintenanceEnabled. </summary>
-        public BicepValue<bool> MaintenanceEnabled
-        {
-            get
-            {
-                return Properties is null ? default : Properties.MaintenanceEnabled;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new SiteProperties();
-                }
-                Properties.MaintenanceEnabled = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for WebSite. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -1130,12 +1062,6 @@ namespace Azure.Provisioning.AppService
         /// <summary></summary>
         public static partial class ResourceVersions
         {
-            /// <summary> API version "2026-07-15". </summary>
-            public static readonly string V2026_07_15 = "2026-07-15";
-            /// <summary> API version "2026-03-15". </summary>
-            public static readonly string V2026_03_15 = "2026-03-15";
-            /// <summary> API version "2025-05-01". </summary>
-            public static readonly string V2025_05_01 = "2025-05-01";
             /// <summary> API version "2025-03-01". </summary>
             public static readonly string V2025_03_01 = "2025-03-01";
         }

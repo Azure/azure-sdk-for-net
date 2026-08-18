@@ -27,11 +27,8 @@ namespace Azure.Provisioning.AppService
         /// <summary> Python. </summary>
         [DataMember(Name = "python")]
         Python = 4,
-        /// <summary> Go. </summary>
-        [DataMember(Name = "go")]
-        Go = 5,
         /// <summary> Custom. </summary>
         [DataMember(Name = "custom")]
-        Custom = 6
+        Custom = 5
     }
 }

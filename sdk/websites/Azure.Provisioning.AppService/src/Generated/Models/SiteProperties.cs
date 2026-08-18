@@ -20,7 +20,6 @@ namespace Azure.Provisioning.AppService
         private BicepValue<string> _repositorySiteName;
         private BicepValue<AppServiceUsageState> _usageState;
         private BicepValue<bool> _isEnabled;
-        private BicepValue<bool> _isSiteScopedCertificatesEnabled;
         private BicepList<string> _enabledHostNames;
         private BicepValue<WebSiteAvailabilityState> _availabilityState;
         private BicepList<HostNameSslState> _hostNameSslStates;
@@ -34,7 +33,6 @@ namespace Azure.Provisioning.AppService
         private SiteConfigProperties _siteConfig;
         private FunctionAppConfig _functionAppConfig;
         private AppDaprConfig _daprConfig;
-        private AiIntegration _aiIntegration;
         private BicepValue<string> _workloadProfileName;
         private FunctionAppResourceConfig _resourceConfig;
         private BicepList<string> _trafficManagerHostNames;
@@ -73,8 +71,6 @@ namespace Azure.Provisioning.AppService
         private BicepValue<ResourceIdentifier> _virtualNetworkSubnetId;
         private BicepValue<string> _managedEnvironmentId;
         private BicepValue<string> _sku;
-        private BicepValue<PlatformReleaseChannel> _platformReleaseChannel;
-        private BicepValue<bool> _maintenanceEnabled;
 
         /// <summary> Creates a new SiteProperties. </summary>
         public SiteProperties()
@@ -133,21 +129,6 @@ namespace Azure.Provisioning.AppService
             {
                 Initialize();
                 _isEnabled.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the IsSiteScopedCertificatesEnabled. </summary>
-        public BicepValue<bool> IsSiteScopedCertificatesEnabled
-        {
-            get
-            {
-                Initialize();
-                return _isSiteScopedCertificatesEnabled;
-            }
-            set
-            {
-                Initialize();
-                _isSiteScopedCertificatesEnabled.Assign(value);
             }
         }
 
@@ -328,21 +309,6 @@ namespace Azure.Provisioning.AppService
             {
                 Initialize();
                 AssignOrReplace(ref _daprConfig, value);
-            }
-        }
-
-        /// <summary> Gets or sets the AiIntegration. </summary>
-        public AiIntegration AiIntegration
-        {
-            get
-            {
-                Initialize();
-                return _aiIntegration;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _aiIntegration, value);
             }
         }
 
@@ -856,36 +822,6 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets or sets the PlatformReleaseChannel. </summary>
-        public BicepValue<PlatformReleaseChannel> PlatformReleaseChannel
-        {
-            get
-            {
-                Initialize();
-                return _platformReleaseChannel;
-            }
-            set
-            {
-                Initialize();
-                _platformReleaseChannel.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the MaintenanceEnabled. </summary>
-        public BicepValue<bool> MaintenanceEnabled
-        {
-            get
-            {
-                Initialize();
-                return _maintenanceEnabled;
-            }
-            set
-            {
-                Initialize();
-                _maintenanceEnabled.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for SiteProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -895,7 +831,6 @@ namespace Azure.Provisioning.AppService
             _repositorySiteName = DefineProperty<string>(nameof(RepositorySiteName), new string[] { "repositorySiteName" }, isOutput: true);
             _usageState = DefineProperty<AppServiceUsageState>(nameof(UsageState), new string[] { "usageState" }, isOutput: true);
             _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "enabled" });
-            _isSiteScopedCertificatesEnabled = DefineProperty<bool>(nameof(IsSiteScopedCertificatesEnabled), new string[] { "siteScopedCertificatesEnabled" });
             _enabledHostNames = DefineListProperty<string>(nameof(EnabledHostNames), new string[] { "enabledHostNames" }, isOutput: true);
             _availabilityState = DefineProperty<WebSiteAvailabilityState>(nameof(AvailabilityState), new string[] { "availabilityState" }, isOutput: true);
             _hostNameSslStates = DefineListProperty<HostNameSslState>(nameof(HostNameSslStates), new string[] { "hostNameSslStates" });
@@ -909,7 +844,6 @@ namespace Azure.Provisioning.AppService
             _siteConfig = DefineModelProperty<SiteConfigProperties>(nameof(SiteConfig), new string[] { "siteConfig" });
             _functionAppConfig = DefineModelProperty<FunctionAppConfig>(nameof(FunctionAppConfig), new string[] { "functionAppConfig" });
             _daprConfig = DefineModelProperty<AppDaprConfig>(nameof(DaprConfig), new string[] { "daprConfig" });
-            _aiIntegration = DefineModelProperty<AiIntegration>(nameof(AiIntegration), new string[] { "aiIntegration" });
             _workloadProfileName = DefineProperty<string>(nameof(WorkloadProfileName), new string[] { "workloadProfileName" });
             _resourceConfig = DefineModelProperty<FunctionAppResourceConfig>(nameof(ResourceConfig), new string[] { "resourceConfig" });
             _trafficManagerHostNames = DefineListProperty<string>(nameof(TrafficManagerHostNames), new string[] { "trafficManagerHostNames" }, isOutput: true);
@@ -948,8 +882,6 @@ namespace Azure.Provisioning.AppService
             _virtualNetworkSubnetId = DefineProperty<ResourceIdentifier>(nameof(VirtualNetworkSubnetId), new string[] { "virtualNetworkSubnetId" });
             _managedEnvironmentId = DefineProperty<string>(nameof(ManagedEnvironmentId), new string[] { "managedEnvironmentId" });
             _sku = DefineProperty<string>(nameof(Sku), new string[] { "sku" }, isOutput: true);
-            _platformReleaseChannel = DefineProperty<PlatformReleaseChannel>(nameof(PlatformReleaseChannel), new string[] { "platformReleaseChannel" });
-            _maintenanceEnabled = DefineProperty<bool>(nameof(MaintenanceEnabled), new string[] { "maintenanceEnabled" });
             DefineAdditionalProperties();
         }
 

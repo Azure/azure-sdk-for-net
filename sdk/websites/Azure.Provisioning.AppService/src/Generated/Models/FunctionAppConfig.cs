@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppService
@@ -16,7 +15,6 @@ namespace Azure.Provisioning.AppService
         private FunctionsDeployment _deployment;
         private FunctionAppRuntime _runtime;
         private FunctionAppScaleAndConcurrency _scaleAndConcurrency;
-        private FunctionsSiteUpdateStrategy _siteUpdateStrategy;
 
         /// <summary> Creates a new FunctionAppConfig. </summary>
         public FunctionAppConfig()
@@ -68,21 +66,6 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets or sets the SiteUpdateStrategy. </summary>
-        internal FunctionsSiteUpdateStrategy SiteUpdateStrategy
-        {
-            get
-            {
-                Initialize();
-                return _siteUpdateStrategy;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _siteUpdateStrategy, value);
-            }
-        }
-
         /// <summary> Gets or sets the Storage. </summary>
         public FunctionAppStorage DeploymentStorage
         {
@@ -100,23 +83,6 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets or sets the Type. </summary>
-        public BicepValue<SiteUpdateStrategyType> SiteUpdateStrategyType
-        {
-            get
-            {
-                return SiteUpdateStrategy is null ? default : SiteUpdateStrategy.Type;
-            }
-            set
-            {
-                if (SiteUpdateStrategy is null)
-                {
-                    SiteUpdateStrategy = new FunctionsSiteUpdateStrategy();
-                }
-                SiteUpdateStrategy.Type = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for FunctionAppConfig. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -124,7 +90,6 @@ namespace Azure.Provisioning.AppService
             _deployment = DefineModelProperty<FunctionsDeployment>(nameof(Deployment), new string[] { "deployment" });
             _runtime = DefineModelProperty<FunctionAppRuntime>(nameof(Runtime), new string[] { "runtime" });
             _scaleAndConcurrency = DefineModelProperty<FunctionAppScaleAndConcurrency>(nameof(ScaleAndConcurrency), new string[] { "scaleAndConcurrency" });
-            _siteUpdateStrategy = DefineModelProperty<FunctionsSiteUpdateStrategy>(nameof(SiteUpdateStrategy), new string[] { "siteUpdateStrategy" });
             DefineAdditionalProperties();
         }
 

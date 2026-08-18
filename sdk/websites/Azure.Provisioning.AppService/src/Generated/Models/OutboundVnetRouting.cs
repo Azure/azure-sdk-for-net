@@ -18,7 +18,6 @@ namespace Azure.Provisioning.AppService
         private BicepValue<bool> _isContentShareTrafficEnabled;
         private BicepValue<bool> _isImagePullTrafficEnabled;
         private BicepValue<bool> _isBackupRestoreTrafficEnabled;
-        private BicepValue<bool> _isManagedIdentityTrafficEnabled;
 
         /// <summary> Creates a new OutboundVnetRouting. </summary>
         public OutboundVnetRouting()
@@ -100,21 +99,6 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets or sets the IsManagedIdentityTrafficEnabled. </summary>
-        public BicepValue<bool> IsManagedIdentityTrafficEnabled
-        {
-            get
-            {
-                Initialize();
-                return _isManagedIdentityTrafficEnabled;
-            }
-            set
-            {
-                Initialize();
-                _isManagedIdentityTrafficEnabled.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for OutboundVnetRouting. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -124,7 +108,6 @@ namespace Azure.Provisioning.AppService
             _isContentShareTrafficEnabled = DefineProperty<bool>(nameof(IsContentShareTrafficEnabled), new string[] { "contentShareTraffic" });
             _isImagePullTrafficEnabled = DefineProperty<bool>(nameof(IsImagePullTrafficEnabled), new string[] { "imagePullTraffic" });
             _isBackupRestoreTrafficEnabled = DefineProperty<bool>(nameof(IsBackupRestoreTrafficEnabled), new string[] { "backupRestoreTraffic" });
-            _isManagedIdentityTrafficEnabled = DefineProperty<bool>(nameof(IsManagedIdentityTrafficEnabled), new string[] { "managedIdentityTraffic" });
             DefineAdditionalProperties();
         }
 
