@@ -42,7 +42,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Listeners
         [TestCase(PutBlobLogContent, 10, "test-blobs/basic", 0, 0)]
         // An unparsable path degrades to container-only matching.
         [TestCase(PutBlobLogContent, 10, "test-blobs/", 1, 1)]
-        public async Task GetScaleResultAsync_WorkAsExpected(string logBlobContent, int offsetInMinutes, string blobPath, int expectedTargetWorkerCount, int excpectedChachReads)
+        // A path with no usable container name never scales out.
+        [TestCase(PutBlobLogContent, 10, "", 0, 0)]
+        [TestCase(PutBlobLogContent, 10, null, 0, 0)]
+        public async Task GetScaleResultAsync_WorkAsExpected(string logBlobContent, int offsetInMinutes, string blobPath, int expectedTargetWorkerCount, int expectedCacheReads)
         {
             string timeStamp = $"{DateTime.UtcNow.AddMinutes(-offsetInMinutes):o}";
             logBlobContent = logBlobContent.Replace("Timestamp=''", timeStamp);
@@ -87,7 +90,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Listeners
             result = await scaler.GetScaleResultAsync(new TargetScalerContext());
 
             var cacheReads = loggerProvider.GetAllLogMessages().Where(x => x.FormattedMessage.Contains("Recent writes were detected from cache for ")).Count();
-            Assert.AreEqual(excpectedChachReads, cacheReads);
+            Assert.AreEqual(expectedCacheReads, cacheReads);
 
             Assert.NotNull(result);
             Assert.AreEqual(expectedTargetWorkerCount, result.TargetWorkerCount);

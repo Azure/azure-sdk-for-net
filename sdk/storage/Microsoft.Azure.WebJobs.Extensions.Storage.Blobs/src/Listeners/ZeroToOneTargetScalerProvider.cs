@@ -101,12 +101,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 {
                     return BlobPathSource.Create(blobPath);
                 }
-                catch (FormatException ex) when (!string.IsNullOrEmpty(blobPath))
+                catch (FormatException ex)
                 {
-                    // Degrade to container-only matching rather than failing scaling for the whole function.
-                    int separatorIndex = blobPath.IndexOf('/');
-                    string containerName = separatorIndex > 0 ? blobPath.Substring(0, separatorIndex) : blobPath;
-                    logger.LogWarning($"Unable to parse blob path '{blobPath}'. Falling back to container-only matching on '{containerName}'. Exception: {ex.Message}");
+                    // Degrade rather than failing scaling for the whole function. An empty container name matches
+                    // nothing, which is the safe default when the path is unusable.
+                    int separatorIndex = blobPath?.IndexOf('/') ?? -1;
+                    string containerName = separatorIndex > 0 ? blobPath.Substring(0, separatorIndex) : blobPath ?? string.Empty;
+
+                    logger.LogWarning(ex, "Unable to parse blob trigger path '{BlobPath}'. Falling back to container-only matching on '{ContainerName}'.", blobPath, containerName);
 
                     return new FixedBlobPathSource(new BlobPath(containerName, string.Empty));
                 }
