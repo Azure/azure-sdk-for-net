@@ -26,8 +26,8 @@
   - New Emitter (TypeSpec): 53
   - Old TypeSpec: 0
 - Provisioning: 59
-  - Reflection-based generator: 24
-  - TypeSpec-based generator: 33
+  - Reflection-based generator: 23
+  - TypeSpec-based generator: 34
   - No generator: 2
 - No generator: 47
 
@@ -416,7 +416,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 43
 
 Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
 
-**Migration Status**: 33 / 59 migrated to TypeSpec-based generator
+**Migration Status**: 34 / 59 migrated to TypeSpec-based generator
 
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
@@ -478,7 +478,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | storage | Azure.Provisioning.Storage | Azure.ResourceManager.Storage ✅ | Reflection |
 | trafficmanager | Azure.Provisioning.TrafficManager | Azure.ResourceManager.TrafficManager ✅ | TypeSpec ✅ |
 | webpubsub | Azure.Provisioning.WebPubSub | Azure.ResourceManager.WebPubSub ✅ | Reflection |
-| websites | Azure.Provisioning.AppService | Azure.ResourceManager.AppService ✅ | Reflection |
+| websites | Azure.Provisioning.AppService | Azure.ResourceManager.AppService ✅ | TypeSpec ✅ |
 
 
 ## Libraries with No Generator
