@@ -12,30 +12,30 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.OperationTemplates
 {
-    internal partial class LroPaging
+    internal partial class Legacy
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
 
-        /// <summary> Initializes a new instance of LroPaging for mocking. </summary>
-        protected LroPaging()
+        /// <summary> Initializes a new instance of Legacy for mocking. </summary>
+        protected Legacy()
         {
         }
 
-        /// <summary> Initializes a new instance of LroPaging. </summary>
+        /// <summary> Initializes a new instance of Legacy. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal LroPaging(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        internal Legacy(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
-            _userAgent = new TelemetryDetails(typeof(LroPaging).Assembly, applicationId);
+            _userAgent = new TelemetryDetails(typeof(Legacy).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.OperationTemplates
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreatePostPagingLroRequest(Guid subscriptionId, string resourceGroupName, string productName, RequestContext context)
+        internal HttpMessage CreateRoutedGetRequest(Guid subscriptionId, string resourceGroupName, string name, string diagnosticName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -52,9 +52,10 @@ namespace Azure.ResourceManager.OperationTemplates
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Azure.ResourceManager.OperationTemplates/products/", false);
-            uri.AppendPath(productName, true);
-            uri.AppendPath("/postPagingLro", false);
+            uri.AppendPath("/providers/Azure.ResourceManager.OperationTemplates/configurations/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/diagnostics/", false);
+            uri.AppendPath(diagnosticName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -62,13 +63,13 @@ namespace Azure.ResourceManager.OperationTemplates
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Get;
             _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreatePostPagingLroWithBodyRequest(Guid subscriptionId, string resourceGroupName, string productName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrReplaceOptionalBodyRequest(Guid subscriptionId, string resourceGroupName, string configurationName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -76,9 +77,8 @@ namespace Azure.ResourceManager.OperationTemplates
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Azure.ResourceManager.OperationTemplates/products/", false);
-            uri.AppendPath(productName, true);
-            uri.AppendPath("/postPagingLroWithBody", false);
+            uri.AppendPath("/providers/Azure.ResourceManager.OperationTemplates/configurations/", false);
+            uri.AppendPath(configurationName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -86,9 +86,12 @@ namespace Azure.ResourceManager.OperationTemplates
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Put;
             _userAgent.Apply(message);
-            request.Headers.SetValue("Content-Type", "application/json");
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json");
+            }
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
