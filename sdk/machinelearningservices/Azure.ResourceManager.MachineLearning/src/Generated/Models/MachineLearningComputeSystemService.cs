@@ -24,11 +24,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningComputeSystemService"/>. </summary>
         /// <param name="systemServiceType"> The type of this system service. </param>
+        /// <param name="publicIPAddress"> Public IP address. </param>
         /// <param name="version"> The version for this type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningComputeSystemService(string systemServiceType, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineLearningComputeSystemService(string systemServiceType, string publicIPAddress, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SystemServiceType = systemServiceType;
+            PublicIPAddress = publicIPAddress;
             Version = version;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }

@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("latestImageVersion"u8);
                 writer.WriteStringValue(LatestImageVersion);
             }
+            if (Optional.IsDefined(IsLatestOSImageVersion))
+            {
+                writer.WritePropertyName("isLatestOsImageVersion"u8);
+                writer.WriteBooleanValue(IsLatestOSImageVersion.Value);
+            }
             if (options.Format != "W" && Optional.IsDefined(OSPatchingStatus))
             {
                 writer.WritePropertyName("osPatchingStatus"u8);
@@ -133,6 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             string currentImageVersion = default;
             string latestImageVersion = default;
+            bool? isLatestOSImageVersion = default;
             OSPatchingStatus osPatchingStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -145,6 +151,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (prop.NameEquals("latestImageVersion"u8))
                 {
                     latestImageVersion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("isLatestOsImageVersion"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isLatestOSImageVersion = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("osPatchingStatus"u8))
@@ -161,7 +176,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ImageMetadata(currentImageVersion, latestImageVersion, osPatchingStatus, additionalBinaryDataProperties);
+            return new ImageMetadata(currentImageVersion, latestImageVersion, isLatestOSImageVersion, osPatchingStatus, additionalBinaryDataProperties);
         }
     }
 }

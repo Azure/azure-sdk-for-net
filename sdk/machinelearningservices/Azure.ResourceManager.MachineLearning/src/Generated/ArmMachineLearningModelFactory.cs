@@ -6722,11 +6722,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <param name="systemServiceType"> The type of this system service. </param>
+        /// <param name="publicIPAddress"> Public IP address. </param>
         /// <param name="version"> The version for this type. </param>
         /// <returns> A new <see cref="Models.MachineLearningComputeSystemService"/> instance for mocking. </returns>
-        public static MachineLearningComputeSystemService MachineLearningComputeSystemService(string systemServiceType = default, string version = default)
+        public static MachineLearningComputeSystemService MachineLearningComputeSystemService(string systemServiceType = default, string publicIPAddress = default, string version = default)
         {
-            return new MachineLearningComputeSystemService(systemServiceType, version, default);
+            return new MachineLearningComputeSystemService(systemServiceType, publicIPAddress, version, default);
         }
 
         /// <param name="status"> Enable or disable ssl for scoring. </param>
@@ -6915,10 +6916,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="name"> Name of the Endpoint. </param>
         /// <param name="target"> Application port inside the container. </param>
         /// <param name="published"> Port over which the application is exposed from container. </param>
+        /// <param name="hostIP"> Host IP over which the application is exposed from the container. </param>
         /// <returns> A new <see cref="Models.ContainerEndpoint"/> instance for mocking. </returns>
-        public static ContainerEndpoint ContainerEndpoint(ContainerCommunicationProtocol? protocol = default, string name = default, int? target = default, int? published = default)
+        public static ContainerEndpoint ContainerEndpoint(ContainerCommunicationProtocol? protocol = default, string name = default, int? target = default, int? published = default, string hostIP = default)
         {
-            return new ContainerEndpoint(protocol, name, target, published, default);
+            return new ContainerEndpoint(
+                protocol,
+                name,
+                target,
+                published,
+                hostIP,
+                default);
         }
 
         /// <param name="definitionType"> Type of Volume Definition. Possible Values: bind,volume,tmpfs,npipe. </param>
@@ -6966,11 +6974,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <param name="currentImageVersion"> Specifies the current operating system image version this compute instance is running on. </param>
         /// <param name="latestImageVersion"> Specifies the latest available operating system image version. </param>
+        /// <param name="isLatestOSImageVersion"> Specifies whether this compute instance is running on the latest operating system image. </param>
         /// <param name="osPatchingStatus"> Metadata about the os patching. </param>
         /// <returns> A new <see cref="Models.ImageMetadata"/> instance for mocking. </returns>
-        public static ImageMetadata ImageMetadata(string currentImageVersion = default, string latestImageVersion = default, OSPatchingStatus osPatchingStatus = default)
+        public static ImageMetadata ImageMetadata(string currentImageVersion = default, string latestImageVersion = default, bool? isLatestOSImageVersion = default, OSPatchingStatus osPatchingStatus = default)
         {
-            return new ImageMetadata(currentImageVersion, latestImageVersion, osPatchingStatus, default);
+            return new ImageMetadata(currentImageVersion, latestImageVersion, isLatestOSImageVersion, osPatchingStatus, default);
         }
 
         /// <param name="patchStatus"> The os patching status. </param>
@@ -6992,10 +7001,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 default);
         }
 
+        /// <param name="publicIPAddress"> Public IP Address of this ComputeInstance. </param>
+        /// <param name="privateIPAddress"> Private IP Address of this ComputeInstance (local to the VNET in which the compute instance is deployed). </param>
         /// <returns> A new <see cref="Models.MachineLearningComputeInstanceConnectivityEndpoints"/> instance for mocking. </returns>
-        public static MachineLearningComputeInstanceConnectivityEndpoints MachineLearningComputeInstanceConnectivityEndpoints()
+        public static MachineLearningComputeInstanceConnectivityEndpoints MachineLearningComputeInstanceConnectivityEndpoints(string publicIPAddress = default, string privateIPAddress = default)
         {
-            return new MachineLearningComputeInstanceConnectivityEndpoints(default);
+            return new MachineLearningComputeInstanceConnectivityEndpoints(publicIPAddress, privateIPAddress, default);
         }
 
         /// <param name="displayName"> Name of the ComputeInstance application. </param>
@@ -7274,13 +7285,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <param name="nodeId"> ID of the compute node. </param>
+        /// <param name="privateIPAddress"> Private IP address of the compute node. </param>
+        /// <param name="publicIPAddress"> Public IP address of the compute node. </param>
         /// <param name="port"> SSH port number of the node. </param>
         /// <param name="nodeState"> State of the compute node. Values are idle, running, preparing, unusable, leaving and preempted. </param>
         /// <param name="runId"> ID of the Experiment running on the node, if any else null. </param>
         /// <returns> A new <see cref="Models.AmlComputeNodeInformation"/> instance for mocking. </returns>
-        public static AmlComputeNodeInformation AmlComputeNodeInformation(string nodeId = default, int? port = default, MachineLearningNodeState? nodeState = default, string runId = default)
+        public static AmlComputeNodeInformation AmlComputeNodeInformation(string nodeId = default, IPAddress privateIPAddress = default, IPAddress publicIPAddress = default, int? port = default, MachineLearningNodeState? nodeState = default, string runId = default)
         {
-            return new AmlComputeNodeInformation(nodeId, port, nodeState, runId, default);
+            return new AmlComputeNodeInformation(
+                nodeId,
+                privateIPAddress,
+                publicIPAddress,
+                port,
+                nodeState,
+                runId,
+                default);
         }
 
         /// <param name="computeType"> The type of compute. </param>
@@ -7331,28 +7351,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <param name="name"> The name of the virtual machine size. </param>
         /// <param name="family"> The family name of the virtual machine size. </param>
-        /// <param name="vcpUs"> The number of vCPUs supported by the virtual machine size. </param>
+        /// <param name="vCpus"> The number of vCPUs supported by the virtual machine size. </param>
         /// <param name="gpus"> The number of gPUs supported by the virtual machine size. </param>
+        /// <param name="osVhdSizeMB"> The OS VHD disk size, in MB, allowed by the virtual machine size. </param>
         /// <param name="maxResourceVolumeMB"> The resource volume size, in MB, allowed by the virtual machine size. </param>
         /// <param name="memoryGB"> The amount of memory, in GB, supported by the virtual machine size. </param>
         /// <param name="lowPriorityCapable"> Specifies if the virtual machine size supports low priority VMs. </param>
-        /// <param name="supportsPremiumIO"> Specifies if the virtual machine size supports premium IO. </param>
+        /// <param name="isPremiumIOSupported"> Specifies if the virtual machine size supports premium IO. </param>
         /// <param name="estimatedVmPrices"> The estimated price information for using a VM. </param>
         /// <param name="supportedComputeTypes"> Specifies the compute types supported by the virtual machine size. </param>
         /// <returns> A new <see cref="Models.MachineLearningVmSize"/> instance for mocking. </returns>
-        public static MachineLearningVmSize MachineLearningVmSize(string name = default, string family = default, int? vcpUs = default, int? gpus = default, int? maxResourceVolumeMB = default, double? memoryGB = default, bool? lowPriorityCapable = default, bool? supportsPremiumIO = default, MachineLearningEstimatedVmPrices estimatedVmPrices = default, IEnumerable<string> supportedComputeTypes = default)
+        public static MachineLearningVmSize MachineLearningVmSize(string name = default, string family = default, int? vCpus = default, int? gpus = default, int? osVhdSizeMB = default, int? maxResourceVolumeMB = default, double? memoryGB = default, bool? lowPriorityCapable = default, bool? isPremiumIOSupported = default, MachineLearningEstimatedVmPrices estimatedVmPrices = default, IEnumerable<string> supportedComputeTypes = default)
         {
             supportedComputeTypes ??= new ChangeTrackingList<string>();
 
             return new MachineLearningVmSize(
                 name,
                 family,
-                vcpUs,
+                vCpus,
                 gpus,
+                osVhdSizeMB,
                 maxResourceVolumeMB,
                 memoryGB,
                 lowPriorityCapable,
-                supportsPremiumIO,
+                default,
                 estimatedVmPrices,
                 (supportedComputeTypes ?? new ChangeTrackingList<string>()).ToList(),
                 default);
@@ -8941,36 +8963,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningVmSize"/>. </summary>
-        /// <param name="name"> The name of the virtual machine size. </param>
-        /// <param name="family"> The family name of the virtual machine size. </param>
-        /// <param name="vCpus"> The number of vCPUs supported by the virtual machine size. </param>
-        /// <param name="gpus"> The number of gPUs supported by the virtual machine size. </param>
-        /// <param name="osVhdSizeMB"> The OS VHD disk size, in MB, allowed by the virtual machine size. </param>
-        /// <param name="maxResourceVolumeMB"> The resource volume size, in MB, allowed by the virtual machine size. </param>
-        /// <param name="memoryGB"> The amount of memory, in GB, supported by the virtual machine size. </param>
-        /// <param name="lowPriorityCapable"> Specifies if the virtual machine size supports low priority VMs. </param>
-        /// <param name="isPremiumIOSupported"> Specifies if the virtual machine size supports premium IO. </param>
-        /// <param name="estimatedVmPrices"> The estimated price information for using a VM. </param>
-        /// <param name="supportedComputeTypes"> Specifies the compute types supported by the virtual machine size. </param>
-        /// <returns> A new <see cref="Models.MachineLearningVmSize"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningVmSize MachineLearningVmSize(string name = default, string family = default, int? vCpus = default, int? gpus = default, int? osVhdSizeMB = default, int? maxResourceVolumeMB = default, double? memoryGB = default, bool? lowPriorityCapable = default, bool? isPremiumIOSupported = default, MachineLearningEstimatedVmPrices estimatedVmPrices = default, IEnumerable<string> supportedComputeTypes = default)
-        {
-            return new MachineLearningVmSize(
-                name,
-                family,
-                vCpus,
-                gpus,
-                maxResourceVolumeMB,
-                memoryGB,
-                lowPriorityCapable,
-                default,
-                estimatedVmPrices,
-                (supportedComputeTypes ?? new ChangeTrackingList<string>()).ToList(),
-                default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="MachineLearning.MachineLearningComputeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -9000,20 +8992,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 sku,
                 identity,
                 default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AmlComputeNodeInformation"/>. </summary>
-        /// <param name="nodeId"> ID of the compute node. </param>
-        /// <param name="privateIPAddress"> Private IP address of the compute node. </param>
-        /// <param name="publicIPAddress"> Public IP address of the compute node. </param>
-        /// <param name="port"> SSH port number of the node. </param>
-        /// <param name="nodeState"> State of the compute node. Values are idle, running, preparing, unusable, leaving and preempted. </param>
-        /// <param name="runId"> ID of the Experiment running on the node, if any else null. </param>
-        /// <returns> A new <see cref="Models.AmlComputeNodeInformation"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AmlComputeNodeInformation AmlComputeNodeInformation(string nodeId = default, IPAddress privateIPAddress = default, IPAddress publicIPAddress = default, int? port = default, MachineLearningNodeState? nodeState = default, string runId = default)
-        {
-            return new AmlComputeNodeInformation(nodeId, port, nodeState, runId, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningWorkspaceNotebookAccessTokenResult"/>. </summary>
@@ -9846,17 +9824,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningComputeSystemService"/>. </summary>
-        /// <param name="systemServiceType"> The type of this system service. </param>
-        /// <param name="publicIPAddress"> Public IP address. </param>
-        /// <param name="version"> The version for this type. </param>
-        /// <returns> A new <see cref="Models.MachineLearningComputeSystemService"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningComputeSystemService MachineLearningComputeSystemService(string systemServiceType = default, string publicIPAddress = default, string version = default)
-        {
-            return new MachineLearningComputeSystemService(systemServiceType, version, default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.ImageMetadata"/>. </summary>
         /// <param name="currentImageVersion"> Specifies the current operating system image version this compute instance is running on. </param>
         /// <param name="latestImageVersion"> Specifies the latest available operating system image version. </param>
@@ -9865,17 +9832,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ImageMetadata ImageMetadata(string currentImageVersion = default, string latestImageVersion = default, bool? isLatestOSImageVersion = default)
         {
-            return new ImageMetadata(currentImageVersion, latestImageVersion, default, default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningComputeInstanceConnectivityEndpoints"/>. </summary>
-        /// <param name="publicIPAddress"> Public IP Address of this ComputeInstance. </param>
-        /// <param name="privateIPAddress"> Private IP Address of this ComputeInstance (local to the VNET in which the compute instance is deployed). </param>
-        /// <returns> A new <see cref="Models.MachineLearningComputeInstanceConnectivityEndpoints"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningComputeInstanceConnectivityEndpoints MachineLearningComputeInstanceConnectivityEndpoints(string publicIPAddress = default, string privateIPAddress = default)
-        {
-            return new MachineLearningComputeInstanceConnectivityEndpoints(default);
+            return new ImageMetadata(currentImageVersion, latestImageVersion, isLatestOSImageVersion, default, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningComputeInstanceDataMount"/>. </summary>
