@@ -696,8 +696,8 @@ namespace Azure.Analytics.Defender.Easm
             string domain = default;
             IList<SslServerConfig> sslServerConfig = default;
             IList<AssetSecurityPolicy> gdprAssetSecurityPolicies = default;
-            IList<ObservedBoolean> ipv4 = default;
-            IList<ObservedBoolean> ipv6 = default;
+            IList<ObservedBoolean> iPv4 = default;
+            IList<ObservedBoolean> iPv6 = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("url"u8))
@@ -1438,7 +1438,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         array.Add(ObservedBoolean.DeserializeObservedBoolean(item, options));
                     }
-                    ipv4 = array;
+                    iPv4 = array;
                     continue;
                 }
                 if (prop.NameEquals("ipv6"u8))
@@ -1452,7 +1452,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         array.Add(ObservedBoolean.DeserializeObservedBoolean(item, options));
                     }
-                    ipv6 = array;
+                    iPv6 = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -1521,8 +1521,8 @@ namespace Azure.Analytics.Defender.Easm
                 domain,
                 sslServerConfig ?? new ChangeTrackingList<SslServerConfig>(),
                 gdprAssetSecurityPolicies ?? new ChangeTrackingList<AssetSecurityPolicy>(),
-                ipv4 ?? new ChangeTrackingList<ObservedBoolean>(),
-                ipv6 ?? new ChangeTrackingList<ObservedBoolean>());
+                iPv4 ?? new ChangeTrackingList<ObservedBoolean>(),
+                iPv6 ?? new ChangeTrackingList<ObservedBoolean>());
         }
     }
 }

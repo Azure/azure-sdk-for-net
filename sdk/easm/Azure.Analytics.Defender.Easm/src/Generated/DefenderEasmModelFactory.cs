@@ -635,10 +635,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="sslServerConfig"></param>
         /// <param name="isWildcard"></param>
         /// <param name="banners"></param>
-        /// <param name="ipv4"></param>
-        /// <param name="ipv6"></param>
+        /// <param name="iPv4"></param>
+        /// <param name="iPv6"></param>
         /// <returns> A new <see cref="Easm.HostAsset"/> instance for mocking. </returns>
-        public static HostAsset HostAsset(string host = default, string domain = default, IEnumerable<ObservedString> ipAddresses = default, IEnumerable<WebComponent> webComponents = default, IEnumerable<ObservedHeader> headers = default, IEnumerable<AttributeDetails> attributes = default, IEnumerable<CookieDetails> cookies = default, IEnumerable<SslCertAsset> sslCerts = default, IEnumerable<ObservedString> parentHosts = default, IEnumerable<ObservedString> childHosts = default, HostCore hostCore = default, IEnumerable<AssetService> services = default, IEnumerable<ObservedString> cnames = default, IEnumerable<SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, IEnumerable<ResourceUri> resourceUrls = default, IEnumerable<ScanMetadata> scanMetadata = default, IEnumerable<ObservedLong> asns = default, IEnumerable<IPBlock> ipBlocks = default, IEnumerable<ObservedString> responseBodies = default, DomainAsset domainAsset = default, IEnumerable<ObservedBoolean> nsRecord = default, IEnumerable<ObservedBoolean> mxRecord = default, IEnumerable<ObservedBoolean> webserver = default, IEnumerable<ObservedLocation> location = default, IEnumerable<ObservedBoolean> nxdomain = default, IEnumerable<SslServerConfig> sslServerConfig = default, IEnumerable<ObservedBoolean> isWildcard = default, IEnumerable<BannerDetails> banners = default, IEnumerable<ObservedBoolean> ipv4 = default, IEnumerable<ObservedBoolean> ipv6 = default)
+        public static HostAsset HostAsset(string host = default, string domain = default, IEnumerable<ObservedString> ipAddresses = default, IEnumerable<WebComponent> webComponents = default, IEnumerable<ObservedHeader> headers = default, IEnumerable<AttributeDetails> attributes = default, IEnumerable<CookieDetails> cookies = default, IEnumerable<SslCertAsset> sslCerts = default, IEnumerable<ObservedString> parentHosts = default, IEnumerable<ObservedString> childHosts = default, HostCore hostCore = default, IEnumerable<AssetService> services = default, IEnumerable<ObservedString> cnames = default, IEnumerable<SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, IEnumerable<ResourceUri> resourceUrls = default, IEnumerable<ScanMetadata> scanMetadata = default, IEnumerable<ObservedLong> asns = default, IEnumerable<IPBlock> ipBlocks = default, IEnumerable<ObservedString> responseBodies = default, DomainAsset domainAsset = default, IEnumerable<ObservedBoolean> nsRecord = default, IEnumerable<ObservedBoolean> mxRecord = default, IEnumerable<ObservedBoolean> webserver = default, IEnumerable<ObservedLocation> location = default, IEnumerable<ObservedBoolean> nxdomain = default, IEnumerable<SslServerConfig> sslServerConfig = default, IEnumerable<ObservedBoolean> isWildcard = default, IEnumerable<BannerDetails> banners = default, IEnumerable<ObservedBoolean> iPv4 = default, IEnumerable<ObservedBoolean> iPv6 = default)
         {
             ipAddresses ??= new ChangeTrackingList<ObservedString>();
             webComponents ??= new ChangeTrackingList<WebComponent>();
@@ -664,8 +664,8 @@ namespace Azure.Analytics.Defender.Easm
             sslServerConfig ??= new ChangeTrackingList<SslServerConfig>();
             isWildcard ??= new ChangeTrackingList<ObservedBoolean>();
             banners ??= new ChangeTrackingList<BannerDetails>();
-            ipv4 ??= new ChangeTrackingList<ObservedBoolean>();
-            ipv6 ??= new ChangeTrackingList<ObservedBoolean>();
+            iPv4 ??= new ChangeTrackingList<ObservedBoolean>();
+            iPv6 ??= new ChangeTrackingList<ObservedBoolean>();
 
             return new HostAsset(
                 additionalBinaryDataProperties: null,
@@ -700,8 +700,8 @@ namespace Azure.Analytics.Defender.Easm
                 sslServerConfig.ToList(),
                 isWildcard.ToList(),
                 banners.ToList(),
-                ipv4.ToList(),
-                ipv6.ToList());
+                iPv4.ToList(),
+                iPv6.ToList());
         }
 
         /// <summary> The WebComponent. </summary>
@@ -1415,10 +1415,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="hosts"></param>
         /// <param name="nxdomain"></param>
         /// <param name="sslServerConfig"></param>
-        /// <param name="ipv4"></param>
-        /// <param name="ipv6"></param>
+        /// <param name="iPv4"></param>
+        /// <param name="iPv6"></param>
         /// <returns> A new <see cref="Easm.IPAddressAsset"/> instance for mocking. </returns>
-        public static IPAddressAsset IPAddressAsset(string ipAddress = default, IEnumerable<ObservedLong> asns = default, IEnumerable<ReputationDetails> reputations = default, IEnumerable<WebComponent> webComponents = default, IEnumerable<ObservedString> netRanges = default, IEnumerable<ObservedHeader> headers = default, IEnumerable<AttributeDetails> attributes = default, IEnumerable<CookieDetails> cookies = default, IEnumerable<SslCertAsset> sslCerts = default, IEnumerable<AssetService> services = default, IEnumerable<IPBlock> ipBlocks = default, IEnumerable<SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, IEnumerable<BannerDetails> banners = default, IEnumerable<ScanMetadata> scanMetadata = default, IEnumerable<ObservedBoolean> nsRecord = default, IEnumerable<ObservedBoolean> mxRecord = default, IEnumerable<ObservedLocation> location = default, IEnumerable<ObservedString> hosts = default, IEnumerable<ObservedBoolean> nxdomain = default, IEnumerable<SslServerConfig> sslServerConfig = default, bool? ipv4 = default, bool? ipv6 = default)
+        public static IPAddressAsset IPAddressAsset(string ipAddress = default, IEnumerable<ObservedLong> asns = default, IEnumerable<ReputationDetails> reputations = default, IEnumerable<WebComponent> webComponents = default, IEnumerable<ObservedString> netRanges = default, IEnumerable<ObservedHeader> headers = default, IEnumerable<AttributeDetails> attributes = default, IEnumerable<CookieDetails> cookies = default, IEnumerable<SslCertAsset> sslCerts = default, IEnumerable<AssetService> services = default, IEnumerable<IPBlock> ipBlocks = default, IEnumerable<SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, IEnumerable<BannerDetails> banners = default, IEnumerable<ScanMetadata> scanMetadata = default, IEnumerable<ObservedBoolean> nsRecord = default, IEnumerable<ObservedBoolean> mxRecord = default, IEnumerable<ObservedLocation> location = default, IEnumerable<ObservedString> hosts = default, IEnumerable<ObservedBoolean> nxdomain = default, IEnumerable<SslServerConfig> sslServerConfig = default, bool? iPv4 = default, bool? iPv6 = default)
         {
             asns ??= new ChangeTrackingList<ObservedLong>();
             reputations ??= new ChangeTrackingList<ReputationDetails>();
@@ -1465,8 +1465,8 @@ namespace Azure.Analytics.Defender.Easm
                 hosts.ToList(),
                 nxdomain.ToList(),
                 sslServerConfig.ToList(),
-                ipv4,
-                ipv6);
+                iPv4,
+                iPv6);
         }
 
         /// <summary> The ReputationDetails. </summary>
@@ -1563,10 +1563,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="registrantPhones"></param>
         /// <param name="adminPhones"></param>
         /// <param name="technicalPhones"></param>
-        /// <param name="ipv4"></param>
-        /// <param name="ipv6"></param>
+        /// <param name="iPv4"></param>
+        /// <param name="iPv6"></param>
         /// <returns> A new <see cref="Easm.IPBlockAsset"/> instance for mocking. </returns>
-        public static IPBlockAsset IPBlockAsset(string ipBlock = default, IEnumerable<ObservedLong> asns = default, IEnumerable<ObservedString> bgpPrefixes = default, IEnumerable<ObservedString> netNames = default, IEnumerable<ObservedString> registrantContacts = default, IEnumerable<ObservedString> registrantOrgs = default, IEnumerable<ObservedString> adminContacts = default, IEnumerable<ObservedString> technicalContacts = default, IEnumerable<ObservedLong> registrarCreatedAt = default, IEnumerable<ObservedLong> registrarUpdatedAt = default, IEnumerable<ObservedString> netRanges = default, string startIP = default, string endIP = default, IEnumerable<ReputationDetails> reputations = default, DateTimeOffset? detailedFromWhoisAt = default, IEnumerable<SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, IEnumerable<ObservedLocation> location = default, IEnumerable<ObservedLong> registrarExpiresAt = default, IEnumerable<ObservedString> registrantNames = default, IEnumerable<ObservedString> adminNames = default, IEnumerable<ObservedString> technicalNames = default, IEnumerable<ObservedString> adminOrgs = default, IEnumerable<ObservedString> technicalOrgs = default, IEnumerable<ObservedString> registrantPhones = default, IEnumerable<ObservedString> adminPhones = default, IEnumerable<ObservedString> technicalPhones = default, bool? ipv4 = default, bool? ipv6 = default)
+        public static IPBlockAsset IPBlockAsset(string ipBlock = default, IEnumerable<ObservedLong> asns = default, IEnumerable<ObservedString> bgpPrefixes = default, IEnumerable<ObservedString> netNames = default, IEnumerable<ObservedString> registrantContacts = default, IEnumerable<ObservedString> registrantOrgs = default, IEnumerable<ObservedString> adminContacts = default, IEnumerable<ObservedString> technicalContacts = default, IEnumerable<ObservedLong> registrarCreatedAt = default, IEnumerable<ObservedLong> registrarUpdatedAt = default, IEnumerable<ObservedString> netRanges = default, string startIP = default, string endIP = default, IEnumerable<ReputationDetails> reputations = default, DateTimeOffset? detailedFromWhoisAt = default, IEnumerable<SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, IEnumerable<ObservedLocation> location = default, IEnumerable<ObservedLong> registrarExpiresAt = default, IEnumerable<ObservedString> registrantNames = default, IEnumerable<ObservedString> adminNames = default, IEnumerable<ObservedString> technicalNames = default, IEnumerable<ObservedString> adminOrgs = default, IEnumerable<ObservedString> technicalOrgs = default, IEnumerable<ObservedString> registrantPhones = default, IEnumerable<ObservedString> adminPhones = default, IEnumerable<ObservedString> technicalPhones = default, bool? iPv4 = default, bool? iPv6 = default)
         {
             asns ??= new ChangeTrackingList<ObservedLong>();
             bgpPrefixes ??= new ChangeTrackingList<ObservedString>();
@@ -1622,8 +1622,8 @@ namespace Azure.Analytics.Defender.Easm
                 registrantPhones.ToList(),
                 adminPhones.ToList(),
                 technicalPhones.ToList(),
-                ipv4,
-                ipv6);
+                iPv4,
+                iPv6);
         }
 
         /// <summary> The PageAssetResource. </summary>
@@ -1726,10 +1726,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="domain"></param>
         /// <param name="sslServerConfig"></param>
         /// <param name="gdprAssetSecurityPolicies"></param>
-        /// <param name="ipv4"></param>
-        /// <param name="ipv6"></param>
+        /// <param name="iPv4"></param>
+        /// <param name="iPv6"></param>
         /// <returns> A new <see cref="Easm.PageAsset"/> instance for mocking. </returns>
-        public static PageAsset PageAsset(Uri url = default, string httpMethod = default, string service = default, IEnumerable<ObservedString> ipAddresses = default, IEnumerable<ObservedBoolean> successful = default, IEnumerable<ObservedInteger> httpResponseCodes = default, IEnumerable<ObservedString> httpResponseMessages = default, IEnumerable<ObservedLong> responseTimes = default, IEnumerable<ObservedBoolean> frames = default, IEnumerable<ObservedBoolean> windows = default, IEnumerable<ObservedBoolean> nonHtmlFrames = default, IEnumerable<ObservedBoolean> undirectedContent = default, IEnumerable<ObservedString> contentTypes = default, IEnumerable<ObservedLong> contentLengths = default, IEnumerable<ObservedString> windowNames = default, IEnumerable<ObservedString> charsets = default, IEnumerable<ObservedString> titles = default, IEnumerable<ObservedString> languages = default, IEnumerable<ObservedHeader> responseHeaders = default, IEnumerable<CookieDetails> cookies = default, IEnumerable<WebComponent> webComponents = default, IEnumerable<AttributeDetails> attributes = default, IEnumerable<AssetSecurityPolicy> assetSecurityPolicies = default, IEnumerable<ObservedIntegers> responseBodyMinhashSignatures = default, IEnumerable<ObservedIntegers> fullDomMinhashSignatures = default, IEnumerable<ObservedString> responseBodyHashSignatures = default, IEnumerable<ObservedString> errors = default, IEnumerable<SslCertAsset> sslCerts = default, IEnumerable<SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, PageCause cause = default, string referrer = default, IEnumerable<ObservedString> redirectUrls = default, PageAssetRedirectType? redirectType = default, IEnumerable<ObservedString> finalUrls = default, IEnumerable<ObservedInteger> finalResponseCodes = default, IEnumerable<ObservedBoolean> parkedPage = default, IEnumerable<ResourceUri> resourceUrls = default, IEnumerable<GuidPair> guids = default, IEnumerable<ObservedString> finalIPAddresses = default, IEnumerable<ObservedLong> asns = default, IEnumerable<IPBlock> ipBlocks = default, IEnumerable<ObservedLong> finalAsns = default, IEnumerable<IPBlock> finalIPBlocks = default, IEnumerable<ObservedString> responseBodies = default, DomainAsset domainAsset = default, ObservedBoolean rootUrl = default, bool? isRootUrl = default, IEnumerable<ObservedLocation> location = default, IEnumerable<AssetService> services = default, string siteStatus = default, IEnumerable<ObservedString> cnames = default, IEnumerable<ObservedString> cdns = default, string host = default, string domain = default, IEnumerable<SslServerConfig> sslServerConfig = default, IEnumerable<AssetSecurityPolicy> gdprAssetSecurityPolicies = default, IEnumerable<ObservedBoolean> ipv4 = default, IEnumerable<ObservedBoolean> ipv6 = default)
+        public static PageAsset PageAsset(Uri url = default, string httpMethod = default, string service = default, IEnumerable<ObservedString> ipAddresses = default, IEnumerable<ObservedBoolean> successful = default, IEnumerable<ObservedInteger> httpResponseCodes = default, IEnumerable<ObservedString> httpResponseMessages = default, IEnumerable<ObservedLong> responseTimes = default, IEnumerable<ObservedBoolean> frames = default, IEnumerable<ObservedBoolean> windows = default, IEnumerable<ObservedBoolean> nonHtmlFrames = default, IEnumerable<ObservedBoolean> undirectedContent = default, IEnumerable<ObservedString> contentTypes = default, IEnumerable<ObservedLong> contentLengths = default, IEnumerable<ObservedString> windowNames = default, IEnumerable<ObservedString> charsets = default, IEnumerable<ObservedString> titles = default, IEnumerable<ObservedString> languages = default, IEnumerable<ObservedHeader> responseHeaders = default, IEnumerable<CookieDetails> cookies = default, IEnumerable<WebComponent> webComponents = default, IEnumerable<AttributeDetails> attributes = default, IEnumerable<AssetSecurityPolicy> assetSecurityPolicies = default, IEnumerable<ObservedIntegers> responseBodyMinhashSignatures = default, IEnumerable<ObservedIntegers> fullDomMinhashSignatures = default, IEnumerable<ObservedString> responseBodyHashSignatures = default, IEnumerable<ObservedString> errors = default, IEnumerable<SslCertAsset> sslCerts = default, IEnumerable<SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, PageCause cause = default, string referrer = default, IEnumerable<ObservedString> redirectUrls = default, PageAssetRedirectType? redirectType = default, IEnumerable<ObservedString> finalUrls = default, IEnumerable<ObservedInteger> finalResponseCodes = default, IEnumerable<ObservedBoolean> parkedPage = default, IEnumerable<ResourceUri> resourceUrls = default, IEnumerable<GuidPair> guids = default, IEnumerable<ObservedString> finalIPAddresses = default, IEnumerable<ObservedLong> asns = default, IEnumerable<IPBlock> ipBlocks = default, IEnumerable<ObservedLong> finalAsns = default, IEnumerable<IPBlock> finalIPBlocks = default, IEnumerable<ObservedString> responseBodies = default, DomainAsset domainAsset = default, ObservedBoolean rootUrl = default, bool? isRootUrl = default, IEnumerable<ObservedLocation> location = default, IEnumerable<AssetService> services = default, string siteStatus = default, IEnumerable<ObservedString> cnames = default, IEnumerable<ObservedString> cdns = default, string host = default, string domain = default, IEnumerable<SslServerConfig> sslServerConfig = default, IEnumerable<AssetSecurityPolicy> gdprAssetSecurityPolicies = default, IEnumerable<ObservedBoolean> iPv4 = default, IEnumerable<ObservedBoolean> iPv6 = default)
         {
             ipAddresses ??= new ChangeTrackingList<ObservedString>();
             successful ??= new ChangeTrackingList<ObservedBoolean>();
@@ -1775,8 +1775,8 @@ namespace Azure.Analytics.Defender.Easm
             cdns ??= new ChangeTrackingList<ObservedString>();
             sslServerConfig ??= new ChangeTrackingList<SslServerConfig>();
             gdprAssetSecurityPolicies ??= new ChangeTrackingList<AssetSecurityPolicy>();
-            ipv4 ??= new ChangeTrackingList<ObservedBoolean>();
-            ipv6 ??= new ChangeTrackingList<ObservedBoolean>();
+            iPv4 ??= new ChangeTrackingList<ObservedBoolean>();
+            iPv6 ??= new ChangeTrackingList<ObservedBoolean>();
 
             return new PageAsset(
                 additionalBinaryDataProperties: null,
@@ -1839,8 +1839,8 @@ namespace Azure.Analytics.Defender.Easm
                 domain,
                 sslServerConfig.ToList(),
                 gdprAssetSecurityPolicies.ToList(),
-                ipv4.ToList(),
-                ipv6.ToList());
+                iPv4.ToList(),
+                iPv6.ToList());
         }
 
         /// <summary> The AssetSecurityPolicy. </summary>
