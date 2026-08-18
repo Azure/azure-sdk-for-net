@@ -12,7 +12,7 @@ namespace Azure.Provisioning.EventHubs
 {
     /// <summary>
     /// Properties of the Application Group policy
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EventHubsThrottlingPolicy"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="EventHubsThrottlingPolicy"/>.
     /// </summary>
     public partial class EventHubsApplicationGroupPolicy : ProvisionableConstruct
     {

@@ -351,6 +351,14 @@ namespace BasicTypeSpec
                 intFixedEnumPart);
         }
 
+        /// <summary> The StreamingItem. </summary>
+        /// <param name="message"></param>
+        /// <returns> A new <see cref="BasicTypeSpec.StreamingItem"/> instance for mocking. </returns>
+        public static StreamingItem StreamingItem(string message = default)
+        {
+            return new StreamingItem(message, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Tree is a specific type of plant. </summary>
         /// <param name="id"> The unique identifier of the plant. </param>
         /// <param name="height"> The height of the plant in centimeters. </param>

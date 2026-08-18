@@ -346,7 +346,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 var telemetryItems = Encoding.UTF8.GetString(payload).Split('\n');
                 for (int i = 0; i < telemetryItems.Length; i++)
                 {
-                    HttpPipelineHelper.IncrementCounterByType(telemetrySchemaTypeCounter, HttpPipelineHelper.GetTelemetryTypeFromJson(telemetryItems[i]));
+                    var (telemetryType, telemetrySuccess) = HttpPipelineHelper.GetTelemetryDetailsFromJson(telemetryItems[i]);
+                    HttpPipelineHelper.IncrementCounterByType(telemetrySchemaTypeCounter, telemetryType, telemetrySuccess);
                 }
             }
             catch (Exception)

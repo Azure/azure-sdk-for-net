@@ -3,6 +3,8 @@
 ## 1.9.0-beta.1 (Unreleased)
 
 ### Features Added
+- Add support for project id attributes propagation
+  ([#62052](https://github.com/Azure/azure-sdk-for-net/pull/62052))
 
 - Shutting down a provider (including `Dispose()`) now writes pending telemetry to offline storage and uploads it in the background instead of blocking on ingestion. Short-lived applications such as CLI tools previously lost this telemetry, because they exit before a transmission completes; process exit now costs a file write rather than an ingestion round trip, and delivery is completed by a background drain in this or a subsequent run. `ForceFlush` is unchanged by default and can be opted in with the `Azure.Monitor.OpenTelemetry.Exporter.PersistOnForceFlush` AppContext switch. The previous behavior can be restored with the `Azure.Monitor.OpenTelemetry.Exporter.DisablePersistOnShutdown` AppContext switch.
 
@@ -17,6 +19,9 @@
 - Stored telemetry is now coalesced into a single request per batch and drained oldest-first, instead of one request per blob newest-first. Previously a backlog could grow faster than it drained, and the oldest telemetry expired before it was ever sent.
 
 - Telemetry is no longer dropped when the offline storage directory reaches its size cap. The oldest stored telemetry is evicted to make room.
+
+- Log fields are now culture-invariant. ([#61996](https://github.com/Azure/azure-sdk-for-net/pull/61996))
+- Added the `telemetrySuccess` dimension to `Item_Dropped_Count` for request and dependency telemetry.
 
 ### Other Changes
 

@@ -154,36 +154,6 @@ namespace Azure.Provisioning.ServiceFabric
             }
         }
 
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<string> ProvisioningState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ApplicationResourceProperties();
-                }
-                return Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Gets or sets the TypeName. </summary>
-        public BicepValue<string> TypeName
-        {
-            get
-            {
-                return Properties is null ? default : Properties.TypeName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ApplicationResourceProperties();
-                }
-                Properties.TypeName = value;
-            }
-        }
-
         /// <summary> Gets or sets the TypeVersion. </summary>
         public BicepValue<string> TypeVersion
         {
@@ -317,6 +287,36 @@ namespace Azure.Provisioning.ServiceFabric
                     Properties = new ApplicationResourceProperties();
                 }
                 Properties.ManagedIdentities = value;
+            }
+        }
+
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<string> ProvisioningState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationResourceProperties();
+                }
+                return Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Gets or sets the TypeName. </summary>
+        public BicepValue<string> TypeName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TypeName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationResourceProperties();
+                }
+                Properties.TypeName = value;
             }
         }
 

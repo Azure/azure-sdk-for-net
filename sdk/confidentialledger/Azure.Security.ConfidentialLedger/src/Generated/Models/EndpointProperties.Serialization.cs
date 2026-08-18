@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Security.ConfidentialLedger;
 
 namespace Azure.Security.ConfidentialLedger.Models
 {
-    public partial class EndpointProperties : IUtf8JsonSerializable, IJsonModel<EndpointProperties>
+    /// <summary> Endpoint properties. </summary>
+    public partial class EndpointProperties : IJsonModel<EndpointProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EndpointProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="EndpointProperties"/> for deserialization. </summary>
+        internal EndpointProperties()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EndpointProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEndpointProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EndpointProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSecurityConfidentialLedgerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EndpointProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EndpointProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EndpointProperties IPersistableModel<EndpointProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EndpointProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EndpointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,15 +74,14 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EndpointProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("authn_policies"u8);
             writer.WriteStartArray();
-            foreach (var item in AuthnPolicies)
+            foreach (IDictionary<string, BinaryData> item in AuthnPolicies)
             {
                 if (item == null)
                 {
@@ -53,9 +98,9 @@ namespace Azure.Security.ConfidentialLedger.Models
                         continue;
                     }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item0.Value);
+                    writer.WriteRawValue(item0.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item0.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item0.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -99,9 +144,9 @@ namespace Azure.Security.ConfidentialLedger.Models
                         continue;
                     }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -119,15 +164,15 @@ namespace Azure.Security.ConfidentialLedger.Models
                 writer.WritePropertyName("redirection_strategy"u8);
                 writer.WriteStringValue(RedirectionStrategy.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -136,22 +181,27 @@ namespace Azure.Security.ConfidentialLedger.Models
             }
         }
 
-        EndpointProperties IJsonModel<EndpointProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EndpointProperties IJsonModel<EndpointProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EndpointProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EndpointProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEndpointProperties(document.RootElement, options);
         }
 
-        internal static EndpointProperties DeserializeEndpointProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static EndpointProperties DeserializeEndpointProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -165,14 +215,13 @@ namespace Azure.Security.ConfidentialLedger.Models
             IDictionary<string, BinaryData> openapi = default;
             bool? openapiHidden = default;
             RedirectionStrategy? redirectionStrategy = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("authn_policies"u8))
+                if (prop.NameEquals("authn_policies"u8))
                 {
                     List<IDictionary<string, BinaryData>> array = new List<IDictionary<string, BinaryData>>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -181,15 +230,15 @@ namespace Azure.Security.ConfidentialLedger.Models
                         else
                         {
                             Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                            foreach (var property0 in item.EnumerateObject())
+                            foreach (var prop0 in item.EnumerateObject())
                             {
-                                if (property0.Value.ValueKind == JsonValueKind.Null)
+                                if (prop0.Value.ValueKind == JsonValueKind.Null)
                                 {
-                                    dictionary.Add(property0.Name, null);
+                                    dictionary.Add(prop0.Name, null);
                                 }
                                 else
                                 {
-                                    dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                                    dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
                                 }
                             }
                             array.Add(dictionary);
@@ -198,84 +247,83 @@ namespace Azure.Security.ConfidentialLedger.Models
                     authnPolicies = array;
                     continue;
                 }
-                if (property.NameEquals("forwarding_required"u8))
+                if (prop.NameEquals("forwarding_required"u8))
                 {
-                    forwardingRequired = new ForwardingRequired(property.Value.GetString());
+                    forwardingRequired = new ForwardingRequired(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("interpreter_reuse"u8))
+                if (prop.NameEquals("interpreter_reuse"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    interpreterReuse = InterpreterReusePolicy.DeserializeInterpreterReusePolicy(property.Value, options);
+                    interpreterReuse = InterpreterReusePolicy.DeserializeInterpreterReusePolicy(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("js_function"u8))
+                if (prop.NameEquals("js_function"u8))
                 {
-                    jsFunction = property.Value.GetString();
+                    jsFunction = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("js_module"u8))
+                if (prop.NameEquals("js_module"u8))
                 {
-                    jsModule = property.Value.GetString();
+                    jsModule = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mode"u8))
+                if (prop.NameEquals("mode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mode = new LedgerEndpointMode(property.Value.GetString());
+                    mode = new LedgerEndpointMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("openapi"u8))
+                if (prop.NameEquals("openapi"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, null);
+                            dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     openapi = dictionary;
                     continue;
                 }
-                if (property.NameEquals("openapi_hidden"u8))
+                if (prop.NameEquals("openapi_hidden"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    openapiHidden = property.Value.GetBoolean();
+                    openapiHidden = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("redirection_strategy"u8))
+                if (prop.NameEquals("redirection_strategy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    redirectionStrategy = new RedirectionStrategy(property.Value.GetString());
+                    redirectionStrategy = new RedirectionStrategy(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new EndpointProperties(
                 authnPolicies,
                 forwardingRequired,
@@ -286,54 +334,7 @@ namespace Azure.Security.ConfidentialLedger.Models
                 openapi ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 openapiHidden,
                 redirectionStrategy,
-                serializedAdditionalRawData);
-        }
-
-        BinaryData IPersistableModel<EndpointProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSecurityConfidentialLedgerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(EndpointProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        EndpointProperties IPersistableModel<EndpointProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeEndpointProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EndpointProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<EndpointProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static EndpointProperties FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeEndpointProperties(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+                additionalBinaryDataProperties);
         }
     }
 }
