@@ -345,8 +345,8 @@ namespace Azure.Analytics.Defender.Easm
             IList<ObservedString> hosts = default;
             IList<ObservedBoolean> nxdomain = default;
             IList<SslServerConfig> sslServerConfig = default;
-            bool? ipv4 = default;
-            bool? ipv6 = default;
+            bool? iPv4 = default;
+            bool? iPv6 = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("ipAddress"u8))
@@ -653,7 +653,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    ipv4 = prop.Value.GetBoolean();
+                    iPv4 = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("ipv6"u8))
@@ -662,7 +662,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    ipv6 = prop.Value.GetBoolean();
+                    iPv6 = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -695,8 +695,8 @@ namespace Azure.Analytics.Defender.Easm
                 hosts ?? new ChangeTrackingList<ObservedString>(),
                 nxdomain ?? new ChangeTrackingList<ObservedBoolean>(),
                 sslServerConfig ?? new ChangeTrackingList<SslServerConfig>(),
-                ipv4,
-                ipv6);
+                iPv4,
+                iPv6);
         }
     }
 }
