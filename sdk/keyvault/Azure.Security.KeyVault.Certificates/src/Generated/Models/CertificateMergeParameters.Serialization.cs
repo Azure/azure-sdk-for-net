@@ -98,7 +98,7 @@ namespace Azure.Security.KeyVault.Certificates.Models
                     writer.WriteNullValue();
                     continue;
                 }
-                writer.WriteBase64StringValue(item.ToArray(), "D");
+                writer.WriteBase64StringValue(item, "D");
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(CertificateAttributes))

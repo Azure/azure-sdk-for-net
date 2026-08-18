@@ -1,14 +1,10 @@
 # Release History
 
-## 1.12.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.11.1 (2026-08-18)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed `GetRevisions` and `GetRevisionsAsync` throwing a `UriFormatException` when retrieving subsequent pages. [#62095](https://github.com/Azure/azure-sdk-for-net/issues/62095)
 
 ## 1.11.0 (2026-07-23)
 

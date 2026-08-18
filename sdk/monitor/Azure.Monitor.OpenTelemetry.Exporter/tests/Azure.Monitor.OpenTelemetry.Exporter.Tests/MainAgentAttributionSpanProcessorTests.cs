@@ -198,6 +198,80 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Null(activity.GetTagItem(MainAgentName));
         }
 
+        [Fact]
+        public void OnStart_ParentHasBothFoundryProjectIds_CopiedToChild()
+        {
+            var processor = new MainAgentAttributionSpanProcessor();
+
+            using var listener = CreateListener(processor);
+
+            using var parent = s_activitySource.StartActivity("parent");
+            Assert.NotNull(parent);
+            // Quick check requires a main-agent-ish attribute on the parent.
+            parent!.SetTag(MainAgentName, "MainBot");
+            parent.SetTag(GenAiFoundryProjectId, "foundry-project-1");
+            parent.SetTag(GenAiAzureAiProjectId, "azure-ai-project-1");
+
+            using var child = s_activitySource.StartActivity("child");
+            Assert.NotNull(child);
+            Assert.Equal("foundry-project-1", child!.GetTagItem(GenAiFoundryProjectId));
+            Assert.Equal("azure-ai-project-1", child.GetTagItem(GenAiAzureAiProjectId));
+        }
+
+        [Fact]
+        public void OnStart_ParentHasOnlyFoundryProjectId_OnlyThatCopied()
+        {
+            var processor = new MainAgentAttributionSpanProcessor();
+
+            using var listener = CreateListener(processor);
+
+            using var parent = s_activitySource.StartActivity("parent");
+            Assert.NotNull(parent);
+            parent!.SetTag(MainAgentName, "MainBot");
+            parent.SetTag(GenAiFoundryProjectId, "foundry-project-1");
+
+            using var child = s_activitySource.StartActivity("child");
+            Assert.NotNull(child);
+            Assert.Equal("foundry-project-1", child!.GetTagItem(GenAiFoundryProjectId));
+            Assert.Null(child.GetTagItem(GenAiAzureAiProjectId));
+        }
+
+        [Fact]
+        public void OnStart_ParentHasOnlyAzureAiProjectId_OnlyThatCopied()
+        {
+            var processor = new MainAgentAttributionSpanProcessor();
+
+            using var listener = CreateListener(processor);
+
+            using var parent = s_activitySource.StartActivity("parent");
+            Assert.NotNull(parent);
+            parent!.SetTag(MainAgentName, "MainBot");
+            parent.SetTag(GenAiAzureAiProjectId, "azure-ai-project-1");
+
+            using var child = s_activitySource.StartActivity("child");
+            Assert.NotNull(child);
+            Assert.Null(child!.GetTagItem(GenAiFoundryProjectId));
+            Assert.Equal("azure-ai-project-1", child.GetTagItem(GenAiAzureAiProjectId));
+        }
+
+        [Fact]
+        public void OnStart_ParentHasNoFoundryProjectIds_NeitherCopied()
+        {
+            var processor = new MainAgentAttributionSpanProcessor();
+
+            using var listener = CreateListener(processor);
+
+            using var parent = s_activitySource.StartActivity("parent");
+            Assert.NotNull(parent);
+            parent!.SetTag(MainAgentName, "MainBot");
+            // No foundry project ids set.
+
+            using var child = s_activitySource.StartActivity("child");
+            Assert.NotNull(child);
+            Assert.Null(child!.GetTagItem(GenAiFoundryProjectId));
+            Assert.Null(child.GetTagItem(GenAiAzureAiProjectId));
+        }
+
         private static ActivityListener CreateListener(MainAgentAttributionSpanProcessor processor)
         {
             var listener = new ActivityListener
