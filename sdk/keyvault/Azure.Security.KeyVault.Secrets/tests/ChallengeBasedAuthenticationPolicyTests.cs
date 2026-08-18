@@ -363,6 +363,57 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             Assert.IsNull(ChallengeBasedAuthenticationPolicy.getDecodedClaimsParameter(null, response401));
         }
 
+        [Test]
+        public async Task RequestsNewProofOfPossessionTokenForDifferentRequestUri()
+        {
+            // Regression coverage for the PoP token cache-invalidation issue raised in
+            // https://github.com/Azure/azure-sdk-for-net/pull/61654#discussion_r3798801017.
+            // PoP tokens are cryptographically bound to the request URI and HTTP method
+            // (see RFC 9449 / MSAL WithProofOfPossession). BearerTokenAuthenticationPolicy's
+            // AccessTokenCache must re-invoke the credential when the request target changes
+            // so a token bound to /secrets/secret-a is not silently reused on a request to
+            // /secrets/secret-b.
+            System.Collections.Generic.List<TokenRequestContext> contexts = new();
+            MockTransport transport = new(new[]
+            {
+                new MockResponse(401, "Unauthorized")
+                    .WithHeader("WWW-Authenticate", @$"Bearer authorization=""https://login.windows.net/{TenantId}"", resource=""https://vault.azure.net"""),
+                new MockResponse(200, "OK")
+                {
+                    ContentStream = new KeyVaultSecret("secret-a", "value-a").ToStream(),
+                },
+                new MockResponse(200, "OK")
+                {
+                    ContentStream = new KeyVaultSecret("secret-b", "value-b").ToStream(),
+                },
+            });
+            CallbackTokenCredential credential = new((context, _) =>
+            {
+                contexts.Add(context);
+                return new AccessToken($"token-{contexts.Count}", DateTimeOffset.UtcNow.AddMinutes(5));
+            });
+            SecretClient client = new(
+                VaultUri,
+                credential,
+                new SecretClientOptions
+                {
+                    Transport = transport,
+                });
+
+            await client.GetSecretAsync("secret-a").ConfigureAwait(false);
+            await client.GetSecretAsync("secret-b").ConfigureAwait(false);
+
+            Assert.AreEqual(2, contexts.Count, "Expected one token acquisition per request URI when PoP is enabled.");
+            Assert.AreEqual(
+                new Uri("https://test.vault.azure.net/secrets/secret-a?api-version=2025-07-01"),
+                contexts[0].ResourceRequestUri);
+            Assert.AreEqual(
+                new Uri("https://test.vault.azure.net/secrets/secret-b?api-version=2025-07-01"),
+                contexts[1].ResourceRequestUri);
+            Assert.IsTrue(contexts[0].IsProofOfPossessionEnabled);
+            Assert.IsTrue(contexts[1].IsProofOfPossessionEnabled);
+        }
+
         private class MockTransportBuilder
         {
             private const string AuthorizationHeader = "Authorization";

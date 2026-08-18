@@ -1196,6 +1196,84 @@ namespace Azure.Core.Tests
                 "Credential must not be called with CAE claims derived from a redirect-target host's challenge.");
         }
 
+        [Test]
+        public async Task BearerTokenAuthenticationPolicy_ReAcquiresProofOfPossessionTokenPerRequestUri()
+        {
+            // Regression coverage for the PoP token cache issue raised in
+            // https://github.com/Azure/azure-sdk-for-net/pull/61654#discussion_r3798801017.
+            // PoP tokens are cryptographically bound to the request URI and HTTP method, so
+            // AccessTokenCache must re-invoke the credential when either changes rather than
+            // silently returning a token whose binding no longer matches the outgoing request.
+            var contexts = new List<TokenRequestContext>();
+            var credential = new TokenCredentialStub((requestContext, _) =>
+                {
+                    lock (contexts)
+                    {
+                        contexts.Add(requestContext);
+                        return new AccessToken($"pop-token-{contexts.Count}", DateTimeOffset.UtcNow.AddHours(1));
+                    }
+                },
+                IsAsync);
+
+            var policy = new ProofOfPossessionTestPolicy(credential, "scope");
+            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200));
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/resource-a"));
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/resource-b"));
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/resource-a")); // back to first URI
+
+            Assert.AreEqual(3, contexts.Count,
+                "Expected one credential invocation per distinct request URI when PoP is enabled.");
+            Assert.AreEqual(new Uri("https://example.com/resource-a"), contexts[0].ResourceRequestUri);
+            Assert.AreEqual(new Uri("https://example.com/resource-b"), contexts[1].ResourceRequestUri);
+            Assert.AreEqual(new Uri("https://example.com/resource-a"), contexts[2].ResourceRequestUri);
+        }
+
+        [Test]
+        public async Task BearerTokenAuthenticationPolicy_ReusesProofOfPossessionTokenForSameUri()
+        {
+            // Complements the invalidate-on-URI-change regression test: repeated requests to
+            // the same URI+method still hit the cache. The URI-based invalidation only fires
+            // when the resource target actually changes.
+            int callCount = 0;
+            var credential = new TokenCredentialStub((_, _) =>
+                {
+                    Interlocked.Increment(ref callCount);
+                    return new AccessToken($"pop-token", DateTimeOffset.UtcNow.AddHours(1));
+                },
+                IsAsync);
+
+            var policy = new ProofOfPossessionTestPolicy(credential, "scope");
+            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200));
+
+            var uri = new Uri("https://example.com/same-resource");
+            await SendGetRequest(transport, policy, uri: uri);
+            await SendGetRequest(transport, policy, uri: uri);
+            await SendGetRequest(transport, policy, uri: uri);
+
+            Assert.AreEqual(1, callCount, "PoP token cache must still hit when the request URI and method are unchanged.");
+        }
+
+        private class ProofOfPossessionTestPolicy : BearerTokenAuthenticationPolicy
+        {
+            public ProofOfPossessionTestPolicy(TokenCredential credential, string scope) : base(credential, scope) { }
+
+            protected override void AuthorizeRequest(HttpMessage message) =>
+                AuthenticateAndAuthorizeRequest(message, BuildPoPContext(message));
+
+            protected override async ValueTask AuthorizeRequestAsync(HttpMessage message) =>
+                await AuthenticateAndAuthorizeRequestAsync(message, BuildPoPContext(message)).ConfigureAwait(false);
+
+            private static TokenRequestContext BuildPoPContext(HttpMessage message) =>
+                new TokenRequestContext(
+                    new[] { "scope" },
+                    parentRequestId: message.Request.ClientRequestId,
+                    isCaeEnabled: true,
+                    isProofOfPossessionEnabled: true,
+                    requestUri: message.Request.Uri.ToUri(),
+                    requestMethod: message.Request.Method.ToString());
+        }
+
         private class ChallengeBasedAuthenticationTestPolicy : BearerTokenAuthenticationPolicy
         {
             public string TenantId { get; private set; }

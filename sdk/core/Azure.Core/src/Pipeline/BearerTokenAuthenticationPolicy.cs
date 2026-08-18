@@ -548,7 +548,15 @@ namespace Azure.Core.Pipeline
                 public bool IsCurrentContextMismatched(TokenRequestContext context) =>
                     (context.Scopes != null && !context.Scopes.AsSpan().SequenceEqual(CurrentContext.Scopes.AsSpan())) ||
                     !string.Equals(context.Claims, CurrentContext.Claims) ||
-                    (context.TenantId != null && !string.Equals(context.TenantId, CurrentContext.TenantId));
+                    (context.TenantId != null && !string.Equals(context.TenantId, CurrentContext.TenantId)) ||
+                    context.IsProofOfPossessionEnabled != CurrentContext.IsProofOfPossessionEnabled ||
+                    // Proof-of-Possession tokens are cryptographically bound to a specific request URI and
+                    // HTTP method (see RFC 9449 / MSAL WithProofOfPossession). Reusing a cached PoP token
+                    // across different request targets would send a token whose binding does not match the
+                    // request, so the cache entry must be considered stale when the URI or method changes.
+                    (context.IsProofOfPossessionEnabled &&
+                        (context.ResourceRequestUri != CurrentContext.ResourceRequestUri ||
+                         !string.Equals(context.ResourceRequestMethod, CurrentContext.ResourceRequestMethod, StringComparison.OrdinalIgnoreCase)));
 
                 public bool IsBackgroundTokenAvailable(DateTimeOffset now) =>
                     BackgroundTokenUpdateTcs != null &&
