@@ -12,7 +12,6 @@ namespace Azure.Provisioning.MachineLearning
     /// <summary>
     /// The MachineLearningOnlineDeploymentProperties.
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MachineLearningKubernetesOnlineDeployment"/> and <see cref="MachineLearningManagedOnlineDeployment"/>.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningKubernetesOnlineDeployment"/> and <see cref="MachineLearningManagedOnlineDeployment"/>.
     /// </summary>
     public partial class MachineLearningOnlineDeploymentProperties : MachineLearningEndpointDeploymentProperties
     {

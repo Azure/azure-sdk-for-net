@@ -12,7 +12,6 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     /// <summary>
     /// The service resource properties.
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="StatefulServiceProperties"/> and <see cref="StatelessServiceProperties"/>.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StatefulServiceProperties"/> and <see cref="StatelessServiceProperties"/>.
     /// </summary>
     public partial class ManagedServiceProperties : ManagedServiceBaseProperties
     {

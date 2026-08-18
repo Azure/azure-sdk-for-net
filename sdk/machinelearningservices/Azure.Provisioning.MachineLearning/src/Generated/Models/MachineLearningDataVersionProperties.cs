@@ -13,7 +13,6 @@ namespace Azure.Provisioning.MachineLearning
     /// <summary>
     /// Data version base definition
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MachineLearningTable"/>, <see cref="MachineLearningUriFileDataVersion"/>, and <see cref="MachineLearningUriFolderDataVersion"/>.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningTable"/>, <see cref="MachineLearningUriFileDataVersion"/>, and <see cref="MachineLearningUriFolderDataVersion"/>.
     /// </summary>
     public partial class MachineLearningDataVersionProperties : MachineLearningAssetBase
     {

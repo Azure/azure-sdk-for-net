@@ -14,7 +14,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
     /// <summary>
     /// Defines workload agnostic properties for a job.
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="IaasVmBackupJob"/>, <see cref="IaasVmBackupJobV2"/>, <see cref="StorageBackupJob"/>, <see cref="WorkloadBackupJob"/>, <see cref="DpmBackupJob"/>, <see cref="MabBackupJob"/>, and <see cref="VaultBackupJob"/>.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="IaasVmBackupJob"/>, <see cref="IaasVmBackupJobV2"/>, <see cref="StorageBackupJob"/>, <see cref="WorkloadBackupJob"/>, <see cref="DpmBackupJob"/>, <see cref="MabBackupJob"/>, and <see cref="VaultBackupJob"/>.
     /// </summary>
     public partial class BackupGenericJob : ProvisionableConstruct
     {

@@ -45,28 +45,6 @@ namespace Azure.Generator.Provisioning.Providers
         protected override TypeSignatureModifiers BuildDeclarationModifiers()
             => TypeSignatureModifiers.Public | TypeSignatureModifiers.Partial | TypeSignatureModifiers.Class;
 
-        protected override FormattableString BuildDescription()
-        {
-            var description = base.BuildDescription();
-            if (_inputModel.DiscriminatedSubtypes.Count == 0)
-                return description;
-
-            // TODO https://github.com/microsoft/typespec/issues/11397: Remove this override when
-            // discriminator-derived models are retained without relying on XML documentation references.
-            var derivedModels = DerivedModels
-                .Where(model => model.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public))
-                .ToList();
-            var derivedDescription = "Please note this is the abstract base class. The derived classes available for instantiation are: ";
-            var useOxfordComma = derivedModels.Count > 2;
-            for (var i = 0; i < derivedModels.Count; i++)
-            {
-                derivedDescription = i != derivedModels.Count - 1
-                    ? derivedDescription + $"<see cref=\"{derivedModels[i].Type.FullyQualifiedName}\"/>" + (useOxfordComma ? ", " : " ")
-                    : derivedDescription + (i > 0 ? "and " : string.Empty) + $"<see cref=\"{derivedModels[i].Type.FullyQualifiedName}\"/>.";
-            }
-            return $"{description}\n{derivedDescription}";
-        }
-
         protected override CSharpType? BuildBaseType()
             => base.BuildBaseType() ?? new CSharpType(typeof(ProvisionableConstruct));
 

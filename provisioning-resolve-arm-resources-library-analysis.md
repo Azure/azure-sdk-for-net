@@ -11,31 +11,34 @@ Known caveat: model base-type changes may include unrelated generator behavior a
 | Library | Resources | ARM adds | ARM deletes | Resource renames | Model base changes | Direct setter changes | Notes |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
 | `Azure.Provisioning.Attestation` | 2 -> 2 | 0 | 0 | 1 | 0 | 0 | resource set unchanged; 1 resource class rename(s) |
-| `Azure.Provisioning.Batch` | 8 -> 0 | 0 | 8 | 0 | 0 | 0 | resource set changed (+0/-8); model file churn A0/D122/R0 |
-| `Azure.Provisioning.BotService` | 5 -> 5 | 0 | 0 | 3 | 2 | 0 | resource set unchanged; 3 resource class rename(s); 2 model base-type change(s); model file churn A1/D0/R0 |
-| `Azure.Provisioning.Cdn` | 15 -> 15 | 0 | 0 | 13 | 7 | 0 | resource set unchanged; 13 resource class rename(s); 7 model base-type change(s); model file churn A4/D0/R0 |
+| `Azure.Provisioning.Batch` | 8 -> 0 | 0 | 8 | 0 | 0 | 0 | resource set changed (+0/-8); model file churn A0/D123/R0 |
+| `Azure.Provisioning.BotService` | 5 -> 5 | 0 | 0 | 3 | 0 | 0 | resource set unchanged; 3 resource class rename(s) |
+| `Azure.Provisioning.Cdn` | 15 -> 15 | 0 | 0 | 13 | 0 | 0 | resource set unchanged; 13 resource class rename(s) |
 | `Azure.Provisioning.Communication` | 7 -> 7 | 0 | 0 | 4 | 0 | 0 | resource set unchanged; 4 resource class rename(s) |
-| `Azure.Provisioning.Compute` | 37 -> 34 | 0 | 3 | 10 | 25 | 0 | resource set changed (+0/-3); 10 resource class rename(s); 25 model base-type change(s); model file churn A10/D0/R0 |
+| `Azure.Provisioning.Compute` | 37 -> 34 | 0 | 3 | 10 | 0 | 0 | resource set changed (+0/-3); 10 resource class rename(s); model file churn A1/D0/R0 |
 | `Azure.Provisioning.ContainerInstance` | 4 -> 3 | 0 | 1 | 0 | 0 | 0 | resource set changed (+0/-1); model file churn A0/D9/R0 |
+| `Azure.Provisioning.ContainerRegistry` | 10 -> 10 | 0 | 0 | 8 | 0 | 0 | resource set unchanged; 8 resource class rename(s) |
 | `Azure.Provisioning.ContainerRegistry.Tasks` | 4 -> 4 | 0 | 0 | 4 | 0 | 0 | resource set unchanged; 4 resource class rename(s) |
-| `Azure.Provisioning.ContainerService` | 12 -> 12 | 0 | 0 | 8 | 3 | 0 | resource set unchanged; 8 resource class rename(s); 3 model base-type change(s) |
-| `Azure.Provisioning.CostManagement` | 9 -> 9 | 0 | 0 | 4 | 3 | 0 | resource set unchanged; 4 resource class rename(s); 3 model base-type change(s); model file churn A1/D0/R0 |
+| `Azure.Provisioning.ContainerService` | 12 -> 12 | 0 | 0 | 8 | 0 | 0 | resource set unchanged; 8 resource class rename(s) |
+| `Azure.Provisioning.CostManagement` | 9 -> 9 | 0 | 0 | 4 | 0 | 0 | resource set unchanged; 4 resource class rename(s) |
+| `Azure.Provisioning.DesktopVirtualization` | 17 -> 17 | 0 | 0 | 4 | 0 | 0 | resource set unchanged; 4 resource class rename(s) |
 | `Azure.Provisioning.DomainRegistration` | 3 -> 3 | 0 | 0 | 1 | 0 | 0 | resource set unchanged; 1 resource class rename(s) |
 | `Azure.Provisioning.DurableTask` | 5 -> 5 | 0 | 0 | 5 | 0 | 0 | resource set unchanged; 5 resource class rename(s) |
 | `Azure.Provisioning.EventHubs` | 13 -> 0 | 0 | 13 | 0 | 0 | 0 | resource set changed (+0/-13); model file churn A0/D69/R0 |
-| `Azure.Provisioning.FrontDoor` | 6 -> 0 | 0 | 6 | 0 | 0 | 0 | resource set changed (+0/-6); model file churn A0/D102/R0 |
+| `Azure.Provisioning.FrontDoor` | 6 -> 0 | 0 | 6 | 0 | 0 | 0 | resource set changed (+0/-6); model file churn A0/D109/R0 |
 | `Azure.Provisioning.IotHub` | 4 -> 4 | 1 | 1 | 2 | 0 | 0 | resource set changed (+1/-1); 2 resource class rename(s) |
-| `Azure.Provisioning.KeyVault` | 7 -> 7 | 0 | 0 | 5 | 1 | 0 | resource set unchanged; 5 resource class rename(s); 1 model base-type change(s); model file churn A1/D0/R0 |
-| `Azure.Provisioning.MachineLearning` | 41 -> 41 | 0 | 0 | 21 | 35 | 0 | resource set unchanged; 21 resource class rename(s); 35 model base-type change(s); model file churn A11/D0/R0 |
+| `Azure.Provisioning.KeyVault` | 7 -> 7 | 0 | 0 | 5 | 0 | 0 | resource set unchanged; 5 resource class rename(s) |
+| `Azure.Provisioning.LoadTesting` | 2 -> 2 | 0 | 0 | 2 | 0 | 0 | resource set unchanged; 2 resource class rename(s) |
+| `Azure.Provisioning.MachineLearning` | 41 -> 41 | 0 | 0 | 21 | 0 | 0 | resource set unchanged; 21 resource class rename(s) |
 | `Azure.Provisioning.MySql` | 11 -> 11 | 0 | 0 | 10 | 0 | 0 | resource set unchanged; 10 resource class rename(s) |
 | `Azure.Provisioning.OperationalInsights` | 12 -> 12 | 1 | 1 | 9 | 0 | 0 | resource set changed (+1/-1); 9 resource class rename(s); model file churn A0/D1/R0 |
 | `Azure.Provisioning.RecoveryServices` | 4 -> 4 | 0 | 0 | 4 | 0 | 0 | resource set unchanged; 4 resource class rename(s) |
-| `Azure.Provisioning.RecoveryServicesBackup` | 12 -> 12 | 0 | 0 | 12 | 3 | 0 | resource set unchanged; 12 resource class rename(s); 3 model base-type change(s); model file churn A1/D0/R0 |
+| `Azure.Provisioning.RecoveryServicesBackup` | 12 -> 12 | 0 | 0 | 12 | 0 | 0 | resource set unchanged; 12 resource class rename(s) |
 | `Azure.Provisioning.Redis` | 7 -> 7 | 0 | 0 | 3 | 2 | 0 | resource set unchanged; 3 resource class rename(s); 2 model base-type change(s); model file churn A3/D0/R0 |
 | `Azure.Provisioning.ResourceGraph` | 1 -> 1 | 0 | 0 | 0 | 0 | 0 | resource set unchanged |
 | `Azure.Provisioning.Search` | 4 -> 4 | 0 | 0 | 2 | 0 | 0 | resource set unchanged; 2 resource class rename(s) |
-| `Azure.Provisioning.ServiceFabric` | 6 -> 6 | 0 | 0 | 6 | 2 | 0 | resource set unchanged; 6 resource class rename(s); 2 model base-type change(s); model file churn A2/D0/R0 |
-| `Azure.Provisioning.ServiceFabricManagedClusters` | 6 -> 6 | 0 | 0 | 6 | 1 | 0 | resource set unchanged; 6 resource class rename(s); 1 model base-type change(s); model file churn A1/D0/R0 |
+| `Azure.Provisioning.ServiceFabric` | 6 -> 6 | 0 | 0 | 6 | 0 | 0 | resource set unchanged; 6 resource class rename(s) |
+| `Azure.Provisioning.ServiceFabricManagedClusters` | 6 -> 6 | 0 | 0 | 6 | 0 | 0 | resource set unchanged; 6 resource class rename(s) |
 | `Azure.Provisioning.ServiceNetworking` | 4 -> 4 | 0 | 0 | 3 | 0 | 0 | resource set unchanged; 3 resource class rename(s) |
 | `Azure.Provisioning.StandbyPool` | 5 -> 5 | 0 | 0 | 5 | 0 | 0 | resource set unchanged; 5 resource class rename(s) |
 | `Azure.Provisioning.TrafficManager` | 7 -> 0 | 0 | 7 | 0 | 0 | 0 | resource set changed (+0/-7); model file churn A0/D24/R0 |
@@ -66,7 +69,7 @@ Deleted ARM resource types:
 - `Microsoft.Batch/batchAccounts/privateEndpointConnections` was `BatchPrivateEndpointConnection`
 - `Microsoft.Batch/batchAccounts/privateLinkResources` was `BatchPrivateLinkResource`
 
-Model file churn: added **0**, deleted **122**, renamed **0**.
+Model file churn: added **0**, deleted **123**, renamed **0**.
 
 ## sdk botservice Azure.Provisioning.BotService[-1]
 
@@ -79,16 +82,6 @@ Resource class renames by unchanged ARM type:
 | `Microsoft.BotService/botServices/connections` | `BotConnectionSetting` | `ConnectionSetting` |
 | `Microsoft.BotService/botServices/networkSecurityPerimeterConfigurations` | `BotServiceNetworkSecurityPerimeterConfiguration` | `NetworkSecurityPerimeterConfiguration` |
 | `Microsoft.BotService/botServices/privateEndpointConnections` | `BotServicePrivateEndpointConnection` | `PrivateEndpointConnection` |
-
-Model base-type changes:
-
-| Model | Old base | New base |
-| --- | --- | --- |
-| `DirectLineSite` | `ProvisionableConstruct` | `BotChannelSite` |
-| `WebChatSite` | `ProvisionableConstruct` | `BotChannelSite` |
-
-Model file churn: added **1**, deleted **0**, renamed **0**.
-- Added model `BotChannelSite.cs`
 
 ## sdk cdn Azure.Provisioning.Cdn[-1]
 
@@ -111,24 +104,6 @@ Resource class renames by unchanged ARM type:
 | `Microsoft.Cdn/profiles/ruleSets/rules` | `FrontDoorRule` | `Rule` |
 | `Microsoft.Cdn/profiles/secrets` | `FrontDoorSecret` | `Secret` |
 | `Microsoft.Cdn/profiles/securityPolicies` | `FrontDoorSecurityPolicy` | `SecurityPolicy` |
-
-Model base-type changes:
-
-| Model | Old base | New base |
-| --- | --- | --- |
-| `CdnRuleSetProperties` | `ProvisionableConstruct` | `FrontDoorStateProperties` |
-| `CdnSecretProperties` | `ProvisionableConstruct` | `FrontDoorStateProperties` |
-| `CdnSecurityPolicyProperties` | `ProvisionableConstruct` | `FrontDoorStateProperties` |
-| `EndpointProperties` | `ProvisionableConstruct` | `EndpointPropertiesUpdateParameters` |
-| `OriginGroupProperties` | `ProvisionableConstruct` | `OriginGroupUpdatePropertiesParameters` |
-| `OriginProperties` | `ProvisionableConstruct` | `OriginUpdatePropertiesParameters` |
-| `RateLimitRule` | `ProvisionableConstruct` | `CustomRule` |
-
-Model file churn: added **4**, deleted **0**, renamed **0**.
-- Added model `EndpointPropertiesUpdateParameters.cs`
-- Added model `FrontDoorStateProperties.cs`
-- Added model `OriginGroupUpdatePropertiesParameters.cs`
-- Added model `OriginUpdatePropertiesParameters.cs`
 
 ## sdk communication Azure.Provisioning.Communication[-1]
 
@@ -167,46 +142,7 @@ Resource class renames by unchanged ARM type:
 | `Microsoft.Compute/virtualMachineScaleSets/rollingUpgrades` | `VirtualMachineScaleSetRollingUpgrade` | `RollingUpgradeStatusInfo` |
 | `Microsoft.Compute/virtualMachineScaleSets/virtualMachines/runCommands` | `VirtualMachineScaleSetVmRunCommand` | `VirtualMachinesRunCommands` |
 
-Model base-type changes:
-
-| Model | Old base | New base |
-| --- | --- | --- |
-| `CapacityReservationInstanceViewWithName` | `ProvisionableConstruct` | `CapacityReservationInstanceView` |
-| `ComputeSubResourceDataWithColocationStatus` | `ProvisionableConstruct` | `ComputeWriteableSubResourceData` |
-| `DataDiskImageEncryption` | `ProvisionableConstruct` | `DiskImageEncryption` |
-| `DedicatedHostInstanceViewWithName` | `ProvisionableConstruct` | `DedicatedHostInstanceView` |
-| `DiskEncryptionSetParameters` | `ProvisionableConstruct` | `ComputeWriteableSubResourceData` |
-| `DiskRestorePointAttributes` | `ProvisionableConstruct` | `ComputeSubResourceData` |
-| `GalleryApplicationVersionPublishingProfile` | `ProvisionableConstruct` | `GalleryArtifactPublishingProfileBase` |
-| `GalleryApplicationVersionSafetyProfile` | `ProvisionableConstruct` | `GalleryArtifactSafetyProfileBase` |
-| `GalleryArtifactVersionFullSource` | `ProvisionableConstruct` | `GalleryArtifactVersionSource` |
-| `GalleryDataDiskImage` | `ProvisionableConstruct` | `GalleryDiskImage` |
-| `GalleryDiskImageSource` | `ProvisionableConstruct` | `GalleryArtifactVersionSource` |
-| `GalleryImageVersionPublishingProfile` | `ProvisionableConstruct` | `GalleryArtifactPublishingProfileBase` |
-| `GalleryImageVersionSafetyProfile` | `ProvisionableConstruct` | `GalleryArtifactSafetyProfileBase` |
-| `GalleryInVmAccessControlProfileProperties` | `ProvisionableConstruct` | `GalleryResourceProfilePropertiesBase` |
-| `GalleryInVmAccessControlProfileVersionProperties` | `ProvisionableConstruct` | `GalleryResourceProfileVersionPropertiesBase` |
-| `GalleryOSDiskImage` | `ProvisionableConstruct` | `GalleryDiskImage` |
-| `GalleryScriptParameter` | `ProvisionableConstruct` | `GenericGalleryParameter` |
-| `GalleryScriptVersionPublishingProfile` | `ProvisionableConstruct` | `GalleryArtifactPublishingProfileBase` |
-| `GalleryScriptVersionSafetyProfile` | `ProvisionableConstruct` | `GalleryArtifactSafetyProfileBase` |
-| `ImageDataDisk` | `ProvisionableConstruct` | `ImageDisk` |
-| `ImageOSDisk` | `ProvisionableConstruct` | `ImageDisk` |
-| `ImageReference` | `ProvisionableConstruct` | `ComputeWriteableSubResourceData` |
-| `OSDiskImageEncryption` | `ProvisionableConstruct` | `DiskImageEncryption` |
-| `VirtualMachineManagedDisk` | `ProvisionableConstruct` | `ComputeWriteableSubResourceData` |
-| `VirtualMachineNetworkInterfaceReference` | `ProvisionableConstruct` | `ComputeWriteableSubResourceData` |
-
-Model file churn: added **10**, deleted **0**, renamed **0**.
-- Added model `DiskImageEncryption.cs`
-- Added model `GalleryArtifactPublishingProfileBase.cs`
-- Added model `GalleryArtifactSafetyProfileBase.cs`
-- Added model `GalleryArtifactVersionSource.cs`
-- Added model `GalleryDiskImage.cs`
-- Added model `GalleryResourceProfilePropertiesBase.cs`
-- Added model `GalleryResourceProfileVersionPropertiesBase.cs`
-- Added model `GenericGalleryParameter.cs`
-- Added model `ImageDisk.cs`
+Model file churn: added **1**, deleted **0**, renamed **0**.
 - Added model `VirtualMachineScaleSetExtension.cs`
 
 ## sdk containerinstance Azure.Provisioning.ContainerInstance[-1]
@@ -226,6 +162,23 @@ Model file churn: added **0**, deleted **9**, renamed **0**.
 - Deleted model `ContainerGroupPropertiesProperties.cs`
 - Deleted model `ContainerGroupSecretReference.cs`
 - Deleted model `StandbyPoolProfileDefinition.cs`
+
+## sdk containerregistry Azure.Provisioning.ContainerRegistry[-1]
+
+Resource count: **10 -> 10**. ARM resource types added/deleted: **+0/-0**. Resource class renames: **8**.
+
+Resource class renames by unchanged ARM type:
+
+| ARM resource type | Old class | New class |
+| --- | --- | --- |
+| `Microsoft.ContainerRegistry/registries` | `ContainerRegistryService` | `Registry` |
+| `Microsoft.ContainerRegistry/registries/cacheRules` | `ContainerRegistryCacheRule` | `CacheRule` |
+| `Microsoft.ContainerRegistry/registries/credentialSets` | `ContainerRegistryCredentialSet` | `CredentialSet` |
+| `Microsoft.ContainerRegistry/registries/privateEndpointConnections` | `ContainerRegistryPrivateEndpointConnection` | `PrivateEndpointConnection` |
+| `Microsoft.ContainerRegistry/registries/privateLinkResources` | `ContainerRegistryPrivateLinkResource` | `RegistryMyPrivateLinkResource` |
+| `Microsoft.ContainerRegistry/registries/replications` | `ContainerRegistryReplication` | `Replication` |
+| `Microsoft.ContainerRegistry/registries/tokens` | `ContainerRegistryToken` | `Token` |
+| `Microsoft.ContainerRegistry/registries/webhooks` | `ContainerRegistryWebhook` | `Webhook` |
 
 ## sdk containerregistry Azure.Provisioning.ContainerRegistry.Tasks[-1]
 
@@ -257,14 +210,6 @@ Resource class renames by unchanged ARM type:
 | `Microsoft.ContainerService/managedClusters/trustedAccessRoleBindings` | `ContainerServiceTrustedAccessRoleBinding` | `TrustedAccessRoleBinding` |
 | `Microsoft.ContainerService/snapshots` | `AgentPoolSnapshot` | `Snapshot` |
 
-Model base-type changes:
-
-| Model | Old base | New base |
-| --- | --- | --- |
-| `ManagedClusterAddonProfileIdentity` | `ProvisionableConstruct` | `ContainerServiceUserAssignedIdentity` |
-| `ManagedClusterAgentPoolProfile` | `ProvisionableConstruct` | `ManagedClusterAgentPoolProfileProperties` |
-| `MeshUpgradeProfileProperties` | `ProvisionableConstruct` | `MeshRevision` |
-
 ## sdk costmanagement Azure.Provisioning.CostManagement[-1]
 
 Resource count: **9 -> 9**. ARM resource types added/deleted: **+0/-0**. Resource class renames: **4**.
@@ -278,16 +223,18 @@ Resource class renames by unchanged ARM type:
 | `Microsoft.CostManagement/exports` | `CostManagementExport` | `Export` |
 | `Microsoft.CostManagement/settings` | `CostManagementSetting` | `Setting` |
 
-Model base-type changes:
+## sdk desktopvirtualization Azure.Provisioning.DesktopVirtualization[-1]
 
-| Model | Old base | New base |
+Resource count: **17 -> 17**. ARM resource types added/deleted: **+0/-0**. Resource class renames: **4**.
+
+Resource class renames by unchanged ARM type:
+
+| ARM resource type | Old class | New class |
 | --- | --- | --- |
-| `ExportProperties` | `ProvisionableConstruct` | `CommonExportProperties` |
-| `SourceCostAllocationEntity` | `ProvisionableConstruct` | `CostAllocationEntity` |
-| `TargetCostAllocationEntity` | `ProvisionableConstruct` | `CostAllocationEntity` |
-
-Model file churn: added **1**, deleted **0**, renamed **0**.
-- Added model `CostAllocationEntity.cs`
+| `Microsoft.DesktopVirtualization/applicationGroups` | `VirtualApplicationGroup` | `ApplicationGroup` |
+| `Microsoft.DesktopVirtualization/applicationGroups/applications` | `VirtualApplication` | `Application` |
+| `Microsoft.DesktopVirtualization/applicationGroups/desktops` | `VirtualDesktop` | `Desktop` |
+| `Microsoft.DesktopVirtualization/workspaces` | `VirtualWorkspace` | `Workspace` |
 
 ## sdk domainregistration Azure.Provisioning.DomainRegistration[-1]
 
@@ -346,7 +293,7 @@ Deleted ARM resource types:
 - `Microsoft.Network/NetworkExperimentProfiles` was `FrontDoorNetworkExperimentProfile`
 - `Microsoft.Network/NetworkExperimentProfiles/Experiments` was `FrontDoorExperiment`
 
-Model file churn: added **0**, deleted **102**, renamed **0**.
+Model file churn: added **0**, deleted **109**, renamed **0**.
 
 ## sdk iothub Azure.Provisioning.IotHub[-1]
 
@@ -379,14 +326,16 @@ Resource class renames by unchanged ARM type:
 | `Microsoft.KeyVault/vaults/privateEndpointConnections` | `KeyVaultPrivateEndpointConnection` | `PrivateEndpointConnection` |
 | `Microsoft.KeyVault/vaults/secrets` | `KeyVaultSecret` | `Secret` |
 
-Model base-type changes:
+## sdk loadtestservice Azure.Provisioning.LoadTesting[-1]
 
-| Model | Old base | New base |
+Resource count: **2 -> 2**. ARM resource types added/deleted: **+0/-0**. Resource class renames: **2**.
+
+Resource class renames by unchanged ARM type:
+
+| ARM resource type | Old class | New class |
 | --- | --- | --- |
-| `SecretAttributes` | `ProvisionableConstruct` | `SecretBaseAttributes` |
-
-Model file churn: added **1**, deleted **0**, renamed **0**.
-- Added model `SecretBaseAttributes.cs`
+| `Microsoft.LoadTestService/loadTests` | `LoadTestingResource` | `LoadTestResource` |
+| `Microsoft.LoadTestService/locations/quotas` | `LoadTestingQuota` | `QuotaResource` |
 
 ## sdk machinelearningservices Azure.Provisioning.MachineLearning[-1]
 
@@ -417,59 +366,6 @@ Resource class renames by unchanged ARM type:
 | `Microsoft.MachineLearningServices/workspaces/privateEndpointConnections` | `MachineLearningPrivateEndpointConnection` | `PrivateEndpointConnection` |
 | `Microsoft.MachineLearningServices/workspaces/schedules` | `MachineLearningSchedule` | `Schedule` |
 | `Microsoft.MachineLearningServices/workspaces/serverlessEndpoints` | `MachineLearningServerlessEndpoint` | `ServerlessEndpoint` |
-
-Model base-type changes:
-
-| Model | Old base | New base |
-| --- | --- | --- |
-| `CapabilityHostProperties` | `ProvisionableConstruct` | `MachineLearningResourceBase` |
-| `ClassificationTrainingSettings` | `ProvisionableConstruct` | `MachineLearningTrainingSettings` |
-| `ForecastingTrainingSettings` | `ProvisionableConstruct` | `MachineLearningTrainingSettings` |
-| `ImageModelDistributionSettingsClassification` | `ProvisionableConstruct` | `ImageModelDistributionSettings` |
-| `ImageModelDistributionSettingsObjectDetection` | `ProvisionableConstruct` | `ImageModelDistributionSettings` |
-| `ImageModelSettingsClassification` | `ProvisionableConstruct` | `ImageModelSettings` |
-| `ImageModelSettingsObjectDetection` | `ProvisionableConstruct` | `ImageModelSettings` |
-| `MachineLearningBatchDeploymentProperties` | `ProvisionableConstruct` | `MachineLearningEndpointDeploymentProperties` |
-| `MachineLearningBatchEndpointProperties` | `ProvisionableConstruct` | `MachineLearningEndpointProperties` |
-| `MachineLearningCodeContainerProperties` | `ProvisionableConstruct` | `MachineLearningAssetContainer` |
-| `MachineLearningCodeVersionProperties` | `ProvisionableConstruct` | `MachineLearningAssetBase` |
-| `MachineLearningComponentContainerProperties` | `ProvisionableConstruct` | `MachineLearningAssetContainer` |
-| `MachineLearningComponentVersionProperties` | `ProvisionableConstruct` | `MachineLearningAssetBase` |
-| `MachineLearningDataContainerProperties` | `ProvisionableConstruct` | `MachineLearningAssetContainer` |
-| `MachineLearningDatastoreProperties` | `ProvisionableConstruct` | `MachineLearningResourceBase` |
-| `MachineLearningDataVersionProperties` | `ProvisionableConstruct` | `MachineLearningAssetBase` |
-| `MachineLearningDeploymentResourceConfiguration` | `ProvisionableConstruct` | `MachineLearningResourceConfiguration` |
-| `MachineLearningEnvironmentContainerProperties` | `ProvisionableConstruct` | `MachineLearningAssetContainer` |
-| `MachineLearningEnvironmentVersionProperties` | `ProvisionableConstruct` | `MachineLearningAssetBase` |
-| `MachineLearningFeatureProperties` | `ProvisionableConstruct` | `MachineLearningResourceBase` |
-| `MachineLearningFeatureSetContainerProperties` | `ProvisionableConstruct` | `MachineLearningAssetContainer` |
-| `MachineLearningFeatureSetVersionProperties` | `ProvisionableConstruct` | `MachineLearningAssetBase` |
-| `MachineLearningFeatureStoreEntityContainerProperties` | `ProvisionableConstruct` | `MachineLearningAssetContainer` |
-| `MachineLearningFeatureStoreEntityVersionProperties` | `ProvisionableConstruct` | `MachineLearningAssetBase` |
-| `MachineLearningJobProperties` | `ProvisionableConstruct` | `MachineLearningResourceBase` |
-| `MachineLearningJobResourceConfiguration` | `ProvisionableConstruct` | `MachineLearningResourceConfiguration` |
-| `MachineLearningModelContainerProperties` | `ProvisionableConstruct` | `MachineLearningAssetContainer` |
-| `MachineLearningModelVersionProperties` | `ProvisionableConstruct` | `MachineLearningAssetBase` |
-| `MachineLearningOnlineDeploymentProperties` | `ProvisionableConstruct` | `MachineLearningEndpointDeploymentProperties` |
-| `MachineLearningOnlineEndpointProperties` | `ProvisionableConstruct` | `MachineLearningEndpointProperties` |
-| `MachineLearningScheduleProperties` | `ProvisionableConstruct` | `MachineLearningResourceBase` |
-| `NlpVerticalFeaturizationSettings` | `ProvisionableConstruct` | `MachineLearningFeaturizationSettings` |
-| `RegistryPrivateEndpoint` | `ProvisionableConstruct` | `PrivateEndpointBase` |
-| `RegressionTrainingSettings` | `ProvisionableConstruct` | `MachineLearningTrainingSettings` |
-| `TableVerticalFeaturizationSettings` | `ProvisionableConstruct` | `MachineLearningFeaturizationSettings` |
-
-Model file churn: added **11**, deleted **0**, renamed **0**.
-- Added model `ImageModelDistributionSettings.cs`
-- Added model `ImageModelSettings.cs`
-- Added model `MachineLearningAssetBase.cs`
-- Added model `MachineLearningAssetContainer.cs`
-- Added model `MachineLearningEndpointDeploymentProperties.cs`
-- Added model `MachineLearningEndpointProperties.cs`
-- Added model `MachineLearningFeaturizationSettings.cs`
-- Added model `MachineLearningResourceBase.cs`
-- Added model `MachineLearningResourceConfiguration.cs`
-- Added model `MachineLearningTrainingSettings.cs`
-- Added model `PrivateEndpointBase.cs`
 
 ## sdk mysql Azure.Provisioning.MySql[-1]
 
@@ -537,17 +433,6 @@ Resource class renames by unchanged ARM type:
 | `Microsoft.RecoveryServices/vaults/backupResourceGuardProxies` | `ResourceGuardProxy` | `ResourceGuardProxyBaseResource` |
 | `Microsoft.RecoveryServices/vaults/backupstorageconfig` | `BackupResourceConfig` | `BackupResourceConfigResource` |
 | `Microsoft.RecoveryServices/vaults/privateEndpointConnections` | `BackupPrivateEndpointConnection` | `PrivateEndpointConnectionResource` |
-
-Model base-type changes:
-
-| Model | Old base | New base |
-| --- | --- | --- |
-| `BackupResourceEncryptionConfigExtendedProperties` | `ProvisionableConstruct` | `BackupResourceEncryptionConfig` |
-| `IaasVmHealthDetails` | `ProvisionableConstruct` | `ResourceHealthDetails` |
-| `RecoveryPointTierInformationV2` | `ProvisionableConstruct` | `RecoveryPointTierInformation` |
-
-Model file churn: added **1**, deleted **0**, renamed **0**.
-- Added model `BackupResourceEncryptionConfig.cs`
 
 ## sdk recoveryservices Azure.Provisioning.RecoveryServices[-1]
 
@@ -618,17 +503,6 @@ Resource class renames by unchanged ARM type:
 | `Microsoft.ServiceFabric/clusters/applicationTypes/versions` | `ServiceFabricApplicationTypeVersion` | `ApplicationTypeVersionResource` |
 | `Microsoft.ServiceFabric/locations/unsupportedVmSizes` | `ServiceFabricVmSizeResource` | `LocationsUnsupportedVmSizes` |
 
-Model base-type changes:
-
-| Model | Old base | New base |
-| --- | --- | --- |
-| `ApplicationResourceProperties` | `ProvisionableConstruct` | `ApplicationResourceUpdateProperties` |
-| `ServiceResourceProperties` | `ProvisionableConstruct` | `ServiceResourcePropertiesBase` |
-
-Model file churn: added **2**, deleted **0**, renamed **0**.
-- Added model `ApplicationResourceUpdateProperties.cs`
-- Added model `ServiceResourcePropertiesBase.cs`
-
 ## sdk servicefabricmanagedclusters Azure.Provisioning.ServiceFabricManagedClusters[-1]
 
 Resource count: **6 -> 6**. ARM resource types added/deleted: **+0/-0**. Resource class renames: **6**.
@@ -643,15 +517,6 @@ Resource class renames by unchanged ARM type:
 | `Microsoft.ServiceFabric/managedClusters/applicationTypes` | `ServiceFabricManagedApplicationType` | `ApplicationTypeResource` |
 | `Microsoft.ServiceFabric/managedClusters/applicationTypes/versions` | `ServiceFabricManagedApplicationTypeVersion` | `ApplicationTypeVersionResource` |
 | `Microsoft.ServiceFabric/managedClusters/nodeTypes` | `ServiceFabricManagedNodeType` | `NodeType` |
-
-Model base-type changes:
-
-| Model | Old base | New base |
-| --- | --- | --- |
-| `ManagedServiceProperties` | `ProvisionableConstruct` | `ManagedServiceBaseProperties` |
-
-Model file churn: added **1**, deleted **0**, renamed **0**.
-- Added model `ManagedServiceBaseProperties.cs`
 
 ## sdk servicenetworking Azure.Provisioning.ServiceNetworking[-1]
 

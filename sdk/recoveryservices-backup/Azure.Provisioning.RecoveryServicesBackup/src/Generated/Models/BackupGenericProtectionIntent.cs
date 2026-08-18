@@ -14,7 +14,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
     /// <summary>
     /// Base class for backup ProtectionIntent.
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="RecoveryServiceVaultProtectionIntent"/>, <see cref="ResourceProtectionIntent"/>, <see cref="WorkloadContainerAutoProtectionIntent"/>, <see cref="WorkloadAutoProtectionIntent"/>, and <see cref="WorkloadSqlAutoProtectionIntent"/>.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RecoveryServiceVaultProtectionIntent"/>, <see cref="ResourceProtectionIntent"/>, <see cref="WorkloadContainerAutoProtectionIntent"/>, <see cref="WorkloadAutoProtectionIntent"/>, and <see cref="WorkloadSqlAutoProtectionIntent"/>.
     /// </summary>
     public partial class BackupGenericProtectionIntent : ProvisionableConstruct
     {

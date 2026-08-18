@@ -13,7 +13,6 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
     /// <summary>
     /// Base properties for any task step.
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="ContainerRegistryDockerBuildStep"/>, <see cref="ContainerRegistryFileTaskStep"/>, and <see cref="ContainerRegistryEncodedTaskStep"/>.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContainerRegistryDockerBuildStep"/>, <see cref="ContainerRegistryFileTaskStep"/>, and <see cref="ContainerRegistryEncodedTaskStep"/>.
     /// </summary>
     public partial class ContainerRegistryTaskStepProperties : ProvisionableConstruct
     {

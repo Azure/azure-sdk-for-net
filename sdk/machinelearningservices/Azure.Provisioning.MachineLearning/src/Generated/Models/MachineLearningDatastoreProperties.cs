@@ -12,7 +12,6 @@ namespace Azure.Provisioning.MachineLearning
     /// <summary>
     /// Base definition for datastore contents configuration.
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MachineLearningAzureBlobDatastore"/>, <see cref="MachineLearningAzureDataLakeGen1Datastore"/>, <see cref="MachineLearningAzureDataLakeGen2Datastore"/>, <see cref="MachineLearningAzureFileDatastore"/>, and <see cref="OneLakeDatastore"/>.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningAzureBlobDatastore"/>, <see cref="MachineLearningAzureDataLakeGen1Datastore"/>, <see cref="MachineLearningAzureDataLakeGen2Datastore"/>, <see cref="MachineLearningAzureFileDatastore"/>, and <see cref="OneLakeDatastore"/>.
     /// </summary>
     public partial class MachineLearningDatastoreProperties : MachineLearningResourceBase
     {

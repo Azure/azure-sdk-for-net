@@ -11,10 +11,7 @@ using Azure.Provisioning;
 
 namespace Azure.Provisioning.RecoveryServicesBackup
 {
-    /// <summary>
-    /// Container for the workloads running inside Azure Compute or Classic Compute.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SqlAvailabilityGroupWorkloadProtectionContainer"/> and <see cref="VmAppContainerProtectionContainer"/>.
-    /// </summary>
+    /// <summary> Container for the workloads running inside Azure Compute or Classic Compute. </summary>
     public partial class WorkloadContainer : BackupGenericProtectionContainer
     {
         private BicepValue<ResourceIdentifier> _sourceResourceId;

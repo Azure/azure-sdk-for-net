@@ -1,14 +1,12 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.5.2 (2026-09-08)
 
 ### Other Changes
+
+- Updated `Azure.Core` dependency from 1.54.0 to 1.61.0.
+- Updated `Azure.Security.KeyVault.Secrets` dependency from 4.10.0 to 4.11.0.
+- Updated `Microsoft.Extensions.Configuration` dependency from 10.0.3 to the serviced 10.0.10 release.
 
 ## 1.5.1 (2026-04-29)
 
