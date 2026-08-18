@@ -14,64 +14,64 @@ using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> The response of a HorizonDbPrivateLinkResource list operation. </summary>
-    internal partial class HorizonDbPrivateLinkResourceListResult : IJsonModel<HorizonDbPrivateLinkResourceListResult>
+    /// <summary> The response of a HorizonDbParameterGroupConnectionProperties list operation. </summary>
+    internal partial class HorizonDBParameterGroupConnectionPropertiesListResult : IJsonModel<HorizonDBParameterGroupConnectionPropertiesListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="HorizonDbPrivateLinkResourceListResult"/> for deserialization. </summary>
-        internal HorizonDbPrivateLinkResourceListResult()
+        /// <summary> Initializes a new instance of <see cref="HorizonDBParameterGroupConnectionPropertiesListResult"/> for deserialization. </summary>
+        internal HorizonDBParameterGroupConnectionPropertiesListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HorizonDbPrivateLinkResourceListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HorizonDBParameterGroupConnectionPropertiesListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBParameterGroupConnectionPropertiesListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHorizonDbPrivateLinkResourceListResult(document.RootElement, options);
+                        return DeserializeHorizonDBParameterGroupConnectionPropertiesListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDbPrivateLinkResourceListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDBParameterGroupConnectionPropertiesListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBParameterGroupConnectionPropertiesListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHorizonDBContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDbPrivateLinkResourceListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDBParameterGroupConnectionPropertiesListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HorizonDbPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HorizonDBParameterGroupConnectionPropertiesListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbPrivateLinkResourceListResult IPersistableModel<HorizonDbPrivateLinkResourceListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HorizonDBParameterGroupConnectionPropertiesListResult IPersistableModel<HorizonDBParameterGroupConnectionPropertiesListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HorizonDbPrivateLinkResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HorizonDBParameterGroupConnectionPropertiesListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HorizonDbPrivateLinkResourceListResult"/> from. </param>
-        internal static HorizonDbPrivateLinkResourceListResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HorizonDBParameterGroupConnectionPropertiesListResult"/> from. </param>
+        internal static HorizonDBParameterGroupConnectionPropertiesListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeHorizonDbPrivateLinkResourceListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeHorizonDBParameterGroupConnectionPropertiesListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HorizonDbPrivateLinkResourceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HorizonDBParameterGroupConnectionPropertiesListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBParameterGroupConnectionPropertiesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDbPrivateLinkResourceListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDBParameterGroupConnectionPropertiesListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (HorizonDBPrivateLinkResourceData item in Value)
+            foreach (HorizonDBParameterGroupConnectionProperties item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbPrivateLinkResourceListResult IJsonModel<HorizonDbPrivateLinkResourceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HorizonDBParameterGroupConnectionPropertiesListResult IJsonModel<HorizonDBParameterGroupConnectionPropertiesListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HorizonDbPrivateLinkResourceListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HorizonDBParameterGroupConnectionPropertiesListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBParameterGroupConnectionPropertiesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDbPrivateLinkResourceListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDBParameterGroupConnectionPropertiesListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHorizonDbPrivateLinkResourceListResult(document.RootElement, options);
+            return DeserializeHorizonDBParameterGroupConnectionPropertiesListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HorizonDbPrivateLinkResourceListResult DeserializeHorizonDbPrivateLinkResourceListResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static HorizonDBParameterGroupConnectionPropertiesListResult DeserializeHorizonDBParameterGroupConnectionPropertiesListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<HorizonDBPrivateLinkResourceData> value = default;
+            IList<HorizonDBParameterGroupConnectionProperties> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<HorizonDBPrivateLinkResourceData> array = new List<HorizonDBPrivateLinkResourceData>();
+                    List<HorizonDBParameterGroupConnectionProperties> array = new List<HorizonDBParameterGroupConnectionProperties>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(HorizonDBPrivateLinkResourceData.DeserializeHorizonDBPrivateLinkResourceData(item, options));
+                        array.Add(HorizonDBParameterGroupConnectionProperties.DeserializeHorizonDBParameterGroupConnectionProperties(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HorizonDbPrivateLinkResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new HorizonDBParameterGroupConnectionPropertiesListResult(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

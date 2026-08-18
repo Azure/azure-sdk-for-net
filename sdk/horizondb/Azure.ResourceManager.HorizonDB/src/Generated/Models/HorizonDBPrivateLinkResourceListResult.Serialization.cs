@@ -14,64 +14,64 @@ using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> The response of a HorizonDbPool list operation. </summary>
-    internal partial class HorizonDbPoolListResult : IJsonModel<HorizonDbPoolListResult>
+    /// <summary> The response of a HorizonDbPrivateLinkResource list operation. </summary>
+    internal partial class HorizonDBPrivateLinkResourceListResult : IJsonModel<HorizonDBPrivateLinkResourceListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="HorizonDbPoolListResult"/> for deserialization. </summary>
-        internal HorizonDbPoolListResult()
+        /// <summary> Initializes a new instance of <see cref="HorizonDBPrivateLinkResourceListResult"/> for deserialization. </summary>
+        internal HorizonDBPrivateLinkResourceListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HorizonDbPoolListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HorizonDBPrivateLinkResourceListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbPoolListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHorizonDbPoolListResult(document.RootElement, options);
+                        return DeserializeHorizonDBPrivateLinkResourceListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDbPoolListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDBPrivateLinkResourceListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbPoolListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHorizonDBContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDbPoolListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDBPrivateLinkResourceListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HorizonDbPoolListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HorizonDBPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbPoolListResult IPersistableModel<HorizonDbPoolListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HorizonDBPrivateLinkResourceListResult IPersistableModel<HorizonDBPrivateLinkResourceListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HorizonDbPoolListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HorizonDBPrivateLinkResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HorizonDbPoolListResult"/> from. </param>
-        internal static HorizonDbPoolListResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HorizonDBPrivateLinkResourceListResult"/> from. </param>
+        internal static HorizonDBPrivateLinkResourceListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeHorizonDbPoolListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeHorizonDBPrivateLinkResourceListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HorizonDbPoolListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HorizonDBPrivateLinkResourceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbPoolListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDbPoolListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDBPrivateLinkResourceListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (HorizonDBPoolData item in Value)
+            foreach (HorizonDBPrivateLinkResourceData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbPoolListResult IJsonModel<HorizonDbPoolListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HorizonDBPrivateLinkResourceListResult IJsonModel<HorizonDBPrivateLinkResourceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HorizonDbPoolListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HorizonDBPrivateLinkResourceListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbPoolListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDbPoolListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDBPrivateLinkResourceListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHorizonDbPoolListResult(document.RootElement, options);
+            return DeserializeHorizonDBPrivateLinkResourceListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HorizonDbPoolListResult DeserializeHorizonDbPoolListResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static HorizonDBPrivateLinkResourceListResult DeserializeHorizonDBPrivateLinkResourceListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<HorizonDBPoolData> value = default;
+            IList<HorizonDBPrivateLinkResourceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<HorizonDBPoolData> array = new List<HorizonDBPoolData>();
+                    List<HorizonDBPrivateLinkResourceData> array = new List<HorizonDBPrivateLinkResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(HorizonDBPoolData.DeserializeHorizonDBPoolData(item, options));
+                        array.Add(HorizonDBPrivateLinkResourceData.DeserializeHorizonDBPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HorizonDbPoolListResult(value, nextLink, additionalBinaryDataProperties);
+            return new HorizonDBPrivateLinkResourceListResult(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

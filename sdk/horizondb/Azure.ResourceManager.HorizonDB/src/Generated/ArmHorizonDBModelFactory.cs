@@ -208,14 +208,14 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 default);
         }
 
-        /// <param name="startIpAddress"> The start IP address of the firewall rule (IPv4). </param>
-        /// <param name="endIpAddress"> The end IP address of the firewall rule (IPv4). </param>
+        /// <param name="startIPAddress"> The start IP address of the firewall rule (IPv4). </param>
+        /// <param name="endIPAddress"> The end IP address of the firewall rule (IPv4). </param>
         /// <param name="description"> The description of the HorizonDB firewall rule. </param>
         /// <param name="provisioningState"> The provisioning state of the firewall rule. </param>
         /// <returns> A new <see cref="Models.HorizonDBFirewallRuleProperties"/> instance for mocking. </returns>
-        public static HorizonDBFirewallRuleProperties HorizonDBFirewallRuleProperties(string startIpAddress = default, string endIpAddress = default, string description = default, HorizonDBProvisioningState? provisioningState = default)
+        public static HorizonDBFirewallRuleProperties HorizonDBFirewallRuleProperties(string startIPAddress = default, string endIPAddress = default, string description = default, HorizonDBProvisioningState? provisioningState = default)
         {
-            return new HorizonDBFirewallRuleProperties(startIpAddress, endIpAddress, description, provisioningState, default);
+            return new HorizonDBFirewallRuleProperties(startIPAddress, endIPAddress, description, provisioningState, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
