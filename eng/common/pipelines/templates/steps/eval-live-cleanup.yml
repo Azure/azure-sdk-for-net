@@ -1,6 +1,6 @@
 # Cleans resources created or reused by a live eval shard. Candidate IDs come only from that
 # shard's Vally trajectories; the cleanup script independently verifies every release plan is
-# tagged as a test plan before abandoning it.
+# tagged as a test plan before abandoning it and skips SDK PRs created before the shard started.
 
 steps:
   - task: AzureCLI@2

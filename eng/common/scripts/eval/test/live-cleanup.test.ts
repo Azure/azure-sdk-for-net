@@ -8,6 +8,7 @@ import {
   discoverLiveCleanupCandidates,
   parseAzureSdkPullRequestUrl,
   requireTestReleasePlan,
+  wasPullRequestCreatedDuringEval,
 } from "../lib/live-cleanup.ts";
 
 const roots = [];
@@ -27,6 +28,7 @@ function writeEvents(events) {
 function start(toolCallId, toolName, argumentsValue) {
   return {
     type: "tool.execution_start",
+    timestamp: "2026-08-18T08:00:00Z",
     data: { toolCallId, toolName, arguments: argumentsValue },
   };
 }
@@ -134,5 +136,28 @@ describe("requireTestReleasePlan", () => {
         ),
       /Refusing to clean non-test release plan/
     );
+  });
+});
+
+describe("wasPullRequestCreatedDuringEval", () => {
+  it("accepts pull requests created during the eval", () => {
+    assert.equal(
+      wasPullRequestCreatedDuringEval(
+        { created_at: "2026-08-18T08:05:00Z" },
+        "2026-08-18T08:00:00Z"
+      ),
+      true
+    );
+  });
+
+  it("rejects pre-existing pull requests and missing timestamps", () => {
+    assert.equal(
+      wasPullRequestCreatedDuringEval(
+        { created_at: "2026-07-01T08:00:00Z" },
+        "2026-08-18T08:00:00Z"
+      ),
+      false
+    );
+    assert.equal(wasPullRequestCreatedDuringEval({}, "2026-08-18T08:00:00Z"), false);
   });
 });

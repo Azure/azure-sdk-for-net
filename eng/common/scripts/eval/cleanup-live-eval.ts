@@ -7,6 +7,7 @@ import {
   getCaseInsensitiveProperty,
   parseAzureSdkPullRequestUrl,
   requireTestReleasePlan,
+  wasPullRequestCreatedDuringEval,
 } from "./lib/live-cleanup.ts";
 
 function parseArgs(argv) {
@@ -89,7 +90,7 @@ async function githubRequest(pathname, options = {}) {
   return response.json();
 }
 
-async function closePullRequest(url) {
+async function closePullRequest(url, evalStartedAt) {
   const pullRequest = parseAzureSdkPullRequestUrl(url);
   if (!pullRequest) {
     throw new Error(`Refusing to close non-Azure-SDK pull request URL: ${url}`);
@@ -97,6 +98,10 @@ async function closePullRequest(url) {
 
   const apiPath = `/repos/${pullRequest.owner}/${pullRequest.repo}/pulls/${pullRequest.number}`;
   const current = await githubRequest(apiPath);
+  if (!wasPullRequestCreatedDuringEval(current, evalStartedAt)) {
+    console.log(`Skipped pre-existing SDK pull request: ${pullRequest.url}`);
+    return;
+  }
   if (current.state === "closed") {
     console.log(`SDK pull request already closed: ${pullRequest.url}`);
     return;
@@ -143,7 +148,7 @@ export async function cleanupLiveEval({ resultsDir, azsdk }) {
   for (const [workItemId, plan] of verifiedPlans) {
     for (const url of plan.pullRequestUrls) {
       try {
-        await closePullRequest(url);
+        await closePullRequest(url, candidates.startedAt);
       } catch (error) {
         errors.push(error.message);
       }

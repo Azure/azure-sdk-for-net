@@ -94,6 +94,7 @@ function addPlanFromResult(plans, result) {
 export function discoverLiveCleanupCandidates(resultsDir) {
   const plans = new Map();
   const eventFiles = findEventFiles(resultsDir);
+  let startedAt;
 
   for (const eventFile of eventFiles) {
     const starts = new Map();
@@ -104,6 +105,9 @@ export function discoverLiveCleanupCandidates(resultsDir) {
         event = JSON.parse(line);
       } catch (error) {
         throw new Error(`Invalid JSON in ${eventFile}:${index + 1}: ${error.message}`);
+      }
+      if (event.timestamp && (!startedAt || event.timestamp < startedAt)) {
+        startedAt = event.timestamp;
       }
 
       if (event.type === "tool.execution_start") {
@@ -136,6 +140,7 @@ export function discoverLiveCleanupCandidates(resultsDir) {
 
   return {
     eventFiles,
+    startedAt,
     plans: [...plans.values()].map((plan) => ({
       ...plan,
       pullRequestUrls: [...plan.pullRequestUrls],
@@ -174,4 +179,13 @@ export function requireTestReleasePlan(response, candidate) {
     throw new Error(`Refusing to clean non-test release plan ${candidate.kind}=${candidate.id}.`);
   }
   return details;
+}
+
+export function wasPullRequestCreatedDuringEval(pullRequest, evalStartedAt) {
+  const createdAt = Date.parse(pullRequest?.created_at);
+  const startedAt = Date.parse(evalStartedAt);
+  if (!Number.isFinite(createdAt) || !Number.isFinite(startedAt)) {
+    return false;
+  }
+  return createdAt >= startedAt;
 }
