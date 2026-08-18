@@ -14,64 +14,64 @@ using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> The response of a HorizonDbParameterGroupConnectionProperties list operation. </summary>
-    internal partial class HorizonDbParameterGroupConnectionPropertiesListResult : IJsonModel<HorizonDbParameterGroupConnectionPropertiesListResult>
+    /// <summary> The response of a HorizonDbParameterGroup list operation. </summary>
+    internal partial class HorizonDBParameterGroupListResult : IJsonModel<HorizonDBParameterGroupListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="HorizonDbParameterGroupConnectionPropertiesListResult"/> for deserialization. </summary>
-        internal HorizonDbParameterGroupConnectionPropertiesListResult()
+        /// <summary> Initializes a new instance of <see cref="HorizonDBParameterGroupListResult"/> for deserialization. </summary>
+        internal HorizonDBParameterGroupListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HorizonDbParameterGroupConnectionPropertiesListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HorizonDBParameterGroupListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbParameterGroupConnectionPropertiesListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBParameterGroupListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHorizonDbParameterGroupConnectionPropertiesListResult(document.RootElement, options);
+                        return DeserializeHorizonDBParameterGroupListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDbParameterGroupConnectionPropertiesListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDBParameterGroupListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbParameterGroupConnectionPropertiesListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBParameterGroupListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHorizonDBContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDbParameterGroupConnectionPropertiesListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDBParameterGroupListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HorizonDbParameterGroupConnectionPropertiesListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HorizonDBParameterGroupListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbParameterGroupConnectionPropertiesListResult IPersistableModel<HorizonDbParameterGroupConnectionPropertiesListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HorizonDBParameterGroupListResult IPersistableModel<HorizonDBParameterGroupListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HorizonDbParameterGroupConnectionPropertiesListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HorizonDBParameterGroupListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HorizonDbParameterGroupConnectionPropertiesListResult"/> from. </param>
-        internal static HorizonDbParameterGroupConnectionPropertiesListResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HorizonDBParameterGroupListResult"/> from. </param>
+        internal static HorizonDBParameterGroupListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeHorizonDbParameterGroupConnectionPropertiesListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeHorizonDBParameterGroupListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HorizonDbParameterGroupConnectionPropertiesListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HorizonDBParameterGroupListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbParameterGroupConnectionPropertiesListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBParameterGroupListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDbParameterGroupConnectionPropertiesListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDBParameterGroupListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (HorizonDBParameterGroupConnectionProperties item in Value)
+            foreach (HorizonDBParameterGroupData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbParameterGroupConnectionPropertiesListResult IJsonModel<HorizonDbParameterGroupConnectionPropertiesListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HorizonDBParameterGroupListResult IJsonModel<HorizonDBParameterGroupListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HorizonDbParameterGroupConnectionPropertiesListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HorizonDBParameterGroupListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbParameterGroupConnectionPropertiesListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBParameterGroupListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDbParameterGroupConnectionPropertiesListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDBParameterGroupListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHorizonDbParameterGroupConnectionPropertiesListResult(document.RootElement, options);
+            return DeserializeHorizonDBParameterGroupListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HorizonDbParameterGroupConnectionPropertiesListResult DeserializeHorizonDbParameterGroupConnectionPropertiesListResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static HorizonDBParameterGroupListResult DeserializeHorizonDBParameterGroupListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<HorizonDBParameterGroupConnectionProperties> value = default;
+            IList<HorizonDBParameterGroupData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<HorizonDBParameterGroupConnectionProperties> array = new List<HorizonDBParameterGroupConnectionProperties>();
+                    List<HorizonDBParameterGroupData> array = new List<HorizonDBParameterGroupData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(HorizonDBParameterGroupConnectionProperties.DeserializeHorizonDBParameterGroupConnectionProperties(item, options));
+                        array.Add(HorizonDBParameterGroupData.DeserializeHorizonDBParameterGroupData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HorizonDbParameterGroupConnectionPropertiesListResult(value, nextLink, additionalBinaryDataProperties);
+            return new HorizonDBParameterGroupListResult(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }
