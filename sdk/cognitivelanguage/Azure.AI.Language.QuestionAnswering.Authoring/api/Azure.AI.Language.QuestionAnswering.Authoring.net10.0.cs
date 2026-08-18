@@ -627,7 +627,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         private readonly int _dummyPrimitive;
         public SourceKind(string value) { throw null; }
         public static Azure.AI.Language.QuestionAnswering.Authoring.SourceKind File { get { throw null; } }
-        public static Azure.AI.Language.QuestionAnswering.Authoring.SourceKind Url { get { throw null; } }
+        public static Azure.AI.Language.QuestionAnswering.Authoring.SourceKind Uri { get { throw null; } }
         public bool Equals(Azure.AI.Language.QuestionAnswering.Authoring.SourceKind other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
