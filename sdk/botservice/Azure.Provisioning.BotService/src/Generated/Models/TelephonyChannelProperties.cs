@@ -26,7 +26,7 @@ namespace Azure.Provisioning.BotService
         {
         }
 
-        /// <summary> Gets or sets the PhoneNumbers. </summary>
+        /// <summary> Gets the PhoneNumbers. </summary>
         public BicepList<TelephonyPhoneNumbers> PhoneNumbers
         {
             get
@@ -34,14 +34,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _phoneNumbers;
             }
-            set
-            {
-                Initialize();
-                _phoneNumbers.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ApiConfigurations. </summary>
+        /// <summary> Gets the ApiConfigurations. </summary>
         public BicepList<TelephonyChannelResourceApiConfiguration> ApiConfigurations
         {
             get
@@ -49,14 +44,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _apiConfigurations;
             }
-            set
-            {
-                Initialize();
-                _apiConfigurations.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the CognitiveServiceSubscriptionKey. </summary>
+        /// <summary> Gets the CognitiveServiceSubscriptionKey. </summary>
         public BicepValue<string> CognitiveServiceSubscriptionKey
         {
             get
@@ -64,14 +54,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _cognitiveServiceSubscriptionKey;
             }
-            set
-            {
-                Initialize();
-                _cognitiveServiceSubscriptionKey.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the CognitiveServiceRegion. </summary>
+        /// <summary> Gets the CognitiveServiceRegion. </summary>
         public BicepValue<string> CognitiveServiceRegion
         {
             get
@@ -79,14 +64,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _cognitiveServiceRegion;
             }
-            set
-            {
-                Initialize();
-                _cognitiveServiceRegion.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the DefaultLocale. </summary>
+        /// <summary> Gets the DefaultLocale. </summary>
         public BicepValue<string> DefaultLocale
         {
             get
@@ -94,14 +74,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _defaultLocale;
             }
-            set
-            {
-                Initialize();
-                _defaultLocale.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the PremiumSku. </summary>
+        /// <summary> Gets the PremiumSku. </summary>
         public BicepValue<string> PremiumSku
         {
             get
@@ -109,25 +84,15 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _premiumSku;
             }
-            set
-            {
-                Initialize();
-                _premiumSku.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the IsEnabled. </summary>
+        /// <summary> Gets the IsEnabled. </summary>
         public BicepValue<bool> IsEnabled
         {
             get
             {
                 Initialize();
                 return _isEnabled;
-            }
-            set
-            {
-                Initialize();
-                _isEnabled.Assign(value);
             }
         }
 

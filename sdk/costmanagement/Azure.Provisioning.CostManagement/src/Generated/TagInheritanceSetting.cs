@@ -10,7 +10,7 @@ using Azure.Provisioning;
 namespace Azure.Provisioning.CostManagement
 {
     /// <summary> Tag Inheritance Setting definition. </summary>
-    public partial class TagInheritanceSetting : CostManagementSetting
+    public partial class TagInheritanceSetting : Setting
     {
         private TagInheritanceProperties _properties;
 

@@ -20,7 +20,7 @@ namespace Azure.Provisioning.DomainRegistration
         private SystemData _systemData;
         private DomainOwnershipIdentifierProperties _properties;
         private BicepValue<string> _kind;
-        private ResourceReference<AppServiceDomain> _parent;
+        private ResourceReference<Domain> _parent;
 
         /// <summary> Creates a new DomainOwnershipIdentifier. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -95,7 +95,7 @@ namespace Azure.Provisioning.DomainRegistration
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public AppServiceDomain Parent
+        public Domain Parent
         {
             get
             {
@@ -135,7 +135,7 @@ namespace Azure.Provisioning.DomainRegistration
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<DomainOwnershipIdentifierProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<AppServiceDomain>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<Domain>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

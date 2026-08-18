@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Compute
         private BicepValue<string> _name;
         private SystemData _systemData;
         private RestorePointProperties _properties;
-        private ResourceReference<RestorePointGroup> _parent;
+        private ResourceReference<RestorePointCollection> _parent;
 
         /// <summary> Creates a new RestorePoint. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -80,7 +80,7 @@ namespace Azure.Provisioning.Compute
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public RestorePointGroup Parent
+        public RestorePointCollection Parent
         {
             get
             {
@@ -226,7 +226,7 @@ namespace Azure.Provisioning.Compute
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<RestorePointProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<RestorePointGroup>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<RestorePointCollection>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Batch
         private BatchKeyVaultReference _keyVaultReference;
         private BicepValue<BatchPublicNetworkAccess> _publicNetworkAccess;
         private BatchNetworkProfile _networkProfile;
-        private BicepList<BatchPrivateEndpointConnection> _privateEndpointConnections;
+        private BicepList<PrivateEndpointConnection> _privateEndpointConnections;
         private BatchAccountAutoStorageConfiguration _autoStorage;
         private BatchAccountEncryptionConfiguration _encryption;
         private BicepValue<int> _dedicatedCoreQuota;
@@ -117,7 +117,7 @@ namespace Azure.Provisioning.Batch
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<BatchPrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<PrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {
@@ -227,7 +227,7 @@ namespace Azure.Provisioning.Batch
             _keyVaultReference = DefineModelProperty<BatchKeyVaultReference>(nameof(KeyVaultReference), new string[] { "keyVaultReference" }, isOutput: true);
             _publicNetworkAccess = DefineProperty<BatchPublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
             _networkProfile = DefineModelProperty<BatchNetworkProfile>(nameof(NetworkProfile), new string[] { "networkProfile" });
-            _privateEndpointConnections = DefineListProperty<BatchPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
+            _privateEndpointConnections = DefineListProperty<PrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _autoStorage = DefineModelProperty<BatchAccountAutoStorageConfiguration>(nameof(AutoStorage), new string[] { "autoStorage" }, isOutput: true);
             _encryption = DefineModelProperty<BatchAccountEncryptionConfiguration>(nameof(Encryption), new string[] { "encryption" }, isOutput: true);
             _dedicatedCoreQuota = DefineProperty<int>(nameof(DedicatedCoreQuota), new string[] { "dedicatedCoreQuota" }, isOutput: true);

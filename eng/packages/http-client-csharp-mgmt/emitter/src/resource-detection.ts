@@ -71,12 +71,73 @@ export function updateClients(
 
   if (options?.["use-legacy-resource-detection"] === false) {
     armProviderSchema = resolveArmResources(sdkContext.program, sdkContext);
+    armProviderSchema = filterArmProviderSchemaToTcgcOutput(
+      armProviderSchema,
+      codeModel
+    );
   } else {
     armProviderSchema = buildArmProviderSchema(sdkContext, codeModel);
   }
 
   applyArmProviderSchemaDecorator(codeModel, armProviderSchema);
   return armProviderSchema;
+}
+
+export function filterArmProviderSchemaToTcgcOutput(
+  armProviderSchema: ArmProviderSchema,
+  codeModel: CodeModel
+): ArmProviderSchema {
+  const modelIds = new Set(
+    codeModel.models.map((model) => model.crossLanguageDefinitionId)
+  );
+  const methodIds = new Set(
+    getAllClients(codeModel).flatMap((client) =>
+      client.methods.map((method) => method.crossLanguageDefinitionId)
+    )
+  );
+
+  let resources = armProviderSchema.resources
+    .filter((resource) => modelIds.has(resource.resourceModelId))
+    .map((resource) => ({
+      ...resource,
+      metadata: {
+        ...resource.metadata,
+        methods: resource.metadata.methods.filter((method) =>
+          methodIds.has(method.methodId)
+        )
+      }
+    }))
+    .filter((resource) =>
+      resource.metadata.methods.some(
+        (method) => method.kind === ResourceOperationKind.Read
+      )
+    );
+
+  let resourceIds = new Set(
+    resources
+      .map((resource) => resource.metadata.resourceIdPattern?.path)
+      .filter((id): id is string => id !== undefined)
+  );
+  let previousResourceCount: number;
+  do {
+    previousResourceCount = resources.length;
+    resources = resources.filter((resource) => {
+      const parentResourceId = resource.metadata.parentResourceId?.path;
+      return parentResourceId === undefined || resourceIds.has(parentResourceId);
+    });
+    resourceIds = new Set(
+      resources
+        .map((resource) => resource.metadata.resourceIdPattern?.path)
+        .filter((id): id is string => id !== undefined)
+    );
+  } while (resources.length !== previousResourceCount);
+
+  return {
+    resources,
+    nonResourceMethods: armProviderSchema.nonResourceMethods.filter((method) =>
+      methodIds.has(method.methodId)
+    )
+  };
 }
 
 /**

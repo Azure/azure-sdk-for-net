@@ -23,7 +23,7 @@ namespace Azure.Provisioning.BotService
         {
         }
 
-        /// <summary> Gets or sets the Sites. </summary>
+        /// <summary> Gets the Sites. </summary>
         public BicepList<DirectLineSite> Sites
         {
             get
@@ -31,14 +31,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _sites;
             }
-            set
-            {
-                Initialize();
-                _sites.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ExtensionKey1. </summary>
+        /// <summary> Gets the ExtensionKey1. </summary>
         public BicepValue<string> ExtensionKey1
         {
             get
@@ -46,14 +41,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _extensionKey1;
             }
-            set
-            {
-                Initialize();
-                _extensionKey1.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ExtensionKey2. </summary>
+        /// <summary> Gets the ExtensionKey2. </summary>
         public BicepValue<string> ExtensionKey2
         {
             get
@@ -61,25 +51,15 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _extensionKey2;
             }
-            set
-            {
-                Initialize();
-                _extensionKey2.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the DirectLineEmbedCode. </summary>
+        /// <summary> Gets the DirectLineEmbedCode. </summary>
         public BicepValue<string> DirectLineEmbedCode
         {
             get
             {
                 Initialize();
                 return _directLineEmbedCode;
-            }
-            set
-            {
-                Initialize();
-                _directLineEmbedCode.Assign(value);
             }
         }
 

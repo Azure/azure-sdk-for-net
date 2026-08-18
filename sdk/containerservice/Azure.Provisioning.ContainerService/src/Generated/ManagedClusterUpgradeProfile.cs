@@ -19,7 +19,7 @@ namespace Azure.Provisioning.ContainerService
         private BicepValue<string> _name;
         private SystemData _systemData;
         private ManagedClusterUpgradeProfileProperties _properties;
-        private ResourceReference<ContainerServiceManagedCluster> _parent;
+        private ResourceReference<ManagedCluster> _parent;
 
         /// <summary> Creates a new ManagedClusterUpgradeProfile. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -69,7 +69,7 @@ namespace Azure.Provisioning.ContainerService
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public ContainerServiceManagedCluster Parent
+        public ManagedCluster Parent
         {
             get
             {
@@ -109,7 +109,7 @@ namespace Azure.Provisioning.ContainerService
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true, defaultValue: "default");
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ManagedClusterUpgradeProfileProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ContainerServiceManagedCluster>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ManagedCluster>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

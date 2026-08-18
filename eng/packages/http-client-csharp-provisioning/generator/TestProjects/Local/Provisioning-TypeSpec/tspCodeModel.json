@@ -5203,43 +5203,31 @@
                 "rbacRoles": []
               },
               {
-                "resourceModelId": "ProvisioningTypeSpec.ResourceProfile",
-                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
-                "resourceType": "ProvisioningTypeSpec/configurationStores/resourceProfiles",
+                "resourceModelId": "ProvisioningTypeSpec.ResourceProfileRevision",
+                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}/revisions/{resourceProfileRevisionName}",
+                "resourceType": "ProvisioningTypeSpec/configurationStores/resourceProfiles/revisions",
                 "methods": [
                   {
                     "$id": "385",
-                    "methodId": "ProvisioningTypeSpec.ResourceProfiles.createOrUpdate",
-                    "kind": "Create",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
+                    "methodId": "ProvisioningTypeSpec.ResourceProfileRevisions.get",
+                    "kind": "Read",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}/revisions/{resourceProfileRevisionName}",
                     "scope": {
                       "$id": "386",
                       "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
-                  },
-                  {
-                    "$id": "387",
-                    "methodId": "ProvisioningTypeSpec.ResourceProfiles.get",
-                    "kind": "Read",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
-                    "scope": {
-                      "$id": "388",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}/revisions/{resourceProfileRevisionName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   }
                 ],
                 "scope": {
-                  "$id": "389",
+                  "$id": "387",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
-                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
-                "resourceName": "ResourceProfile",
+                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
+                "resourceName": "ResourceProfileRevision",
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -5256,9 +5244,21 @@
                 "resourceType": "ProvisioningTypeSpec/configurationStores/discriminatedResourceProfiles",
                 "methods": [
                   {
-                    "$id": "390",
+                    "$id": "388",
                     "methodId": "ProvisioningTypeSpec.DiscriminatedResourceProfiles.createOrUpdate",
                     "kind": "Create",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/discriminatedResourceProfiles/{discriminatedResourceProfileName}",
+                    "scope": {
+                      "$id": "389",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/discriminatedResourceProfiles/{discriminatedResourceProfileName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "390",
+                    "methodId": "ProvisioningTypeSpec.DiscriminatedResourceProfiles.get",
+                    "kind": "Read",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/discriminatedResourceProfiles/{discriminatedResourceProfileName}",
                     "scope": {
                       "$id": "391",
@@ -5266,22 +5266,10 @@
                       "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/discriminatedResourceProfiles/{discriminatedResourceProfileName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
-                  },
-                  {
-                    "$id": "392",
-                    "methodId": "ProvisioningTypeSpec.DiscriminatedResourceProfiles.get",
-                    "kind": "Read",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/discriminatedResourceProfiles/{discriminatedResourceProfileName}",
-                    "scope": {
-                      "$id": "393",
-                      "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/discriminatedResourceProfiles/{discriminatedResourceProfileName}",
-                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
-                    }
                   }
                 ],
                 "scope": {
-                  "$id": "394",
+                  "$id": "392",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
@@ -5299,19 +5287,31 @@
                 "rbacRoles": []
               },
               {
-                "resourceModelId": "ProvisioningTypeSpec.ResourceProfileRevision",
-                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}/revisions/{resourceProfileRevisionName}",
-                "resourceType": "ProvisioningTypeSpec/configurationStores/resourceProfiles/revisions",
+                "resourceModelId": "ProvisioningTypeSpec.ResourceProfile",
+                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
+                "resourceType": "ProvisioningTypeSpec/configurationStores/resourceProfiles",
                 "methods": [
                   {
+                    "$id": "393",
+                    "methodId": "ProvisioningTypeSpec.ResourceProfiles.createOrUpdate",
+                    "kind": "Create",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
+                    "scope": {
+                      "$id": "394",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
                     "$id": "395",
-                    "methodId": "ProvisioningTypeSpec.ResourceProfileRevisions.get",
+                    "methodId": "ProvisioningTypeSpec.ResourceProfiles.get",
                     "kind": "Read",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}/revisions/{resourceProfileRevisionName}",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
                     "scope": {
                       "$id": "396",
                       "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}/revisions/{resourceProfileRevisionName}",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   }
@@ -5322,8 +5322,8 @@
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
-                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
-                "resourceName": "ResourceProfileRevision",
+                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                "resourceName": "ResourceProfile",
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -5462,7 +5462,7 @@
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
-                "resourceName": "ConfigurationStorePrivateLinkResource",
+                "resourceName": "ConfigurationStoreConfigurationStorePrivateLinkResource",
                 "nameConstraints": {},
                 "apiVersions": [
                   "2024-01-01-preview",
@@ -5654,15 +5654,15 @@
                 "isExtensionResource": false
               },
               {
-                "resourceModelId": "ProvisioningTypeSpec.ResourceProfile",
-                "resourceName": "ResourceProfile",
-                "resourceType": "ProvisioningTypeSpec/configurationStores/resourceProfiles",
-                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                "resourceModelId": "ProvisioningTypeSpec.ResourceProfileRevision",
+                "resourceName": "ResourceProfileRevision",
+                "resourceType": "ProvisioningTypeSpec/configurationStores/resourceProfiles/revisions",
+                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
                 "resourceIdPatterns": [
-                  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}"
+                  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}/revisions/{resourceProfileRevisionName}"
                 ],
                 "apiVersions": [
                   "2024-01-01-preview",
@@ -5670,16 +5670,13 @@
                   "2024-05-01"
                 ],
                 "methodIds": [
-                  "ProvisioningTypeSpec.ResourceProfiles.createOrUpdate",
-                  "ProvisioningTypeSpec.ResourceProfiles.get"
+                  "ProvisioningTypeSpec.ResourceProfileRevisions.get"
                 ],
                 "rbacRoles": [],
                 "readableScopes": [
                   "ResourceGroup"
                 ],
-                "writableScopes": [
-                  "ResourceGroup"
-                ],
+                "writableScopes": [],
                 "isExtensionResource": false
               },
               {
@@ -5712,15 +5709,15 @@
                 "isExtensionResource": false
               },
               {
-                "resourceModelId": "ProvisioningTypeSpec.ResourceProfileRevision",
-                "resourceName": "ResourceProfileRevision",
-                "resourceType": "ProvisioningTypeSpec/configurationStores/resourceProfiles/revisions",
-                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}",
+                "resourceModelId": "ProvisioningTypeSpec.ResourceProfile",
+                "resourceName": "ResourceProfile",
+                "resourceType": "ProvisioningTypeSpec/configurationStores/resourceProfiles",
+                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
                 "resourceIdPatterns": [
-                  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}/revisions/{resourceProfileRevisionName}"
+                  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/resourceProfiles/{resourceProfileName}"
                 ],
                 "apiVersions": [
                   "2024-01-01-preview",
@@ -5728,13 +5725,16 @@
                   "2024-05-01"
                 ],
                 "methodIds": [
-                  "ProvisioningTypeSpec.ResourceProfileRevisions.get"
+                  "ProvisioningTypeSpec.ResourceProfiles.createOrUpdate",
+                  "ProvisioningTypeSpec.ResourceProfiles.get"
                 ],
                 "rbacRoles": [],
                 "readableScopes": [
                   "ResourceGroup"
                 ],
-                "writableScopes": [],
+                "writableScopes": [
+                  "ResourceGroup"
+                ],
                 "isExtensionResource": false
               },
               {
@@ -5795,7 +5795,7 @@
               },
               {
                 "resourceModelId": "ProvisioningTypeSpec.ConfigurationStorePrivateLinkResource",
-                "resourceName": "ConfigurationStorePrivateLinkResource",
+                "resourceName": "ConfigurationStoreConfigurationStorePrivateLinkResource",
                 "resourceType": "ProvisioningTypeSpec/configurationStores/privateLinkResources",
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
                 "nameConstraints": {},
@@ -5837,16 +5837,16 @@
                 "isSettable": true
               },
               {
-                "modelId": "ProvisioningTypeSpec.ResourceProfile",
-                "isSettable": true
+                "modelId": "ProvisioningTypeSpec.ResourceProfileRevision",
+                "isSettable": false
               },
               {
                 "modelId": "ProvisioningTypeSpec.DiscriminatedResourceProfile",
                 "isSettable": true
               },
               {
-                "modelId": "ProvisioningTypeSpec.ResourceProfileRevision",
-                "isSettable": false
+                "modelId": "ProvisioningTypeSpec.ResourceProfile",
+                "isSettable": true
               },
               {
                 "modelId": "ProvisioningTypeSpec.ExtensionAssignment",
@@ -5889,8 +5889,8 @@
                 "isSettable": true
               },
               {
-                "modelId": "ProvisioningTypeSpec.ResourceProfileProperties",
-                "isSettable": true
+                "modelId": "ProvisioningTypeSpec.ResourceProfileRevisionProperties",
+                "isSettable": false
               },
               {
                 "modelId": "ProvisioningTypeSpec.SpecializedResourceProfile",
@@ -5901,8 +5901,8 @@
                 "isSettable": true
               },
               {
-                "modelId": "ProvisioningTypeSpec.ResourceProfileRevisionProperties",
-                "isSettable": false
+                "modelId": "ProvisioningTypeSpec.ResourceProfileProperties",
+                "isSettable": true
               },
               {
                 "modelId": "Azure.ResourceManager.CommonTypes.ExtensionResource",

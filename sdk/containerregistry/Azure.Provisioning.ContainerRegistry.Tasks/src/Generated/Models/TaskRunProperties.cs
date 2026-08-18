@@ -15,7 +15,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
     {
         private BicepValue<ContainerRegistryTaskProvisioningState> _provisioningState;
         private ContainerRegistryRunContent _runRequest;
-        private ContainerRegistryRun _runResult;
+        private Run _runResult;
         private BicepValue<string> _forceUpdateTag;
 
         /// <summary> Creates a new TaskRunProperties. </summary>
@@ -49,7 +49,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the RunResult. </summary>
-        public ContainerRegistryRun RunResult
+        public Run RunResult
         {
             get
             {
@@ -79,7 +79,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             base.DefineProvisionableProperties();
             _provisioningState = DefineProperty<ContainerRegistryTaskProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _runRequest = DefineModelProperty<ContainerRegistryRunContent>(nameof(RunRequest), new string[] { "runRequest" });
-            _runResult = DefineModelProperty(nameof(RunResult), new string[] { "runResult" }, new ContainerRegistryRun("runResult"), isOutput: true);
+            _runResult = DefineModelProperty(nameof(RunResult), new string[] { "runResult" }, new Run("runResult"), isOutput: true);
             _forceUpdateTag = DefineProperty<string>(nameof(ForceUpdateTag), new string[] { "forceUpdateTag" });
             DefineAdditionalProperties();
         }

@@ -25,7 +25,7 @@ namespace Azure.Provisioning.MySql
         {
         }
 
-        /// <summary> Gets or sets the BackupNameV2. </summary>
+        /// <summary> Gets the BackupNameV2. </summary>
         public BicepValue<string> BackupNameV2
         {
             get
@@ -33,14 +33,9 @@ namespace Azure.Provisioning.MySql
                 Initialize();
                 return _backupNameV2;
             }
-            set
-            {
-                Initialize();
-                _backupNameV2.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the BackupType. </summary>
+        /// <summary> Gets the BackupType. </summary>
         public BicepValue<MySqlFlexibleServerBackupType> BackupType
         {
             get
@@ -48,14 +43,9 @@ namespace Azure.Provisioning.MySql
                 Initialize();
                 return _backupType;
             }
-            set
-            {
-                Initialize();
-                _backupType.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the CompletedOn. </summary>
+        /// <summary> Gets the CompletedOn. </summary>
         public BicepValue<DateTimeOffset> CompletedOn
         {
             get
@@ -63,25 +53,15 @@ namespace Azure.Provisioning.MySql
                 Initialize();
                 return _completedOn;
             }
-            set
-            {
-                Initialize();
-                _completedOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Source. </summary>
+        /// <summary> Gets the Source. </summary>
         public BicepValue<string> Source
         {
             get
             {
                 Initialize();
                 return _source;
-            }
-            set
-            {
-                Initialize();
-                _source.Assign(value);
             }
         }
 

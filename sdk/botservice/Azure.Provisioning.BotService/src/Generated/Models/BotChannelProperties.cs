@@ -27,18 +27,13 @@ namespace Azure.Provisioning.BotService
         {
         }
 
-        /// <summary> Gets or sets the ETag. </summary>
+        /// <summary> Gets the ETag. </summary>
         public BicepValue<ETag> ETag
         {
             get
             {
                 Initialize();
                 return _eTag;
-            }
-            set
-            {
-                Initialize();
-                _eTag.Assign(value);
             }
         }
 
@@ -52,18 +47,13 @@ namespace Azure.Provisioning.BotService
             }
         }
 
-        /// <summary> Gets or sets the Location. </summary>
+        /// <summary> Gets the Location. </summary>
         public BicepValue<AzureLocation> Location
         {
             get
             {
                 Initialize();
                 return _location;
-            }
-            set
-            {
-                Initialize();
-                _location.Assign(value);
             }
         }
 

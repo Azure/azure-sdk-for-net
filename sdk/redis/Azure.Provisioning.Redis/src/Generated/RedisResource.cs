@@ -30,7 +30,7 @@ namespace Azure.Provisioning.Redis
         private BicepList<string> _zones;
         private ManagedServiceIdentity _identity;
 
-        /// <summary> Creates a new Redis. </summary>
+        /// <summary> Creates a new RedisResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
         public RedisResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Cache/redis", resourceVersion ?? "2024-11-01")
@@ -144,144 +144,6 @@ namespace Azure.Provisioning.Redis
             {
                 Initialize();
                 AssignOrReplace(ref _identity, value);
-            }
-        }
-
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<RedisProvisioningState> ProvisioningState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new RedisProperties();
-                }
-                return Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Gets the HostName. </summary>
-        public BicepValue<string> HostName
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new RedisProperties();
-                }
-                return Properties.HostName;
-            }
-        }
-
-        /// <summary> Gets the Port. </summary>
-        public BicepValue<int> Port
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new RedisProperties();
-                }
-                return Properties.Port;
-            }
-        }
-
-        /// <summary> Gets the SslPort. </summary>
-        public BicepValue<int> SslPort
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new RedisProperties();
-                }
-                return Properties.SslPort;
-            }
-        }
-
-        /// <summary> Gets the AccessKeys. </summary>
-        public RedisAccessKeys AccessKeys
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AccessKeys;
-            }
-        }
-
-        /// <summary> Gets the LinkedServers. </summary>
-        public BicepList<SubResource> LinkedServers
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new RedisProperties();
-                }
-                return Properties.LinkedServers;
-            }
-        }
-
-        /// <summary> Gets the Instances. </summary>
-        public BicepList<RedisInstanceDetails> Instances
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new RedisProperties();
-                }
-                return Properties.Instances;
-            }
-        }
-
-        /// <summary> Gets or sets the Sku. </summary>
-        public RedisSku Sku
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Sku;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RedisProperties();
-                }
-                Properties.Sku = value;
-            }
-        }
-
-        /// <summary> Gets or sets the SubnetId. </summary>
-        public BicepValue<ResourceIdentifier> SubnetId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SubnetId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RedisProperties();
-                }
-                Properties.SubnetId = value;
-            }
-        }
-
-        /// <summary> Gets or sets the StaticIP. </summary>
-        public BicepValue<IPAddress> StaticIP
-        {
-            get
-            {
-                return Properties is null ? default : Properties.StaticIP;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RedisProperties();
-                }
-                Properties.StaticIP = value;
             }
         }
 
@@ -489,7 +351,145 @@ namespace Azure.Provisioning.Redis
             }
         }
 
-        /// <summary> Define all the provisionable properties for Redis. </summary>
+        /// <summary> Gets or sets the Sku. </summary>
+        public RedisSku Sku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Sku;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisProperties();
+                }
+                Properties.Sku = value;
+            }
+        }
+
+        /// <summary> Gets or sets the SubnetId. </summary>
+        public BicepValue<ResourceIdentifier> SubnetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubnetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisProperties();
+                }
+                Properties.SubnetId = value;
+            }
+        }
+
+        /// <summary> Gets or sets the StaticIP. </summary>
+        public BicepValue<IPAddress> StaticIP
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StaticIP;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisProperties();
+                }
+                Properties.StaticIP = value;
+            }
+        }
+
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<RedisProvisioningState> ProvisioningState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisProperties();
+                }
+                return Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Gets the HostName. </summary>
+        public BicepValue<string> HostName
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisProperties();
+                }
+                return Properties.HostName;
+            }
+        }
+
+        /// <summary> Gets the Port. </summary>
+        public BicepValue<int> Port
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisProperties();
+                }
+                return Properties.Port;
+            }
+        }
+
+        /// <summary> Gets the SslPort. </summary>
+        public BicepValue<int> SslPort
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisProperties();
+                }
+                return Properties.SslPort;
+            }
+        }
+
+        /// <summary> Gets the AccessKeys. </summary>
+        public RedisAccessKeys AccessKeys
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AccessKeys;
+            }
+        }
+
+        /// <summary> Gets the LinkedServers. </summary>
+        public BicepList<SubResource> LinkedServers
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisProperties();
+                }
+                return Properties.LinkedServers;
+            }
+        }
+
+        /// <summary> Gets the Instances. </summary>
+        public BicepList<RedisInstanceDetails> Instances
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisProperties();
+                }
+                return Properties.Instances;
+            }
+        }
+
+        /// <summary> Define all the provisionable properties for RedisResource. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -504,7 +504,7 @@ namespace Azure.Provisioning.Redis
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing Redis. </summary>
+        /// <summary> Creates a reference to an existing RedisResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
         public static RedisResource FromExisting(string bicepIdentifier, string resourceVersion = null)
@@ -514,7 +514,7 @@ namespace Azure.Provisioning.Redis
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for Redis that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for RedisResource that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary> Get the requirements for naming this resource. </summary>
@@ -522,7 +522,7 @@ namespace Azure.Provisioning.Redis
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 63, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen);
 
-        /// <summary> Creates a role assignment for a user-assigned identity that grants access to this Redis. </summary>
+        /// <summary> Creates a role assignment for a user-assigned identity that grants access to this RedisResource. </summary>
         /// <param name="role"> The role to grant. </param>
         /// <param name="identity"> The <see cref="UserAssignedIdentity"/>. </param>
         /// <returns> The <see cref="RoleAssignment"/>. </returns>
@@ -538,7 +538,7 @@ namespace Azure.Provisioning.Redis
             return result;
         }
 
-        /// <summary> Creates a role assignment for a principal that grants access to this Redis. </summary>
+        /// <summary> Creates a role assignment for a principal that grants access to this RedisResource. </summary>
         /// <param name="role"> The role to grant. </param>
         /// <param name="principalType"> The type of the principal to assign to. </param>
         /// <param name="principalId"> The principal to assign to. </param>

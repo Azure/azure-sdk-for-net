@@ -24,7 +24,7 @@ namespace Azure.Provisioning.ContainerRegistry
         private ContainerRegistryEncryption _encryption;
         private BicepValue<bool> _isDataEndpointEnabled;
         private BicepList<string> _dataEndpointHostNames;
-        private BicepList<ContainerRegistryPrivateEndpointConnection> _privateEndpointConnections;
+        private BicepList<PrivateEndpointConnection> _privateEndpointConnections;
         private BicepValue<ContainerRegistryPublicNetworkAccess> _publicNetworkAccess;
         private BicepValue<ContainerRegistryNetworkRuleBypassOption> _networkRuleBypassOptions;
         private BicepValue<bool> _isNetworkRuleBypassAllowedForTasks;
@@ -163,7 +163,7 @@ namespace Azure.Provisioning.ContainerRegistry
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<ContainerRegistryPrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<PrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {
@@ -267,7 +267,7 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             base.DefineProvisionableProperties();
             _loginServer = DefineProperty<string>(nameof(LoginServer), new string[] { "loginServer" }, isOutput: true);
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationDate" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationDate" }, isOutput: true, format: "O");
             _provisioningState = DefineProperty<ContainerRegistryProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _status = DefineModelProperty<ContainerRegistryResourceStatus>(nameof(Status), new string[] { "status" }, isOutput: true);
             _isAdminUserEnabled = DefineProperty<bool>(nameof(IsAdminUserEnabled), new string[] { "adminUserEnabled" });
@@ -276,7 +276,7 @@ namespace Azure.Provisioning.ContainerRegistry
             _encryption = DefineModelProperty<ContainerRegistryEncryption>(nameof(Encryption), new string[] { "encryption" });
             _isDataEndpointEnabled = DefineProperty<bool>(nameof(IsDataEndpointEnabled), new string[] { "dataEndpointEnabled" });
             _dataEndpointHostNames = DefineListProperty<string>(nameof(DataEndpointHostNames), new string[] { "dataEndpointHostNames" }, isOutput: true);
-            _privateEndpointConnections = DefineListProperty<ContainerRegistryPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
+            _privateEndpointConnections = DefineListProperty<PrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _publicNetworkAccess = DefineProperty<ContainerRegistryPublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
             _networkRuleBypassOptions = DefineProperty<ContainerRegistryNetworkRuleBypassOption>(nameof(NetworkRuleBypassOptions), new string[] { "networkRuleBypassOptions" });
             _isNetworkRuleBypassAllowedForTasks = DefineProperty<bool>(nameof(IsNetworkRuleBypassAllowedForTasks), new string[] { "networkRuleBypassAllowedForTasks" });
