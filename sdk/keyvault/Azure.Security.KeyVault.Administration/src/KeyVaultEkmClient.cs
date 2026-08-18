@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Administration
     /// The rest client for the KeyVault External Key Manager (EKM) service.
     /// </summary>
     [CodeGenType("KeyVaultEkmRestClient")]
-    public partial class KeyVaultEkmClient
+    public partial class KeyVaultEkmClient : IDisposable
     {
         /// <summary>
         /// Gets the vault URI.
@@ -46,7 +46,13 @@ namespace Azure.Security.KeyVault.Administration
             ClientDiagnostics = new ClientDiagnostics(options, true);
             Pipeline = HttpPipelineBuilder.Build(
                 options,
-                new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
+                perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                perRetryPolicies: [new ChallengeBasedAuthenticationPolicy(
+                    credential,
+                    options.DisableChallengeResourceVerification,
+                    ChallengeBasedAuthenticationPolicy.SupportsProofOfPossession(options.Transport))],
+                transportOptions: new HttpPipelineTransportOptions(),
+                responseClassifier: null);
             _endpoint = vaultUri;
             _apiVersion = options.GetVersionString();
         }
@@ -65,6 +71,18 @@ namespace Azure.Security.KeyVault.Administration
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             _apiVersion = options.GetVersionString();
             ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary>
+        /// Releases the resources used by this <see cref="KeyVaultEkmClient"/>. The transport options passed to
+        /// <see cref="HttpPipelineBuilder"/> to support Proof-of-Possession (PoP) token binding cause a
+        /// dedicated, non-shared transport (and its underlying <see cref="System.Net.Http.HttpClient"/>) to be
+        /// created for this client instance; disposing releases that transport instead of leaving it for the
+        /// garbage collector to finalize.
+        /// </summary>
+        public void Dispose()
+        {
+            (Pipeline as IDisposable)?.Dispose();
         }
 
         /// <summary>
