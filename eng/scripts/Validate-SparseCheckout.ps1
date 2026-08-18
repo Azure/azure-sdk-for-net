@@ -13,6 +13,10 @@ materialization only; they do not measure network transfer.
 .EXAMPLE
 ./eng/scripts/Validate-SparseCheckout.ps1 -ServiceDirectory advisor -Target Pack `
   -MSBuildArguments /p:IncludeTests=false,/p:Configuration=Release
+
+.EXAMPLE
+./eng/scripts/Validate-SparseCheckout.ps1 -ServiceDirectory advisor -Target Test `
+  -CommandArguments --framework,net10.0,--filter,TestCategory!=Live
 #>
 [CmdletBinding()]
 param(
@@ -23,6 +27,8 @@ param(
   [string] $Target = 'Build',
 
   [string[]] $MSBuildArguments = @(),
+
+  [string[]] $CommandArguments = @(),
 
   [string] $OutputDirectory,
 
@@ -141,10 +147,10 @@ function Invoke-Comparison([string] $Mode) {
   $checkoutTree = Get-TreeMetrics -Path $clonePath
 
   $commandArguments = switch ($Target) {
-    'Build' { @('build') + $commonArguments }
-    'Pack' { @('pack') + $commonArguments }
-    'Test' { @('test') + $commonArguments }
-    'GenerateCode' { @('msbuild') + $commonArguments + @('/t:GenerateCode') }
+    'Build' { @('build') + $commonArguments + $CommandArguments }
+    'Pack' { @('pack') + $commonArguments + $CommandArguments }
+    'Test' { @('test') + $commonArguments + $CommandArguments }
+    'GenerateCode' { @('msbuild') + $commonArguments + @('/t:GenerateCode') + $CommandArguments }
   }
 
   Write-Host "Running in $Mode clone: dotnet $($commandArguments -join ' ')"
@@ -194,6 +200,7 @@ finally {
     ServiceDirectory = $ServiceDirectory
     Target = $Target
     MSBuildArguments = $MSBuildArguments
+    CommandArguments = $CommandArguments
     Manifest = $manifest
     ProjectGraph = @(Get-Content -LiteralPath $projectGraphPath)
     Results = $results
