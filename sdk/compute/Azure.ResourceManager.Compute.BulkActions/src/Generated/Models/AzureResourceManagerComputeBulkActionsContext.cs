@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
     [ModelReaderWriterBuildable(typeof(BulkCreateCustomOverridesProfile))]
     [ModelReaderWriterBuildable(typeof(BulkCreateCustomPriorityProfile))]
     [ModelReaderWriterBuildable(typeof(BulkCreateCustomProperties))]
-    [ModelReaderWriterBuildable(typeof(BulkCreateCustomResource))]
+    [ModelReaderWriterBuildable(typeof(BulkCreateCustomResolvedItem))]
     [ModelReaderWriterBuildable(typeof(BulkCreateCustomVirtualMachineInfo))]
     [ModelReaderWriterBuildable(typeof(BulkCreateCustomVmSizeProfile))]
     [ModelReaderWriterBuildable(typeof(BulkCreateCustomZoneAllocationPolicy))]

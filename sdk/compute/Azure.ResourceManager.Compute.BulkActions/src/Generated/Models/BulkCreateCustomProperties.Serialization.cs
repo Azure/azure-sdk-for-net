@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
-                foreach (BulkCreateCustomResource item in Resources)
+                foreach (BulkCreateCustomResolvedItem item in Resources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             CapacityType? capacityType = default;
             int? minCapacity = default;
             PartialFulfillmentPolicy partialFulfillmentPolicy = default;
-            IReadOnlyList<BulkCreateCustomResource> resources = default;
+            IReadOnlyList<BulkCreateCustomResolvedItem> resources = default;
             BulkCreateCustomPriorityProfile priorityProfile = default;
             IList<BulkCreateCustomVmSizeProfile> vmSizesProfile = default;
             ComputeProfile computeProfile = default;
@@ -259,10 +259,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    List<BulkCreateCustomResource> array = new List<BulkCreateCustomResource>();
+                    List<BulkCreateCustomResolvedItem> array = new List<BulkCreateCustomResolvedItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BulkCreateCustomResource.DeserializeBulkCreateCustomResource(item, options));
+                        array.Add(BulkCreateCustomResolvedItem.DeserializeBulkCreateCustomResolvedItem(item, options));
                     }
                     resources = array;
                     continue;
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 capacityType,
                 minCapacity,
                 partialFulfillmentPolicy,
-                resources ?? new ChangeTrackingList<BulkCreateCustomResource>(),
+                resources ?? new ChangeTrackingList<BulkCreateCustomResolvedItem>(),
                 priorityProfile,
                 vmSizesProfile ?? new ChangeTrackingList<BulkCreateCustomVmSizeProfile>(),
                 computeProfile,

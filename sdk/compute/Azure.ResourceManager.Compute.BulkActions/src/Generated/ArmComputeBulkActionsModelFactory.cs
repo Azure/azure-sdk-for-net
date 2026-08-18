@@ -1457,9 +1457,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="overridesProfile"> Per-VM overrides and the shared name prefix, specified when the operation is created. </param>
         /// <param name="executionParameters"> Extra parameters that control how the request is executed, including the retry policy. </param>
         /// <returns> A new <see cref="Models.BulkCreateCustomProperties"/> instance for mocking. </returns>
-        public static BulkCreateCustomProperties BulkCreateCustomProperties(DateTimeOffset? createdOn = default, BulkInstancesOperationProvisioningState? provisioningState = default, int capacity = default, CapacityType? capacityType = default, int? minCapacity = default, PartialFulfillmentPolicy partialFulfillmentPolicy = default, IEnumerable<BulkCreateCustomResource> resources = default, BulkCreateCustomPriorityProfile priorityProfile = default, IEnumerable<BulkCreateCustomVmSizeProfile> vmSizesProfile = default, ComputeProfile computeProfile = default, BulkCreateCustomZoneAllocationPolicy zoneAllocationPolicy = default, BulkCreateCustomOverridesProfile overridesProfile = default, BulkActionExecutionParameterDetail executionParameters = default)
+        public static BulkCreateCustomProperties BulkCreateCustomProperties(DateTimeOffset? createdOn = default, BulkInstancesOperationProvisioningState? provisioningState = default, int capacity = default, CapacityType? capacityType = default, int? minCapacity = default, PartialFulfillmentPolicy partialFulfillmentPolicy = default, IEnumerable<BulkCreateCustomResolvedItem> resources = default, BulkCreateCustomPriorityProfile priorityProfile = default, IEnumerable<BulkCreateCustomVmSizeProfile> vmSizesProfile = default, ComputeProfile computeProfile = default, BulkCreateCustomZoneAllocationPolicy zoneAllocationPolicy = default, BulkCreateCustomOverridesProfile overridesProfile = default, BulkActionExecutionParameterDetail executionParameters = default)
         {
-            resources ??= new ChangeTrackingList<BulkCreateCustomResource>();
+            resources ??= new ChangeTrackingList<BulkCreateCustomResolvedItem>();
             vmSizesProfile ??= new ChangeTrackingList<BulkCreateCustomVmSizeProfile>();
 
             return new BulkCreateCustomProperties(
@@ -1469,7 +1469,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 capacityType,
                 minCapacity,
                 partialFulfillmentPolicy,
-                (resources ?? new ChangeTrackingList<BulkCreateCustomResource>()).ToList(),
+                (resources ?? new ChangeTrackingList<BulkCreateCustomResolvedItem>()).ToList(),
                 priorityProfile,
                 (vmSizesProfile ?? new ChangeTrackingList<BulkCreateCustomVmSizeProfile>()).ToList(),
                 computeProfile,
@@ -1489,10 +1489,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <param name="virtualMachineInfo"> Information about the resolved virtual machine. </param>
-        /// <returns> A new <see cref="Models.BulkCreateCustomResource"/> instance for mocking. </returns>
-        public static BulkCreateCustomResource BulkCreateCustomResource(BulkCreateCustomVirtualMachineInfo virtualMachineInfo = default)
+        /// <returns> A new <see cref="Models.BulkCreateCustomResolvedItem"/> instance for mocking. </returns>
+        public static BulkCreateCustomResolvedItem BulkCreateCustomResolvedItem(BulkCreateCustomVirtualMachineInfo virtualMachineInfo = default)
         {
-            return new BulkCreateCustomResource(virtualMachineInfo, default);
+            return new BulkCreateCustomResolvedItem(virtualMachineInfo, default);
         }
 
         /// <param name="name"> The resolved Azure virtual machine name. </param>

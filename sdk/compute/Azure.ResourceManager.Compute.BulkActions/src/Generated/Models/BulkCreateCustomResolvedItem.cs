@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> A virtual machine resource resolved for a BulkCreateCustom operation. </summary>
-    public partial class BulkCreateCustomResource
+    public partial class BulkCreateCustomResolvedItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BulkCreateCustomResource"/>. </summary>
-        internal BulkCreateCustomResource()
+        /// <summary> Initializes a new instance of <see cref="BulkCreateCustomResolvedItem"/>. </summary>
+        internal BulkCreateCustomResolvedItem()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BulkCreateCustomResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkCreateCustomResolvedItem"/>. </summary>
         /// <param name="virtualMachineInfo"> Information about the resolved virtual machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkCreateCustomResource(BulkCreateCustomVirtualMachineInfo virtualMachineInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkCreateCustomResolvedItem(BulkCreateCustomVirtualMachineInfo virtualMachineInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualMachineInfo = virtualMachineInfo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
