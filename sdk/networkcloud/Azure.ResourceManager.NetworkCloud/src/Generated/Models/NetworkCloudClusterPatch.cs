@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </summary>
-        public NetworkCloudRackDefinition AggregatorOrSingleRackDefinition
+        public NetworkCloudRackDefinitionPatch AggregatorOrSingleRackDefinition
         {
             get
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Field Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </summary>
-        public ServicePrincipalInformation ClusterServicePrincipal
+        public ServicePrincipalInformationPatch ClusterServicePrincipal
         {
             get
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </summary>
-        public ValidationThreshold ComputeDeploymentThreshold
+        public ValidationThresholdPatch ComputeDeploymentThreshold
         {
             get
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> The list of rack definitions for the compute racks in a multi-rack cluster, or an empty list in a single-rack cluster. </summary>
-        public IList<NetworkCloudRackDefinition> ComputeRackDefinitions
+        public IList<NetworkCloudRackDefinitionPatch> ComputeRackDefinitions
         {
             get
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> The settings for cluster runtime protection. </summary>
-        public RuntimeProtectionConfiguration RuntimeProtectionConfiguration
+        public RuntimeProtectionConfigurationPatch RuntimeProtectionConfiguration
         {
             get
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> The configuration for use of a key vault to store secrets for later retrieval by the operator. </summary>
-        public ClusterSecretArchive SecretArchive
+        public ClusterSecretArchivePatch SecretArchive
         {
             get
             {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> The strategy for updating the cluster. </summary>
-        public ClusterUpdateStrategy UpdateStrategy
+        public ClusterUpdateStrategyPatch UpdateStrategy
         {
             get
             {

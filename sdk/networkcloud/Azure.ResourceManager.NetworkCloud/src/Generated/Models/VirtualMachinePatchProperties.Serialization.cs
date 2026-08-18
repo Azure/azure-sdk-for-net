@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            ImageRepositoryCredentials vmImageRepositoryCredentials = default;
+            ImageRepositoryCredentialsPatch vmImageRepositoryCredentials = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    vmImageRepositoryCredentials = ImageRepositoryCredentials.DeserializeImageRepositoryCredentials(prop.Value, options);
+                    vmImageRepositoryCredentials = ImageRepositoryCredentialsPatch.DeserializeImageRepositoryCredentialsPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
