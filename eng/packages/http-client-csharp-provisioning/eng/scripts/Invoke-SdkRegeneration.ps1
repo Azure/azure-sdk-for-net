@@ -48,6 +48,25 @@ $result = @{
     Error = ""
 }
 
+function Expand-EmitterOption {
+    param(
+        [string]$Key,
+        [object]$Value
+    )
+
+    if ($Value -is [System.Collections.IDictionary]) {
+        foreach ($nestedKey in $Value.Keys) {
+            Expand-EmitterOption -Key "$Key.$nestedKey" -Value $Value[$nestedKey]
+        }
+    }
+    else {
+        [pscustomobject]@{
+            Key = $Key
+            Value = $Value
+        }
+    }
+}
+
 try {
     # Load tsp-location.yaml
     . (Join-Path $PSScriptRoot ".." ".." ".." ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
@@ -206,12 +225,14 @@ try {
         # Build --option flags from all collected options
         $tspOptions = "--emit $ProvisioningPackageRoot"
         foreach ($key in $provisioningEmitterOptions.Keys) {
-            $value = $provisioningEmitterOptions[$key]
-            # Normalize boolean values to lowercase for TypeSpec compiler
-            if ($value -is [bool]) {
-                $value = if ($value) { "true" } else { "false" }
+            foreach ($option in Expand-EmitterOption -Key $key -Value $provisioningEmitterOptions[$key]) {
+                $value = $option.Value
+                # Normalize boolean values to lowercase for TypeSpec compiler
+                if ($value -is [bool]) {
+                    $value = if ($value) { "true" } else { "false" }
+                }
+                $tspOptions += " --option `"@azure-typespec/http-client-csharp-provisioning.$($option.Key)=$value`""
             }
-            $tspOptions += " --option `"@azure-typespec/http-client-csharp-provisioning.$key=$value`""
         }
         $tspOutput = Invoke-Expression "npx tsp compile $mainTsp $tspOptions 2>&1"
         $tspExitCode = $LASTEXITCODE
