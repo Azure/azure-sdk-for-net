@@ -372,7 +372,10 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             // (see RFC 9449 / MSAL WithProofOfPossession). BearerTokenAuthenticationPolicy's
             // AccessTokenCache must re-invoke the credential when the request target changes
             // so a token bound to /secrets/secret-a is not silently reused on a request to
-            // /secrets/secret-b.
+            // /secrets/secret-b. The URI-based invalidation only fires when the cached token
+            // is PoP-bound (has a BindingCertificate) — this test simulates that by returning
+            // a token with a self-signed certificate to mimic an mTLS-capable credential.
+            using System.Security.Cryptography.X509Certificates.X509Certificate2 bindingCertificate = MakeSelfSignedCertificate();
             System.Collections.Generic.List<TokenRequestContext> contexts = new();
             MockTransport transport = new(new[]
             {
@@ -390,7 +393,12 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             CallbackTokenCredential credential = new((context, _) =>
             {
                 contexts.Add(context);
-                return new AccessToken($"token-{contexts.Count}", DateTimeOffset.UtcNow.AddMinutes(5));
+                return new AccessToken(
+                    $"token-{contexts.Count}",
+                    DateTimeOffset.UtcNow.AddMinutes(5),
+                    refreshOn: null,
+                    tokenType: "PoP",
+                    bindingCertificate: bindingCertificate);
             });
             SecretClient client = new(
                 VaultUri,
@@ -412,6 +420,17 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 contexts[1].ResourceRequestUri);
             Assert.IsTrue(contexts[0].IsProofOfPossessionEnabled);
             Assert.IsTrue(contexts[1].IsProofOfPossessionEnabled);
+        }
+
+        private static System.Security.Cryptography.X509Certificates.X509Certificate2 MakeSelfSignedCertificate()
+        {
+            using System.Security.Cryptography.RSA key = System.Security.Cryptography.RSA.Create(2048);
+            var request = new System.Security.Cryptography.X509Certificates.CertificateRequest(
+                $"CN=ChallengeBasedAuthenticationPolicyTests-{Guid.NewGuid()}",
+                key,
+                System.Security.Cryptography.HashAlgorithmName.SHA256,
+                System.Security.Cryptography.RSASignaturePadding.Pkcs1);
+            return request.CreateSelfSigned(DateTimeOffset.UtcNow.AddMinutes(-5), DateTimeOffset.UtcNow.AddHours(1));
         }
 
         private class MockTransportBuilder

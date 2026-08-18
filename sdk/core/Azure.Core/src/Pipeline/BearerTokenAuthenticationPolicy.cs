@@ -551,12 +551,20 @@ namespace Azure.Core.Pipeline
                     (context.TenantId != null && !string.Equals(context.TenantId, CurrentContext.TenantId)) ||
                     context.IsProofOfPossessionEnabled != CurrentContext.IsProofOfPossessionEnabled ||
                     // Proof-of-Possession tokens are cryptographically bound to a specific request URI and
-                    // HTTP method (see RFC 9449 / MSAL WithProofOfPossession). Reusing a cached PoP token
-                    // across different request targets would send a token whose binding does not match the
-                    // request, so the cache entry must be considered stale when the URI or method changes.
-                    (context.IsProofOfPossessionEnabled &&
+                    // HTTP method (see RFC 9449 / MSAL WithProofOfPossession). Reusing a PoP-bound cached
+                    // token across different request targets would send a token whose binding does not
+                    // match the request line, so treat the cache entry as stale when the URI or method
+                    // changes. This only applies when the cached token is actually PoP-bound — if the
+                    // credential returned a plain bearer token (no binding certificate), URI/method
+                    // differences do not invalidate the cache and existing bearer-flow behavior (including
+                    // Continuous Access Evaluation challenge handling) is unchanged.
+                    (context.IsProofOfPossessionEnabled && IsCachedTokenProofOfPossessionBound() &&
                         (context.ResourceRequestUri != CurrentContext.ResourceRequestUri ||
                          !string.Equals(context.ResourceRequestMethod, CurrentContext.ResourceRequestMethod, StringComparison.OrdinalIgnoreCase)));
+
+                private bool IsCachedTokenProofOfPossessionBound() =>
+                    CurrentTokenTcs.Task.Status == TaskStatus.RanToCompletion &&
+                    CurrentTokenTcs.Task.Result.BindingCertificate != null;
 
                 public bool IsBackgroundTokenAvailable(DateTimeOffset now) =>
                     BackgroundTokenUpdateTcs != null &&

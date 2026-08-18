@@ -5,6 +5,8 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
@@ -1204,13 +1206,19 @@ namespace Azure.Core.Tests
             // PoP tokens are cryptographically bound to the request URI and HTTP method, so
             // AccessTokenCache must re-invoke the credential when either changes rather than
             // silently returning a token whose binding no longer matches the outgoing request.
+            using var bindingCertificate = MakeSelfSignedCertificate();
             var contexts = new List<TokenRequestContext>();
             var credential = new TokenCredentialStub((requestContext, _) =>
                 {
                     lock (contexts)
                     {
                         contexts.Add(requestContext);
-                        return new AccessToken($"pop-token-{contexts.Count}", DateTimeOffset.UtcNow.AddHours(1));
+                        return new AccessToken(
+                            $"pop-token-{contexts.Count}",
+                            DateTimeOffset.UtcNow.AddHours(1),
+                            refreshOn: null,
+                            tokenType: "PoP",
+                            bindingCertificate: bindingCertificate);
                     }
                 },
                 IsAsync);
@@ -1235,11 +1243,17 @@ namespace Azure.Core.Tests
             // Complements the invalidate-on-URI-change regression test: repeated requests to
             // the same URI+method still hit the cache. The URI-based invalidation only fires
             // when the resource target actually changes.
+            using var bindingCertificate = MakeSelfSignedCertificate();
             int callCount = 0;
             var credential = new TokenCredentialStub((_, _) =>
                 {
                     Interlocked.Increment(ref callCount);
-                    return new AccessToken($"pop-token", DateTimeOffset.UtcNow.AddHours(1));
+                    return new AccessToken(
+                        "pop-token",
+                        DateTimeOffset.UtcNow.AddHours(1),
+                        refreshOn: null,
+                        tokenType: "PoP",
+                        bindingCertificate: bindingCertificate);
                 },
                 IsAsync);
 
@@ -1252,6 +1266,43 @@ namespace Azure.Core.Tests
             await SendGetRequest(transport, policy, uri: uri);
 
             Assert.AreEqual(1, callCount, "PoP token cache must still hit when the request URI and method are unchanged.");
+        }
+
+        [Test]
+        public async Task BearerTokenAuthenticationPolicy_ReusesBearerTokenAcrossRequestUrisWhenPoPRequestedButNotHonored()
+        {
+            // Complements the URI-invalidation regression test: when the credential does not
+            // honor TokenRequestContext.IsProofOfPossessionEnabled and returns a plain bearer
+            // token (no binding certificate), the URI/method are not part of the cache key,
+            // matching the pre-PoP behavior that Continuous Access Evaluation flows depend on.
+            int callCount = 0;
+            var credential = new TokenCredentialStub((_, _) =>
+                {
+                    Interlocked.Increment(ref callCount);
+                    return new AccessToken("bearer-token", DateTimeOffset.UtcNow.AddHours(1));
+                },
+                IsAsync);
+
+            var policy = new ProofOfPossessionTestPolicy(credential, "scope");
+            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200));
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/resource-a"));
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/resource-b"));
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/resource-c"));
+
+            Assert.AreEqual(1, callCount,
+                "URI-based cache invalidation must not fire when the cached token is not PoP-bound.");
+        }
+
+        private static X509Certificate2 MakeSelfSignedCertificate()
+        {
+            using RSA key = RSA.Create(2048);
+            var request = new CertificateRequest(
+                $"CN=BearerTokenAuthenticationPolicyTests-{Guid.NewGuid()}",
+                key,
+                HashAlgorithmName.SHA256,
+                RSASignaturePadding.Pkcs1);
+            return request.CreateSelfSigned(DateTimeOffset.UtcNow.AddMinutes(-5), DateTimeOffset.UtcNow.AddHours(1));
         }
 
         private class ProofOfPossessionTestPolicy : BearerTokenAuthenticationPolicy
