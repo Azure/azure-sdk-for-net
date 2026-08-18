@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Whether to send Proxy Protocol header to backend servers over TCP or TLS protocols. Default value is false. </summary>
         [WirePath("properties.enableL4ClientIpPreservation")]
-        public bool? EnableL4ClientIpPreservation
+        public bool? EnableL4ClientIPPreservation
         {
             get
             {
-                return Properties is null ? default : Properties.EnableL4ClientIpPreservation;
+                return Properties is null ? default : Properties.EnableL4ClientIPPreservation;
             }
             set
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
                 }
-                Properties.EnableL4ClientIpPreservation = value;
+                Properties.EnableL4ClientIPPreservation = value;
             }
         }
 

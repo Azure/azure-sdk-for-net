@@ -12,20 +12,20 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of the container network interface IP configuration. </summary>
-    internal partial class ContainerNetworkInterfaceIpConfigurationPropertiesFormat
+    internal partial class ContainerNetworkInterfaceIPConfigurationPropertiesFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterfaceIpConfigurationPropertiesFormat"/>. </summary>
-        internal ContainerNetworkInterfaceIpConfigurationPropertiesFormat()
+        /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterfaceIPConfigurationPropertiesFormat"/>. </summary>
+        internal ContainerNetworkInterfaceIPConfigurationPropertiesFormat()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterfaceIpConfigurationPropertiesFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterfaceIPConfigurationPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the container network interface IP configuration resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerNetworkInterfaceIpConfigurationPropertiesFormat(NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerNetworkInterfaceIPConfigurationPropertiesFormat(NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

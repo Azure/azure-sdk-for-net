@@ -14,51 +14,51 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of the IpAllocation. </summary>
-    internal partial class IpAllocationPropertiesFormat : IJsonModel<IpAllocationPropertiesFormat>
+    internal partial class IPAllocationPropertiesFormat : IJsonModel<IPAllocationPropertiesFormat>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IpAllocationPropertiesFormat PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual IPAllocationPropertiesFormat PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpAllocationPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPAllocationPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIpAllocationPropertiesFormat(document.RootElement, options);
+                        return DeserializeIPAllocationPropertiesFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IpAllocationPropertiesFormat)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPAllocationPropertiesFormat)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpAllocationPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPAllocationPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IpAllocationPropertiesFormat)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPAllocationPropertiesFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IpAllocationPropertiesFormat>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IPAllocationPropertiesFormat>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IpAllocationPropertiesFormat IPersistableModel<IpAllocationPropertiesFormat>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        IPAllocationPropertiesFormat IPersistableModel<IPAllocationPropertiesFormat>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IpAllocationPropertiesFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IPAllocationPropertiesFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IpAllocationPropertiesFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IPAllocationPropertiesFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpAllocationPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPAllocationPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IpAllocationPropertiesFormat)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IPAllocationPropertiesFormat)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(Subnet))
             {
@@ -144,24 +144,24 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IpAllocationPropertiesFormat IJsonModel<IpAllocationPropertiesFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        IPAllocationPropertiesFormat IJsonModel<IPAllocationPropertiesFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IpAllocationPropertiesFormat JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual IPAllocationPropertiesFormat JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpAllocationPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPAllocationPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IpAllocationPropertiesFormat)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IPAllocationPropertiesFormat)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIpAllocationPropertiesFormat(document.RootElement, options);
+            return DeserializeIPAllocationPropertiesFormat(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static IpAllocationPropertiesFormat DeserializeIpAllocationPropertiesFormat(JsonElement element, ModelReaderWriterOptions options)
+        internal static IPAllocationPropertiesFormat DeserializeIPAllocationPropertiesFormat(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IpAllocationPropertiesFormat(
+            return new IPAllocationPropertiesFormat(
                 subnet,
                 virtualNetwork,
                 ipAllocationType,

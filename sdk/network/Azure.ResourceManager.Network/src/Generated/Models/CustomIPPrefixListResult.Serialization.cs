@@ -14,64 +14,64 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> VirtualHubIpConfigurations list. </summary>
-    internal partial class ListVirtualHubIpConfigurationResults : IJsonModel<ListVirtualHubIpConfigurationResults>
+    /// <summary> The response of a CustomIpPrefix list operation. </summary>
+    internal partial class CustomIPPrefixListResult : IJsonModel<CustomIPPrefixListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="ListVirtualHubIpConfigurationResults"/> for deserialization. </summary>
-        internal ListVirtualHubIpConfigurationResults()
+        /// <summary> Initializes a new instance of <see cref="CustomIPPrefixListResult"/> for deserialization. </summary>
+        internal CustomIPPrefixListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ListVirtualHubIpConfigurationResults PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CustomIPPrefixListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListVirtualHubIpConfigurationResults>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomIPPrefixListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeListVirtualHubIpConfigurationResults(document.RootElement, options);
+                        return DeserializeCustomIPPrefixListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ListVirtualHubIpConfigurationResults)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomIPPrefixListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListVirtualHubIpConfigurationResults>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomIPPrefixListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ListVirtualHubIpConfigurationResults)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomIPPrefixListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ListVirtualHubIpConfigurationResults>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CustomIPPrefixListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ListVirtualHubIpConfigurationResults IPersistableModel<ListVirtualHubIpConfigurationResults>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CustomIPPrefixListResult IPersistableModel<CustomIPPrefixListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ListVirtualHubIpConfigurationResults>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CustomIPPrefixListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ListVirtualHubIpConfigurationResults"/> from. </param>
-        internal static ListVirtualHubIpConfigurationResults FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CustomIPPrefixListResult"/> from. </param>
+        internal static CustomIPPrefixListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeListVirtualHubIpConfigurationResults(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeCustomIPPrefixListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ListVirtualHubIpConfigurationResults>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CustomIPPrefixListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListVirtualHubIpConfigurationResults>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomIPPrefixListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListVirtualHubIpConfigurationResults)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomIPPrefixListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (HubIPConfigurationData item in Value)
+            foreach (CustomIPPrefixData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ListVirtualHubIpConfigurationResults IJsonModel<ListVirtualHubIpConfigurationResults>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CustomIPPrefixListResult IJsonModel<CustomIPPrefixListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ListVirtualHubIpConfigurationResults JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CustomIPPrefixListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListVirtualHubIpConfigurationResults>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomIPPrefixListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListVirtualHubIpConfigurationResults)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomIPPrefixListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeListVirtualHubIpConfigurationResults(document.RootElement, options);
+            return DeserializeCustomIPPrefixListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ListVirtualHubIpConfigurationResults DeserializeListVirtualHubIpConfigurationResults(JsonElement element, ModelReaderWriterOptions options)
+        internal static CustomIPPrefixListResult DeserializeCustomIPPrefixListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<HubIPConfigurationData> value = default;
+            IList<CustomIPPrefixData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<HubIPConfigurationData> array = new List<HubIPConfigurationData>();
+                    List<CustomIPPrefixData> array = new List<CustomIPPrefixData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(HubIPConfigurationData.DeserializeHubIPConfigurationData(item, options));
+                        array.Add(CustomIPPrefixData.DeserializeCustomIPPrefixData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ListVirtualHubIpConfigurationResults(value, nextLink, additionalBinaryDataProperties);
+            return new CustomIPPrefixListResult(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }
