@@ -12,32 +12,32 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> DocumentDB Collection dataset properties. </summary>
-    internal partial class DocumentDbCollectionDatasetTypeProperties
+    /// <summary> MongoDB database dataset properties. </summary>
+    internal partial class MongoDBCollectionDatasetTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentDbCollectionDatasetTypeProperties"/>. </summary>
-        /// <param name="collectionName"> Document Database collection name. Type: string (or Expression with resultType string). </param>
+        /// <summary> Initializes a new instance of <see cref="MongoDBCollectionDatasetTypeProperties"/>. </summary>
+        /// <param name="collectionName"> The table name of the MongoDB database. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
-        public DocumentDbCollectionDatasetTypeProperties(DataFactoryElement<string> collectionName)
+        public MongoDBCollectionDatasetTypeProperties(DataFactoryElement<string> collectionName)
         {
             Argument.AssertNotNull(collectionName, nameof(collectionName));
 
             CollectionName = collectionName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentDbCollectionDatasetTypeProperties"/>. </summary>
-        /// <param name="collectionName"> Document Database collection name. Type: string (or Expression with resultType string). </param>
+        /// <summary> Initializes a new instance of <see cref="MongoDBCollectionDatasetTypeProperties"/>. </summary>
+        /// <param name="collectionName"> The table name of the MongoDB database. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentDbCollectionDatasetTypeProperties(DataFactoryElement<string> collectionName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MongoDBCollectionDatasetTypeProperties(DataFactoryElement<string> collectionName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CollectionName = collectionName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Document Database collection name. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The table name of the MongoDB database. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> CollectionName { get; set; }
     }
 }
