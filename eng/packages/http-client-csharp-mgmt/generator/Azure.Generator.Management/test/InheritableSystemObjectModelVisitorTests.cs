@@ -337,6 +337,52 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(propertyNames.Contains("Id"), Is.False, "Id should still be filtered because the effective custom base is ResourceData, which does not expose it");
         }
 
+        [Test]
+        public void CustomCodeBaseTypeOverride_WithoutTypeSpecBase_StillUsesCustomBaseForFiltering()
+        {
+            var resourceDataInputModel = InputFactory.Model(
+                "ResourceData",
+                properties: [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("systemData", InputPrimitiveType.String, isReadOnly: true),
+                ],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+
+            var inputModel = InputFactory.Model(
+                "MyCustomBaseModel",
+                properties: [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("location", InputPrimitiveType.String),
+                    InputFactory.Property("tags", InputPrimitiveType.String),
+                    InputFactory.Property("customProp", InputPrimitiveType.String),
+                ],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+
+            ManagementMockHelpers.LoadMockPlugin(inputModels: () => [resourceDataInputModel, inputModel]);
+
+            var resourceDataType = new CSharpType(typeof(ResourceData));
+            ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[resourceDataType] =
+                new SystemObjectModelProvider(resourceDataType, resourceDataInputModel);
+
+            var model = new ModelProvider(inputModel);
+            SetCustomCodeView(model, new ResourceDataCustomCodeView());
+
+            var visitor = new TestableInheritableSystemObjectModelVisitor();
+            var result = visitor.InvokePreVisitModel(inputModel, model);
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result!.BaseType?.Name, Is.EqualTo(nameof(ResourceData)));
+
+            var propertyNames = result.Properties.Select(p => p.Name).ToList();
+            Assert.That(propertyNames.Contains("Location"), Is.True, "Location should remain when custom ResourceData base has no TypeSpec base");
+            Assert.That(propertyNames.Contains("Tags"), Is.True, "Tags should remain when custom ResourceData base has no TypeSpec base");
+            Assert.That(propertyNames.Contains("Id"), Is.False, "Id should be filtered because it is provided by ResourceData");
+        }
+
         private static void SetCustomCodeView(TypeProvider typeProvider, TypeProvider customCodeTypeProvider)
         {
             typeProvider.GetType().BaseType!.GetField(

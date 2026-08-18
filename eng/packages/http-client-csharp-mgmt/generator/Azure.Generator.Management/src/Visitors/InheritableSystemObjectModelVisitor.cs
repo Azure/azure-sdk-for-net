@@ -24,9 +24,9 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             EnsureFrameworkTypeRegistered(systemType);
         }
 
-        if (type?.BaseModelProvider is not null && type is not SystemObjectModelProvider)
+        if (type is ModelProvider modelProvider && GetEffectiveBaseProvider(modelProvider) is not null && type is not SystemObjectModelProvider)
         {
-            UpdateRegularModelInheritance(type);
+            UpdateRegularModelInheritance(modelProvider);
         }
         return type;
     }
@@ -39,9 +39,9 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             EnsureFrameworkTypeRegistered(systemType);
         }
 
-        if (type is ModelProvider model3 && model3.BaseModelProvider is not null && model3 is not SystemObjectModelProvider)
+        if (type is ModelProvider modelProvider && GetEffectiveBaseProvider(modelProvider) is not null && type is not SystemObjectModelProvider)
         {
-            UpdateRegularModelInheritance(model3);
+            UpdateRegularModelInheritance(modelProvider);
         }
 
         return type;
