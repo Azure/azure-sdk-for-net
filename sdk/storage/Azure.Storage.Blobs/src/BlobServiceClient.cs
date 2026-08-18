@@ -1887,6 +1887,11 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
+        ///
+        /// Operations on blobs within the container, including reads and writes, may
+        /// continue to succeed for up to 30 seconds after the delete request is
+        /// accepted.  After this period, all operations on the container and its blobs
+        /// fail with status code 404 (Not Found).
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response DeleteBlobContainer(
@@ -1925,6 +1930,11 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
+        ///
+        /// Operations on blobs within the container, including reads and writes, may
+        /// continue to succeed for up to 30 seconds after the delete request is
+        /// accepted.  After this period, all operations on the container and its blobs
+        /// fail with status code 404 (Not Found).
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteBlobContainerAsync(
