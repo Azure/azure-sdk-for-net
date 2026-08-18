@@ -274,7 +274,11 @@ After the outcome, a `### Summary` header holds a one or two sentence summary.
 <one or two sentences describing the decision and the core issue>
 ```
 
-After the summary, add the detail sections as `###` child headers that stay always visible. Do not wrap them in `<details>`. For the analysis outcomes (Recommended for Copilot, Requires a human) use these headers in this order: `### 🩹 Mitigation`, `### 🧭 Root Cause`, `### 🛠️ Suggested Fix`, and `### ✅ Decision Basis`.
+After the summary, add the detail sections as `###` child headers that stay always visible. Do not wrap them in `<details>`. The header set depends on the outcome.
+
+For the `Recommended for Copilot automated fix` outcome use these headers in this order: `### 🩹 Mitigation`, `### 🧭 Root Cause`, `### 🛠️ Suggested Fix`, and `### ✅ Decision Basis`. This outcome names a bounded, testable fix, so a definite root cause and suggested fix are expected.
+
+For the `Requires a human. Analysis provided below` outcome use these headers in this order: `### 🩹 Mitigation`, `### 🧭 Analysis`, and `### ✅ Decision Basis`. This outcome fires because the fix is not a bounded first pass or an exclusion applied, so it does not assert a single suggested fix. The `### 🧭 Analysis` section holds the observations, suspected area, and any constraints for the human reviewer.
 
 The `### 🩹 Mitigation` section is required whenever a fix is pending. It tells the issue author what they can do to unblock themselves while they wait, using only steps supported by the issue evidence or trusted repository, package, or documentation context. Give concrete, verifiable actions such as a supported workaround, a configuration change, an alternate API, or a safe downgrade to a version known to lack the bug. If no real workaround is known from that evidence, say so plainly and do not invent one.
 
