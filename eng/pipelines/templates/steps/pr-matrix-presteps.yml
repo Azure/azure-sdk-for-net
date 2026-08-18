@@ -22,6 +22,12 @@ parameters:
 steps:
   - template: /eng/pipelines/templates/steps/install-dotnet.yml
 
+  # ForceDirect removes indirect packages before matrix generation, so avoid calculating them.
+  - ${{ if eq(parameters.ForceDirect, true) }}:
+    - pwsh: |
+        Write-Host "##vso[task.setvariable variable=AZURESDK_SKIP_DEPENDENT_PACKAGE_CALCULATION;]true"
+      displayName: Skip dependent package calculation (direct packages only)
+
   - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
     parameters:
       ServiceDirectory: ${{parameters.ServiceDirectory}}

@@ -8,16 +8,75 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class ApplicationInsightsComponentAnalyticsItem : IUtf8JsonSerializable, IJsonModel<ApplicationInsightsComponentAnalyticsItem>
+    /// <summary> Properties that define an Analytics item that is associated to an Application Insights component. </summary>
+    public partial class ApplicationInsightsComponentAnalyticsItem : IJsonModel<ApplicationInsightsComponentAnalyticsItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentAnalyticsItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApplicationInsightsComponentAnalyticsItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentAnalyticsItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeApplicationInsightsComponentAnalyticsItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentAnalyticsItem)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentAnalyticsItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApplicationInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentAnalyticsItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ApplicationInsightsComponentAnalyticsItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApplicationInsightsComponentAnalyticsItem IPersistableModel<ApplicationInsightsComponentAnalyticsItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApplicationInsightsComponentAnalyticsItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="applicationInsightsComponentAnalyticsItem"> The <see cref="ApplicationInsightsComponentAnalyticsItem"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ApplicationInsightsComponentAnalyticsItem applicationInsightsComponentAnalyticsItem)
+        {
+            if (applicationInsightsComponentAnalyticsItem == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(applicationInsightsComponentAnalyticsItem, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ApplicationInsightsComponentAnalyticsItem"/> from. </param>
+        internal static ApplicationInsightsComponentAnalyticsItem FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeApplicationInsightsComponentAnalyticsItem(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApplicationInsightsComponentAnalyticsItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +88,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentAnalyticsItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentAnalyticsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApplicationInsightsComponentAnalyticsItem)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("Id"u8);
@@ -80,15 +138,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("Properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -97,22 +155,27 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
         }
 
-        ApplicationInsightsComponentAnalyticsItem IJsonModel<ApplicationInsightsComponentAnalyticsItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApplicationInsightsComponentAnalyticsItem IJsonModel<ApplicationInsightsComponentAnalyticsItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApplicationInsightsComponentAnalyticsItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentAnalyticsItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentAnalyticsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApplicationInsightsComponentAnalyticsItem)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeApplicationInsightsComponentAnalyticsItem(document.RootElement, options);
         }
 
-        internal static ApplicationInsightsComponentAnalyticsItem DeserializeApplicationInsightsComponentAnalyticsItem(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ApplicationInsightsComponentAnalyticsItem DeserializeApplicationInsightsComponentAnalyticsItem(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -122,316 +185,94 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             string content = default;
             string version = default;
             ComponentItemScope? scope = default;
-            ComponentItemType? type = default;
-            DateTimeOffset? timeCreated = default;
-            DateTimeOffset? timeModified = default;
+            ComponentItemType? componentItemType = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? modifiedOn = default;
             ApplicationInsightsComponentAnalyticsItemProperties properties = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("Id"u8))
+                if (prop.NameEquals("Id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("Name"u8))
+                if (prop.NameEquals("Name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("Content"u8))
+                if (prop.NameEquals("Content"u8))
                 {
-                    content = property.Value.GetString();
+                    content = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("Version"u8))
+                if (prop.NameEquals("Version"u8))
                 {
-                    version = property.Value.GetString();
+                    version = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("Scope"u8))
+                if (prop.NameEquals("Scope"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scope = new ComponentItemScope(property.Value.GetString());
+                    scope = new ComponentItemScope(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("Type"u8))
+                if (prop.NameEquals("Type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    type = new ComponentItemType(property.Value.GetString());
+                    componentItemType = new ComponentItemType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("TimeCreated"u8))
+                if (prop.NameEquals("TimeCreated"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    timeCreated = property.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("TimeModified"u8))
+                if (prop.NameEquals("TimeModified"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    timeModified = property.Value.GetDateTimeOffset("O");
+                    modifiedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("Properties"u8))
+                if (prop.NameEquals("Properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    properties = ApplicationInsightsComponentAnalyticsItemProperties.DeserializeApplicationInsightsComponentAnalyticsItemProperties(property.Value, options);
+                    properties = ApplicationInsightsComponentAnalyticsItemProperties.DeserializeApplicationInsightsComponentAnalyticsItemProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ApplicationInsightsComponentAnalyticsItem(
                 id,
                 name,
                 content,
                 version,
                 scope,
-                type,
-                timeCreated,
-                timeModified,
+                componentItemType,
+                createdOn,
+                modifiedOn,
                 properties,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  Id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  Id: ");
-                    if (Id.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Id}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Id}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  Name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  Name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Content), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  Content: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Content))
-                {
-                    builder.Append("  Content: ");
-                    if (Content.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Content}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Content}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  Version: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Version))
-                {
-                    builder.Append("  Version: ");
-                    if (Version.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Version}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Version}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Scope), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  Scope: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Scope))
-                {
-                    builder.Append("  Scope: ");
-                    builder.AppendLine($"'{Scope.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComponentItemType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  Type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ComponentItemType))
-                {
-                    builder.Append("  Type: ");
-                    builder.AppendLine($"'{ComponentItemType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  TimeCreated: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CreatedOn))
-                {
-                    builder.Append("  TimeCreated: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ModifiedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  TimeModified: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ModifiedOn))
-                {
-                    builder.Append("  TimeModified: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(ModifiedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ApplicationInsightsComponentAnalyticsItemFunctionAlias", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  Properties: ");
-                builder.AppendLine("{");
-                builder.Append("    functionAlias: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Properties))
-                {
-                    builder.Append("  Properties: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Properties, options, 2, false, "  Properties: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ApplicationInsightsComponentAnalyticsItem>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentAnalyticsItem>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApplicationInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentAnalyticsItem)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ApplicationInsightsComponentAnalyticsItem IPersistableModel<ApplicationInsightsComponentAnalyticsItem>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentAnalyticsItem>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeApplicationInsightsComponentAnalyticsItem(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentAnalyticsItem)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ApplicationInsightsComponentAnalyticsItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

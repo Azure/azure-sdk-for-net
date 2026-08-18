@@ -15,3 +15,7 @@ extends:
       safeName: AzureResourceManagerKubernetesConfigurationPrivateLinkScopes
     - name: Azure.ResourceManager.KubernetesConfiguration.Extensions
       safeName: AzureResourceManagerKubernetesConfigurationExtensions
+    - name: Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
+      safeName: AzureResourceManagerKubernetesConfigurationExtensionTypes
+    - name: Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
+      safeName: AzureResourceManagerKubernetesConfigurationFluxConfigurations
