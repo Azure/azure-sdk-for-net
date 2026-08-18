@@ -49,36 +49,10 @@ namespace Azure.Generator.Management.Visitors
                         updatedMethods.Add(method);
                     }
                 }
-                AddMissingLastContractModelMethods(modelFactory, updatedMethods);
                 modelFactory.Update(methods: updatedMethods);
                 return modelFactory;
             }
             return base.VisitType(type);
-        }
-
-        private void AddMissingLastContractModelMethods(ModelFactoryProvider modelFactory, List<MethodProvider> updatedMethods)
-        {
-            var previousMethods = modelFactory.LastContractView?.Methods;
-            if (previousMethods is null || previousMethods.Count == 0)
-            {
-                return;
-            }
-
-            var customMethods = modelFactory.CustomCodeView?.Methods ?? [];
-            foreach (var previousMethod in previousMethods)
-            {
-                var returnType = previousMethod.Signature.ReturnType;
-                if (returnType is null
-                    || KnownManagementTypes.IsKnownManagementType(returnType)
-                    || updatedMethods.Any(method => HasSameCSharpSignature(method.Signature, previousMethod.Signature))
-                    || customMethods.Any(method => HasSameCSharpSignature(method.Signature, previousMethod.Signature))
-                    || !ModelFactoryBackwardCompatHelper.TryCreateBackwardCompatMethod(previousMethod, modelFactory, out var restoredMethod))
-                {
-                    continue;
-                }
-
-                updatedMethods.Add(restoredMethod);
-            }
         }
 
         private bool IsModelType(CSharpType type) => ContainsModelType(ModelTypes, type.WithNullable(false));
@@ -177,13 +151,6 @@ namespace Azure.Generator.Management.Visitors
                     }
                 }
             }
-        }
-
-        private static bool HasSameCSharpSignature(MethodSignature first, MethodSignature second)
-        {
-            return first.Name == second.Name
-                && first.Parameters.Count == second.Parameters.Count
-                && first.Parameters.Zip(second.Parameters).All(pair => pair.First.Type.AreNamesEqual(pair.Second.Type));
         }
 
         private void FixArgumentNullExceptionXmlDoc(MethodProvider method)
