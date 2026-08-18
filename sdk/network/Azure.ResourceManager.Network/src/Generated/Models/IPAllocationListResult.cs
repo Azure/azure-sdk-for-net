@@ -12,33 +12,33 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The response of a IpGroup list operation. </summary>
-    internal partial class IpGroupListResult
+    /// <summary> The response of a IpAllocation list operation. </summary>
+    internal partial class IPAllocationListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IpGroupListResult"/>. </summary>
-        /// <param name="value"> The IpGroup items on this page. </param>
-        internal IpGroupListResult(IEnumerable<IPGroupData> value)
+        /// <summary> Initializes a new instance of <see cref="IPAllocationListResult"/>. </summary>
+        /// <param name="value"> The IpAllocation items on this page. </param>
+        internal IPAllocationListResult(IEnumerable<IPAllocationData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IpGroupListResult"/>. </summary>
-        /// <param name="value"> The IpGroup items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="IPAllocationListResult"/>. </summary>
+        /// <param name="value"> The IpAllocation items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IpGroupListResult(IList<IPGroupData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IPAllocationListResult(IList<IPAllocationData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The IpGroup items on this page. </summary>
+        /// <summary> The IpAllocation items on this page. </summary>
         [WirePath("value")]
-        public IList<IPGroupData> Value { get; }
+        public IList<IPAllocationData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]
