@@ -67,7 +67,7 @@ namespace Azure.Security.KeyVault.Administration
         string System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.GetSettingsResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.GetSettingsResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KeyVaultAccessControlClient
+    public partial class KeyVaultAccessControlClient : System.IDisposable
     {
         protected KeyVaultAccessControlClient() { }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
@@ -86,6 +86,7 @@ namespace Azure.Security.KeyVault.Administration
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteRoleAssignmentAsync(Azure.Security.KeyVault.Administration.KeyVaultRoleScope roleScope, string roleAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteRoleDefinition(Azure.Security.KeyVault.Administration.KeyVaultRoleScope roleScope, System.Guid roleDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteRoleDefinitionAsync(Azure.Security.KeyVault.Administration.KeyVaultRoleScope roleScope, System.Guid roleDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public void Dispose() { }
         public virtual Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment> GetRoleAssignment(Azure.Security.KeyVault.Administration.KeyVaultRoleScope roleScope, string roleAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment>> GetRoleAssignmentAsync(Azure.Security.KeyVault.Administration.KeyVaultRoleScope roleScope, string roleAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment> GetRoleAssignments(Azure.Security.KeyVault.Administration.KeyVaultRoleScope roleScope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -147,12 +148,13 @@ namespace Azure.Security.KeyVault.Administration
         public static Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition RoleDefinition(string id, string name, string type, string roleName, string description, string roleType, System.Collections.Generic.IList<Azure.Security.KeyVault.Administration.KeyVaultPermission> permissions, System.Collections.Generic.IList<Azure.Security.KeyVault.Administration.KeyVaultRoleScope> assignableScopes) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultRestoreResult SelectiveKeyRestoreResult(System.DateTimeOffset startTime, System.DateTimeOffset endTime) { throw null; }
     }
-    public partial class KeyVaultBackupClient
+    public partial class KeyVaultBackupClient : System.IDisposable
     {
         protected KeyVaultBackupClient() { }
         public KeyVaultBackupClient(System.Uri vaultUri, Azure.Core.TokenCredential credential) { }
         public KeyVaultBackupClient(System.Uri vaultUri, Azure.Core.TokenCredential credential, Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions options) { }
         public virtual System.Uri VaultUri { get { throw null; } }
+        public void Dispose() { }
         public virtual Azure.Security.KeyVault.Administration.KeyVaultBackupOperation StartBackup(System.Uri blobStorageUri, string sasToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Administration.KeyVaultBackupOperation> StartBackupAsync(System.Uri blobStorageUri, string sasToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.KeyVault.Administration.KeyVaultBackupOperation StartPreBackup(System.Uri blobStorageUri, string sasToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -236,7 +238,7 @@ namespace Azure.Security.KeyVault.Administration
         public static bool operator !=(Azure.Security.KeyVault.Administration.KeyVaultDataAction left, Azure.Security.KeyVault.Administration.KeyVaultDataAction right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class KeyVaultEkmClient
+    public partial class KeyVaultEkmClient : System.IDisposable
     {
         protected KeyVaultEkmClient() { }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
@@ -251,6 +253,7 @@ namespace Azure.Security.KeyVault.Administration
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection>> CreateEkmConnectionAsync(Azure.Security.KeyVault.Administration.KeyVaultEkmConnection ekmConnection, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection> DeleteEkmConnection(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection>> DeleteEkmConnectionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public void Dispose() { }
         public virtual Azure.Response<Azure.Security.KeyVault.Administration.EkmProxyClientCertificateInfo> GetEkmCertificate(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.EkmProxyClientCertificateInfo>> GetEkmCertificateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection> GetEkmConnection(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -479,12 +482,13 @@ namespace Azure.Security.KeyVault.Administration
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultSetting>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class KeyVaultSettingsClient
+    public partial class KeyVaultSettingsClient : System.IDisposable
     {
         protected KeyVaultSettingsClient() { }
         public KeyVaultSettingsClient(System.Uri vaultUri, Azure.Core.TokenCredential credential) { }
         public KeyVaultSettingsClient(System.Uri vaultUri, Azure.Core.TokenCredential credential, Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions options) { }
         public virtual System.Uri VaultUri { get { throw null; } }
+        public void Dispose() { }
         public virtual Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultSetting> GetSetting(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultSetting>> GetSettingAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Administration.GetSettingsResult> GetSettings(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
