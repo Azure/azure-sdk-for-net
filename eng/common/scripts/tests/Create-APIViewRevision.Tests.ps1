@@ -63,10 +63,10 @@ Describe "Create-APIViewRevision.ps1" {
         $global:ApiViewRequests.Count | Should Be 1
         $global:ApiViewRequests[0].Uri | Should Be "https://apiview.dev/autoreview/upload"
         $global:ApiViewRequests[0].Headers.Authorization | Should Be "Bearer test-token"
-        $global:ApiViewRequests[0].Body | Should Match 'name="label"\r?\n\r?\nSource Branch:main'
-        $global:ApiViewRequests[0].Body | Should Match 'name="packageVersion"\r?\n\r?\n1.0.0'
-        $global:ApiViewRequests[0].Body | Should Match 'name="setReleaseTag"\r?\n\r?\nFalse'
-        $global:ApiViewRequests[0].Body | Should Match 'name="packageType"\r?\n\r?\nclient'
+        $global:ApiViewRequests[0].Body | Should Match '(?s)name="?label"?.*?Source Branch:main'
+        $global:ApiViewRequests[0].Body | Should Match '(?s)name="?packageVersion"?.*?1.0.0'
+        $global:ApiViewRequests[0].Body | Should Match '(?s)name="?setReleaseTag"?.*?False'
+        $global:ApiViewRequests[0].Body | Should Match '(?s)name="?packageType"?.*?client'
     }
 
     It "creates a revision from a review token when one exists" {
@@ -81,6 +81,34 @@ Describe "Create-APIViewRevision.ps1" {
         $global:ApiViewRequests[0].Uri | Should Match "packageName=test-package"
         $global:ApiViewRequests[0].Uri | Should Match "reviewFilePath=test-package_Unknown.json"
         $global:ApiViewRequests[0].Uri | Should Not Match "setReleaseTag"
+    }
+
+    It "requires pipeline metadata when creating from a review token" {
+        Set-Content -Path (Join-Path $packageDirectory "${packageName}_Unknown.json") -Value "{}"
+
+        $caughtError = $null
+        try {
+            & $scriptPath -ArtifactPath $testRoot -PackageName $packageName -SourceBranch main -DefaultBranch main
+        }
+        catch {
+            $caughtError = $_
+        }
+
+        $caughtError.Exception.Message | Should Match "BuildId is required"
+        $global:ApiViewRequests.Count | Should Be 0
+    }
+
+    It "requires branch metadata before processing packages" {
+        $caughtError = $null
+        try {
+            & $scriptPath -ArtifactPath $testRoot -PackageName $packageName -SourceBranch "" -DefaultBranch main
+        }
+        catch {
+            $caughtError = $_
+        }
+
+        $caughtError.Exception.Message | Should Match "SourceBranch is required"
+        $global:ApiViewRequests.Count | Should Be 0
     }
 
     It "skips prerelease revisions from feature branches" {
