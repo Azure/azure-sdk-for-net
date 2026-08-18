@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace Azure.Provisioning.ResourceHealth.Tests;
 
 public class BasicLiveResourceHealthTests(bool async)
-    : ProvisioningTestBase(async, skipTools: false, skipLiveCalls: true)
+    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true */)
 {
     [Test]
     [Description("https://learn.microsoft.com/azure/templates/microsoft.resourcehealth/2025-05-01/events")]
