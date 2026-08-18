@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
@@ -15,7 +16,7 @@ public class BasicResourceHealthTests
             ctx =>
             {
                 #region Snippet:ResourceHealthEventBasic
-                Infrastructure infra = new();
+                Infrastructure infra = new() { TargetScope = DeploymentScope.Subscription };
 
                 ResourceHealthEvent healthEvent = ResourceHealthEvent.FromExisting(nameof(healthEvent), ResourceHealthEvent.ResourceVersions.V2025_05_01);
                 healthEvent.Name = "eventTrackingId";
@@ -35,6 +36,8 @@ public class BasicResourceHealthTests
         await using Trycep test = CreateResourceHealthEventTest();
         test.Compare(
             """
+            targetScope = 'subscription'
+
             resource healthEvent 'Microsoft.ResourceHealth/events@2025-05-01' existing = {
               name: 'eventTrackingId'
             }

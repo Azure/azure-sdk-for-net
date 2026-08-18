@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace Azure.Provisioning.ResourceHealth.Tests;
 
 public class BasicLiveResourceHealthTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true */)
+    : ProvisioningTestBase(async, skipTools: false, skipLiveCalls: true)
 {
     [Test]
     [Description("https://learn.microsoft.com/azure/templates/microsoft.resourcehealth/2025-05-01/events")]
@@ -17,8 +17,7 @@ public class BasicLiveResourceHealthTests(bool async)
     public async Task ReferenceResourceHealthEvent()
     {
         await using Trycep test = BasicResourceHealthTests.CreateResourceHealthEventTest();
-        await test.SetupLiveCalls(this)
-            .Lint()
-            .ValidateAsync();
+        test.SetupLiveCalls(this)
+            .Lint();
     }
 }

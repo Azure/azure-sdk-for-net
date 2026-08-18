@@ -29,7 +29,7 @@ This library allows you to specify your infrastructure in a declarative style us
 This example references an existing Resource Health event by its event tracking ID.
 
 ```C# Snippet:ResourceHealthEventBasic
-Infrastructure infra = new();
+Infrastructure infra = new() { TargetScope = DeploymentScope.Subscription };
 
 ResourceHealthEvent healthEvent = ResourceHealthEvent.FromExisting(nameof(healthEvent), ResourceHealthEvent.ResourceVersions.V2025_05_01);
 healthEvent.Name = "eventTrackingId";
