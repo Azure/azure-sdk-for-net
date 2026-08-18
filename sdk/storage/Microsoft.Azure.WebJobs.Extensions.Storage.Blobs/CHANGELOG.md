@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed a bug where Blob Trigger scaling from zero only matched the container name, so writes that did not match the trigger's blob name pattern (for example `container/{name}.txt`) could still scale the function out. The scale decision now applies the same path matching used by the Blob Trigger listener.
 
 ### Other Changes
 

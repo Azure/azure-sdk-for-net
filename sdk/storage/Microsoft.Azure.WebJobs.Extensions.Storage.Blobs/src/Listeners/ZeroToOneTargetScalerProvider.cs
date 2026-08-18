@@ -51,7 +51,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             private readonly TargetScalerDescriptor _targetScalerDescriptor;
             private readonly Lazy<Task<BlobLogListener>> _blobLogListener;
             private readonly ILogger _logger;
-            private readonly string _containerName;
+            private readonly IBlobPathSource _pathSource;
             private StorageAnalyticsLogEntry _lastIdentifiedLogEntryWithWrites = null;
 
             public ZeroToOneTargetScaler(string functionId, BlobServiceClient blobServiceClient, string blobPath, ILoggerFactory loggerFactory)
@@ -63,12 +63,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                     CancellationToken.None));
                 _logger = loggerFactory.CreateLogger<ZeroToOneTargetScaler>();
 
-                _containerName = blobPath;
-                int separatorIndex = blobPath.IndexOf("/", StringComparison.OrdinalIgnoreCase);
-                if (separatorIndex > 0)
-                {
-                    _containerName = blobPath.Substring(0, separatorIndex);
-                }
+                // Matching on the full path pattern keeps scale decisions consistent with BlobTriggerExecutor.
+                _pathSource = CreatePathSource(blobPath, _logger);
             }
 
             public TargetScalerDescriptor TargetScalerDescriptor => _targetScalerDescriptor;
@@ -85,7 +81,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 }
 
                 var blobLogListener = await _blobLogListener.Value.ConfigureAwait(false);
-                _lastIdentifiedLogEntryWithWrites = await blobLogListener.GetFirstLogEntryWithWritesAsync(_containerName, CancellationToken.None).ConfigureAwait(false);
+                _lastIdentifiedLogEntryWithWrites = await blobLogListener.GetFirstLogEntryWithWritesAsync(_pathSource, CancellationToken.None).ConfigureAwait(false);
                 if (_lastIdentifiedLogEntryWithWrites != null)
                 {
                     _logger.LogInformation($"Recent writes were detected for '{_targetScalerDescriptor.FunctionId}' (requestedObjectKey='{_lastIdentifiedLogEntryWithWrites.RequestedObjectKey}', requestStartTime='{_lastIdentifiedLogEntryWithWrites.RequestStartTime:O}').");
@@ -97,6 +93,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 }
 
                 return new TargetScalerResult() { TargetWorkerCount = 0 };
+            }
+
+            private static IBlobPathSource CreatePathSource(string blobPath, ILogger logger)
+            {
+                try
+                {
+                    return BlobPathSource.Create(blobPath);
+                }
+                catch (FormatException ex) when (!string.IsNullOrEmpty(blobPath))
+                {
+                    // Degrade to container-only matching rather than failing scaling for the whole function.
+                    int separatorIndex = blobPath.IndexOf('/');
+                    string containerName = separatorIndex > 0 ? blobPath.Substring(0, separatorIndex) : blobPath;
+                    logger.LogWarning($"Unable to parse blob path '{blobPath}'. Falling back to container-only matching on '{containerName}'. Exception: {ex.Message}");
+
+                    return new FixedBlobPathSource(new BlobPath(containerName, string.Empty));
+                }
             }
         }
 

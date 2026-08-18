@@ -20,18 +20,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Listeners
 {
     public class ZeroToOneTargetScalerTests
     {
+        // A single PutBlob entry for 'test-blobs/basic/test.txt'. 'Timestamp=' is replaced by each test case.
+        private const string PutBlobLogContent = "1.0;Timestamp='';PutBlob;Success;201;6;6;authenticated;teststorage;teststorage;blob;\"https://teststorage.blob.core.windows.net:443/test-blobs/basic%5Ctest.txt\";\"/teststorage/test-blobs/basic/test.txt\";612fc70e-e01e-008e-507f-3defe5000000;0;172.185.1.166:36700;2025-01-05;545;9;337;0;9;;\"HlAhCgICSX+3m8OLat5sNA==\";\"&quot;0x8DE0B970756F5CF&quot;\";Wednesday, 15-Oct-25 03:00:42 GMT;\"If-None-Match=*\";\"azsdk-net-Storage.Blobs/12.23.0 (.NET 8.0.21; Microsoft Windows 10.0.17763)\";;\"0ec36b75-69d3-453f-afd3-a329e0970962\"\r\n1.0;";
+
         public ZeroToOneTargetScalerTests()
         {
         }
 
         [Test]
         [TestCase("Sample log content", 10, "sc-test-blobs/basic", 0, 0)]
-        [TestCase("1.0;Timestamp='';PutBlob;Success;201;6;6;authenticated;teststorage;teststorage;blob;\"https://teststorage.blob.core.windows.net:443/test-blobs/basic%5Ctest.txt\";\"/teststorage/test-blobs/basic/test.txt\";612fc70e-e01e-008e-507f-3defe5000000;0;172.185.1.166:36700;2025-01-05;545;9;337;0;9;;\"HlAhCgICSX+3m8OLat5sNA==\";\"&quot;0x8DE0B970756F5CF&quot;\";Wednesday, 15-Oct-25 03:00:42 GMT;\"If-None-Match=*\";\"azsdk-net-Storage.Blobs/12.23.0 (.NET 8.0.21; Microsoft Windows 10.0.17763)\";;\"0ec36b75-69d3-453f-afd3-a329e0970962\"\r\n1.0;",
-            10, "test-blobs/basic", 1, 1)]
-        [TestCase("1.0;Timestamp='';PutBlob;Success;201;6;6;authenticated;teststorage;teststorage;blob;\"https://teststorage.blob.core.windows.net:443/test-blobs/basic%5Ctest.txt\";\"/teststorage/test-blobs/basic/test.txt\";612fc70e-e01e-008e-507f-3defe5000000;0;172.185.1.166:36700;2025-01-05;545;9;337;0;9;;\"HlAhCgICSX+3m8OLat5sNA==\";\"&quot;0x8DE0B970756F5CF&quot;\";Wednesday, 15-Oct-25 03:00:42 GMT;\"If-None-Match=*\";\"azsdk-net-Storage.Blobs/12.23.0 (.NET 8.0.21; Microsoft Windows 10.0.17763)\";;\"0ec36b75-69d3-453f-afd3-a329e0970962\"\r\n1.0;",
-            180, "test-blobs/basic", 1, 0)]
-        [TestCase("1.0;Timestamp='';PutBlob;Success;201;6;6;authenticated;teststorage;teststorage;blob;\"https://teststorage.blob.core.windows.net:443/test-blobs/basic%5Ctest.txt\";\"/teststorage/test-blobs/basic/test.txt\";612fc70e-e01e-008e-507f-3defe5000000;0;172.185.1.166:36700;2025-01-05;545;9;337;0;9;;\"HlAhCgICSX+3m8OLat5sNA==\";\"&quot;0x8DE0B970756F5CF&quot;\";Wednesday, 15-Oct-25 03:00:42 GMT;\"If-None-Match=*\";\"azsdk-net-Storage.Blobs/12.23.0 (.NET 8.0.21; Microsoft Windows 10.0.17763)\";;\"0ec36b75-69d3-453f-afd3-a329e0970962\"\r\n1.0;",
-            10, "test-blobs1/basic", 0, 0)]
+        [TestCase(PutBlobLogContent, 10, "test-blobs/basic/test.txt", 1, 1)]
+        [TestCase(PutBlobLogContent, 180, "test-blobs/basic/test.txt", 1, 0)]
+        [TestCase(PutBlobLogContent, 10, "test-blobs1/basic", 0, 0)]
+        // Container-only pattern matches any write in the container.
+        [TestCase(PutBlobLogContent, 10, "test-blobs", 1, 1)]
+        // Binding parameters are matched against the whole path, and '{name}' spans '/'.
+        [TestCase(PutBlobLogContent, 10, "test-blobs/{name}.txt", 1, 1)]
+        [TestCase(PutBlobLogContent, 10, "test-blobs/basic/{name}", 1, 1)]
+        [TestCase(PutBlobLogContent, 10, "test-blobs/{name}.json", 0, 0)]
+        [TestCase(PutBlobLogContent, 10, "test-blobs/other/{name}", 0, 0)]
+        [TestCase(PutBlobLogContent, 10, "test-blobs/basic", 0, 0)]
+        // An unparsable path degrades to container-only matching.
+        [TestCase(PutBlobLogContent, 10, "test-blobs/", 1, 1)]
         public async Task GetScaleResultAsync_WorkAsExpected(string logBlobContent, int offsetInMinutes, string blobPath, int expectedTargetWorkerCount, int excpectedChachReads)
         {
             string timeStamp = $"{DateTime.UtcNow.AddMinutes(-offsetInMinutes):o}";

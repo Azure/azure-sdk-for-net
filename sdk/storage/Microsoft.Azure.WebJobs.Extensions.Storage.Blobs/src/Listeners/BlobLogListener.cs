@@ -77,8 +77,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             return blobs;
         }
 
-        public async Task<StorageAnalyticsLogEntry> GetFirstLogEntryWithWritesAsync(string containerName, CancellationToken cancellationToken, int hoursWindow = DefaultScanHoursWindow)
+        public async Task<StorageAnalyticsLogEntry> GetFirstLogEntryWithWritesAsync(IBlobPathSource pathSource, CancellationToken cancellationToken, int hoursWindow = DefaultScanHoursWindow)
         {
+            if (pathSource == null)
+            {
+                throw new ArgumentNullException(nameof(pathSource));
+            }
+
             if (hoursWindow <= 0)
             {
                 return null;
@@ -121,8 +126,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                                     if (entry != null && entry.IsBlobWrite)
                                     {
                                         var path = entry.ToBlobPath();
-                                        if (path != null &&
-                                            string.Equals(path.ContainerName, containerName, StringComparison.OrdinalIgnoreCase))
+
+                                        // A null binding data means the blob does not match the trigger's path pattern.
+                                        if (path != null && pathSource.CreateBindingData(path) != null)
                                         {
                                             // If we found a valid write entry, we can stop searching.
                                             return entry;
