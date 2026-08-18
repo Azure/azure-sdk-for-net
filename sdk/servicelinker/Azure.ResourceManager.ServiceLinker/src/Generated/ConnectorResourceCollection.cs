@@ -20,32 +20,32 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ServiceLinker
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ConnectorDryrunResource"/> and their operations.
-    /// Each <see cref="ConnectorDryrunResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="ConnectorDryrunCollection"/> instance call the GetConnectorDryruns method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="ConnectorResource"/> and their operations.
+    /// Each <see cref="ConnectorResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ConnectorResourceCollection"/> instance call the GetConnectorResources method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class ConnectorDryrunCollection : ArmCollection, IEnumerable<ConnectorDryrunResource>, IAsyncEnumerable<ConnectorDryrunResource>
+    public partial class ConnectorResourceCollection : ArmCollection, IEnumerable<ConnectorResource>, IAsyncEnumerable<ConnectorResource>
     {
-        private readonly ClientDiagnostics _connectorDryrunClientDiagnostics;
-        private readonly ConnectorDryrun _connectorDryrunRestClient;
+        private readonly ClientDiagnostics _connectorResourcesClientDiagnostics;
+        private readonly ConnectorResources _connectorResourcesRestClient;
         /// <summary> The location. </summary>
         private readonly string _location;
 
-        /// <summary> Initializes a new instance of ConnectorDryrunCollection for mocking. </summary>
-        protected ConnectorDryrunCollection()
+        /// <summary> Initializes a new instance of ConnectorResourceCollection for mocking. </summary>
+        protected ConnectorResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectorDryrunCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         /// <param name="location"> The location for the resource. </param>
-        internal ConnectorDryrunCollection(ArmClient client, ResourceIdentifier id, string location) : base(client, id)
+        internal ConnectorResourceCollection(ArmClient client, ResourceIdentifier id, string location) : base(client, id)
         {
-            TryGetApiVersion(ConnectorDryrunResource.ResourceType, out string connectorDryrunApiVersion);
+            TryGetApiVersion(ConnectorResource.ResourceType, out string connectorResourceApiVersion);
             _location = location;
-            _connectorDryrunClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceLinker", ConnectorDryrunResource.ResourceType.Namespace, Diagnostics);
-            _connectorDryrunRestClient = new ConnectorDryrun(_connectorDryrunClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, connectorDryrunApiVersion ?? "2024-07-01-preview");
+            _connectorResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceLinker", ConnectorResource.ResourceType.Namespace, Diagnostics);
+            _connectorResourcesRestClient = new ConnectorResources(_connectorResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, connectorResourceApiVersion ?? "2024-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -60,15 +60,15 @@ namespace Azure.ResourceManager.ServiceLinker
         }
 
         /// <summary>
-        /// create a dryrun job to do necessary check before actual creation
+        /// Create or update Connector resource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns/{dryrunName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DryrunResources_CreateDryrun. </description>
+        /// <description> LinkerResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -77,17 +77,17 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="dryrunName"></param>
+        /// <param name="connectorName"></param>
         /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ConnectorDryrunResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dryrunName, LinkerDryrunData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<ConnectorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectorName, LinkerResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _connectorDryrunClientDiagnostics.CreateScope("ConnectorDryrunCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _connectorResourcesClientDiagnostics.CreateScope("ConnectorResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorDryrunRestClient.CreateCreateDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, dryrunName, LinkerDryrunData.ToRequestContent(data), context);
+                HttpMessage message = _connectorResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, connectorName, LinkerResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ServiceLinkerArmOperation<ConnectorDryrunResource> operation = new ServiceLinkerArmOperation<ConnectorDryrunResource>(
-                    new ConnectorDryrunResourceOperationSource(Client),
-                    _connectorDryrunClientDiagnostics,
+                ServiceLinkerArmOperation<ConnectorResource> operation = new ServiceLinkerArmOperation<ConnectorResource>(
+                    new ConnectorResourceOperationSource(Client),
+                    _connectorResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -118,15 +118,15 @@ namespace Azure.ResourceManager.ServiceLinker
         }
 
         /// <summary>
-        /// create a dryrun job to do necessary check before actual creation
+        /// Create or update Connector resource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns/{dryrunName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DryrunResources_CreateDryrun. </description>
+        /// <description> LinkerResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -135,17 +135,17 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="dryrunName"></param>
+        /// <param name="connectorName"></param>
         /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ConnectorDryrunResource> CreateOrUpdate(WaitUntil waitUntil, string dryrunName, LinkerDryrunData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<ConnectorResource> CreateOrUpdate(WaitUntil waitUntil, string connectorName, LinkerResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _connectorDryrunClientDiagnostics.CreateScope("ConnectorDryrunCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _connectorResourcesClientDiagnostics.CreateScope("ConnectorResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorDryrunRestClient.CreateCreateDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, dryrunName, LinkerDryrunData.ToRequestContent(data), context);
+                HttpMessage message = _connectorResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, connectorName, LinkerResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ServiceLinkerArmOperation<ConnectorDryrunResource> operation = new ServiceLinkerArmOperation<ConnectorDryrunResource>(
-                    new ConnectorDryrunResourceOperationSource(Client),
-                    _connectorDryrunClientDiagnostics,
+                ServiceLinkerArmOperation<ConnectorResource> operation = new ServiceLinkerArmOperation<ConnectorResource>(
+                    new ConnectorResourceOperationSource(Client),
+                    _connectorResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -176,15 +176,15 @@ namespace Azure.ResourceManager.ServiceLinker
         }
 
         /// <summary>
-        /// get a dryrun job
+        /// Returns Connector resource for a given name.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns/{dryrunName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DryrunResources_GetDryrun. </description>
+        /// <description> LinkerResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -192,15 +192,15 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="dryrunName"></param>
+        /// <param name="connectorName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ConnectorDryrunResource>> GetAsync(string dryrunName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConnectorResource>> GetAsync(string connectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            using DiagnosticScope scope = _connectorDryrunClientDiagnostics.CreateScope("ConnectorDryrunCollection.Get");
+            using DiagnosticScope scope = _connectorResourcesClientDiagnostics.CreateScope("ConnectorResourceCollection.Get");
             scope.Start();
             try
             {
@@ -208,14 +208,14 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorDryrunRestClient.CreateGetDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, dryrunName, context);
+                HttpMessage message = _connectorResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, connectorName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<LinkerDryrunData> response = Response.FromValue(LinkerDryrunData.FromResponse(result), result);
+                Response<LinkerResourceData> response = Response.FromValue(LinkerResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ConnectorDryrunResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConnectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -225,15 +225,15 @@ namespace Azure.ResourceManager.ServiceLinker
         }
 
         /// <summary>
-        /// get a dryrun job
+        /// Returns Connector resource for a given name.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns/{dryrunName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DryrunResources_GetDryrun. </description>
+        /// <description> LinkerResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -241,15 +241,15 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="dryrunName"></param>
+        /// <param name="connectorName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ConnectorDryrunResource> Get(string dryrunName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConnectorResource> Get(string connectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            using DiagnosticScope scope = _connectorDryrunClientDiagnostics.CreateScope("ConnectorDryrunCollection.Get");
+            using DiagnosticScope scope = _connectorResourcesClientDiagnostics.CreateScope("ConnectorResourceCollection.Get");
             scope.Start();
             try
             {
@@ -257,14 +257,14 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorDryrunRestClient.CreateGetDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, dryrunName, context);
+                HttpMessage message = _connectorResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, connectorName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<LinkerDryrunData> response = Response.FromValue(LinkerDryrunData.FromResponse(result), result);
+                Response<LinkerResourceData> response = Response.FromValue(LinkerResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ConnectorDryrunResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConnectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -274,15 +274,15 @@ namespace Azure.ResourceManager.ServiceLinker
         }
 
         /// <summary>
-        /// list dryrun jobs
+        /// Returns list of connector which connects to the resource, which supports to config the target service during the resource provision.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DryrunResources_ListDryrun. </description>
+        /// <description> LinkerResources_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -291,32 +291,32 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConnectorDryrunResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConnectorDryrunResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConnectorResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConnectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LinkerDryrunData, ConnectorDryrunResource>(new ConnectorDryrunGetDryrunAsyncCollectionResultOfT(
-                _connectorDryrunRestClient,
+            return new AsyncPageableWrapper<LinkerResourceData, ConnectorResource>(new ConnectorResourcesGetAllAsyncCollectionResultOfT(
+                _connectorResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 _location,
                 context,
-                "ConnectorDryrunCollection.GetAll"), data => new ConnectorDryrunResource(Client, data));
+                "ConnectorResourceCollection.GetAll"), data => new ConnectorResource(Client, data));
         }
 
         /// <summary>
-        /// list dryrun jobs
+        /// Returns list of connector which connects to the resource, which supports to config the target service during the resource provision.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DryrunResources_ListDryrun. </description>
+        /// <description> LinkerResources_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -325,20 +325,20 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConnectorDryrunResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConnectorDryrunResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConnectorResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConnectorResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LinkerDryrunData, ConnectorDryrunResource>(new ConnectorDryrunGetDryrunCollectionResultOfT(
-                _connectorDryrunRestClient,
+            return new PageableWrapper<LinkerResourceData, ConnectorResource>(new ConnectorResourcesGetAllCollectionResultOfT(
+                _connectorResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 _location,
                 context,
-                "ConnectorDryrunCollection.GetAll"), data => new ConnectorDryrunResource(Client, data));
+                "ConnectorResourceCollection.GetAll"), data => new ConnectorResource(Client, data));
         }
 
         /// <summary>
@@ -346,11 +346,11 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns/{dryrunName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DryrunResources_GetDryrun. </description>
+        /// <description> LinkerResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -358,15 +358,15 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="dryrunName"></param>
+        /// <param name="connectorName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string dryrunName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string connectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            using DiagnosticScope scope = _connectorDryrunClientDiagnostics.CreateScope("ConnectorDryrunCollection.Exists");
+            using DiagnosticScope scope = _connectorResourcesClientDiagnostics.CreateScope("ConnectorResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -374,17 +374,17 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorDryrunRestClient.CreateGetDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, dryrunName, context);
+                HttpMessage message = _connectorResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, connectorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<LinkerDryrunData> response = default;
+                Response<LinkerResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(LinkerDryrunData.FromResponse(result), result);
+                        response = Response.FromValue(LinkerResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((LinkerDryrunData)null, result);
+                        response = Response.FromValue((LinkerResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -403,11 +403,11 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns/{dryrunName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DryrunResources_GetDryrun. </description>
+        /// <description> LinkerResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -415,15 +415,15 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="dryrunName"></param>
+        /// <param name="connectorName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string dryrunName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string connectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            using DiagnosticScope scope = _connectorDryrunClientDiagnostics.CreateScope("ConnectorDryrunCollection.Exists");
+            using DiagnosticScope scope = _connectorResourcesClientDiagnostics.CreateScope("ConnectorResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -431,17 +431,17 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorDryrunRestClient.CreateGetDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, dryrunName, context);
+                HttpMessage message = _connectorResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, connectorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<LinkerDryrunData> response = default;
+                Response<LinkerResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(LinkerDryrunData.FromResponse(result), result);
+                        response = Response.FromValue(LinkerResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((LinkerDryrunData)null, result);
+                        response = Response.FromValue((LinkerResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -460,11 +460,11 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns/{dryrunName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DryrunResources_GetDryrun. </description>
+        /// <description> LinkerResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -472,15 +472,15 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="dryrunName"></param>
+        /// <param name="connectorName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<ConnectorDryrunResource>> GetIfExistsAsync(string dryrunName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<ConnectorResource>> GetIfExistsAsync(string connectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            using DiagnosticScope scope = _connectorDryrunClientDiagnostics.CreateScope("ConnectorDryrunCollection.GetIfExists");
+            using DiagnosticScope scope = _connectorResourcesClientDiagnostics.CreateScope("ConnectorResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -488,26 +488,26 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorDryrunRestClient.CreateGetDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, dryrunName, context);
+                HttpMessage message = _connectorResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, connectorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<LinkerDryrunData> response = default;
+                Response<LinkerResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(LinkerDryrunData.FromResponse(result), result);
+                        response = Response.FromValue(LinkerResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((LinkerDryrunData)null, result);
+                        response = Response.FromValue((LinkerResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ConnectorDryrunResource>(response.GetRawResponse());
+                    return new NoValueResponse<ConnectorResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ConnectorDryrunResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConnectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -521,11 +521,11 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/dryruns/{dryrunName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceLinker/locations/{location}/connectors/{connectorName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DryrunResources_GetDryrun. </description>
+        /// <description> LinkerResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -533,15 +533,15 @@ namespace Azure.ResourceManager.ServiceLinker
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="dryrunName"></param>
+        /// <param name="connectorName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dryrunName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dryrunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<ConnectorDryrunResource> GetIfExists(string dryrunName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<ConnectorResource> GetIfExists(string connectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dryrunName, nameof(dryrunName));
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            using DiagnosticScope scope = _connectorDryrunClientDiagnostics.CreateScope("ConnectorDryrunCollection.GetIfExists");
+            using DiagnosticScope scope = _connectorResourcesClientDiagnostics.CreateScope("ConnectorResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -549,26 +549,26 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorDryrunRestClient.CreateGetDryrunRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, dryrunName, context);
+                HttpMessage message = _connectorResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, connectorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<LinkerDryrunData> response = default;
+                Response<LinkerResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(LinkerDryrunData.FromResponse(result), result);
+                        response = Response.FromValue(LinkerResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((LinkerDryrunData)null, result);
+                        response = Response.FromValue((LinkerResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ConnectorDryrunResource>(response.GetRawResponse());
+                    return new NoValueResponse<ConnectorResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ConnectorDryrunResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConnectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.ServiceLinker
             }
         }
 
-        IEnumerator<ConnectorDryrunResource> IEnumerable<ConnectorDryrunResource>.GetEnumerator()
+        IEnumerator<ConnectorResource> IEnumerable<ConnectorResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.ServiceLinker
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<ConnectorDryrunResource> IAsyncEnumerable<ConnectorDryrunResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ConnectorResource> IAsyncEnumerable<ConnectorResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

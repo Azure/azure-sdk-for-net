@@ -39,6 +39,24 @@ namespace Azure.ResourceManager.ServiceLinker
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="DryrunResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceLinkerArmClient.GetDryrunResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DryrunResource"/> object. </returns>
+        public static DryrunResource GetDryrunResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableServiceLinkerArmClient(client).GetDryrunResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="LinkerDryrunResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -112,6 +130,24 @@ namespace Azure.ResourceManager.ServiceLinker
             Argument.AssertNotNull(client, nameof(client));
 
             return await GetMockableServiceLinkerArmClient(client).GetLinkerDryrunAsync(scope, dryrunName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ConnectorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableServiceLinkerArmClient.GetConnectorResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ConnectorResource"/> object. </returns>
+        public static ConnectorResource GetConnectorResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableServiceLinkerArmClient(client).GetConnectorResource(id);
         }
 
         /// <summary>
@@ -191,42 +227,6 @@ namespace Azure.ResourceManager.ServiceLinker
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ConnectorDryrunResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceLinkerArmClient.GetConnectorDryrunResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ConnectorDryrunResource"/> object. </returns>
-        public static ConnectorDryrunResource GetConnectorDryrunResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableServiceLinkerArmClient(client).GetConnectorDryrunResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="LinkerConnectorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceLinkerArmClient.GetLinkerConnectorResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="LinkerConnectorResource"/> object. </returns>
-        public static LinkerConnectorResource GetLinkerConnectorResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableServiceLinkerArmClient(client).GetLinkerConnectorResource(id);
-        }
-
-        /// <summary>
         /// List the dapr configuration supported by Service Connector.
         /// <item>
         /// <term> Mocking. </term>
@@ -265,28 +265,28 @@ namespace Azure.ResourceManager.ServiceLinker
         }
 
         /// <summary>
-        /// Gets a collection of ConnectorDryruns in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of DryrunResources in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceLinkerResourceGroupResource.GetConnectorDryruns(string)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableServiceLinkerResourceGroupResource.GetDryrunResources(string)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ConnectorDryruns and their operations over a ConnectorDryrunResource. </returns>
-        public static ConnectorDryrunCollection GetConnectorDryruns(this ResourceGroupResource resourceGroupResource, string location)
+        /// <returns> An object representing collection of DryrunResources and their operations over a DryrunResource. </returns>
+        public static DryrunResourceCollection GetDryrunResources(this ResourceGroupResource resourceGroupResource, string location)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableServiceLinkerResourceGroupResource(resourceGroupResource).GetConnectorDryruns(location);
+            return GetMockableServiceLinkerResourceGroupResource(resourceGroupResource).GetDryrunResources(location);
         }
 
         /// <summary>
         /// get a dryrun job
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceLinkerResourceGroupResource.GetConnectorDryrunAsync(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableServiceLinkerResourceGroupResource.GetDryrunResourceAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -295,18 +295,18 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ConnectorDryrunResource>> GetConnectorDryrunAsync(this ResourceGroupResource resourceGroupResource, string location, string dryrunName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DryrunResource>> GetDryrunResourceAsync(this ResourceGroupResource resourceGroupResource, string location, string dryrunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableServiceLinkerResourceGroupResource(resourceGroupResource).GetConnectorDryrunAsync(location, dryrunName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableServiceLinkerResourceGroupResource(resourceGroupResource).GetDryrunResourceAsync(location, dryrunName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// get a dryrun job
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceLinkerResourceGroupResource.GetConnectorDryrun(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableServiceLinkerResourceGroupResource.GetDryrunResource(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -315,36 +315,36 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ConnectorDryrunResource> GetConnectorDryrun(this ResourceGroupResource resourceGroupResource, string location, string dryrunName, CancellationToken cancellationToken = default)
+        public static Response<DryrunResource> GetDryrunResource(this ResourceGroupResource resourceGroupResource, string location, string dryrunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableServiceLinkerResourceGroupResource(resourceGroupResource).GetConnectorDryrun(location, dryrunName, cancellationToken);
+            return GetMockableServiceLinkerResourceGroupResource(resourceGroupResource).GetDryrunResource(location, dryrunName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of LinkerConnectors in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of ConnectorResources in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceLinkerResourceGroupResource.GetLinkerConnectors(string)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableServiceLinkerResourceGroupResource.GetConnectorResources(string)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of LinkerConnectors and their operations over a LinkerConnectorResource. </returns>
-        public static LinkerConnectorCollection GetLinkerConnectors(this ResourceGroupResource resourceGroupResource, string location)
+        /// <returns> An object representing collection of ConnectorResources and their operations over a ConnectorResource. </returns>
+        public static ConnectorResourceCollection GetConnectorResources(this ResourceGroupResource resourceGroupResource, string location)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableServiceLinkerResourceGroupResource(resourceGroupResource).GetLinkerConnectors(location);
+            return GetMockableServiceLinkerResourceGroupResource(resourceGroupResource).GetConnectorResources(location);
         }
 
         /// <summary>
         /// Returns Connector resource for a given name.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceLinkerResourceGroupResource.GetLinkerConnectorAsync(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableServiceLinkerResourceGroupResource.GetConnectorResourceAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -353,18 +353,18 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<LinkerConnectorResource>> GetLinkerConnectorAsync(this ResourceGroupResource resourceGroupResource, string location, string connectorName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ConnectorResource>> GetConnectorResourceAsync(this ResourceGroupResource resourceGroupResource, string location, string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableServiceLinkerResourceGroupResource(resourceGroupResource).GetLinkerConnectorAsync(location, connectorName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableServiceLinkerResourceGroupResource(resourceGroupResource).GetConnectorResourceAsync(location, connectorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Returns Connector resource for a given name.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableServiceLinkerResourceGroupResource.GetLinkerConnector(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableServiceLinkerResourceGroupResource.GetConnectorResource(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -373,11 +373,11 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<LinkerConnectorResource> GetLinkerConnector(this ResourceGroupResource resourceGroupResource, string location, string connectorName, CancellationToken cancellationToken = default)
+        public static Response<ConnectorResource> GetConnectorResource(this ResourceGroupResource resourceGroupResource, string location, string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableServiceLinkerResourceGroupResource(resourceGroupResource).GetLinkerConnector(location, connectorName, cancellationToken);
+            return GetMockableServiceLinkerResourceGroupResource(resourceGroupResource).GetConnectorResource(location, connectorName, cancellationToken);
         }
 
         /// <summary>

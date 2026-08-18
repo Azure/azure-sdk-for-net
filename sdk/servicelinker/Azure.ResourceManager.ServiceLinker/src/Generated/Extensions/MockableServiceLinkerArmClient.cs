@@ -39,6 +39,15 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
 
         private LinkerDryruns LinkerDryrunsRestClient => _linkerDryrunsRestClient ??= new LinkerDryruns(LinkerDryrunsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-07-01-preview");
 
+        /// <summary> Gets an object representing a <see cref="DryrunResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DryrunResource"/> object. </returns>
+        public virtual DryrunResource GetDryrunResource(ResourceIdentifier id)
+        {
+            DryrunResource.ValidateResourceId(id);
+            return new DryrunResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="LinkerDryrunResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="LinkerDryrunResource"/> object. </returns>
@@ -84,6 +93,15 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
             return await GetLinkerDryruns(scope).GetAsync(dryrunName, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> Gets an object representing a <see cref="ConnectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ConnectorResource"/> object. </returns>
+        public virtual ConnectorResource GetConnectorResource(ResourceIdentifier id)
+        {
+            ConnectorResource.ValidateResourceId(id);
+            return new ConnectorResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="LinkerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="LinkerResource"/> object. </returns>
@@ -127,24 +145,6 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
             Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
 
             return await GetLinkerResources(scope).GetAsync(linkerName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ConnectorDryrunResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConnectorDryrunResource"/> object. </returns>
-        public virtual ConnectorDryrunResource GetConnectorDryrunResource(ResourceIdentifier id)
-        {
-            ConnectorDryrunResource.ValidateResourceId(id);
-            return new ConnectorDryrunResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="LinkerConnectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LinkerConnectorResource"/> object. </returns>
-        public virtual LinkerConnectorResource GetLinkerConnectorResource(ResourceIdentifier id)
-        {
-            LinkerConnectorResource.ValidateResourceId(id);
-            return new LinkerConnectorResource(Client, id);
         }
 
         /// <summary>
