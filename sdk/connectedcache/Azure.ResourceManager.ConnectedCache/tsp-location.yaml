@@ -1,5 +1,5 @@
 directory: specification/connectedcache/resource-manager/Microsoft.ConnectedCache/ConnectedCache
-commit: 83dbc87f0fd9f08fd36b5d77eac705f1fb51e9c1
+commit: dd062db80ed423912aa53d3ef5c065ccda78d374
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 

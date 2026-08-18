@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="lastSyncedWithAzureOn"> Customer resource last Azure sync timestamp. </param>
         /// <param name="isEnterpriseManaged"> Customer resource flag for enterprise management as boolean. </param>
         /// <param name="shouldMigrate"> Customer resource flag for migration. </param>
-        /// <param name="resendSignupCode"> Customer resource flag for resending signup code as boolean. </param>
+        /// <param name="shouldResendSignupCode"> Customer resource flag for resending signup code as boolean. </param>
         /// <param name="shouldVerifySignupCode"> Customer resource flag for requiring verification of signup code as boolean. </param>
         /// <param name="verifySignupPhrase"> Customer resource phrase for verifying signup. </param>
         /// <returns> A new <see cref="Models.MccCustomerEntity"/> instance for mocking. </returns>
-        public static MccCustomerEntity MccCustomerEntity(ResourceIdentifier fullyQualifiedResourceId = default, string customerId = default, string customerName = default, string contactEmail = default, string contactPhone = default, string contactName = default, bool? isEntitled = default, int? releaseVersion = default, string createAsyncOperationId = default, string deleteAsyncOperationId = default, string clientTenantId = default, int? synchWithAzureAttemptsCount = default, DateTimeOffset? lastSyncedWithAzureOn = default, bool? isEnterpriseManaged = default, bool? shouldMigrate = default, bool? resendSignupCode = default, bool? shouldVerifySignupCode = default, string verifySignupPhrase = default)
+        public static MccCustomerEntity MccCustomerEntity(ResourceIdentifier fullyQualifiedResourceId = default, string customerId = default, string customerName = default, string contactEmail = default, string contactPhone = default, string contactName = default, bool? isEntitled = default, int? releaseVersion = default, string createAsyncOperationId = default, string deleteAsyncOperationId = default, string clientTenantId = default, int? synchWithAzureAttemptsCount = default, DateTimeOffset? lastSyncedWithAzureOn = default, bool? isEnterpriseManaged = default, bool? shouldMigrate = default, bool? shouldResendSignupCode = default, bool? shouldVerifySignupCode = default, string verifySignupPhrase = default)
         {
             return new MccCustomerEntity(
                 fullyQualifiedResourceId,
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 lastSyncedWithAzureOn,
                 isEnterpriseManaged,
                 shouldMigrate,
-                resendSignupCode,
+                shouldResendSignupCode,
                 shouldVerifySignupCode,
                 verifySignupPhrase,
                 default);

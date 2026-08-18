@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 writer.WritePropertyName("shouldMigrate"u8);
                 writer.WriteBooleanValue(ShouldMigrate.Value);
             }
-            if (Optional.IsDefined(ResendSignupCode))
+            if (Optional.IsDefined(ShouldResendSignupCode))
             {
                 writer.WritePropertyName("resendSignupCode"u8);
-                writer.WriteBooleanValue(ResendSignupCode.Value);
+                writer.WriteBooleanValue(ShouldResendSignupCode.Value);
             }
             if (Optional.IsDefined(ShouldVerifySignupCode))
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             DateTimeOffset? lastSyncedWithAzureOn = default;
             bool? isEnterpriseManaged = default;
             bool? shouldMigrate = default;
-            bool? resendSignupCode = default;
+            bool? shouldResendSignupCode = default;
             bool? shouldVerifySignupCode = default;
             string verifySignupPhrase = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                     {
                         continue;
                     }
-                    resendSignupCode = prop.Value.GetBoolean();
+                    shouldResendSignupCode = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("verifySignupCode"u8))
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 lastSyncedWithAzureOn,
                 isEnterpriseManaged,
                 shouldMigrate,
-                resendSignupCode,
+                shouldResendSignupCode,
                 shouldVerifySignupCode,
                 verifySignupPhrase,
                 additionalBinaryDataProperties);
