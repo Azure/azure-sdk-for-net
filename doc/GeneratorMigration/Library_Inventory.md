@@ -483,19 +483,13 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 
 ## Libraries with No Generator
 
-Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 47
+Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 41
 
 | Service | Library |
 | ------- | ------- |
 | agentserver | Azure.AI.AgentServer.Core |
 | agentserver | Azure.AI.AgentServer.Invocations |
 | ai | Azure.AI.Inference |
-| cloudmachine | Azure.Projects |
-| cloudmachine | Azure.Projects.AI |
-| cloudmachine | Azure.Projects.AI.Foundry |
-| cloudmachine | Azure.Projects.Provisioning |
-| cloudmachine | Azure.Projects.Tsp |
-| cloudmachine | Azure.Projects.Web |
 | communication | Azure.Communication.Common |
 | core | Azure.Core |
 | core | Azure.Core.Amqp |
