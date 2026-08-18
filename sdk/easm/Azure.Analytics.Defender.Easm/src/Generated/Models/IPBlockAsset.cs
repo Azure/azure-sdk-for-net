@@ -71,9 +71,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="registrantPhones"></param>
         /// <param name="adminPhones"></param>
         /// <param name="technicalPhones"></param>
-        /// <param name="ipv4"></param>
-        /// <param name="ipv6"></param>
-        internal IPBlockAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, string ipBlock, IList<ObservedLong> asns, IList<ObservedString> bgpPrefixes, IList<ObservedString> netNames, IList<ObservedString> registrantContacts, IList<ObservedString> registrantOrgs, IList<ObservedString> adminContacts, IList<ObservedString> technicalContacts, IList<ObservedLong> registrarCreatedAt, IList<ObservedLong> registrarUpdatedAt, IList<ObservedString> netRanges, string startIP, string endIP, IList<ReputationDetails> reputations, DateTimeOffset? detailedFromWhoisAt, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<ObservedLocation> location, IList<ObservedLong> registrarExpiresAt, IList<ObservedString> registrantNames, IList<ObservedString> adminNames, IList<ObservedString> technicalNames, IList<ObservedString> adminOrgs, IList<ObservedString> technicalOrgs, IList<ObservedString> registrantPhones, IList<ObservedString> adminPhones, IList<ObservedString> technicalPhones, bool? ipv4, bool? ipv6) : base(additionalBinaryDataProperties)
+        /// <param name="iPv4"></param>
+        /// <param name="iPv6"></param>
+        internal IPBlockAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, string ipBlock, IList<ObservedLong> asns, IList<ObservedString> bgpPrefixes, IList<ObservedString> netNames, IList<ObservedString> registrantContacts, IList<ObservedString> registrantOrgs, IList<ObservedString> adminContacts, IList<ObservedString> technicalContacts, IList<ObservedLong> registrarCreatedAt, IList<ObservedLong> registrarUpdatedAt, IList<ObservedString> netRanges, string startIP, string endIP, IList<ReputationDetails> reputations, DateTimeOffset? detailedFromWhoisAt, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<ObservedLocation> location, IList<ObservedLong> registrarExpiresAt, IList<ObservedString> registrantNames, IList<ObservedString> adminNames, IList<ObservedString> technicalNames, IList<ObservedString> adminOrgs, IList<ObservedString> technicalOrgs, IList<ObservedString> registrantPhones, IList<ObservedString> adminPhones, IList<ObservedString> technicalPhones, bool? iPv4, bool? iPv6) : base(additionalBinaryDataProperties)
         {
             IPBlock = ipBlock;
             Asns = asns;
@@ -104,8 +104,8 @@ namespace Azure.Analytics.Defender.Easm
             RegistrantPhones = registrantPhones;
             AdminPhones = adminPhones;
             TechnicalPhones = technicalPhones;
-            IPv4 = ipv4;
-            IPv6 = ipv6;
+            IPv4 = iPv4;
+            IPv6 = iPv6;
         }
 
         /// <summary> Gets the IPBlock. </summary>
