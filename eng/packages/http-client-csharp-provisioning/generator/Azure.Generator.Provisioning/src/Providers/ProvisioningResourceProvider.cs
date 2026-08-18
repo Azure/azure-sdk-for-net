@@ -53,20 +53,16 @@ namespace Azure.Generator.Provisioning.Providers
         /// <summary>
         /// All collected properties for the resource, including flattened and inherited ones,
         /// with their resolved isOutput/isRequired/bicepPath metadata.
-        /// Used to build the C# Properties, Fields, and DefineProvisionableProperties() method.
+        /// Dictionary insertion order controls the generated Bicep property order, while the key
+        /// provides O(1) access in <see cref="IProvisioningPropertyInfo.GetProvisioningPropertyInfo"/>.
         /// </summary>
-        private readonly Lazy<List<ResourcePropertyInfo>> _allProperties;
-        /// <summary>
-        /// Lookup from InputModelProperty to ResourcePropertyInfo for O(1) access in
-        /// <see cref="IProvisioningPropertyInfo.GetProvisioningPropertyInfo"/>.
-        /// </summary>
-        private readonly Lazy<Dictionary<InputModelProperty, ResourcePropertyInfo>> _propertyLookup;
+        private readonly Lazy<Dictionary<InputModelProperty, ProvisioningPropertyInfo>> _properties;
         private readonly Lazy<ProvisioningResourceProvider?> _immediateParentResource;
         /// <summary>
         /// Serialized property names that are writable in the create/update request body model.
         /// When the resource model is output-only (e.g., a ProxyResource with a separate create body),
         /// its properties may be marked readOnly even though the create body accepts them as input.
-        /// This set is used during <see cref="_allProperties"/> construction to avoid incorrectly
+        /// This set is used during <see cref="_properties"/> construction to avoid incorrectly
         /// marking such properties as output-only.
         /// </summary>
         private readonly HashSet<string> _createBodyWritableProperties;
@@ -119,20 +115,7 @@ namespace Azure.Generator.Provisioning.Providers
 
         /// <inheritdoc/>
         ProvisioningPropertyInfo? IProvisioningPropertyInfo.GetProvisioningPropertyInfo(InputModelProperty inputProp)
-        {
-            if (!_propertyLookup.Value.TryGetValue(inputProp, out var propInfo))
-                return null;
-
-            return new ProvisioningPropertyInfo(
-                propInfo.PropertyName,
-                propInfo.IsOutput,
-                propInfo.IsSettable,
-                propInfo.IsRequired,
-                propInfo.BicepPath,
-                propInfo.DefaultValue,
-                propInfo.TypeOverride,
-                inputProp.IsDiscriminator);
-        }
+            => _properties.Value.TryGetValue(inputProp, out var propertyInfo) ? propertyInfo : null;
 
         /// <summary>
         /// Constructor for base resource types (with metadata from ARM provider schema).
@@ -148,8 +131,7 @@ namespace Azure.Generator.Provisioning.Providers
             _isSettableResource = ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(projection.ResourceModel);
             _createBodyWritableProperties = BuildCreateBodyWritableProperties();
             _immediateParentResource = new(ResolveImmediateParentResource);
-            _allProperties = new(CollectAllProperties);
-            _propertyLookup = new(() => _allProperties.Value.ToDictionary(p => p.Property));
+            _properties = new(CollectAllProperties);
             ProvisioningGenerator.Instance.AddTypeToKeep(this);
         }
 
@@ -165,8 +147,7 @@ namespace Azure.Generator.Provisioning.Providers
             _isSettableResource = ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(inputModel);
             _createBodyWritableProperties = [];
             _immediateParentResource = new(ResolveImmediateParentResource);
-            _allProperties = new(CollectAllProperties);
-            _propertyLookup = new(() => _allProperties.Value.ToDictionary(p => p.Property));
+            _properties = new(CollectAllProperties);
             ProvisioningGenerator.Instance.AddTypeToKeep(this);
         }
 
@@ -226,9 +207,9 @@ namespace Azure.Generator.Provisioning.Providers
         protected override PropertyProvider[] BuildProperties()
         {
             var properties = new List<PropertyProvider>();
-            foreach (var propInfo in _allProperties.Value)
+            foreach (var inputProperty in _properties.Value.Keys)
             {
-                var property = ProvisioningGenerator.Instance.TypeFactory.CreateProvisioningProperty(propInfo.Property, this);
+                var property = ProvisioningGenerator.Instance.TypeFactory.CreateProvisioningProperty(inputProperty, this);
                 if (property != null)
                     properties.Add(property);
             }
@@ -463,13 +444,13 @@ namespace Azure.Generator.Provisioning.Providers
             }
         }
 
-        private List<ResourcePropertyInfo> CollectAllProperties()
+        private Dictionary<InputModelProperty, ProvisioningPropertyInfo> CollectAllProperties()
         {
             // Derived discriminated resources only collect their own properties
             if (_inputModel.DiscriminatorValue != null)
                 return CollectOwnProperties();
 
-            var result = new List<ResourcePropertyInfo>();
+            var result = new Dictionary<InputModelProperty, ProvisioningPropertyInfo>();
             var seen = new HashSet<string>(StringComparer.Ordinal);
 
             // Collect from the base chain first (top-most ancestor → immediate base),
@@ -495,7 +476,7 @@ namespace Azure.Generator.Provisioning.Providers
 
         private void CollectPropertiesFromModel(
             InputModelType model,
-            List<ResourcePropertyInfo> result,
+            Dictionary<InputModelProperty, ProvisioningPropertyInfo> result,
             HashSet<string> seen,
             string[]? basePath)
         {
@@ -553,7 +534,17 @@ namespace Azure.Generator.Provisioning.Providers
                     typeOverride = new CSharpType(typeof(BicepValue<>), typeof(Azure.Core.AzureLocation));
                 }
 
-                result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isSettable, isRequired, defaultValue, typeOverride));
+                result.Add(
+                    prop,
+                    new ProvisioningPropertyInfo(
+                        propertyName,
+                        isOutput,
+                        isSettable,
+                        isRequired,
+                        bicepPath,
+                        defaultValue,
+                        typeOverride,
+                        prop.IsDiscriminator));
             }
         }
 
@@ -922,9 +913,9 @@ namespace Azure.Generator.Provisioning.Providers
         /// Collects only the derived type's own properties (no base chain, no flattening).
         /// Used for derived discriminated resources.
         /// </summary>
-        private List<ResourcePropertyInfo> CollectOwnProperties()
+        private Dictionary<InputModelProperty, ProvisioningPropertyInfo> CollectOwnProperties()
         {
-            var result = new List<ResourcePropertyInfo>();
+            var result = new Dictionary<InputModelProperty, ProvisioningPropertyInfo>();
             foreach (var prop in _inputModel.Properties)
             {
                 if (prop.IsDiscriminator && IsInheritedDiscriminator(prop)) continue;
@@ -932,13 +923,15 @@ namespace Azure.Generator.Provisioning.Providers
                 string[] bicepPath = [serializedName];
                 var isOutput = !prop.IsDiscriminator && prop.IsReadOnly;
                 var isSettable = !prop.IsDiscriminator && !prop.IsReadOnly && _isSettableResource;
-                result.Add(new ResourcePropertyInfo(
+                result.Add(
                     prop,
-                    prop.Name.ToIdentifierName(),
-                    bicepPath,
-                    isOutput,
-                    isSettable,
-                    prop.IsRequired));
+                    new ProvisioningPropertyInfo(
+                        prop.Name.ToIdentifierName(),
+                        isOutput,
+                        isSettable,
+                        prop.IsRequired,
+                        bicepPath,
+                        IsDiscriminator: prop.IsDiscriminator));
             }
             return result;
         }
@@ -979,18 +972,6 @@ namespace Azure.Generator.Provisioning.Providers
             }
             return false;
         }
-
-        // ── Property info record ─────────────────────────────────────
-
-        internal record ResourcePropertyInfo(
-            InputModelProperty Property,
-            string PropertyName,
-            string[] BicepPath,
-            bool IsOutput,
-            bool IsSettable,
-            bool IsRequired,
-            string? DefaultValue = null,
-            CSharpType? TypeOverride = null);
 
         // ── ResourceVersions nested class ────────────────────────────
 
