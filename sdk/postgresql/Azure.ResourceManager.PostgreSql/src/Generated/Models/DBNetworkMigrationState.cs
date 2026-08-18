@@ -12,7 +12,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> State of the network migration operation. </summary>
-    public readonly partial struct DbNetworkMigrationState : IEquatable<DbNetworkMigrationState>
+    public readonly partial struct DBNetworkMigrationState : IEquatable<DBNetworkMigrationState>
     {
         private readonly string _value;
         /// <summary> Network migration is pending. </summary>
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Network migration was cancelled. </summary>
         private const string CancelledValue = "Cancelled";
 
-        /// <summary> Initializes a new instance of <see cref="DbNetworkMigrationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DBNetworkMigrationState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DbNetworkMigrationState(string value)
+        public DBNetworkMigrationState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -39,47 +39,47 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Network migration is pending. </summary>
-        public static DbNetworkMigrationState Pending { get; } = new DbNetworkMigrationState(PendingValue);
+        public static DBNetworkMigrationState Pending { get; } = new DBNetworkMigrationState(PendingValue);
 
         /// <summary> Network migration is in progress. </summary>
-        public static DbNetworkMigrationState InProgress { get; } = new DbNetworkMigrationState(InProgressValue);
+        public static DBNetworkMigrationState InProgress { get; } = new DBNetworkMigrationState(InProgressValue);
 
         /// <summary> Network migration succeeded. </summary>
-        public static DbNetworkMigrationState Succeeded { get; } = new DbNetworkMigrationState(SucceededValue);
+        public static DBNetworkMigrationState Succeeded { get; } = new DBNetworkMigrationState(SucceededValue);
 
         /// <summary> Network migration failed. </summary>
-        public static DbNetworkMigrationState Failed { get; } = new DbNetworkMigrationState(FailedValue);
+        public static DBNetworkMigrationState Failed { get; } = new DBNetworkMigrationState(FailedValue);
 
         /// <summary> Network migration cancellation is in progress. </summary>
-        public static DbNetworkMigrationState CancelInProgress { get; } = new DbNetworkMigrationState(CancelInProgressValue);
+        public static DBNetworkMigrationState CancelInProgress { get; } = new DBNetworkMigrationState(CancelInProgressValue);
 
         /// <summary> Network migration was cancelled. </summary>
-        public static DbNetworkMigrationState Cancelled { get; } = new DbNetworkMigrationState(CancelledValue);
+        public static DBNetworkMigrationState Cancelled { get; } = new DBNetworkMigrationState(CancelledValue);
 
-        /// <summary> Determines if two <see cref="DbNetworkMigrationState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="DBNetworkMigrationState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(DbNetworkMigrationState left, DbNetworkMigrationState right) => left.Equals(right);
+        public static bool operator ==(DBNetworkMigrationState left, DBNetworkMigrationState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DbNetworkMigrationState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="DBNetworkMigrationState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(DbNetworkMigrationState left, DbNetworkMigrationState right) => !left.Equals(right);
+        public static bool operator !=(DBNetworkMigrationState left, DBNetworkMigrationState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DbNetworkMigrationState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DBNetworkMigrationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DbNetworkMigrationState(string value) => new DbNetworkMigrationState(value);
+        public static implicit operator DBNetworkMigrationState(string value) => new DBNetworkMigrationState(value);
 
-        /// <summary> Converts a string to a <see cref="DbNetworkMigrationState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DBNetworkMigrationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DbNetworkMigrationState?(string value) => value == null ? null : new DbNetworkMigrationState(value);
+        public static implicit operator DBNetworkMigrationState?(string value) => value == null ? null : new DBNetworkMigrationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DbNetworkMigrationState other && Equals(other);
+        public override bool Equals(object obj) => obj is DBNetworkMigrationState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(DbNetworkMigrationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DBNetworkMigrationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

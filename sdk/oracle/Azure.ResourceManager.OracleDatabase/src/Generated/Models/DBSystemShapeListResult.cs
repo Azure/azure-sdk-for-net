@@ -12,32 +12,32 @@ using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> The response of a DbVersion list operation. </summary>
-    internal partial class DbVersionListResult
+    /// <summary> The response of a DbSystemShape list operation. </summary>
+    internal partial class DBSystemShapeListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DbVersionListResult"/>. </summary>
-        /// <param name="value"> The DbVersion items on this page. </param>
-        internal DbVersionListResult(IEnumerable<OracleDBVersionData> value)
+        /// <summary> Initializes a new instance of <see cref="DBSystemShapeListResult"/>. </summary>
+        /// <param name="value"> The DbSystemShape items on this page. </param>
+        internal DBSystemShapeListResult(IEnumerable<OracleDBSystemShapeData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DbVersionListResult"/>. </summary>
-        /// <param name="value"> The DbVersion items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="DBSystemShapeListResult"/>. </summary>
+        /// <param name="value"> The DbSystemShape items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DbVersionListResult(IList<OracleDBVersionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DBSystemShapeListResult(IList<OracleDBSystemShapeData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The DbVersion items on this page. </summary>
-        public IList<OracleDBVersionData> Value { get; }
+        /// <summary> The DbSystemShape items on this page. </summary>
+        public IList<OracleDBSystemShapeData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

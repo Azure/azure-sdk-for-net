@@ -14,64 +14,64 @@ using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> The response of a DbSystemShape list operation. </summary>
-    internal partial class DbSystemShapeListResult : IJsonModel<DbSystemShapeListResult>
+    /// <summary> The response of a ExascaleDbStorageVault list operation. </summary>
+    internal partial class ExascaleDBStorageVaultListResult : IJsonModel<ExascaleDBStorageVaultListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="DbSystemShapeListResult"/> for deserialization. </summary>
-        internal DbSystemShapeListResult()
+        /// <summary> Initializes a new instance of <see cref="ExascaleDBStorageVaultListResult"/> for deserialization. </summary>
+        internal ExascaleDBStorageVaultListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DbSystemShapeListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ExascaleDBStorageVaultListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DbSystemShapeListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExascaleDBStorageVaultListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDbSystemShapeListResult(document.RootElement, options);
+                        return DeserializeExascaleDBStorageVaultListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DbSystemShapeListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExascaleDBStorageVaultListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DbSystemShapeListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExascaleDBStorageVaultListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DbSystemShapeListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExascaleDBStorageVaultListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DbSystemShapeListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ExascaleDBStorageVaultListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DbSystemShapeListResult IPersistableModel<DbSystemShapeListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ExascaleDBStorageVaultListResult IPersistableModel<ExascaleDBStorageVaultListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DbSystemShapeListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ExascaleDBStorageVaultListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DbSystemShapeListResult"/> from. </param>
-        internal static DbSystemShapeListResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ExascaleDBStorageVaultListResult"/> from. </param>
+        internal static ExascaleDBStorageVaultListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDbSystemShapeListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeExascaleDBStorageVaultListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DbSystemShapeListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ExascaleDBStorageVaultListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DbSystemShapeListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExascaleDBStorageVaultListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DbSystemShapeListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ExascaleDBStorageVaultListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (OracleDBSystemShapeData item in Value)
+            foreach (ExascaleDBStorageVaultData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DbSystemShapeListResult IJsonModel<DbSystemShapeListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ExascaleDBStorageVaultListResult IJsonModel<ExascaleDBStorageVaultListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DbSystemShapeListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ExascaleDBStorageVaultListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DbSystemShapeListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExascaleDBStorageVaultListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DbSystemShapeListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ExascaleDBStorageVaultListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDbSystemShapeListResult(document.RootElement, options);
+            return DeserializeExascaleDBStorageVaultListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DbSystemShapeListResult DeserializeDbSystemShapeListResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static ExascaleDBStorageVaultListResult DeserializeExascaleDBStorageVaultListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<OracleDBSystemShapeData> value = default;
+            IList<ExascaleDBStorageVaultData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<OracleDBSystemShapeData> array = new List<OracleDBSystemShapeData>();
+                    List<ExascaleDBStorageVaultData> array = new List<ExascaleDBStorageVaultData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OracleDBSystemShapeData.DeserializeOracleDBSystemShapeData(item, options));
+                        array.Add(ExascaleDBStorageVaultData.DeserializeExascaleDBStorageVaultData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DbSystemShapeListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ExascaleDBStorageVaultListResult(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

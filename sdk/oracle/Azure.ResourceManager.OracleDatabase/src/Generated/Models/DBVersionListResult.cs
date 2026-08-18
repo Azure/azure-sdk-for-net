@@ -12,32 +12,32 @@ using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> The response of a AutonomousDbVersion list operation. </summary>
-    internal partial class AutonomousDbVersionListResult
+    /// <summary> The response of a DbVersion list operation. </summary>
+    internal partial class DBVersionListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AutonomousDbVersionListResult"/>. </summary>
-        /// <param name="value"> The AutonomousDbVersion items on this page. </param>
-        internal AutonomousDbVersionListResult(IEnumerable<AutonomousDBVersionData> value)
+        /// <summary> Initializes a new instance of <see cref="DBVersionListResult"/>. </summary>
+        /// <param name="value"> The DbVersion items on this page. </param>
+        internal DBVersionListResult(IEnumerable<OracleDBVersionData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutonomousDbVersionListResult"/>. </summary>
-        /// <param name="value"> The AutonomousDbVersion items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="DBVersionListResult"/>. </summary>
+        /// <param name="value"> The DbVersion items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutonomousDbVersionListResult(IList<AutonomousDBVersionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DBVersionListResult(IList<OracleDBVersionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The AutonomousDbVersion items on this page. </summary>
-        public IList<AutonomousDBVersionData> Value { get; }
+        /// <summary> The DbVersion items on this page. </summary>
+        public IList<OracleDBVersionData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

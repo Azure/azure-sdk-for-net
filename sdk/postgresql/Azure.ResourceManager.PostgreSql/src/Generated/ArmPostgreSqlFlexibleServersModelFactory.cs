@@ -516,10 +516,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="serverName"> Name of the server. </param>
         /// <param name="state"> State of the network migration operation. </param>
-        /// <returns> A new <see cref="Models.DbMigrateNetworkStatus"/> instance for mocking. </returns>
-        public static DbMigrateNetworkStatus DbMigrateNetworkStatus(Guid? subscriptionId = default, string resourceGroupName = default, string serverName = default, DbNetworkMigrationState? state = default)
+        /// <returns> A new <see cref="Models.DBMigrateNetworkStatus"/> instance for mocking. </returns>
+        public static DBMigrateNetworkStatus DBMigrateNetworkStatus(Guid? subscriptionId = default, string resourceGroupName = default, string serverName = default, DBNetworkMigrationState? state = default)
         {
-            return new DbMigrateNetworkStatus(subscriptionId, resourceGroupName, serverName, state, default);
+            return new DBMigrateNetworkStatus(subscriptionId, resourceGroupName, serverName, state, default);
         }
 
         /// <param name="targetVersion"> The target major version to upgrade to. </param>
