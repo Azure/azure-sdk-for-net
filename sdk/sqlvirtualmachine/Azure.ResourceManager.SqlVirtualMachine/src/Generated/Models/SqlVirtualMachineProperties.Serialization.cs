@@ -15,7 +15,6 @@ using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    /// <summary> The SQL virtual machine properties. </summary>
     internal partial class SqlVirtualMachineProperties : IJsonModel<SqlVirtualMachineProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -176,10 +175,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("virtualMachineIdentitySettings"u8);
                 writer.WriteObjectValue(VirtualMachineIdentitySettings, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSType))
+            if (options.Format != "W" && Optional.IsDefined(OsType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OSType.Value.ToSerialString());
+                writer.WriteStringValue(OsType.Value.ToSerialString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

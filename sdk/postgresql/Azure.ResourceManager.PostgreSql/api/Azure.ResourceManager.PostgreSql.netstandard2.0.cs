@@ -1133,8 +1133,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         public virtual Azure.Response<Azure.ResourceManager.PostgreSql.FlexibleServers.VirtualEndpointResource> GetVirtualEndpointResource(string virtualEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PostgreSql.FlexibleServers.VirtualEndpointResource>> GetVirtualEndpointResourceAsync(string virtualEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.PostgreSql.FlexibleServers.VirtualEndpointResourceCollection GetVirtualEndpointResources() { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbMigrateNetworkStatus> MigrateNetworkMode(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbMigrateNetworkStatus>> MigrateNetworkModeAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBMigrateNetworkStatus> MigrateNetworkMode(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBMigrateNetworkStatus>> MigrateNetworkModeAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Restart(Azure.WaitUntil waitUntil, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerRestartParameter postgreSqlFlexibleServerRestartParameter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1597,7 +1597,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public static partial class ArmPostgreSqlFlexibleServersModelFactory
     {
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbLevelValidationStatus DbLevelValidationStatus(string databaseName = null, System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationSummaryItem> summary = null) { throw null; }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbMigrateNetworkStatus DbMigrateNetworkStatus(System.Guid? subscriptionId = default(System.Guid?), string resourceGroupName = null, string serverName = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbNetworkMigrationState? state = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbNetworkMigrationState?)) { throw null; }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBMigrateNetworkStatus DBMigrateNetworkStatus(System.Guid? subscriptionId = default(System.Guid?), string resourceGroupName = null, string serverName = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBNetworkMigrationState? state = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBNetworkMigrationState?)) { throw null; }
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbMigrationStatus DbMigrationStatus(string databaseName = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.MigrationDbState? migrationState = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.MigrationDbState?), string migrationOperation = null, System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), int? fullLoadQueuedTables = default(int?), int? fullLoadErroredTables = default(int?), int? fullLoadLoadingTables = default(int?), int? fullLoadCompletedTables = default(int?), int? cdcUpdateCounter = default(int?), int? cdcDeleteCounter = default(int?), int? cdcInsertCounter = default(int?), int? appliedChanges = default(int?), int? incomingChanges = default(int?), int? latency = default(int?), string message = null) { throw null; }
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.MaintenanceEventActionResult MaintenanceEventActionResult(string maintenanceEventId = null, Azure.Core.ResourceIdentifier serverId = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.MaintenanceEventStatus? status = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.MaintenanceEventStatus?), System.DateTimeOffset? plannedStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? plannedEndOn = default(System.DateTimeOffset?), bool? isAppliedNow = default(bool?), System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.MaintenanceEventData MaintenanceEventData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.MaintenanceEventProperties properties = null) { throw null; }
@@ -1721,22 +1721,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbLevelValidationStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbLevelValidationStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DbMigrateNetworkStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbMigrateNetworkStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbMigrateNetworkStatus>
+    public partial class DBMigrateNetworkStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBMigrateNetworkStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBMigrateNetworkStatus>
     {
-        internal DbMigrateNetworkStatus() { }
+        internal DBMigrateNetworkStatus() { }
         public string ResourceGroupName { get { throw null; } }
         public string ServerName { get { throw null; } }
-        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbNetworkMigrationState? State { get { throw null; } }
+        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBNetworkMigrationState? State { get { throw null; } }
         public System.Guid? SubscriptionId { get { throw null; } }
-        protected virtual Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbMigrateNetworkStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBMigrateNetworkStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbMigrateNetworkStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBMigrateNetworkStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbMigrateNetworkStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbMigrateNetworkStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbMigrateNetworkStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbMigrateNetworkStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbMigrateNetworkStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbMigrateNetworkStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbMigrateNetworkStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBMigrateNetworkStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBMigrateNetworkStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBMigrateNetworkStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBMigrateNetworkStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBMigrateNetworkStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBMigrateNetworkStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBMigrateNetworkStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DbMigrationStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbMigrationStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbMigrationStatus>
     {
@@ -1772,24 +1772,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbMigrationStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DbNetworkMigrationState : System.IEquatable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbNetworkMigrationState>
+    public readonly partial struct DBNetworkMigrationState : System.IEquatable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBNetworkMigrationState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public DbNetworkMigrationState(string value) { throw null; }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbNetworkMigrationState CancelInProgress { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbNetworkMigrationState Cancelled { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbNetworkMigrationState Failed { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbNetworkMigrationState InProgress { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbNetworkMigrationState Pending { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbNetworkMigrationState Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbNetworkMigrationState other) { throw null; }
+        public DBNetworkMigrationState(string value) { throw null; }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBNetworkMigrationState CancelInProgress { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBNetworkMigrationState Cancelled { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBNetworkMigrationState Failed { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBNetworkMigrationState InProgress { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBNetworkMigrationState Pending { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBNetworkMigrationState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBNetworkMigrationState other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbNetworkMigrationState left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbNetworkMigrationState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbNetworkMigrationState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbNetworkMigrationState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbNetworkMigrationState left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbNetworkMigrationState right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBNetworkMigrationState left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBNetworkMigrationState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBNetworkMigrationState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBNetworkMigrationState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBNetworkMigrationState left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DBNetworkMigrationState right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class MaintenanceEventActionResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.MaintenanceEventActionResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.MaintenanceEventActionResult>
