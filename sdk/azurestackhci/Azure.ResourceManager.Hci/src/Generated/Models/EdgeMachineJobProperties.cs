@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary>
     /// EdgeMachine Job properties
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EdgeMachineRemoteSupportJobProperties"/>, <see cref="ProvisionOsJobProperties"/>, <see cref="DownloadOsJobProperties"/>, and <see cref="EdgeMachineCollectLogJobProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EdgeMachineRemoteSupportJobProperties"/>, <see cref="ProvisionOSJobProperties"/>, <see cref="DownloadOSJobProperties"/>, and <see cref="EdgeMachineCollectLogJobProperties"/>.
     /// </summary>
     public abstract partial class EdgeMachineJobProperties
     {

@@ -12,22 +12,22 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Reported Properties for Provision Os job. </summary>
-    public partial class ProvisionOsReportedProperties
+    public partial class ProvisionOSReportedProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProvisionOsReportedProperties"/>. </summary>
-        public ProvisionOsReportedProperties()
+        /// <summary> Initializes a new instance of <see cref="ProvisionOSReportedProperties"/>. </summary>
+        public ProvisionOSReportedProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProvisionOsReportedProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionOSReportedProperties"/>. </summary>
         /// <param name="percentComplete"> The percentage of the job that is complete. </param>
         /// <param name="validationStatus"> Validation status of job. </param>
         /// <param name="deploymentStatus"> Deployment status of job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProvisionOsReportedProperties(int? percentComplete, EceActionStatus validationStatus, EceActionStatus deploymentStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProvisionOSReportedProperties(int? percentComplete, EceActionStatus validationStatus, EceActionStatus deploymentStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PercentComplete = percentComplete;
             ValidationStatus = validationStatus;

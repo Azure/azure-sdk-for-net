@@ -14,51 +14,51 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Reported Properties for Provision Os job. </summary>
-    public partial class ProvisionOsReportedProperties : IJsonModel<ProvisionOsReportedProperties>
+    public partial class ProvisionOSReportedProperties : IJsonModel<ProvisionOSReportedProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProvisionOsReportedProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ProvisionOSReportedProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisionOsReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProvisionOSReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeProvisionOsReportedProperties(document.RootElement, options);
+                        return DeserializeProvisionOSReportedProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProvisionOsReportedProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProvisionOSReportedProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisionOsReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProvisionOSReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProvisionOsReportedProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProvisionOSReportedProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProvisionOsReportedProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ProvisionOSReportedProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProvisionOsReportedProperties IPersistableModel<ProvisionOsReportedProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ProvisionOSReportedProperties IPersistableModel<ProvisionOSReportedProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProvisionOsReportedProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProvisionOSReportedProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProvisionOsReportedProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProvisionOSReportedProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisionOsReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProvisionOSReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisionOsReportedProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ProvisionOSReportedProperties)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(PercentComplete))
             {
@@ -108,24 +108,24 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProvisionOsReportedProperties IJsonModel<ProvisionOsReportedProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ProvisionOSReportedProperties IJsonModel<ProvisionOSReportedProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProvisionOsReportedProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ProvisionOSReportedProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisionOsReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProvisionOSReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisionOsReportedProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ProvisionOSReportedProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProvisionOsReportedProperties(document.RootElement, options);
+            return DeserializeProvisionOSReportedProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProvisionOsReportedProperties DeserializeProvisionOsReportedProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ProvisionOSReportedProperties DeserializeProvisionOSReportedProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProvisionOsReportedProperties(percentComplete, validationStatus, deploymentStatus, additionalBinaryDataProperties);
+            return new ProvisionOSReportedProperties(percentComplete, validationStatus, deploymentStatus, additionalBinaryDataProperties);
         }
     }
 }
