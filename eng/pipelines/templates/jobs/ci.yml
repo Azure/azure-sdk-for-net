@@ -59,6 +59,7 @@ jobs:
           Path: eng/pipelines/templates/stages/build-matrix.json
           Selection: sparse
           GenerateVMJobs: true
+        # Experiment baseline: retain API listings in root build, analyze, and test matrix sparse checkouts.
         SparseCheckoutPaths:
           - "/*"
           - "!SessionRecords"
