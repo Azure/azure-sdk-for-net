@@ -86,11 +86,29 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 function Get-TreeMetrics([string] $Path) {
-  $files = @(Get-ChildItem -LiteralPath $Path -File -Recurse -Force -ErrorAction SilentlyContinue |
-    Where-Object { $_.FullName -notlike "$Path/.git/*" })
+  $materialized = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::Ordinal)
+  foreach ($line in (& git -C $Path ls-files -v)) {
+    if ($line -notmatch '^S (.+)$') {
+      $null = $materialized.Add($line.Substring(2))
+    }
+  }
+  if ($LASTEXITCODE -ne 0) {
+    throw "Unable to list files in '$Path'."
+  }
+
+  [long] $bytes = 0
+  foreach ($line in (& git -C $Path ls-tree -r -l HEAD)) {
+    if ($line -match '^\d+ blob [0-9a-f]+\s+(\d+)\t(.+)$' -and $materialized.Contains($Matches[2])) {
+      $bytes += [long] $Matches[1]
+    }
+  }
+  if ($LASTEXITCODE -ne 0) {
+    throw "Unable to measure files in '$Path'."
+  }
+
   return [ordered]@{
-    FileCount = $files.Count
-    FileBytes = ($files | Measure-Object -Property Length -Sum).Sum
+    FileCount = $materialized.Count
+    FileBytes = $bytes
   }
 }
 
@@ -141,9 +159,15 @@ function Invoke-Comparison([string] $Mode) {
   }
   $commandWatch.Stop()
 
-  $packages = @(Get-ChildItem -LiteralPath $clonePath -Filter '*.nupkg' -File -Recurse -ErrorAction SilentlyContinue |
-    ForEach-Object { [System.IO.Path]::GetRelativePath($clonePath, $_.FullName).Replace('\', '/') } |
-    Sort-Object)
+  $artifactPath = Join-Path $clonePath 'artifacts'
+  $packages = if (Test-Path -LiteralPath $artifactPath) {
+    @(Get-ChildItem -LiteralPath $artifactPath -Filter '*.nupkg' -File -Recurse -ErrorAction SilentlyContinue |
+      ForEach-Object { [System.IO.Path]::GetRelativePath($clonePath, $_.FullName).Replace('\', '/') } |
+      Sort-Object)
+  }
+  else {
+    @()
+  }
 
   return [ordered]@{
     Mode = $Mode
