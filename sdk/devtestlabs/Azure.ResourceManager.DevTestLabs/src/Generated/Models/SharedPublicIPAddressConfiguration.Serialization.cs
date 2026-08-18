@@ -14,51 +14,51 @@ using Azure.ResourceManager.DevTestLabs;
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Properties of a virtual machine that determine how it is connected to a load balancer. </summary>
-    internal partial class SharedPublicIpAddressConfiguration : IJsonModel<SharedPublicIpAddressConfiguration>
+    internal partial class SharedPublicIPAddressConfiguration : IJsonModel<SharedPublicIPAddressConfiguration>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SharedPublicIpAddressConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SharedPublicIPAddressConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SharedPublicIpAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SharedPublicIPAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSharedPublicIpAddressConfiguration(document.RootElement, options);
+                        return DeserializeSharedPublicIPAddressConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SharedPublicIpAddressConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharedPublicIPAddressConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SharedPublicIpAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SharedPublicIPAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDevTestLabsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SharedPublicIpAddressConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharedPublicIPAddressConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SharedPublicIpAddressConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SharedPublicIPAddressConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SharedPublicIpAddressConfiguration IPersistableModel<SharedPublicIpAddressConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SharedPublicIPAddressConfiguration IPersistableModel<SharedPublicIPAddressConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SharedPublicIpAddressConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SharedPublicIPAddressConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SharedPublicIpAddressConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SharedPublicIPAddressConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SharedPublicIpAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SharedPublicIPAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharedPublicIpAddressConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SharedPublicIPAddressConfiguration)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(InboundNatRules))
             {
@@ -103,24 +103,24 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SharedPublicIpAddressConfiguration IJsonModel<SharedPublicIpAddressConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SharedPublicIPAddressConfiguration IJsonModel<SharedPublicIPAddressConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SharedPublicIpAddressConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SharedPublicIPAddressConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SharedPublicIpAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SharedPublicIPAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharedPublicIpAddressConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SharedPublicIPAddressConfiguration)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSharedPublicIpAddressConfiguration(document.RootElement, options);
+            return DeserializeSharedPublicIPAddressConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SharedPublicIpAddressConfiguration DeserializeSharedPublicIpAddressConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        internal static SharedPublicIPAddressConfiguration DeserializeSharedPublicIPAddressConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SharedPublicIpAddressConfiguration(inboundNatRules ?? new ChangeTrackingList<DevTestLabInboundNatRule>(), additionalBinaryDataProperties);
+            return new SharedPublicIPAddressConfiguration(inboundNatRules ?? new ChangeTrackingList<DevTestLabInboundNatRule>(), additionalBinaryDataProperties);
         }
     }
 }
