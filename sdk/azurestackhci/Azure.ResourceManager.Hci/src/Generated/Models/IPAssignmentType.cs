@@ -12,7 +12,7 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> IP assignment types. </summary>
-    public readonly partial struct IpAssignmentType : IEquatable<IpAssignmentType>
+    public readonly partial struct IPAssignmentType : IEquatable<IPAssignmentType>
     {
         private readonly string _value;
         /// <summary> Automatic IP assignment. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Manual IP assignment. </summary>
         private const string ManualValue = "Manual";
 
-        /// <summary> Initializes a new instance of <see cref="IpAssignmentType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPAssignmentType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public IpAssignmentType(string value)
+        public IPAssignmentType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Automatic IP assignment. </summary>
-        public static IpAssignmentType Automatic { get; } = new IpAssignmentType(AutomaticValue);
+        public static IPAssignmentType Automatic { get; } = new IPAssignmentType(AutomaticValue);
 
         /// <summary> Manual IP assignment. </summary>
-        public static IpAssignmentType Manual { get; } = new IpAssignmentType(ManualValue);
+        public static IPAssignmentType Manual { get; } = new IPAssignmentType(ManualValue);
 
-        /// <summary> Determines if two <see cref="IpAssignmentType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="IPAssignmentType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(IpAssignmentType left, IpAssignmentType right) => left.Equals(right);
+        public static bool operator ==(IPAssignmentType left, IPAssignmentType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="IpAssignmentType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="IPAssignmentType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(IpAssignmentType left, IpAssignmentType right) => !left.Equals(right);
+        public static bool operator !=(IPAssignmentType left, IPAssignmentType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="IpAssignmentType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="IPAssignmentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IpAssignmentType(string value) => new IpAssignmentType(value);
+        public static implicit operator IPAssignmentType(string value) => new IPAssignmentType(value);
 
-        /// <summary> Converts a string to a <see cref="IpAssignmentType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="IPAssignmentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IpAssignmentType?(string value) => value == null ? null : new IpAssignmentType(value);
+        public static implicit operator IPAssignmentType?(string value) => value == null ? null : new IPAssignmentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is IpAssignmentType other && Equals(other);
+        public override bool Equals(object obj) => obj is IPAssignmentType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(IpAssignmentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(IPAssignmentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
