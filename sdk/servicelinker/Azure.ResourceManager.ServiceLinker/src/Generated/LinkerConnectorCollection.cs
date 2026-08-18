@@ -22,30 +22,30 @@ namespace Azure.ResourceManager.ServiceLinker
     /// <summary>
     /// A class representing a collection of <see cref="LinkerConnectorResource"/> and their operations.
     /// Each <see cref="LinkerConnectorResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="LinkerConnectorResourceCollection"/> instance call the GetLinkerConnectorResources method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="LinkerConnectorCollection"/> instance call the GetLinkerConnectors method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class LinkerConnectorResourceCollection : ArmCollection, IEnumerable<LinkerConnectorResource>, IAsyncEnumerable<LinkerConnectorResource>
+    public partial class LinkerConnectorCollection : ArmCollection, IEnumerable<LinkerConnectorResource>, IAsyncEnumerable<LinkerConnectorResource>
     {
-        private readonly ClientDiagnostics _linkerConnectorResourcesClientDiagnostics;
-        private readonly LinkerConnectorResources _linkerConnectorResourcesRestClient;
+        private readonly ClientDiagnostics _linkerConnectorsClientDiagnostics;
+        private readonly LinkerConnectors _linkerConnectorsRestClient;
         /// <summary> The location. </summary>
         private readonly string _location;
 
-        /// <summary> Initializes a new instance of LinkerConnectorResourceCollection for mocking. </summary>
-        protected LinkerConnectorResourceCollection()
+        /// <summary> Initializes a new instance of LinkerConnectorCollection for mocking. </summary>
+        protected LinkerConnectorCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LinkerConnectorResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkerConnectorCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         /// <param name="location"> The location for the resource. </param>
-        internal LinkerConnectorResourceCollection(ArmClient client, ResourceIdentifier id, string location) : base(client, id)
+        internal LinkerConnectorCollection(ArmClient client, ResourceIdentifier id, string location) : base(client, id)
         {
-            TryGetApiVersion(LinkerConnectorResource.ResourceType, out string linkerConnectorResourceApiVersion);
+            TryGetApiVersion(LinkerConnectorResource.ResourceType, out string linkerConnectorApiVersion);
             _location = location;
-            _linkerConnectorResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceLinker", LinkerConnectorResource.ResourceType.Namespace, Diagnostics);
-            _linkerConnectorResourcesRestClient = new LinkerConnectorResources(_linkerConnectorResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, linkerConnectorResourceApiVersion ?? "2024-07-01-preview");
+            _linkerConnectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceLinker", LinkerConnectorResource.ResourceType.Namespace, Diagnostics);
+            _linkerConnectorsRestClient = new LinkerConnectors(_linkerConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, linkerConnectorApiVersion ?? "2024-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ServiceLinker
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _linkerConnectorResourcesClientDiagnostics.CreateScope("LinkerConnectorResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _linkerConnectorsClientDiagnostics.CreateScope("LinkerConnectorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerConnectorResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, connectorName, LinkerResourceData.ToRequestContent(data), context);
+                HttpMessage message = _linkerConnectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, connectorName, LinkerResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceLinkerArmOperation<LinkerConnectorResource> operation = new ServiceLinkerArmOperation<LinkerConnectorResource>(
                     new LinkerConnectorResourceOperationSource(Client),
-                    _linkerConnectorResourcesClientDiagnostics,
+                    _linkerConnectorsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ServiceLinker
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _linkerConnectorResourcesClientDiagnostics.CreateScope("LinkerConnectorResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _linkerConnectorsClientDiagnostics.CreateScope("LinkerConnectorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerConnectorResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, connectorName, LinkerResourceData.ToRequestContent(data), context);
+                HttpMessage message = _linkerConnectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, connectorName, LinkerResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceLinkerArmOperation<LinkerConnectorResource> operation = new ServiceLinkerArmOperation<LinkerConnectorResource>(
                     new LinkerConnectorResourceOperationSource(Client),
-                    _linkerConnectorResourcesClientDiagnostics,
+                    _linkerConnectorsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ServiceLinker
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            using DiagnosticScope scope = _linkerConnectorResourcesClientDiagnostics.CreateScope("LinkerConnectorResourceCollection.Get");
+            using DiagnosticScope scope = _linkerConnectorsClientDiagnostics.CreateScope("LinkerConnectorCollection.Get");
             scope.Start();
             try
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerConnectorResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, connectorName, context);
+                HttpMessage message = _linkerConnectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, connectorName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LinkerResourceData> response = Response.FromValue(LinkerResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ServiceLinker
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            using DiagnosticScope scope = _linkerConnectorResourcesClientDiagnostics.CreateScope("LinkerConnectorResourceCollection.Get");
+            using DiagnosticScope scope = _linkerConnectorsClientDiagnostics.CreateScope("LinkerConnectorCollection.Get");
             scope.Start();
             try
             {
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerConnectorResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, connectorName, context);
+                HttpMessage message = _linkerConnectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, connectorName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LinkerResourceData> response = Response.FromValue(LinkerResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -298,13 +298,13 @@ namespace Azure.ResourceManager.ServiceLinker
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LinkerResourceData, LinkerConnectorResource>(new LinkerConnectorResourcesGetAllAsyncCollectionResultOfT(
-                _linkerConnectorResourcesRestClient,
+            return new AsyncPageableWrapper<LinkerResourceData, LinkerConnectorResource>(new LinkerConnectorsGetAllAsyncCollectionResultOfT(
+                _linkerConnectorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 _location,
                 context,
-                "LinkerConnectorResourceCollection.GetAll"), data => new LinkerConnectorResource(Client, data));
+                "LinkerConnectorCollection.GetAll"), data => new LinkerConnectorResource(Client, data));
         }
 
         /// <summary>
@@ -332,13 +332,13 @@ namespace Azure.ResourceManager.ServiceLinker
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LinkerResourceData, LinkerConnectorResource>(new LinkerConnectorResourcesGetAllCollectionResultOfT(
-                _linkerConnectorResourcesRestClient,
+            return new PageableWrapper<LinkerResourceData, LinkerConnectorResource>(new LinkerConnectorsGetAllCollectionResultOfT(
+                _linkerConnectorsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 _location,
                 context,
-                "LinkerConnectorResourceCollection.GetAll"), data => new LinkerConnectorResource(Client, data));
+                "LinkerConnectorCollection.GetAll"), data => new LinkerConnectorResource(Client, data));
         }
 
         /// <summary>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.ServiceLinker
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            using DiagnosticScope scope = _linkerConnectorResourcesClientDiagnostics.CreateScope("LinkerConnectorResourceCollection.Exists");
+            using DiagnosticScope scope = _linkerConnectorsClientDiagnostics.CreateScope("LinkerConnectorCollection.Exists");
             scope.Start();
             try
             {
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerConnectorResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, connectorName, context);
+                HttpMessage message = _linkerConnectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, connectorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LinkerResourceData> response = default;
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.ServiceLinker
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            using DiagnosticScope scope = _linkerConnectorResourcesClientDiagnostics.CreateScope("LinkerConnectorResourceCollection.Exists");
+            using DiagnosticScope scope = _linkerConnectorsClientDiagnostics.CreateScope("LinkerConnectorCollection.Exists");
             scope.Start();
             try
             {
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerConnectorResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, connectorName, context);
+                HttpMessage message = _linkerConnectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, connectorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LinkerResourceData> response = default;
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.ServiceLinker
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            using DiagnosticScope scope = _linkerConnectorResourcesClientDiagnostics.CreateScope("LinkerConnectorResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _linkerConnectorsClientDiagnostics.CreateScope("LinkerConnectorCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerConnectorResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, connectorName, context);
+                HttpMessage message = _linkerConnectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, connectorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LinkerResourceData> response = default;
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.ServiceLinker
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            using DiagnosticScope scope = _linkerConnectorResourcesClientDiagnostics.CreateScope("LinkerConnectorResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _linkerConnectorsClientDiagnostics.CreateScope("LinkerConnectorCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerConnectorResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, connectorName, context);
+                HttpMessage message = _linkerConnectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _location, connectorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LinkerResourceData> response = default;
