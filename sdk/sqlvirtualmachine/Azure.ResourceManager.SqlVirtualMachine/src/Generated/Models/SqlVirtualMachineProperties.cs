@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             EnableAutomaticUpgrade = enableAutomaticUpgrade;
             AdditionalVmPatch = additionalVmPatch;
             VirtualMachineIdentitySettings = virtualMachineIdentitySettings;
-            OsType = osType;
+            OSType = osType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -133,6 +133,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public SqlVmIdentity VirtualMachineIdentitySettings { get; set; }
 
         /// <summary> Operating System of the current SQL Virtual Machine. </summary>
-        public SqlVmOsType? OsType { get; }
+        public SqlVmOsType? OSType { get; }
     }
 }
