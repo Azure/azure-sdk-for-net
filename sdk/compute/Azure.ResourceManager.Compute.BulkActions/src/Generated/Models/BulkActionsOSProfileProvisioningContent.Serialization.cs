@@ -13,52 +13,52 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Contains the IP tag associated with the public IP address. </summary>
-    public partial class VirtualMachineIpTag : IJsonModel<VirtualMachineIpTag>
+    /// <summary> Additional parameters for Reimaging Non-Ephemeral Virtual Machine. </summary>
+    public partial class BulkActionsOSProfileProvisioningContent : IJsonModel<BulkActionsOSProfileProvisioningContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VirtualMachineIpTag PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BulkActionsOSProfileProvisioningContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineIpTag>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsOSProfileProvisioningContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVirtualMachineIpTag(document.RootElement, options);
+                        return DeserializeBulkActionsOSProfileProvisioningContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineIpTag)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BulkActionsOSProfileProvisioningContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineIpTag>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsOSProfileProvisioningContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeBulkActionsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineIpTag)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BulkActionsOSProfileProvisioningContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VirtualMachineIpTag>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BulkActionsOSProfileProvisioningContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualMachineIpTag IPersistableModel<VirtualMachineIpTag>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BulkActionsOSProfileProvisioningContent IPersistableModel<BulkActionsOSProfileProvisioningContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VirtualMachineIpTag>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BulkActionsOSProfileProvisioningContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VirtualMachineIpTag>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BulkActionsOSProfileProvisioningContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineIpTag>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsOSProfileProvisioningContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineIpTag)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BulkActionsOSProfileProvisioningContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IpTagType))
+            if (Optional.IsDefined(AdminPassword))
             {
-                writer.WritePropertyName("ipTagType"u8);
-                writer.WriteStringValue(IpTagType);
+                writer.WritePropertyName("adminPassword"u8);
+                writer.WriteStringValue(AdminPassword);
             }
-            if (Optional.IsDefined(Tag))
+            if (Optional.IsDefined(CustomData))
             {
-                writer.WritePropertyName("tag"u8);
-                writer.WriteStringValue(Tag);
+                writer.WritePropertyName("customData"u8);
+                writer.WriteStringValue(CustomData);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,42 +103,42 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualMachineIpTag IJsonModel<VirtualMachineIpTag>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BulkActionsOSProfileProvisioningContent IJsonModel<BulkActionsOSProfileProvisioningContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VirtualMachineIpTag JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BulkActionsOSProfileProvisioningContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineIpTag>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsOSProfileProvisioningContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineIpTag)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BulkActionsOSProfileProvisioningContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVirtualMachineIpTag(document.RootElement, options);
+            return DeserializeBulkActionsOSProfileProvisioningContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VirtualMachineIpTag DeserializeVirtualMachineIpTag(JsonElement element, ModelReaderWriterOptions options)
+        internal static BulkActionsOSProfileProvisioningContent DeserializeBulkActionsOSProfileProvisioningContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string ipTagType = default;
-            string tag = default;
+            string adminPassword = default;
+            string customData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("ipTagType"u8))
+                if (prop.NameEquals("adminPassword"u8))
                 {
-                    ipTagType = prop.Value.GetString();
+                    adminPassword = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("tag"u8))
+                if (prop.NameEquals("customData"u8))
                 {
-                    tag = prop.Value.GetString();
+                    customData = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualMachineIpTag(ipTagType, tag, additionalBinaryDataProperties);
+            return new BulkActionsOSProfileProvisioningContent(adminPassword, customData, additionalBinaryDataProperties);
         }
     }
 }
