@@ -168,9 +168,9 @@ namespace Azure.Compute.Batch
             return new BatchClientGetApplicationsCollectionResultOfT(
                 this,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetApplications");
         }
 
@@ -198,9 +198,9 @@ namespace Azure.Compute.Batch
             return new BatchClientGetApplicationsAsyncCollectionResultOfT(
                 this,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetApplications");
         }
 
@@ -310,7 +310,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
-            Response result = GetApplication(applicationId, timeout, requestDate: null, context: cancellationToken.ToRequestContext());
+            Response result = GetApplication(applicationId, timeout, requestDate, cancellationToken.ToRequestContext());
             return Response.FromValue((BatchApplication)result, result);
         }
 
@@ -336,7 +336,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
-            Response result = await GetApplicationAsync(applicationId, timeout, requestDate: null, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetApplicationAsync(applicationId, timeout, requestDate, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((BatchApplication)result, result);
         }
 
@@ -487,12 +487,12 @@ namespace Azure.Compute.Batch
             return new BatchClientGetPoolUsageMetricsCollectionResultOfT(
                 this,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                starttime: starttime,
-                endtime: endtime,
-                filter: filter,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                starttime,
+                endtime,
+                filter,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetPoolUsageMetrics");
         }
 
@@ -535,12 +535,12 @@ namespace Azure.Compute.Batch
             return new BatchClientGetPoolUsageMetricsAsyncCollectionResultOfT(
                 this,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                starttime: starttime,
-                endtime: endtime,
-                filter: filter,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                starttime,
+                endtime,
+                filter,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetPoolUsageMetrics");
         }
 
@@ -641,7 +641,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNull(pool, nameof(pool));
 
-            return CreatePool(pool, timeout, context: cancellationToken.ToRequestContext());
+            return CreatePool(pool, timeout, requestDate, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -663,7 +663,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNull(pool, nameof(pool));
 
-            return await CreatePoolAsync(pool, timeout, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await CreatePoolAsync(pool, timeout, requestDate, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -772,12 +772,12 @@ namespace Azure.Compute.Batch
             return new BatchClientGetPoolsCollectionResultOfT(
                 this,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                filter: filter,
-                @select: @select,
-                expand: expand,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                filter,
+                @select,
+                expand,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetPools");
         }
 
@@ -805,12 +805,12 @@ namespace Azure.Compute.Batch
             return new BatchClientGetPoolsAsyncCollectionResultOfT(
                 this,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                filter: filter,
-                @select: @select,
-                expand: expand,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                filter,
+                @select,
+                expand,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetPools");
         }
 
@@ -835,7 +835,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -844,13 +844,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response DeletePoolInternal(string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
+        internal virtual Response DeletePoolInternal(string poolId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.DeletePoolInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeletePoolInternalRequest(poolId, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateDeletePoolInternalRequest(poolId, timeout, requestOn, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -881,7 +881,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -890,13 +890,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> DeletePoolInternalAsync(string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
+        internal virtual async Task<Response> DeletePoolInternalAsync(string poolId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.DeletePoolInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeletePoolInternalRequest(poolId, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateDeletePoolInternalRequest(poolId, timeout, requestOn, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -932,7 +932,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response DeletePoolInternal(string poolId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return this.DeletePoolInternal(poolId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext());
+            return DeletePoolInternal(poolId, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -961,7 +961,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response> DeletePoolInternalAsync(string poolId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await this.DeletePoolInternalAsync(poolId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DeletePoolInternalAsync(poolId, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -974,7 +974,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -983,13 +983,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response PoolExistsInternal(string poolId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, RequestContext context = null)
+        internal virtual Response PoolExistsInternal(string poolId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.PoolExistsInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePoolExistsInternalRequest(poolId, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreatePoolExistsInternalRequest(poolId, timeout, requestOn, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1009,7 +1009,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1018,13 +1018,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> PoolExistsInternalAsync(string poolId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, RequestContext context = null)
+        internal virtual async Task<Response> PoolExistsInternalAsync(string poolId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.PoolExistsInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePoolExistsInternalRequest(poolId, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreatePoolExistsInternalRequest(poolId, timeout, requestOn, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1135,7 +1135,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
-            Response result = this.GetPool(poolId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, @select: @select, expand: expand, context: cancellationToken.ToRequestContext());
+            Response result = GetPool(poolId, timeout, requestDate, requestConditions, @select, expand, cancellationToken.ToRequestContext());
             return Response.FromValue((BatchPool)result, result);
         }
 
@@ -1158,7 +1158,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
-            Response result = await this.GetPoolAsync(poolId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, @select: @select, expand: expand, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetPoolAsync(poolId, timeout, requestDate, requestConditions, @select, expand, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((BatchPool)result, result);
         }
 
@@ -1340,7 +1340,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
-            return DisablePoolAutoScale(poolId, timeout, requestDate: null, context: cancellationToken.ToRequestContext());
+            return DisablePoolAutoScale(poolId, timeout, requestDate, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Disables automatic scaling for a Pool. </summary>
@@ -1359,7 +1359,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
-            return await DisablePoolAutoScaleAsync(poolId, timeout, requestDate: null, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DisablePoolAutoScaleAsync(poolId, timeout, requestDate, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1480,7 +1480,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(enableAutoScaleOptions, nameof(enableAutoScaleOptions));
 
-            return this.EnablePoolAutoScale(poolId, enableAutoScaleOptions, timeout, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext());
+            return EnablePoolAutoScale(poolId, enableAutoScaleOptions, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -1509,7 +1509,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(enableAutoScaleOptions, nameof(enableAutoScaleOptions));
 
-            return await this.EnablePoolAutoScaleAsync(poolId, enableAutoScaleOptions, timeout, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await EnablePoolAutoScaleAsync(poolId, enableAutoScaleOptions, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1618,7 +1618,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(evaluateAutoScaleOptions, nameof(evaluateAutoScaleOptions));
 
-            Response result = EvaluatePoolAutoScale(poolId, evaluateAutoScaleOptions, timeout, context: cancellationToken.ToRequestContext());
+            Response result = EvaluatePoolAutoScale(poolId, evaluateAutoScaleOptions, timeout, requestDate, cancellationToken.ToRequestContext());
             return Response.FromValue((AutoScaleRun)result, result);
         }
 
@@ -1644,7 +1644,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(evaluateAutoScaleOptions, nameof(evaluateAutoScaleOptions));
 
-            Response result = await EvaluatePoolAutoScaleAsync(poolId, evaluateAutoScaleOptions, timeout, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await EvaluatePoolAutoScaleAsync(poolId, evaluateAutoScaleOptions, timeout, requestDate, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((AutoScaleRun)result, result);
         }
 
@@ -1665,7 +1665,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1674,13 +1674,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response ResizePoolInternal(string poolId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, RequestContext context = null)
+        internal virtual Response ResizePoolInternal(string poolId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.ResizePoolInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateResizePoolInternalRequest(poolId, content, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateResizePoolInternalRequest(poolId, content, timeout, requestOn, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1707,7 +1707,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1716,13 +1716,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> ResizePoolInternalAsync(string poolId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, RequestContext context = null)
+        internal virtual async Task<Response> ResizePoolInternalAsync(string poolId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.ResizePoolInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateResizePoolInternalRequest(poolId, content, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateResizePoolInternalRequest(poolId, content, timeout, requestOn, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1754,7 +1754,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response ResizePoolInternal(string poolId, BatchPoolResizeOptions resizeOptions, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return this.ResizePoolInternal(poolId, resizeOptions, timeout, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext());
+            return ResizePoolInternal(poolId, resizeOptions, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -1779,7 +1779,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response> ResizePoolInternalAsync(string poolId, BatchPoolResizeOptions resizeOptions, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await this.ResizePoolInternalAsync(poolId, resizeOptions, timeout, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await ResizePoolInternalAsync(poolId, resizeOptions, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1798,7 +1798,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1807,13 +1807,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response StopPoolResizeInternal(string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
+        internal virtual Response StopPoolResizeInternal(string poolId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.StopPoolResizeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStopPoolResizeInternalRequest(poolId, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateStopPoolResizeInternalRequest(poolId, timeout, requestOn, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1839,7 +1839,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -1848,13 +1848,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> StopPoolResizeInternalAsync(string poolId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
+        internal virtual async Task<Response> StopPoolResizeInternalAsync(string poolId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.StopPoolResizeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStopPoolResizeInternalRequest(poolId, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateStopPoolResizeInternalRequest(poolId, timeout, requestOn, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1885,7 +1885,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response StopPoolResizeInternal(string poolId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return this.StopPoolResizeInternal(poolId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext());
+            return StopPoolResizeInternal(poolId, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -1909,7 +1909,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response> StopPoolResizeInternalAsync(string poolId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await this.StopPoolResizeInternalAsync(poolId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await StopPoolResizeInternalAsync(poolId, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2018,7 +2018,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(pool, nameof(pool));
 
-            return ReplacePoolProperties(poolId, pool, timeout, context: cancellationToken.ToRequestContext());
+            return ReplacePoolProperties(poolId, pool, timeout, requestDate, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -2043,7 +2043,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(pool, nameof(pool));
 
-            return await ReplacePoolPropertiesAsync(poolId, pool, timeout, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await ReplacePoolPropertiesAsync(poolId, pool, timeout, requestDate, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2059,7 +2059,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2068,13 +2068,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response RemoveNodesInternal(string poolId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, RequestContext context = null)
+        internal virtual Response RemoveNodesInternal(string poolId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.RemoveNodesInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRemoveNodesInternalRequest(poolId, content, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateRemoveNodesInternalRequest(poolId, content, timeout, requestOn, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2097,7 +2097,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2106,13 +2106,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> RemoveNodesInternalAsync(string poolId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, RequestContext context = null)
+        internal virtual async Task<Response> RemoveNodesInternalAsync(string poolId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.RemoveNodesInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRemoveNodesInternalRequest(poolId, content, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateRemoveNodesInternalRequest(poolId, content, timeout, requestOn, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2140,7 +2140,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response RemoveNodesInternal(string poolId, BatchNodeRemoveOptions removeOptions, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return this.RemoveNodesInternal(poolId, removeOptions, timeout, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext());
+            return RemoveNodesInternal(poolId, removeOptions, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -2161,7 +2161,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response> RemoveNodesInternalAsync(string poolId, BatchNodeRemoveOptions removeOptions, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await this.RemoveNodesInternalAsync(poolId, removeOptions, timeout, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await RemoveNodesInternalAsync(poolId, removeOptions, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2260,10 +2260,10 @@ namespace Azure.Compute.Batch
             return new BatchClientGetSupportedImagesCollectionResultOfT(
                 this,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                filter: filter,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                filter,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetSupportedImages");
         }
 
@@ -2289,10 +2289,10 @@ namespace Azure.Compute.Batch
             return new BatchClientGetSupportedImagesAsyncCollectionResultOfT(
                 this,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                filter: filter,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                filter,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetSupportedImages");
         }
 
@@ -2400,10 +2400,10 @@ namespace Azure.Compute.Batch
             return new BatchClientGetPoolNodeCountsCollectionResultOfT(
                 this,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                filter: filter,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                filter,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetPoolNodeCounts");
         }
 
@@ -2433,10 +2433,10 @@ namespace Azure.Compute.Batch
             return new BatchClientGetPoolNodeCountsAsyncCollectionResultOfT(
                 this,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                filter: filter,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                filter,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetPoolNodeCounts");
         }
 
@@ -2457,7 +2457,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobId"> The ID of the Job to delete. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2467,13 +2467,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response DeleteJobInternal(string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, bool? force, RequestContext context)
+        internal virtual Response DeleteJobInternal(string jobId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, bool? force, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJobInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteJobInternalRequest(jobId, timeout, requestDate, requestConditions, force, context);
+                using HttpMessage message = CreateDeleteJobInternalRequest(jobId, timeout, requestOn, requestConditions, force, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2500,7 +2500,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobId"> The ID of the Job to delete. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2510,13 +2510,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> DeleteJobInternalAsync(string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, bool? force, RequestContext context)
+        internal virtual async Task<Response> DeleteJobInternalAsync(string jobId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, bool? force, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJobInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteJobInternalRequest(jobId, timeout, requestDate, requestConditions, force, context);
+                using HttpMessage message = CreateDeleteJobInternalRequest(jobId, timeout, requestOn, requestConditions, force, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2549,7 +2549,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response DeleteJobInternal(string jobId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, bool? force = default, CancellationToken cancellationToken = default)
         {
-            return this.DeleteJobInternal(jobId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, force: force, context: cancellationToken.ToRequestContext());
+            return DeleteJobInternal(jobId, timeout, requestOn, requestConditions, force, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -2575,7 +2575,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response> DeleteJobInternalAsync(string jobId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, bool? force = default, CancellationToken cancellationToken = default)
         {
-            return await this.DeleteJobInternalAsync(jobId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, force: force, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DeleteJobInternalAsync(jobId, timeout, requestOn, requestConditions, force, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2679,7 +2679,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            Response result = this.GetJob(jobId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, @select: @select, expand: expand, context: cancellationToken.ToRequestContext());
+            Response result = GetJob(jobId, timeout, requestDate, requestConditions, @select, expand, cancellationToken.ToRequestContext());
             return Response.FromValue((BatchJob)result, result);
         }
 
@@ -2702,7 +2702,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            Response result = await this.GetJobAsync(jobId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, @select: @select, expand: expand, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetJobAsync(jobId, timeout, requestDate, requestConditions, @select, expand, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((BatchJob)result, result);
         }
 
@@ -2901,7 +2901,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(job, nameof(job));
 
-            return this.ReplaceJob(jobId, job, timeout, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext());
+            return ReplaceJob(jobId, job, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -2927,7 +2927,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(job, nameof(job));
 
-            return await this.ReplaceJobAsync(jobId, job, timeout, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await ReplaceJobAsync(jobId, job, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2948,7 +2948,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to disable. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -2957,13 +2957,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response DisableJobInternal(string jobId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, RequestContext context = null)
+        internal virtual Response DisableJobInternal(string jobId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.DisableJobInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDisableJobInternalRequest(jobId, content, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateDisableJobInternalRequest(jobId, content, timeout, requestOn, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2991,7 +2991,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to disable. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3000,13 +3000,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> DisableJobInternalAsync(string jobId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, RequestContext context = null)
+        internal virtual async Task<Response> DisableJobInternalAsync(string jobId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.DisableJobInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDisableJobInternalRequest(jobId, content, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateDisableJobInternalRequest(jobId, content, timeout, requestOn, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3039,7 +3039,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response DisableJobInternal(string jobId, BatchJobDisableOptions disableOptions, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return this.DisableJobInternal(jobId, disableOptions, timeout, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext());
+            return DisableJobInternal(jobId, disableOptions, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -3065,7 +3065,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response> DisableJobInternalAsync(string jobId, BatchJobDisableOptions disableOptions, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await this.DisableJobInternalAsync(jobId, disableOptions, timeout, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DisableJobInternalAsync(jobId, disableOptions, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3083,7 +3083,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobId"> The ID of the Job to enable. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3092,13 +3092,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response EnableJobInternal(string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
+        internal virtual Response EnableJobInternal(string jobId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.EnableJobInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateEnableJobInternalRequest(jobId, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateEnableJobInternalRequest(jobId, timeout, requestOn, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3123,7 +3123,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobId"> The ID of the Job to enable. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3132,13 +3132,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> EnableJobInternalAsync(string jobId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
+        internal virtual async Task<Response> EnableJobInternalAsync(string jobId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.EnableJobInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateEnableJobInternalRequest(jobId, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateEnableJobInternalRequest(jobId, timeout, requestOn, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3168,7 +3168,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response EnableJobInternal(string jobId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return this.EnableJobInternal(jobId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext());
+            return EnableJobInternal(jobId, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -3191,7 +3191,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response> EnableJobInternalAsync(string jobId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await this.EnableJobInternalAsync(jobId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await EnableJobInternalAsync(jobId, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3210,7 +3210,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to terminate. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3220,13 +3220,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response TerminateJobInternal(string jobId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, bool? force = default, RequestContext context = null)
+        internal virtual Response TerminateJobInternal(string jobId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, bool? force = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJobInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTerminateJobInternalRequest(jobId, content, timeout, requestDate, requestConditions, force, context);
+                using HttpMessage message = CreateTerminateJobInternalRequest(jobId, content, timeout, requestOn, requestConditions, force, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3252,7 +3252,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job to terminate. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -3262,13 +3262,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> TerminateJobInternalAsync(string jobId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, bool? force = default, RequestContext context = null)
+        internal virtual async Task<Response> TerminateJobInternalAsync(string jobId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, bool? force = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJobInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTerminateJobInternalRequest(jobId, content, timeout, requestDate, requestConditions, force, context);
+                using HttpMessage message = CreateTerminateJobInternalRequest(jobId, content, timeout, requestOn, requestConditions, force, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3300,7 +3300,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response TerminateJobInternal(string jobId, BatchJobTerminateOptions options = default, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, bool? force = default, CancellationToken cancellationToken = default)
         {
-            return this.TerminateJobInternal(jobId, options, timeout, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, force: force, context: cancellationToken.ToRequestContext());
+            return TerminateJobInternal(jobId, options, timeout, requestOn, requestConditions, force, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -3325,7 +3325,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response> TerminateJobInternalAsync(string jobId, BatchJobTerminateOptions options = default, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, bool? force = default, CancellationToken cancellationToken = default)
         {
-            return await this.TerminateJobInternalAsync(jobId, options, timeout, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, force: force, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await TerminateJobInternalAsync(jobId, options, timeout, requestOn, requestConditions, force, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3443,7 +3443,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNull(job, nameof(job));
 
-            return CreateJob(job, timeout, context: cancellationToken.ToRequestContext());
+            return CreateJob(job, timeout, requestDate, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -3471,7 +3471,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNull(job, nameof(job));
 
-            return await CreateJobAsync(job, timeout, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await CreateJobAsync(job, timeout, requestDate, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3580,12 +3580,12 @@ namespace Azure.Compute.Batch
             return new BatchClientGetJobsCollectionResultOfT(
                 this,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                filter: filter,
-                @select: @select,
-                expand: expand,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                filter,
+                @select,
+                expand,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetJobs");
         }
 
@@ -3613,12 +3613,12 @@ namespace Azure.Compute.Batch
             return new BatchClientGetJobsAsyncCollectionResultOfT(
                 this,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                filter: filter,
-                @select: @select,
-                expand: expand,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                filter,
+                @select,
+                expand,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetJobs");
         }
 
@@ -3746,12 +3746,12 @@ namespace Azure.Compute.Batch
                 this,
                 jobScheduleId,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                filter: filter,
-                @select: @select,
-                expand: expand,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                filter,
+                @select,
+                expand,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetJobsFromSchedule");
         }
 
@@ -3785,12 +3785,12 @@ namespace Azure.Compute.Batch
                 this,
                 jobScheduleId,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                filter: filter,
-                @select: @select,
-                expand: expand,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                filter,
+                @select,
+                expand,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetJobsFromSchedule");
         }
 
@@ -3930,11 +3930,11 @@ namespace Azure.Compute.Batch
                 this,
                 jobId,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                filter: filter,
-                @select: @select,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                filter,
+                @select,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetJobPreparationAndReleaseTaskStatuses");
         }
 
@@ -3974,11 +3974,11 @@ namespace Azure.Compute.Batch
                 this,
                 jobId,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                filter: filter,
-                @select: @select,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                filter,
+                @select,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetJobPreparationAndReleaseTaskStatuses");
         }
 
@@ -4085,7 +4085,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            Response result = GetJobTaskCounts(jobId, timeout, requestDate: null, context: cancellationToken.ToRequestContext());
+            Response result = GetJobTaskCounts(jobId, timeout, requestDate, cancellationToken.ToRequestContext());
             return Response.FromValue((BatchTaskCountsResult)result, result);
         }
 
@@ -4110,7 +4110,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            Response result = await GetJobTaskCountsAsync(jobId, timeout, requestDate: null, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetJobTaskCountsAsync(jobId, timeout, requestDate, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((BatchTaskCountsResult)result, result);
         }
 
@@ -4124,7 +4124,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule which you want to check. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4133,13 +4133,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response JobScheduleExistsInternal(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, RequestContext context = null)
+        internal virtual Response JobScheduleExistsInternal(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.JobScheduleExistsInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateJobScheduleExistsInternalRequest(jobScheduleId, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateJobScheduleExistsInternalRequest(jobScheduleId, timeout, requestOn, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -4159,7 +4159,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule which you want to check. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4168,13 +4168,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> JobScheduleExistsInternalAsync(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestConditions requestConditions = default, RequestContext context = null)
+        internal virtual async Task<Response> JobScheduleExistsInternalAsync(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.JobScheduleExistsInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateJobScheduleExistsInternalRequest(jobScheduleId, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateJobScheduleExistsInternalRequest(jobScheduleId, timeout, requestOn, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4198,7 +4198,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to delete. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4208,13 +4208,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response DeleteJobScheduleInternal(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, bool? force, RequestContext context)
+        internal virtual Response DeleteJobScheduleInternal(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, bool? force, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJobScheduleInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteJobScheduleInternalRequest(jobScheduleId, timeout, requestDate, requestConditions, force, context);
+                using HttpMessage message = CreateDeleteJobScheduleInternalRequest(jobScheduleId, timeout, requestOn, requestConditions, force, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -4238,7 +4238,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to delete. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4248,13 +4248,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> DeleteJobScheduleInternalAsync(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, bool? force, RequestContext context)
+        internal virtual async Task<Response> DeleteJobScheduleInternalAsync(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, bool? force, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJobScheduleInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteJobScheduleInternalRequest(jobScheduleId, timeout, requestDate, requestConditions, force, context);
+                using HttpMessage message = CreateDeleteJobScheduleInternalRequest(jobScheduleId, timeout, requestOn, requestConditions, force, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4284,7 +4284,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response DeleteJobScheduleInternal(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, bool? force = default, CancellationToken cancellationToken = default)
         {
-            return this.DeleteJobScheduleInternal(jobScheduleId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, force: force, context: cancellationToken.ToRequestContext());
+            return DeleteJobScheduleInternal(jobScheduleId, timeout, requestOn, requestConditions, force, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -4307,7 +4307,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response> DeleteJobScheduleInternalAsync(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, bool? force = default, CancellationToken cancellationToken = default)
         {
-            return await this.DeleteJobScheduleInternalAsync(jobScheduleId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, force: force, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DeleteJobScheduleInternalAsync(jobScheduleId, timeout, requestOn, requestConditions, force, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -4411,7 +4411,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            Response result = this.GetJobSchedule(jobScheduleId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, @select: @select, expand: expand, context: cancellationToken.ToRequestContext());
+            Response result = GetJobSchedule(jobScheduleId, timeout, requestDate, requestConditions, @select, expand, cancellationToken.ToRequestContext());
             return Response.FromValue((BatchJobSchedule)result, result);
         }
 
@@ -4434,7 +4434,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            Response result = await this.GetJobScheduleAsync(jobScheduleId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, @select: @select, expand: expand, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetJobScheduleAsync(jobScheduleId, timeout, requestDate, requestConditions, @select, expand, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((BatchJobSchedule)result, result);
         }
 
@@ -4643,7 +4643,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
             Argument.AssertNotNull(jobSchedule, nameof(jobSchedule));
 
-            return this.ReplaceJobSchedule(jobScheduleId, jobSchedule, timeout, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext());
+            return ReplaceJobSchedule(jobScheduleId, jobSchedule, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -4671,7 +4671,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
             Argument.AssertNotNull(jobSchedule, nameof(jobSchedule));
 
-            return await this.ReplaceJobScheduleAsync(jobScheduleId, jobSchedule, timeout, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await ReplaceJobScheduleAsync(jobScheduleId, jobSchedule, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -4769,7 +4769,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            return this.DisableJobSchedule(jobScheduleId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext());
+            return DisableJobSchedule(jobScheduleId, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary> No new Jobs will be created until the Job Schedule is enabled again. </summary>
@@ -4789,7 +4789,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            return await this.DisableJobScheduleAsync(jobScheduleId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DisableJobScheduleAsync(jobScheduleId, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -4887,7 +4887,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            return this.EnableJobSchedule(jobScheduleId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext());
+            return EnableJobSchedule(jobScheduleId, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Enables a Job Schedule. </summary>
@@ -4907,7 +4907,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            return await this.EnableJobScheduleAsync(jobScheduleId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await EnableJobScheduleAsync(jobScheduleId, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -4920,7 +4920,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to terminates. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4930,13 +4930,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response TerminateJobScheduleInternal(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, bool? force, RequestContext context)
+        internal virtual Response TerminateJobScheduleInternal(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, bool? force, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJobScheduleInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTerminateJobScheduleInternalRequest(jobScheduleId, timeout, requestDate, requestConditions, force, context);
+                using HttpMessage message = CreateTerminateJobScheduleInternalRequest(jobScheduleId, timeout, requestOn, requestConditions, force, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -4956,7 +4956,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to terminates. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -4966,13 +4966,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> TerminateJobScheduleInternalAsync(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, bool? force, RequestContext context)
+        internal virtual async Task<Response> TerminateJobScheduleInternalAsync(string jobScheduleId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, bool? force, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJobScheduleInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTerminateJobScheduleInternalRequest(jobScheduleId, timeout, requestDate, requestConditions, force, context);
+                using HttpMessage message = CreateTerminateJobScheduleInternalRequest(jobScheduleId, timeout, requestOn, requestConditions, force, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4996,7 +4996,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response TerminateJobScheduleInternal(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, bool? force = default, CancellationToken cancellationToken = default)
         {
-            return this.TerminateJobScheduleInternal(jobScheduleId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, force: force, context: cancellationToken.ToRequestContext());
+            return TerminateJobScheduleInternal(jobScheduleId, timeout, requestOn, requestConditions, force, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Terminates a Job Schedule. </summary>
@@ -5013,7 +5013,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response> TerminateJobScheduleInternalAsync(string jobScheduleId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, bool? force = default, CancellationToken cancellationToken = default)
         {
-            return await this.TerminateJobScheduleInternalAsync(jobScheduleId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, force: force, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await TerminateJobScheduleInternalAsync(jobScheduleId, timeout, requestOn, requestConditions, force, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -5105,7 +5105,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNull(jobSchedule, nameof(jobSchedule));
 
-            return CreateJobSchedule(jobSchedule, timeout, context: cancellationToken.ToRequestContext());
+            return CreateJobSchedule(jobSchedule, timeout, requestDate, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Creates a Job Schedule to the specified Account. </summary>
@@ -5123,7 +5123,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNull(jobSchedule, nameof(jobSchedule));
 
-            return await CreateJobScheduleAsync(jobSchedule, timeout, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await CreateJobScheduleAsync(jobSchedule, timeout, requestDate, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -5232,12 +5232,12 @@ namespace Azure.Compute.Batch
             return new BatchClientGetJobSchedulesCollectionResultOfT(
                 this,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                filter: filter,
-                @select: @select,
-                expand: expand,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                filter,
+                @select,
+                expand,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetJobSchedules");
         }
 
@@ -5265,12 +5265,12 @@ namespace Azure.Compute.Batch
             return new BatchClientGetJobSchedulesAsyncCollectionResultOfT(
                 this,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                filter: filter,
-                @select: @select,
-                expand: expand,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                filter,
+                @select,
+                expand,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetJobSchedules");
         }
 
@@ -5380,7 +5380,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(task, nameof(task));
 
-            return CreateTask(jobId, task, timeout, context: cancellationToken.ToRequestContext());
+            return CreateTask(jobId, task, timeout, requestDate, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -5405,7 +5405,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(task, nameof(task));
 
-            return await CreateTaskAsync(jobId, task, timeout, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await CreateTaskAsync(jobId, task, timeout, requestDate, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -5540,12 +5540,12 @@ namespace Azure.Compute.Batch
                 this,
                 jobId,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                filter: filter,
-                @select: @select,
-                expand: expand,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                filter,
+                @select,
+                expand,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetTasks");
         }
 
@@ -5583,12 +5583,12 @@ namespace Azure.Compute.Batch
                 this,
                 jobId,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                filter: filter,
-                @select: @select,
-                expand: expand,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                filter,
+                @select,
+                expand,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetTasks");
         }
 
@@ -5731,7 +5731,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(taskCollection, nameof(taskCollection));
 
-            Response result = CreateTaskCollection(jobId, taskCollection, timeout, context: cancellationToken.ToRequestContext());
+            Response result = CreateTaskCollection(jobId, taskCollection, timeout, requestDate, cancellationToken.ToRequestContext());
             return Response.FromValue((BatchCreateTaskCollectionResult)result, result);
         }
 
@@ -5768,7 +5768,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(taskCollection, nameof(taskCollection));
 
-            Response result = await CreateTaskCollectionAsync(jobId, taskCollection, timeout, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await CreateTaskCollectionAsync(jobId, taskCollection, timeout, requestDate, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((BatchCreateTaskCollectionResult)result, result);
         }
 
@@ -5887,7 +5887,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            return this.DeleteTask(jobId, taskId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext());
+            return DeleteTask(jobId, taskId, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -5915,7 +5915,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            return await this.DeleteTaskAsync(jobId, taskId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DeleteTaskAsync(jobId, taskId, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -6033,7 +6033,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            Response result = this.GetTask(jobId, taskId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, @select: @select, expand: expand, context: cancellationToken.ToRequestContext());
+            Response result = GetTask(jobId, taskId, timeout, requestDate, requestConditions, @select, expand, cancellationToken.ToRequestContext());
             return Response.FromValue((BatchTask)result, result);
         }
 
@@ -6062,7 +6062,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            Response result = await this.GetTaskAsync(jobId, taskId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, @select: @select, expand: expand, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetTaskAsync(jobId, taskId, timeout, requestDate, requestConditions, @select, expand, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((BatchTask)result, result);
         }
 
@@ -6173,7 +6173,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
             Argument.AssertNotNull(task, nameof(task));
 
-            return this.ReplaceTask(jobId, taskId, task, timeout, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext());
+            return ReplaceTask(jobId, taskId, task, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Updates the properties of the specified Task. </summary>
@@ -6197,7 +6197,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
             Argument.AssertNotNull(task, nameof(task));
 
-            return await this.ReplaceTaskAsync(jobId, taskId, task, timeout, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await ReplaceTaskAsync(jobId, taskId, task, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -6300,9 +6300,9 @@ namespace Azure.Compute.Batch
                 jobId,
                 taskId,
                 timeout,
-                requestDate: null,
-                @select: @select,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                @select,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetSubTasks");
         }
 
@@ -6330,9 +6330,9 @@ namespace Azure.Compute.Batch
                 jobId,
                 taskId,
                 timeout,
-                requestDate: null,
-                @select: @select,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                @select,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetSubTasks");
         }
 
@@ -6445,7 +6445,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            return this.TerminateTask(jobId, taskId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext());
+            return TerminateTask(jobId, taskId, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -6471,7 +6471,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            return await this.TerminateTaskAsync(jobId, taskId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await TerminateTaskAsync(jobId, taskId, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -6595,7 +6595,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            return this.ReactivateTask(jobId, taskId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext());
+            return ReactivateTask(jobId, taskId, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -6625,7 +6625,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            return await this.ReactivateTaskAsync(jobId, taskId, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await ReactivateTaskAsync(jobId, taskId, timeout, requestDate, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -6750,7 +6750,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
             Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
 
-            return DeleteTaskFile(jobId, taskId, filePath, timeout, requestDate: null, recursive: recursive, context: cancellationToken.ToRequestContext());
+            return DeleteTaskFile(jobId, taskId, filePath, timeout, requestDate, recursive, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes the specified Task file from the Compute Node where the Task ran. </summary>
@@ -6779,7 +6779,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
             Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
 
-            return await DeleteTaskFileAsync(jobId, taskId, filePath, timeout, requestDate: null, recursive: recursive, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DeleteTaskFileAsync(jobId, taskId, filePath, timeout, requestDate, recursive, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -6919,7 +6919,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
             Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
 
-            Response result = this.GetTaskFile(jobId, taskId, filePath, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ocp-range: ocpRange, context: cancellationToken.ToRequestContext());
+            Response result = GetTaskFile(jobId, taskId, filePath, timeout, requestDate, requestConditions, ocpRange, cancellationToken.ToRequestContext());
             return Response.FromValue(result.Content, result);
         }
 
@@ -6948,7 +6948,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
             Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
 
-            Response result = await this.GetTaskFileAsync(jobId, taskId, filePath, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ocp-range: ocpRange, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetTaskFileAsync(jobId, taskId, filePath, timeout, requestDate, requestConditions, ocpRange, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue(result.Content, result);
         }
 
@@ -6964,7 +6964,7 @@ namespace Azure.Compute.Batch
         /// <param name="taskId"> The ID of the Task whose file you want to retrieve. </param>
         /// <param name="filePath"> The path to the Task file that you want to get the content of. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -6973,7 +6973,7 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetTaskFilePropertiesInternal(string jobId, string taskId, string filePath, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
+        internal virtual Response GetTaskFilePropertiesInternal(string jobId, string taskId, string filePath, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.GetTaskFilePropertiesInternal");
             scope.Start();
@@ -6988,7 +6988,7 @@ namespace Azure.Compute.Batch
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
 
-                using HttpMessage message = CreateGetTaskFilePropertiesInternalRequest(jobId, taskId, filePath, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateGetTaskFilePropertiesInternalRequest(jobId, taskId, filePath, timeout, requestOn, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -7010,7 +7010,7 @@ namespace Azure.Compute.Batch
         /// <param name="taskId"> The ID of the Task whose file you want to retrieve. </param>
         /// <param name="filePath"> The path to the Task file that you want to get the content of. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7019,7 +7019,7 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetTaskFilePropertiesInternalAsync(string jobId, string taskId, string filePath, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
+        internal virtual async Task<Response> GetTaskFilePropertiesInternalAsync(string jobId, string taskId, string filePath, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.GetTaskFilePropertiesInternal");
             scope.Start();
@@ -7034,7 +7034,7 @@ namespace Azure.Compute.Batch
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
 
-                using HttpMessage message = CreateGetTaskFilePropertiesInternalRequest(jobId, taskId, filePath, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateGetTaskFilePropertiesInternalRequest(jobId, taskId, filePath, timeout, requestOn, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -7059,7 +7059,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response GetTaskFilePropertiesInternal(string jobId, string taskId, string filePath, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return this.GetTaskFilePropertiesInternal(jobId, taskId, filePath, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, context: cancellationToken.ToRequestContext());
+            return GetTaskFilePropertiesInternal(jobId, taskId, filePath, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Gets the properties of the specified Task file. </summary>
@@ -7077,7 +7077,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response> GetTaskFilePropertiesInternalAsync(string jobId, string taskId, string filePath, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await this.GetTaskFilePropertiesInternalAsync(jobId, taskId, filePath, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await GetTaskFilePropertiesInternalAsync(jobId, taskId, filePath, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -7217,11 +7217,11 @@ namespace Azure.Compute.Batch
                 jobId,
                 taskId,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                filter: filter,
-                recursive: recursive,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                filter,
+                recursive,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetTaskFiles");
         }
 
@@ -7260,11 +7260,11 @@ namespace Azure.Compute.Batch
                 jobId,
                 taskId,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                filter: filter,
-                recursive: recursive,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                filter,
+                recursive,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetTaskFiles");
         }
 
@@ -7377,7 +7377,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNull(user, nameof(user));
 
-            return CreateNodeUser(poolId, nodeId, user, timeout, context: cancellationToken.ToRequestContext());
+            return CreateNodeUser(poolId, nodeId, user, timeout, requestDate, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -7403,7 +7403,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNull(user, nameof(user));
 
-            return await CreateNodeUserAsync(poolId, nodeId, user, timeout, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await CreateNodeUserAsync(poolId, nodeId, user, timeout, requestDate, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -7518,7 +7518,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNullOrEmpty(userName, nameof(userName));
 
-            return DeleteNodeUser(poolId, nodeId, userName, timeout, requestDate: null, context: cancellationToken.ToRequestContext());
+            return DeleteNodeUser(poolId, nodeId, userName, timeout, requestDate, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -7545,7 +7545,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNullOrEmpty(userName, nameof(userName));
 
-            return await DeleteNodeUserAsync(poolId, nodeId, userName, timeout, requestDate: null, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DeleteNodeUserAsync(poolId, nodeId, userName, timeout, requestDate, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -7669,7 +7669,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(userName, nameof(userName));
             Argument.AssertNotNull(updateOptions, nameof(updateOptions));
 
-            return ReplaceNodeUser(poolId, nodeId, userName, updateOptions, timeout, context: cancellationToken.ToRequestContext());
+            return ReplaceNodeUser(poolId, nodeId, userName, updateOptions, timeout, requestDate, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -7699,7 +7699,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(userName, nameof(userName));
             Argument.AssertNotNull(updateOptions, nameof(updateOptions));
 
-            return await ReplaceNodeUserAsync(poolId, nodeId, userName, updateOptions, timeout, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await ReplaceNodeUserAsync(poolId, nodeId, userName, updateOptions, timeout, requestDate, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -7803,7 +7803,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            Response result = GetNode(poolId, nodeId, timeout, requestDate: null, @select: @select, context: cancellationToken.ToRequestContext());
+            Response result = GetNode(poolId, nodeId, timeout, requestDate, @select, cancellationToken.ToRequestContext());
             return Response.FromValue((BatchNode)result, result);
         }
 
@@ -7826,7 +7826,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            Response result = await GetNodeAsync(poolId, nodeId, timeout, requestDate: null, @select: @select, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetNodeAsync(poolId, nodeId, timeout, requestDate, @select, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((BatchNode)result, result);
         }
 
@@ -7842,7 +7842,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7850,13 +7850,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response RebootNodeInternal(string poolId, string nodeId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestContext context = null)
+        internal virtual Response RebootNodeInternal(string poolId, string nodeId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.RebootNodeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRebootNodeInternalRequest(poolId, nodeId, content, timeout, requestDate, context);
+                using HttpMessage message = CreateRebootNodeInternalRequest(poolId, nodeId, content, timeout, requestOn, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -7878,7 +7878,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7886,13 +7886,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> RebootNodeInternalAsync(string poolId, string nodeId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestContext context = null)
+        internal virtual async Task<Response> RebootNodeInternalAsync(string poolId, string nodeId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.RebootNodeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRebootNodeInternalRequest(poolId, nodeId, content, timeout, requestDate, context);
+                using HttpMessage message = CreateRebootNodeInternalRequest(poolId, nodeId, content, timeout, requestOn, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -7916,7 +7916,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response RebootNodeInternal(string poolId, string nodeId, BatchNodeRebootOptions options = default, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, CancellationToken cancellationToken = default)
         {
-            return RebootNodeInternal(poolId, nodeId, options, timeout, context: cancellationToken.ToRequestContext());
+            return RebootNodeInternal(poolId, nodeId, options, timeout, requestOn, cancellationToken.ToRequestContext());
         }
 
         /// <summary> You can restart a Compute Node only if it is in an idle or running state. </summary>
@@ -7933,7 +7933,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response> RebootNodeInternalAsync(string poolId, string nodeId, BatchNodeRebootOptions options = default, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, CancellationToken cancellationToken = default)
         {
-            return await RebootNodeInternalAsync(poolId, nodeId, options, timeout, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await RebootNodeInternalAsync(poolId, nodeId, options, timeout, requestOn, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -7947,7 +7947,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7955,13 +7955,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response StartNodeInternal(string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestContext context)
+        internal virtual Response StartNodeInternal(string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.StartNodeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStartNodeInternalRequest(poolId, nodeId, timeout, requestDate, context);
+                using HttpMessage message = CreateStartNodeInternalRequest(poolId, nodeId, timeout, requestOn, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -7982,7 +7982,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -7990,13 +7990,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> StartNodeInternalAsync(string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, RequestContext context)
+        internal virtual async Task<Response> StartNodeInternalAsync(string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestOn, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.StartNodeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStartNodeInternalRequest(poolId, nodeId, timeout, requestDate, context);
+                using HttpMessage message = CreateStartNodeInternalRequest(poolId, nodeId, timeout, requestOn, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -8019,7 +8019,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response StartNodeInternal(string poolId, string nodeId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, CancellationToken cancellationToken = default)
         {
-            return StartNodeInternal(poolId, nodeId, timeout, requestDate: null, context: cancellationToken.ToRequestContext());
+            return StartNodeInternal(poolId, nodeId, timeout, requestOn, cancellationToken.ToRequestContext());
         }
 
         /// <summary> You can start a Compute Node only if it has been deallocated. </summary>
@@ -8035,7 +8035,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response> StartNodeInternalAsync(string poolId, string nodeId, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, CancellationToken cancellationToken = default)
         {
-            return await StartNodeInternalAsync(poolId, nodeId, timeout, requestDate: null, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await StartNodeInternalAsync(poolId, nodeId, timeout, requestOn, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -8052,7 +8052,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8060,13 +8060,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response ReimageNodeInternal(string poolId, string nodeId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestContext context = null)
+        internal virtual Response ReimageNodeInternal(string poolId, string nodeId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.ReimageNodeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReimageNodeInternalRequest(poolId, nodeId, content, timeout, requestDate, context);
+                using HttpMessage message = CreateReimageNodeInternalRequest(poolId, nodeId, content, timeout, requestOn, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -8090,7 +8090,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8098,13 +8098,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> ReimageNodeInternalAsync(string poolId, string nodeId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestContext context = null)
+        internal virtual async Task<Response> ReimageNodeInternalAsync(string poolId, string nodeId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.ReimageNodeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReimageNodeInternalRequest(poolId, nodeId, content, timeout, requestDate, context);
+                using HttpMessage message = CreateReimageNodeInternalRequest(poolId, nodeId, content, timeout, requestOn, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -8132,7 +8132,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response ReimageNodeInternal(string poolId, string nodeId, BatchNodeReimageOptions options = default, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, CancellationToken cancellationToken = default)
         {
-            return ReimageNodeInternal(poolId, nodeId, options, timeout, context: cancellationToken.ToRequestContext());
+            return ReimageNodeInternal(poolId, nodeId, options, timeout, requestOn, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -8153,7 +8153,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response> ReimageNodeInternalAsync(string poolId, string nodeId, BatchNodeReimageOptions options = default, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, CancellationToken cancellationToken = default)
         {
-            return await ReimageNodeInternalAsync(poolId, nodeId, options, timeout, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await ReimageNodeInternalAsync(poolId, nodeId, options, timeout, requestOn, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -8168,7 +8168,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8176,13 +8176,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response DeallocateNodeInternal(string poolId, string nodeId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestContext context = null)
+        internal virtual Response DeallocateNodeInternal(string poolId, string nodeId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.DeallocateNodeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeallocateNodeInternalRequest(poolId, nodeId, content, timeout, requestDate, context);
+                using HttpMessage message = CreateDeallocateNodeInternalRequest(poolId, nodeId, content, timeout, requestOn, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -8204,7 +8204,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -8212,13 +8212,13 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> DeallocateNodeInternalAsync(string poolId, string nodeId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestDate = default, RequestContext context = null)
+        internal virtual async Task<Response> DeallocateNodeInternalAsync(string poolId, string nodeId, RequestContent content, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.DeallocateNodeInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeallocateNodeInternalRequest(poolId, nodeId, content, timeout, requestDate, context);
+                using HttpMessage message = CreateDeallocateNodeInternalRequest(poolId, nodeId, content, timeout, requestOn, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -8242,7 +8242,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response DeallocateNodeInternal(string poolId, string nodeId, BatchNodeDeallocateOptions options = default, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, CancellationToken cancellationToken = default)
         {
-            return DeallocateNodeInternal(poolId, nodeId, options, timeout, context: cancellationToken.ToRequestContext());
+            return DeallocateNodeInternal(poolId, nodeId, options, timeout, requestOn, cancellationToken.ToRequestContext());
         }
 
         /// <summary> You can deallocate a Compute Node only if it is in an idle or running state. </summary>
@@ -8259,7 +8259,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response> DeallocateNodeInternalAsync(string poolId, string nodeId, BatchNodeDeallocateOptions options = default, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, CancellationToken cancellationToken = default)
         {
-            return await DeallocateNodeInternalAsync(poolId, nodeId, options, timeout, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DeallocateNodeInternalAsync(poolId, nodeId, options, timeout, requestOn, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -8368,7 +8368,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            return DisableNodeScheduling(poolId, nodeId, options, timeout, context: cancellationToken.ToRequestContext());
+            return DisableNodeScheduling(poolId, nodeId, options, timeout, requestDate, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -8393,7 +8393,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            return await DisableNodeSchedulingAsync(poolId, nodeId, options, timeout, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DisableNodeSchedulingAsync(poolId, nodeId, options, timeout, requestDate, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -8499,7 +8499,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            return EnableNodeScheduling(poolId, nodeId, timeout, requestDate: null, context: cancellationToken.ToRequestContext());
+            return EnableNodeScheduling(poolId, nodeId, timeout, requestDate, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -8523,7 +8523,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            return await EnableNodeSchedulingAsync(poolId, nodeId, timeout, requestDate: null, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await EnableNodeSchedulingAsync(poolId, nodeId, timeout, requestDate, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -8624,7 +8624,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            Response result = GetNodeRemoteLoginSettings(poolId, nodeId, timeout, requestDate: null, context: cancellationToken.ToRequestContext());
+            Response result = GetNodeRemoteLoginSettings(poolId, nodeId, timeout, requestDate, cancellationToken.ToRequestContext());
             return Response.FromValue((BatchNodeRemoteLoginSettings)result, result);
         }
 
@@ -8646,7 +8646,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            Response result = await GetNodeRemoteLoginSettingsAsync(poolId, nodeId, timeout, requestDate: null, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetNodeRemoteLoginSettingsAsync(poolId, nodeId, timeout, requestDate, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((BatchNodeRemoteLoginSettings)result, result);
         }
 
@@ -8774,7 +8774,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNull(uploadOptions, nameof(uploadOptions));
 
-            Response result = UploadNodeLogs(poolId, nodeId, uploadOptions, timeout, context: cancellationToken.ToRequestContext());
+            Response result = UploadNodeLogs(poolId, nodeId, uploadOptions, timeout, requestDate, cancellationToken.ToRequestContext());
             return Response.FromValue((UploadBatchServiceLogsResult)result, result);
         }
 
@@ -8806,7 +8806,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNull(uploadOptions, nameof(uploadOptions));
 
-            Response result = await UploadNodeLogsAsync(poolId, nodeId, uploadOptions, timeout, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await UploadNodeLogsAsync(poolId, nodeId, uploadOptions, timeout, requestDate, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((UploadBatchServiceLogsResult)result, result);
         }
 
@@ -8929,11 +8929,11 @@ namespace Azure.Compute.Batch
                 this,
                 poolId,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                filter: filter,
-                @select: @select,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                filter,
+                @select,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetNodes");
         }
 
@@ -8966,11 +8966,11 @@ namespace Azure.Compute.Batch
                 this,
                 poolId,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                filter: filter,
-                @select: @select,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                filter,
+                @select,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetNodes");
         }
 
@@ -9081,7 +9081,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
-            Response result = GetNodeExtension(poolId, nodeId, extensionName, timeout, requestDate: null, @select: @select, context: cancellationToken.ToRequestContext());
+            Response result = GetNodeExtension(poolId, nodeId, extensionName, timeout, requestDate, @select, cancellationToken.ToRequestContext());
             return Response.FromValue((BatchNodeVMExtension)result, result);
         }
 
@@ -9106,7 +9106,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
-            Response result = await GetNodeExtensionAsync(poolId, nodeId, extensionName, timeout, requestDate: null, @select: @select, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetNodeExtensionAsync(poolId, nodeId, extensionName, timeout, requestDate, @select, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((BatchNodeVMExtension)result, result);
         }
 
@@ -9224,10 +9224,10 @@ namespace Azure.Compute.Batch
                 poolId,
                 nodeId,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                @select: @select,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                @select,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetNodeExtensions");
         }
 
@@ -9259,10 +9259,10 @@ namespace Azure.Compute.Batch
                 poolId,
                 nodeId,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                @select: @select,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                @select,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetNodeExtensions");
         }
 
@@ -9388,7 +9388,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
 
-            return DeleteNodeFile(poolId, nodeId, filePath, timeout, requestDate: null, recursive: recursive, context: cancellationToken.ToRequestContext());
+            return DeleteNodeFile(poolId, nodeId, filePath, timeout, requestDate, recursive, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes the specified file from the Compute Node. </summary>
@@ -9417,7 +9417,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
 
-            return await DeleteNodeFileAsync(poolId, nodeId, filePath, timeout, requestDate: null, recursive: recursive, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DeleteNodeFileAsync(poolId, nodeId, filePath, timeout, requestDate, recursive, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -9557,7 +9557,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
 
-            Response result = this.GetNodeFile(poolId, nodeId, filePath, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ocp-range: ocpRange, context: cancellationToken.ToRequestContext());
+            Response result = GetNodeFile(poolId, nodeId, filePath, timeout, requestDate, requestConditions, ocpRange, cancellationToken.ToRequestContext());
             return Response.FromValue(result.Content, result);
         }
 
@@ -9586,7 +9586,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
 
-            Response result = await this.GetNodeFileAsync(poolId, nodeId, filePath, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, ocp-range: ocpRange, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetNodeFileAsync(poolId, nodeId, filePath, timeout, requestDate, requestConditions, ocpRange, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue(result.Content, result);
         }
 
@@ -9602,7 +9602,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node. </param>
         /// <param name="filePath"> The path to the file or directory. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9611,7 +9611,7 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetNodeFilePropertiesInternal(string poolId, string nodeId, string filePath, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
+        internal virtual Response GetNodeFilePropertiesInternal(string poolId, string nodeId, string filePath, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.GetNodeFilePropertiesInternal");
             scope.Start();
@@ -9626,7 +9626,7 @@ namespace Azure.Compute.Batch
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
 
-                using HttpMessage message = CreateGetNodeFilePropertiesInternalRequest(poolId, nodeId, filePath, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateGetNodeFilePropertiesInternalRequest(poolId, nodeId, filePath, timeout, requestOn, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -9648,7 +9648,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeId"> The ID of the Compute Node. </param>
         /// <param name="filePath"> The path to the file or directory. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -9657,7 +9657,7 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetNodeFilePropertiesInternalAsync(string poolId, string nodeId, string filePath, TimeSpan? timeout, DateTimeOffset? requestDate, RequestConditions requestConditions, RequestContext context)
+        internal virtual async Task<Response> GetNodeFilePropertiesInternalAsync(string poolId, string nodeId, string filePath, TimeSpan? timeout, DateTimeOffset? requestOn, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.GetNodeFilePropertiesInternal");
             scope.Start();
@@ -9672,7 +9672,7 @@ namespace Azure.Compute.Batch
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
 
-                using HttpMessage message = CreateGetNodeFilePropertiesInternalRequest(poolId, nodeId, filePath, timeout, requestDate, requestConditions, context);
+                using HttpMessage message = CreateGetNodeFilePropertiesInternalRequest(poolId, nodeId, filePath, timeout, requestOn, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -9697,7 +9697,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response GetNodeFilePropertiesInternal(string poolId, string nodeId, string filePath, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return this.GetNodeFilePropertiesInternal(poolId, nodeId, filePath, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, context: cancellationToken.ToRequestContext());
+            return GetNodeFilePropertiesInternal(poolId, nodeId, filePath, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Gets the properties of the specified Compute Node file. </summary>
@@ -9715,7 +9715,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response> GetNodeFilePropertiesInternalAsync(string poolId, string nodeId, string filePath, TimeSpan? timeout = default, DateTimeOffset? requestOn = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await this.GetNodeFilePropertiesInternalAsync(poolId, nodeId, filePath, timeout, requestDate: null, ifModifiedSince: ifModifiedSince, ifUnmodifiedSince: ifUnmodifiedSince, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await GetNodeFilePropertiesInternalAsync(poolId, nodeId, filePath, timeout, requestOn, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -9846,11 +9846,11 @@ namespace Azure.Compute.Batch
                 poolId,
                 nodeId,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                filter: filter,
-                recursive: recursive,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                filter,
+                recursive,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetNodeFiles");
         }
 
@@ -9886,11 +9886,11 @@ namespace Azure.Compute.Batch
                 poolId,
                 nodeId,
                 timeout,
-                requestDate: null,
-                maxResults: maxResults,
-                filter: filter,
-                recursive: recursive,
-                context: cancellationToken.ToRequestContext(),
+                requestDate,
+                maxResults,
+                filter,
+                recursive,
+                cancellationToken.ToRequestContext(),
                 "BatchClient.GetNodeFiles");
         }
     }
