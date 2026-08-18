@@ -30,7 +30,6 @@
     <PackageReference Include="Azure.ResourceManager.AppContainers" />
     <PackageReference Include="Azure.ResourceManager.ApiManagement" />
     <PackageReference Include="Azure.ResourceManager.ApplicationInsights" />
-    <PackageReference Include="Azure.ResourceManager.AppService" />
     <PackageReference Include="Azure.ResourceManager.CognitiveServices" />
     <PackageReference Include="Azure.ResourceManager.ContainerRegistry" />
     <PackageReference Include="Azure.ResourceManager.CosmosDB" />
