@@ -40,6 +40,11 @@ namespace Azure.Generator.Provisioning.Providers
         /// <summary>Optional Bicep literal serialization format.</summary>
         public string? Format { get; }
 
+        /// <summary>
+        /// Creates a regular provisioning property. This bypasses input-property initialization in
+        /// <see cref="PropertyProvider"/> so provisioning can explicitly control public visibility
+        /// and setter behavior while retaining <paramref name="inputProperty"/> for reconciliation.
+        /// </summary>
         private ProvisioningPropertyProvider(
             InputModelProperty inputProperty,
             FieldProvider backingField,
@@ -73,6 +78,11 @@ namespace Azure.Generator.Provisioning.Providers
             Format = format;
         }
 
+        /// <summary>
+        /// Creates a discriminator property. Initializing <see cref="PropertyProvider"/> with
+        /// <paramref name="inputProperty"/> preserves discriminator metadata before the property is
+        /// reshaped as an internal, getter-only <c>BicepValue&lt;string&gt;</c>.
+        /// </summary>
         private ProvisioningPropertyProvider(
             InputModelProperty inputProperty,
             FieldProvider backingField,
