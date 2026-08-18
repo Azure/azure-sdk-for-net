@@ -81,7 +81,7 @@ namespace Azure.AI.ContentUnderstanding
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
-                writer.WriteBase64StringValue(Data.ToArray(), "D");
+                writer.WriteBase64StringValue(Data, "D");
             }
             if (Optional.IsDefined(Name))
             {
