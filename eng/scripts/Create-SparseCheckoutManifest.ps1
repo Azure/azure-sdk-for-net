@@ -44,18 +44,32 @@ if (-not (Test-Path -LiteralPath $ProjectListPath -PathType Leaf)) {
 
 $roots = [System.Collections.Generic.SortedSet[string]]::new([System.StringComparer]::Ordinal)
 foreach ($projectPath in (Get-Content -LiteralPath $ProjectListPath | Where-Object { $_ })) {
-  $fullPath = [System.IO.Path]::GetFullPath($projectPath)
+  $kind, $itemPath = $projectPath -split '\|', 2
+  if (-not $itemPath) {
+    $kind = 'Project'
+    $itemPath = $projectPath
+  }
+  $fullPath = [System.IO.Path]::GetFullPath($itemPath)
   if (-not $fullPath.StartsWith($rootWithSeparator, $comparison)) {
-    throw "Sparse-checkout graph project '$fullPath' is outside repository root '$repositoryRoot'."
+    if ($kind -eq 'Project') {
+      throw "Sparse-checkout graph project '$fullPath' is outside repository root '$repositoryRoot'."
+    }
+    continue
   }
   if (-not (Test-Path -LiteralPath $fullPath -PathType Leaf)) {
-    throw "Sparse-checkout graph project '$fullPath' does not exist."
+    if ($kind -eq 'Project') {
+      throw "Sparse-checkout graph project '$fullPath' does not exist."
+    }
+    continue
   }
 
   $relativePath = [System.IO.Path]::GetRelativePath($repositoryRoot, $fullPath).Replace('\', '/')
   $segments = @($relativePath -split '/' | Where-Object { $_ })
   if ($segments.Count -lt 2 -or $segments[0] -eq '..') {
-    throw "Sparse-checkout graph project '$fullPath' did not produce a safe repository-relative directory."
+    if ($kind -eq 'Project') {
+      throw "Sparse-checkout graph project '$fullPath' did not produce a safe repository-relative directory."
+    }
+    continue
   }
 
   if ($segments[0] -eq 'sdk') {

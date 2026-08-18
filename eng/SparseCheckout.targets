@@ -3,9 +3,13 @@
     <SparseCheckoutTargetsImported>true</SparseCheckoutTargetsImported>
   </PropertyGroup>
 
-  <Target Name="_CollectSparseCheckoutProjectGraph" Returns="@(_SparseCheckoutProjectGraph)">
+  <Target Name="_CollectSparseCheckoutProjectGraph" Returns="@(_SparseCheckoutGraphInput)">
     <ItemGroup>
-      <_SparseCheckoutProjectGraph Include="$(MSBuildProjectFullPath)" />
+      <_SparseCheckoutGraphInput Include="$(MSBuildProjectFullPath)" Kind="Project" />
+      <_SparseCheckoutGraphInput Include="$(MSBuildAllProjects)" Kind="Input" />
+      <_SparseCheckoutGraphInput
+        Include="@(Compile->'%(FullPath)');@(None->'%(FullPath)');@(Content->'%(FullPath)');@(EmbeddedResource->'%(FullPath)');@(AdditionalFiles->'%(FullPath)')"
+        Kind="Input" />
     </ItemGroup>
 
     <MSBuild
@@ -15,18 +19,18 @@
       SkipNonexistentProjects="false"
       SkipNonexistentTargets="false"
       Condition="'@(ProjectReference)' != ''">
-      <Output TaskParameter="TargetOutputs" ItemName="_SparseCheckoutReferencedProjectGraph" />
+      <Output TaskParameter="TargetOutputs" ItemName="_SparseCheckoutReferencedGraphInput" />
     </MSBuild>
 
     <ItemGroup>
-      <_SparseCheckoutProjectGraph Include="@(_SparseCheckoutReferencedProjectGraph)" />
+      <_SparseCheckoutGraphInput Include="@(_SparseCheckoutReferencedGraphInput)" />
     </ItemGroup>
-    <RemoveDuplicates Inputs="@(_SparseCheckoutProjectGraph)">
-      <Output TaskParameter="Filtered" ItemName="_SparseCheckoutProjectGraphDeduplicated" />
+    <RemoveDuplicates Inputs="@(_SparseCheckoutGraphInput)">
+      <Output TaskParameter="Filtered" ItemName="_SparseCheckoutGraphInputDeduplicated" />
     </RemoveDuplicates>
     <ItemGroup>
-      <_SparseCheckoutProjectGraph Remove="@(_SparseCheckoutProjectGraph)" />
-      <_SparseCheckoutProjectGraph Include="@(_SparseCheckoutProjectGraphDeduplicated)" />
+      <_SparseCheckoutGraphInput Remove="@(_SparseCheckoutGraphInput)" />
+      <_SparseCheckoutGraphInput Include="@(_SparseCheckoutGraphInputDeduplicated)" />
     </ItemGroup>
   </Target>
 
@@ -47,20 +51,35 @@
       BuildInParallel="false"
       SkipNonexistentProjects="false"
       SkipNonexistentTargets="false">
-      <Output TaskParameter="TargetOutputs" ItemName="_SparseCheckoutProjectGraphFromEntries" />
+      <Output TaskParameter="TargetOutputs" ItemName="_SparseCheckoutGraphInputFromEntries" />
     </MSBuild>
 
-    <RemoveDuplicates Inputs="@(_SparseCheckoutProjectGraphFromEntries)">
-      <Output TaskParameter="Filtered" ItemName="_SparseCheckoutProjectGraphAll" />
+    <RemoveDuplicates Inputs="@(_SparseCheckoutGraphInputFromEntries)">
+      <Output TaskParameter="Filtered" ItemName="_SparseCheckoutGraphInputAll" />
     </RemoveDuplicates>
+    <ItemGroup>
+      <_SparseCheckoutProjectGraphAll
+        Include="@(_SparseCheckoutGraphInputAll)"
+        Condition="'%(_SparseCheckoutGraphInputAll.Kind)' == 'Project'" />
+      <_SparseCheckoutBuildInputAll
+        Include="@(_SparseCheckoutGraphInputAll)"
+        Condition="'%(_SparseCheckoutGraphInputAll.Kind)' == 'Input'" />
+      <_SparseCheckoutManifestInput Include="@(_SparseCheckoutProjectGraphAll->'Project|%(Identity)')" />
+      <_SparseCheckoutManifestInput Include="@(_SparseCheckoutBuildInputAll->'Input|%(Identity)')" />
+    </ItemGroup>
 
     <WriteLinesToFile
       File="$(SparseCheckoutProjectGraphPath)"
       Lines="@(_SparseCheckoutProjectGraphAll)"
       Overwrite="true"
       WriteOnlyWhenDifferent="true" />
+    <WriteLinesToFile
+      File="$(SparseCheckoutManifestPath).inputs"
+      Lines="@(_SparseCheckoutManifestInput)"
+      Overwrite="true"
+      WriteOnlyWhenDifferent="true" />
     <Exec
-      Command="pwsh -NoProfile -File &quot;$(MSBuildThisFileDirectory)scripts/Create-SparseCheckoutManifest.ps1&quot; -ProjectListPath &quot;$(SparseCheckoutProjectGraphPath)&quot; -RepoRoot &quot;$(RepoRoot)&quot; -OutputPath &quot;$(SparseCheckoutManifestPath)&quot;" />
+      Command="pwsh -NoProfile -File &quot;$(MSBuildThisFileDirectory)scripts/Create-SparseCheckoutManifest.ps1&quot; -ProjectListPath &quot;$(SparseCheckoutManifestPath).inputs&quot; -RepoRoot &quot;$(RepoRoot)&quot; -OutputPath &quot;$(SparseCheckoutManifestPath)&quot;" />
     <ReadLinesFromFile File="$(SparseCheckoutManifestPath)">
       <Output TaskParameter="Lines" ItemName="SparseCheckoutDirectory" />
     </ReadLinesFromFile>
