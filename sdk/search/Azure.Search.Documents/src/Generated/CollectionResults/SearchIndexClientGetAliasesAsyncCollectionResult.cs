@@ -49,6 +49,14 @@ namespace Azure.Search.Documents.Indexes
         /// <returns> The pages of SearchIndexClientGetAliasesAsyncCollectionResult as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
+            Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
+            ListAliasesResult result = (ListAliasesResult)response;
+            List<BinaryData> items = new List<BinaryData>();
+            foreach (var item in result.Aliases)
+            {
+                items.Add(ModelReaderWriter.Write(item, ModelReaderWriterOptions.Json, AzureSearchDocumentsContext.Default));
+            }
+            yield return Page<BinaryData>.FromValues(items, null, response);
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {

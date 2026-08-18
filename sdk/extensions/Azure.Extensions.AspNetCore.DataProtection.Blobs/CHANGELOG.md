@@ -10,6 +10,13 @@
 
 ### Other Changes
 
+## 1.5.4 (2026-09-08)
+
+### Other Changes
+
+- Updated `Azure.Core` dependency from 1.55.0 to 1.61.0.
+- Updated `Microsoft.AspNetCore.DataProtection` to patched versions that resolve `System.Security.Cryptography.Xml` advisories GHSA-g8r8-53c2-pm3f, GHSA-8q5v-6pqq-x66h, GHSA-23rf-6693-g89p, GHSA-cvvh-rhrc-wg4q, and GHSA-mmjf-rqrv-855v: from 8.0.26 to 8.0.29 for `net8.0`, and from 10.0.7 to 10.0.10 for all other target frameworks.
+
 ## 1.5.3 (2026-05-08)
 
 ### Bugs Fixed

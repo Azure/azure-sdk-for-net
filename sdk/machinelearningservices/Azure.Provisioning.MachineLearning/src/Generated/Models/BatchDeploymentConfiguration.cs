@@ -11,7 +11,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Properties relevant to different deployment types.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BatchPipelineComponentDeploymentConfiguration"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="BatchPipelineComponentDeploymentConfiguration"/>.
     /// </summary>
     public partial class BatchDeploymentConfiguration : ProvisionableConstruct
     {

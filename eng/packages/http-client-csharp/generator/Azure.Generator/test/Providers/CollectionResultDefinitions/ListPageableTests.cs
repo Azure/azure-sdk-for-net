@@ -7,6 +7,7 @@ using Azure.Generator.Tests.TestHelpers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
@@ -42,6 +43,41 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
         }
 
         [Test]
+        public void ProtocolPageableUsesJsonSerializationOptions()
+        {
+            CreatePagingOperation();
+
+            var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
+                t => t is AzureCollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResult");
+            Assert.IsNotNull(collectionResultDefinition);
+
+            var writer = new TypeProviderWriter(collectionResultDefinition!);
+            var file = writer.Write();
+            Assert.That(file.Content, Does.Contain("ModelReaderWriterOptions.Json"));
+            Assert.That(file.Content, Does.Not.Contain("ModelSerializationExtensions.WireOptions"));
+        }
+
+        [Test]
+        public void ProtocolPageableUsesXmlSerializationOptions()
+        {
+            CreatePagingOperation(
+                ["application/xml"],
+                new InputSerializationOptions(
+                    json: null,
+                    xml: new InputXmlSerializationOptions("page", false, null)));
+
+            var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
+                t => t is AzureCollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResult");
+            Assert.IsNotNull(collectionResultDefinition);
+
+            var writer = new TypeProviderWriter(collectionResultDefinition!);
+            var file = writer.Write();
+            Assert.That(file.Content, Does.Contain("ModelReaderWriterOptions.Xml"));
+            Assert.That(file.Content, Does.Not.Contain("ModelReaderWriterOptions.Json"));
+            Assert.That(file.Content, Does.Not.Contain("ModelSerializationExtensions.WireOptions"));
+        }
+
+        [Test]
         public void NoNextLinkOrContinuationTokenOfT()
         {
             CreatePagingOperation();
@@ -69,7 +105,9 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
             Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
         }
 
-        private static void CreatePagingOperation()
+        private static void CreatePagingOperation(
+            IReadOnlyList<string>? contentTypes = null,
+            InputSerializationOptions? serializationOptions = null)
         {
             var inputModel = InputFactory.Model("cat", properties:
             [
@@ -81,7 +119,9 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
                 [200],
                 InputFactory.Model(
                     "page",
-                    properties: [InputFactory.Property("cats", InputFactory.Array(inputModel))]));
+                    properties: [InputFactory.Property("cats", InputFactory.Array(inputModel))]),
+                contentTypes,
+                serializationOptions);
             var operation = InputFactory.Operation("getCats", parameters: [parameter], responses: [response]);
             var inputServiceMethod = InputFactory.PagingServiceMethod("getCats", operation, pagingMetadata: pagingMetadata);
             var client = InputFactory.Client("catClient", methods: [inputServiceMethod]);

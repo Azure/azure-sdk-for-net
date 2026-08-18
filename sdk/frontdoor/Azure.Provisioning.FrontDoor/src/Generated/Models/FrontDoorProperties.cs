@@ -6,12 +6,11 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.FrontDoor
 {
     /// <summary> The JSON object that contains the properties required to create an endpoint. </summary>
-    internal partial class FrontDoorProperties : ProvisionableConstruct
+    internal partial class FrontDoorProperties : FrontDoorUpdateParameters
     {
         private BicepValue<FrontDoorResourceState> _resourceState;
         private BicepValue<string> _provisioningState;
@@ -19,14 +18,6 @@ namespace Azure.Provisioning.FrontDoor
         private BicepValue<string> _frontdoorId;
         private BicepList<FrontDoorRulesEngine> _rulesEngines;
         private BicepDictionary<string> _extendedProperties;
-        private BicepValue<string> _friendlyName;
-        private BicepList<RoutingRuleData> _routingRules;
-        private BicepList<FrontDoorLoadBalancingSettingsData> _loadBalancingSettings;
-        private BicepList<FrontDoorHealthProbeSettingsData> _healthProbeSettings;
-        private BicepList<FrontDoorBackendPool> _backendPools;
-        private BicepList<FrontendEndpoint> _frontendEndpoints;
-        private BackendPoolsSettings _backendPoolsSettings;
-        private BicepValue<FrontDoorEnabledState> _enabledState;
 
         /// <summary> Creates a new FrontDoorProperties. </summary>
         public FrontDoorProperties()
@@ -93,126 +84,6 @@ namespace Azure.Provisioning.FrontDoor
             }
         }
 
-        /// <summary> Gets or sets the FriendlyName. </summary>
-        public BicepValue<string> FriendlyName
-        {
-            get
-            {
-                Initialize();
-                return _friendlyName;
-            }
-            set
-            {
-                Initialize();
-                _friendlyName.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the RoutingRules. </summary>
-        public BicepList<RoutingRuleData> RoutingRules
-        {
-            get
-            {
-                Initialize();
-                return _routingRules;
-            }
-            set
-            {
-                Initialize();
-                _routingRules.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the LoadBalancingSettings. </summary>
-        public BicepList<FrontDoorLoadBalancingSettingsData> LoadBalancingSettings
-        {
-            get
-            {
-                Initialize();
-                return _loadBalancingSettings;
-            }
-            set
-            {
-                Initialize();
-                _loadBalancingSettings.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the HealthProbeSettings. </summary>
-        public BicepList<FrontDoorHealthProbeSettingsData> HealthProbeSettings
-        {
-            get
-            {
-                Initialize();
-                return _healthProbeSettings;
-            }
-            set
-            {
-                Initialize();
-                _healthProbeSettings.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the BackendPools. </summary>
-        public BicepList<FrontDoorBackendPool> BackendPools
-        {
-            get
-            {
-                Initialize();
-                return _backendPools;
-            }
-            set
-            {
-                Initialize();
-                _backendPools.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the FrontendEndpoints. </summary>
-        public BicepList<FrontendEndpoint> FrontendEndpoints
-        {
-            get
-            {
-                Initialize();
-                return _frontendEndpoints;
-            }
-            set
-            {
-                Initialize();
-                _frontendEndpoints.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the BackendPoolsSettings. </summary>
-        public BackendPoolsSettings BackendPoolsSettings
-        {
-            get
-            {
-                Initialize();
-                return _backendPoolsSettings;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _backendPoolsSettings, value);
-            }
-        }
-
-        /// <summary> Gets or sets the EnabledState. </summary>
-        public BicepValue<FrontDoorEnabledState> EnabledState
-        {
-            get
-            {
-                Initialize();
-                return _enabledState;
-            }
-            set
-            {
-                Initialize();
-                _enabledState.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for FrontDoorProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -223,14 +94,6 @@ namespace Azure.Provisioning.FrontDoor
             _frontdoorId = DefineProperty<string>(nameof(FrontdoorId), new string[] { "frontdoorId" }, isOutput: true);
             _rulesEngines = DefineListProperty<FrontDoorRulesEngine>(nameof(RulesEngines), new string[] { "rulesEngines" }, isOutput: true);
             _extendedProperties = DefineDictionaryProperty<string>(nameof(ExtendedProperties), new string[] { "extendedProperties" }, isOutput: true);
-            _friendlyName = DefineProperty<string>(nameof(FriendlyName), new string[] { "friendlyName" });
-            _routingRules = DefineListProperty<RoutingRuleData>(nameof(RoutingRules), new string[] { "routingRules" });
-            _loadBalancingSettings = DefineListProperty<FrontDoorLoadBalancingSettingsData>(nameof(LoadBalancingSettings), new string[] { "loadBalancingSettings" });
-            _healthProbeSettings = DefineListProperty<FrontDoorHealthProbeSettingsData>(nameof(HealthProbeSettings), new string[] { "healthProbeSettings" });
-            _backendPools = DefineListProperty<FrontDoorBackendPool>(nameof(BackendPools), new string[] { "backendPools" });
-            _frontendEndpoints = DefineListProperty<FrontendEndpoint>(nameof(FrontendEndpoints), new string[] { "frontendEndpoints" });
-            _backendPoolsSettings = DefineModelProperty<BackendPoolsSettings>(nameof(BackendPoolsSettings), new string[] { "backendPoolsSettings" });
-            _enabledState = DefineProperty<FrontDoorEnabledState>(nameof(EnabledState), new string[] { "enabledState" });
             DefineAdditionalProperties();
         }
 

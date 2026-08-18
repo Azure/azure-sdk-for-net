@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Security.ConfidentialLedger;
 
 namespace Azure.Security.ConfidentialLedger.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.Security.ConfidentialLedger.Models
     public readonly partial struct ConfidentialLedgerQueryState : IEquatable<ConfidentialLedgerQueryState>
     {
         private readonly string _value;
+        /// <summary> The query is still loading. </summary>
+        private const string LoadingValue = "Loading";
+        /// <summary> The query is ready. </summary>
+        private const string ReadyValue = "Ready";
 
         /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerQueryState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConfidentialLedgerQueryState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LoadingValue = "Loading";
-        private const string ReadyValue = "Ready";
+            _value = value;
+        }
 
         /// <summary> The query is still loading. </summary>
         public static ConfidentialLedgerQueryState Loading { get; } = new ConfidentialLedgerQueryState(LoadingValue);
+
         /// <summary> The query is ready. </summary>
         public static ConfidentialLedgerQueryState Ready { get; } = new ConfidentialLedgerQueryState(ReadyValue);
+
         /// <summary> Determines if two <see cref="ConfidentialLedgerQueryState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConfidentialLedgerQueryState left, ConfidentialLedgerQueryState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConfidentialLedgerQueryState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConfidentialLedgerQueryState left, ConfidentialLedgerQueryState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConfidentialLedgerQueryState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConfidentialLedgerQueryState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConfidentialLedgerQueryState(string value) => new ConfidentialLedgerQueryState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConfidentialLedgerQueryState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConfidentialLedgerQueryState?(string value) => value == null ? null : new ConfidentialLedgerQueryState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConfidentialLedgerQueryState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConfidentialLedgerQueryState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
