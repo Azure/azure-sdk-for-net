@@ -76,20 +76,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 throw new FormatException($"The model {nameof(MigrationPropertiesForPatch)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SourceDbServerResourceId))
+            if (Optional.IsDefined(SourceDBServerResourceId))
             {
                 writer.WritePropertyName("sourceDbServerResourceId"u8);
-                writer.WriteStringValue(SourceDbServerResourceId);
+                writer.WriteStringValue(SourceDBServerResourceId);
             }
-            if (Optional.IsDefined(SourceDbServerFullyQualifiedDomainName))
+            if (Optional.IsDefined(SourceDBServerFullyQualifiedDomainName))
             {
                 writer.WritePropertyName("sourceDbServerFullyQualifiedDomainName"u8);
-                writer.WriteStringValue(SourceDbServerFullyQualifiedDomainName);
+                writer.WriteStringValue(SourceDBServerFullyQualifiedDomainName);
             }
-            if (Optional.IsDefined(TargetDbServerFullyQualifiedDomainName))
+            if (Optional.IsDefined(TargetDBServerFullyQualifiedDomainName))
             {
                 writer.WritePropertyName("targetDbServerFullyQualifiedDomainName"u8);
-                writer.WriteStringValue(TargetDbServerFullyQualifiedDomainName);
+                writer.WriteStringValue(TargetDBServerFullyQualifiedDomainName);
             }
             if (Optional.IsDefined(SecretParameters))
             {
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SetupLogicalReplicationOnSourceDbIfNeeded))
+            if (Optional.IsDefined(SetupLogicalReplicationOnSourceDBIfNeeded))
             {
                 writer.WritePropertyName("setupLogicalReplicationOnSourceDbIfNeeded"u8);
-                writer.WriteStringValue(SetupLogicalReplicationOnSourceDbIfNeeded.Value.ToString());
+                writer.WriteStringValue(SetupLogicalReplicationOnSourceDBIfNeeded.Value.ToString());
             }
             if (Optional.IsDefined(OverwriteDbsInTarget))
             {
@@ -223,12 +223,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            ResourceIdentifier sourceDbServerResourceId = default;
-            string sourceDbServerFullyQualifiedDomainName = default;
-            string targetDbServerFullyQualifiedDomainName = default;
+            ResourceIdentifier sourceDBServerResourceId = default;
+            string sourceDBServerFullyQualifiedDomainName = default;
+            string targetDBServerFullyQualifiedDomainName = default;
             MigrationSecretParametersForPatch secretParameters = default;
             IList<string> dbsToMigrate = default;
-            PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = default;
+            PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDBIfNeeded = default;
             PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = default;
             DateTimeOffset? migrationWindowStartTimeInUtc = default;
             MigrateRolesEnum? migrateRoles = default;
@@ -247,17 +247,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    sourceDbServerResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    sourceDBServerResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sourceDbServerFullyQualifiedDomainName"u8))
                 {
-                    sourceDbServerFullyQualifiedDomainName = prop.Value.GetString();
+                    sourceDBServerFullyQualifiedDomainName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("targetDbServerFullyQualifiedDomainName"u8))
                 {
-                    targetDbServerFullyQualifiedDomainName = prop.Value.GetString();
+                    targetDBServerFullyQualifiedDomainName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("secretParameters"u8))
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    setupLogicalReplicationOnSourceDbIfNeeded = new PostgreSqlMigrationLogicalReplicationOnSourceDb(prop.Value.GetString());
+                    setupLogicalReplicationOnSourceDBIfNeeded = new PostgreSqlMigrationLogicalReplicationOnSourceDb(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("overwriteDbsInTarget"u8))
@@ -410,12 +410,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             return new MigrationPropertiesForPatch(
-                sourceDbServerResourceId,
-                sourceDbServerFullyQualifiedDomainName,
-                targetDbServerFullyQualifiedDomainName,
+                sourceDBServerResourceId,
+                sourceDBServerFullyQualifiedDomainName,
+                targetDBServerFullyQualifiedDomainName,
                 secretParameters,
                 dbsToMigrate ?? new ChangeTrackingList<string>(),
-                setupLogicalReplicationOnSourceDbIfNeeded,
+                setupLogicalReplicationOnSourceDBIfNeeded,
                 overwriteDbsInTarget,
                 migrationWindowStartTimeInUtc,
                 migrateRoles,

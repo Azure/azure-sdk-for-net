@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrationPropertiesForPatch"/>. </summary>
-        /// <param name="sourceDbServerResourceId"> Identifier of the source database server resource, when 'sourceType' is 'PostgreSQLSingleServer'. For other source types this must be set to ipaddress:port@username or hostname:port@username. </param>
-        /// <param name="sourceDbServerFullyQualifiedDomainName"> Fully qualified domain name (FQDN) or IP address of the source server. This property is optional. When provided, the migration service will always use it to connect to the source server. </param>
-        /// <param name="targetDbServerFullyQualifiedDomainName"> Fully qualified domain name (FQDN) or IP address of the target server. This property is optional. When provided, the migration service will always use it to connect to the target server. </param>
+        /// <param name="sourceDBServerResourceId"> Identifier of the source database server resource, when 'sourceType' is 'PostgreSQLSingleServer'. For other source types this must be set to ipaddress:port@username or hostname:port@username. </param>
+        /// <param name="sourceDBServerFullyQualifiedDomainName"> Fully qualified domain name (FQDN) or IP address of the source server. This property is optional. When provided, the migration service will always use it to connect to the source server. </param>
+        /// <param name="targetDBServerFullyQualifiedDomainName"> Fully qualified domain name (FQDN) or IP address of the target server. This property is optional. When provided, the migration service will always use it to connect to the target server. </param>
         /// <param name="secretParameters"> Migration secret parameters. </param>
         /// <param name="dbsToMigrate"> Names of databases to migrate. </param>
-        /// <param name="setupLogicalReplicationOnSourceDbIfNeeded"> Indicates whether to setup logical replication on source server, if needed. </param>
+        /// <param name="setupLogicalReplicationOnSourceDBIfNeeded"> Indicates whether to setup logical replication on source server, if needed. </param>
         /// <param name="overwriteDbsInTarget"> Indicates if databases on the target server can be overwritten when already present. If set to 'False', when the migration workflow detects that the database already exists on the target server, it will wait for a confirmation. </param>
         /// <param name="migrationWindowStartTimeInUtc"> Start time (UTC) for migration window. </param>
         /// <param name="migrateRoles"> Indicates if roles and permissions must be migrated. </param>
@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="dbsToCancelMigrationOn"> When you want to trigger cancel for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </param>
         /// <param name="migrationMode"> Mode used to perform the migration: Online or Offline. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationPropertiesForPatch(ResourceIdentifier sourceDbServerResourceId, string sourceDbServerFullyQualifiedDomainName, string targetDbServerFullyQualifiedDomainName, MigrationSecretParametersForPatch secretParameters, IList<string> dbsToMigrate, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget, DateTimeOffset? migrationWindowStartTimeInUtc, MigrateRolesEnum? migrateRoles, PostgreSqlMigrationStartDataMigration? startDataMigration, PostgreSqlMigrationTriggerCutover? triggerCutover, IList<string> dbsToTriggerCutoverOn, PostgreSqlMigrationCancel? cancel, IList<string> dbsToCancelMigrationOn, PostgreSqlMigrationMode? migrationMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MigrationPropertiesForPatch(ResourceIdentifier sourceDBServerResourceId, string sourceDBServerFullyQualifiedDomainName, string targetDBServerFullyQualifiedDomainName, MigrationSecretParametersForPatch secretParameters, IList<string> dbsToMigrate, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDBIfNeeded, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget, DateTimeOffset? migrationWindowStartTimeInUtc, MigrateRolesEnum? migrateRoles, PostgreSqlMigrationStartDataMigration? startDataMigration, PostgreSqlMigrationTriggerCutover? triggerCutover, IList<string> dbsToTriggerCutoverOn, PostgreSqlMigrationCancel? cancel, IList<string> dbsToCancelMigrationOn, PostgreSqlMigrationMode? migrationMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SourceDbServerResourceId = sourceDbServerResourceId;
-            SourceDbServerFullyQualifiedDomainName = sourceDbServerFullyQualifiedDomainName;
-            TargetDbServerFullyQualifiedDomainName = targetDbServerFullyQualifiedDomainName;
+            SourceDBServerResourceId = sourceDBServerResourceId;
+            SourceDBServerFullyQualifiedDomainName = sourceDBServerFullyQualifiedDomainName;
+            TargetDBServerFullyQualifiedDomainName = targetDBServerFullyQualifiedDomainName;
             SecretParameters = secretParameters;
             DbsToMigrate = dbsToMigrate;
-            SetupLogicalReplicationOnSourceDbIfNeeded = setupLogicalReplicationOnSourceDbIfNeeded;
+            SetupLogicalReplicationOnSourceDBIfNeeded = setupLogicalReplicationOnSourceDBIfNeeded;
             OverwriteDbsInTarget = overwriteDbsInTarget;
             MigrationWindowStartTimeInUtc = migrationWindowStartTimeInUtc;
             MigrateRoles = migrateRoles;
@@ -65,15 +65,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Identifier of the source database server resource, when 'sourceType' is 'PostgreSQLSingleServer'. For other source types this must be set to ipaddress:port@username or hostname:port@username. </summary>
         [WirePath("sourceDbServerResourceId")]
-        public ResourceIdentifier SourceDbServerResourceId { get; set; }
+        public ResourceIdentifier SourceDBServerResourceId { get; set; }
 
         /// <summary> Fully qualified domain name (FQDN) or IP address of the source server. This property is optional. When provided, the migration service will always use it to connect to the source server. </summary>
         [WirePath("sourceDbServerFullyQualifiedDomainName")]
-        public string SourceDbServerFullyQualifiedDomainName { get; set; }
+        public string SourceDBServerFullyQualifiedDomainName { get; set; }
 
         /// <summary> Fully qualified domain name (FQDN) or IP address of the target server. This property is optional. When provided, the migration service will always use it to connect to the target server. </summary>
         [WirePath("targetDbServerFullyQualifiedDomainName")]
-        public string TargetDbServerFullyQualifiedDomainName { get; set; }
+        public string TargetDBServerFullyQualifiedDomainName { get; set; }
 
         /// <summary> Migration secret parameters. </summary>
         [WirePath("secretParameters")]
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Indicates whether to setup logical replication on source server, if needed. </summary>
         [WirePath("setupLogicalReplicationOnSourceDbIfNeeded")]
-        public PostgreSqlMigrationLogicalReplicationOnSourceDb? SetupLogicalReplicationOnSourceDbIfNeeded { get; set; }
+        public PostgreSqlMigrationLogicalReplicationOnSourceDb? SetupLogicalReplicationOnSourceDBIfNeeded { get; set; }
 
         /// <summary> Indicates if databases on the target server can be overwritten when already present. If set to 'False', when the migration workflow detects that the database already exists on the target server, it will wait for a confirmation. </summary>
         [WirePath("overwriteDbsInTarget")]

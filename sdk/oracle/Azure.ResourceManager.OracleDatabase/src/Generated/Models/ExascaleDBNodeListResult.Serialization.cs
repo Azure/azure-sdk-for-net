@@ -14,64 +14,64 @@ using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> The response of a AutonomousDbVersion list operation. </summary>
-    internal partial class AutonomousDbVersionListResult : IJsonModel<AutonomousDbVersionListResult>
+    /// <summary> The response of a ExascaleDbNode list operation. </summary>
+    internal partial class ExascaleDBNodeListResult : IJsonModel<ExascaleDBNodeListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="AutonomousDbVersionListResult"/> for deserialization. </summary>
-        internal AutonomousDbVersionListResult()
+        /// <summary> Initializes a new instance of <see cref="ExascaleDBNodeListResult"/> for deserialization. </summary>
+        internal ExascaleDBNodeListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AutonomousDbVersionListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ExascaleDBNodeListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AutonomousDbVersionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExascaleDBNodeListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAutonomousDbVersionListResult(document.RootElement, options);
+                        return DeserializeExascaleDBNodeListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutonomousDbVersionListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExascaleDBNodeListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AutonomousDbVersionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExascaleDBNodeListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AutonomousDbVersionListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExascaleDBNodeListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AutonomousDbVersionListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ExascaleDBNodeListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AutonomousDbVersionListResult IPersistableModel<AutonomousDbVersionListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ExascaleDBNodeListResult IPersistableModel<ExascaleDBNodeListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AutonomousDbVersionListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ExascaleDBNodeListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AutonomousDbVersionListResult"/> from. </param>
-        internal static AutonomousDbVersionListResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ExascaleDBNodeListResult"/> from. </param>
+        internal static ExascaleDBNodeListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAutonomousDbVersionListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeExascaleDBNodeListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AutonomousDbVersionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ExascaleDBNodeListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AutonomousDbVersionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExascaleDBNodeListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutonomousDbVersionListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ExascaleDBNodeListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (AutonomousDBVersionData item in Value)
+            foreach (ExascaleDBNodeData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AutonomousDbVersionListResult IJsonModel<AutonomousDbVersionListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ExascaleDBNodeListResult IJsonModel<ExascaleDBNodeListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AutonomousDbVersionListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ExascaleDBNodeListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AutonomousDbVersionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExascaleDBNodeListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutonomousDbVersionListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ExascaleDBNodeListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAutonomousDbVersionListResult(document.RootElement, options);
+            return DeserializeExascaleDBNodeListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AutonomousDbVersionListResult DeserializeAutonomousDbVersionListResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static ExascaleDBNodeListResult DeserializeExascaleDBNodeListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<AutonomousDBVersionData> value = default;
+            IList<ExascaleDBNodeData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<AutonomousDBVersionData> array = new List<AutonomousDBVersionData>();
+                    List<ExascaleDBNodeData> array = new List<ExascaleDBNodeData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AutonomousDBVersionData.DeserializeAutonomousDBVersionData(item, options));
+                        array.Add(ExascaleDBNodeData.DeserializeExascaleDBNodeData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AutonomousDbVersionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ExascaleDBNodeListResult(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Identifier of the source database server resource, when 'sourceType' is 'PostgreSQLSingleServer'. For other source types this must be set to ipaddress:port@username or hostname:port@username. </summary>
         [WirePath("properties.sourceDbServerResourceId")]
-        public ResourceIdentifier SourceDbServerResourceId
+        public ResourceIdentifier SourceDBServerResourceId
         {
             get
             {
-                return Properties is null ? default : Properties.SourceDbServerResourceId;
+                return Properties is null ? default : Properties.SourceDBServerResourceId;
             }
             set
             {
@@ -57,17 +57,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     Properties = new MigrationPropertiesForPatch();
                 }
-                Properties.SourceDbServerResourceId = value;
+                Properties.SourceDBServerResourceId = value;
             }
         }
 
         /// <summary> Fully qualified domain name (FQDN) or IP address of the source server. This property is optional. When provided, the migration service will always use it to connect to the source server. </summary>
         [WirePath("properties.sourceDbServerFullyQualifiedDomainName")]
-        public string SourceDbServerFullyQualifiedDomainName
+        public string SourceDBServerFullyQualifiedDomainName
         {
             get
             {
-                return Properties is null ? default : Properties.SourceDbServerFullyQualifiedDomainName;
+                return Properties is null ? default : Properties.SourceDBServerFullyQualifiedDomainName;
             }
             set
             {
@@ -75,17 +75,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     Properties = new MigrationPropertiesForPatch();
                 }
-                Properties.SourceDbServerFullyQualifiedDomainName = value;
+                Properties.SourceDBServerFullyQualifiedDomainName = value;
             }
         }
 
         /// <summary> Fully qualified domain name (FQDN) or IP address of the target server. This property is optional. When provided, the migration service will always use it to connect to the target server. </summary>
         [WirePath("properties.targetDbServerFullyQualifiedDomainName")]
-        public string TargetDbServerFullyQualifiedDomainName
+        public string TargetDBServerFullyQualifiedDomainName
         {
             get
             {
-                return Properties is null ? default : Properties.TargetDbServerFullyQualifiedDomainName;
+                return Properties is null ? default : Properties.TargetDBServerFullyQualifiedDomainName;
             }
             set
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     Properties = new MigrationPropertiesForPatch();
                 }
-                Properties.TargetDbServerFullyQualifiedDomainName = value;
+                Properties.TargetDBServerFullyQualifiedDomainName = value;
             }
         }
 
@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Indicates whether to setup logical replication on source server, if needed. </summary>
         [WirePath("properties.setupLogicalReplicationOnSourceDbIfNeeded")]
-        public PostgreSqlMigrationLogicalReplicationOnSourceDb? SetupLogicalReplicationOnSourceDbIfNeeded
+        public PostgreSqlMigrationLogicalReplicationOnSourceDb? SetupLogicalReplicationOnSourceDBIfNeeded
         {
             get
             {
-                return Properties is null ? default : Properties.SetupLogicalReplicationOnSourceDbIfNeeded;
+                return Properties is null ? default : Properties.SetupLogicalReplicationOnSourceDBIfNeeded;
             }
             set
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     Properties = new MigrationPropertiesForPatch();
                 }
-                Properties.SetupLogicalReplicationOnSourceDbIfNeeded = value;
+                Properties.SetupLogicalReplicationOnSourceDBIfNeeded = value;
             }
         }
 
