@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.EventHubs
     [ModelReaderWriterBuildable(typeof(ConsumerGroupListResult))]
     [ModelReaderWriterBuildable(typeof(ConsumerGroupProperties))]
     [ModelReaderWriterBuildable(typeof(DestinationProperties))]
+    [ModelReaderWriterBuildable(typeof(EHNamespaceIdContainer))]
     [ModelReaderWriterBuildable(typeof(EHNamespaceIdListResult))]
     [ModelReaderWriterBuildable(typeof(EHNamespaceListResult))]
     [ModelReaderWriterBuildable(typeof(EHNamespaceProperties))]
