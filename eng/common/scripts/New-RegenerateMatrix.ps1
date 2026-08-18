@@ -23,12 +23,79 @@ param (
   # Optional comma-separated filter patterns applied to package directory names
   # (e.g., 'Azure.ResourceManager*,Azure.Provisioning*')
   [Parameter()]
-  [string]$DirectoryFilterPattern
+  [string]$DirectoryFilterPattern,
+
+  # Balance jobs by existing C# LOC plus a fixed per-package cost instead of by
+  # package count. The generated source is a strong proxy for regeneration time.
+  [Parameter()]
+  [string]$UseLocWeighting,
+
+  [Parameter()]
+  [ValidateRange(0, [int]::MaxValue)]
+  [int]$LocBaseCost = 30000
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
 
 [bool]$OnlyTypespec = $OnlyTypespec -in @("true", "t", "1", "yes", "y")
+[bool]$UseLocWeighting = $UseLocWeighting -in @("true", "t", "1", "yes", "y")
+
+if ($UseLocWeighting) {
+  Add-Type -TypeDefinition @"
+using System;
+using System.IO;
+using System.Threading.Tasks;
+
+public static class RegenerationLocCounter
+{
+    private const int BufferSize = 64 * 1024;
+
+    private static long CountDirectory(string root)
+    {
+        if (!Directory.Exists(root))
+        {
+            return 1;
+        }
+
+        long total = 0;
+        byte[] buffer = new byte[BufferSize];
+        foreach (string file in Directory.EnumerateFiles(root, "*.cs", SearchOption.AllDirectories))
+        {
+            using (var stream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, 1, FileOptions.SequentialScan))
+            {
+                int read;
+                bool any = false;
+                byte last = 0;
+                while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    any = true;
+                    for (int i = 0; i < read; i++)
+                    {
+                        if (buffer[i] == (byte)10)
+                        {
+                            total++;
+                        }
+                    }
+                    last = buffer[read - 1];
+                }
+                if (any && last != (byte)10)
+                {
+                    total++;
+                }
+            }
+        }
+        return Math.Max(total, 1);
+    }
+
+    public static long[] CountAll(string[] roots)
+    {
+        var results = new long[roots.Length];
+        Parallel.For(0, roots.Length, i => results[i] = CountDirectory(roots[i]));
+        return results;
+    }
+}
+"@
+}
 
 # Divide the items into groups of approximately equal size.
 function Split-Items([array]$Items) {
@@ -63,6 +130,56 @@ function Split-Items([array]$Items) {
 
   Write-Host "$itemCount items split into $JobCount groups of approximately $itemsPerGroup items each."
 
+  return , $groups
+}
+
+function Split-ItemsByWeight([array]$Items) {
+  $itemCount = $Items.Length
+  $jobsForMinimum = $itemCount -lt $MinimumPerJob ? 1 : [math]::Floor($itemCount / $MinimumPerJob)
+  $effectiveJobCount = [math]::Min($JobCount, $jobsForMinimum)
+
+  $sourceRoots = [string[]]@($Items | ForEach-Object {
+    Join-Path $RepoRoot "sdk/$($_.PackageDirectory)/src"
+  })
+  $locCounts = [RegenerationLocCounter]::CountAll($sourceRoots)
+
+  $weightedItems = for ($i = 0; $i -lt $Items.Length; $i++) {
+    [PSCustomObject]@{
+      Item = $Items[$i]
+      Loc = $locCounts[$i]
+      Weight = $locCounts[$i] + $LocBaseCost
+    }
+  }
+  $weightedItems = @($weightedItems | Sort-Object -Property Weight -Descending)
+
+  $buckets = @(
+    for ($i = 0; $i -lt $effectiveJobCount; $i++) {
+      [PSCustomObject]@{
+        Items = [System.Collections.ArrayList]::new()
+        TotalLoc = [long]0
+        TotalWeight = [long]0
+      }
+    }
+  )
+
+  foreach ($weightedItem in $weightedItems) {
+    $bucket = $buckets | Sort-Object -Property TotalWeight | Select-Object -First 1
+    [void]$bucket.Items.Add($weightedItem.Item)
+    $bucket.TotalLoc += $weightedItem.Loc
+    $bucket.TotalWeight += $weightedItem.Weight
+  }
+
+  for ($i = 0; $i -lt $buckets.Count; $i++) {
+    $bucket = $buckets[$i]
+    $bucket.Items = [System.Collections.ArrayList]@($bucket.Items | Sort-Object -Property PackageDirectory)
+    Write-Host "Weighted group $i`: $($bucket.Items.Count) packages, $($bucket.TotalLoc) LOC, weight $($bucket.TotalWeight)"
+  }
+  Write-Host "$itemCount items split into $effectiveJobCount LOC-weighted groups with base cost $LocBaseCost per package."
+
+  $groups = [object[]]::new($buckets.Count)
+  for ($i = 0; $i -lt $buckets.Count; $i++) {
+    $groups[$i] = [object[]]$buckets[$i].Items
+  }
   return , $groups
 }
 
@@ -105,7 +222,12 @@ if ($directoriesForGeneration.Count -eq 0) {
   }
 }
 
-$batches = Split-Items -Items $packageDirectories
+$batches = if ($UseLocWeighting) {
+  Split-ItemsByWeight -Items $packageDirectories
+}
+else {
+  Split-Items -Items $packageDirectories
+}
 
 $matrix = [ordered]@{}
 for ($i = 0; $i -lt $batches.Length; $i++) {
