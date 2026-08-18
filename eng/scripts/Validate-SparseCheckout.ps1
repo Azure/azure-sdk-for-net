@@ -175,6 +175,30 @@ function Invoke-Comparison([string] $Mode) {
     @()
   }
 
+  $testSummary = $null
+  if ($Target -eq 'Test') {
+    $testResultFiles = @(Get-ChildItem -LiteralPath (Join-Path $clonePath "sdk/$ServiceDirectory") `
+      -Filter '*.trx' -File -Recurse -ErrorAction SilentlyContinue)
+    $testSummary = [ordered]@{
+      Files = $testResultFiles.Count
+      Total = 0
+      Executed = 0
+      Passed = 0
+      Failed = 0
+      NotExecuted = 0
+    }
+    foreach ($testResultFile in $testResultFiles) {
+      [xml] $testResult = Get-Content -LiteralPath $testResultFile.FullName -Raw
+      $counters = $testResult.TestRun.ResultSummary.Counters
+      foreach ($name in @('Total', 'Executed', 'Passed', 'Failed', 'NotExecuted')) {
+        $value = $counters.GetAttribute($name.ToLowerInvariant())
+        if ($value) {
+          $testSummary[$name] += [int] $value
+        }
+      }
+    }
+  }
+
   return [ordered]@{
     Mode = $Mode
     CloneSeconds = [math]::Round($cloneWatch.Elapsed.TotalSeconds, 3)
@@ -183,6 +207,7 @@ function Invoke-Comparison([string] $Mode) {
     CheckoutTree = $checkoutTree
     FinalTree = Get-TreeMetrics -Path $clonePath
     Packages = $packages
+    Tests = $testSummary
   }
 }
 
@@ -218,6 +243,10 @@ if ($results.Count -ne 2 -or ($results | Where-Object ExitCode -ne 0)) {
   throw 'One or more comparison commands failed. See the report for details.'
 }
 
-if (Compare-Object $results[0].Packages $results[1].Packages) {
+if ($Target -eq 'Pack' -and (Compare-Object $results[0].Packages $results[1].Packages)) {
   throw 'Full and sparse clones produced different package sets.'
+}
+if ($Target -eq 'Test' -and
+    ($results[0].Tests | ConvertTo-Json -Compress) -ne ($results[1].Tests | ConvertTo-Json -Compress)) {
+  throw 'Full and sparse clones produced different test counts.'
 }
