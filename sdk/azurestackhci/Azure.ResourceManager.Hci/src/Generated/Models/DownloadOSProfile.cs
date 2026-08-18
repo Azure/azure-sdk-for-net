@@ -12,17 +12,17 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Operating system profile. </summary>
-    public partial class DownloadOsProfile
+    public partial class DownloadOSProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DownloadOsProfile"/>. </summary>
-        public DownloadOsProfile()
+        /// <summary> Initializes a new instance of <see cref="DownloadOSProfile"/>. </summary>
+        public DownloadOSProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DownloadOsProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DownloadOSProfile"/>. </summary>
         /// <param name="osName"> Name of the operating system. </param>
         /// <param name="osType"> Type of the operating system. </param>
         /// <param name="osVersion"> Version of the operating system. </param>
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="imageHash"> Hash of the OS package downloaded. </param>
         /// <param name="gpgPubKey"> GPG Public Key used for package verification. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DownloadOsProfile(string osName, string osType, string osVersion, string osImageLocation, string vsrVersion, string imageHash, string gpgPubKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DownloadOSProfile(string osName, string osType, string osVersion, string osImageLocation, string vsrVersion, string imageHash, string gpgPubKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OsName = osName;
-            OsType = osType;
-            OsVersion = osVersion;
-            OsImageLocation = osImageLocation;
+            OSName = osName;
+            OSType = osType;
+            OSVersion = osVersion;
+            OSImageLocation = osImageLocation;
             VsrVersion = vsrVersion;
             ImageHash = imageHash;
             GpgPubKey = gpgPubKey;
@@ -45,19 +45,19 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Name of the operating system. </summary>
         [WirePath("osName")]
-        public string OsName { get; set; }
+        public string OSName { get; set; }
 
         /// <summary> Type of the operating system. </summary>
         [WirePath("osType")]
-        public string OsType { get; set; }
+        public string OSType { get; set; }
 
         /// <summary> Version of the operating system. </summary>
         [WirePath("osVersion")]
-        public string OsVersion { get; set; }
+        public string OSVersion { get; set; }
 
         /// <summary> Location of the operating system image. </summary>
         [WirePath("osImageLocation")]
-        public string OsImageLocation { get; set; }
+        public string OSImageLocation { get; set; }
 
         /// <summary> Validated Solution Recipe version to be used for the job. </summary>
         [WirePath("vsrVersion")]

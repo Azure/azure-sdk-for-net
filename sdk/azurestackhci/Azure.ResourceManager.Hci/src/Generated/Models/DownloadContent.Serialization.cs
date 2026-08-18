@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WritePropertyName("target"u8);
             writer.WriteStringValue(Target.ToString());
             writer.WritePropertyName("osProfile"u8);
-            writer.WriteObjectValue(OsProfile, options);
+            writer.WriteObjectValue(OSProfile, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -125,19 +125,19 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            ProvisioningOsType target = default;
-            DownloadOsProfile osProfile = default;
+            ProvisioningOSType target = default;
+            DownloadOSProfile osProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("target"u8))
                 {
-                    target = new ProvisioningOsType(prop.Value.GetString());
+                    target = new ProvisioningOSType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("osProfile"u8))
                 {
-                    osProfile = DownloadOsProfile.DeserializeDownloadOsProfile(prop.Value, options);
+                    osProfile = DownloadOSProfile.DeserializeDownloadOSProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

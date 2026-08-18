@@ -14,24 +14,24 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Hci
 {
     /// <summary> Represents a os image resource. </summary>
-    public partial class OsImageData : ResourceData
+    public partial class OSImageData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OsImageData"/>. </summary>
-        internal OsImageData()
+        /// <summary> Initializes a new instance of <see cref="OSImageData"/>. </summary>
+        internal OSImageData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OsImageData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSImageData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OsImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, OsImageProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal OSImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, OSImageProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> The resource-specific properties for this resource. </summary>
         [WirePath("properties")]
-        public OsImageProperties Properties { get; }
+        public OSImageProperties Properties { get; }
     }
 }

@@ -13,19 +13,19 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Represents the properties of an Azure Linux restricted operating environment Provision Os job. </summary>
-    public partial class ProvisionOsJobProperties : EdgeMachineJobProperties
+    public partial class ProvisionOSJobProperties : EdgeMachineJobProperties
     {
-        /// <summary> Initializes a new instance of <see cref="ProvisionOsJobProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionOSJobProperties"/>. </summary>
         /// <param name="provisioningRequest"> Os Provisioning request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provisioningRequest"/> is null. </exception>
-        public ProvisionOsJobProperties(ProvisioningContent provisioningRequest) : base(EdgeMachineJobType.ProvisionOs)
+        public ProvisionOSJobProperties(ProvisioningContent provisioningRequest) : base(EdgeMachineJobType.ProvisionOs)
         {
             Argument.AssertNotNull(provisioningRequest, nameof(provisioningRequest));
 
             ProvisioningRequest = provisioningRequest;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProvisionOsJobProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionOSJobProperties"/>. </summary>
         /// <param name="jobType"> Job Type to support polymorphic resource. </param>
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
         /// <param name="provisioningState"> Job provisioning state. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="provisioningRequest"> Os Provisioning request. </param>
         /// <param name="reportedProperties"> Reported Properties for Provision Os job. </param>
-        internal ProvisionOsJobProperties(EdgeMachineJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startOn, DateTimeOffset? endOn, HciJobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, ProvisioningContent provisioningRequest, ProvisionOsReportedProperties reportedProperties) : base(jobType, deploymentMode, provisioningState, jobId, startOn, endOn, status, error, additionalBinaryDataProperties)
+        internal ProvisionOSJobProperties(EdgeMachineJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startOn, DateTimeOffset? endOn, HciJobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, ProvisioningContent provisioningRequest, ProvisionOSReportedProperties reportedProperties) : base(jobType, deploymentMode, provisioningState, jobId, startOn, endOn, status, error, additionalBinaryDataProperties)
         {
             ProvisioningRequest = provisioningRequest;
             ReportedProperties = reportedProperties;
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Reported Properties for Provision Os job. </summary>
         [WirePath("reportedProperties")]
-        public ProvisionOsReportedProperties ReportedProperties { get; set; }
+        public ProvisionOSReportedProperties ReportedProperties { get; set; }
     }
 }
