@@ -16,6 +16,7 @@ namespace Azure.Security.KeyVault
     {
         private const string KeyVaultStashedContentKey = "KeyVaultContent";
         private const string TokenBoundAuthHeaderName = "x-ms-tokenboundauth";
+        private const string PoPTokenTypePrefix = "pop ";
         private static readonly Type[] s_updateParameterTypes = [typeof(HttpPipelineTransportOptions)];
         private readonly bool _verifyChallengeResource;
         private readonly bool _enableProofOfPossession;
@@ -72,7 +73,6 @@ namespace Azure.Security.KeyVault
                     isProofOfPossessionEnabled: _enableProofOfPossession,
                     requestUri: message.Request.Uri.ToUri(),
                     requestMethod: message.Request.Method.ToString());
-                AddTokenBoundAuthHeader(message, context);
                 if (async)
                 {
                     await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
@@ -82,6 +82,7 @@ namespace Azure.Security.KeyVault
                     AuthenticateAndAuthorizeRequest(message, context);
                 }
 
+                AddTokenBoundAuthHeaderIfBound(message);
                 return;
             }
 
@@ -209,7 +210,6 @@ namespace Azure.Security.KeyVault
                 isProofOfPossessionEnabled: _enableProofOfPossession,
                 requestUri: message.Request.Uri.ToUri(),
                 requestMethod: message.Request.Method.ToString());
-            AddTokenBoundAuthHeader(message, context);
             if (async)
             {
                 await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
@@ -219,12 +219,23 @@ namespace Azure.Security.KeyVault
                 AuthenticateAndAuthorizeRequest(message, context);
             }
 
+            AddTokenBoundAuthHeaderIfBound(message);
             return true;
         }
 
-        private static void AddTokenBoundAuthHeader(HttpMessage message, TokenRequestContext context)
+        /// <summary>
+        /// Adds the token-bound auth header only when the token actually acquired for this request is
+        /// Proof-of-Possession (PoP) bound. Requesting PoP via <see cref="TokenRequestContext.IsProofOfPossessionEnabled"/>
+        /// does not guarantee the credential honors it — the credential may not support PoP, or the current
+        /// environment may not support token binding — in which case a normal Bearer token is returned. The header
+        /// must reflect what was actually negotiated, not merely what was requested, so it is set based on the
+        /// scheme of the Authorization header written by <see cref="BearerTokenAuthenticationPolicy"/> rather than
+        /// on the request's <see cref="TokenRequestContext.IsProofOfPossessionEnabled"/> flag.
+        /// </summary>
+        private static void AddTokenBoundAuthHeaderIfBound(HttpMessage message)
         {
-            if (context.IsProofOfPossessionEnabled)
+            if (message.Request.Headers.TryGetValue(HttpHeader.Names.Authorization, out string authorizationHeaderValue) &&
+                authorizationHeaderValue.StartsWith(PoPTokenTypePrefix, StringComparison.OrdinalIgnoreCase))
             {
                 message.Request.Headers.SetValue(TokenBoundAuthHeaderName, "true");
             }

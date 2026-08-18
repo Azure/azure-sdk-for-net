@@ -64,7 +64,11 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             };
 
             MockTransport transport = builder.Build();
-            MockCredential credential = new MockCredential(transport);
+
+            // The credential simulates a Proof-of-Possession-bound token by returning "PoP" as the token type,
+            // matching what MSAL/Azure.Identity returns for a credential that actually honored
+            // TokenRequestContext.IsProofOfPossessionEnabled (e.g. Managed Identity with mTLS support).
+            MockCredential credential = new MockCredential(transport, tokenType: "PoP");
             SecretClient client = new SecretClient(
                 VaultUri,
                 credential,
@@ -83,6 +87,42 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             CollectionAssert.AreEqual(new[] { "https://vault.azure.net/.default" }, credential.LastRequestContext.Scopes);
             Assert.AreEqual(RequestMethod.Get.ToString(), credential.LastRequestContext.ResourceRequestMethod);
             Assert.AreEqual(new Uri("https://test.vault.azure.net/secrets/test-secret?api-version=2025-07-01"), credential.LastRequestContext.ResourceRequestUri);
+        }
+
+        [Test]
+        public async Task DoesNotAddTokenBoundAuthHeaderWhenCredentialDoesNotReturnPoPToken()
+        {
+            // Requesting PoP via TokenRequestContext.IsProofOfPossessionEnabled does not guarantee the credential
+            // honors it - most credentials (anything other than Managed Identity with mTLS support) simply ignore
+            // the flag and return a normal Bearer token. The SDK must not claim the request is token-bound in that
+            // case, even though the transport supports being updated and PoP was requested.
+            bool sawAuthorizedVaultRequest = false;
+            MockTransportBuilder builder = new MockTransportBuilder();
+            builder.Request += (_, args) =>
+            {
+                if (args.Request.Uri.Host == VaultHost &&
+                    args.Request.Headers.TryGetValue("Authorization", out string _))
+                {
+                    sawAuthorizedVaultRequest = true;
+                }
+            };
+
+            MockTransport transport = builder.Build();
+            MockCredential credential = new MockCredential(transport);
+            SecretClient client = new SecretClient(
+                VaultUri,
+                credential,
+                new SecretClientOptions
+                {
+                    Transport = transport,
+                });
+
+            KeyVaultSecret secret = await client.GetSecretAsync("test-secret").ConfigureAwait(false);
+
+            Assert.AreEqual("secret-value", secret.Value);
+            Assert.IsTrue(sawAuthorizedVaultRequest);
+            Assert.IsNotNull(credential.LastRequestContext);
+            Assert.IsTrue(credential.LastRequestContext.IsProofOfPossessionEnabled);
         }
 
         [Test]
@@ -343,7 +383,10 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
                 switch (request.Uri.Host)
                 {
-                    case VaultHost when request.Headers.TryGetValue(AuthorizationHeader, out string headerValue) && headerValue == $"Bearer {AccessToken}":
+                    // Accept both a plain Bearer token and a PoP-bound token carrying the same access token value,
+                    // so tests can simulate a credential that honored TokenRequestContext.IsProofOfPossessionEnabled.
+                    case VaultHost when request.Headers.TryGetValue(AuthorizationHeader, out string headerValue) &&
+                        (headerValue == $"Bearer {AccessToken}" || headerValue == $"PoP {AccessToken}"):
                         return new MockResponse(200, "OK")
                         {
                             ContentStream = new KeyVaultSecret("test-secret", "secret-value").ToStream(),
@@ -415,13 +458,15 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             private readonly string _tenantId;
             private readonly string _clientId;
             private readonly string _clientSecret;
+            private readonly string _tokenType;
 
-            public MockCredential(MockTransport transport, string tenantId = TenantId, string clientId = "test_id", string clientSecret = "test_secret")
+            public MockCredential(MockTransport transport, string tenantId = TenantId, string clientId = "test_id", string clientSecret = "test_secret", string tokenType = "Bearer")
             {
                 _pipeline = new HttpPipeline(transport);
                 _tenantId = tenantId ?? throw new ArgumentNullException(nameof(tenantId));
                 _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
                 _clientSecret = clientSecret ?? throw new ArgumentNullException(nameof(clientSecret));
+                _tokenType = tokenType ?? throw new ArgumentNullException(nameof(tokenType));
             }
 
             public TokenRequestContext LastRequestContext { get; private set; }
@@ -445,21 +490,21 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
                 if (response.Status == 200 || response.Status == 201)
                 {
-                    return await DeserializeAsync(response.ContentStream, cancellationToken);
+                    return await DeserializeAsync(response.ContentStream, _tokenType, cancellationToken);
                 }
 
                 throw new RequestFailedException(response.Status, response.ReasonPhrase);
             }
 
-            private static async Task<AccessToken> DeserializeAsync(Stream content, CancellationToken cancellationToken)
+            private static async Task<AccessToken> DeserializeAsync(Stream content, string tokenType, CancellationToken cancellationToken)
             {
                 using (JsonDocument json = await JsonDocument.ParseAsync(content, default, cancellationToken).ConfigureAwait(false))
                 {
-                    return Deserialize(json.RootElement);
+                    return Deserialize(json.RootElement, tokenType);
                 }
             }
 
-            private static AccessToken Deserialize(JsonElement json)
+            private static AccessToken Deserialize(JsonElement json, string tokenType)
             {
                 string accessToken = null;
                 DateTimeOffset expiresOn = DateTimeOffset.MaxValue;
@@ -478,7 +523,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                     }
                 }
 
-                return new AccessToken(accessToken, expiresOn);
+                return new AccessToken(accessToken, expiresOn, null, tokenType);
             }
         }
 
