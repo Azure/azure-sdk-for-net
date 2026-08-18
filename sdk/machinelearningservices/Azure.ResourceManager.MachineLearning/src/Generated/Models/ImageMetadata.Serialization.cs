@@ -84,15 +84,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("latestImageVersion"u8);
                 writer.WriteStringValue(LatestImageVersion);
             }
-            if (Optional.IsDefined(IsLatestOsImageVersion))
-            {
-                writer.WritePropertyName("isLatestOsImageVersion"u8);
-                writer.WriteBooleanValue(IsLatestOsImageVersion.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(OsPatchingStatus))
+            if (options.Format != "W" && Optional.IsDefined(OSPatchingStatus))
             {
                 writer.WritePropertyName("osPatchingStatus"u8);
-                writer.WriteObjectValue(OsPatchingStatus, options);
+                writer.WriteObjectValue(OSPatchingStatus, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -138,8 +133,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             string currentImageVersion = default;
             string latestImageVersion = default;
-            bool? isLatestOsImageVersion = default;
-            OsPatchingStatus osPatchingStatus = default;
+            OSPatchingStatus osPatchingStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,22 +147,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     latestImageVersion = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("isLatestOsImageVersion"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isLatestOsImageVersion = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (prop.NameEquals("osPatchingStatus"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    osPatchingStatus = OsPatchingStatus.DeserializeOsPatchingStatus(prop.Value, options);
+                    osPatchingStatus = OSPatchingStatus.DeserializeOSPatchingStatus(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -176,7 +161,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ImageMetadata(currentImageVersion, latestImageVersion, isLatestOsImageVersion, osPatchingStatus, additionalBinaryDataProperties);
+            return new ImageMetadata(currentImageVersion, latestImageVersion, osPatchingStatus, additionalBinaryDataProperties);
         }
     }
 }

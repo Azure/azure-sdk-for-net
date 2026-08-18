@@ -94,11 +94,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("published"u8);
                 writer.WriteNumberValue(Published.Value);
             }
-            if (Optional.IsDefined(HostIp))
-            {
-                writer.WritePropertyName("hostIp"u8);
-                writer.WriteStringValue(HostIp);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -145,7 +140,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string name = default;
             int? target = default;
             int? published = default;
-            string hostIp = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -182,28 +176,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     published = prop.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("hostIp"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        hostIp = null;
-                        continue;
-                    }
-                    hostIp = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerEndpoint(
-                protocol,
-                name,
-                target,
-                published,
-                hostIp,
-                additionalBinaryDataProperties);
+            return new ContainerEndpoint(protocol, name, target, published, additionalBinaryDataProperties);
         }
     }
 }
