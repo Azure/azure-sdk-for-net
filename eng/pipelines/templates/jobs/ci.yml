@@ -201,15 +201,6 @@ jobs:
 
         - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
-        # Temporary: the agent image does not yet carry the SDK version specified by global.json.
-        # This step can be removed once the agent version satisfies global.json.
-        - task: UseDotNet@2
-          displayName: 'Use .NET SDK'
-          retryCountOnTaskFailure: 3
-          inputs:
-            useGlobalJson: true
-            performMultiLevelLookup: true
-
         - pwsh: ./eng/scripts/Test-NoWarnValidation.ps1
           displayName: Validate NoWarn enforcement targets
 
