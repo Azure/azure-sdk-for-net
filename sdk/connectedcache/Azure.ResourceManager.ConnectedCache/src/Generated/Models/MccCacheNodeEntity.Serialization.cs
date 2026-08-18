@@ -350,25 +350,25 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 writer.WritePropertyName("autoUpdateRequestedTime"u8);
                 writer.WriteStringValue(AutoUpdateRequestedTime);
             }
-            if (Optional.IsDefined(OpenFirewallPort80))
+            if (Optional.IsDefined(ShouldOpenFirewallPort80))
             {
                 writer.WritePropertyName("openFirewallPort80"u8);
-                writer.WriteBooleanValue(OpenFirewallPort80.Value);
+                writer.WriteBooleanValue(ShouldOpenFirewallPort80.Value);
             }
-            if (Optional.IsDefined(OpenFirewallPort443))
+            if (Optional.IsDefined(ShouldOpenFirewallPort443))
             {
                 writer.WritePropertyName("openFirewallPort443"u8);
-                writer.WriteBooleanValue(OpenFirewallPort443.Value);
+                writer.WriteBooleanValue(ShouldOpenFirewallPort443.Value);
             }
-            if (Optional.IsDefined(OpenFirewallPort5000))
+            if (Optional.IsDefined(ShouldOpenFirewallPort5000))
             {
                 writer.WritePropertyName("openFirewallPort5000"u8);
-                writer.WriteBooleanValue(OpenFirewallPort5000.Value);
+                writer.WriteBooleanValue(ShouldOpenFirewallPort5000.Value);
             }
-            if (Optional.IsDefined(OpenFirewallPort5001))
+            if (Optional.IsDefined(ShouldOpenFirewallPort5001))
             {
                 writer.WritePropertyName("openFirewallPort5001"u8);
-                writer.WriteBooleanValue(OpenFirewallPort5001.Value);
+                writer.WriteBooleanValue(ShouldOpenFirewallPort5001.Value);
             }
             if (Optional.IsDefined(RuntimeAccountType))
             {
@@ -470,10 +470,10 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             int? autoUpdateRequestedWeek = default;
             int? autoUpdateRequestedDay = default;
             string autoUpdateRequestedTime = default;
-            bool? openFirewallPort80 = default;
-            bool? openFirewallPort443 = default;
-            bool? openFirewallPort5000 = default;
-            bool? openFirewallPort5001 = default;
+            bool? shouldOpenFirewallPort80 = default;
+            bool? shouldOpenFirewallPort443 = default;
+            bool? shouldOpenFirewallPort5000 = default;
+            bool? shouldOpenFirewallPort5001 = default;
             string runtimeAccountType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -893,7 +893,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                     {
                         continue;
                     }
-                    openFirewallPort80 = prop.Value.GetBoolean();
+                    shouldOpenFirewallPort80 = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("openFirewallPort443"u8))
@@ -902,7 +902,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                     {
                         continue;
                     }
-                    openFirewallPort443 = prop.Value.GetBoolean();
+                    shouldOpenFirewallPort443 = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("openFirewallPort5000"u8))
@@ -911,7 +911,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                     {
                         continue;
                     }
-                    openFirewallPort5000 = prop.Value.GetBoolean();
+                    shouldOpenFirewallPort5000 = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("openFirewallPort5001"u8))
@@ -920,7 +920,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                     {
                         continue;
                     }
-                    openFirewallPort5001 = prop.Value.GetBoolean();
+                    shouldOpenFirewallPort5001 = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("runtimeAccountType"u8))
@@ -987,10 +987,10 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 autoUpdateRequestedWeek,
                 autoUpdateRequestedDay,
                 autoUpdateRequestedTime,
-                openFirewallPort80,
-                openFirewallPort443,
-                openFirewallPort5000,
-                openFirewallPort5001,
+                shouldOpenFirewallPort80,
+                shouldOpenFirewallPort443,
+                shouldOpenFirewallPort5000,
+                shouldOpenFirewallPort5001,
                 runtimeAccountType,
                 additionalBinaryDataProperties);
         }

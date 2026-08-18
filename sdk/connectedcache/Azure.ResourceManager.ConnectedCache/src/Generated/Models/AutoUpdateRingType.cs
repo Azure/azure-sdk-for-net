@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.ConnectedCache.Models
     public readonly partial struct AutoUpdateRingType : IEquatable<AutoUpdateRingType>
     {
         private readonly string _value;
-        /// <summary> customer selection of preview update install mcc on their physical vm. </summary>
+        /// <summary> Legacy update ring retained for backward compatibility. This value was used prior to 2026-06-01.customer selection of preview update install mcc on their physical vm. </summary>
         private const string PreviewValue = "Preview";
-        /// <summary> customer selection of slow update to install mcc on their physical vm. </summary>
+        /// <summary> Legacy update ring retained for backward compatibility. This value was used prior to 2026-06-01.customer selection of slow update to install mcc on their physical vm. </summary>
         private const string SlowValue = "Slow";
-        /// <summary> customer selection of fast / auto update to install mcc on their physical vm. </summary>
+        /// <summary> Legacy update ring retained for backward compatibility. This value was used prior to 2026-06-01.customer selection of fast / auto update to install mcc on their physical vm. </summary>
         private const string FastValue = "Fast";
         /// <summary> customer selection of stable update to install mcc on their physical vm. </summary>
         private const string StableValue = "Stable";
@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             _value = value;
         }
 
-        /// <summary> customer selection of preview update install mcc on their physical vm. </summary>
+        /// <summary> Legacy update ring retained for backward compatibility. This value was used prior to 2026-06-01.customer selection of preview update install mcc on their physical vm. </summary>
         public static AutoUpdateRingType Preview { get; } = new AutoUpdateRingType(PreviewValue);
 
-        /// <summary> customer selection of slow update to install mcc on their physical vm. </summary>
+        /// <summary> Legacy update ring retained for backward compatibility. This value was used prior to 2026-06-01.customer selection of slow update to install mcc on their physical vm. </summary>
         public static AutoUpdateRingType Slow { get; } = new AutoUpdateRingType(SlowValue);
 
-        /// <summary> customer selection of fast / auto update to install mcc on their physical vm. </summary>
+        /// <summary> Legacy update ring retained for backward compatibility. This value was used prior to 2026-06-01.customer selection of fast / auto update to install mcc on their physical vm. </summary>
         public static AutoUpdateRingType Fast { get; } = new AutoUpdateRingType(FastValue);
 
         /// <summary> customer selection of stable update to install mcc on their physical vm. </summary>

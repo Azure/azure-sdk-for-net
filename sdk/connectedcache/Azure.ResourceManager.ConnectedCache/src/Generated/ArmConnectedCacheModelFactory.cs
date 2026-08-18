@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="isEnterpriseManaged"> Customer resource flag for enterprise management as boolean. </param>
         /// <param name="shouldMigrate"> Customer resource flag for migration. </param>
         /// <param name="resendSignupCode"> Customer resource flag for resending signup code as boolean. </param>
-        /// <param name="verifySignupCode"> Customer resource flag for requiring verification of signup code as boolean. </param>
+        /// <param name="shouldVerifySignupCode"> Customer resource flag for requiring verification of signup code as boolean. </param>
         /// <param name="verifySignupPhrase"> Customer resource phrase for verifying signup. </param>
         /// <returns> A new <see cref="Models.MccCustomerEntity"/> instance for mocking. </returns>
-        public static MccCustomerEntity MccCustomerEntity(ResourceIdentifier fullyQualifiedResourceId = default, string customerId = default, string customerName = default, string contactEmail = default, string contactPhone = default, string contactName = default, bool? isEntitled = default, int? releaseVersion = default, string createAsyncOperationId = default, string deleteAsyncOperationId = default, string clientTenantId = default, int? synchWithAzureAttemptsCount = default, DateTimeOffset? lastSyncedWithAzureOn = default, bool? isEnterpriseManaged = default, bool? shouldMigrate = default, bool? resendSignupCode = default, bool? verifySignupCode = default, string verifySignupPhrase = default)
+        public static MccCustomerEntity MccCustomerEntity(ResourceIdentifier fullyQualifiedResourceId = default, string customerId = default, string customerName = default, string contactEmail = default, string contactPhone = default, string contactName = default, bool? isEntitled = default, int? releaseVersion = default, string createAsyncOperationId = default, string deleteAsyncOperationId = default, string clientTenantId = default, int? synchWithAzureAttemptsCount = default, DateTimeOffset? lastSyncedWithAzureOn = default, bool? isEnterpriseManaged = default, bool? shouldMigrate = default, bool? resendSignupCode = default, bool? shouldVerifySignupCode = default, string verifySignupPhrase = default)
         {
             return new MccCustomerEntity(
                 fullyQualifiedResourceId,
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 isEnterpriseManaged,
                 shouldMigrate,
                 resendSignupCode,
-                verifySignupCode,
+                shouldVerifySignupCode,
                 verifySignupPhrase,
                 default);
         }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="customerPropertiesOverviewMissMbpsMaxOn"> Customer resource peak cache miss throughput timestamp. </param>
         /// <param name="customerPropertiesOverviewCacheNodesHealthyCount"> Customer resource total healthy cache nodes. </param>
         /// <param name="customerPropertiesOverviewCacheNodesUnhealthyCount"> Customer resource total unhealthy cache nodes. </param>
-        /// <param name="signupStatus"> Customer resource signup status as boolean. </param>
+        /// <param name="isSignupComplete"> Customer resource signup status as boolean. </param>
         /// <param name="signupStatusCode"> Customer resource signup status as integer code. </param>
         /// <param name="signupStatusText"> Customer resource signup status as string text. </param>
         /// <param name="signupPhaseStatusCode"> Customer resource signup phase status code as integer. </param>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="optionalProperty4"> Optional property #4 of Mcc response object. </param>
         /// <param name="optionalProperty5"> Optional property #5 of Mcc response object. </param>
         /// <returns> A new <see cref="Models.MccCustomerAdditionalProperties"/> instance for mocking. </returns>
-        public static MccCustomerAdditionalProperties MccCustomerAdditionalProperties(float? customerPropertiesOverviewCacheEfficiency = default, float? customerPropertiesOverviewAverageEgressMbps = default, float? customerPropertiesOverviewAverageMissMbps = default, float? customerPropertiesOverviewEgressMbpsMax = default, DateTimeOffset? customerPropertiesOverviewEgressMbpsMaxOn = default, float? customerPropertiesOverviewMissMbpsMax = default, DateTimeOffset? customerPropertiesOverviewMissMbpsMaxOn = default, int? customerPropertiesOverviewCacheNodesHealthyCount = default, int? customerPropertiesOverviewCacheNodesUnhealthyCount = default, bool? signupStatus = default, int? signupStatusCode = default, string signupStatusText = default, int? signupPhaseStatusCode = default, string signupPhaseStatusText = default, DateTimeOffset? peeringDBLastUpdatedOn = default, string customerOrgName = default, string customerEmail = default, string customerTransitAsn = default, CustomerTransitState? customerTransitState = default, string customerAsn = default, float? customerAsnEstimatedEgressPeekGbps = default, string customerEntitlementSkuId = default, string customerEntitlementSkuGuid = default, string customerEntitlementSkuName = default, DateTimeOffset? customerEntitlementExpiryOn = default, string optionalProperty1 = default, string optionalProperty2 = default, string optionalProperty3 = default, string optionalProperty4 = default, string optionalProperty5 = default)
+        public static MccCustomerAdditionalProperties MccCustomerAdditionalProperties(float? customerPropertiesOverviewCacheEfficiency = default, float? customerPropertiesOverviewAverageEgressMbps = default, float? customerPropertiesOverviewAverageMissMbps = default, float? customerPropertiesOverviewEgressMbpsMax = default, DateTimeOffset? customerPropertiesOverviewEgressMbpsMaxOn = default, float? customerPropertiesOverviewMissMbpsMax = default, DateTimeOffset? customerPropertiesOverviewMissMbpsMaxOn = default, int? customerPropertiesOverviewCacheNodesHealthyCount = default, int? customerPropertiesOverviewCacheNodesUnhealthyCount = default, bool? isSignupComplete = default, int? signupStatusCode = default, string signupStatusText = default, int? signupPhaseStatusCode = default, string signupPhaseStatusText = default, DateTimeOffset? peeringDBLastUpdatedOn = default, string customerOrgName = default, string customerEmail = default, string customerTransitAsn = default, CustomerTransitState? customerTransitState = default, string customerAsn = default, float? customerAsnEstimatedEgressPeekGbps = default, string customerEntitlementSkuId = default, string customerEntitlementSkuGuid = default, string customerEntitlementSkuName = default, DateTimeOffset? customerEntitlementExpiryOn = default, string optionalProperty1 = default, string optionalProperty2 = default, string optionalProperty3 = default, string optionalProperty4 = default, string optionalProperty5 = default)
         {
             return new MccCustomerAdditionalProperties(
                 customerPropertiesOverviewCacheEfficiency,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 customerPropertiesOverviewMissMbpsMaxOn,
                 customerPropertiesOverviewCacheNodesHealthyCount,
                 customerPropertiesOverviewCacheNodesUnhealthyCount,
-                signupStatus,
+                isSignupComplete,
                 signupStatusCode,
                 signupStatusText,
                 signupPhaseStatusCode,
@@ -283,13 +283,13 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="autoUpdateRequestedWeek"> Customer requested week of month for mcc install of auto update cycle. 0 is default no selection. 1-5 are valid weeks of month, 1 is first week, 2 is second week, etc. </param>
         /// <param name="autoUpdateRequestedDay"> Customer requested day of week for mcc install of auto update cycle. 0 is default no selection. 1-7 are days of week, 1 is Sunday, 2 is Monday, etc. </param>
         /// <param name="autoUpdateRequestedTime"> Customer requested time of the day for mcc install of auto update cycle, should be hh:mm. </param>
-        /// <param name="openFirewallPort80"> Cache node port firewall rule creation opt-in for port 80 property. </param>
-        /// <param name="openFirewallPort443"> Cache node port firewall rule creation opt-in for port 443 property. </param>
-        /// <param name="openFirewallPort5000"> Cache node port firewall rule creation opt-in for port 5000 property. </param>
-        /// <param name="openFirewallPort5001"> Cache node port firewall rule creation opt-in for port 5001 property. </param>
+        /// <param name="shouldOpenFirewallPort80"> Cache node port firewall rule creation opt-in for port 80 property. </param>
+        /// <param name="shouldOpenFirewallPort443"> Cache node port firewall rule creation opt-in for port 443 property. </param>
+        /// <param name="shouldOpenFirewallPort5000"> Cache node port firewall rule creation opt-in for port 5000 property. </param>
+        /// <param name="shouldOpenFirewallPort5001"> Cache node port firewall rule creation opt-in for port 5001 property. </param>
         /// <param name="runtimeAccountType"> Connected Cache runtime account type. </param>
         /// <returns> A new <see cref="Models.MccCacheNodeEntity"/> instance for mocking. </returns>
-        public static MccCacheNodeEntity MccCacheNodeEntity(ResourceIdentifier fullyQualifiedResourceId = default, string customerId = default, string customerName = default, string ipAddress = default, string customerIndex = default, string cacheNodeId = default, string cacheNodeName = default, int? customerAsn = default, bool? isEnabled = default, int? maxAllowableEgressInMbps = default, float? maxAllowableProbability = default, string xCid = default, bool? isEnterpriseManaged = default, string createAsyncOperationId = default, string deleteAsyncOperationId = default, string clientTenantId = default, string category = default, int? releaseVersion = default, DateTimeOffset? lastSyncedWithAzureOn = default, DateTimeOffset? lastUpdatedOn = default, int? synchWithAzureAttemptsCount = default, string containerConfigurations = default, IEnumerable<string> cidrCsv = default, DateTimeOffset? cidrCsvLastUpdatedOn = default, string bgpNetworkInterface = default, DateTimeOffset? bgpCidrCsvLastUpdatedOn = default, DateTimeOffset? bgpLastReportedOn = default, string bgpReviewStateText = default, MccCacheNodeBgpReviewState? bgpReviewState = default, string bgpReviewFeedback = default, int? bgpNumberOfTimesUpdated = default, int? bgpNumberOfRecords = default, int? bgpCidrBlocksCount = default, int? bgpAddressSpace = default, bool? shouldMigrate = default, int? bgpFileBytesTruncated = default, int? cidrSelectionType = default, bool? isFrozen = default, int? reviewState = default, string reviewStateText = default, string reviewFeedback = default, MccCacheNodeConfigurationState? configurationState = default, string configurationStateText = default, int? addressSpace = default, int? workerConnections = default, DateTimeOffset? workerConnectionsLastUpdatedOn = default, int? containerResyncTrigger = default, Uri imageUri = default, string fullyQualifiedDomainName = default, AutoUpdateRingType? autoUpdateRingType = default, int? autoUpdateRequestedWeek = default, int? autoUpdateRequestedDay = default, string autoUpdateRequestedTime = default, bool? openFirewallPort80 = default, bool? openFirewallPort443 = default, bool? openFirewallPort5000 = default, bool? openFirewallPort5001 = default, string runtimeAccountType = default)
+        public static MccCacheNodeEntity MccCacheNodeEntity(ResourceIdentifier fullyQualifiedResourceId = default, string customerId = default, string customerName = default, string ipAddress = default, string customerIndex = default, string cacheNodeId = default, string cacheNodeName = default, int? customerAsn = default, bool? isEnabled = default, int? maxAllowableEgressInMbps = default, float? maxAllowableProbability = default, string xCid = default, bool? isEnterpriseManaged = default, string createAsyncOperationId = default, string deleteAsyncOperationId = default, string clientTenantId = default, string category = default, int? releaseVersion = default, DateTimeOffset? lastSyncedWithAzureOn = default, DateTimeOffset? lastUpdatedOn = default, int? synchWithAzureAttemptsCount = default, string containerConfigurations = default, IEnumerable<string> cidrCsv = default, DateTimeOffset? cidrCsvLastUpdatedOn = default, string bgpNetworkInterface = default, DateTimeOffset? bgpCidrCsvLastUpdatedOn = default, DateTimeOffset? bgpLastReportedOn = default, string bgpReviewStateText = default, MccCacheNodeBgpReviewState? bgpReviewState = default, string bgpReviewFeedback = default, int? bgpNumberOfTimesUpdated = default, int? bgpNumberOfRecords = default, int? bgpCidrBlocksCount = default, int? bgpAddressSpace = default, bool? shouldMigrate = default, int? bgpFileBytesTruncated = default, int? cidrSelectionType = default, bool? isFrozen = default, int? reviewState = default, string reviewStateText = default, string reviewFeedback = default, MccCacheNodeConfigurationState? configurationState = default, string configurationStateText = default, int? addressSpace = default, int? workerConnections = default, DateTimeOffset? workerConnectionsLastUpdatedOn = default, int? containerResyncTrigger = default, Uri imageUri = default, string fullyQualifiedDomainName = default, AutoUpdateRingType? autoUpdateRingType = default, int? autoUpdateRequestedWeek = default, int? autoUpdateRequestedDay = default, string autoUpdateRequestedTime = default, bool? shouldOpenFirewallPort80 = default, bool? shouldOpenFirewallPort443 = default, bool? shouldOpenFirewallPort5000 = default, bool? shouldOpenFirewallPort5001 = default, string runtimeAccountType = default)
         {
             cidrCsv ??= new ChangeTrackingList<string>();
 
@@ -347,10 +347,10 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 autoUpdateRequestedWeek,
                 autoUpdateRequestedDay,
                 autoUpdateRequestedTime,
-                openFirewallPort80,
-                openFirewallPort443,
-                openFirewallPort5000,
-                openFirewallPort5001,
+                shouldOpenFirewallPort80,
+                shouldOpenFirewallPort443,
+                shouldOpenFirewallPort5000,
+                shouldOpenFirewallPort5001,
                 runtimeAccountType,
                 default);
         }
