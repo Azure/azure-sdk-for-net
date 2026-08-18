@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects
 {
@@ -62,13 +62,13 @@ namespace Azure.AI.Projects
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="InternalWebSearchActionSearch"/>. </description>
+        /// <description> <see cref="WebSearchSearchAction"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="InternalWebSearchActionOpenPage"/>. </description>
+        /// <description> <see cref="WebSearchOpenPageAction"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="InternalWebSearchActionFind"/>. </description>
+        /// <description> <see cref="WebSearchFindInPageAction"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>

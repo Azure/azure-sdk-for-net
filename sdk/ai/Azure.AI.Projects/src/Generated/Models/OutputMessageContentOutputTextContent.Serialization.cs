@@ -6,7 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects
 {
@@ -81,15 +81,25 @@ namespace Azure.AI.Projects
             writer.WriteStringValue(Text);
             writer.WritePropertyName("annotations"u8);
             writer.WriteStartArray();
-            foreach (InternalAnnotation item in Annotations)
+            foreach (ResponseMessageAnnotation item in Annotations)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("logprobs"u8);
             writer.WriteStartArray();
-            foreach (InternalLogProb item in Logprobs)
+            foreach (ResponseTokenLogProbabilityDetails item in Logprobs)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
@@ -123,8 +133,8 @@ namespace Azure.AI.Projects
             OutputMessageContentType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string text = default;
-            IList<InternalAnnotation> annotations = default;
-            IList<InternalLogProb> logprobs = default;
+            IList<ResponseMessageAnnotation> annotations = default;
+            IList<ResponseTokenLogProbabilityDetails> logprobs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -139,20 +149,34 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("annotations"u8))
                 {
-                    List<InternalAnnotation> array = new List<InternalAnnotation>();
+                    List<ResponseMessageAnnotation> array = new List<ResponseMessageAnnotation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InternalAnnotation.DeserializeInternalAnnotation(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<ResponseMessageAnnotation>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsContext.Default));
+                        }
                     }
                     annotations = array;
                     continue;
                 }
                 if (prop.NameEquals("logprobs"u8))
                 {
-                    List<InternalLogProb> array = new List<InternalLogProb>();
+                    List<ResponseTokenLogProbabilityDetails> array = new List<ResponseTokenLogProbabilityDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InternalLogProb.DeserializeInternalLogProb(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<ResponseTokenLogProbabilityDetails>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsContext.Default));
+                        }
                     }
                     logprobs = array;
                     continue;

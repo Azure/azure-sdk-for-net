@@ -4,12 +4,12 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    [PersistableModelProxy(typeof(UnknownContainerNetworkPolicyParam))]
-    internal abstract partial class InternalContainerNetworkPolicyParam : IJsonModel<InternalContainerNetworkPolicyParam>
+    internal partial class InternalContainerNetworkPolicyParam : IJsonModel<InternalContainerNetworkPolicyParam>
     {
         /// <summary> Initializes a new instance of <see cref="InternalContainerNetworkPolicyParam"/> for deserialization. </summary>
         internal InternalContainerNetworkPolicyParam()
@@ -118,17 +118,21 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
+            ContainerNetworkPolicyParamType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("type"u8))
                 {
-                    case "disabled":
-                        return ContainerNetworkPolicyDisabledParam.DeserializeContainerNetworkPolicyDisabledParam(element, options);
-                    case "allowlist":
-                        return InternalContainerNetworkPolicyAllowlistParam.DeserializeInternalContainerNetworkPolicyAllowlistParam(element, options);
+                    @type = new ContainerNetworkPolicyParamType(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownContainerNetworkPolicyParam.DeserializeUnknownContainerNetworkPolicyParam(element, options);
+            return new InternalContainerNetworkPolicyParam(@type, additionalBinaryDataProperties);
         }
     }
 }

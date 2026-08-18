@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.AI.Projects.Memory
+namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Memory search options. </summary>
     [Experimental("AAIP001")]

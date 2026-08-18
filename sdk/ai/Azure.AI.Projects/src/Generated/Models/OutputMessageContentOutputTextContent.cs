@@ -4,8 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects
 {
@@ -17,7 +18,8 @@ namespace Azure.AI.Projects
         /// <param name="annotations"> The annotations of the text output. </param>
         /// <param name="logprobs"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/>, <paramref name="annotations"/> or <paramref name="logprobs"/> is null. </exception>
-        public OutputMessageContentOutputTextContent(string text, IEnumerable<InternalAnnotation> annotations, IEnumerable<InternalLogProb> logprobs) : base(OutputMessageContentType.OutputText)
+        [Experimental("AAIP002")]
+        public OutputMessageContentOutputTextContent(string text, IEnumerable<ResponseMessageAnnotation> annotations, IEnumerable<ResponseTokenLogProbabilityDetails> logprobs) : base(OutputMessageContentType.OutputText)
         {
             Argument.AssertNotNull(text, nameof(text));
             Argument.AssertNotNull(annotations, nameof(annotations));
@@ -34,7 +36,8 @@ namespace Azure.AI.Projects
         /// <param name="text"> The text output from the model. </param>
         /// <param name="annotations"> The annotations of the text output. </param>
         /// <param name="logprobs"></param>
-        internal OutputMessageContentOutputTextContent(OutputMessageContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text, IList<InternalAnnotation> annotations, IList<InternalLogProb> logprobs) : base(@type, additionalBinaryDataProperties)
+        [Experimental("AAIP002")]
+        internal OutputMessageContentOutputTextContent(OutputMessageContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text, IList<ResponseMessageAnnotation> annotations, IList<ResponseTokenLogProbabilityDetails> logprobs) : base(@type, additionalBinaryDataProperties)
         {
             Text = text;
             Annotations = annotations;
@@ -45,9 +48,11 @@ namespace Azure.AI.Projects
         public string Text { get; }
 
         /// <summary> The annotations of the text output. </summary>
-        public IList<InternalAnnotation> Annotations { get; }
+        [Experimental("AAIP002")]
+        public IList<ResponseMessageAnnotation> Annotations { get; }
 
         /// <summary> Gets the Logprobs. </summary>
-        public IList<InternalLogProb> Logprobs { get; }
+        [Experimental("AAIP002")]
+        public IList<ResponseTokenLogProbabilityDetails> Logprobs { get; }
     }
 }

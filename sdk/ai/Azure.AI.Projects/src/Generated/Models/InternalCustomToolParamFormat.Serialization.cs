@@ -4,12 +4,12 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    [PersistableModelProxy(typeof(UnknownCustomToolParamFormat))]
-    internal abstract partial class InternalCustomToolParamFormat : IJsonModel<InternalCustomToolParamFormat>
+    internal partial class InternalCustomToolParamFormat : IJsonModel<InternalCustomToolParamFormat>
     {
         /// <summary> Initializes a new instance of <see cref="InternalCustomToolParamFormat"/> for deserialization. </summary>
         internal InternalCustomToolParamFormat()
@@ -118,17 +118,21 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
+            CustomToolParamFormatType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("type"u8))
                 {
-                    case "text":
-                        return InternalCustomTextFormatParam.DeserializeInternalCustomTextFormatParam(element, options);
-                    case "grammar":
-                        return InternalCustomGrammarFormatParam.DeserializeInternalCustomGrammarFormatParam(element, options);
+                    @type = new CustomToolParamFormatType(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownCustomToolParamFormat.DeserializeUnknownCustomToolParamFormat(element, options);
+            return new InternalCustomToolParamFormat(@type, additionalBinaryDataProperties);
         }
     }
 }

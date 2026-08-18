@@ -503,7 +503,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="updateDelayInSeconds"> Time to wait before updating memories after inactivity (seconds). Default 300. </param>
         /// <returns> A new <see cref="OpenAI.MemorySearchPreviewTool"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static MemorySearchPreviewTool MemorySearchPreviewTool(string memoryStoreName = default, string scope = default, MemorySearchOptions searchOptions = default, int? updateDelayInSeconds = default)
+        public static MemorySearchPreviewTool MemorySearchPreviewTool(string memoryStoreName = default, string scope = default, MemorySearchResultOptions searchOptions = default, int? updateDelayInSeconds = default)
         {
             return new MemorySearchPreviewTool(
                 "memory_search_preview",
@@ -516,11 +516,11 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Memory search options. </summary>
         /// <param name="maxMemories"> Maximum number of memory items to return. </param>
-        /// <returns> A new <see cref="OpenAI.MemorySearchOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="OpenAI.MemorySearchResultOptions"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static MemorySearchOptions MemorySearchOptions(int? maxMemories = default)
+        public static MemorySearchResultOptions MemorySearchResultOptions(int? maxMemories = default)
         {
-            return new MemorySearchOptions(maxMemories, additionalBinaryDataProperties: null);
+            return new MemorySearchResultOptions(maxMemories, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A web search configuration for bing custom search. </summary>

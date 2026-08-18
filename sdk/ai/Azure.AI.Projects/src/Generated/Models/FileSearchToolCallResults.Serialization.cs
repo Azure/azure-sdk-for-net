@@ -6,7 +6,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
 
 namespace Azure.AI.Projects
 {
@@ -89,7 +88,7 @@ namespace Azure.AI.Projects
             if (Optional.IsDefined(Attributes))
             {
                 writer.WritePropertyName("attributes"u8);
-                writer.WriteObjectValue(Attributes, options);
+                writer.WriteObjectValue<object>(Attributes, options);
             }
             if (Optional.IsDefined(Score))
             {
@@ -141,7 +140,7 @@ namespace Azure.AI.Projects
             string fileId = default;
             string text = default;
             string filename = default;
-            InternalVectorStoreFileAttributes attributes = default;
+            object attributes = default;
             float? score = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -168,7 +167,7 @@ namespace Azure.AI.Projects
                         attributes = null;
                         continue;
                     }
-                    attributes = InternalVectorStoreFileAttributes.DeserializeInternalVectorStoreFileAttributes(prop.Value, options);
+                    attributes = prop.Value.GetObject();
                     continue;
                 }
                 if (prop.NameEquals("score"u8))

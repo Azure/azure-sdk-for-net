@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects
 {
@@ -70,10 +70,10 @@ namespace Azure.AI.Projects
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="InternalCodeInterpreterOutputLogs"/>. </description>
+        /// <description> <see cref="CodeInterpreterCallLogsOutput"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="InternalCodeInterpreterOutputImage"/>. </description>
+        /// <description> <see cref="CodeInterpreterCallImageOutput"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>

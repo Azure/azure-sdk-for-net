@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Azure.AI.Extensions.OpenAI;
 using Azure.Identity;
+using Azure.ResourceManager.CognitiveServices;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;

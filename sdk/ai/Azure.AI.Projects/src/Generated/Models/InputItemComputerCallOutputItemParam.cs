@@ -4,6 +4,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects
 {
@@ -21,7 +23,7 @@ namespace Azure.AI.Projects
 
             CallId = callId;
             Output = output;
-            AcknowledgedSafetyChecks = new ChangeTrackingList<ComputerCallSafetyCheckParam>();
+            AcknowledgedSafetyChecks = new ChangeTrackingList<ComputerCallSafetyCheck>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InputItemComputerCallOutputItemParam"/>. </summary>
@@ -32,7 +34,8 @@ namespace Azure.AI.Projects
         /// <param name="output"></param>
         /// <param name="acknowledgedSafetyChecks"></param>
         /// <param name="status"></param>
-        internal InputItemComputerCallOutputItemParam(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ComputerScreenshotImage output, IList<ComputerCallSafetyCheckParam> acknowledgedSafetyChecks, FunctionCallItemStatus? status) : base(@type, additionalBinaryDataProperties)
+        [Experimental("AAIP002")]
+        internal InputItemComputerCallOutputItemParam(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ComputerScreenshotImage output, IList<ComputerCallSafetyCheck> acknowledgedSafetyChecks, FunctionCallItemStatus? status) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             CallId = callId;
@@ -51,7 +54,8 @@ namespace Azure.AI.Projects
         public ComputerScreenshotImage Output { get; }
 
         /// <summary> Gets or sets the AcknowledgedSafetyChecks. </summary>
-        public IList<ComputerCallSafetyCheckParam> AcknowledgedSafetyChecks { get; set; }
+        [Experimental("AAIP002")]
+        public IList<ComputerCallSafetyCheck> AcknowledgedSafetyChecks { get; set; }
 
         /// <summary> Gets or sets the Status. </summary>
         public FunctionCallItemStatus? Status { get; set; }

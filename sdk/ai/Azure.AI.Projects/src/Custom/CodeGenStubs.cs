@@ -29,3 +29,4 @@ namespace Azure.AI.Projects;
 [CodeGenType("CustomToolParamFormat")] internal partial class InternalCustomToolParamFormat { }
 [CodeGenType("CustomGrammarFormatParam")] internal partial class InternalCustomGrammarFormatParam { }
 [CodeGenType("FunctionToolParam")] internal partial class InternalFunctionToolParam { }
+[CodeGenType("InputItem")] internal partial class InputItem { }

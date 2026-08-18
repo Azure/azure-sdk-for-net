@@ -9,6 +9,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects.Agents;
 using Azure.AI.Projects.Evaluation;
 using Azure.Identity;
@@ -315,7 +316,7 @@ public class Sample_ScheduledEvaluations : EvaluationSampleBase
             foreach (ResponseTool agentTool in agentDefinition.Tools)
             {
                 ToolDescription tool = new();
-                if (agentTool is global::Azure.AI.Extensions.OpenAI.OpenApiTool openAPITool)
+                if (agentTool is OpenApiTool openAPITool)
                 {
                     tool.Name = openAPITool.FunctionDefinition.Name;
                     tool.Description = string.IsNullOrEmpty(openAPITool.FunctionDefinition.Description) ? "No description provided" : openAPITool.FunctionDefinition.Description;

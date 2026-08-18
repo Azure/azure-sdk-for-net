@@ -46,8 +46,10 @@ public class Sample_OpenAPI : ProjectsOpenAITestBase
             name: "get_weather",
             specification: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
             authentication: new OpenApiAnonymousAuthenticationDetails()
-        );
-        toolDefinition.Description = "Retrieve weather information for a location.";
+        )
+        {
+            Description = "Retrieve weather information for a location."
+        };
         OpenApiTool openapiTool = new(toolDefinition);
 
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -91,8 +93,10 @@ public class Sample_OpenAPI : ProjectsOpenAITestBase
             name: "get_weather",
             specification: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
             authentication: new OpenApiAnonymousAuthenticationDetails()
-        );
-        toolDefinition.Description = "Retrieve weather information for a location.";
+        )
+        {
+            Description = "Retrieve weather information for a location."
+        };
         OpenApiTool openapiTool = new(toolDefinition);
 
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)

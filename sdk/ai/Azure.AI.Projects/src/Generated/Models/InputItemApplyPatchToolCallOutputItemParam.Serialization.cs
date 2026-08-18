@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects
 {
@@ -84,7 +85,7 @@ namespace Azure.AI.Projects
             writer.WritePropertyName("call_id"u8);
             writer.WriteStringValue(CallId);
             writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToSerialString());
+            writer.WriteObjectValue(Status, options);
             if (Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
@@ -121,7 +122,7 @@ namespace Azure.AI.Projects
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string callId = default;
-            ApplyPatchCallOutputStatusParam status = default;
+            ApplyPatchCallOutputStatus status = default;
             string output = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,7 +148,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToApplyPatchCallOutputStatusParam();
+                    status = ModelReaderWriter.Read<ApplyPatchCallOutputStatus>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("output"u8))

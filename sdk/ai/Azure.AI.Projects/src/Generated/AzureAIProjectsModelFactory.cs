@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.AI.Projects.Evaluation;
 using Azure.AI.Projects.Memory;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects
 {
@@ -759,6 +760,27 @@ namespace Azure.AI.Projects
             return new ModelSamplingParams(temperature, topP, seed, maxCompletionTokens, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Represents a target specifying an Azure AI agent. </summary>
+        /// <param name="name"> The unique identifier of the Azure AI agent. </param>
+        /// <param name="version"> The version of the Azure AI agent. </param>
+        /// <param name="toolDescriptions"> The parameters used to control the sampling behavior of the agent during text generation. </param>
+        /// <param name="tools"></param>
+        /// <returns> A new <see cref="Evaluation.AzureAIAgentTarget"/> instance for mocking. </returns>
+        [Experimental("AAIP002")]
+        public static AzureAIAgentTarget AzureAIAgentTarget(string name = default, string version = default, IEnumerable<ToolDescription> toolDescriptions = default, IEnumerable<ResponseTool> tools = default)
+        {
+            toolDescriptions ??= new ChangeTrackingList<ToolDescription>();
+            tools ??= new ChangeTrackingList<ResponseTool>();
+
+            return new AzureAIAgentTarget(
+                "azure_ai_agent",
+                additionalBinaryDataProperties: null,
+                name,
+                version,
+                toolDescriptions.ToList(),
+                tools.ToList());
+        }
+
         /// <summary> Description of a tool that can be used by an agent. </summary>
         /// <param name="name"> The name of the tool. </param>
         /// <param name="description"> A brief description of the tool's purpose. </param>
@@ -766,15 +788,6 @@ namespace Azure.AI.Projects
         public static ToolDescription ToolDescription(string name = default, string description = default)
         {
             return new ToolDescription(name, description, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Memory search options. </summary>
-        /// <param name="maxMemories"> Maximum number of memory items to return. </param>
-        /// <returns> A new <see cref="Memory.MemorySearchResultOptions"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static MemorySearchResultOptions MemorySearchResultOptions(int? maxMemories = default)
-        {
-            return new MemorySearchResultOptions(maxMemories, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Taxonomy category definition. </summary>
@@ -1776,31 +1789,6 @@ namespace Azure.AI.Projects
             return new DeleteMemoryStoreResponse("memory_store.deleted", name, isDeleted, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Input text. </summary>
-        /// <param name="text"> The text input to the model. </param>
-        /// <returns> A new <see cref="Projects.InputTextContentParam"/> instance for mocking. </returns>
-        public static InputTextContentParam InputTextContentParam(string text = default)
-        {
-            return new InputTextContentParam("input_text", text, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Input file. </summary>
-        /// <param name="fileId"></param>
-        /// <param name="filename"></param>
-        /// <param name="fileData"></param>
-        /// <param name="fileUri"></param>
-        /// <returns> A new <see cref="Projects.InputFileContentParam"/> instance for mocking. </returns>
-        public static InputFileContentParam InputFileContentParam(string fileId = default, string filename = default, string fileData = default, Uri fileUri = default)
-        {
-            return new InputFileContentParam(
-                "input_file",
-                fileId,
-                filename,
-                fileData,
-                fileUri,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Memory search response. </summary>
         /// <param name="searchId"> The unique ID of this search request. Use this value as previous_search_id in subsequent requests to perform incremental searches. </param>
         /// <param name="memories"> Related memory items found during the search operation. </param>
@@ -1908,7 +1896,7 @@ namespace Azure.AI.Projects
         /// <param name="totalTokens"> The total number of tokens used. </param>
         /// <returns> A new <see cref="Memory.MemoryStoreOperationUsage"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static MemoryStoreOperationUsage MemoryStoreOperationUsage(int embeddingTokens = default, long inputTokens = default, ResponseUsageInputTokensDetails inputTokensDetails = default, long outputTokens = default, ResponseUsageOutputTokensDetails outputTokensDetails = default, long totalTokens = default)
+        public static MemoryStoreOperationUsage MemoryStoreOperationUsage(int embeddingTokens = default, long inputTokens = default, ResponseInputTokenUsageDetails inputTokensDetails = default, long outputTokens = default, ResponseOutputTokenUsageDetails outputTokensDetails = default, long totalTokens = default)
         {
             return new MemoryStoreOperationUsage(
                 embeddingTokens,
@@ -1918,22 +1906,6 @@ namespace Azure.AI.Projects
                 outputTokensDetails,
                 totalTokens,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The ResponseUsageInputTokensDetails. </summary>
-        /// <param name="cachedTokens"></param>
-        /// <returns> A new <see cref="Projects.ResponseUsageInputTokensDetails"/> instance for mocking. </returns>
-        public static ResponseUsageInputTokensDetails ResponseUsageInputTokensDetails(long cachedTokens = default)
-        {
-            return new ResponseUsageInputTokensDetails(cachedTokens, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The ResponseUsageOutputTokensDetails. </summary>
-        /// <param name="reasoningTokens"></param>
-        /// <returns> A new <see cref="Projects.ResponseUsageOutputTokensDetails"/> instance for mocking. </returns>
-        public static ResponseUsageOutputTokensDetails ResponseUsageOutputTokensDetails(long reasoningTokens = default)
-        {
-            return new ResponseUsageOutputTokensDetails(reasoningTokens, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Memory update result. </summary>

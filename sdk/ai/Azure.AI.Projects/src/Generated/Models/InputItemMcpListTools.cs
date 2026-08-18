@@ -4,8 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects
 {
@@ -17,7 +18,8 @@ namespace Azure.AI.Projects
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <param name="tools"> The tools available on the server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="serverLabel"/> or <paramref name="tools"/> is null. </exception>
-        public InputItemMcpListTools(string id, string serverLabel, IEnumerable<InternalMCPListToolsTool> tools) : base(InputItemType.McpListTools)
+        [Experimental("AAIP002")]
+        public InputItemMcpListTools(string id, string serverLabel, IEnumerable<McpToolDefinition> tools) : base(InputItemType.McpListTools)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(serverLabel, nameof(serverLabel));
@@ -35,7 +37,8 @@ namespace Azure.AI.Projects
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <param name="tools"> The tools available on the server. </param>
         /// <param name="error"></param>
-        internal InputItemMcpListTools(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, IList<InternalMCPListToolsTool> tools, RealtimeMCPError error) : base(@type, additionalBinaryDataProperties)
+        [Experimental("AAIP002")]
+        internal InputItemMcpListTools(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, IList<McpToolDefinition> tools, RealtimeMCPError error) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             ServerLabel = serverLabel;
@@ -50,7 +53,8 @@ namespace Azure.AI.Projects
         public string ServerLabel { get; }
 
         /// <summary> The tools available on the server. </summary>
-        public IList<InternalMCPListToolsTool> Tools { get; }
+        [Experimental("AAIP002")]
+        public IList<McpToolDefinition> Tools { get; }
 
         /// <summary> Gets or sets the Error. </summary>
         public RealtimeMCPError Error { get; set; }

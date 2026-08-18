@@ -7,7 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Memory;
+using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Projects
 {
@@ -187,7 +187,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    options0 = MemorySearchResultOptions.DeserializeMemorySearchResultOptions(prop.Value, options);
+                    options0 = ModelReaderWriter.Read<MemorySearchResultOptions>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

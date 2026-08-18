@@ -6,7 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects
 {
@@ -83,8 +83,13 @@ namespace Azure.AI.Projects
             writer.WriteStringValue(ServerLabel);
             writer.WritePropertyName("tools"u8);
             writer.WriteStartArray();
-            foreach (InternalMCPListToolsTool item in Tools)
+            foreach (McpToolDefinition item in Tools)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
@@ -124,7 +129,7 @@ namespace Azure.AI.Projects
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string serverLabel = default;
-            IList<InternalMCPListToolsTool> tools = default;
+            IList<McpToolDefinition> tools = default;
             RealtimeMCPError error = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -145,10 +150,17 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("tools"u8))
                 {
-                    List<InternalMCPListToolsTool> array = new List<InternalMCPListToolsTool>();
+                    List<McpToolDefinition> array = new List<McpToolDefinition>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InternalMCPListToolsTool.DeserializeInternalMCPListToolsTool(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<McpToolDefinition>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsContext.Default));
+                        }
                     }
                     tools = array;
                     continue;
