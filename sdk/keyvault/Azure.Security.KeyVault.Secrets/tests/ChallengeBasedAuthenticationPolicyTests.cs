@@ -7,6 +7,10 @@ using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+#if !NET462
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
+#endif
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -75,6 +79,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 new SecretClientOptions
                 {
                     Transport = transport,
+                    EnableProofOfPossession = true,
                 });
 
             KeyVaultSecret secret = await client.GetSecretAsync("test-secret").ConfigureAwait(false);
@@ -115,6 +120,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 new SecretClientOptions
                 {
                     Transport = transport,
+                    EnableProofOfPossession = true,
                 });
 
             KeyVaultSecret secret = await client.GetSecretAsync("test-secret").ConfigureAwait(false);
@@ -148,6 +154,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 new SecretClientOptions
                 {
                     Transport = new NonUpdatingTransport(transport),
+                    EnableProofOfPossession = true,
                 });
 
             KeyVaultSecret secret = await client.GetSecretAsync("test-secret").ConfigureAwait(false);
@@ -157,6 +164,116 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             Assert.IsNotNull(credential.LastRequestContext);
             Assert.IsFalse(credential.LastRequestContext.IsProofOfPossessionEnabled);
         }
+
+        [Test]
+        public async Task DoesNotRequestProofOfPossessionByDefault()
+        {
+            // SecretClientOptions.EnableProofOfPossession defaults to false so existing applications see no
+            // change in authentication behavior, transport/connection-pooling behavior, or resource usage unless
+            // they explicitly opt in.
+            MockTransportBuilder builder = new MockTransportBuilder();
+            MockTransport transport = builder.Build();
+            MockCredential credential = new MockCredential(transport);
+            SecretClient client = new SecretClient(
+                VaultUri,
+                credential,
+                new SecretClientOptions
+                {
+                    Transport = transport,
+                    // EnableProofOfPossession intentionally left unset.
+                });
+
+            KeyVaultSecret secret = await client.GetSecretAsync("test-secret").ConfigureAwait(false);
+
+            Assert.AreEqual("secret-value", secret.Value);
+            Assert.IsNotNull(credential.LastRequestContext);
+            Assert.IsFalse(credential.LastRequestContext.IsProofOfPossessionEnabled);
+        }
+
+#if !NET462
+        // CertificateRequest was introduced in .NET Framework 4.7.2 and .NET Core 2.0, so the two tests below
+        // that construct a binding certificate are excluded from the net462 TFM.
+        [Test]
+        public async Task DoesNotThrowWhenTransportCannotApplyBindingCertificate()
+        {
+            // Regression coverage: SupportsProofOfPossession is a best-effort, type-based check that cannot
+            // always predict whether HttpPipelineTransport.Update will actually succeed on the specific transport
+            // instance in use (e.g. HttpClientTransport.Shared overrides Update but throws
+            // InvalidOperationException because the shared instance can never be updated in place).
+            // ThrowingUpdateTransport simulates that exact failure mode. The request must still succeed, and the
+            // token-bound header must not be sent for a certificate that was never actually applied.
+            bool sawAuthorizedVaultRequest = false;
+            MockTransportBuilder builder = new MockTransportBuilder();
+            builder.Request += (_, args) =>
+            {
+                if (args.Request.Uri.Host == VaultHost &&
+                    args.Request.Headers.TryGetValue("Authorization", out string _))
+                {
+                    sawAuthorizedVaultRequest = true;
+                    Assert.IsFalse(args.Request.Headers.TryGetValue(TokenBoundAuthHeader, out string _),
+                        "The token-bound header must not be sent when the transport failed to apply the binding certificate.");
+                }
+            };
+
+            MockTransport transport = builder.Build();
+            using X509Certificate2 bindingCertificate = CreateSelfSignedCertificate();
+            string expectedToken = Convert.ToBase64String(Encoding.UTF8.GetBytes(TenantId));
+            CallbackTokenCredential credential = new((context, _) =>
+                new AccessToken(expectedToken, DateTimeOffset.UtcNow.AddMinutes(5), refreshOn: null, tokenType: "PoP", bindingCertificate: bindingCertificate));
+
+            SecretClient client = new SecretClient(
+                VaultUri,
+                credential,
+                new SecretClientOptions
+                {
+                    Transport = new ThrowingUpdateTransport(transport),
+                    EnableProofOfPossession = true,
+                });
+
+            KeyVaultSecret secret = await client.GetSecretAsync("test-secret").ConfigureAwait(false);
+
+            Assert.AreEqual("secret-value", secret.Value);
+            Assert.IsTrue(sawAuthorizedVaultRequest);
+        }
+
+        [Test]
+        public async Task DoesNotThrowWhenTransportDoesNotOverrideUpdateAndCredentialReturnsBindingCertificate()
+        {
+            // Defense in depth: even if a credential returns a binding certificate on a transport that does not
+            // override Update() at all (the HttpPipelineTransport base implementation throws
+            // NotSupportedException), the request must not crash.
+            MockTransportBuilder builder = new MockTransportBuilder();
+            MockTransport transport = builder.Build();
+            using X509Certificate2 bindingCertificate = CreateSelfSignedCertificate();
+            string expectedToken = Convert.ToBase64String(Encoding.UTF8.GetBytes(TenantId));
+            CallbackTokenCredential credential = new((context, _) =>
+                new AccessToken(expectedToken, DateTimeOffset.UtcNow.AddMinutes(5), refreshOn: null, tokenType: "PoP", bindingCertificate: bindingCertificate));
+
+            SecretClient client = new SecretClient(
+                VaultUri,
+                credential,
+                new SecretClientOptions
+                {
+                    Transport = new NonUpdatingTransport(transport),
+                    EnableProofOfPossession = true,
+                });
+
+            KeyVaultSecret secret = await client.GetSecretAsync("test-secret").ConfigureAwait(false);
+
+            Assert.AreEqual("secret-value", secret.Value);
+        }
+
+        private static X509Certificate2 CreateSelfSignedCertificate()
+        {
+            using RSA key = RSA.Create(2048);
+            var request = new CertificateRequest(
+                $"CN=ChallengeBasedAuthenticationPolicyTests-{Guid.NewGuid()}",
+                key,
+                HashAlgorithmName.SHA256,
+                RSASignaturePadding.Pkcs1);
+            return request.CreateSelfSigned(DateTimeOffset.UtcNow.AddMinutes(-5), DateTimeOffset.UtcNow.AddHours(1));
+        }
+#endif
 
         // Test concurrent authentication requests with immediate, fast, and slow network simulations.
         [TestCase(10, 0, 0)]
@@ -450,6 +567,30 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             public override void Process(HttpMessage message) => _inner.Process(message);
 
             public override ValueTask ProcessAsync(HttpMessage message) => _inner.ProcessAsync(message);
+        }
+
+        /// <summary>
+        /// Simulates <see cref="HttpClientTransport.Shared"/>: it overrides <see cref="Update"/> (so
+        /// <see cref="ChallengeBasedAuthenticationPolicy.SupportsProofOfPossession"/> reports it as capable), but
+        /// the update itself always fails, exactly like calling <c>Update</c> on the real shared instance does.
+        /// </summary>
+        private class ThrowingUpdateTransport : HttpPipelineTransport
+        {
+            private readonly MockTransport _inner;
+
+            public ThrowingUpdateTransport(MockTransport inner)
+            {
+                _inner = inner;
+            }
+
+            public override Request CreateRequest() => _inner.CreateRequest();
+
+            public override void Process(HttpMessage message) => _inner.Process(message);
+
+            public override ValueTask ProcessAsync(HttpMessage message) => _inner.ProcessAsync(message);
+
+            public override void Update(HttpPipelineTransportOptions options) =>
+                throw new InvalidOperationException("Simulated: this transport cannot be updated in place.");
         }
 
         private class MockCredential : TokenCredential
