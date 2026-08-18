@@ -34,9 +34,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="instanceAvailabilityGroupName"> Managed instance side availability group name. </param>
         /// <param name="failoverMode"> The link failover mode - can be Manual if intended to be used for two-way failover with a supported SQL Server, or None for one-way failover to Azure. </param>
         /// <param name="seedingMode"> Database seeding mode – can be Automatic (default), or Manual for supported scenarios. </param>
+        /// <param name="linkMode"> Specifies whether the link operates in single-database or multi-database mode. </param>
         /// <param name="databases"> Databases in the distributed availability group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DistributedAvailabilityGroupProperties(string distributedAvailabilityGroupName, Guid? distributedAvailabilityGroupId, SqlReplicationModeType? replicationMode, SqlServerSideLinkRole? partnerLinkRole, string partnerAvailabilityGroupName, string partnerEndpoint, SqlServerSideLinkRole? instanceLinkRole, string instanceAvailabilityGroupName, SqlServerFailoverModeType? failoverMode, SeedingModeType? seedingMode, IList<DistributedAvailabilityGroupDatabase> databases, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DistributedAvailabilityGroupProperties(string distributedAvailabilityGroupName, Guid? distributedAvailabilityGroupId, SqlReplicationModeType? replicationMode, SqlServerSideLinkRole? partnerLinkRole, string partnerAvailabilityGroupName, string partnerEndpoint, SqlServerSideLinkRole? instanceLinkRole, string instanceAvailabilityGroupName, SqlServerFailoverModeType? failoverMode, SeedingModeType? seedingMode, LinkModeType? linkMode, IList<DistributedAvailabilityGroupDatabase> databases, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DistributedAvailabilityGroupName = distributedAvailabilityGroupName;
             DistributedAvailabilityGroupId = distributedAvailabilityGroupId;
@@ -48,6 +49,7 @@ namespace Azure.ResourceManager.Sql.Models
             InstanceAvailabilityGroupName = instanceAvailabilityGroupName;
             FailoverMode = failoverMode;
             SeedingMode = seedingMode;
+            LinkMode = linkMode;
             Databases = databases;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -91,6 +93,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Database seeding mode – can be Automatic (default), or Manual for supported scenarios. </summary>
         [WirePath("seedingMode")]
         public SeedingModeType? SeedingMode { get; set; }
+
+        /// <summary> Specifies whether the link operates in single-database or multi-database mode. </summary>
+        [WirePath("linkMode")]
+        public LinkModeType? LinkMode { get; set; }
 
         /// <summary> Databases in the distributed availability group. </summary>
         [WirePath("databases")]
