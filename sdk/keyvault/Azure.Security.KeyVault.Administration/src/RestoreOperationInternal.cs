@@ -99,10 +99,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// The start time of the restore operation.
         /// </summary>
-        public DateTimeOffset? StartTime => _value switch
+        public DateTimeOffset? StartOn => _value switch
         {
-            SelectiveKeyRestoreDetailsInternal r => r.StartTime,
-            RestoreDetailsInternal r => r.StartTime,
+            SelectiveKeyRestoreDetailsInternal r => r.StartOn,
+            RestoreDetailsInternal r => r.StartOn,
             null => default,
             _ => throw new InvalidOperationException("Unknown type")
         };
@@ -110,10 +110,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// The end time of the restore operation.
         /// </summary>
-        public DateTimeOffset? EndTime => _value switch
+        public DateTimeOffset? EndOn => _value switch
         {
-            SelectiveKeyRestoreDetailsInternal r => r.EndTime,
-            RestoreDetailsInternal r => r.EndTime,
+            SelectiveKeyRestoreDetailsInternal r => r.EndOn,
+            RestoreDetailsInternal r => r.EndOn,
             null => default,
             _ => throw new InvalidOperationException("Unknown type")
         };
@@ -153,18 +153,18 @@ namespace Azure.Security.KeyVault.Administration
 
                 if (resultType == typeof(KeyVaultRestoreResult))
                 {
-                    result = new KeyVaultRestoreResult(StartTime.Value, EndTime.Value) as TResult;
+                    result = new KeyVaultRestoreResult(StartOn.Value, EndOn.Value) as TResult;
                 }
                 else if (resultType == typeof(KeyVaultSelectiveKeyRestoreResult))
                 {
-                    result = new KeyVaultSelectiveKeyRestoreResult(StartTime.Value, EndTime.Value) as TResult;
+                    result = new KeyVaultSelectiveKeyRestoreResult(StartOn.Value, EndOn.Value) as TResult;
                 }
                 return result;
             }
         }
 
         /// <inheritdoc/>
-        public override bool HasCompleted => EndTime.HasValue;
+        public override bool HasCompleted => EndOn.HasValue;
 
         /// <inheritdoc/>
         public override bool HasValue => _response != null && Error == null && HasCompleted;
@@ -216,7 +216,7 @@ namespace Azure.Security.KeyVault.Administration
                     throw _requestFailedException;
                 }
 
-                if (_value != null && EndTime.HasValue && Error?.Code != null)
+                if (_value != null && EndOn.HasValue && Error?.Code != null)
                 {
                     _requestFailedException = _response != null ?
                         new RequestFailedException(_response)

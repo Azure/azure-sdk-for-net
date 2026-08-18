@@ -58,12 +58,12 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// The start time of the restore operation.
         /// </summary>
-        public DateTimeOffset? StartTime => _operationInternal.StartTime;
+        public DateTimeOffset? StartTime => _operationInternal.StartOn;
 
         /// <summary>
         /// The end time of the restore operation.
         /// </summary>
-        public DateTimeOffset? EndTime => _operationInternal.EndTime;
+        public DateTimeOffset? EndTime => _operationInternal.EndOn;
 
         /// <inheritdoc/>
         public override string Id => _operationInternal.Id;
