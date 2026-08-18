@@ -14,23 +14,23 @@ using Azure.ResourceManager.ServiceLinker.Models;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
-    internal partial class DryrunResourcesGetDryrunCollectionResultOfT : Pageable<LinkerDryrunData>
+    internal partial class ConnectorDryrunResourcesGetDryrunCollectionResultOfT : Pageable<LinkerDryrunData>
     {
-        private readonly DryrunResources _client;
+        private readonly ConnectorDryrunResources _client;
         private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _location;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of DryrunResourcesGetDryrunCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The DryrunResources client used to send requests. </param>
+        /// <summary> Initializes a new instance of ConnectorDryrunResourcesGetDryrunCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ConnectorDryrunResources client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="location"> The location name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DryrunResourcesGetDryrunCollectionResultOfT(DryrunResources client, string subscriptionId, string resourceGroupName, string location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ConnectorDryrunResourcesGetDryrunCollectionResultOfT(ConnectorDryrunResources client, string subscriptionId, string resourceGroupName, string location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.ServiceLinker
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of DryrunResourcesGetDryrunCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ConnectorDryrunResourcesGetDryrunCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DryrunResourcesGetDryrunCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ConnectorDryrunResourcesGetDryrunCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<LinkerDryrunData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;

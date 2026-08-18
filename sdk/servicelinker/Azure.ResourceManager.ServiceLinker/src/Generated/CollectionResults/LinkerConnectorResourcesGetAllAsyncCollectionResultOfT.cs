@@ -15,23 +15,23 @@ using Azure.ResourceManager.ServiceLinker.Models;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
-    internal partial class ConnectorResourcesGetAllAsyncCollectionResultOfT : AsyncPageable<LinkerResourceData>
+    internal partial class LinkerConnectorResourcesGetAllAsyncCollectionResultOfT : AsyncPageable<LinkerResourceData>
     {
-        private readonly ConnectorResources _client;
+        private readonly LinkerConnectorResources _client;
         private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _location;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ConnectorResourcesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ConnectorResources client used to send requests. </param>
+        /// <summary> Initializes a new instance of LinkerConnectorResourcesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The LinkerConnectorResources client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="location"> The location name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ConnectorResourcesGetAllAsyncCollectionResultOfT(ConnectorResources client, string subscriptionId, string resourceGroupName, string location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public LinkerConnectorResourcesGetAllAsyncCollectionResultOfT(LinkerConnectorResources client, string subscriptionId, string resourceGroupName, string location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.ServiceLinker
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ConnectorResourcesGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of LinkerConnectorResourcesGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ConnectorResourcesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of LinkerConnectorResourcesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<LinkerResourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;

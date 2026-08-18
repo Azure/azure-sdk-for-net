@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ServiceLinker
 {
     /// <summary></summary>
-    internal partial class DryrunResourceOperationSource : IOperationSource<DryrunResource>
+    internal partial class ConnectorDryrunResourceOperationSource : IOperationSource<ConnectorDryrunResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal DryrunResourceOperationSource(ArmClient client)
+        internal ConnectorDryrunResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        DryrunResource IOperationSource<DryrunResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ConnectorDryrunResource IOperationSource<ConnectorDryrunResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
             LinkerDryrunData data = LinkerDryrunData.DeserializeLinkerDryrunData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DryrunResource(_client, data);
+            return new ConnectorDryrunResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<DryrunResource> IOperationSource<DryrunResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ConnectorDryrunResource> IOperationSource<ConnectorDryrunResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             LinkerDryrunData data = LinkerDryrunData.DeserializeLinkerDryrunData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DryrunResource(_client, data);
+            return new ConnectorDryrunResource(_client, data);
         }
     }
 }

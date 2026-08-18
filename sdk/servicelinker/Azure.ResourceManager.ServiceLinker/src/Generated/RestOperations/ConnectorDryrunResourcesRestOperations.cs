@@ -12,30 +12,30 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
-    internal partial class DryrunResources
+    internal partial class ConnectorDryrunResources
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
 
-        /// <summary> Initializes a new instance of DryrunResources for mocking. </summary>
-        protected DryrunResources()
+        /// <summary> Initializes a new instance of ConnectorDryrunResources for mocking. </summary>
+        protected ConnectorDryrunResources()
         {
         }
 
-        /// <summary> Initializes a new instance of DryrunResources. </summary>
+        /// <summary> Initializes a new instance of ConnectorDryrunResources. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal DryrunResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        internal ConnectorDryrunResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
-            _userAgent = new TelemetryDetails(typeof(DryrunResources).Assembly, applicationId);
+            _userAgent = new TelemetryDetails(typeof(ConnectorDryrunResources).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
