@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes.csproj" />
-  <Project Path="tests/Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes.Tests.csproj" />
-</Solution>
