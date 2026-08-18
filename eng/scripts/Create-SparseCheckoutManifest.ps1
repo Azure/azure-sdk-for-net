@@ -42,6 +42,18 @@ if (-not (Test-Path -LiteralPath $ProjectListPath -PathType Leaf)) {
   throw "Sparse-checkout project graph '$ProjectListPath' does not exist."
 }
 
+$trackedFiles = $null
+$isGitWorkTree = & git -C $repositoryRoot rev-parse --is-inside-work-tree 2>$null
+if ($LASTEXITCODE -eq 0 -and $isGitWorkTree -eq 'true') {
+  $trackedFiles = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::Ordinal)
+  foreach ($trackedFile in (& git -C $repositoryRoot ls-files)) {
+    $null = $trackedFiles.Add($trackedFile.Replace('\', '/'))
+  }
+  if ($LASTEXITCODE -ne 0) {
+    throw "Unable to enumerate tracked files under '$repositoryRoot'."
+  }
+}
+
 $roots = [System.Collections.Generic.SortedSet[string]]::new([System.StringComparer]::Ordinal)
 foreach ($projectPath in (Get-Content -LiteralPath $ProjectListPath | Where-Object { $_ })) {
   $kind, $itemPath = $projectPath -split '\|', 2
@@ -64,6 +76,9 @@ foreach ($projectPath in (Get-Content -LiteralPath $ProjectListPath | Where-Obje
   }
 
   $relativePath = [System.IO.Path]::GetRelativePath($repositoryRoot, $fullPath).Replace('\', '/')
+  if ($kind -eq 'Input' -and $trackedFiles -and -not $trackedFiles.Contains($relativePath)) {
+    continue
+  }
   $segments = @($relativePath -split '/' | Where-Object { $_ })
   if ($segments.Count -lt 2 -or $segments[0] -eq '..') {
     if ($kind -eq 'Project') {
@@ -93,8 +108,22 @@ if ($roots.Count -eq 0) {
   throw 'The sparse-checkout project graph did not produce any directory roots.'
 }
 
+$collapsedRoots = [System.Collections.Generic.List[string]]::new()
+foreach ($root in ($roots | Sort-Object { ($_ -split '/').Count }, { $_ })) {
+  $hasParent = $false
+  foreach ($parent in $collapsedRoots) {
+    if ($root.StartsWith("$parent/", [System.StringComparison]::Ordinal)) {
+      $hasParent = $true
+      break
+    }
+  }
+  if (-not $hasParent) {
+    $collapsedRoots.Add($root)
+  }
+}
+
 $outputDirectory = Split-Path -Parent ([System.IO.Path]::GetFullPath($OutputPath))
 if ($outputDirectory) {
   $null = New-Item -ItemType Directory -Path $outputDirectory -Force
 }
-$roots | Set-Content -LiteralPath $OutputPath -Encoding utf8NoBOM
+$collapsedRoots | Sort-Object | Set-Content -LiteralPath $OutputPath -Encoding utf8NoBOM

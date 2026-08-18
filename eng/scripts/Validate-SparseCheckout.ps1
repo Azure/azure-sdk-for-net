@@ -151,7 +151,7 @@ function Invoke-Comparison([string] $Mode) {
   $commandWatch = [System.Diagnostics.Stopwatch]::StartNew()
   Push-Location $clonePath
   try {
-    & dotnet @commandArguments
+    & dotnet @commandArguments | Out-Host
     $exitCode = $LASTEXITCODE
   }
   finally {
