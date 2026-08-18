@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     public readonly partial struct AppConfigurationSeverity : IEquatable<AppConfigurationSeverity>
     {
         private readonly string _value;
+        /// <summary> The issue is a warning and does not prevent the configuration from being applied. </summary>
         private const string WarningValue = "Warning";
+        /// <summary> The issue is an error and prevents the configuration from being applied. </summary>
         private const string ErrorValue = "Error";
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationSeverity"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             _value = value;
         }
 
-        /// <summary> Gets the Warning. </summary>
+        /// <summary> The issue is a warning and does not prevent the configuration from being applied. </summary>
         public static AppConfigurationSeverity Warning { get; } = new AppConfigurationSeverity(WarningValue);
 
-        /// <summary> Gets the Error. </summary>
+        /// <summary> The issue is an error and prevents the configuration from being applied. </summary>
         public static AppConfigurationSeverity Error { get; } = new AppConfigurationSeverity(ErrorValue);
 
         /// <summary> Determines if two <see cref="AppConfigurationSeverity"/> values are the same. </summary>
