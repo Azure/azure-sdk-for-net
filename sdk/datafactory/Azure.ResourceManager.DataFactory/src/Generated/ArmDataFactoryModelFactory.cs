@@ -4654,10 +4654,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="connectionString"> The connection string. It is mutually exclusive with sasUri property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="accountKey"> The Azure key vault secret reference of accountKey in connection string. </param>
         /// <param name="sasUri"> SAS URI of the Azure Storage resource. It is mutually exclusive with connectionString property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="sasToken"> The Azure key vault secret reference of sasToken in sas uri. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <returns> A new <see cref="Models.AzureStorageLinkedService"/> instance for mocking. </returns>
-        public static AzureStorageLinkedService AzureStorageLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, DataFactoryElement<string> sasUri = default, string encryptedCredential = default)
+        public static AzureStorageLinkedService AzureStorageLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, DataFactoryKeyVaultSecret accountKey = default, DataFactoryElement<string> sasUri = default, DataFactoryKeyVaultSecret sasToken = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4681,12 +4683,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="connectionString"> The connection string. It is mutually exclusive with sasUri property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="accountKey"> The Azure key vault secret reference of accountKey in connection string. </param>
         /// <param name="sasUri"> SAS URI of the Azure Storage resource. It is mutually exclusive with connectionString property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="sasToken"> The Azure key vault secret reference of sasToken in sas uri. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="serviceEndpoint"> Table service endpoint of the Azure Table Storage resource. It is mutually exclusive with connectionString, sasUri property. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
         /// <returns> A new <see cref="Models.AzureTableStorageLinkedService"/> instance for mocking. </returns>
-        public static AzureTableStorageLinkedService AzureTableStorageLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, DataFactoryElement<string> sasUri = default, string encryptedCredential = default, DataFactoryElement<string> serviceEndpoint = default, DataFactoryCredentialReference credential = default)
+        public static AzureTableStorageLinkedService AzureTableStorageLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, DataFactoryKeyVaultSecret accountKey = default, DataFactoryElement<string> sasUri = default, DataFactoryKeyVaultSecret sasToken = default, string encryptedCredential = default, DataFactoryElement<string> serviceEndpoint = default, DataFactoryCredentialReference credential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4815,7 +4819,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="userId"> User ID to logon the server. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> Password to logon the server. </param>
         /// <param name="connectionString"> The connection string. It is mutually exclusive with sasUri property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="accountKey"> The Azure key vault secret reference of accountKey in connection string. </param>
         /// <param name="sasUri"> SAS URI of the Azure File resource. It is mutually exclusive with connectionString property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="sasToken"> The Azure key vault secret reference of sasToken in sas uri. </param>
         /// <param name="fileShare"> The azure file share name. It is required when auth with accountKey/sasToken. Type: string (or Expression with resultType string). </param>
         /// <param name="snapshot"> The azure file share snapshot version. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
@@ -4823,7 +4829,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="credential"> The credential reference containing authentication information. </param>
         /// <param name="password0"></param>
         /// <returns> A new <see cref="Models.AzureFileStorageLinkedService"/> instance for mocking. </returns>
-        public static AzureFileStorageLinkedService AzureFileStorageLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> host = default, DataFactoryElement<string> userId = default, DataFactorySecret password = default, DataFactoryElement<string> connectionString = default, DataFactoryElement<string> sasUri = default, DataFactoryElement<string> fileShare = default, DataFactoryElement<string> snapshot = default, string encryptedCredential = default, DataFactoryElement<string> serviceEndpoint = default, DataFactoryCredentialReference credential = default, DataFactorySecret password0 = default)
+        public static AzureFileStorageLinkedService AzureFileStorageLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> host = default, DataFactoryElement<string> userId = default, DataFactorySecret password = default, DataFactoryElement<string> connectionString = default, DataFactoryKeyVaultSecret accountKey = default, DataFactoryElement<string> sasUri = default, DataFactoryKeyVaultSecret sasToken = default, DataFactoryElement<string> fileShare = default, DataFactoryElement<string> snapshot = default, string encryptedCredential = default, DataFactoryElement<string> serviceEndpoint = default, DataFactoryCredentialReference credential = default, DataFactorySecret password0 = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4933,10 +4939,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         /// <returns> A new <see cref="Models.AzureMySqlLinkedService"/> instance for mocking. </returns>
-        public static AzureMySqlLinkedService AzureMySqlLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, string encryptedCredential = default)
+        public static AzureMySqlLinkedService AzureMySqlLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, DataFactoryKeyVaultSecret password = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4960,10 +4967,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         /// <returns> A new <see cref="Models.PostgreSqlLinkedService"/> instance for mocking. </returns>
-        public static PostgreSqlLinkedService PostgreSqlLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, string encryptedCredential = default)
+        public static PostgreSqlLinkedService PostgreSqlLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, DataFactoryKeyVaultSecret password = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -5391,9 +5399,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="connectionString"> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="credString"> The Azure key vault secret reference of credString in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <returns> A new <see cref="Models.CouchbaseLinkedService"/> instance for mocking. </returns>
-        public static CouchbaseLinkedService CouchbaseLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, string encryptedCredential = default)
+        public static CouchbaseLinkedService CouchbaseLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, DataFactoryKeyVaultSecret credString = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -5417,9 +5426,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="connectionString"> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="pwd"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <returns> A new <see cref="Models.DrillLinkedService"/> instance for mocking. </returns>
-        public static DrillLinkedService DrillLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, string encryptedCredential = default)
+        public static DrillLinkedService DrillLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, DataFactoryKeyVaultSecret pwd = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -5547,9 +5557,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="connectionString"> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="pwd"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <returns> A new <see cref="Models.AzureMariaDBLinkedService"/> instance for mocking. </returns>
-        public static AzureMariaDBLinkedService AzureMariaDBLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, string encryptedCredential = default)
+        public static AzureMariaDBLinkedService AzureMariaDBLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, DataFactoryKeyVaultSecret pwd = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -5805,9 +5816,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="port"> The port for the connection. Type: integer. </param>
         /// <param name="uid"> Username for authentication. Type: string. </param>
         /// <param name="database"> Database name for connection. Type: string. </param>
+        /// <param name="pwd"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <returns> A new <see cref="Models.VerticaLinkedService"/> instance for mocking. </returns>
-        public static VerticaLinkedService VerticaLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, DataFactoryElement<string> server = default, DataFactoryElement<int> port = default, DataFactoryElement<string> uid = default, DataFactoryElement<string> database = default, string encryptedCredential = default)
+        public static VerticaLinkedService VerticaLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, DataFactoryElement<string> server = default, DataFactoryElement<int> port = default, DataFactoryElement<string> uid = default, DataFactoryElement<string> database = default, DataFactoryKeyVaultSecret pwd = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -5836,9 +5848,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="uid"> Username for authentication. Type: string. </param>
         /// <param name="database"> Database name for connection. Type: string. </param>
         /// <param name="securityLevel"> Specifies the security level for the driver connection to the data store. PreferredUnSecured : prefer unsecured, allow fallback to secured connection if required. OnlyUnSecured : strictly unsecured, no fallback. </param>
+        /// <param name="pwd"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <returns> A new <see cref="Models.NetezzaLinkedService"/> instance for mocking. </returns>
-        public static NetezzaLinkedService NetezzaLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, DataFactoryElement<string> server = default, DataFactoryElement<int> port = default, DataFactoryElement<string> uid = default, DataFactoryElement<string> database = default, NetezzaSecurityLevelType? securityLevel = default, string encryptedCredential = default)
+        public static NetezzaLinkedService NetezzaLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, DataFactoryElement<string> server = default, DataFactoryElement<int> port = default, DataFactoryElement<string> uid = default, DataFactoryElement<string> database = default, NetezzaSecurityLevelType? securityLevel = default, DataFactoryKeyVaultSecret pwd = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -6023,10 +6036,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="connectionString"> The connection string of snowflake. Type: string, SecureString. </param>
+        /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         /// <returns> A new <see cref="Models.SnowflakeLinkedService"/> instance for mocking. </returns>
-        public static SnowflakeLinkedService SnowflakeLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, string encryptedCredential = default)
+        public static SnowflakeLinkedService SnowflakeLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, DataFactoryKeyVaultSecret password = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
