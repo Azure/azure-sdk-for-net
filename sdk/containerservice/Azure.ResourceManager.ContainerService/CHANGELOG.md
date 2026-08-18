@@ -1,5 +1,11 @@
 # Release History
 
+## 1.7.0 (Unreleased)
+
+### Features Added
+
+- Upgraded api-version to 2026-06-01.
+
 ## 1.7.0-beta.2 (Unreleased)
 
 ### Features Added
@@ -183,7 +189,7 @@ Polishing since last public beta release:
 - Prepended `CognitiveServices` prefix to all single / simple model names.
 - Corrected the format of all `Guid` type properties / parameters.
 - Corrected the format of all `ResourceIdentifier` type properties / parameters.
-- Corrected the format of all `ResouceType` type properties / parameters.
+- Corrected the format of all `ResourceType` type properties / parameters.
 - Corrected the format of all `ETag` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
 - Corrected the format of all binary type properties / parameters.
