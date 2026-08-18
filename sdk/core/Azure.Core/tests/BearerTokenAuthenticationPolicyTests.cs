@@ -5,8 +5,10 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+#if !NET462
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+#endif
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
@@ -1199,6 +1201,35 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task BearerTokenAuthenticationPolicy_ReusesBearerTokenAcrossRequestUrisWhenPoPRequestedButNotHonored()
+        {
+            // Complements the URI-invalidation regression test: when the credential does not
+            // honor TokenRequestContext.IsProofOfPossessionEnabled and returns a plain bearer
+            // token (no binding certificate), the URI/method are not part of the cache key,
+            // matching the pre-PoP behavior that Continuous Access Evaluation flows depend on.
+            int callCount = 0;
+            var credential = new TokenCredentialStub((_, _) =>
+                {
+                    Interlocked.Increment(ref callCount);
+                    return new AccessToken("bearer-token", DateTimeOffset.UtcNow.AddHours(1));
+                },
+                IsAsync);
+
+            var policy = new ProofOfPossessionTestPolicy(credential, "scope");
+            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200));
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/resource-a"));
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/resource-b"));
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/resource-c"));
+
+            Assert.AreEqual(1, callCount,
+                "URI-based cache invalidation must not fire when the cached token is not PoP-bound.");
+        }
+
+#if !NET462
+        // CertificateRequest was introduced in .NET Framework 4.7.2 and .NET Core 2.0, so the
+        // two PoP-bound token tests below are excluded from the net462 TFM.
+        [Test]
         public async Task BearerTokenAuthenticationPolicy_ReAcquiresProofOfPossessionTokenPerRequestUri()
         {
             // Regression coverage for the PoP token cache issue raised in
@@ -1268,32 +1299,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual(1, callCount, "PoP token cache must still hit when the request URI and method are unchanged.");
         }
 
-        [Test]
-        public async Task BearerTokenAuthenticationPolicy_ReusesBearerTokenAcrossRequestUrisWhenPoPRequestedButNotHonored()
-        {
-            // Complements the URI-invalidation regression test: when the credential does not
-            // honor TokenRequestContext.IsProofOfPossessionEnabled and returns a plain bearer
-            // token (no binding certificate), the URI/method are not part of the cache key,
-            // matching the pre-PoP behavior that Continuous Access Evaluation flows depend on.
-            int callCount = 0;
-            var credential = new TokenCredentialStub((_, _) =>
-                {
-                    Interlocked.Increment(ref callCount);
-                    return new AccessToken("bearer-token", DateTimeOffset.UtcNow.AddHours(1));
-                },
-                IsAsync);
-
-            var policy = new ProofOfPossessionTestPolicy(credential, "scope");
-            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200));
-
-            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/resource-a"));
-            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/resource-b"));
-            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/resource-c"));
-
-            Assert.AreEqual(1, callCount,
-                "URI-based cache invalidation must not fire when the cached token is not PoP-bound.");
-        }
-
         private static X509Certificate2 MakeSelfSignedCertificate()
         {
             using RSA key = RSA.Create(2048);
@@ -1304,6 +1309,7 @@ namespace Azure.Core.Tests
                 RSASignaturePadding.Pkcs1);
             return request.CreateSelfSigned(DateTimeOffset.UtcNow.AddMinutes(-5), DateTimeOffset.UtcNow.AddHours(1));
         }
+#endif
 
         private class ProofOfPossessionTestPolicy : BearerTokenAuthenticationPolicy
         {
