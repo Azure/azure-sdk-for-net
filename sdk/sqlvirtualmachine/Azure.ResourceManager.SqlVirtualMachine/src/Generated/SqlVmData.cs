@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         }
 
         /// <summary> Operating System of the current SQL Virtual Machine. </summary>
-        public SqlVmOsType? OsType
+        public SqlVmOsType? OSType
         {
             get
             {
-                return Properties is null ? default : Properties.OsType;
+                return Properties is null ? default : Properties.OSType;
             }
         }
     }
