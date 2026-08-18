@@ -16,6 +16,10 @@ dotnet add package Azure.Provisioning.KubernetesConfiguration.ExtensionTypes --p
 
 > You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
 
+### Authenticate the client
+
+Azure.Provisioning libraries do not authenticate directly. When you deploy the generated infrastructure, the deployment tool uses your Azure credentials.
+
 ## Key concepts
 
 This library allows you to reference Kubernetes configuration extension types in declarative .NET infrastructure and use their values in Bicep deployments.
@@ -40,6 +44,10 @@ infra.Add(new ProvisioningOutput("extensionTypeId", typeof(string)) { Value = ex
 
 - File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
 - Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on Stack Overflow using Azure and .NET tags.
+
+## Next steps
+
+Use the generated `Infrastructure` with the [Azure Developer CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/) to provision your resources.
 
 ## Contributing
 
