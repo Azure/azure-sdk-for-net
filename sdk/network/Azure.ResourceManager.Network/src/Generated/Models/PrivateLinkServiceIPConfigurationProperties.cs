@@ -11,28 +11,30 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Properties of virtual network appliance IP configuration. </summary>
-    internal partial class VirtualNetworkApplianceIpConfigurationProperties
+    /// <summary> Properties of private link service IP configuration. </summary>
+    internal partial class PrivateLinkServiceIPConfigurationProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualNetworkApplianceIpConfigurationProperties"/>. </summary>
-        internal VirtualNetworkApplianceIpConfigurationProperties()
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceIPConfigurationProperties"/>. </summary>
+        public PrivateLinkServiceIPConfigurationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualNetworkApplianceIpConfigurationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceIPConfigurationProperties"/>. </summary>
         /// <param name="privateIPAddress"> The private IP address of the IP configuration. </param>
         /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
+        /// <param name="subnet"> The reference to the subnet resource. </param>
         /// <param name="primary"> Whether the ip configuration is primary or not. </param>
         /// <param name="provisioningState"> The provisioning state of the private link service IP configuration resource. </param>
         /// <param name="privateIPAddressVersion"> Whether the specific IP configuration is IPv4 or IPv6. Default is IPv4. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkApplianceIpConfigurationProperties(string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, bool? primary, NetworkProvisioningState? provisioningState, NetworkIPVersion? privateIPAddressVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateLinkServiceIPConfigurationProperties(string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, SubnetData subnet, bool? primary, NetworkProvisioningState? provisioningState, NetworkIPVersion? privateIPAddressVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateIPAddress = privateIPAddress;
             PrivateIPAllocationMethod = privateIPAllocationMethod;
+            Subnet = subnet;
             Primary = primary;
             ProvisioningState = provisioningState;
             PrivateIPAddressVersion = privateIPAddressVersion;
@@ -41,15 +43,19 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The private IP address of the IP configuration. </summary>
         [WirePath("privateIPAddress")]
-        public string PrivateIPAddress { get; }
+        public string PrivateIPAddress { get; set; }
 
         /// <summary> The private IP address allocation method. </summary>
         [WirePath("privateIPAllocationMethod")]
-        public NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; }
+        public NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
+
+        /// <summary> The reference to the subnet resource. </summary>
+        [WirePath("subnet")]
+        public SubnetData Subnet { get; set; }
 
         /// <summary> Whether the ip configuration is primary or not. </summary>
         [WirePath("primary")]
-        public bool? Primary { get; }
+        public bool? Primary { get; set; }
 
         /// <summary> The provisioning state of the private link service IP configuration resource. </summary>
         [WirePath("provisioningState")]
@@ -57,6 +63,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Whether the specific IP configuration is IPv4 or IPv6. Default is IPv4. </summary>
         [WirePath("privateIPAddressVersion")]
-        public NetworkIPVersion? PrivateIPAddressVersion { get; }
+        public NetworkIPVersion? PrivateIPAddressVersion { get; set; }
     }
 }
