@@ -13,25 +13,25 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> MongoDB Atlas database dataset properties. </summary>
-    internal partial class MongoDbAtlasCollectionDatasetTypeProperties
+    internal partial class MongoDBAtlasCollectionDatasetTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MongoDbAtlasCollectionDatasetTypeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasCollectionDatasetTypeProperties"/>. </summary>
         /// <param name="collection"> The collection name of the MongoDB Atlas database. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collection"/> is null. </exception>
-        public MongoDbAtlasCollectionDatasetTypeProperties(DataFactoryElement<string> collection)
+        public MongoDBAtlasCollectionDatasetTypeProperties(DataFactoryElement<string> collection)
         {
             Argument.AssertNotNull(collection, nameof(collection));
 
             Collection = collection;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MongoDbAtlasCollectionDatasetTypeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasCollectionDatasetTypeProperties"/>. </summary>
         /// <param name="collection"> The collection name of the MongoDB Atlas database. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MongoDbAtlasCollectionDatasetTypeProperties(DataFactoryElement<string> collection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MongoDBAtlasCollectionDatasetTypeProperties(DataFactoryElement<string> collection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Collection = collection;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

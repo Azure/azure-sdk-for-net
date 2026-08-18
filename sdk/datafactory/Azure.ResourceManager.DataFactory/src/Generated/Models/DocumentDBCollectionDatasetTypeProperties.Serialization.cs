@@ -15,56 +15,56 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> DocumentDB Collection dataset properties. </summary>
-    internal partial class DocumentDbCollectionDatasetTypeProperties : IJsonModel<DocumentDbCollectionDatasetTypeProperties>
+    internal partial class DocumentDBCollectionDatasetTypeProperties : IJsonModel<DocumentDBCollectionDatasetTypeProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentDbCollectionDatasetTypeProperties"/> for deserialization. </summary>
-        internal DocumentDbCollectionDatasetTypeProperties()
+        /// <summary> Initializes a new instance of <see cref="DocumentDBCollectionDatasetTypeProperties"/> for deserialization. </summary>
+        internal DocumentDBCollectionDatasetTypeProperties()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DocumentDbCollectionDatasetTypeProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DocumentDBCollectionDatasetTypeProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentDbCollectionDatasetTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentDBCollectionDatasetTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDocumentDbCollectionDatasetTypeProperties(document.RootElement, options);
+                        return DeserializeDocumentDBCollectionDatasetTypeProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentDbCollectionDatasetTypeProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentDBCollectionDatasetTypeProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentDbCollectionDatasetTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentDBCollectionDatasetTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentDbCollectionDatasetTypeProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentDBCollectionDatasetTypeProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DocumentDbCollectionDatasetTypeProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DocumentDBCollectionDatasetTypeProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentDbCollectionDatasetTypeProperties IPersistableModel<DocumentDbCollectionDatasetTypeProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DocumentDBCollectionDatasetTypeProperties IPersistableModel<DocumentDBCollectionDatasetTypeProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DocumentDbCollectionDatasetTypeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DocumentDBCollectionDatasetTypeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DocumentDbCollectionDatasetTypeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DocumentDBCollectionDatasetTypeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentDbCollectionDatasetTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentDBCollectionDatasetTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentDbCollectionDatasetTypeProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentDBCollectionDatasetTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("collectionName"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(CollectionName, options);
@@ -101,24 +101,24 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentDbCollectionDatasetTypeProperties IJsonModel<DocumentDbCollectionDatasetTypeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DocumentDBCollectionDatasetTypeProperties IJsonModel<DocumentDBCollectionDatasetTypeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DocumentDbCollectionDatasetTypeProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DocumentDBCollectionDatasetTypeProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentDbCollectionDatasetTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentDBCollectionDatasetTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentDbCollectionDatasetTypeProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentDBCollectionDatasetTypeProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDocumentDbCollectionDatasetTypeProperties(document.RootElement, options);
+            return DeserializeDocumentDBCollectionDatasetTypeProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DocumentDbCollectionDatasetTypeProperties DeserializeDocumentDbCollectionDatasetTypeProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static DocumentDBCollectionDatasetTypeProperties DeserializeDocumentDBCollectionDatasetTypeProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DocumentDbCollectionDatasetTypeProperties(collectionName, additionalBinaryDataProperties);
+            return new DocumentDBCollectionDatasetTypeProperties(collectionName, additionalBinaryDataProperties);
         }
     }
 }

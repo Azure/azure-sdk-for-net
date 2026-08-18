@@ -14,57 +14,57 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> MongoDB Atlas database dataset properties. </summary>
-    internal partial class MongoDbAtlasCollectionDatasetTypeProperties : IJsonModel<MongoDbAtlasCollectionDatasetTypeProperties>
+    /// <summary> CosmosDB (SQL API) Collection dataset properties. </summary>
+    internal partial class CosmosDBSqlApiCollectionDatasetTypeProperties : IJsonModel<CosmosDBSqlApiCollectionDatasetTypeProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="MongoDbAtlasCollectionDatasetTypeProperties"/> for deserialization. </summary>
-        internal MongoDbAtlasCollectionDatasetTypeProperties()
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlApiCollectionDatasetTypeProperties"/> for deserialization. </summary>
+        internal CosmosDBSqlApiCollectionDatasetTypeProperties()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MongoDbAtlasCollectionDatasetTypeProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CosmosDBSqlApiCollectionDatasetTypeProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MongoDbAtlasCollectionDatasetTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlApiCollectionDatasetTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMongoDbAtlasCollectionDatasetTypeProperties(document.RootElement, options);
+                        return DeserializeCosmosDBSqlApiCollectionDatasetTypeProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MongoDbAtlasCollectionDatasetTypeProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBSqlApiCollectionDatasetTypeProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MongoDbAtlasCollectionDatasetTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlApiCollectionDatasetTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MongoDbAtlasCollectionDatasetTypeProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBSqlApiCollectionDatasetTypeProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MongoDbAtlasCollectionDatasetTypeProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CosmosDBSqlApiCollectionDatasetTypeProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MongoDbAtlasCollectionDatasetTypeProperties IPersistableModel<MongoDbAtlasCollectionDatasetTypeProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CosmosDBSqlApiCollectionDatasetTypeProperties IPersistableModel<CosmosDBSqlApiCollectionDatasetTypeProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MongoDbAtlasCollectionDatasetTypeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CosmosDBSqlApiCollectionDatasetTypeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MongoDbAtlasCollectionDatasetTypeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CosmosDBSqlApiCollectionDatasetTypeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,13 +75,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MongoDbAtlasCollectionDatasetTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlApiCollectionDatasetTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDbAtlasCollectionDatasetTypeProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBSqlApiCollectionDatasetTypeProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("collection"u8);
-            writer.WriteObjectValue<DataFactoryElement<string>>(Collection, options);
+            writer.WritePropertyName("collectionName"u8);
+            writer.WriteObjectValue<DataFactoryElement<string>>(CollectionName, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -101,36 +101,36 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MongoDbAtlasCollectionDatasetTypeProperties IJsonModel<MongoDbAtlasCollectionDatasetTypeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CosmosDBSqlApiCollectionDatasetTypeProperties IJsonModel<CosmosDBSqlApiCollectionDatasetTypeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MongoDbAtlasCollectionDatasetTypeProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CosmosDBSqlApiCollectionDatasetTypeProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MongoDbAtlasCollectionDatasetTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlApiCollectionDatasetTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDbAtlasCollectionDatasetTypeProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBSqlApiCollectionDatasetTypeProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMongoDbAtlasCollectionDatasetTypeProperties(document.RootElement, options);
+            return DeserializeCosmosDBSqlApiCollectionDatasetTypeProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MongoDbAtlasCollectionDatasetTypeProperties DeserializeMongoDbAtlasCollectionDatasetTypeProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static CosmosDBSqlApiCollectionDatasetTypeProperties DeserializeCosmosDBSqlApiCollectionDatasetTypeProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DataFactoryElement<string> collection = default;
+            DataFactoryElement<string> collectionName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("collection"u8))
+                if (prop.NameEquals("collectionName"u8))
                 {
-                    collection = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    collectionName = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MongoDbAtlasCollectionDatasetTypeProperties(collection, additionalBinaryDataProperties);
+            return new CosmosDBSqlApiCollectionDatasetTypeProperties(collectionName, additionalBinaryDataProperties);
         }
     }
 }
