@@ -334,7 +334,7 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(propertyNames.Contains("Location"), Is.True, "Location should stay when custom base narrows to ResourceData");
             Assert.That(propertyNames.Contains("Tags"), Is.True, "Tags should stay when custom base narrows to ResourceData");
             Assert.That(propertyNames.Contains("CustomProp"), Is.True, "CustomProp should remain");
-            Assert.That(propertyNames.Contains("Id"), Is.False, "Id should still be filtered because ResourceData does not expose it");
+            Assert.That(propertyNames.Contains("Id"), Is.False, "Id should still be filtered because the effective custom base is ResourceData, which does not expose it");
         }
 
         private static void SetCustomCodeView(TypeProvider typeProvider, TypeProvider customCodeTypeProvider)

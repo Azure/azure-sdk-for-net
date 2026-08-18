@@ -119,9 +119,9 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         // Example: a model may infer TrackedResourceData from TypeSpec, but a custom partial can
         // narrow the effective base to ResourceData. In that case we must compare against the
         // custom base's members, not the TypeSpec hierarchy.
-        if (model.CustomCodeView?.BaseType is not null && model.BaseType is not null)
+        if (model.CustomCodeView?.BaseType is { } customBaseType)
         {
-            if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(model.BaseType, out var customBaseProvider)
+            if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(customBaseType, out var customBaseProvider)
                 && customBaseProvider is TypeProvider typeProvider)
             {
                 return typeProvider;
