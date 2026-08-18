@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="state"> The state this IP address is located in. </param>
         /// <param name="stateConfidenceFactor"> A numeric rating of confidence that the value in the 'state' field is correct on a scale of 0-100. </param>
         /// <param name="stateCode"> The abbreviated name for the state this IP address is located in. </param>
-        /// <returns> A new <see cref="Models.EnrichmentIpGeodata"/> instance for mocking. </returns>
-        public static EnrichmentIpGeodata EnrichmentIpGeodata(string asn = default, string carrier = default, string city = default, int? cityConfidenceFactor = default, string continent = default, string country = default, int? countryConfidenceFactor = default, string ipAddr = default, string ipRoutingType = default, string latitude = default, string longitude = default, string organization = default, string organizationType = default, string region = default, string state = default, int? stateConfidenceFactor = default, string stateCode = default)
+        /// <returns> A new <see cref="Models.EnrichmentIPGeodata"/> instance for mocking. </returns>
+        public static EnrichmentIPGeodata EnrichmentIPGeodata(string asn = default, string carrier = default, string city = default, int? cityConfidenceFactor = default, string continent = default, string country = default, int? countryConfidenceFactor = default, string ipAddr = default, string ipRoutingType = default, string latitude = default, string longitude = default, string organization = default, string organizationType = default, string region = default, string state = default, int? stateConfidenceFactor = default, string stateCode = default)
         {
-            return new EnrichmentIpGeodata(
+            return new EnrichmentIPGeodata(
                 asn,
                 carrier,
                 city,
@@ -1775,7 +1775,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 systemData,
                 default,
                 default,
-                additionalData is null && friendlyName is null && address is null && location is null && threatIntelligence is null ? default : new IpEntityProperties(
+                additionalData is null && friendlyName is null && address is null && location is null && threatIntelligence is null ? default : new IPEntityProperties(
                     additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
                     friendlyName,
                     default,

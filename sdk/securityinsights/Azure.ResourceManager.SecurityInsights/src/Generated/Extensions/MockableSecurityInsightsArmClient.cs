@@ -1944,7 +1944,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <param name="content"> IP address (v4 or v6) to be enriched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<EnrichmentIpGeodata>> GetGeodataByIpAsync(ResourceIdentifier scope, EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EnrichmentIPGeodata>> GetGeodataByIpAsync(ResourceIdentifier scope, EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
@@ -1959,7 +1959,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
                 };
                 HttpMessage message = SecurityInsightsClientRestClient.CreateGetGeodataByIpRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, enrichmentType.ToString(), EnrichmentIPAddressContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<EnrichmentIpGeodata> response = Response.FromValue(EnrichmentIpGeodata.FromResponse(result), result);
+                Response<EnrichmentIPGeodata> response = Response.FromValue(EnrichmentIPGeodata.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1995,7 +1995,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <param name="content"> IP address (v4 or v6) to be enriched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<EnrichmentIpGeodata> GetGeodataByIp(ResourceIdentifier scope, EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
+        public virtual Response<EnrichmentIPGeodata> GetGeodataByIp(ResourceIdentifier scope, EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
@@ -2010,7 +2010,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
                 };
                 HttpMessage message = SecurityInsightsClientRestClient.CreateGetGeodataByIpRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, enrichmentType.ToString(), EnrichmentIPAddressContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<EnrichmentIpGeodata> response = Response.FromValue(EnrichmentIpGeodata.FromResponse(result), result);
+                Response<EnrichmentIPGeodata> response = Response.FromValue(EnrichmentIPGeodata.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
