@@ -7,10 +7,7 @@
 
 namespace Azure.Provisioning.RecoveryServicesBackup
 {
-    /// <summary>
-    /// Azure Recovery Services Vault specific protection intent item.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="WorkloadAutoProtectionIntent"/> and <see cref="WorkloadSqlAutoProtectionIntent"/>.
-    /// </summary>
+    /// <summary> Azure Recovery Services Vault specific protection intent item. </summary>
     public partial class RecoveryServiceVaultProtectionIntent : BackupGenericProtectionIntent
     {
         /// <summary> Creates a new RecoveryServiceVaultProtectionIntent. </summary>

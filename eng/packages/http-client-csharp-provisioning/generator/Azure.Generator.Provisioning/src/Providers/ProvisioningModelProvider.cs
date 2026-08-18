@@ -100,6 +100,13 @@ namespace Azure.Generator.Provisioning.Providers
                     // not implement this input property. The derived property must still be emitted,
                     // but it deliberately hides the incompatible base member.
                     property.Update(modifiers: property.Modifiers | MethodSignatureModifiers.New);
+                    if (property.IsDiscriminator && !baseProperty.IsDiscriminator)
+                    {
+                        // Customization filtering compares source names only. A verbatim identifier
+                        // preserves the C# member name while preventing a non-discriminator base
+                        // property from suppressing the generated discriminator.
+                        property.Update(name: $"@{property.Name}");
+                    }
                 }
 
                 properties.Add(property);
@@ -148,10 +155,15 @@ namespace Azure.Generator.Provisioning.Providers
 
                 // Walk from the immediate C# base toward the root and keep the first property for
                 // each name. That is the member visible to the derived class when multiple base
-                // layers hide one another.
+                // layers hide one another. Include the raw provider surface as well because Roslyn
+                // providers can omit inherited source-only members from their canonical view.
                 foreach (var property in baseProvider.CanonicalView.Properties)
                 {
-                    properties.TryAdd(property.Name, property);
+                    properties.TryAdd(NormalizePropertyName(property.Name), property);
+                }
+                foreach (var property in baseProvider.Properties)
+                {
+                    properties.TryAdd(NormalizePropertyName(property.Name), property);
                 }
 
                 baseType = baseProvider.BaseType;
@@ -159,6 +171,9 @@ namespace Azure.Generator.Provisioning.Providers
 
             return properties;
         }
+
+        private static string NormalizePropertyName(string name)
+            => name.StartsWith('@') ? name[1..] : name;
 
         private static TypeProvider? ResolveTypeProvider(CSharpType type)
         {

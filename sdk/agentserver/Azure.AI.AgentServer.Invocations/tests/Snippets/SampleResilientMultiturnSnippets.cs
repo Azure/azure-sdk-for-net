@@ -3,11 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.AgentServer.Core.Storage;
 using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Invocations;
+using Azure.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -16,14 +18,16 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 {
     /// <summary>
     /// Code snippets backing Sample — Resilient Multi-turn Steerable Agent.
-    /// Demonstrates named-namespace metadata (session history + turn_count),
-    /// "done" termination that clears session state, EntryMode.Recovered handling,
+    /// Demonstrates explicit Foundry State Store session and invocation state,
+    /// "done" termination that clears session state, recovered-run idempotency,
     /// and cooperative steering via PendingInputCount / OCE interception.
     /// </summary>
     [TestFixture]
     [Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]
     public class SampleResilientMultiturnSnippets
     {
+        private static readonly DefaultAzureCredential s_credential = new();
+
         [Test]
         public void Implement_Handler()
         {
@@ -35,15 +39,12 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 
         /// <summary>
         /// The durable, steerable conversation task — one execution per turn.
-        /// Uses TWO metadata namespaces:
+        /// Uses two session-isolated Foundry State Stores:
         /// <list type="bullet">
-        ///   <item><c>ctx.Metadata</c> (default) — per-invocation state (status, output).</item>
-        ///   <item><c>ctx.Metadata.GetNamespace("session")</c> — session-level state that persists
-        ///         across many invocations: conversation <c>history</c> and <c>turn_count</c>.</item>
+        ///   <item><c>resilient-multiturn/sessions/{sessionId}</c> — conversation history.</item>
+        ///   <item><c>resilient-multiturn/invocations/{sessionId}</c> — invocation status and output.</item>
         /// </list>
-        /// On <c>EntryMode.Recovered</c>, the handler reads persisted session history from the
-        /// named namespace and seamlessly continues. A message of "done" terminates and clears
-        /// session history for future reuse.
+        /// A message of "done" terminates and clears session history for future reuse.
         /// </summary>
         /// <remarks>
         /// The reply is produced by a <paramref name="respond"/> delegate so the same
@@ -56,52 +57,69 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             Func<List<ConversationMessage>, string, CancellationToken, Task<string>> respond,
             CancellationToken ct)
         {
-            // Session-level state lives in a named namespace — logically separate from
-            // per-invocation ephemeral state. Both survive crashes.
-            TaskMetadata session = ctx.Metadata.GetNamespace("session");
+            ConversationInput input = ctx.Input;
+            string sessionKey = $"session/{input.SessionId}";
+            string invocationKey = $"invocation/{input.InvocationId}";
+            FoundryStateStore sessionStore = await FoundryStateStore.GetOrCreateAsync(
+                $"resilient-multiturn/sessions/{input.SessionId}",
+                s_credential,
+                description: "Multi-turn conversation state",
+                cancellationToken: CancellationToken.None);
+            FoundryStateStore invocationStore = await FoundryStateStore.GetOrCreateAsync(
+                $"resilient-multiturn/invocations/{input.SessionId}",
+                s_credential,
+                description: "Multi-turn invocation status and results",
+                cancellationToken: CancellationToken.None);
 
-            List<ConversationMessage> history;
-            if (session.TryGetValue("history", out var histRaw) && histRaw is not null)
+            StateStoreItem? sessionItem = await sessionStore.GetItemAsync(
+                sessionKey,
+                cancellationToken: CancellationToken.None);
+            IDictionary<string, BinaryData> session = sessionItem?.Value
+                ?? new Dictionary<string, BinaryData>(StringComparer.Ordinal);
+            List<ConversationMessage> history =
+                session.TryGetValue("history", out BinaryData? historyData)
+                    ? historyData.ToObjectFromJson<List<ConversationMessage>>()
+                        ?? new List<ConversationMessage>()
+                    : new List<ConversationMessage>();
+            int turnCount = session.TryGetValue("turn_count", out BinaryData? turnData)
+                ? turnData.ToObjectFromJson<int>()
+                : 0;
+
+            if (ctx.EntryMode == EntryMode.Recovered
+                && session.TryGetValue("last_applied_invocation_id", out BinaryData? appliedData)
+                && appliedData.ToObjectFromJson<string>() == input.InvocationId
+                && session.TryGetValue("last_output", out BinaryData? outputData)
+                && outputData.ToObjectFromJson<ConversationOutput>() is ConversationOutput recoveredOutput)
             {
-                history = histRaw.ToObjectFromJson<List<ConversationMessage>>()
-                    ?? new List<ConversationMessage>();
-            }
-            else
-            {
-                history = new List<ConversationMessage>();
+                await SaveInvocationAsync(invocationStore, invocationKey, recoveredOutput);
+                return recoveredOutput;
             }
 
-            int turnCount = 0;
-            if (session.TryGetValue("turn_count", out var tcRaw) && tcRaw is not null)
-            {
-                turnCount = tcRaw.ToObjectFromJson<int>();
-            }
+            await invocationStore.SetItemAsync(
+                invocationKey,
+                new Dictionary<string, BinaryData>
+                {
+                    ["status"] = BinaryData.FromObjectAsJson("running"),
+                },
+                cancellationToken: CancellationToken.None);
 
-            // Mark default namespace as running
-            ctx.Metadata["status"] = BinaryData.FromObjectAsJson("running");
-            await ctx.Metadata.FlushAsync(ct);
-
-            if (ctx.EntryMode == EntryMode.Recovered)
-            {
-                // On crash recovery, session history was already flushed by a prior lifetime.
-                // We simply continue from where we left off.
-            }
-
-            string message = ctx.Input.Message;
+            string message = input.Message;
 
             // Handle explicit session end — "done" clears session history for reuse.
             if (string.Equals(message.Trim(), "done", StringComparison.OrdinalIgnoreCase))
             {
                 string summary = $"Session complete after {turnCount} turns. " +
                     $"Total messages exchanged: {history.Count}.";
-                session["history"] = BinaryData.FromObjectAsJson(new List<ConversationMessage>());
-                session["turn_count"] = BinaryData.FromObjectAsJson(0);
-                await session.FlushAsync(ct);
-
                 var doneResult = new ConversationOutput(turnCount, summary, Finished: true);
-                ctx.Metadata["status"] = BinaryData.FromObjectAsJson("completed");
-                ctx.Metadata["output"] = BinaryData.FromObjectAsJson(doneResult);
-                await ctx.Metadata.FlushAsync(ct);
+                await SaveCompletedTurnAsync(
+                    sessionStore,
+                    invocationStore,
+                    input,
+                    sessionKey,
+                    invocationKey,
+                    new List<ConversationMessage>(),
+                    turnCount: 0,
+                    doneResult);
                 return doneResult;
             }
 
@@ -119,10 +137,11 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                     // A newer message is waiting — wrap up early so the next turn runs.
                     string partial = $"Turn {turnCount} (interrupted): \"{message}\"";
                     history.Add(new ConversationMessage("assistant", partial));
-                    session["history"] = BinaryData.FromObjectAsJson(history);
-                    session["turn_count"] = BinaryData.FromObjectAsJson(turnCount);
-                    await session.FlushAsync(ct);
-                    return new ConversationOutput(turnCount, partial);
+                    var partialResult = new ConversationOutput(turnCount, partial);
+                    await SaveCompletedTurnAsync(
+                        sessionStore, invocationStore, input, sessionKey, invocationKey,
+                        history, turnCount, partialResult);
+                    return partialResult;
                 }
 
                 try
@@ -133,10 +152,11 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 {
                     string partial = $"Turn {turnCount} (interrupted): \"{message}\"";
                     history.Add(new ConversationMessage("assistant", partial));
-                    session["history"] = BinaryData.FromObjectAsJson(history);
-                    session["turn_count"] = BinaryData.FromObjectAsJson(turnCount);
-                    await session.FlushAsync(ct);
-                    return new ConversationOutput(turnCount, partial);
+                    var partialResult = new ConversationOutput(turnCount, partial);
+                    await SaveCompletedTurnAsync(
+                        sessionStore, invocationStore, input, sessionKey, invocationKey,
+                        history, turnCount, partialResult);
+                    return partialResult;
                 }
             }
 
@@ -144,19 +164,51 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             string reply = await respond(history, message, ct);
             history.Add(new ConversationMessage("assistant", reply));
 
-            // Checkpoint session state — survives crash.
-            session["history"] = BinaryData.FromObjectAsJson(history);
-            session["turn_count"] = BinaryData.FromObjectAsJson(turnCount);
-            await session.FlushAsync(ct);
-
-            // Persist invocation result BEFORE suspending.
             var output = new ConversationOutput(turnCount, reply);
-            ctx.Metadata["status"] = BinaryData.FromObjectAsJson("completed");
-            ctx.Metadata["output"] = BinaryData.FromObjectAsJson(output);
-            await ctx.Metadata.FlushAsync(ct);
+            await SaveCompletedTurnAsync(
+                sessionStore, invocationStore, input, sessionKey, invocationKey,
+                history, turnCount, output);
 
             return output;
         }
+
+        private static async Task SaveCompletedTurnAsync(
+            FoundryStateStore sessionStore,
+            FoundryStateStore invocationStore,
+            ConversationInput input,
+            string sessionKey,
+            string invocationKey,
+            List<ConversationMessage> history,
+            int turnCount,
+            ConversationOutput output)
+        {
+            await sessionStore.SetItemAsync(
+                sessionKey,
+                new Dictionary<string, BinaryData>
+                {
+                    ["history"] = BinaryData.FromObjectAsJson(history),
+                    ["turn_count"] = BinaryData.FromObjectAsJson(turnCount),
+                    ["last_applied_invocation_id"] = BinaryData.FromObjectAsJson(input.InvocationId),
+                    ["last_output"] = BinaryData.FromObjectAsJson(output),
+                },
+                tags: new Dictionary<string, string> { ["invocation_id"] = input.InvocationId },
+                cancellationToken: CancellationToken.None);
+
+            await SaveInvocationAsync(invocationStore, invocationKey, output);
+        }
+
+        private static Task SaveInvocationAsync(
+            FoundryStateStore invocationStore,
+            string invocationKey,
+            ConversationOutput output)
+            => invocationStore.SetItemAsync(
+                invocationKey,
+                new Dictionary<string, BinaryData>
+                {
+                    ["status"] = BinaryData.FromObjectAsJson("completed"),
+                    ["output"] = BinaryData.FromObjectAsJson(output),
+                },
+                cancellationToken: CancellationToken.None);
 
         // A bare steering nudge cancels ctx.Cancellation with no cancel cause: a newer input is
         // queued but the caller did not cancel, no timeout fired, and shutdown is not in progress.
@@ -184,8 +236,13 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 InvocationContext context,
                 CancellationToken cancellationToken)
             {
-                var input = await request.ReadFromJsonAsync<ConversationInput>(cancellationToken)
-                    ?? new ConversationInput("hello");
+                var body = await request.ReadFromJsonAsync<ConversationRequest>(cancellationToken)
+                    ?? new ConversationRequest("hello");
+                var input = new ConversationInput(
+                    body.Message,
+                    context.SessionId,
+                    context.InvocationId,
+                    context.PlatformContext.CallId);
 
                 var invoker = request.HttpContext.RequestServices
                     .GetRequiredService<ITaskInvoker>();
@@ -215,8 +272,15 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             }
         }
 
-        /// <summary>Input for the conversation task.</summary>
-        public record ConversationInput(string Message);
+        /// <summary>HTTP request body for one conversation turn.</summary>
+        public record ConversationRequest(string Message);
+
+        /// <summary>Persisted input required to run or recover one conversation turn.</summary>
+        public record ConversationInput(
+            string Message,
+            string SessionId,
+            string InvocationId,
+            [property: JsonPropertyName("call_id")] string? CallId);
 
         /// <summary>Output for a single conversation turn.</summary>
         public record ConversationOutput(int Turn, string Reply, bool Finished = false);

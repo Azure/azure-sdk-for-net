@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Playwright.Models;
 
@@ -34,6 +35,7 @@ namespace Azure.ResourceManager.Playwright
     [ModelReaderWriterBuildable(typeof(PlaywrightWorkspaceQuotaResource))]
     [ModelReaderWriterBuildable(typeof(PlaywrightWorkspaceResource))]
     [ModelReaderWriterBuildable(typeof(PlaywrightWorkspaceUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerPlaywrightContext : ModelReaderWriterContext

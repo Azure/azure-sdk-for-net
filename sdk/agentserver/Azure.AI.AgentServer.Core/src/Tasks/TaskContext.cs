@@ -8,7 +8,7 @@ namespace Azure.AI.AgentServer.Core.Tasks;
 
 /// <summary>
 /// The handler-facing context for a single task turn. Exposes the typed input,
-/// identity, entry mode, durable metadata, retry/steering signals, the crash-recovery
+/// identity, entry mode, retry/steering signals, the crash-recovery
 /// count, and cooperative cancellation, matching Python's <c>TaskContext</c>. The protected
 /// constructor supports mocking; the engine populates instances internally.
 /// </summary>
@@ -39,9 +39,6 @@ public class TaskContext<TInput>
     /// <summary>How the handler was entered for this turn.</summary>
     public virtual EntryMode EntryMode => State.EntryMode;
 
-    /// <summary>The durable, namespaced task metadata.</summary>
-    public virtual TaskMetadata Metadata => State.Metadata;
-
     /// <summary>The zero-based retry attempt for the current turn (0 on the first try).</summary>
     public virtual int RetryAttempt => State.RetryAttempt;
 
@@ -71,8 +68,8 @@ public class TaskContext<TInput>
     public virtual CancellationToken Shutdown => State.Shutdown;
 
     /// <summary>
-    /// Exits the current turn for later recovery: flushes metadata, releases the lease without a
-    /// terminal status, and signals the engine to park the task <c>in_progress</c> so it can be
+    /// Exits the current turn for later recovery: releases the lease without a terminal status
+    /// and signals the engine to park the task <c>in_progress</c> so it can be
     /// resumed elsewhere. This does <b>not</b> throw — after calling it the handler should return
     /// (any returned value is ignored). Only valid while <see cref="Shutdown"/> is signaled;
     /// calling it otherwise throws <see cref="System.InvalidOperationException"/>.

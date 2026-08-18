@@ -396,6 +396,69 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
+        public void CustomBasePropertyDoesNotReplaceDiscriminator()
+        {
+            var discriminator = CreateProperty("kind", InputPrimitiveType.String, isDiscriminator: true);
+            var baseModel = new InputModelType(
+                "BaseModel",
+                "Sample.Models",
+                "Sample.Models.BaseModel",
+                "public",
+                null,
+                string.Empty,
+                "Base model.",
+                InputModelTypeUsage.Input | InputModelTypeUsage.Output,
+                [discriminator],
+                null,
+                [],
+                null,
+                discriminator,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
+            var derivedModel = CreateDerivedModel("DerivedModel", "derived", baseModel);
+            ((IDictionary<string, InputModelType>)baseModel.DiscriminatedSubtypes).Add("derived", derivedModel);
+            var factory = ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [baseModel, derivedModel],
+                armProviderSchema: () => new ArmProviderSchema([], []),
+                customizationSources:
+                [
+                    """
+                    namespace Azure.Provisioning.Tests
+                    {
+                        public class CustomBase
+                        {
+                            public BicepValue<string> Kind { get; }
+                        }
+
+                        public partial class BaseModel : CustomBase
+                        {
+                        }
+                    }
+                    """
+                ])
+                .Object.TypeFactory;
+
+            var provider = factory.CreateModel(baseModel)!;
+            var property = provider.Properties.Single();
+            var derivedProvider = factory.CreateModel(derivedModel)!;
+            var methodBody = derivedProvider.Methods
+                .Single(method => method.Signature.Name == "DefineProvisionableProperties")
+                .BodyStatements!
+                .ToDisplayString();
+
+            Assert.That(provider.BaseType?.Name, Is.EqualTo("CustomBase"));
+            Assert.That(property.Name, Is.EqualTo("@Kind"));
+            Assert.That(property.IsDiscriminator, Is.True);
+            Assert.That(property.Modifiers.HasFlag(MethodSignatureModifiers.Internal), Is.True);
+            Assert.That(property.Modifiers.HasFlag(MethodSignatureModifiers.New), Is.True);
+            Assert.That(derivedProvider.Properties, Is.Empty);
+            Assert.That(methodBody, Does.Contain("@Kind.Assign(\"derived\");"));
+        }
+
+        [Test]
         public void NestedDiscriminatorsDefineAndAssignEachLevel()
         {
             var kind = CreateProperty("kind", InputPrimitiveType.String, isDiscriminator: true);

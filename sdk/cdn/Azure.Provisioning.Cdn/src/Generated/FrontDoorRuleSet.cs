@@ -93,19 +93,6 @@ namespace Azure.Provisioning.Cdn
             }
         }
 
-        /// <summary> Gets the ProfileName. </summary>
-        public BicepValue<string> ProfileName
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new CdnRuleSetProperties();
-                }
-                return Properties.ProfileName;
-            }
-        }
-
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<FrontDoorProvisioningState> ProvisioningState
         {
@@ -129,6 +116,19 @@ namespace Azure.Provisioning.Cdn
                     Properties = new CdnRuleSetProperties();
                 }
                 return Properties.DeploymentStatus;
+            }
+        }
+
+        /// <summary> Gets the ProfileName. </summary>
+        public BicepValue<string> ProfileName
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CdnRuleSetProperties();
+                }
+                return Properties.ProfileName;
             }
         }
 

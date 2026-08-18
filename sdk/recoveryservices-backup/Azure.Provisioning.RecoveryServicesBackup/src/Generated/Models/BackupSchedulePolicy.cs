@@ -11,7 +11,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
 {
     /// <summary>
     /// Base class for backup schedule.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LogSchedulePolicy"/>, <see cref="LongTermSchedulePolicy"/>, <see cref="SimpleSchedulePolicy"/>, and <see cref="SimpleSchedulePolicyV2"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="LogSchedulePolicy"/>, <see cref="LongTermSchedulePolicy"/>, <see cref="SimpleSchedulePolicy"/>, and <see cref="SimpleSchedulePolicyV2"/>.
     /// </summary>
     public partial class BackupSchedulePolicy : ProvisionableConstruct
     {
