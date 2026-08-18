@@ -1005,12 +1005,12 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
             }
         }
 
-        /// <summary> Gets or sets the EnableResilientEphemeralOsDisk. </summary>
-        public BicepValue<bool> EnableResilientEphemeralOsDisk
+        /// <summary> Gets or sets the EnableResilientEphemeralOSDisk. </summary>
+        public BicepValue<bool> EnableResilientEphemeralOSDisk
         {
             get
             {
-                return Properties is null ? default : Properties.EnableResilientEphemeralOsDisk;
+                return Properties is null ? default : Properties.EnableResilientEphemeralOSDisk;
             }
             set
             {
@@ -1018,7 +1018,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
                 {
                     Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
-                Properties.EnableResilientEphemeralOsDisk = value;
+                Properties.EnableResilientEphemeralOSDisk = value;
             }
         }
 
