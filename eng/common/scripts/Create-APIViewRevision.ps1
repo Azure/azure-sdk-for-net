@@ -114,6 +114,13 @@ function Invoke-ApiViewTokenCreation(
     [string] $ReviewFileName,
     [string] $PackagePath
 ) {
+    if ([string]::IsNullOrWhiteSpace($BuildId)) {
+        throw "BuildId is required to create an APIView revision from a review token file."
+    }
+    if ([string]::IsNullOrWhiteSpace($RepoName)) {
+        throw "RepoName is required to create an APIView revision from a review token file."
+    }
+
     $fileName = Split-Path -Leaf $PackagePath
     $queryParameters = [ordered]@{
         buildId = $BuildId
@@ -244,6 +251,16 @@ Write-Host "Artifact path: $ArtifactPath"
 Write-Host "Source branch: $SourceBranch"
 Write-Host "Package name: $PackageName"
 
+if ([string]::IsNullOrWhiteSpace($SourceBranch)) {
+    throw "SourceBranch is required to determine APIView revision eligibility."
+}
+if ([string]::IsNullOrWhiteSpace($DefaultBranch)) {
+    throw "DefaultBranch is required to determine APIView revision eligibility."
+}
+if (-not (Test-Path $ArtifactPath -PathType Container)) {
+    throw "Artifact path $ArtifactPath does not exist or is not a directory."
+}
+
 $processedPackageInfoFiles = @(Resolve-PackageInfoFiles)
 if ($processedPackageInfoFiles.Count -eq 0) {
     throw "No package info files found after processing the supplied package inputs."
@@ -258,10 +275,10 @@ foreach ($packageInfoFile in $processedPackageInfoFiles) {
     }
     catch {
         Write-Error "Failed to create an APIView revision from ${packageInfoFile}: $($_.Exception.Message)" -ErrorAction Continue
-        $failures += $packageInfoFile
+        $failures += "${packageInfoFile}: $($_.Exception.Message)"
     }
 }
 
 if ($failures.Count -gt 0) {
-    throw "APIView revision creation failed for $($failures.Count) package(s)."
+    throw "APIView revision creation failed for $($failures.Count) package(s):`n$($failures -join "`n")"
 }
