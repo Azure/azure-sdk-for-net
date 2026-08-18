@@ -1,0 +1,33 @@
+# Cleans resources created or reused by a live eval shard. Candidate IDs come only from that
+# shard's Vally trajectories; the cleanup script independently verifies every release plan is
+# tagged as a test plan before abandoning it.
+
+steps:
+  - task: AzureCLI@2
+    displayName: 'Login to GitHub for live eval cleanup'
+    condition: always()
+    inputs:
+      azureSubscription: 'AzureSDKEngKeyVault Secrets'
+      scriptType: pscore
+      scriptLocation: scriptPath
+      scriptPath: $(Build.SourcesDirectory)/eng/common/scripts/login-to-github.ps1
+      arguments: >
+        -InstallationTokenOwners 'Azure'
+        -VariableNamePrefix 'LIVE_EVAL_GITHUB_TOKEN'
+
+  - task: AzureCLI@2
+    displayName: 'Cleanup live eval release plans and SDK PRs'
+    condition: always()
+    inputs:
+      azureSubscription: opensource-api-connection
+      scriptType: bash
+      scriptLocation: inlineScript
+      workingDirectory: $(Build.SourcesDirectory)
+      inlineScript: |
+        node --experimental-strip-types \
+          "$(Build.SourcesDirectory)/eng/common/scripts/eval/cleanup-live-eval.ts" \
+          --results-dir "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" \
+          --azsdk "$(Build.SourcesDirectory)/artifacts/mcp/cli/azsdk.dll"
+    env:
+      AZSDKTOOLS_AGENT_TESTING: 'true'
+      GITHUB_TOKEN: $(LIVE_EVAL_GITHUB_TOKEN)

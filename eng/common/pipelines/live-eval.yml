@@ -40,4 +40,4 @@ extends:
     # A spec/language repo that must start its own bot / server / MCP copies the example hook and
     # points these at it — see eng/common/pipelines/templates/steps/eval-hook-example.yml.
     # preEvalTemplate: /eng/pipelines/eval/start-my-bot.yml
-    # postEvalTemplate: /eng/pipelines/eval/stop-my-bot.yml
+    postEvalTemplate: /eng/common/pipelines/templates/steps/eval-live-cleanup.yml
