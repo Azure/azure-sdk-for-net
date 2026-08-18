@@ -126,6 +126,9 @@
 # ServiceLabel: %Azure Load Testing
 # ServiceOwners: @azure/testing-services
 
+# PRLabel: %Azure Projects
+/sdk/cloudmachine/    @KrzysztofCwalina
+
 # PRLabel: %Azure Stack
 /sdk/azurestack*/    @bganapa
 
