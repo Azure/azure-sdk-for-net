@@ -1190,10 +1190,15 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         ///
-        /// Operations on paths within the file system, including reads and writes, may
-        /// continue to succeed for up to 30 seconds after the delete request is
-        /// accepted.  After this period, all operations on the file system and its paths
-        /// fail with status code 404 (Not Found).
+        /// When a file system is deleted, a file system with the same name can't be
+        /// created for at least 30 seconds.  The file system might not be available for
+        /// more than 30 seconds if the service is still processing the request.  While the
+        /// file system is being deleted, attempts to create a file system of the same name
+        /// fail with status code 409 (Conflict).  The service indicates that the file
+        /// system is being deleted.  Operations on paths within the file system, including
+        /// reads and writes, may continue to succeed for up to 30 seconds after the delete
+        /// request is accepted.  After this period, all operations on the file system and
+        /// its paths fail with status code 404 (Not Found).
         /// </remarks>
         public virtual Response Delete(
             DataLakeRequestConditions conditions = default,
@@ -1253,10 +1258,15 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         ///
-        /// Operations on paths within the file system, including reads and writes, may
-        /// continue to succeed for up to 30 seconds after the delete request is
-        /// accepted.  After this period, all operations on the file system and its paths
-        /// fail with status code 404 (Not Found).
+        /// When a file system is deleted, a file system with the same name can't be
+        /// created for at least 30 seconds.  The file system might not be available for
+        /// more than 30 seconds if the service is still processing the request.  While the
+        /// file system is being deleted, attempts to create a file system of the same name
+        /// fail with status code 409 (Conflict).  The service indicates that the file
+        /// system is being deleted.  Operations on paths within the file system, including
+        /// reads and writes, may continue to succeed for up to 30 seconds after the delete
+        /// request is accepted.  After this period, all operations on the file system and
+        /// its paths fail with status code 404 (Not Found).
         /// </remarks>
         public virtual async Task<Response> DeleteAsync(
             DataLakeRequestConditions conditions = default,
@@ -1319,10 +1329,15 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         ///
-        /// Operations on paths within the file system, including reads and writes, may
-        /// continue to succeed for up to 30 seconds after the delete request is
-        /// accepted.  After this period, all operations on the file system and its paths
-        /// fail with status code 404 (Not Found).
+        /// When a file system is deleted, a file system with the same name can't be
+        /// created for at least 30 seconds.  The file system might not be available for
+        /// more than 30 seconds if the service is still processing the request.  While the
+        /// file system is being deleted, attempts to create a file system of the same name
+        /// fail with status code 409 (Conflict).  The service indicates that the file
+        /// system is being deleted.  Operations on paths within the file system, including
+        /// reads and writes, may continue to succeed for up to 30 seconds after the delete
+        /// request is accepted.  After this period, all operations on the file system and
+        /// its paths fail with status code 404 (Not Found).
         /// </remarks>
         public virtual Response<bool> DeleteIfExists(
             DataLakeRequestConditions conditions = default,
@@ -1382,10 +1397,15 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         ///
-        /// Operations on paths within the file system, including reads and writes, may
-        /// continue to succeed for up to 30 seconds after the delete request is
-        /// accepted.  After this period, all operations on the file system and its paths
-        /// fail with status code 404 (Not Found).
+        /// When a file system is deleted, a file system with the same name can't be
+        /// created for at least 30 seconds.  The file system might not be available for
+        /// more than 30 seconds if the service is still processing the request.  While the
+        /// file system is being deleted, attempts to create a file system of the same name
+        /// fail with status code 409 (Conflict).  The service indicates that the file
+        /// system is being deleted.  Operations on paths within the file system, including
+        /// reads and writes, may continue to succeed for up to 30 seconds after the delete
+        /// request is accepted.  After this period, all operations on the file system and
+        /// its paths fail with status code 404 (Not Found).
         /// </remarks>
         public virtual async Task<Response<bool>> DeleteIfExistsAsync(
             DataLakeRequestConditions conditions = default,
