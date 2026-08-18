@@ -3,7 +3,7 @@
 
 using NUnit.Framework;
 
-namespace Azure.Storage.Tests
+namespace Azure.Storage.Blobs.Tests
 {
     [TestFixture]
     public class TransferValidationOptionsExtensionsTests
@@ -57,7 +57,7 @@ namespace Azure.Storage.Tests
 
             Assert.IsNotNull(result);
             Assert.AreEqual(StorageChecksumAlgorithm.MD5, result.ChecksumAlgorithm);
-            Assert.AreEqual(md5, result.PrecalculatedChecksum);
+            Assert.AreEqual(md5, result.PrecalculatedChecksum.ToArray());
         }
 
         [Test]
@@ -96,7 +96,7 @@ namespace Azure.Storage.Tests
             source.CopyTo(dest);
 
             Assert.AreEqual(StorageChecksumAlgorithm.MD5, dest.ChecksumAlgorithm);
-            Assert.AreEqual(checksum, dest.PrecalculatedChecksum);
+            Assert.AreEqual(checksum, dest.PrecalculatedChecksum.ToArray());
         }
 
         [Test]

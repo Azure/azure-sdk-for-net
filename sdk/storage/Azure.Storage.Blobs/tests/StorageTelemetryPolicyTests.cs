@@ -6,7 +6,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Storage.Tests
+namespace Azure.Storage.Blobs.Tests
 {
     [TestFixture]
     public class StorageTelemetryPolicyTests
