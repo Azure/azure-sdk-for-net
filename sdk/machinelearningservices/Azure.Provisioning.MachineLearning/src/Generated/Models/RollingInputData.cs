@@ -71,7 +71,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("inputDataType", new string[] { "inputDataType" }, defaultValue: "Rolling");
+            InputDataType.Assign("Rolling");
             _preprocessingComponentId = DefineProperty<string>(nameof(PreprocessingComponentId), new string[] { "preprocessingComponentId" });
             _windowOffset = DefineProperty<TimeSpan>(nameof(WindowOffset), new string[] { "windowOffset" }, isRequired: true, format: "P");
             _windowSize = DefineProperty<TimeSpan>(nameof(WindowSize), new string[] { "windowSize" }, isRequired: true, format: "P");

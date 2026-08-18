@@ -38,7 +38,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("triggerType", new string[] { "triggerType" }, defaultValue: "Cron");
+            TriggerType.Assign("Cron");
             _expression = DefineProperty<string>(nameof(Expression), new string[] { "expression" }, isRequired: true);
             DefineAdditionalProperties();
         }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.MachineLearning
     /// </summary>
     public partial class MonitorComputeIdentityBase : ProvisionableConstruct
     {
+        private BicepValue<string> _computeIdentityType;
+
         /// <summary> Creates a new MonitorComputeIdentityBase. </summary>
         public MonitorComputeIdentityBase()
         {
+        }
+
+        /// <summary> [Required] Specifies the type of identity to use within the monitoring jobs. </summary>
+        internal BicepValue<string> ComputeIdentityType
+        {
+            get
+            {
+                Initialize();
+                return _computeIdentityType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for MonitorComputeIdentityBase. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _computeIdentityType = DefineProperty<string>(nameof(ComputeIdentityType), new string[] { "computeIdentityType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

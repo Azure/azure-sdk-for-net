@@ -54,7 +54,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("distributionType", new string[] { "distributionType" }, defaultValue: "TensorFlow");
+            DistributionType.Assign("TensorFlow");
             _parameterServerCount = DefineProperty<int>(nameof(ParameterServerCount), new string[] { "parameterServerCount" });
             _workerCount = DefineProperty<int>(nameof(WorkerCount), new string[] { "workerCount" });
             DefineAdditionalProperties();

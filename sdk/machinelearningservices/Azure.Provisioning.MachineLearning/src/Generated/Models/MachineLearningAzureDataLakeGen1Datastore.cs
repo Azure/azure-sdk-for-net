@@ -86,7 +86,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("datastoreType", new string[] { "datastoreType" }, defaultValue: "AzureDataLakeGen1");
+            DatastoreType.Assign("AzureDataLakeGen1");
             _resourceGroup = DefineProperty<string>(nameof(ResourceGroup), new string[] { "resourceGroup" });
             _subscriptionId = DefineProperty<string>(nameof(SubscriptionId), new string[] { "subscriptionId" });
             _serviceDataAccessAuthIdentity = DefineProperty<MachineLearningServiceDataAccessAuthIdentity>(nameof(ServiceDataAccessAuthIdentity), new string[] { "serviceDataAccessAuthIdentity" });

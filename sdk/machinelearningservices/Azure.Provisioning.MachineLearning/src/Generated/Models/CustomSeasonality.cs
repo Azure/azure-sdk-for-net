@@ -38,7 +38,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("mode", new string[] { "mode" }, defaultValue: "Custom");
+            Mode.Assign("Custom");
             _value = DefineProperty<int>(nameof(Value), new string[] { "value" }, isRequired: true);
             DefineAdditionalProperties();
         }

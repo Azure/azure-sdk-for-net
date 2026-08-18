@@ -71,7 +71,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("inputDataType", new string[] { "inputDataType" }, defaultValue: "Static");
+            InputDataType.Assign("Static");
             _preprocessingComponentId = DefineProperty<string>(nameof(PreprocessingComponentId), new string[] { "preprocessingComponentId" });
             _windowEnd = DefineProperty<DateTimeOffset>(nameof(WindowEnd), new string[] { "windowEnd" }, isRequired: true, format: "O");
             _windowStart = DefineProperty<DateTimeOffset>(nameof(WindowStart), new string[] { "windowStart" }, isRequired: true, format: "O");

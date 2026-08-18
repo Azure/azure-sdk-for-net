@@ -39,7 +39,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("actionType", new string[] { "actionType" }, defaultValue: "InvokeBatchEndpoint");
+            ActionType.Assign("InvokeBatchEndpoint");
             _endpointInvocationDefinition = DefineDictionaryProperty<BinaryData>(nameof(EndpointInvocationDefinition), new string[] { "endpointInvocationDefinition" }, isRequired: true);
             DefineAdditionalProperties();
         }

@@ -197,13 +197,16 @@ namespace Azure.Generator.Provisioning
                 var info = infoProvider.GetProvisioningPropertyInfo(inputModelProperty);
                 if (info == null) return null;
                 var resolvedName = baseProperty?.Name ?? info.PropertyName;
-                var bicepType = info.TypeOverride ?? CreateCSharpType(inputModelProperty.Type);
+                var bicepType = info.IsDiscriminator
+                    ? new CSharpType(typeof(BicepValue<>), typeof(string))
+                    : info.TypeOverride ?? CreateCSharpType(inputModelProperty.Type);
                 if (bicepType == null) return null;
 
                 return ProvisioningPropertyProvider.Create(
                     inputModelProperty, resolvedName, bicepType,
                     info.IsOutput, info.IsSettable, info.IsRequired, info.BicepPath, info.DefaultValue,
                     BicepTypeHelpers.GetLiteralFormat(baseProperty?.SerializationFormat),
+                    baseProperty?.WireInfo, info.IsDiscriminator,
                     enclosingType);
             }
 

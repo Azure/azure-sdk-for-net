@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Provisioning;
-
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary> Account key datastore credentials configuration. </summary>
@@ -20,7 +18,7 @@ namespace Azure.Provisioning.MachineLearning
         }
 
         /// <summary> Gets or sets the Secrets. </summary>
-        internal MachineLearningAccountKeyDatastoreSecrets Secrets
+        public MachineLearningAccountKeyDatastoreSecrets Secrets
         {
             get
             {
@@ -34,28 +32,11 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
-        /// <summary> Gets or sets the Key. </summary>
-        public BicepValue<string> SecretsKey
-        {
-            get
-            {
-                return Secrets is null ? default : Secrets.Key;
-            }
-            set
-            {
-                if (Secrets is null)
-                {
-                    Secrets = new MachineLearningAccountKeyDatastoreSecrets();
-                }
-                Secrets.Key = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for MachineLearningAccountKeyDatastoreCredentials. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("credentialsType", new string[] { "credentialsType" }, defaultValue: "AccountKey");
+            CredentialsType.Assign("AccountKey");
             _secrets = DefineModelProperty<MachineLearningAccountKeyDatastoreSecrets>(nameof(Secrets), new string[] { "secrets" }, isRequired: true);
             DefineAdditionalProperties();
         }

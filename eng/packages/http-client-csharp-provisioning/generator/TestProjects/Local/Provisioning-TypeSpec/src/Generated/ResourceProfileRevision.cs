@@ -94,7 +94,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
             }
         }
 

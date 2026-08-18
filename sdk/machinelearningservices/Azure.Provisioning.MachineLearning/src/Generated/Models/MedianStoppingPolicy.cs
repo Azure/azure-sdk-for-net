@@ -19,7 +19,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("policyType", new string[] { "policyType" }, defaultValue: "MedianStopping");
+            PolicyType.Assign("MedianStopping");
             DefineAdditionalProperties();
         }
 

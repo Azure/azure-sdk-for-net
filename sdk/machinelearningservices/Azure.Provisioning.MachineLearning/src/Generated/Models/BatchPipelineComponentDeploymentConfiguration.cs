@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.MachineLearning
@@ -24,7 +23,7 @@ namespace Azure.Provisioning.MachineLearning
         }
 
         /// <summary> Gets or sets the ComponentId. </summary>
-        internal MachineLearningIdAssetReference ComponentId
+        public MachineLearningIdAssetReference ComponentId
         {
             get
             {
@@ -83,28 +82,11 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
-        /// <summary> Gets or sets the AssetId. </summary>
-        public BicepValue<ResourceIdentifier> AssetId
-        {
-            get
-            {
-                return ComponentId is null ? default : ComponentId.AssetId;
-            }
-            set
-            {
-                if (ComponentId is null)
-                {
-                    ComponentId = new MachineLearningIdAssetReference();
-                }
-                ComponentId.AssetId = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for BatchPipelineComponentDeploymentConfiguration. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("deploymentConfigurationType", new string[] { "deploymentConfigurationType" }, defaultValue: "PipelineComponent");
+            DeploymentConfigurationType.Assign("PipelineComponent");
             _componentId = DefineModelProperty<MachineLearningIdAssetReference>(nameof(ComponentId), new string[] { "componentId" });
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             _settings = DefineDictionaryProperty<string>(nameof(Settings), new string[] { "settings" });

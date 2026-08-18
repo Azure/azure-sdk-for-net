@@ -21,7 +21,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("kind", new string[] { "kind" }, defaultValue: "Specialized");
+            Kind.Assign("Specialized");
             DefineAdditionalProperties();
         }
 

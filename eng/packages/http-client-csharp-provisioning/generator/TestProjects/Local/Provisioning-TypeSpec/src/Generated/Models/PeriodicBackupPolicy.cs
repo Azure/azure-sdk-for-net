@@ -38,7 +38,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("kind", new string[] { "kind" }, defaultValue: "Periodic");
+            Kind.Assign("Periodic");
             _intervalInHours = DefineProperty<int>(nameof(IntervalInHours), new string[] { "intervalInHours" }, isRequired: true);
             DefineAdditionalProperties();
         }

@@ -1,7 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <LangVersion>12</LangVersion>
-  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\applicationinsights\Azure.Provisioning.ApplicationInsights\src\Azure.Provisioning.ApplicationInsights.csproj" />
     <ProjectReference Include="..\..\..\containerregistry\Azure.Provisioning.ContainerRegistry\src\Azure.Provisioning.ContainerRegistry.csproj" />

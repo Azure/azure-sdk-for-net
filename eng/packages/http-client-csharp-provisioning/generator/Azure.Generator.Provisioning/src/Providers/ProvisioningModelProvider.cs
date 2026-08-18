@@ -51,8 +51,18 @@ namespace Azure.Generator.Provisioning.Providers
         /// <inheritdoc/>
         ProvisioningPropertyInfo? IProvisioningPropertyInfo.GetProvisioningPropertyInfo(InputModelProperty property)
         {
-            if (property.IsDiscriminator) return null;
             var serializedName = property.SerializedName ?? property.Name;
+            if (property.IsDiscriminator)
+            {
+                return new ProvisioningPropertyInfo(
+                    property.Name.ToIdentifierName(),
+                    false,
+                    false,
+                    property.IsRequired && _hasSettableUsage,
+                    [serializedName],
+                    IsDiscriminator: true);
+            }
+
             return new ProvisioningPropertyInfo(
                 property.Name.ToIdentifierName(),
                 property.IsReadOnly,
@@ -90,6 +100,13 @@ namespace Azure.Generator.Provisioning.Providers
                     // not implement this input property. The derived property must still be emitted,
                     // but it deliberately hides the incompatible base member.
                     property.Update(modifiers: property.Modifiers | MethodSignatureModifiers.New);
+                    if (property.IsDiscriminator && !baseProperty.IsDiscriminator)
+                    {
+                        // Customization filtering compares source names only. A verbatim identifier
+                        // preserves the C# member name while preventing a non-discriminator base
+                        // property from suppressing the generated discriminator.
+                        property.Update(name: $"@{property.Name}");
+                    }
                 }
 
                 properties.Add(property);
@@ -108,11 +125,6 @@ namespace Azure.Generator.Provisioning.Providers
             {
                 foreach (var inputProperty in model.Properties)
                 {
-                    if (inputProperty.IsDiscriminator)
-                    {
-                        continue;
-                    }
-
                     if (ProvisioningGenerator.Instance.TypeFactory.CreateProvisioningProperty(inputProperty, this)
                         is ProvisioningPropertyProvider property)
                     {
@@ -143,10 +155,15 @@ namespace Azure.Generator.Provisioning.Providers
 
                 // Walk from the immediate C# base toward the root and keep the first property for
                 // each name. That is the member visible to the derived class when multiple base
-                // layers hide one another.
+                // layers hide one another. Include the raw provider surface as well because Roslyn
+                // providers can omit inherited source-only members from their canonical view.
                 foreach (var property in baseProvider.CanonicalView.Properties)
                 {
-                    properties.TryAdd(property.Name, property);
+                    properties.TryAdd(NormalizePropertyName(property.Name), property);
+                }
+                foreach (var property in baseProvider.Properties)
+                {
+                    properties.TryAdd(NormalizePropertyName(property.Name), property);
                 }
 
                 baseType = baseProvider.BaseType;
@@ -154,6 +171,9 @@ namespace Azure.Generator.Provisioning.Providers
 
             return properties;
         }
+
+        private static string NormalizePropertyName(string name)
+            => name.StartsWith('@') ? name[1..] : name;
 
         private static TypeProvider? ResolveTypeProvider(CSharpType type)
         {
@@ -193,12 +213,27 @@ namespace Azure.Generator.Provisioning.Providers
                 return false;
             }
 
+            if (property.IsDiscriminator != baseProperty.IsDiscriminator)
+            {
+                return false;
+            }
+
             // Custom properties do not expose provisioning metadata. Once their C# name and type
             // match, treat the base member as authoritative rather than generating a duplicate
             // property whose semantic equivalence cannot be disproved.
             if (baseProperty is not ProvisioningPropertyProvider baseProvisioningProperty)
             {
                 return true;
+            }
+
+            // TypeSpec repeats inherited discriminator declarations as distinct input property
+            // instances. The emitted base property still implements the repeated declaration when
+            // both target the same Bicep path.
+            if (property.IsDiscriminator)
+            {
+                return property.BicepPath.SequenceEqual(
+                    baseProvisioningProperty.BicepPath,
+                    StringComparer.Ordinal);
             }
 
             // The same InputModelProperty instance represents the same TypeSpec declaration, including
@@ -236,25 +271,15 @@ namespace Azure.Generator.Provisioning.Providers
             var statements = new List<MethodBodyStatement>();
             statements.Add(Base.Invoke("DefineProvisionableProperties").Terminate());
 
-            // Emit discriminator property for derived discriminated types
             if (_inputModel.DiscriminatorValue != null)
             {
-                var discriminatorProp = FindDiscriminatorProperty();
-                if (discriminatorProp != null)
+                var discriminatorProperty = FindDiscriminatorPropertyProvider();
+                if (discriminatorProperty != null)
                 {
-                    var serializedName = discriminatorProp.SerializedName ?? discriminatorProp.Name;
                     statements.Add(
-                        This.Invoke(
-                            "DefineProperty",
-                            [
-                                Literal(serializedName),
-                                New.Array(typeof(string), [Literal(serializedName)]),
-                                new PositionalParameterReferenceExpression("defaultValue", Literal(_inputModel.DiscriminatorValue))
-                            ],
-                            [typeof(string)],
-                            false
-                        ).Terminate()
-                    );
+                        This.Property(discriminatorProperty.Name)
+                            .Invoke("Assign", Literal(_inputModel.DiscriminatorValue))
+                            .Terminate());
                 }
             }
 
@@ -328,16 +353,18 @@ namespace Azure.Generator.Provisioning.Providers
 
         // ── Discriminator helpers ────────────────────────────────────
 
-        /// <summary>
-        /// Finds the discriminator property by walking up the model's base chain.
-        /// </summary>
-        private InputModelProperty? FindDiscriminatorProperty()
+        private PropertyProvider? FindDiscriminatorPropertyProvider()
         {
-            var model = _inputModel;
+            var model = _inputModel.BaseModel;
             while (model != null)
             {
                 if (model.DiscriminatorProperty != null)
-                    return model.DiscriminatorProperty;
+                {
+                    var discriminatorProperty = CodeModelGenerator.Instance.TypeFactory.CreateModel(model)?
+                        .Properties.FirstOrDefault(property => property.IsDiscriminator);
+                    if (discriminatorProperty != null)
+                        return discriminatorProperty;
+                }
                 model = model.BaseModel;
             }
             return null;
