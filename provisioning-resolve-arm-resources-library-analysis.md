@@ -11,7 +11,7 @@ Known caveat: model base-type changes may include unrelated generator behavior a
 | Library | Resources | ARM adds | ARM deletes | Resource renames | Model base changes | Direct setter changes | Notes |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
 | `Azure.Provisioning.Attestation` | 2 -> 2 | 0 | 0 | 1 | 0 | 0 | resource set unchanged; 1 resource class rename(s) |
-| `Azure.Provisioning.Batch` | 8 -> 0 | 0 | 8 | 0 | 0 | 0 | resource set changed (+0/-8); model file churn A0/D123/R0 |
+| `Azure.Provisioning.Batch` | 8 -> 8 | 0 | 0 | 7 | 0 | 0 | resource set unchanged; 7 resource class rename(s); model file churn A1/D0/R0 |
 | `Azure.Provisioning.BotService` | 5 -> 5 | 0 | 0 | 3 | 0 | 0 | resource set unchanged; 3 resource class rename(s) |
 | `Azure.Provisioning.Cdn` | 15 -> 15 | 0 | 0 | 13 | 0 | 0 | resource set unchanged; 13 resource class rename(s) |
 | `Azure.Provisioning.Communication` | 7 -> 7 | 0 | 0 | 4 | 0 | 0 | resource set unchanged; 4 resource class rename(s) |
@@ -57,19 +57,22 @@ Resource class renames by unchanged ARM type:
 
 ## sdk batch Azure.Provisioning.Batch[-1]
 
-Resource count: **8 -> 0**. ARM resource types added/deleted: **+0/-8**. Resource class renames: **0**.
+Resource count: **8 -> 8**. ARM resource types added/deleted: **+0/-0**. Resource class renames: **7**.
 
-Deleted ARM resource types:
-- `Microsoft.Batch/batchAccounts` was `BatchAccount`
-- `Microsoft.Batch/batchAccounts/applications` was `BatchApplication`
-- `Microsoft.Batch/batchAccounts/applications/versions` was `BatchApplicationPackage`
-- `Microsoft.Batch/batchAccounts/detectors` was `BatchAccountDetector`
-- `Microsoft.Batch/batchAccounts/networkSecurityPerimeterConfigurations` was `NetworkSecurityPerimeterConfiguration`
-- `Microsoft.Batch/batchAccounts/pools` was `BatchAccountPool`
-- `Microsoft.Batch/batchAccounts/privateEndpointConnections` was `BatchPrivateEndpointConnection`
-- `Microsoft.Batch/batchAccounts/privateLinkResources` was `BatchPrivateLinkResource`
+Resource class renames by unchanged ARM type:
 
-Model file churn: added **0**, deleted **123**, renamed **0**.
+| ARM resource type | Old class | New class |
+| --- | --- | --- |
+| `Microsoft.Batch/batchAccounts/applications` | `BatchApplication` | `Application` |
+| `Microsoft.Batch/batchAccounts/applications/versions` | `BatchApplicationPackage` | `ApplicationPackage` |
+| `Microsoft.Batch/batchAccounts/detectors` | `BatchAccountDetector` | `DetectorResponse` |
+| `Microsoft.Batch/batchAccounts/networkSecurityPerimeterConfigurations` | `NetworkSecurityPerimeterConfiguration` | `BatchAccountNetworkSecurityPerimeterConfiguration` |
+| `Microsoft.Batch/batchAccounts/pools` | `BatchAccountPool` | `Pool` |
+| `Microsoft.Batch/batchAccounts/privateEndpointConnections` | `BatchPrivateEndpointConnection` | `PrivateEndpointConnection` |
+| `Microsoft.Batch/batchAccounts/privateLinkResources` | `BatchPrivateLinkResource` | `PrivateLinkResource` |
+
+Model file churn: added **1**, deleted **0**, renamed **0**.
+- Added model `AccessRulePropertiesSubscription.cs`
 
 ## sdk botservice Azure.Provisioning.BotService[-1]
 
