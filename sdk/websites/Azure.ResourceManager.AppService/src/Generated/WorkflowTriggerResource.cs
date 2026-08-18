@@ -307,9 +307,9 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<WorkflowTriggerCallbackUri>> GetCallbackUrlAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkflowTriggerCallbackUri>> GetCallbackUriAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _workflowTriggersClientDiagnostics.CreateScope("WorkflowTriggerResource.GetCallbackUrl");
+            using DiagnosticScope scope = _workflowTriggersClientDiagnostics.CreateScope("WorkflowTriggerResource.GetCallbackUri");
             scope.Start();
             try
             {
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workflowTriggersRestClient.CreateGetCallbackUrlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _workflowTriggersRestClient.CreateGetCallbackUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkflowTriggerCallbackUri> response = Response.FromValue(WorkflowTriggerCallbackUri.FromResponse(result), result);
                 if (response.Value == null)
@@ -355,9 +355,9 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<WorkflowTriggerCallbackUri> GetCallbackUrl(CancellationToken cancellationToken = default)
+        public virtual Response<WorkflowTriggerCallbackUri> GetCallbackUri(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _workflowTriggersClientDiagnostics.CreateScope("WorkflowTriggerResource.GetCallbackUrl");
+            using DiagnosticScope scope = _workflowTriggersClientDiagnostics.CreateScope("WorkflowTriggerResource.GetCallbackUri");
             scope.Start();
             try
             {
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workflowTriggersRestClient.CreateGetCallbackUrlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _workflowTriggersRestClient.CreateGetCallbackUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkflowTriggerCallbackUri> response = Response.FromValue(WorkflowTriggerCallbackUri.FromResponse(result), result);
                 if (response.Value == null)
