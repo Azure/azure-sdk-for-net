@@ -94,11 +94,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("gpus"u8);
                 writer.WriteNumberValue(Gpus.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(OsVhdSizeMB))
-            {
-                writer.WritePropertyName("osVhdSizeMB"u8);
-                writer.WriteNumberValue(OsVhdSizeMB.Value);
-            }
             if (options.Format != "W" && Optional.IsDefined(MaxResourceVolumeMB))
             {
                 writer.WritePropertyName("maxResourceVolumeMB"u8);
@@ -185,7 +180,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string family = default;
             int? vcpUs = default;
             int? gpus = default;
-            int? osVhdSizeMB = default;
             int? maxResourceVolumeMB = default;
             double? memoryGB = default;
             bool? lowPriorityCapable = default;
@@ -221,15 +215,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     gpus = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("osVhdSizeMB"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    osVhdSizeMB = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("maxResourceVolumeMB"u8))
@@ -308,7 +293,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 family,
                 vcpUs,
                 gpus,
-                osVhdSizeMB,
                 maxResourceVolumeMB,
                 memoryGB,
                 lowPriorityCapable,
