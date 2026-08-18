@@ -8,7 +8,26 @@ namespace Azure.Provisioning.KubernetesConfiguration.Extensions
     [CodeGenType("KubernetesClusterExtensionProperties")]
     internal partial class KubernetesClusterExtensionProperties
     {
+        private global::Azure.Provisioning.KubernetesConfiguration.Extensions.KubernetesClusterExtensionScope? _installationScope;
+
         [CodeGenMember("Scope")]
-        public global::Azure.Provisioning.KubernetesConfiguration.Extensions.KubernetesClusterExtensionScope InstallationScope { get; set; }
+        public global::Azure.Provisioning.KubernetesConfiguration.Extensions.KubernetesClusterExtensionScope InstallationScope
+        {
+            get
+            {
+                Initialize();
+                return _installationScope!;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _installationScope, value);
+            }
+        }
+
+        partial void DefineAdditionalProperties()
+        {
+            _installationScope = DefineModelProperty<global::Azure.Provisioning.KubernetesConfiguration.Extensions.KubernetesClusterExtensionScope>(nameof(InstallationScope), new string[] { "scope" });
+        }
     }
 }
