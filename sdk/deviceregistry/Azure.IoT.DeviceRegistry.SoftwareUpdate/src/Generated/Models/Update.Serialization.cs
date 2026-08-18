@@ -115,7 +115,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
             }
             writer.WritePropertyName("compatibility"u8);
             writer.WriteStartArray();
-            foreach (Compatibility item in Compatibility)
+            foreach (SoftwareUpdateCompatibility item in Compatibility)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -199,7 +199,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
             bool? isDeployable = default;
             string updateType = default;
             string installedCriteria = default;
-            IList<Compatibility> compatibility = default;
+            IList<SoftwareUpdateCompatibility> compatibility = default;
             Instructions instructions = default;
             IList<UpdateId> referencedBy = default;
             string scanResult = default;
@@ -246,10 +246,10 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
                 }
                 if (prop.NameEquals("compatibility"u8))
                 {
-                    List<Compatibility> array = new List<Compatibility>();
+                    List<SoftwareUpdateCompatibility> array = new List<SoftwareUpdateCompatibility>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(_SoftwareUpdate.Compatibility.DeserializeCompatibility(item, options));
+                        array.Add(SoftwareUpdateCompatibility.DeserializeSoftwareUpdateCompatibility(item, options));
                     }
                     compatibility = array;
                     continue;

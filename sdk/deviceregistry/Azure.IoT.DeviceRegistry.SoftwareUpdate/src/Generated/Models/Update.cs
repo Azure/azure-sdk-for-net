@@ -24,7 +24,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <param name="manifestVersion"> Schema version of manifest used to import the update. </param>
         /// <param name="importedDateTime"> Date and time in UTC when the update was imported. </param>
         /// <param name="createdDateTime"> Date and time in UTC when the update was created. </param>
-        internal Update(UpdateId updateId, IEnumerable<Compatibility> compatibility, string manifestVersion, DateTimeOffset importedDateTime, DateTimeOffset createdDateTime)
+        internal Update(UpdateId updateId, IEnumerable<SoftwareUpdateCompatibility> compatibility, string manifestVersion, DateTimeOffset importedDateTime, DateTimeOffset createdDateTime)
         {
             UpdateId = updateId;
             Compatibility = compatibility.ToList();
@@ -53,7 +53,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <param name="createdDateTime"> Date and time in UTC when the update was created. </param>
         /// <param name="etag"> Update ETag. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Update(UpdateId updateId, string description, string friendlyName, bool? isDeployable, string updateType, string installedCriteria, IList<Compatibility> compatibility, Instructions instructions, IList<UpdateId> referencedBy, string scanResult, string manifestVersion, DateTimeOffset importedDateTime, DateTimeOffset createdDateTime, ETag? etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Update(UpdateId updateId, string description, string friendlyName, bool? isDeployable, string updateType, string installedCriteria, IList<SoftwareUpdateCompatibility> compatibility, Instructions instructions, IList<UpdateId> referencedBy, string scanResult, string manifestVersion, DateTimeOffset importedDateTime, DateTimeOffset createdDateTime, ETag? etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UpdateId = updateId;
             Description = description;
@@ -94,7 +94,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         public string InstalledCriteria { get; }
 
         /// <summary> List of update compatibility information. </summary>
-        public IList<Compatibility> Compatibility { get; }
+        public IList<SoftwareUpdateCompatibility> Compatibility { get; }
 
         /// <summary> Update install instructions. </summary>
         public Instructions Instructions { get; }

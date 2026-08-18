@@ -12,22 +12,22 @@ using System.Collections.ObjectModel;
 namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
 {
     /// <summary> Key-value pairs representing update compatibility information. </summary>
-    public partial class Compatibility
+    public partial class SoftwareUpdateCompatibility
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private IDictionary<string, string> _additionalStringProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Compatibility"/>. </summary>
-        internal Compatibility()
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateCompatibility"/>. </summary>
+        internal SoftwareUpdateCompatibility()
         {
             _additionalStringProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Compatibility"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateCompatibility"/>. </summary>
         /// <param name="additionalProperties"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Compatibility(IReadOnlyDictionary<string, string> additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SoftwareUpdateCompatibility(IReadOnlyDictionary<string, string> additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             _additionalStringProperties = new ChangeTrackingDictionary<string, string>(additionalProperties);
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

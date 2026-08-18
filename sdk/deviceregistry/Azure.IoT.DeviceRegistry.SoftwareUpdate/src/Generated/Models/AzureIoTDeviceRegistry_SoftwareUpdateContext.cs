@@ -15,7 +15,6 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(BestCompatibleUpdate))]
-    [ModelReaderWriterBuildable(typeof(Compatibility))]
     [ModelReaderWriterBuildable(typeof(DeviceClass))]
     [ModelReaderWriterBuildable(typeof(DeviceClassesList))]
     [ModelReaderWriterBuildable(typeof(DeviceClassProperties))]
@@ -25,6 +24,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
     [ModelReaderWriterBuildable(typeof(ImportUpdateRequest))]
     [ModelReaderWriterBuildable(typeof(Instructions))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SoftwareUpdateCompatibility))]
     [ModelReaderWriterBuildable(typeof(Step))]
     [ModelReaderWriterBuildable(typeof(StringsList))]
     [ModelReaderWriterBuildable(typeof(Update))]

@@ -86,9 +86,9 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <param name="createdDateTime"> Date and time in UTC when the update was created. </param>
         /// <param name="etag"> Update ETag. </param>
         /// <returns> A new <see cref="_SoftwareUpdate.Update"/> instance for mocking. </returns>
-        public static Update Update(UpdateId updateId = default, string description = default, string friendlyName = default, bool? isDeployable = default, string updateType = default, string installedCriteria = default, IEnumerable<Compatibility> compatibility = default, Instructions instructions = default, IEnumerable<UpdateId> referencedBy = default, string scanResult = default, string manifestVersion = default, DateTimeOffset importedDateTime = default, DateTimeOffset createdDateTime = default, ETag? etag = default)
+        public static Update Update(UpdateId updateId = default, string description = default, string friendlyName = default, bool? isDeployable = default, string updateType = default, string installedCriteria = default, IEnumerable<SoftwareUpdateCompatibility> compatibility = default, Instructions instructions = default, IEnumerable<UpdateId> referencedBy = default, string scanResult = default, string manifestVersion = default, DateTimeOffset importedDateTime = default, DateTimeOffset createdDateTime = default, ETag? etag = default)
         {
-            compatibility ??= new ChangeTrackingList<Compatibility>();
+            compatibility ??= new ChangeTrackingList<SoftwareUpdateCompatibility>();
             referencedBy ??= new ChangeTrackingList<UpdateId>();
 
             return new Update(
@@ -111,12 +111,12 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
 
         /// <summary> Key-value pairs representing update compatibility information. </summary>
         /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="_SoftwareUpdate.Compatibility"/> instance for mocking. </returns>
-        public static Compatibility Compatibility(IReadOnlyDictionary<string, string> additionalProperties = default)
+        /// <returns> A new <see cref="_SoftwareUpdate.SoftwareUpdateCompatibility"/> instance for mocking. </returns>
+        public static SoftwareUpdateCompatibility SoftwareUpdateCompatibility(IReadOnlyDictionary<string, string> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, string>();
 
-            return new Compatibility(additionalProperties, additionalBinaryDataProperties: null);
+            return new SoftwareUpdateCompatibility(additionalProperties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Update install instructions container. </summary>
