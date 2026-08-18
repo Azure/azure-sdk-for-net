@@ -521,12 +521,12 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets or sets the IsNodePublicIpEnabled. </summary>
-        public BicepValue<bool> IsNodePublicIpEnabled
+        /// <summary> Gets or sets the IsNodePublicIPEnabled. </summary>
+        public BicepValue<bool> IsNodePublicIPEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.IsNodePublicIpEnabled;
+                return Properties is null ? default : Properties.IsNodePublicIPEnabled;
             }
             set
             {
@@ -534,7 +534,7 @@ namespace Azure.Provisioning.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.IsNodePublicIpEnabled = value;
+                Properties.IsNodePublicIPEnabled = value;
             }
         }
 
