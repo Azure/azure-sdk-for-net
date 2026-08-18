@@ -12,32 +12,32 @@ using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> The response of a DbSystem list operation. </summary>
-    internal partial class DbSystemListResult
+    /// <summary> The response of a ExascaleDbStorageVault list operation. </summary>
+    internal partial class ExascaleDBStorageVaultListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DbSystemListResult"/>. </summary>
-        /// <param name="value"> The DbSystem items on this page. </param>
-        internal DbSystemListResult(IEnumerable<OracleDBSystemData> value)
+        /// <summary> Initializes a new instance of <see cref="ExascaleDBStorageVaultListResult"/>. </summary>
+        /// <param name="value"> The ExascaleDbStorageVault items on this page. </param>
+        internal ExascaleDBStorageVaultListResult(IEnumerable<ExascaleDBStorageVaultData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DbSystemListResult"/>. </summary>
-        /// <param name="value"> The DbSystem items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="ExascaleDBStorageVaultListResult"/>. </summary>
+        /// <param name="value"> The ExascaleDbStorageVault items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DbSystemListResult(IList<OracleDBSystemData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExascaleDBStorageVaultListResult(IList<ExascaleDBStorageVaultData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The DbSystem items on this page. </summary>
-        public IList<OracleDBSystemData> Value { get; }
+        /// <summary> The ExascaleDbStorageVault items on this page. </summary>
+        public IList<ExascaleDBStorageVaultData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
