@@ -201,6 +201,27 @@ jobs:
 
         - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
+        # UseDotNet's useGlobalJson applies the rollForward policy against the set of downloadable
+        # SDKs, so 'feature' installs the newest 10.0.x rather than the version named in global.json.
+        # Install the exact version instead so the validation below builds against the pinned SDK.
+        - pwsh: |
+            $globalJsonPath = Join-Path '$(Build.SourcesDirectory)' 'global.json'
+            $sdkVersion = (Get-Content $globalJsonPath -Raw | ConvertFrom-Json).sdk.version
+            if (-not $sdkVersion) {
+              Write-Error "Unable to read sdk.version from $globalJsonPath"
+              exit 1
+            }
+            Write-Host "Pinning the .NET SDK install to $sdkVersion (from global.json)"
+            echo "##vso[task.setvariable variable=DotNetSdkVersion]$sdkVersion"
+          displayName: 'Resolve .NET SDK version from global.json'
+
+        - task: UseDotNet@2
+          displayName: 'Use .NET SDK'
+          retryCountOnTaskFailure: 3
+          inputs:
+            version: $(DotNetSdkVersion)
+            performMultiLevelLookup: true
+
         - pwsh: ./eng/scripts/Test-NoWarnValidation.ps1
           displayName: Validate NoWarn enforcement targets
 
