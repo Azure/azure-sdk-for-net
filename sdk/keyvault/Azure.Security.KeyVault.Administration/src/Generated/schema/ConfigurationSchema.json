@@ -59,6 +59,9 @@
             },
             "DisableChallengeResourceVerification": {
               "type": "boolean"
+            },
+            "EnableProofOfPossession": {
+              "type": "boolean"
             }
           }
         }
