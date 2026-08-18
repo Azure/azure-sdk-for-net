@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="disabled"> Tell if the scheduled action is disabled or not. </param>
         /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionProperties(ScheduledActionsResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startOn, DateTimeOffset? endOn, ScheduledActionsSchedule schedule, IList<NotificationProperties> notificationSettings, bool? disabled, RecurringScheduledActionsProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledActionProperties(ScheduledActionsResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startOn, DateTimeOffset? endOn, ScheduledActionsSchedule schedule, IList<NotificationProperties> notificationSettings, bool? disabled, ScheduledActionsProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceType = resourceType;
             ActionType = actionType;
@@ -82,6 +82,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public bool? Disabled { get; set; }
 
         /// <summary> The status of the last provisioning operation performed on the resource. </summary>
-        public RecurringScheduledActionsProvisioningState? ProvisioningState { get; }
+        public ScheduledActionsProvisioningState? ProvisioningState { get; }
     }
 }
