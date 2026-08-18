@@ -86,6 +86,7 @@ namespace Azure.Security.KeyVault.Certificates
     {
         public CertificateClientOptions(Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion version = Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion.V2026_03_01_Preview) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
+        public bool EnableProofOfPossession { get { throw null; } set { } }
         public Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
