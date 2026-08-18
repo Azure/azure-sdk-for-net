@@ -199,4 +199,5 @@
     <WriteLinesToFile File="$(OutputProjectFilePath)" Lines="@(_WriteToLines)" />
   </Target>
 
+  <Import Project="SparseCheckout.targets" Condition="'$(SparseCheckoutTargetsImported)' != 'true'" />
 </Project>

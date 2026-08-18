@@ -1,0 +1,73 @@
+<Project>
+  <PropertyGroup>
+    <SparseCheckoutTargetsImported>true</SparseCheckoutTargetsImported>
+  </PropertyGroup>
+
+  <Target Name="_CollectSparseCheckoutProjectGraph" Returns="@(_SparseCheckoutProjectGraph)">
+    <ItemGroup>
+      <_SparseCheckoutProjectGraph Include="$(MSBuildProjectFullPath)" />
+    </ItemGroup>
+
+    <MSBuild
+      Projects="@(ProjectReference)"
+      Targets="_CollectSparseCheckoutProjectGraph"
+      BuildInParallel="false"
+      SkipNonexistentProjects="false"
+      SkipNonexistentTargets="false"
+      Condition="'@(ProjectReference)' != ''">
+      <Output TaskParameter="TargetOutputs" ItemName="_SparseCheckoutReferencedProjectGraph" />
+    </MSBuild>
+
+    <ItemGroup>
+      <_SparseCheckoutProjectGraph Include="@(_SparseCheckoutReferencedProjectGraph)" />
+    </ItemGroup>
+    <RemoveDuplicates Inputs="@(_SparseCheckoutProjectGraph)">
+      <Output TaskParameter="Filtered" ItemName="_SparseCheckoutProjectGraphDeduplicated" />
+    </RemoveDuplicates>
+    <ItemGroup>
+      <_SparseCheckoutProjectGraph Remove="@(_SparseCheckoutProjectGraph)" />
+      <_SparseCheckoutProjectGraph Include="@(_SparseCheckoutProjectGraphDeduplicated)" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="GenerateSparseCheckoutManifest">
+    <PropertyGroup>
+      <SparseCheckoutProjectGraphPath Condition="'$(SparseCheckoutProjectGraphPath)' == ''">$(SparseCheckoutManifestPath).projects</SparseCheckoutProjectGraphPath>
+    </PropertyGroup>
+    <Error
+      Condition="'$(SparseCheckoutManifestPath)' == ''"
+      Text="SparseCheckoutManifestPath must be set to generate a sparse-checkout manifest." />
+    <Error
+      Condition="'@(ProjectReference)' == ''"
+      Text="No entry projects were selected; refusing to generate an empty sparse-checkout manifest." />
+
+    <MSBuild
+      Projects="@(ProjectReference)"
+      Targets="_CollectSparseCheckoutProjectGraph"
+      BuildInParallel="false"
+      SkipNonexistentProjects="false"
+      SkipNonexistentTargets="false">
+      <Output TaskParameter="TargetOutputs" ItemName="_SparseCheckoutProjectGraphFromEntries" />
+    </MSBuild>
+
+    <RemoveDuplicates Inputs="@(_SparseCheckoutProjectGraphFromEntries)">
+      <Output TaskParameter="Filtered" ItemName="_SparseCheckoutProjectGraphAll" />
+    </RemoveDuplicates>
+
+    <WriteLinesToFile
+      File="$(SparseCheckoutProjectGraphPath)"
+      Lines="@(_SparseCheckoutProjectGraphAll)"
+      Overwrite="true"
+      WriteOnlyWhenDifferent="true" />
+    <Exec
+      Command="pwsh -NoProfile -File &quot;$(MSBuildThisFileDirectory)scripts/Create-SparseCheckoutManifest.ps1&quot; -ProjectListPath &quot;$(SparseCheckoutProjectGraphPath)&quot; -RepoRoot &quot;$(RepoRoot)&quot; -OutputPath &quot;$(SparseCheckoutManifestPath)&quot;" />
+    <ReadLinesFromFile File="$(SparseCheckoutManifestPath)">
+      <Output TaskParameter="Lines" ItemName="SparseCheckoutDirectory" />
+    </ReadLinesFromFile>
+
+    <Message Text="Sparse-checkout project graph: @(_SparseCheckoutProjectGraphAll->Count()) projects" Importance="high" />
+    <Message Text="Sparse-checkout directory roots: @(SparseCheckoutDirectory, ', ')" Importance="high" />
+    <Message Text="Sparse-checkout project graph file: $(SparseCheckoutProjectGraphPath)" Importance="high" />
+    <Message Text="Sparse-checkout manifest: $(SparseCheckoutManifestPath)" Importance="high" />
+  </Target>
+</Project>
