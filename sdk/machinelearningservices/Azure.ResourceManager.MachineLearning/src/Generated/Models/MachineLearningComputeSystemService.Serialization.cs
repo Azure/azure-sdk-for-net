@@ -79,11 +79,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("systemServiceType"u8);
                 writer.WriteStringValue(SystemServiceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicIpAddress))
-            {
-                writer.WritePropertyName("publicIpAddress"u8);
-                writer.WriteStringValue(PublicIpAddress);
-            }
             if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
@@ -132,7 +127,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string systemServiceType = default;
-            string publicIpAddress = default;
             string version = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -140,11 +134,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (prop.NameEquals("systemServiceType"u8))
                 {
                     systemServiceType = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("publicIpAddress"u8))
-                {
-                    publicIpAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("version"u8))
@@ -157,7 +146,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MachineLearningComputeSystemService(systemServiceType, publicIpAddress, version, additionalBinaryDataProperties);
+            return new MachineLearningComputeSystemService(systemServiceType, version, additionalBinaryDataProperties);
         }
     }
 }
