@@ -85,6 +85,70 @@ namespace Azure.ResourceManager.OperationTemplates.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="OperationTemplates.CostReportData"/> instance for mocking. </returns>
+        public static CostReportData CostReportData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CostReportProperties properties = default)
+        {
+            return new CostReportData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="downloadUri"> The download URL for the cost report. </param>
+        /// <param name="provisioningState"> The provisioning state of the cost report. </param>
+        /// <returns> A new <see cref="Models.CostReportProperties"/> instance for mocking. </returns>
+        public static CostReportProperties CostReportProperties(Uri downloadUri = default, string provisioningState = default)
+        {
+            return new CostReportProperties(downloadUri, provisioningState, default);
+        }
+
+        /// <param name="name"> The diagnostic name. </param>
+        /// <param name="status"> The diagnostic status. </param>
+        /// <returns> A new <see cref="Models.DiagnosticInfo"/> instance for mocking. </returns>
+        public static DiagnosticInfo DiagnosticInfo(string name = default, string status = default)
+        {
+            return new DiagnosticInfo(name, status, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.Configuration"/> instance for mocking. </returns>
+        public static Configuration Configuration(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ConfigurationProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new Configuration(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
+        /// <param name="configValue"> The configuration value. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <returns> A new <see cref="Models.ConfigurationProperties"/> instance for mocking. </returns>
+        public static ConfigurationProperties ConfigurationProperties(string configValue = default, string provisioningState = default)
+        {
+            return new ConfigurationProperties(configValue, provisioningState, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
@@ -142,6 +206,69 @@ namespace Azure.ResourceManager.OperationTemplates.Models
         public static ChangeAllowanceResult ChangeAllowanceResult(int totalAllowed = default, string status = default)
         {
             return new ChangeAllowanceResult(totalAllowed, status, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="OperationTemplates.MonitorData"/> instance for mocking. </returns>
+        public static MonitorData MonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MonitorProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new MonitorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
+        /// <param name="status"> The status of the monitor. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <returns> A new <see cref="Models.MonitorProperties"/> instance for mocking. </returns>
+        public static MonitorProperties MonitorProperties(string status = default, string provisioningState = default)
+        {
+            return new MonitorProperties(status, provisioningState, default);
+        }
+
+        /// <param name="filter"> Filter for the monitored resources. </param>
+        /// <returns> A new <see cref="Models.LogStatusRequest"/> instance for mocking. </returns>
+        public static LogStatusRequest LogStatusRequest(string filter = default)
+        {
+            return new LogStatusRequest(filter, default);
+        }
+
+        /// <param name="id"> The resource ID. </param>
+        /// <param name="sendingMetrics"> Whether metrics are being sent. </param>
+        /// <returns> A new <see cref="Models.MonitoredResource"/> instance for mocking. </returns>
+        public static MonitoredResource MonitoredResource(string id = default, bool? sendingMetrics = default)
+        {
+            return new MonitoredResource(id, sendingMetrics, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="collectionDisplayName"> The display name of the collection. </param>
+        /// <returns> A new <see cref="Models.Collection"/> instance for mocking. </returns>
+        public static Collection Collection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string collectionDisplayName = default)
+        {
+            return new Collection(
+                id,
+                name,
+                resourceType,
+                systemData,
+                collectionDisplayName is null ? default : new CollectionProperties(collectionDisplayName, default),
+                default);
         }
     }
 }

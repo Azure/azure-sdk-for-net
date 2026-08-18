@@ -8,43 +8,36 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.OperationTemplates.Models;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.ResourceManager.OperationTemplates
 {
-    /// <summary> A best practice resource - used by both parent and child operations. </summary>
-    public partial class BestPracticeData : ResourceData
+    /// <summary> Concrete extension resource types can be created by aliasing this type using a specific property type. </summary>
+    public partial class CostReportData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BestPracticeData"/>. </summary>
-        public BestPracticeData()
+        /// <summary> Initializes a new instance of <see cref="CostReportData"/>. </summary>
+        internal CostReportData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BestPracticeData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostReportData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"> The extended location of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BestPracticeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BestPracticeProperties properties, ExtendedLocationOptionalModel extendedLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal CostReportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CostReportProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            ExtendedLocation = extendedLocation;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        [WirePath("properties")]
-        public BestPracticeProperties Properties { get; set; }
-
-        /// <summary> The extended location of the resource. </summary>
-        [WirePath("extendedLocation")]
-        public ExtendedLocationOptionalModel ExtendedLocation { get; set; }
+        public CostReportProperties Properties { get; }
     }
 }
