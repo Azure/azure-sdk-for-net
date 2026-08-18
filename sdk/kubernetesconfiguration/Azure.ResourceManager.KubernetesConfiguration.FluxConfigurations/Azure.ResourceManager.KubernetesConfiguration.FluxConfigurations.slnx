@@ -1,9 +1,4 @@
 <Solution>
-  <Configurations>
-    <Platform Name="Any CPU" />
-    <Platform Name="x64" />
-    <Platform Name="x86" />
-  </Configurations>
   <Project Path="src/Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.csproj" />
   <Project Path="tests/Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Tests.csproj" />
 </Solution>
