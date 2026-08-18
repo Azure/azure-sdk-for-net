@@ -12,22 +12,22 @@ using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The ManagedClusterNATGatewayProfileOutboundIpPrefixes. </summary>
-    internal partial class ManagedClusterNATGatewayProfileOutboundIpPrefixes
+    /// <summary> The ManagedClusterNATGatewayProfileOutboundIPPrefixes. </summary>
+    internal partial class ManagedClusterNATGatewayProfileOutboundIPPrefixes
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterNATGatewayProfileOutboundIpPrefixes"/>. </summary>
-        public ManagedClusterNATGatewayProfileOutboundIpPrefixes()
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterNATGatewayProfileOutboundIPPrefixes"/>. </summary>
+        public ManagedClusterNATGatewayProfileOutboundIPPrefixes()
         {
             PublicIPPrefixes = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterNATGatewayProfileOutboundIpPrefixes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterNATGatewayProfileOutboundIPPrefixes"/>. </summary>
         /// <param name="publicIPPrefixes"> A list of public IP prefix resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterNATGatewayProfileOutboundIpPrefixes(IList<ResourceIdentifier> publicIPPrefixes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterNATGatewayProfileOutboundIPPrefixes(IList<ResourceIdentifier> publicIPPrefixes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublicIPPrefixes = publicIPPrefixes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

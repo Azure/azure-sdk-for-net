@@ -14,52 +14,52 @@ using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The ManagedClusterNATGatewayProfileOutboundIpPrefixes. </summary>
-    internal partial class ManagedClusterNATGatewayProfileOutboundIpPrefixes : IJsonModel<ManagedClusterNATGatewayProfileOutboundIpPrefixes>
+    /// <summary> The ManagedClusterNATGatewayProfileOutboundIPPrefixes. </summary>
+    internal partial class ManagedClusterNATGatewayProfileOutboundIPPrefixes : IJsonModel<ManagedClusterNATGatewayProfileOutboundIPPrefixes>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedClusterNATGatewayProfileOutboundIpPrefixes PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ManagedClusterNATGatewayProfileOutboundIPPrefixes PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterNATGatewayProfileOutboundIpPrefixes>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterNATGatewayProfileOutboundIPPrefixes>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeManagedClusterNATGatewayProfileOutboundIpPrefixes(document.RootElement, options);
+                        return DeserializeManagedClusterNATGatewayProfileOutboundIPPrefixes(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterNATGatewayProfileOutboundIpPrefixes)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterNATGatewayProfileOutboundIPPrefixes)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterNATGatewayProfileOutboundIpPrefixes>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterNATGatewayProfileOutboundIPPrefixes>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterNATGatewayProfileOutboundIpPrefixes)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterNATGatewayProfileOutboundIPPrefixes)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedClusterNATGatewayProfileOutboundIpPrefixes>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ManagedClusterNATGatewayProfileOutboundIPPrefixes>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedClusterNATGatewayProfileOutboundIpPrefixes IPersistableModel<ManagedClusterNATGatewayProfileOutboundIpPrefixes>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ManagedClusterNATGatewayProfileOutboundIPPrefixes IPersistableModel<ManagedClusterNATGatewayProfileOutboundIPPrefixes>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedClusterNATGatewayProfileOutboundIpPrefixes>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedClusterNATGatewayProfileOutboundIPPrefixes>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManagedClusterNATGatewayProfileOutboundIpPrefixes>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedClusterNATGatewayProfileOutboundIPPrefixes>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterNATGatewayProfileOutboundIpPrefixes>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterNATGatewayProfileOutboundIPPrefixes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterNATGatewayProfileOutboundIpPrefixes)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterNATGatewayProfileOutboundIPPrefixes)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(PublicIPPrefixes))
             {
@@ -109,24 +109,24 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedClusterNATGatewayProfileOutboundIpPrefixes IJsonModel<ManagedClusterNATGatewayProfileOutboundIpPrefixes>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ManagedClusterNATGatewayProfileOutboundIPPrefixes IJsonModel<ManagedClusterNATGatewayProfileOutboundIPPrefixes>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedClusterNATGatewayProfileOutboundIpPrefixes JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ManagedClusterNATGatewayProfileOutboundIPPrefixes JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterNATGatewayProfileOutboundIpPrefixes>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterNATGatewayProfileOutboundIPPrefixes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterNATGatewayProfileOutboundIpPrefixes)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterNATGatewayProfileOutboundIPPrefixes)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedClusterNATGatewayProfileOutboundIpPrefixes(document.RootElement, options);
+            return DeserializeManagedClusterNATGatewayProfileOutboundIPPrefixes(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ManagedClusterNATGatewayProfileOutboundIpPrefixes DeserializeManagedClusterNATGatewayProfileOutboundIpPrefixes(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManagedClusterNATGatewayProfileOutboundIPPrefixes DeserializeManagedClusterNATGatewayProfileOutboundIPPrefixes(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterNATGatewayProfileOutboundIpPrefixes(publicIPPrefixes ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
+            return new ManagedClusterNATGatewayProfileOutboundIPPrefixes(publicIPPrefixes ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
         }
     }
 }
