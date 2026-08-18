@@ -44,6 +44,7 @@ internal static class Program
             //new DnsSpecification(), // the Dns's mgmt SDK is majority hand-crafted, therefore here we just use this to generate a scaffold, and then hand-craft the rest.
             new EventGridSpecification(),
             new FrontDoorSpecification(),
+            new KubernetesConfigurationSpecification(),
             new KustoSpecification(),
             new LogicSpecification(),
             new MonitorSpecification(),
