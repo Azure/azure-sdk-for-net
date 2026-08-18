@@ -50,6 +50,55 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Listeners
             string timeStamp = $"{DateTime.UtcNow.AddMinutes(-offsetInMinutes):o}";
             logBlobContent = logBlobContent.Replace("Timestamp=''", timeStamp);
 
+            var scaler = CreateScaler(logBlobContent, blobPath, out var loggerProvider);
+
+            var result = await scaler.GetScaleResultAsync(new TargetScalerContext());
+
+            Assert.NotNull(result);
+            Assert.AreEqual(expectedTargetWorkerCount, result.TargetWorkerCount);
+
+            result = await scaler.GetScaleResultAsync(new TargetScalerContext());
+
+            var cacheReads = loggerProvider.GetAllLogMessages().Where(x => x.FormattedMessage.Contains("Recent writes were detected from cache for ")).Count();
+            Assert.AreEqual(expectedCacheReads, cacheReads);
+
+            Assert.NotNull(result);
+            Assert.AreEqual(expectedTargetWorkerCount, result.TargetWorkerCount);
+        }
+
+        // The scaler only ever sees $logs entries, so a blob must resolve to the same path the host's
+        // BlobTriggerExecutor would match. StorageAnalyticsLogEntry.ToBlobPath decodes the absolute-URL form
+        // of RequestedObjectKey but not the '/account/container/blob' form, so special characters can differ.
+        [Test]
+        [TestCase("/teststorage/test-blobs/basic/test.txt", "test-blobs/{name}.txt", 1)]
+        [TestCase("/teststorage/test-blobs/my%20folder/test.txt", "test-blobs/{name}", 1)]
+        [TestCase("/teststorage/test-blobs/my%20folder/test.txt", "test-blobs/my folder/{name}", 1)]
+        [TestCase("/teststorage/test-blobs/caf%C3%A9/test.txt", "test-blobs/café/{name}", 1)]
+        [TestCase("/teststorage/test-blobs/report%2450.txt", "test-blobs/report$50.txt", 1)]
+        [TestCase("https://teststorage.blob.core.windows.net:443/test-blobs/my%20folder/test.txt", "test-blobs/my folder/{name}", 1)]
+        public async Task GetScaleResultAsync_MatchesBlobNamesWithSpecialCharacters(string requestedObjectKey, string blobPath, int expectedTargetWorkerCount)
+        {
+            var scaler = CreateScaler(BuildPutBlobLogContent(requestedObjectKey), blobPath, out _);
+
+            var result = await scaler.GetScaleResultAsync(new TargetScalerContext());
+
+            Assert.NotNull(result);
+            Assert.AreEqual(expectedTargetWorkerCount, result.TargetWorkerCount);
+        }
+
+        private static string BuildPutBlobLogContent(string requestedObjectKey)
+        {
+            string timeStamp = $"{DateTime.UtcNow.AddMinutes(-10):o}";
+
+            return $"1.0;{timeStamp};PutBlob;Success;201;6;6;authenticated;teststorage;teststorage;blob;" +
+                $"\"https://teststorage.blob.core.windows.net:443/test-blobs/basic%5Ctest.txt\";\"{requestedObjectKey}\";" +
+                "612fc70e-e01e-008e-507f-3defe5000000;0;172.185.1.166:36700;2025-01-05;545;9;337;0;9;;" +
+                "\"HlAhCgICSX+3m8OLat5sNA==\";\"&quot;0x8DE0B970756F5CF&quot;\";Wednesday, 15-Oct-25 03:00:42 GMT;\"If-None-Match=*\";" +
+                "\"azsdk-net-Storage.Blobs/12.23.0 (.NET 8.0.21; Microsoft Windows 10.0.17763)\";;\"0ec36b75-69d3-453f-afd3-a329e0970962\"";
+        }
+
+        private ZeroToOneTargetScaler CreateScaler(string logBlobContent, string blobPath, out TestLoggerProvider loggerProvider)
+        {
             var mockBlobContainerClient = new Mock<BlobContainerClient>();
             var page = Page<BlobItem>.FromValues(
                 values: new BlobItem[] { CreateBlobItem() },
@@ -76,24 +125,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Listeners
             mockBlobServiceClient.Setup(b => b.GetBlobContainerClient(It.IsAny<string>()))
                 .Returns(mockBlobContainerClient.Object);
 
-            var loggerProvider = new TestLoggerProvider();
+            loggerProvider = new TestLoggerProvider();
             var loggerFactory = new LoggerFactory();
             loggerFactory.AddProvider(loggerProvider);
 
-            var scaler = new ZeroToOneTargetScaler("TestFunction", mockBlobServiceClient.Object, blobPath, loggerFactory);
-
-            var result = await scaler.GetScaleResultAsync(new TargetScalerContext());
-
-            Assert.NotNull(result);
-            Assert.AreEqual(expectedTargetWorkerCount, result.TargetWorkerCount);
-
-            result = await scaler.GetScaleResultAsync(new TargetScalerContext());
-
-            var cacheReads = loggerProvider.GetAllLogMessages().Where(x => x.FormattedMessage.Contains("Recent writes were detected from cache for ")).Count();
-            Assert.AreEqual(expectedCacheReads, cacheReads);
-
-            Assert.NotNull(result);
-            Assert.AreEqual(expectedTargetWorkerCount, result.TargetWorkerCount);
+            return new ZeroToOneTargetScaler("TestFunction", mockBlobServiceClient.Object, blobPath, loggerFactory);
         }
 
         private BlobItem CreateBlobItem()
