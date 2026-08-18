@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="region"> The region of the VM. </param>
         /// <param name="networkId"> The network Id of the VM. </param>
         /// <param name="subnetId"> The subnet Id of the VM. </param>
-        /// <param name="shouldAttachAndSwapOsDisk"> The identifier to check if to attach and swap disk of the VM. </param>
+        /// <param name="shouldAttachAndSwapOSDisk"> The identifier to check if to attach and swap disk of the VM. </param>
         /// <param name="targetVmGuid"> The GUID of target VM used in DISK ATTACH. </param>
         /// <param name="vmTags"> The vmTag of the VM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VmInfo(string sourceVmGuid, string storageAccountId, bool? shouldPowerOnVmAfterRestore, string name, string resourceGroup, string region, string networkId, string subnetId, bool? shouldAttachAndSwapOsDisk, string targetVmGuid, IList<VmTag> vmTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VmInfo(string sourceVmGuid, string storageAccountId, bool? shouldPowerOnVmAfterRestore, string name, string resourceGroup, string region, string networkId, string subnetId, bool? shouldAttachAndSwapOSDisk, string targetVmGuid, IList<VmTag> vmTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceVmGuid = sourceVmGuid;
             StorageAccountId = storageAccountId;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             Region = region;
             NetworkId = networkId;
             SubnetId = subnetId;
-            ShouldAttachAndSwapOsDisk = shouldAttachAndSwapOsDisk;
+            ShouldAttachAndSwapOSDisk = shouldAttachAndSwapOSDisk;
             TargetVmGuid = targetVmGuid;
             VmTags = vmTags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public string SubnetId { get; set; }
 
         /// <summary> The identifier to check if to attach and swap disk of the VM. </summary>
-        public bool? ShouldAttachAndSwapOsDisk { get; set; }
+        public bool? ShouldAttachAndSwapOSDisk { get; set; }
 
         /// <summary> The GUID of target VM used in DISK ATTACH. </summary>
         public string TargetVmGuid { get; set; }
