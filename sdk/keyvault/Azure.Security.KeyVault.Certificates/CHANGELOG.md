@@ -4,12 +4,14 @@
 
 ### Features Added
 
-- Added support for Proof-of-Possession (PoP) token binding in the Key Vault authentication policy.
-- `CertificateClient` now implements `IDisposable` to deterministically release the dedicated transport created internally to support PoP token binding.
+- Added opt-in support for Proof-of-Possession (PoP) token binding in the Key Vault authentication policy. Set `CertificateClientOptions.EnableProofOfPossession` to `true` to request PoP-bound tokens; it defaults to `false` so existing applications see no change in authentication behavior, transport/connection-pooling behavior, or resource usage.
+- `CertificateClient` now implements `IDisposable` to deterministically release the dedicated transport created internally when Proof-of-Possession token binding is enabled and the transport supports being updated in place.
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Fixed a potential crash when Proof-of-Possession token binding is enabled and the configured transport cannot actually apply a binding certificate update (for example, `HttpClientTransport.Shared`, which cannot be updated in place). The request now proceeds without the certificate applied instead of throwing, and the `x-ms-tokenboundauth` header is not sent in that case.
 
 ### Other Changes
 

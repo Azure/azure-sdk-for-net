@@ -116,7 +116,7 @@ namespace Azure.Security.KeyVault.Certificates
                 perRetryPolicies: [new ChallengeBasedAuthenticationPolicy(
                     credential,
                     options.DisableChallengeResourceVerification,
-                    ChallengeBasedAuthenticationPolicy.SupportsProofOfPossession(options.Transport))],
+                    options.EnableProofOfPossession && ChallengeBasedAuthenticationPolicy.SupportsProofOfPossession(options.Transport))],
                 transportOptions: new HttpPipelineTransportOptions(),
                 responseClassifier: null);
 

@@ -99,6 +99,20 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </summary>
         public bool DisableChallengeResourceVerification { get; set; }
 
+        /// <summary>
+        /// Gets or sets whether to request Proof-of-Possession (PoP) token binding for authenticated requests. When
+        /// enabled, the client asks the credential for a token that is cryptographically bound to a client
+        /// certificate and, only when the credential and transport actually support it, sends the
+        /// <c>x-ms-tokenboundauth</c> header alongside the bound token.
+        /// </summary>
+        /// <remarks>
+        /// This is opt-in and defaults to <see langword="false"/> so existing applications see no change in
+        /// authentication behavior, transport/connection-pooling behavior, or resource usage. The underlying
+        /// Proof-of-Possession support in Azure.Core and Azure.Identity is experimental (see <c>AZID0004</c>);
+        /// enable this only if you understand and accept that.
+        /// </remarks>
+        public bool EnableProofOfPossession { get; set; }
+
         internal string GetVersionString()
         {
             return Version switch
