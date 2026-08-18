@@ -5,6 +5,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using System;
 using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
 using System.Threading.Tasks;
@@ -31,6 +32,10 @@ namespace Azure.Security.KeyVault
             _enableProofOfPossession = enableProofOfPossession;
         }
 
+        [UnconditionalSuppressMessage(
+            "Trimming",
+            "IL2075",
+            Justification = "This reflection check only determines whether a public virtual method was overridden; it does not invoke dynamically discovered code.")]
         internal static bool SupportsProofOfPossession(HttpPipelineTransport transport)
             => transport.GetType().GetMethod(nameof(HttpPipelineTransport.Update), s_updateParameterTypes)?.DeclaringType != typeof(HttpPipelineTransport);
 
