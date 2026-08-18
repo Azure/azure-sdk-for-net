@@ -16,6 +16,10 @@ dotnet add package Azure.Provisioning.Enclave --prerelease
 
 > You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
 
+### Authenticate the client
+
+To use `Azure.Provisioning.Enclave`, construct the infrastructure definition using the provisioning resources and deploy it with a credentials-aware deployment tool (e.g., `AzureDeploymentProvisioner` from `Azure.Provisioning`). Authentication is handled at deployment time by the configured `TokenCredential`.
+
 ## Key concepts
 
 This library allows you to specify your infrastructure in a declarative style using .NET. You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain Bicep or ARM templates.
@@ -53,6 +57,11 @@ infra.Add(enclave);
 
 - File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
 - Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on Stack Overflow using Azure and .NET tags.
+
+## Next steps
+
+- [Azure Provisioning overview](https://learn.microsoft.com/dotnet/azure/sdk/resource-provisioning)
+- [Bicep documentation for Microsoft.Mission resources](https://learn.microsoft.com/azure/templates/microsoft.mission)
 
 ## Contributing
 
