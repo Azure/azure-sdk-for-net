@@ -301,12 +301,6 @@ namespace Azure.Generator.Mgmt.Tests
             var inputModel = InputFactory.Model(
                 "MyTrackedModel",
                 properties: [
-                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("systemData", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("location", InputPrimitiveType.String),
-                    InputFactory.Property("tags", InputPrimitiveType.String),
                     InputFactory.Property("customProp", InputPrimitiveType.String),
                 ],
                 baseModel: trackedResourceInputModel,
@@ -331,10 +325,10 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(result!.BaseType?.Name, Is.EqualTo(nameof(ResourceData)));
 
             var propertyNames = result.Properties.Select(p => p.Name).ToList();
-            Assert.That(propertyNames.Contains("Location"), Is.True, "Location should stay when custom base narrows to ResourceData");
-            Assert.That(propertyNames.Contains("Tags"), Is.True, "Tags should stay when custom base narrows to ResourceData");
+            Assert.That(propertyNames.Contains("Location"), Is.True, "Location should be materialized from the TypeSpec base when the custom base is narrower");
+            Assert.That(propertyNames.Contains("Tags"), Is.True, "Tags should be materialized from the TypeSpec base when the custom base is narrower");
             Assert.That(propertyNames.Contains("CustomProp"), Is.True, "CustomProp should remain");
-            Assert.That(propertyNames.Contains("Id"), Is.False, "Id should still be filtered because the effective custom base is ResourceData, which does not expose it");
+            Assert.That(propertyNames.Contains("Id"), Is.False, "Id should still be filtered because ResourceData already supplies it");
         }
 
         [Test]
@@ -353,9 +347,6 @@ namespace Azure.Generator.Mgmt.Tests
             var inputModel = InputFactory.Model(
                 "MyCustomBaseModel",
                 properties: [
-                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
                     InputFactory.Property("location", InputPrimitiveType.String),
                     InputFactory.Property("tags", InputPrimitiveType.String),
                     InputFactory.Property("customProp", InputPrimitiveType.String),
@@ -380,7 +371,7 @@ namespace Azure.Generator.Mgmt.Tests
             var propertyNames = result.Properties.Select(p => p.Name).ToList();
             Assert.That(propertyNames.Contains("Location"), Is.True, "Location should remain when custom ResourceData base has no TypeSpec base");
             Assert.That(propertyNames.Contains("Tags"), Is.True, "Tags should remain when custom ResourceData base has no TypeSpec base");
-            Assert.That(propertyNames.Contains("Id"), Is.False, "Id should be filtered because it is provided by ResourceData");
+            Assert.That(propertyNames.Contains("CustomProp"), Is.True, "CustomProp should remain");
         }
 
         private static void SetCustomCodeView(TypeProvider typeProvider, TypeProvider customCodeTypeProvider)

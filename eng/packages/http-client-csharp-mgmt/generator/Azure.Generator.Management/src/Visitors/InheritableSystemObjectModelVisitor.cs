@@ -78,17 +78,45 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             return;
         }
 
-        var baseProvider = GetEffectiveBaseProvider(model);
-        if (baseProvider is null)
+        var effectiveBaseProvider = GetEffectiveBaseProvider(model);
+        if (effectiveBaseProvider is null)
         {
             return;
         }
 
-        var basePropertyNames = EnumerateBaseModelProperties(baseProvider);
+        var basePropertyNames = EnumerateBaseModelProperties(effectiveBaseProvider);
+        var mergedProperties = new List<PropertyProvider>(model.Properties);
+
+        // When a custom CLR base is narrower than the TypeSpec base (for example, custom
+        // ResourceData vs. generated TrackedResourceData), the original TypeSpec base chain still
+        // owns properties like Location/Tags that are no longer supplied by the custom base.
+        // Reconcile those lost properties back onto the derived model so constructors and
+        // serialization still emit them.
+        var materializedPropertyNames = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var property in mergedProperties)
+        {
+            materializedPropertyNames.Add(property.Name);
+        }
+
+        foreach (var baseProperty in GetOriginalBaseModelProperties(model))
+        {
+            if (basePropertyNames.Contains(baseProperty.Name) || materializedPropertyNames.Contains(baseProperty.Name))
+            {
+                continue;
+            }
+
+            var generatedProperty = CodeModelGenerator.Instance.TypeFactory.CreateProperty(baseProperty, model);
+            if (generatedProperty is not null)
+            {
+                mergedProperties.Add(generatedProperty);
+                materializedPropertyNames.Add(baseProperty.Name);
+            }
+        }
+
         var removedPropertyNames = new HashSet<string>();
         var remainingProperties = new List<PropertyProvider>();
 
-        foreach (var prop in model.Properties)
+        foreach (var prop in mergedProperties)
         {
             // Only remove true C# duplicate/shadowing properties. Some services expose
             // public SDK properties with distinct CLR names but inherited ARM wire names
@@ -105,12 +133,35 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             }
         }
 
-        StripOrphanedVirtualModifiers(baseProvider, removedPropertyNames);
+        StripOrphanedVirtualModifiers(effectiveBaseProvider, removedPropertyNames);
         // Reset cached constructors, serialization, and model factories so they do not keep
         // references to inherited ARM properties removed from the model surface.
         model.Update(name: model.Name, properties: remainingProperties.ToArray(), reset: true);
 
         _regularUpdated.Add(model);
+    }
+
+    private static IEnumerable<InputModelProperty> GetOriginalBaseModelProperties(ModelProvider model)
+    {
+        var inputModel = typeof(ModelProvider)
+            .GetField("_inputModel", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+            ?.GetValue(model) as InputModelType;
+
+        if (inputModel is null)
+        {
+            yield break;
+        }
+
+        var seen = new HashSet<InputModelType>();
+        var current = inputModel.BaseModel;
+        while (current is not null && seen.Add(current))
+        {
+            foreach (var property in current.Properties)
+            {
+                yield return property;
+            }
+            current = current.BaseModel;
+        }
     }
 
     private static TypeProvider? GetEffectiveBaseProvider(ModelProvider model)
