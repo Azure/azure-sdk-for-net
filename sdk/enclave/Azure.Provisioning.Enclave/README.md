@@ -60,8 +60,8 @@ infra.Add(enclave);
 
 ## Next steps
 
-- [Azure Provisioning overview](https://learn.microsoft.com/dotnet/azure/sdk/resource-provisioning)
-- [Bicep documentation for Microsoft.Mission resources](https://learn.microsoft.com/azure/templates/microsoft.mission)
+- [Azure Provisioning SDK for .NET](https://learn.microsoft.com/dotnet/api/overview/azure/provisioning?view=azure-dotnet)
+- [Azure Enclave deployment templates](https://learn.microsoft.com/azure/enclave/azure-enclave-templates)
 
 ## Contributing
 
