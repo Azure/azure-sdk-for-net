@@ -78,7 +78,13 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             return;
         }
 
-        var basePropertyNames = EnumerateBaseModelProperties(model.BaseModelProvider!);
+        var baseProvider = GetEffectiveBaseProvider(model);
+        if (baseProvider is null)
+        {
+            return;
+        }
+
+        var basePropertyNames = EnumerateBaseModelProperties(baseProvider);
         var removedPropertyNames = new HashSet<string>();
         var remainingProperties = new List<PropertyProvider>();
 
@@ -99,7 +105,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             }
         }
 
-        StripOrphanedVirtualModifiers(model.BaseModelProvider!, removedPropertyNames);
+        StripOrphanedVirtualModifiers(baseProvider, removedPropertyNames);
         // Reset cached constructors, serialization, and model factories so they do not keep
         // references to inherited ARM properties removed from the model surface.
         model.Update(name: model.Name, properties: remainingProperties.ToArray(), reset: true);
@@ -107,29 +113,64 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         _regularUpdated.Add(model);
     }
 
-    private static HashSet<string> EnumerateBaseModelProperties(ModelProvider baseModel)
+    private static TypeProvider? GetEffectiveBaseProvider(ModelProvider model)
+    {
+        // Custom base declarations win over the TypeSpec base for inherited-property filtering.
+        // Example: a model may infer TrackedResourceData from TypeSpec, but a custom partial can
+        // narrow the effective base to ResourceData. In that case we must compare against the
+        // custom base's members, not the TypeSpec hierarchy.
+        if (model.CustomCodeView?.BaseType is not null && model.BaseType is not null)
+        {
+            if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(model.BaseType, out var customBaseProvider)
+                && customBaseProvider is TypeProvider typeProvider)
+            {
+                return typeProvider;
+            }
+        }
+
+        return model.BaseModelProvider;
+    }
+
+    private static TypeProvider? GetBaseTypeProvider(TypeProvider typeProvider)
+    {
+        if (typeProvider is ModelProvider modelProvider)
+        {
+            return GetEffectiveBaseProvider(modelProvider);
+        }
+
+        if (typeProvider.BaseType is not null
+            && ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(typeProvider.BaseType, out var mappedProvider)
+            && mappedProvider is TypeProvider baseTypeProvider)
+        {
+            return baseTypeProvider;
+        }
+
+        return null;
+    }
+
+    private static HashSet<string> EnumerateBaseModelProperties(TypeProvider baseModel)
     {
         var basePropertyNames = new HashSet<string>(StringComparer.Ordinal);
-        ModelProvider? currentModel = baseModel;
+        TypeProvider? currentModel = baseModel;
         while (currentModel != null)
         {
             foreach (var property in currentModel.Properties)
             {
                 basePropertyNames.Add(property.Name);
             }
-            currentModel = currentModel.BaseModelProvider;
+            currentModel = GetBaseTypeProvider(currentModel);
         }
         return basePropertyNames;
     }
 
-    private static void StripOrphanedVirtualModifiers(ModelProvider baseModel, HashSet<string> removedPropertyNames)
+    private static void StripOrphanedVirtualModifiers(TypeProvider baseModel, HashSet<string> removedPropertyNames)
     {
         if (removedPropertyNames.Count == 0)
         {
             return;
         }
 
-        ModelProvider? current = baseModel;
+        TypeProvider? current = baseModel;
         while (current != null)
         {
             foreach (var property in current.Properties)
@@ -139,7 +180,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
                     property.Update(modifiers: property.Modifiers & ~MethodSignatureModifiers.Virtual);
                 }
             }
-            current = current.BaseModelProvider;
+            current = GetBaseTypeProvider(current);
         }
     }
 }
