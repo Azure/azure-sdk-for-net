@@ -62,6 +62,8 @@ jobs:
         SparseCheckoutPaths:
           - "/*"
           - "!SessionRecords"
+          # API listings are consumed by Analyze workers, not matrix generation.
+          - "!/sdk/*/**/api/*"
         EnablePRGeneration: true
         PRMatrixSetting: ProjectNames
         PRJobBatchSize: 1
@@ -99,6 +101,8 @@ jobs:
         SparseCheckoutPaths:
           - "/*"
           - "!SessionRecords"
+          # API listings are consumed by Analyze workers, not matrix generation.
+          - "!/sdk/*/**/api/*"
         EnablePRGeneration: true
         PRMatrixSetting: ProjectNames
         PRJobBatchSize: 1
@@ -228,6 +232,8 @@ jobs:
           SparseCheckoutPaths:
             - "/*"
             - "!SessionRecords"
+            # API listings are consumed by Analyze workers, not matrix generation.
+            - "!/sdk/*/**/api/*"
           EnablePRGeneration: true
           PRMatrixSetting: ProjectNames
           PRJobBatchSize: 10
@@ -264,6 +270,8 @@ jobs:
         SparseCheckoutPaths:
           - /*
           - '!/sdk/*/**/SessionRecords/*'
+          # API listings are consumed by Analyze workers, not matrix generation.
+          - '!/sdk/*/**/api/*'
         PreGenerationSteps:
           - ${{ each config in parameters.MatrixConfigs }}:
               - template: /eng/pipelines/templates/steps/dependency.tests.yml
