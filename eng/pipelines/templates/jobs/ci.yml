@@ -201,15 +201,13 @@ jobs:
 
         - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
-        # Temporary: the agent image does not yet carry the SDK version pinned in global.json.
-        # UseDotNet's useGlobalJson applies the rollForward policy against the set of downloadable
-        # SDKs, so it would install a floating 10.0.x rather than the pinned version. Install the
-        # exact version instead. This step can be removed once the agent version satisfies global.json.
+        # Temporary: the agent image does not yet carry the SDK version specified by global.json.
+        # This step can be removed once the agent version satisfies global.json.
         - task: UseDotNet@2
           displayName: 'Use .NET SDK'
           retryCountOnTaskFailure: 3
           inputs:
-            version: 10.0.400
+            useGlobalJson: true
             performMultiLevelLookup: true
 
         - pwsh: ./eng/scripts/Test-NoWarnValidation.ps1
