@@ -16,8 +16,6 @@ dotnet add package Azure.Provisioning.Enclave --prerelease
 
 > You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
 
-### Authenticate the Client
-
 ## Key concepts
 
 This library allows you to specify your infrastructure in a declarative style using .NET. You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain Bicep or ARM templates.
@@ -55,8 +53,6 @@ infra.Add(enclave);
 
 - File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
 - Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on Stack Overflow using Azure and .NET tags.
-
-## Next steps
 
 ## Contributing
 
