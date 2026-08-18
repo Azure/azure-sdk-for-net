@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -18,7 +17,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Defines a connection analyzer resource. </summary>
-    public partial class ConnectionAnalyzerData : IJsonModel<ConnectionAnalyzerData>
+    public partial class ConnectionAnalyzerData : TrackedResourceData, IJsonModel<ConnectionAnalyzerData>
     {
         /// <summary> Initializes a new instance of <see cref="ConnectionAnalyzerData"/> for deserialization. </summary>
         internal ConnectionAnalyzerData()
@@ -93,55 +92,18 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ConnectionAnalyzerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConnectionAnalyzerData)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
-            }
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag);
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                ((IJsonModel<SystemData>)SystemData).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
@@ -187,70 +149,14 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            string name = default;
-            string id = default;
-            string @type = default;
             string eTag = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            SystemData systemData = default;
             ConnectionAnalyzerProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("etag"u8))
                 {
                     eTag = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("tags"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
-                    }
-                    tags = dictionary;
-                    continue;
-                }
-                if (prop.NameEquals("systemData"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -263,16 +169,7 @@ namespace Azure.ResourceManager.Network
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConnectionAnalyzerData(
-                name,
-                id,
-                @type,
-                eTag,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                systemData,
-                properties,
-                additionalBinaryDataProperties);
+            return new ConnectionAnalyzerData(eTag, properties, additionalBinaryDataProperties);
         }
     }
 }

@@ -7045,29 +7045,12 @@ namespace Azure.ResourceManager.Network.Models
                 default);
         }
 
-        /// <param name="name"> Name of the connection analyzer. </param>
-        /// <param name="id"> Resource ID of the connection analyzer. </param>
-        /// <param name="type"> Resource type. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Properties of the connection analyzer. </param>
         /// <returns> A new <see cref="Network.ConnectionAnalyzerData"/> instance for mocking. </returns>
-        public static ConnectionAnalyzerData ConnectionAnalyzerData(string name = default, string id = default, string @type = default, string eTag = default, string location = default, IDictionary<string, string> tags = default, SystemData systemData = default, ConnectionAnalyzerProperties properties = default)
+        public static ConnectionAnalyzerData ConnectionAnalyzerData(string eTag = default, ConnectionAnalyzerProperties properties = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ConnectionAnalyzerData(
-                name,
-                id,
-                @type,
-                eTag,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                systemData,
-                properties,
-                default);
+            return new ConnectionAnalyzerData(eTag, properties, default);
         }
 
         /// <param name="source"> Source endpoint of the connection analyzer. </param>
