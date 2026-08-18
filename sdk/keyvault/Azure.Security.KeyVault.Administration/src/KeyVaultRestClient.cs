@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Administration
     /// The rest client for the KeyVault service.
     /// </summary>
     [CodeGenType("KeyVaultRestClient")]
-    internal partial class KeyVaultRestClient
+    internal partial class KeyVaultRestClient : IDisposable
     {
         /// <summary> Initializes a new instance of KeyVaultRestClient. </summary>
         /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
@@ -65,6 +65,15 @@ namespace Azure.Security.KeyVault.Administration
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             _apiVersion = options.GetVersionString();
             ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary>
+        /// Releases the resources used by this <see cref="KeyVaultRestClient"/>, including the dedicated
+        /// transport created internally to support Proof-of-Possession (PoP) token binding.
+        /// </summary>
+        public void Dispose()
+        {
+            (Pipeline as IDisposable)?.Dispose();
         }
     }
 }

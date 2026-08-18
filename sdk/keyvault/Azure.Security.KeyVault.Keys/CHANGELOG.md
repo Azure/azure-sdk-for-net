@@ -5,6 +5,7 @@
 ### Features Added
 
 - Added support for Proof-of-Possession (PoP) token binding in the Key Vault authentication policy.
+- `KeyClient`, `KeyResolver`, and `CryptographyClient` now implement `IDisposable` to deterministically release the dedicated transport created internally to support PoP token binding.
 
 ### Breaking Changes
 

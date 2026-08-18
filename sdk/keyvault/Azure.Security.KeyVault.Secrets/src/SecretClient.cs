@@ -29,7 +29,7 @@ namespace Azure.Security.KeyVault.Secrets
     /// invoked.
     /// </remarks>
     [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/security-keyvault-secrets")]
-    public class SecretClient
+    public class SecretClient : IDisposable
     {
         private const string OTelSecretNameKey    = "az.keyvault.secret.name";
         private const string OTelSecretVersionKey = "az.keyvault.secret.version";
@@ -37,6 +37,7 @@ namespace Azure.Security.KeyVault.Secrets
         private readonly Uri _vaultUri;
         private readonly KeyVaultSecretsClient _generated;
         private readonly ClientDiagnostics _diagnostics;
+        private readonly HttpPipeline _pipeline;
 
         /// <summary>For mocking.</summary>
         protected SecretClient() { }
@@ -70,12 +71,25 @@ namespace Azure.Security.KeyVault.Secrets
                     ChallengeBasedAuthenticationPolicy.SupportsProofOfPossession(options.Transport))],
                 transportOptions: new HttpPipelineTransportOptions(),
                 responseClassifier: null);
+            _pipeline = pipeline;
 
             _generated = new KeyVaultSecretsClient(
                 vaultUri,
                 MapApiVersion(options.Version),
                 pipeline,
                 _diagnostics);
+        }
+
+        /// <summary>
+        /// Releases the resources used by this <see cref="SecretClient"/>. The transport options passed to
+        /// <see cref="HttpPipelineBuilder"/> to support Proof-of-Possession (PoP) token binding cause a
+        /// dedicated, non-shared transport (and its underlying <see cref="System.Net.Http.HttpClient"/>) to be
+        /// created for this client instance; disposing releases that transport instead of leaving it for the
+        /// garbage collector to finalize.
+        /// </summary>
+        public void Dispose()
+        {
+            (_pipeline as IDisposable)?.Dispose();
         }
 
         /// <summary>Initializes a new instance of the <see cref="SecretClient"/> class from settings.</summary>

@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Keys
     /// supports creating, retrieving, updating, deleting, purging, backing up, restoring, and listing the <see cref="KeyVaultKey"/>.
     /// The client also supports listing <see cref="DeletedKey"/> for a soft-delete enabled Azure Key Vault.
     /// </summary>
-    public class KeyClient
+    public class KeyClient : IDisposable
     {
         internal const string KeysPath = "/keys/";
         internal const string DeletedKeysPath = "/deletedkeys/";
@@ -81,6 +81,18 @@ namespace Azure.Security.KeyVault.Keys
 
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = new KeyVaultPipeline(vaultUri, apiVersion, pipeline, _clientDiagnostics);
+        }
+
+        /// <summary>
+        /// Releases the resources used by this <see cref="KeyClient"/>. The transport options passed to
+        /// <see cref="HttpPipelineBuilder"/> to support Proof-of-Possession (PoP) token binding cause a
+        /// dedicated, non-shared transport (and its underlying <see cref="System.Net.Http.HttpClient"/>) to be
+        /// created for this client instance; disposing releases that transport instead of leaving it for the
+        /// garbage collector to finalize.
+        /// </summary>
+        public void Dispose()
+        {
+            (_pipeline?.HttpPipeline as IDisposable)?.Dispose();
         }
 
         /// <summary>

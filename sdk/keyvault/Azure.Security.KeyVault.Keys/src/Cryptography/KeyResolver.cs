@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// a byte array with a length matching one of the AES key lengths (128, 192, 256) and the
     /// content-type of the secret is application/octet-stream.
     /// </summary>
-    public class KeyResolver : IKeyEncryptionKeyResolver
+    public class KeyResolver : IKeyEncryptionKeyResolver, IDisposable
     {
         private const string OTelKeyIdKey = "az.keyvault.key.id";
         private readonly HttpPipeline  _pipeline;
@@ -67,6 +67,18 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 responseClassifier: null);
 
             _clientDiagnostics = new ClientDiagnostics(options);
+        }
+
+        /// <summary>
+        /// Releases the resources used by this <see cref="KeyResolver"/>. The transport options passed to
+        /// <see cref="HttpPipelineBuilder"/> to support Proof-of-Possession (PoP) token binding cause a
+        /// dedicated, non-shared transport (and its underlying <see cref="System.Net.Http.HttpClient"/>) to be
+        /// created for this instance; disposing releases that transport instead of leaving it for the garbage
+        /// collector to finalize.
+        /// </summary>
+        public void Dispose()
+        {
+            (_pipeline as IDisposable)?.Dispose();
         }
 
         /// <summary>

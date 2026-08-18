@@ -40,6 +40,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 responseClassifier: null);
 
             Pipeline = new KeyVaultPipeline(keyId, apiVersion, pipeline, new ClientDiagnostics(options));
+            OwnsPipeline = true;
         }
 
         internal RemoteCryptographyClient(KeyVaultPipeline pipeline)
@@ -48,6 +49,14 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         internal KeyVaultPipeline Pipeline { get; }
+
+        /// <summary>
+        /// Indicates whether this instance created its own dedicated <see cref="Pipeline"/> (and therefore owns
+        /// the underlying transport) versus reusing a <see cref="KeyVaultPipeline"/> supplied by another client
+        /// (e.g. a <see cref="KeyClient"/>). The transport must only be disposed by its owner - reusers must
+        /// leave disposal to whichever client originally created the pipeline.
+        /// </summary>
+        internal bool OwnsPipeline { get; }
 
         public bool SupportsOperation(KeyOperation operation) => true;
 

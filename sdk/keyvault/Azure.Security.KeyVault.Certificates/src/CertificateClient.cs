@@ -34,7 +34,7 @@ namespace Azure.Security.KeyVault.Certificates
     /// is retained only for DownloadCertificate because that API hits the
     /// Secrets endpoint, not the Certificates endpoint.
     /// </remarks>
-    public class CertificateClient
+    public class CertificateClient : IDisposable
     {
         internal const string CertificatesPath = "/certificates/";
         private const string CallerShouldAuditReason = "https://aka.ms/azsdk/callershouldaudit/security-keyvault-certificates";
@@ -53,6 +53,10 @@ namespace Azure.Security.KeyVault.Certificates
         // here preserves byte-identical wire behavior for that API while Phase 3
         // decides whether to route Download through a SecretClient instead.
         private readonly KeyVaultPipeline _pipeline;
+
+        // Raw HttpPipeline reference kept solely so Dispose() can release the dedicated transport created
+        // to support Proof-of-Possession (PoP) token binding (see HttpPipelineTransportOptions usage below).
+        private readonly HttpPipeline _transportPipeline;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CertificateClient"/> class for mocking.
@@ -122,6 +126,19 @@ namespace Azure.Security.KeyVault.Certificates
             // wrapper that DownloadCertificate still depends on - so DownloadCertificate's
             // wire shape is byte-identical to prior releases.
             _pipeline = new KeyVaultPipeline(vaultUri, options.GetVersionString(), pipeline, _diagnostics);
+            _transportPipeline = pipeline;
+        }
+
+        /// <summary>
+        /// Releases the resources used by this <see cref="CertificateClient"/>. The transport options passed to
+        /// <see cref="HttpPipelineBuilder"/> to support Proof-of-Possession (PoP) token binding cause a
+        /// dedicated, non-shared transport (and its underlying <see cref="System.Net.Http.HttpClient"/>) to be
+        /// created for this client instance; disposing releases that transport instead of leaving it for the
+        /// garbage collector to finalize.
+        /// </summary>
+        public void Dispose()
+        {
+            (_transportPipeline as IDisposable)?.Dispose();
         }
 
         /// <summary>

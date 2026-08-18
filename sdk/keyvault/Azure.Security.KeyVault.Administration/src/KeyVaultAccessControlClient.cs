@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Administration
     /// The client supports creating, listing, updating, and deleting <see cref="KeyVaultRoleAssignment"/> and <see cref="KeyVaultRoleDefinition" />.
     /// </summary>
     [CodeGenType("KeyVaultAccessControlRestClient")]
-    public partial class KeyVaultAccessControlClient
+    public partial class KeyVaultAccessControlClient : IDisposable
     {
         private readonly ClientDiagnostics _diagnostics;
 
@@ -92,6 +92,18 @@ namespace Azure.Security.KeyVault.Administration
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             _apiVersion = options.GetVersionString();
             ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary>
+        /// Releases the resources used by this <see cref="KeyVaultAccessControlClient"/>. The transport options
+        /// passed to <see cref="HttpPipelineBuilder"/> to support Proof-of-Possession (PoP) token binding cause a
+        /// dedicated, non-shared transport (and its underlying <see cref="System.Net.Http.HttpClient"/>) to be
+        /// created for this client instance; disposing releases that transport instead of leaving it for the
+        /// garbage collector to finalize.
+        /// </summary>
+        public void Dispose()
+        {
+            (Pipeline as IDisposable)?.Dispose();
         }
 
         /// <summary>
