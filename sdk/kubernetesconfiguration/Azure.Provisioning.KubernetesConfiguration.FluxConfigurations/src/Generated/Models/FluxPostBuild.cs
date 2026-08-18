@@ -11,13 +11,13 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
 {
     /// <summary> The postBuild definitions defining variable substitutions for this Kustomization after kustomize build. </summary>
-    public partial class PostBuild : ProvisionableConstruct
+    public partial class FluxPostBuild : ProvisionableConstruct
     {
         private BicepDictionary<string> _substitute;
-        private BicepList<FluxConfigurationsSubstitution> _substituteFrom;
+        private BicepList<FluxSubstitution> _substituteFrom;
 
-        /// <summary> Creates a new PostBuild. </summary>
-        public PostBuild()
+        /// <summary> Creates a new FluxPostBuild. </summary>
+        public FluxPostBuild()
         {
         }
 
@@ -37,7 +37,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Gets or sets the SubstituteFrom. </summary>
-        public BicepList<FluxConfigurationsSubstitution> SubstituteFrom
+        public BicepList<FluxSubstitution> SubstituteFrom
         {
             get
             {
@@ -51,16 +51,16 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             }
         }
 
-        /// <summary> Define all the provisionable properties for PostBuild. </summary>
+        /// <summary> Define all the provisionable properties for FluxPostBuild. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _substitute = DefineDictionaryProperty<string>(nameof(Substitute), new string[] { "substitute" });
-            _substituteFrom = DefineListProperty<FluxConfigurationsSubstitution>(nameof(SubstituteFrom), new string[] { "substituteFrom" });
+            _substituteFrom = DefineListProperty<FluxSubstitution>(nameof(SubstituteFrom), new string[] { "substituteFrom" });
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for PostBuild that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for FluxPostBuild that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

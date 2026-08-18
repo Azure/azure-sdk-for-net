@@ -18,12 +18,12 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         private BicepValue<long> _timeoutInSeconds;
         private BicepValue<long> _syncIntervalInSeconds;
         private OciRepositoryRef _repositoryRef;
-        private LayerSelector _layerSelector;
+        private FluxLayerSelector _layerSelector;
         private OciRepositoryVerify _verify;
         private BicepValue<bool> _isInsecure;
         private BicepValue<bool> _useWorkloadIdentity;
         private BicepValue<string> _serviceAccountName;
-        private TlsConfig _tlsConfig;
+        private FluxTlsConfig _tlsConfig;
         private BicepValue<string> _localAuthRef;
 
         /// <summary> Creates a new OciRepository. </summary>
@@ -92,7 +92,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Gets or sets the LayerSelector. </summary>
-        public LayerSelector LayerSelector
+        public FluxLayerSelector LayerSelector
         {
             get
             {
@@ -167,7 +167,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Gets or sets the TlsConfig. </summary>
-        public TlsConfig TlsConfig
+        public FluxTlsConfig TlsConfig
         {
             get
             {
@@ -204,12 +204,12 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             _timeoutInSeconds = DefineProperty<long>(nameof(TimeoutInSeconds), new string[] { "timeoutInSeconds" });
             _syncIntervalInSeconds = DefineProperty<long>(nameof(SyncIntervalInSeconds), new string[] { "syncIntervalInSeconds" });
             _repositoryRef = DefineModelProperty<OciRepositoryRef>(nameof(RepositoryRef), new string[] { "repositoryRef" });
-            _layerSelector = DefineModelProperty<LayerSelector>(nameof(LayerSelector), new string[] { "layerSelector" });
+            _layerSelector = DefineModelProperty<FluxLayerSelector>(nameof(LayerSelector), new string[] { "layerSelector" });
             _verify = DefineModelProperty<OciRepositoryVerify>(nameof(Verify), new string[] { "verify" });
             _isInsecure = DefineProperty<bool>(nameof(IsInsecure), new string[] { "insecure" });
             _useWorkloadIdentity = DefineProperty<bool>(nameof(UseWorkloadIdentity), new string[] { "useWorkloadIdentity" });
             _serviceAccountName = DefineProperty<string>(nameof(ServiceAccountName), new string[] { "serviceAccountName" });
-            _tlsConfig = DefineModelProperty<TlsConfig>(nameof(TlsConfig), new string[] { "tlsConfig" });
+            _tlsConfig = DefineModelProperty<FluxTlsConfig>(nameof(TlsConfig), new string[] { "tlsConfig" });
             _localAuthRef = DefineProperty<string>(nameof(LocalAuthRef), new string[] { "localAuthRef" });
             DefineAdditionalProperties();
         }

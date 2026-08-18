@@ -22,7 +22,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         private BicepValue<bool> _isPrune;
         private BicepValue<bool> _isForce;
         private BicepValue<bool> _isWait;
-        private PostBuild _postBuild;
+        private FluxPostBuild _postBuild;
 
         /// <summary> Creates a new FluxConfigurationsKustomization. </summary>
         public FluxConfigurationsKustomization()
@@ -160,7 +160,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Gets or sets the PostBuild. </summary>
-        public PostBuild PostBuild
+        public FluxPostBuild PostBuild
         {
             get
             {
@@ -187,7 +187,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             _isPrune = DefineProperty<bool>(nameof(IsPrune), new string[] { "prune" });
             _isForce = DefineProperty<bool>(nameof(IsForce), new string[] { "force" });
             _isWait = DefineProperty<bool>(nameof(IsWait), new string[] { "wait" });
-            _postBuild = DefineModelProperty<PostBuild>(nameof(PostBuild), new string[] { "postBuild" });
+            _postBuild = DefineModelProperty<FluxPostBuild>(nameof(PostBuild), new string[] { "postBuild" });
             DefineAdditionalProperties();
         }
 

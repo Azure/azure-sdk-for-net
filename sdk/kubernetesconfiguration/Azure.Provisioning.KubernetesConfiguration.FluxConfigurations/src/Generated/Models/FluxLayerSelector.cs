@@ -11,13 +11,13 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
 {
     /// <summary> Parameters to specify which layer to pull from the OCI artifact. By default, the first layer in the artifact is pulled. </summary>
-    public partial class LayerSelector : ProvisionableConstruct
+    public partial class FluxLayerSelector : ProvisionableConstruct
     {
         private BicepValue<string> _mediaType;
         private BicepValue<FluxConfigurationOperationType> _operation;
 
-        /// <summary> Creates a new LayerSelector. </summary>
-        public LayerSelector()
+        /// <summary> Creates a new FluxLayerSelector. </summary>
+        public FluxLayerSelector()
         {
         }
 
@@ -51,7 +51,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             }
         }
 
-        /// <summary> Define all the provisionable properties for LayerSelector. </summary>
+        /// <summary> Define all the provisionable properties for FluxLayerSelector. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -60,7 +60,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for LayerSelector that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for FluxLayerSelector that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

@@ -11,14 +11,14 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
 {
     /// <summary> Parameters to authenticate using TLS config for OCI repository. </summary>
-    public partial class TlsConfig : ProvisionableConstruct
+    public partial class FluxTlsConfig : ProvisionableConstruct
     {
         private BicepValue<string> _clientCertificate;
         private BicepValue<string> _privateKey;
         private BicepValue<string> _caCertificate;
 
-        /// <summary> Creates a new TlsConfig. </summary>
-        public TlsConfig()
+        /// <summary> Creates a new FluxTlsConfig. </summary>
+        public FluxTlsConfig()
         {
         }
 
@@ -67,7 +67,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             }
         }
 
-        /// <summary> Define all the provisionable properties for TlsConfig. </summary>
+        /// <summary> Define all the provisionable properties for FluxTlsConfig. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -77,7 +77,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for TlsConfig that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for FluxTlsConfig that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

@@ -147,7 +147,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Gets or sets the GitRepository. </summary>
-        public GitRepository GitRepository
+        public FluxGitRepository GitRepository
         {
             get
             {
@@ -164,7 +164,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Gets or sets the Bucket. </summary>
-        public FluxConfigurationsBucket Bucket
+        public FluxBucket Bucket
         {
             get
             {
@@ -249,7 +249,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Gets the Statuses. </summary>
-        public BicepList<ObjectStatus> Statuses
+        public BicepList<FluxObjectStatus> Statuses
         {
             get
             {

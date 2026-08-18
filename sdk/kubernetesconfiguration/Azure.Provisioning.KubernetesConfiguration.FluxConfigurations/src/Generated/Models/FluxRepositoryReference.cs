@@ -11,15 +11,15 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
 {
     /// <summary> The source reference for the GitRepository object. </summary>
-    public partial class RepositoryReference : ProvisionableConstruct
+    public partial class FluxRepositoryReference : ProvisionableConstruct
     {
         private BicepValue<string> _branch;
         private BicepValue<string> _tag;
         private BicepValue<string> _semver;
         private BicepValue<string> _commit;
 
-        /// <summary> Creates a new RepositoryReference. </summary>
-        public RepositoryReference()
+        /// <summary> Creates a new FluxRepositoryReference. </summary>
+        public FluxRepositoryReference()
         {
         }
 
@@ -83,7 +83,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             }
         }
 
-        /// <summary> Define all the provisionable properties for RepositoryReference. </summary>
+        /// <summary> Define all the provisionable properties for FluxRepositoryReference. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -94,7 +94,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for RepositoryReference that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for FluxRepositoryReference that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

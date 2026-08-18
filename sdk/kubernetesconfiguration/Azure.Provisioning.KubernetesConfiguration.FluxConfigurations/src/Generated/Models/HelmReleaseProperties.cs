@@ -14,7 +14,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
     public partial class HelmReleaseProperties : ProvisionableConstruct
     {
         private BicepValue<long> _lastRevisionApplied;
-        private ObjectReference _helmChartRef;
+        private FluxObjectReference _helmChartRef;
         private BicepValue<long> _failureCount;
         private BicepValue<long> _installFailureCount;
         private BicepValue<long> _upgradeFailureCount;
@@ -35,7 +35,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Gets the HelmChartRef. </summary>
-        public ObjectReference HelmChartRef
+        public FluxObjectReference HelmChartRef
         {
             get
             {
@@ -79,7 +79,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         {
             base.DefineProvisionableProperties();
             _lastRevisionApplied = DefineProperty<long>(nameof(LastRevisionApplied), new string[] { "lastRevisionApplied" });
-            _helmChartRef = DefineModelProperty<ObjectReference>(nameof(HelmChartRef), new string[] { "helmChartRef" });
+            _helmChartRef = DefineModelProperty<FluxObjectReference>(nameof(HelmChartRef), new string[] { "helmChartRef" });
             _failureCount = DefineProperty<long>(nameof(FailureCount), new string[] { "failureCount" });
             _installFailureCount = DefineProperty<long>(nameof(InstallFailureCount), new string[] { "installFailureCount" });
             _upgradeFailureCount = DefineProperty<long>(nameof(UpgradeFailureCount), new string[] { "upgradeFailureCount" });

@@ -11,13 +11,13 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
 {
     /// <summary> Object reference to a Kubernetes object on a cluster. </summary>
-    public partial class ObjectReference : ProvisionableConstruct
+    public partial class FluxObjectReference : ProvisionableConstruct
     {
         private BicepValue<string> _name;
         private BicepValue<string> _namespace;
 
-        /// <summary> Creates a new ObjectReference. </summary>
-        public ObjectReference()
+        /// <summary> Creates a new FluxObjectReference. </summary>
+        public FluxObjectReference()
         {
         }
 
@@ -41,7 +41,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             }
         }
 
-        /// <summary> Define all the provisionable properties for ObjectReference. </summary>
+        /// <summary> Define all the provisionable properties for FluxObjectReference. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -50,7 +50,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for ObjectReference that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for FluxObjectReference that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

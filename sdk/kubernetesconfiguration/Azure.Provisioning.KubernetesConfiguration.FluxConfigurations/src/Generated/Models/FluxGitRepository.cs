@@ -11,20 +11,20 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
 {
     /// <summary> Parameters to reconcile to the GitRepository source kind type. </summary>
-    public partial class GitRepository : ProvisionableConstruct
+    public partial class FluxGitRepository : ProvisionableConstruct
     {
         private BicepValue<string> _uri;
         private BicepValue<long> _timeoutInSeconds;
         private BicepValue<long> _syncIntervalInSeconds;
-        private RepositoryReference _repositoryRef;
+        private FluxRepositoryReference _repositoryRef;
         private BicepValue<string> _sshKnownHosts;
         private BicepValue<string> _httpsUser;
         private BicepValue<string> _httpsCACert;
         private BicepValue<string> _localAuthRef;
         private BicepValue<FluxConfigurationProviderType> _provider;
 
-        /// <summary> Creates a new GitRepository. </summary>
-        public GitRepository()
+        /// <summary> Creates a new FluxGitRepository. </summary>
+        public FluxGitRepository()
         {
         }
 
@@ -74,7 +74,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Gets or sets the RepositoryRef. </summary>
-        public RepositoryReference RepositoryRef
+        public FluxRepositoryReference RepositoryRef
         {
             get
             {
@@ -163,14 +163,14 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             }
         }
 
-        /// <summary> Define all the provisionable properties for GitRepository. </summary>
+        /// <summary> Define all the provisionable properties for FluxGitRepository. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _uri = DefineProperty<string>(nameof(Uri), new string[] { "url" });
             _timeoutInSeconds = DefineProperty<long>(nameof(TimeoutInSeconds), new string[] { "timeoutInSeconds" });
             _syncIntervalInSeconds = DefineProperty<long>(nameof(SyncIntervalInSeconds), new string[] { "syncIntervalInSeconds" });
-            _repositoryRef = DefineModelProperty<RepositoryReference>(nameof(RepositoryRef), new string[] { "repositoryRef" });
+            _repositoryRef = DefineModelProperty<FluxRepositoryReference>(nameof(RepositoryRef), new string[] { "repositoryRef" });
             _sshKnownHosts = DefineProperty<string>(nameof(SshKnownHosts), new string[] { "sshKnownHosts" });
             _httpsUser = DefineProperty<string>(nameof(HttpsUser), new string[] { "httpsUser" });
             _httpsCACert = DefineProperty<string>(nameof(HttpsCACert), new string[] { "httpsCACert" });
@@ -179,7 +179,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for GitRepository that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for FluxGitRepository that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

@@ -11,18 +11,18 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
 {
     /// <summary> Statuses of objects deployed by the user-specified kustomizations from the git repository. </summary>
-    public partial class ObjectStatus : ProvisionableConstruct
+    public partial class FluxObjectStatus : ProvisionableConstruct
     {
         private BicepValue<string> _name;
         private BicepValue<string> _namespace;
         private BicepValue<string> _kind;
         private BicepValue<FluxComplianceState> _complianceState;
-        private ObjectReference _appliedBy;
-        private BicepList<ObjectStatusCondition> _statusConditions;
+        private FluxObjectReference _appliedBy;
+        private BicepList<FluxObjectStatusCondition> _statusConditions;
         private HelmReleaseProperties _helmReleaseProperties;
 
-        /// <summary> Creates a new ObjectStatus. </summary>
-        public ObjectStatus()
+        /// <summary> Creates a new FluxObjectStatus. </summary>
+        public FluxObjectStatus()
         {
         }
 
@@ -67,7 +67,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Gets the AppliedBy. </summary>
-        public ObjectReference AppliedBy
+        public FluxObjectReference AppliedBy
         {
             get
             {
@@ -77,7 +77,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Gets the StatusConditions. </summary>
-        public BicepList<ObjectStatusCondition> StatusConditions
+        public BicepList<FluxObjectStatusCondition> StatusConditions
         {
             get
             {
@@ -96,7 +96,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             }
         }
 
-        /// <summary> Define all the provisionable properties for ObjectStatus. </summary>
+        /// <summary> Define all the provisionable properties for FluxObjectStatus. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -104,13 +104,13 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             _namespace = DefineProperty<string>(nameof(Namespace), new string[] { "namespace" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
             _complianceState = DefineProperty<FluxComplianceState>(nameof(ComplianceState), new string[] { "complianceState" });
-            _appliedBy = DefineModelProperty<ObjectReference>(nameof(AppliedBy), new string[] { "appliedBy" });
-            _statusConditions = DefineListProperty<ObjectStatusCondition>(nameof(StatusConditions), new string[] { "statusConditions" });
+            _appliedBy = DefineModelProperty<FluxObjectReference>(nameof(AppliedBy), new string[] { "appliedBy" });
+            _statusConditions = DefineListProperty<FluxObjectStatusCondition>(nameof(StatusConditions), new string[] { "statusConditions" });
             _helmReleaseProperties = DefineModelProperty<HelmReleaseProperties>(nameof(HelmReleaseProperties), new string[] { "helmReleaseProperties" });
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for ObjectStatus that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for FluxObjectStatus that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

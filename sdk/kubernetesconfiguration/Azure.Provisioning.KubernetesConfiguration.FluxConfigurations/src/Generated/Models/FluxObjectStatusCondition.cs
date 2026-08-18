@@ -12,7 +12,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
 {
     /// <summary> Status condition of Kubernetes object. </summary>
-    public partial class ObjectStatusCondition : ProvisionableConstruct
+    public partial class FluxObjectStatusCondition : ProvisionableConstruct
     {
         private BicepValue<DateTimeOffset> _lastTransitionOn;
         private BicepValue<string> _message;
@@ -20,8 +20,8 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         private BicepValue<string> _status;
         private BicepValue<string> _type;
 
-        /// <summary> Creates a new ObjectStatusCondition. </summary>
-        public ObjectStatusCondition()
+        /// <summary> Creates a new FluxObjectStatusCondition. </summary>
+        public FluxObjectStatusCondition()
         {
         }
 
@@ -75,7 +75,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             }
         }
 
-        /// <summary> Define all the provisionable properties for ObjectStatusCondition. </summary>
+        /// <summary> Define all the provisionable properties for FluxObjectStatusCondition. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -87,7 +87,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for ObjectStatusCondition that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for FluxObjectStatusCondition that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

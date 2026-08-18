@@ -21,7 +21,7 @@ public class BasicKubernetesConfigurationFluxConfigurationsTests
                     new(nameof(flux), FluxConfiguration.ResourceVersions.V2025_04_01)
                     {
                         Namespace = "flux-system",
-                        GitRepository = new GitRepository
+                        GitRepository = new FluxGitRepository
                         {
                             Uri = "https://github.com/Azure/arc-k8s-demo",
                         },

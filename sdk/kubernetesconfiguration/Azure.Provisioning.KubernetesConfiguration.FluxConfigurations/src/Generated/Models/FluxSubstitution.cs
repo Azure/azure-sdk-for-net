@@ -11,14 +11,14 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
 {
     /// <summary> Array of ConfigMaps/Secrets from which the variables are substituted for this Kustomization. </summary>
-    public partial class FluxConfigurationsSubstitution : ProvisionableConstruct
+    public partial class FluxSubstitution : ProvisionableConstruct
     {
         private BicepValue<string> _kind;
         private BicepValue<string> _name;
         private BicepValue<bool> _isOptional;
 
-        /// <summary> Creates a new FluxConfigurationsSubstitution. </summary>
-        public FluxConfigurationsSubstitution()
+        /// <summary> Creates a new FluxSubstitution. </summary>
+        public FluxSubstitution()
         {
         }
 
@@ -67,7 +67,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             }
         }
 
-        /// <summary> Define all the provisionable properties for FluxConfigurationsSubstitution. </summary>
+        /// <summary> Define all the provisionable properties for FluxSubstitution. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -77,7 +77,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for FluxConfigurationsSubstitution that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for FluxSubstitution that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

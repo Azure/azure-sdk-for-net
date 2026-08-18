@@ -16,13 +16,13 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         private BicepValue<string> _namespace;
         private BicepValue<FluxConfigurationSourceKindType> _sourceKind;
         private BicepValue<bool> _isSuspended;
-        private GitRepository _gitRepository;
-        private FluxConfigurationsBucket _bucket;
+        private FluxGitRepository _gitRepository;
+        private FluxBucket _bucket;
         private AzureBlob _azureBlob;
         private OciRepository _ociRepository;
         private BicepDictionary<FluxConfigurationsKustomization> _kustomizations;
         private BicepDictionary<string> _configurationProtectedSettings;
-        private BicepList<ObjectStatus> _statuses;
+        private BicepList<FluxObjectStatus> _statuses;
         private BicepValue<string> _repositoryPublicKey;
         private BicepValue<string> _sourceSyncedCommitId;
         private BicepValue<DateTimeOffset> _sourceUpdatedOn;
@@ -84,7 +84,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Gets or sets the GitRepository. </summary>
-        public GitRepository GitRepository
+        public FluxGitRepository GitRepository
         {
             get
             {
@@ -99,7 +99,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Gets or sets the Bucket. </summary>
-        public FluxConfigurationsBucket Bucket
+        public FluxBucket Bucket
         {
             get
             {
@@ -174,7 +174,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Gets the Statuses. </summary>
-        public BicepList<ObjectStatus> Statuses
+        public BicepList<FluxObjectStatus> Statuses
         {
             get
             {
@@ -290,13 +290,13 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             _namespace = DefineProperty<string>(nameof(Namespace), new string[] { "namespace" });
             _sourceKind = DefineProperty<FluxConfigurationSourceKindType>(nameof(SourceKind), new string[] { "sourceKind" });
             _isSuspended = DefineProperty<bool>(nameof(IsSuspended), new string[] { "suspend" });
-            _gitRepository = DefineModelProperty<GitRepository>(nameof(GitRepository), new string[] { "gitRepository" });
-            _bucket = DefineModelProperty<FluxConfigurationsBucket>(nameof(Bucket), new string[] { "bucket" });
+            _gitRepository = DefineModelProperty<FluxGitRepository>(nameof(GitRepository), new string[] { "gitRepository" });
+            _bucket = DefineModelProperty<FluxBucket>(nameof(Bucket), new string[] { "bucket" });
             _azureBlob = DefineModelProperty<AzureBlob>(nameof(AzureBlob), new string[] { "azureBlob" });
             _ociRepository = DefineModelProperty<OciRepository>(nameof(OciRepository), new string[] { "ociRepository" });
             _kustomizations = DefineDictionaryProperty<FluxConfigurationsKustomization>(nameof(Kustomizations), new string[] { "kustomizations" });
             _configurationProtectedSettings = DefineDictionaryProperty<string>(nameof(ConfigurationProtectedSettings), new string[] { "configurationProtectedSettings" });
-            _statuses = DefineListProperty<ObjectStatus>(nameof(Statuses), new string[] { "statuses" }, isOutput: true);
+            _statuses = DefineListProperty<FluxObjectStatus>(nameof(Statuses), new string[] { "statuses" }, isOutput: true);
             _repositoryPublicKey = DefineProperty<string>(nameof(RepositoryPublicKey), new string[] { "repositoryPublicKey" }, isOutput: true);
             _sourceSyncedCommitId = DefineProperty<string>(nameof(SourceSyncedCommitId), new string[] { "sourceSyncedCommitId" }, isOutput: true);
             _sourceUpdatedOn = DefineProperty<DateTimeOffset>(nameof(SourceUpdatedOn), new string[] { "sourceUpdatedAt" }, isOutput: true, format: "O");

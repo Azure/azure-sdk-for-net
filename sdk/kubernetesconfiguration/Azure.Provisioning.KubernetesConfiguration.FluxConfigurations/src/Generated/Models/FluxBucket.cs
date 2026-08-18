@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
 {
     /// <summary> Parameters to reconcile to the Bucket source kind type. </summary>
-    public partial class FluxConfigurationsBucket : ProvisionableConstruct
+    public partial class FluxBucket : ProvisionableConstruct
     {
         private BicepValue<string> _uri;
         private BicepValue<string> _bucketName;
@@ -21,8 +21,8 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         private BicepValue<string> _accessKey;
         private BicepValue<string> _localAuthRef;
 
-        /// <summary> Creates a new FluxConfigurationsBucket. </summary>
-        public FluxConfigurationsBucket()
+        /// <summary> Creates a new FluxBucket. </summary>
+        public FluxBucket()
         {
         }
 
@@ -131,7 +131,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             }
         }
 
-        /// <summary> Define all the provisionable properties for FluxConfigurationsBucket. </summary>
+        /// <summary> Define all the provisionable properties for FluxBucket. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -145,7 +145,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for FluxConfigurationsBucket that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for FluxBucket that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }
