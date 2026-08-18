@@ -185,7 +185,6 @@ internal sealed class WebSocketEndpointHandler
         }
         finally
         {
-            var durationMs = GetElapsedMilliseconds(startTimestamp);
             async Task FinalizeConnectionAsync()
             {
                 if (handlerOutcome is null)
@@ -198,13 +197,13 @@ internal sealed class WebSocketEndpointHandler
                 }
             }
 
-            void EmitCloseEvent() => TryInvokeLogger(() =>
+            void EmitCloseEvent(long durationMs) => TryInvokeLogger(() =>
                 EmitCloseEventLog(sessionId, closeCode, durationMs, errorCode));
 
             if (lifecycle is null)
             {
                 await FinalizeConnectionAsync();
-                EmitCloseEvent();
+                EmitCloseEvent(GetElapsedMilliseconds(startTimestamp));
             }
             else
             {

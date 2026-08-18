@@ -153,6 +153,13 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                         outputItemCount: 1,
                         responseId));
                 }
+                catch (OperationCanceledException exception)
+                    when (exception.CancellationToken == cancellationToken &&
+                          cancellationToken.IsCancellationRequested)
+                {
+                    turn.Complete(new VoiceTurnResult(VoiceTurnOutcome.Cancelled));
+                    throw;
+                }
                 catch
                 {
                     turn.Complete(new VoiceTurnResult(VoiceTurnOutcome.Error));

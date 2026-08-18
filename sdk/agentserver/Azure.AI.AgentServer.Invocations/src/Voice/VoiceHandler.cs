@@ -244,7 +244,21 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
             connectionContext,
             message.MessageType);
         using var callbackScope = callbackTrace.Activate();
-        await DispatchCallbackAsync(session, message, cancellationToken).ConfigureAwait(false);
+        try
+        {
+            await DispatchCallbackAsync(session, message, cancellationToken).ConfigureAwait(false);
+        }
+        catch (OperationCanceledException exception)
+            when (exception.CancellationToken == cancellationToken &&
+                  cancellationToken.IsCancellationRequested)
+        {
+            throw;
+        }
+        catch (Exception exception)
+        {
+            callbackTrace.RecordFailure(exception);
+            throw;
+        }
     }
 
     private Task DispatchCallbackAsync(

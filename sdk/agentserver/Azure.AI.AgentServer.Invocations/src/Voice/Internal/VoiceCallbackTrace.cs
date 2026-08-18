@@ -17,8 +17,22 @@ internal sealed class VoiceCallbackTrace : IDisposable
 
     internal static VoiceCallbackTrace Start(
         ActivityContext connectionContext,
-        string eventType)
+        string eventType) =>
+        Start(
+            connectionContext,
+            eventType,
+            static (context, tags) => s_activitySource.StartActivity(
+                OperationName,
+                ActivityKind.Internal,
+                context,
+                tags));
+
+    internal static VoiceCallbackTrace Start(
+        ActivityContext connectionContext,
+        string eventType,
+        Func<ActivityContext, ActivityTagsCollection, Activity?> startActivity)
     {
+        ArgumentNullException.ThrowIfNull(startActivity);
         if (connectionContext == default)
         {
             return new VoiceCallbackTrace(activity: null);
@@ -30,6 +44,7 @@ internal sealed class VoiceCallbackTrace : IDisposable
         s_startToken.Value = startToken;
         Activity? activity = null;
         Activity? startedActivity = null;
+        Activity? propagationActivity = null;
         EventHandler<ActivityChangedEventArgs> captureStartedActivity = (_, args) =>
         {
             if (!ReferenceEquals(s_startToken.Value, startToken))
@@ -57,24 +72,40 @@ internal sealed class VoiceCallbackTrace : IDisposable
             VoiceActivityScope.TrySetCurrent(null);
             try
             {
-                activity = s_activitySource.StartActivity(
-                    OperationName,
-                    ActivityKind.Internal,
-                    connectionContext,
-                    tags);
+                activity = startActivity(connectionContext, tags);
+                if (activity is null)
+                {
+                    propagationActivity = new Activity(OperationName)
+                        .SetParentId(
+                            connectionContext.TraceId,
+                            connectionContext.SpanId,
+                            connectionContext.TraceFlags);
+                    propagationActivity.TraceStateString = connectionContext.TraceState;
+                    foreach (var tag in tags)
+                    {
+                        propagationActivity.SetTag(tag.Key, tag.Value);
+                    }
+                    activity = propagationActivity.Start();
+                }
             }
             catch (Exception exception) when (!ContainsOutOfMemoryException(exception))
             {
-                activity = startedActivity ?? Activity.Current;
+                activity = propagationActivity?.Id is not null
+                    ? propagationActivity
+                    : startedActivity ?? Activity.Current;
                 if (!IsCallbackActivity(activity))
                 {
-                    activity = null;
+                    activity = ReferenceEquals(activity, propagationActivity)
+                        ? activity
+                        : null;
                 }
             }
         }
         catch (Exception exception) when (!ContainsOutOfMemoryException(exception))
         {
-            activity = null;
+            activity = propagationActivity?.Id is not null
+                ? propagationActivity
+                : null;
         }
         finally
         {
@@ -86,6 +117,18 @@ internal sealed class VoiceCallbackTrace : IDisposable
     }
 
     internal IDisposable Activate() => VoiceActivityScope.Activate(_activity);
+
+    internal void RecordFailure(Exception exception)
+    {
+        var activity = Volatile.Read(ref _activity);
+        if (activity is null)
+        {
+            return;
+        }
+
+        TryInvokeTelemetry(() => activity.SetStatus(ActivityStatusCode.Error));
+        TryInvokeTelemetry(() => activity.SetTag("error.type", exception.GetType().FullName));
+    }
 
     public void Dispose()
     {

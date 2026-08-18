@@ -16,7 +16,7 @@ internal interface IInvocationsWebSocketEndpointLifecycle
 
     Task FinalizeAsync(
         Func<Task> finalizeConnection,
-        Action emitCloseEvent,
+        Action<long> emitCloseEvent,
         WebSocketEndpointCompletion completion);
 }
 

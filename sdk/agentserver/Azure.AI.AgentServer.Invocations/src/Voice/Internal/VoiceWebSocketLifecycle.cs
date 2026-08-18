@@ -76,22 +76,25 @@ internal sealed class VoiceWebSocketLifecycle : IInvocationsWebSocketEndpointLif
 
     public async Task FinalizeAsync(
         Func<Task> finalizeConnection,
-        Action emitCloseEvent,
+        Action<long> emitCloseEvent,
         WebSocketEndpointCompletion completion)
     {
+        long durationMs;
         try
         {
             await finalizeConnection().ConfigureAwait(false);
-            _telemetry.EmitStructuredLog(emitCloseEvent);
         }
         finally
         {
+            durationMs = completion.GetFinalDurationMs();
             _telemetry.Complete(
                 completion.SessionId,
                 completion.CloseCode,
                 completion.ErrorCode,
                 completion.HandlerOutcome,
-                completion.GetFinalDurationMs());
+                durationMs);
         }
+
+        _telemetry.EmitStructuredLog(() => emitCloseEvent(durationMs));
     }
 }

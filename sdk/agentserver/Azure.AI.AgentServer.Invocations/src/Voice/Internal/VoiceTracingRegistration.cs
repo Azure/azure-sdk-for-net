@@ -4,8 +4,12 @@
 using System.Diagnostics;
 using System.Globalization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Routing.Template;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using OpenTelemetry.Context.Propagation;
 using OpenTelemetry.Instrumentation.AspNetCore;
 
 namespace Azure.AI.AgentServer.Invocations.Voice;
@@ -15,6 +19,7 @@ internal static class VoiceTracingRegistration
     private static readonly ActivitySource s_activitySource = new(InvocationsActivitySource.DefaultName);
     private static readonly object s_endpointEntered = new();
     private static readonly object s_rejectionTraceRegistered = new();
+    private static readonly object s_tracedWebSocketCandidate = new();
     private static readonly AsyncLocal<object?> s_rejectionStartToken = new();
 
     internal static void Add(IServiceCollection services)
@@ -25,9 +30,20 @@ internal static class VoiceTracingRegistration
             options.Filter = httpContext =>
             {
                 var applicationTracingEnabled = applicationFilter?.Invoke(httpContext) ?? true;
-                if (!applicationTracingEnabled || !IsVoiceWebSocketUpgrade(httpContext))
+                if (!applicationTracingEnabled)
                 {
-                    return applicationTracingEnabled;
+                    return false;
+                }
+
+                if (!IsWebSocketUpgrade(httpContext))
+                {
+                    return true;
+                }
+
+                httpContext.Items[s_tracedWebSocketCandidate] = null;
+                if (!httpContext.RequestServices.GetRequiredService<VoiceRouteRegistry>().Contains(httpContext))
+                {
+                    return true;
                 }
 
                 RegisterRejectionTrace(httpContext);
@@ -37,8 +53,21 @@ internal static class VoiceTracingRegistration
         services.TryAddSingleton<VoiceRouteRegistry>();
     }
 
-    internal static void MarkEndpointEntered(HttpContext httpContext) =>
+    internal static void MarkEndpointEntered(HttpContext httpContext)
+    {
         httpContext.Items[s_endpointEntered] = null;
+        if (!httpContext.Items.ContainsKey(s_tracedWebSocketCandidate))
+        {
+            return;
+        }
+
+        var requestActivity = Activity.Current;
+        if (requestActivity?.Source.Name == "Microsoft.AspNetCore")
+        {
+            requestActivity.IsAllDataRequested = false;
+            requestActivity.ActivityTraceFlags &= ~ActivityTraceFlags.Recorded;
+        }
+    }
 
     private static void RegisterRejectionTrace(HttpContext httpContext)
     {
@@ -48,15 +77,7 @@ internal static class VoiceTracingRegistration
         }
 
         var requestActivity = Activity.Current;
-        var parentContext = requestActivity is not null &&
-            requestActivity.ParentSpanId != default
-                ? new ActivityContext(
-                    requestActivity.TraceId,
-                    requestActivity.ParentSpanId,
-                    requestActivity.ActivityTraceFlags,
-                    requestActivity.TraceStateString,
-                    isRemote: true)
-                : default;
+        var parentContext = ExtractParentContext(httpContext.Request.Headers);
         var startTime = requestActivity is null
             ? DateTimeOffset.UtcNow
             : new DateTimeOffset(requestActivity.StartTimeUtc);
@@ -72,6 +93,24 @@ internal static class VoiceTracingRegistration
                 return Task.CompletedTask;
             },
             state);
+    }
+
+    private static ActivityContext ExtractParentContext(IHeaderDictionary headers)
+    {
+        try
+        {
+            return Propagators.DefaultTextMapPropagator.Extract(
+                default,
+                headers,
+                static (carrier, key) => carrier.TryGetValue(key, out var values)
+                    ? values
+                    : Array.Empty<string>())
+                .ActivityContext;
+        }
+        catch (Exception exception) when (!ContainsOutOfMemoryException(exception))
+        {
+            return default;
+        }
     }
 
     private static void EmitRejectionTrace(RejectionTraceState state)
@@ -159,16 +198,22 @@ internal static class VoiceTracingRegistration
         activity?.Source.Name == InvocationsActivitySource.DefaultName &&
         activity.OperationName == operationName;
 
-    private static bool IsVoiceWebSocketUpgrade(HttpContext httpContext)
+    private static bool IsWebSocketUpgrade(HttpContext httpContext)
     {
         var request = httpContext.Request;
-        return HttpMethods.IsGet(request.Method) &&
-            httpContext.RequestServices.GetRequiredService<VoiceRouteRegistry>()
-                .Contains(request.Path) &&
+        if (HttpMethods.IsGet(request.Method))
+        {
+            return
             HeaderContainsToken(request.Headers.Connection, "upgrade") &&
             HeaderContainsToken(request.Headers.Upgrade, "websocket") &&
             HasValidWebSocketKey(request.Headers.SecWebSocketKey) &&
             HeaderContainsToken(request.Headers.SecWebSocketVersion, "13");
+        }
+
+        var extendedConnect = httpContext.Features.Get<IHttpExtendedConnectFeature>();
+        return HttpMethods.IsConnect(request.Method) &&
+            extendedConnect?.IsExtendedConnect == true &&
+            string.Equals(extendedConnect.Protocol, "websocket", StringComparison.OrdinalIgnoreCase);
     }
 
     private static bool HasValidWebSocketKey(
@@ -246,22 +291,52 @@ internal static class VoiceTracingRegistration
 
 internal sealed class VoiceRouteRegistry
 {
-    private readonly HashSet<string> _paths = new(StringComparer.OrdinalIgnoreCase);
+    private readonly Dictionary<string, TemplateMatcher> _routes = new(StringComparer.OrdinalIgnoreCase);
     private readonly object _gate = new();
 
     internal void Add(string path)
     {
+        var normalizedPath = NormalizePath(path);
+        var matcher = CreateMatcher(normalizedPath);
         lock (_gate)
         {
-            _paths.Add(path);
+            _routes[normalizedPath] = matcher;
         }
     }
 
-    internal bool Contains(PathString path)
+    internal bool Contains(HttpContext httpContext) =>
+        MatchesVoiceRoute(new PathString(NormalizePath(httpContext.Request.Path.Value)));
+
+    private bool MatchesVoiceRoute(PathString path)
     {
         lock (_gate)
         {
-            return path.Value is { } value && _paths.Contains(value);
+            foreach (var matcher in _routes.Values)
+            {
+                if (matcher.TryMatch(path, new RouteValueDictionary()))
+                {
+                    return true;
+                }
+            }
         }
+
+        return false;
+    }
+
+    private static TemplateMatcher CreateMatcher(string pattern) =>
+        new(TemplateParser.Parse(pattern.TrimStart('/')), new RouteValueDictionary());
+
+    private static string NormalizePath(string? path)
+    {
+        if (string.IsNullOrEmpty(path))
+        {
+            return "/";
+        }
+
+        var normalized = path[0] == '/' ? path : $"/{path}";
+        return normalized.Length > 1 &&
+            normalized[^1] == '/' &&
+            normalized[^2] != '/'
+                ? normalized[..^1] : normalized;
     }
 }
