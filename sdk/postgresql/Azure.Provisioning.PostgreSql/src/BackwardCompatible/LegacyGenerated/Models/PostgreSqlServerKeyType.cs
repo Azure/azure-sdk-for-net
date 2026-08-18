@@ -1,0 +1,15 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace Azure.Provisioning.PostgreSql;
+
+/// <summary>
+/// The key type like &apos;AzureKeyVault&apos;.
+/// </summary>
+public enum PostgreSqlServerKeyType
+{
+    /// <summary>
+    /// AzureKeyVault.
+    /// </summary>
+    AzureKeyVault,
+}

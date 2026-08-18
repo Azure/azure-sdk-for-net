@@ -1,0 +1,30 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace Azure.Provisioning.PostgreSql;
+
+/// <summary>
+/// The current provisioning state.
+/// </summary>
+public enum PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState
+{
+    /// <summary>
+    /// Succeeded.
+    /// </summary>
+    Succeeded,
+
+    /// <summary>
+    /// Creating.
+    /// </summary>
+    Creating,
+
+    /// <summary>
+    /// Deleting.
+    /// </summary>
+    Deleting,
+
+    /// <summary>
+    /// Failed.
+    /// </summary>
+    Failed,
+}

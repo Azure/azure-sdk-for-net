@@ -1,0 +1,25 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace Azure.Provisioning.PostgreSql;
+
+/// <summary>
+/// The tier of the particular SKU, e.g. Basic.
+/// </summary>
+public enum PostgreSqlSkuTier
+{
+    /// <summary>
+    /// Basic.
+    /// </summary>
+    Basic,
+
+    /// <summary>
+    /// GeneralPurpose.
+    /// </summary>
+    GeneralPurpose,
+
+    /// <summary>
+    /// MemoryOptimized.
+    /// </summary>
+    MemoryOptimized,
+}

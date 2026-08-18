@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
+#nullable disable
 
 using System;
 using System.ComponentModel;
@@ -28,7 +28,7 @@ public partial class PostgreSqlFlexibleServersPrivateEndpointConnectionData : Pr
     {
         get { Initialize(); return _groupIds!; }
     }
-    private BicepList<string>? _groupIds;
+    private BicepList<string> _groupIds;
 
     /// <summary>
     /// Gets Id.
@@ -37,7 +37,7 @@ public partial class PostgreSqlFlexibleServersPrivateEndpointConnectionData : Pr
     {
         get { Initialize(); return _privateEndpointId!; }
     }
-    private BicepValue<ResourceIdentifier>? _privateEndpointId;
+    private BicepValue<ResourceIdentifier> _privateEndpointId;
 
     /// <summary>
     /// A collection of information about the state of the connection between
@@ -48,7 +48,7 @@ public partial class PostgreSqlFlexibleServersPrivateEndpointConnectionData : Pr
         get { Initialize(); return _connectionState!; }
         set { Initialize(); AssignOrReplace(ref _connectionState, value); }
     }
-    private PostgreSqlFlexibleServersPrivateLinkServiceConnectionState? _connectionState;
+    private PostgreSqlFlexibleServersPrivateLinkServiceConnectionState _connectionState;
 
     /// <summary>
     /// The provisioning state of the private endpoint connection resource.
@@ -57,7 +57,7 @@ public partial class PostgreSqlFlexibleServersPrivateEndpointConnectionData : Pr
     {
         get { Initialize(); return _provisioningState!; }
     }
-    private BicepValue<PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState>? _provisioningState;
+    private BicepValue<PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState> _provisioningState;
 
     /// <summary>
     /// Gets the Id.
@@ -66,7 +66,7 @@ public partial class PostgreSqlFlexibleServersPrivateEndpointConnectionData : Pr
     {
         get { Initialize(); return _id!; }
     }
-    private BicepValue<ResourceIdentifier>? _id;
+    private BicepValue<ResourceIdentifier> _id;
 
     /// <summary>
     /// Gets the Name.
@@ -75,7 +75,7 @@ public partial class PostgreSqlFlexibleServersPrivateEndpointConnectionData : Pr
     {
         get { Initialize(); return _name!; }
     }
-    private BicepValue<string>? _name;
+    private BicepValue<string> _name;
 
     /// <summary>
     /// Gets the ResourceType.
@@ -84,7 +84,7 @@ public partial class PostgreSqlFlexibleServersPrivateEndpointConnectionData : Pr
     {
         get { Initialize(); return _resourceType!; }
     }
-    private BicepValue<ResourceType>? _resourceType;
+    private BicepValue<ResourceType> _resourceType;
 
     /// <summary>
     /// Gets the SystemData.
@@ -93,7 +93,7 @@ public partial class PostgreSqlFlexibleServersPrivateEndpointConnectionData : Pr
     {
         get { Initialize(); return _systemData!; }
     }
-    private SystemData? _systemData;
+    private SystemData _systemData;
 
     /// <summary>
     /// Creates a new PostgreSqlFlexibleServersPrivateEndpointConnectionData.
