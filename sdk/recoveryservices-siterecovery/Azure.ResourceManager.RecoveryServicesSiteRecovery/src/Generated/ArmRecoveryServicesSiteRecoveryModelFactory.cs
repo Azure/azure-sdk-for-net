@@ -135,6 +135,89 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 default);
         }
 
+        /// <param name="innerHealthErrors"> The inner health errors. HealthError having a list of HealthError as child errors is problematic. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&gt; InnerException. </param>
+        /// <param name="errorSource"> Source of error. </param>
+        /// <param name="errorType"> Type of error. </param>
+        /// <param name="errorLevel"> Level of error. </param>
+        /// <param name="errorCategory"> Category of error. </param>
+        /// <param name="errorCode"> Error code. </param>
+        /// <param name="summaryMessage"> Summary message of the entity. </param>
+        /// <param name="errorMessage"> Error message. </param>
+        /// <param name="possibleCauses"> Possible causes of error. </param>
+        /// <param name="recommendedAction"> Recommended action to resolve error. </param>
+        /// <param name="creationTimeUtc"> Error creation time (UTC). </param>
+        /// <param name="recoveryProviderErrorMessage"> DRA error message. </param>
+        /// <param name="entityId"> ID of the entity. </param>
+        /// <param name="errorId"> The health error unique id. </param>
+        /// <param name="customerResolvability"> Value indicating whether the health error is customer resolvable. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryHealthError"/> instance for mocking. </returns>
+        public static SiteRecoveryHealthError SiteRecoveryHealthError(IEnumerable<SiteRecoveryInnerHealthError> innerHealthErrors = default, string errorSource = default, string errorType = default, string errorLevel = default, string errorCategory = default, string errorCode = default, string summaryMessage = default, string errorMessage = default, string possibleCauses = default, string recommendedAction = default, DateTimeOffset? creationTimeUtc = default, string recoveryProviderErrorMessage = default, string entityId = default, string errorId = default, HealthErrorCustomerResolvability? customerResolvability = default)
+        {
+            innerHealthErrors ??= new ChangeTrackingList<SiteRecoveryInnerHealthError>();
+
+            return new SiteRecoveryHealthError(
+                default,
+                errorSource,
+                errorType,
+                errorLevel,
+                errorCategory,
+                errorCode,
+                summaryMessage,
+                errorMessage,
+                possibleCauses,
+                recommendedAction,
+                creationTimeUtc,
+                recoveryProviderErrorMessage,
+                entityId,
+                errorId,
+                customerResolvability,
+                default);
+        }
+
+        /// <param name="errorSource"> Source of error. </param>
+        /// <param name="errorType"> Type of error. </param>
+        /// <param name="errorLevel"> Level of error. </param>
+        /// <param name="errorCategory"> Category of error. </param>
+        /// <param name="errorCode"> Error code. </param>
+        /// <param name="summaryMessage"> Summary message of the entity. </param>
+        /// <param name="errorMessage"> Error message. </param>
+        /// <param name="possibleCauses"> Possible causes of error. </param>
+        /// <param name="recommendedAction"> Recommended action to resolve error. </param>
+        /// <param name="createdOn"> Error creation time (UTC). </param>
+        /// <param name="recoveryProviderErrorMessage"> DRA error message. </param>
+        /// <param name="entityId"> ID of the entity. </param>
+        /// <param name="errorId"> The health error unique id. </param>
+        /// <param name="customerResolvability"> Value indicating whether the health error is customer resolvable. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryInnerHealthError"/> instance for mocking. </returns>
+        public static SiteRecoveryInnerHealthError SiteRecoveryInnerHealthError(string errorSource = default, string errorType = default, string errorLevel = default, string errorCategory = default, string errorCode = default, string summaryMessage = default, string errorMessage = default, string possibleCauses = default, string recommendedAction = default, DateTimeOffset? createdOn = default, string recoveryProviderErrorMessage = default, string entityId = default, string errorId = default, HealthErrorCustomerResolvability? customerResolvability = default)
+        {
+            return new SiteRecoveryInnerHealthError(
+                errorSource,
+                errorType,
+                errorLevel,
+                errorCategory,
+                errorCode,
+                summaryMessage,
+                errorMessage,
+                possibleCauses,
+                recommendedAction,
+                createdOn,
+                recoveryProviderErrorMessage,
+                entityId,
+                errorId,
+                customerResolvability,
+                default);
+        }
+
+        /// <param name="scenarioName"> Scenario name. </param>
+        /// <param name="jobId"> ARM Id of the job being executed. </param>
+        /// <param name="startOn"> Start time of the workflow. </param>
+        /// <returns> A new <see cref="Models.CurrentScenarioDetails"/> instance for mocking. </returns>
+        public static CurrentScenarioDetails CurrentScenarioDetails(string scenarioName = default, ResourceIdentifier jobId = default, DateTimeOffset? startOn = default)
+        {
+            return new CurrentScenarioDetails(scenarioName, jobId, startOn, default);
+        }
+
         /// <param name="instanceType"> Gets the Instance type. </param>
         /// <returns> A new <see cref="Models.ReplicationProviderSpecificSettings"/> instance for mocking. </returns>
         public static ReplicationProviderSpecificSettings ReplicationProviderSpecificSettings(string instanceType = default)
@@ -373,6 +456,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 failoverDiskName,
                 tfoDiskName,
                 default);
+        }
+
+        /// <param name="diskLunId"> The source lun Id for the data disk. </param>
+        /// <param name="diskAutoProtectionStatus"> A value indicating whether the disk auto protection is enabled. </param>
+        /// <returns> A new <see cref="Models.A2AUnprotectedDiskDetails"/> instance for mocking. </returns>
+        public static A2AUnprotectedDiskDetails A2AUnprotectedDiskDetails(int? diskLunId = default, AutoProtectionOfDataDisk? diskAutoProtectionStatus = default)
+        {
+            return new A2AUnprotectedDiskDetails(diskLunId, diskAutoProtectionStatus, default);
         }
 
         /// <param name="diskId"> The managed disk Arm id. </param>
