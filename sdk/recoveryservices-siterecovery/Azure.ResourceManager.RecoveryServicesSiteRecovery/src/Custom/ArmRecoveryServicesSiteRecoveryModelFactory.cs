@@ -23,6 +23,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
+    // TODO: Remove these four suppressions and their corresponding factory methods when https://github.com/microsoft/typespec/issues/11667 is fixed.
     [CodeGenSuppress("CurrentScenarioDetails", typeof(string), typeof(ResourceIdentifier), typeof(DateTimeOffset?))]
     [CodeGenSuppress("A2AUnprotectedDiskDetails", typeof(int?), typeof(AutoProtectionOfDataDisk?))]
     [CodeGenSuppress("SiteRecoveryHealthError", typeof(IEnumerable<SiteRecoveryInnerHealthError>), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(DateTimeOffset?), typeof(string), typeof(string), typeof(string), typeof(HealthErrorCustomerResolvability?))]
