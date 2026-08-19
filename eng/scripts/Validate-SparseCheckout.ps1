@@ -59,6 +59,7 @@ $manifestPath = Join-Path $OutputDirectory 'manifest.txt'
 $projectGraphPath = "$manifestPath.projects"
 $reportPath = Join-Path $OutputDirectory 'report.json'
 $cloneRoot = Join-Path $OutputDirectory 'clones'
+$activeClonePath = Join-Path $cloneRoot 'work'
 
 $null = New-Item -ItemType Directory -Path $OutputDirectory -Force
 
@@ -119,7 +120,7 @@ function Get-TreeMetrics([string] $Path) {
 }
 
 function Invoke-Comparison([string] $Mode) {
-  $clonePath = Join-Path $cloneRoot $Mode.ToLowerInvariant()
+  $clonePath = $activeClonePath
 
   $cloneWatch = [System.Diagnostics.Stopwatch]::StartNew()
   & git clone --quiet --no-checkout --shared $repoRoot $clonePath
@@ -266,8 +267,15 @@ $createdCloneRoot = $false
 try {
   $null = New-Item -ItemType Directory -Path $cloneRoot
   $createdCloneRoot = $true
-  $results += Invoke-Comparison -Mode Full
-  $results += Invoke-Comparison -Mode Sparse
+  foreach ($mode in @('Full', 'Sparse')) {
+    $results += Invoke-Comparison -Mode $mode
+    if ($KeepClones) {
+      Move-Item -LiteralPath $activeClonePath -Destination (Join-Path $cloneRoot $mode.ToLowerInvariant())
+    }
+    else {
+      Remove-Item -LiteralPath $activeClonePath -Recurse -Force
+    }
+  }
 }
 finally {
   $report = [ordered]@{
@@ -296,7 +304,7 @@ if ($results.Count -ne 2 -or ($results | Where-Object ExitCode -ne 0)) {
 if ($Target -eq 'Pack' -and
     ($results[0].Packages | ConvertTo-Json -Compress) -ne
       ($results[1].Packages | ConvertTo-Json -Compress)) {
-  throw 'Full and sparse clones produced different package sets.'
+  throw 'Full and sparse clones produced different package paths or contents.'
 }
 if ($Target -eq 'Test' -and
     ($results[0].Tests | ConvertTo-Json -Compress) -ne ($results[1].Tests | ConvertTo-Json -Compress)) {
