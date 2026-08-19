@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Network
         [WirePath("properties")]
         internal AdminRuleCollectionPropertiesFormat Properties { get; set; }
 
+        /// <summary> Resource type. </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
         /// <summary> A description of the admin rule collection. </summary>
         [WirePath("properties.description")]
         public string Description

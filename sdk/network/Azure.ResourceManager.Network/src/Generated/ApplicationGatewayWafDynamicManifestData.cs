@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Network
         [WirePath("properties")]
         internal ApplicationGatewayWafDynamicManifestPropertiesResult Properties { get; }
 
+        /// <summary> Resource type. </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
         /// <summary> The type of the web application firewall rule set. </summary>
         [WirePath("properties.defaultRuleSet.ruleSetType")]
         public string RuleSetType

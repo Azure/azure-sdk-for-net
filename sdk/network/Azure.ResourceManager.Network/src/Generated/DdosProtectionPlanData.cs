@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Network
         [WirePath("etag")]
         public ETag? ETag { get; }
 
+        /// <summary> Resource type. </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
         /// <summary> The provisioning state of the DDoS protection plan resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState

@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.Network
         [WirePath("properties")]
         internal SwapResourceProperties Properties { get; set; }
 
+        /// <summary> Resource type. </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
         /// <summary> Specifies slot info on a cloud service. </summary>
         [WirePath("properties.slotType")]
         public SwapSlotType? SwapResourceSlotType

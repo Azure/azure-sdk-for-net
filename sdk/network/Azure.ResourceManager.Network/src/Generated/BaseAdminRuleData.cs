@@ -44,5 +44,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Whether the rule is custom or default. </summary>
         [WirePath("kind")]
         internal AdminRuleKind Kind { get; set; }
+
+        /// <summary> Resource type. </summary>
+        [WirePath("type")]
+        public string Type { get; }
     }
 }

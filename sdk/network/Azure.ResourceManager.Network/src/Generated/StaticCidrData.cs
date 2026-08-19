@@ -37,5 +37,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Properties of static CIDR resource. </summary>
         [WirePath("properties")]
         public StaticCidrProperties Properties { get; set; }
+
+        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
+        [WirePath("type")]
+        public string Type { get; }
     }
 }

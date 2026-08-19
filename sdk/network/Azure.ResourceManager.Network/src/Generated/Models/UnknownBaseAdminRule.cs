@@ -19,8 +19,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="systemData"> The system metadata related to this resource. </param>
         /// <param name="kind"> Whether the rule is custom or default. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownBaseAdminRule(string name, SystemData systemData, AdminRuleKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, systemData, kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        /// <param name="type"> Resource type. </param>
+        internal UnknownBaseAdminRule(string name, SystemData systemData, AdminRuleKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string @type) : base(name, systemData, kind != default ? kind : "unknown", additionalBinaryDataProperties)
         {
+            Type = @type;
         }
+
+        /// <summary> Resource type. </summary>
+        [WirePath("type")]
+        public string Type { get; }
     }
 }

@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.Network
         [WirePath("zones")]
         public IList<string> Zones { get; }
 
+        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
         /// <summary> Reference to an existing virtual network. </summary>
         [WirePath("properties.virtualNetwork")]
         public VirtualNetworkData VirtualNetwork

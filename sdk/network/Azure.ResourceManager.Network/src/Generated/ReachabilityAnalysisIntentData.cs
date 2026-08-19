@@ -44,5 +44,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Represents the Reachability Analysis Intent properties. </summary>
         [WirePath("properties")]
         public ReachabilityAnalysisIntentProperties Properties { get; set; }
+
+        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
+        [WirePath("type")]
+        public string Type { get; }
     }
 }

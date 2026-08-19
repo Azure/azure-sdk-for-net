@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Network.Models
         [WirePath("properties")]
         internal DefaultAdminPropertiesFormat Properties { get; set; }
 
+        /// <summary> Resource type. </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
         /// <summary> A description for this rule. Restricted to 140 chars. </summary>
         [WirePath("properties.description")]
         public string Description

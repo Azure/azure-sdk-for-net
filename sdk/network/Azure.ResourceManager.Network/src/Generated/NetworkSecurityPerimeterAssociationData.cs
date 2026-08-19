@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.Network
         [WirePath("properties")]
         internal NspAssociationProperties Properties { get; set; }
 
+        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
         /// <summary> The provisioning state of the resource  association resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkSecurityPerimeterProvisioningState? ProvisioningState

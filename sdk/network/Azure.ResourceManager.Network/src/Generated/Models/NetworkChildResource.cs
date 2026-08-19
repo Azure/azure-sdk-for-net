@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
-        public virtual string ETag { get; }
+        public string ETag { get; }
     }
 }

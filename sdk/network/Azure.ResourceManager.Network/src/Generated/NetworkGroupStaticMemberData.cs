@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Network
         [WirePath("properties")]
         internal StaticMemberProperties Properties { get; set; }
 
+        /// <summary> Resource type. </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
         /// <summary> Resource Id. </summary>
         [WirePath("properties.resourceId")]
         public ResourceIdentifier ResourceId

@@ -46,5 +46,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> String representing unique etag for the resource document. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
+        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
+        [WirePath("type")]
+        public string Type { get; }
     }
 }

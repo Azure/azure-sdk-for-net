@@ -48,6 +48,14 @@ namespace Azure.ResourceManager.Network
         [WirePath("etag")]
         public ETag? ETag { get; }
 
+        /// <summary> Resource type. </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
+        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
+        public string ETag { get; }
+
         /// <summary> Resource ID. </summary>
         [WirePath("properties.resourceId")]
         public ResourceIdentifier ResourceId

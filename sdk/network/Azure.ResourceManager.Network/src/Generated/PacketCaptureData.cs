@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.Network
         [WirePath("properties")]
         internal PacketCaptureResultProperties Properties { get; }
 
+        /// <summary> Resource type. </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
         /// <summary> The ID of the targeted resource, only AzureVM and AzureVMSS as target type are currently supported. </summary>
         [WirePath("properties.target")]
         public string Target

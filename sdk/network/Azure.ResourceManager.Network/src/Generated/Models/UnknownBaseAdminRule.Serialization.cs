@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.Network.Models
                 throw new FormatException($"The model {nameof(BaseAdminRuleData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -118,6 +123,7 @@ namespace Azure.ResourceManager.Network.Models
             SystemData systemData = default;
             AdminRuleKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string @type = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("systemData"u8))
@@ -134,12 +140,17 @@ namespace Azure.ResourceManager.Network.Models
                     kind = new AdminRuleKind(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownBaseAdminRule(name, systemData, kind, additionalBinaryDataProperties);
+            return new UnknownBaseAdminRule(name, systemData, kind, additionalBinaryDataProperties, @type);
         }
     }
 }

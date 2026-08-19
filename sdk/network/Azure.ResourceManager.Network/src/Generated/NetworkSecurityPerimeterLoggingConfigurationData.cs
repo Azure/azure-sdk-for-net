@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Network
         [WirePath("properties")]
         internal NspLoggingConfigurationProperties Properties { get; set; }
 
+        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
         /// <summary> The log categories to enable in the NSP logging configuration. </summary>
         [WirePath("properties.enabledLogCategories")]
         public IList<string> EnabledLogCategories

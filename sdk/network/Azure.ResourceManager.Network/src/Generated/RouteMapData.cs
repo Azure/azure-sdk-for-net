@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Network
         [WirePath("etag")]
         public ETag? ETag { get; }
 
+        /// <summary> Type of the resource. </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
         /// <summary> List of connections which have this RoutMap associated for inbound traffic. </summary>
         [WirePath("properties.associatedInboundConnections")]
         public IList<string> AssociatedInboundConnections

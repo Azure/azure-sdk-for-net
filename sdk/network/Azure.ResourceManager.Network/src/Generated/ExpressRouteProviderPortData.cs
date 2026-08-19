@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Network
         [WirePath("etag")]
         public ETag? ETag { get; }
 
+        /// <summary> Resource type. </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
         /// <summary> The name of the port pair. </summary>
         [WirePath("properties.portPairDescriptor")]
         public string PortPairDescriptor

@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Network
         [WirePath("properties")]
         internal NspProfileProperties Properties { get; set; }
 
+        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
         /// <summary> Version number that increases with every update to access rules within the profile. </summary>
         [WirePath("properties.accessRulesVersion")]
         public string AccessRulesVersion
