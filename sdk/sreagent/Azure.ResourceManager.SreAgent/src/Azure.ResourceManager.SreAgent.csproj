@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>This is the Azure.ResourceManager.SreAgent client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>SDK Code Generation Azure.ResourceManager.SreAgent</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Azure.ResourceManager.SreAgent</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+</Project>
