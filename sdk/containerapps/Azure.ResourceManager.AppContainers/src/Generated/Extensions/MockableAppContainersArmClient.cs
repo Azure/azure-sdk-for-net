@@ -228,22 +228,22 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             return new ContainerAppAuthConfigResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="BuilderResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ContainerAppBuilderResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BuilderResource"/> object. </returns>
-        public virtual BuilderResource GetBuilderResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppBuilderResource"/> object. </returns>
+        public virtual ContainerAppBuilderResource GetContainerAppBuilderResource(ResourceIdentifier id)
         {
-            BuilderResource.ValidateResourceId(id);
-            return new BuilderResource(Client, id);
+            ContainerAppBuilderResource.ValidateResourceId(id);
+            return new ContainerAppBuilderResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="BuildResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ContainerAppBuildResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BuildResource"/> object. </returns>
-        public virtual BuildResource GetBuildResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppBuildResource"/> object. </returns>
+        public virtual ContainerAppBuildResource GetContainerAppBuildResource(ResourceIdentifier id)
         {
-            BuildResource.ValidateResourceId(id);
-            return new BuildResource(Client, id);
+            ContainerAppBuildResource.ValidateResourceId(id);
+            return new ContainerAppBuildResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ContainerAppConnectedEnvironmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>

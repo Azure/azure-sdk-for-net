@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="properties"> Specifies the properties of the virtual machine to be created. </param>
         /// <param name="vmExtensions"> Virtual Machine Extensions Array to be applied to the Virtual Machines. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkVmConfiguration(string name, string computeApiVersion, string resourceGroupName, IList<string> zones, ArmPlan plan, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, Placement placement, IDictionary<string, string> tags, BulkActionVirtualMachineProperties properties, IList<BulkActionVmExtension> vmExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkVmConfiguration(string name, string computeApiVersion, string resourceGroupName, IList<string> zones, ArmPlan plan, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, VirtualMachinePlacement placement, IDictionary<string, string> tags, BulkActionVirtualMachineProperties properties, IList<BulkActionVmExtension> vmExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ComputeApiVersion = computeApiVersion;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> Placement constraints for virtual machine hardware placement. </summary>
-        public Placement Placement { get; set; }
+        public VirtualMachinePlacement Placement { get; set; }
 
         /// <summary> Resource tags to apply to the virtual machines created by this bulk action. </summary>
         public IDictionary<string, string> Tags { get; }

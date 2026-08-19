@@ -14,7 +14,7 @@ using Azure.ResourceManager.AppContainers.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    internal partial class BuildsByBuilderResourceGetAllCollectionResultOfT : Pageable<BuildData>
+    internal partial class BuildsByBuilderResourceGetAllCollectionResultOfT : Pageable<ContainerAppBuildData>
     {
         private readonly BuildsByBuilderResource _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of BuildsByBuilderResourceGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<BuildData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<ContainerAppBuildData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     yield break;
                 }
-                BuildList result = BuildList.FromResponse(response);
+                ContainerAppBuildList result = ContainerAppBuildList.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<BuildData>.FromValues((IReadOnlyList<BuildData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ContainerAppBuildData>.FromValues((IReadOnlyList<ContainerAppBuildData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

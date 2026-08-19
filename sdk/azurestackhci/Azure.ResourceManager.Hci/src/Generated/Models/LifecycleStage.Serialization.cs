@@ -91,20 +91,20 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartTimeUtc))
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
-                writer.WriteStringValue(StartTimeUtc.Value, "O");
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndTimeUtc))
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTimeUtc"u8);
-                writer.WriteStringValue(EndTimeUtc.Value, "O");
+                writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedUtc))
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedUtc"u8);
-                writer.WriteStringValue(LastUpdatedUtc.Value, "O");
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.Hci.Models
             string name = default;
             string description = default;
             LifecycleOperationStatus status = default;
-            DateTimeOffset? startTimeUtc = default;
-            DateTimeOffset? endTimeUtc = default;
-            DateTimeOffset? lastUpdatedUtc = default;
+            DateTimeOffset? startOn = default;
+            DateTimeOffset? endOn = default;
+            DateTimeOffset? lastUpdatedOn = default;
             ResponseError error = default;
             IReadOnlyList<LifecycleStage> subStages = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    startTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTimeUtc"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    endTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastUpdatedUtc"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    lastUpdatedUtc = prop.Value.GetDateTimeOffset("O");
+                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("error"u8))
@@ -248,9 +248,9 @@ namespace Azure.ResourceManager.Hci.Models
                 name,
                 description,
                 status,
-                startTimeUtc,
-                endTimeUtc,
-                lastUpdatedUtc,
+                startOn,
+                endOn,
+                lastUpdatedOn,
                 error,
                 subStages ?? new ChangeTrackingList<LifecycleStage>(),
                 additionalBinaryDataProperties);

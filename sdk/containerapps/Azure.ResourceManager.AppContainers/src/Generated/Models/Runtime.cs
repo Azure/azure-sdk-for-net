@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Auto configure the ASP.NET Core Data Protection feature. </summary>
         [WirePath("dotnet.autoConfigureDataProtection")]
-        public bool? AutoConfigureDataProtection
+        public bool? IsAutoConfigureDataProtectionEnabled
         {
             get
             {
-                return Dotnet is null ? default : Dotnet.AutoConfigureDataProtection;
+                return Dotnet is null ? default : Dotnet.IsAutoConfigureDataProtectionEnabled;
             }
             set
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     Dotnet = new RuntimeDotnet();
                 }
-                Dotnet.AutoConfigureDataProtection = value;
+                Dotnet.IsAutoConfigureDataProtectionEnabled = value;
             }
         }
     }

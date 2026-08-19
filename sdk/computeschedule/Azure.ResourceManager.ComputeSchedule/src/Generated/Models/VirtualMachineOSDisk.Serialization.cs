@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 writer.WritePropertyName("caching"u8);
                 writer.WriteStringValue(Caching.Value.ToString());
             }
-            if (Optional.IsDefined(WriteAcceleratorEnabled))
+            if (Optional.IsDefined(IsWriteAcceleratorEnabled))
             {
                 writer.WritePropertyName("writeAcceleratorEnabled"u8);
-                writer.WriteBooleanValue(WriteAcceleratorEnabled.Value);
+                writer.WriteBooleanValue(IsWriteAcceleratorEnabled.Value);
             }
             if (Optional.IsDefined(DiffDiskSettings))
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             VirtualHardDisk vhd = default;
             VirtualHardDisk image = default;
             CachingType? caching = default;
-            bool? writeAcceleratorEnabled = default;
+            bool? isWriteAcceleratorEnabled = default;
             DiffDiskSettings diffDiskSettings = default;
             DiskCreateOptionType createOption = default;
             int? diskSizeGB = default;
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    writeAcceleratorEnabled = prop.Value.GetBoolean();
+                    isWriteAcceleratorEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("diffDiskSettings"u8))
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 vhd,
                 image,
                 caching,
-                writeAcceleratorEnabled,
+                isWriteAcceleratorEnabled,
                 diffDiskSettings,
                 createOption,
                 diskSizeGB,

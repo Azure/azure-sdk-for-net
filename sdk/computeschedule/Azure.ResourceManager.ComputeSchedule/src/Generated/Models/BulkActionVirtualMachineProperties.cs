@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
         }
 
-        /// <summary> The ID of the sub-resource. </summary>
-        public ResourceIdentifier CapacityReservationGroupId
+        /// <summary> Specifies the capacity reservation group resource id that should be used for allocating the virtual machine provided enough capacity has been reserved. Please refer to https://aka.ms/CapacityReservation for more details. </summary>
+        public WritableSubResource CapacityReservationGroup
         {
             get
             {
-                return CapacityReservation is null ? default : CapacityReservation.CapacityReservationGroupId;
+                return CapacityReservation is null ? default : CapacityReservation.CapacityReservationGroup;
             }
             set
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 {
                     CapacityReservation = new CapacityReservationProfile();
                 }
-                CapacityReservation.CapacityReservationGroupId = value;
+                CapacityReservation.CapacityReservationGroup = value;
             }
         }
 

@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode for the GPU job. </param>
         /// <param name="provisioningState"> Job provisioning state. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
-        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="startOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of GPU job. </param>
         /// <param name="error"> Error details. </param>
         /// <param name="reportedProperties"> Reported properties specific to the GPU job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vmId"> Virtual machine ID from which the GPU partition is removed. </param>
-        internal RemovePartitionGpuJobProperties(string gpuId, EdgeMachineGpuJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, HciJobStatus? status, ResponseError error, JobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, string vmId) : base(gpuId, jobType, deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, error, reportedProperties, additionalBinaryDataProperties)
+        internal RemovePartitionGpuJobProperties(string gpuId, EdgeMachineGpuJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startOn, DateTimeOffset? endOn, HciJobStatus? status, ResponseError error, JobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, string vmId) : base(gpuId, jobType, deploymentMode, provisioningState, jobId, startOn, endOn, status, error, reportedProperties, additionalBinaryDataProperties)
         {
             VmId = vmId;
         }

@@ -33,20 +33,20 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
         /// <param name="provisioningState"> Job provisioning state. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
-        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="startOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of disk job. </param>
         /// <param name="error"> Error details if job failed. </param>
         /// <param name="reportedProperties"> Properties reported by the job execution. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeMachineDiskPrivilegedJobProperties(PrivilegedJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, HciJobStatus? status, ResponseError error, DiskJobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeMachineDiskPrivilegedJobProperties(PrivilegedJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startOn, DateTimeOffset? endOn, HciJobStatus? status, ResponseError error, DiskJobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             JobType = jobType;
             DeploymentMode = deploymentMode;
             ProvisioningState = provisioningState;
             JobId = jobId;
-            StartTimeUtc = startTimeUtc;
-            EndTimeUtc = endTimeUtc;
+            StartOn = startOn;
+            EndOn = endOn;
             Status = status;
             Error = error;
             ReportedProperties = reportedProperties;
@@ -68,14 +68,6 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Unique, immutable job id. </summary>
         [WirePath("jobId")]
         public string JobId { get; }
-
-        /// <summary> The UTC date and time at which the job started. </summary>
-        [WirePath("startTimeUtc")]
-        public DateTimeOffset? StartTimeUtc { get; }
-
-        /// <summary> The UTC date and time at which the job completed. </summary>
-        [WirePath("endTimeUtc")]
-        public DateTimeOffset? EndTimeUtc { get; }
 
         /// <summary> Status of disk job. </summary>
         [WirePath("status")]

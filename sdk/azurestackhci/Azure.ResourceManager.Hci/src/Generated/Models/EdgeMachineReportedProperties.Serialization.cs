@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(WorkloadInventoryLastUpdated))
+            if (options.Format != "W" && Optional.IsDefined(WorkloadInventoryLastUpdatedOn))
             {
                 writer.WritePropertyName("workloadInventoryLastUpdated"u8);
-                writer.WriteStringValue(WorkloadInventoryLastUpdated.Value, "O");
+                writer.WriteStringValue(WorkloadInventoryLastUpdatedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Hci.Models
             SbeDeploymentPackageInfo sbeDeploymentPackageInfo = default;
             ExtensionProfile extensionProfile = default;
             IReadOnlyList<EdgeMachineWorkloadInventoryItem> workloadInventory = default;
-            DateTimeOffset? workloadInventoryLastUpdated = default;
+            DateTimeOffset? workloadInventoryLastUpdatedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    workloadInventoryLastUpdated = prop.Value.GetDateTimeOffset("O");
+                    workloadInventoryLastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Hci.Models
                 sbeDeploymentPackageInfo,
                 extensionProfile,
                 workloadInventory ?? new ChangeTrackingList<EdgeMachineWorkloadInventoryItem>(),
-                workloadInventoryLastUpdated,
+                workloadInventoryLastUpdatedOn,
                 additionalBinaryDataProperties);
         }
     }

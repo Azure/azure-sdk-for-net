@@ -161,11 +161,11 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             return GetContainerApps().Get(containerAppName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Builders in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Builders and their operations over a BuilderResource. </returns>
-        public virtual BuilderCollection GetBuilders()
+        /// <summary> Gets a collection of ContainerAppBuilders in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerAppBuilders and their operations over a ContainerAppBuilderResource. </returns>
+        public virtual ContainerAppBuilderCollection GetContainerAppBuilders()
         {
-            return GetCachedClient(client => new BuilderCollection(client, Id));
+            return GetCachedClient(client => new ContainerAppBuilderCollection(client, Id));
         }
 
         /// <summary>
@@ -190,11 +190,11 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="builderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="builderName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BuilderResource>> GetBuilderAsync(string builderName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppBuilderResource>> GetContainerAppBuilderAsync(string builderName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(builderName, nameof(builderName));
 
-            return await GetBuilders().GetAsync(builderName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerAppBuilders().GetAsync(builderName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -219,11 +219,11 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="builderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="builderName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BuilderResource> GetBuilder(string builderName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppBuilderResource> GetContainerAppBuilder(string builderName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(builderName, nameof(builderName));
 
-            return GetBuilders().Get(builderName, cancellationToken);
+            return GetContainerAppBuilders().Get(builderName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerAppConnectedEnvironments in the <see cref="ResourceGroupResource"/>. </summary>

@@ -2089,7 +2089,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="clientId"> The Client ID of a User-Assigned Managed Identity. Should not be used along with managedIdentityResourceId. </param>
         /// <param name="managedIdentityResourceId"> The Resource ID of a User-Assigned Managed Identity. Should not be used along with clientId. </param>
         /// <returns> A new <see cref="Models.ContainerAppTokenStore"/> instance for mocking. </returns>
-        public static ContainerAppTokenStore ContainerAppTokenStore(bool? isEnabled = default, double? tokenRefreshExtensionHours = default, string azureBlobStorageSasUrlSettingName = default, string blobContainerUri = default, string clientId = default, string managedIdentityResourceId = default)
+        public static ContainerAppTokenStore ContainerAppTokenStore(bool? isEnabled = default, double? tokenRefreshExtensionHours = default, string azureBlobStorageSasUrlSettingName = default, string blobContainerUri = default, string clientId = default, ResourceIdentifier managedIdentityResourceId = default)
         {
             return new ContainerAppTokenStore(isEnabled, tokenRefreshExtensionHours, azureBlobStorageSasUrlSettingName is null && blobContainerUri is null && clientId is null && managedIdentityResourceId is null ? default : new BlobStorageTokenStore(azureBlobStorageSasUrlSettingName, blobContainerUri, clientId, managedIdentityResourceId, default), default);
         }
@@ -2146,12 +2146,12 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="environmentId"> Resource ID of the container apps environment that the builder is associated with. </param>
         /// <param name="containerRegistries"> List of mappings of container registries and the managed identity used to connect to it. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="AppContainers.BuilderData"/> instance for mocking. </returns>
-        public static BuilderData BuilderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BuilderProvisioningState? provisioningState = default, ResourceIdentifier environmentId = default, IEnumerable<ContainerRegistry> containerRegistries = default, ManagedServiceIdentity identity = default)
+        /// <returns> A new <see cref="AppContainers.ContainerAppBuilderData"/> instance for mocking. </returns>
+        public static ContainerAppBuilderData ContainerAppBuilderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BuilderProvisioningState? provisioningState = default, ResourceIdentifier environmentId = default, IEnumerable<ContainerRegistry> containerRegistries = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new BuilderData(
+            return new ContainerAppBuilderData(
                 id,
                 name,
                 resourceType,
@@ -2174,12 +2174,12 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="environmentId"> Resource ID of the container apps environment that the builder is associated with. </param>
-        /// <returns> A new <see cref="Models.BuilderPatch"/> instance for mocking. </returns>
-        public static BuilderPatch BuilderPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, ResourceIdentifier environmentId = default)
+        /// <returns> A new <see cref="Models.ContainerAppBuilderPatch"/> instance for mocking. </returns>
+        public static ContainerAppBuilderPatch ContainerAppBuilderPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, ResourceIdentifier environmentId = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new BuilderPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), environmentId is null ? default : new BuilderResourceUpdateProperties(environmentId, default), default);
+            return new ContainerAppBuilderPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), environmentId is null ? default : new BuilderResourceUpdateProperties(environmentId, default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2193,10 +2193,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="uploadEndpoint"> Endpoint to which the source code should be uploaded. </param>
         /// <param name="logStreamEndpoint"> Endpoint from which the build logs can be streamed. </param>
         /// <param name="tokenEndpoint"> Endpoint to use to retrieve an authentication token for log streaming and uploading source code. </param>
-        /// <returns> A new <see cref="AppContainers.BuildData"/> instance for mocking. </returns>
-        public static BuildData BuildData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BuildProvisioningState? provisioningState = default, BuildStatus? buildStatus = default, ContainerRegistryWithCustomImage destinationContainerRegistry = default, BuildConfiguration configuration = default, string uploadEndpoint = default, string logStreamEndpoint = default, string tokenEndpoint = default)
+        /// <returns> A new <see cref="AppContainers.ContainerAppBuildData"/> instance for mocking. </returns>
+        public static ContainerAppBuildData ContainerAppBuildData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BuildProvisioningState? provisioningState = default, BuildStatus? buildStatus = default, ContainerRegistryWithCustomImage destinationContainerRegistry = default, BuildConfiguration configuration = default, string uploadEndpoint = default, string logStreamEndpoint = default, string tokenEndpoint = default)
         {
-            return new BuildData(
+            return new ContainerAppBuildData(
                 id,
                 name,
                 resourceType,

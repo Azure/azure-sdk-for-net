@@ -12,7 +12,7 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> EAP authentication method. </summary>
-    public readonly partial struct EAPMethod : IEquatable<EAPMethod>
+    public readonly partial struct EapMethod : IEquatable<EapMethod>
     {
         private readonly string _value;
         /// <summary> PEAP authentication. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> EAP-FAST authentication. </summary>
         private const string EAPFASTValue = "EAP-FAST";
 
-        /// <summary> Initializes a new instance of <see cref="EAPMethod"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EapMethod"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EAPMethod(string value)
+        public EapMethod(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> PEAP authentication. </summary>
-        public static EAPMethod PEAP { get; } = new EAPMethod(PEAPValue);
+        public static EapMethod PEAP { get; } = new EapMethod(PEAPValue);
 
         /// <summary> EAP-TLS authentication. </summary>
-        public static EAPMethod EAPTLS { get; } = new EAPMethod(EAPTLSValue);
+        public static EapMethod EAPTLS { get; } = new EapMethod(EAPTLSValue);
 
         /// <summary> EAP-TTLS authentication. </summary>
-        public static EAPMethod EAPTTLS { get; } = new EAPMethod(EAPTTLSValue);
+        public static EapMethod EAPTTLS { get; } = new EapMethod(EAPTTLSValue);
 
         /// <summary> EAP-FAST authentication. </summary>
-        public static EAPMethod EAPFAST { get; } = new EAPMethod(EAPFASTValue);
+        public static EapMethod EAPFAST { get; } = new EapMethod(EAPFASTValue);
 
-        /// <summary> Determines if two <see cref="EAPMethod"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="EapMethod"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(EAPMethod left, EAPMethod right) => left.Equals(right);
+        public static bool operator ==(EapMethod left, EapMethod right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="EAPMethod"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="EapMethod"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(EAPMethod left, EAPMethod right) => !left.Equals(right);
+        public static bool operator !=(EapMethod left, EapMethod right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="EAPMethod"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EapMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EAPMethod(string value) => new EAPMethod(value);
+        public static implicit operator EapMethod(string value) => new EapMethod(value);
 
-        /// <summary> Converts a string to a <see cref="EAPMethod"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EapMethod"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EAPMethod?(string value) => value == null ? null : new EAPMethod(value);
+        public static implicit operator EapMethod?(string value) => value == null ? null : new EapMethod(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is EAPMethod other && Equals(other);
+        public override bool Equals(object obj) => obj is EapMethod other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(EAPMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EapMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

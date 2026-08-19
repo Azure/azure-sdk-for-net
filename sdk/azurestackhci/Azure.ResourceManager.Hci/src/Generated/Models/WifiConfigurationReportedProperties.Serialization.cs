@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             string ssid = default;
             AuthenticationType? authenticationType = default;
-            EAPMethod? eapMethod = default;
+            EapMethod? eapMethod = default;
             int? signalStrength = default;
             string lastSuccessfulConnectionTimestamp = default;
             ConnectionState? connectionState = default;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    eapMethod = new EAPMethod(prop.Value.GetString());
+                    eapMethod = new EapMethod(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("signalStrength"u8))

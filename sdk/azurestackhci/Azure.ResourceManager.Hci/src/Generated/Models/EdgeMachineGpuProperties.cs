@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="model"> The model of the GPU. </param>
         /// <param name="status"> The status of the GPU. </param>
         /// <param name="pciLocation"> The PCI location of the GPU. </param>
-        /// <param name="assignable"> Indicates whether the GPU is assignable. </param>
-        /// <param name="partitionable"> Indicates whether the GPU is partitionable. </param>
+        /// <param name="isAssignable"> Indicates whether the GPU is assignable. </param>
+        /// <param name="isPartitionable"> Indicates whether the GPU is partitionable. </param>
         /// <param name="hostDriverVersion"> This is the host driver for the host on which GPU is assigned, only for DDA. </param>
         /// <param name="assignmentStatus"> This is the assignment status of the GPU. </param>
         /// <param name="gpuMode"> Specified by admin whether this GPU can be used as DDA, GPU-P with LM. Can only be updated when the GPU is not attached to any VM. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="memoryModel"> The memory model of the GPU. Possible values are 'Dedicated VRAM', 'Unified (Shared System Memory)', and 'Unified (SoC LPDDR)'. </param>
         /// <param name="totalMemoryInBytes"> The total memory of the GPU in bytes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeMachineGpuProperties(HciProvisioningState? provisioningState, string gpuId, string manufacturer, string model, string status, string pciLocation, bool? assignable, bool? partitionable, string hostDriverVersion, string assignmentStatus, GpuMode? gpuMode, DdaDetails ddaDetails, GpuPartitionDetails partitionDetails, string acceleratorType, string memoryModel, long? totalMemoryInBytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeMachineGpuProperties(HciProvisioningState? provisioningState, string gpuId, string manufacturer, string model, string status, string pciLocation, bool? isAssignable, bool? isPartitionable, string hostDriverVersion, string assignmentStatus, GpuMode? gpuMode, DdaDetails ddaDetails, GpuPartitionDetails partitionDetails, string acceleratorType, string memoryModel, long? totalMemoryInBytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             GpuId = gpuId;
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.Hci.Models
             Model = model;
             Status = status;
             PciLocation = pciLocation;
-            Assignable = assignable;
-            Partitionable = partitionable;
+            IsAssignable = isAssignable;
+            IsPartitionable = isPartitionable;
             HostDriverVersion = hostDriverVersion;
             AssignmentStatus = assignmentStatus;
             GpuMode = gpuMode;
@@ -84,14 +84,6 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> The PCI location of the GPU. </summary>
         [WirePath("pciLocation")]
         public string PciLocation { get; }
-
-        /// <summary> Indicates whether the GPU is assignable. </summary>
-        [WirePath("assignable")]
-        public bool? Assignable { get; }
-
-        /// <summary> Indicates whether the GPU is partitionable. </summary>
-        [WirePath("partitionable")]
-        public bool? Partitionable { get; }
 
         /// <summary> This is the host driver for the host on which GPU is assigned, only for DDA. </summary>
         [WirePath("hostDriverVersion")]

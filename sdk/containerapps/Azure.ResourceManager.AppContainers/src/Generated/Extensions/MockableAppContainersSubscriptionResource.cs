@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BuilderResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BuilderResource> GetBuildersAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerAppBuilderResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerAppBuilderResource> GetContainerAppBuildersAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BuilderData, BuilderResource>(new BuildersGetBySubscriptionAsyncCollectionResultOfT(BuildersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetBuilders"), data => new BuilderResource(Client, data));
+            return new AsyncPageableWrapper<ContainerAppBuilderData, ContainerAppBuilderResource>(new BuildersGetBySubscriptionAsyncCollectionResultOfT(BuildersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetContainerAppBuilders"), data => new ContainerAppBuilderResource(Client, data));
         }
 
         /// <summary>
@@ -253,14 +253,14 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BuilderResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BuilderResource> GetBuilders(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerAppBuilderResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerAppBuilderResource> GetContainerAppBuilders(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BuilderData, BuilderResource>(new BuildersGetBySubscriptionCollectionResultOfT(BuildersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetBuilders"), data => new BuilderResource(Client, data));
+            return new PageableWrapper<ContainerAppBuilderData, ContainerAppBuilderResource>(new BuildersGetBySubscriptionCollectionResultOfT(BuildersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetContainerAppBuilders"), data => new ContainerAppBuilderResource(Client, data));
         }
 
         /// <summary>

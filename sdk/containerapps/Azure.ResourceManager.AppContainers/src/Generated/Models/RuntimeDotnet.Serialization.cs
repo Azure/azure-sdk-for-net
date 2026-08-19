@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 throw new FormatException($"The model {nameof(RuntimeDotnet)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AutoConfigureDataProtection))
+            if (Optional.IsDefined(IsAutoConfigureDataProtectionEnabled))
             {
                 writer.WritePropertyName("autoConfigureDataProtection"u8);
-                writer.WriteBooleanValue(AutoConfigureDataProtection.Value);
+                writer.WriteBooleanValue(IsAutoConfigureDataProtectionEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            bool? autoConfigureDataProtection = default;
+            bool? isAutoConfigureDataProtectionEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    autoConfigureDataProtection = prop.Value.GetBoolean();
+                    isAutoConfigureDataProtectionEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RuntimeDotnet(autoConfigureDataProtection, additionalBinaryDataProperties);
+            return new RuntimeDotnet(isAutoConfigureDataProtectionEnabled, additionalBinaryDataProperties);
         }
     }
 }

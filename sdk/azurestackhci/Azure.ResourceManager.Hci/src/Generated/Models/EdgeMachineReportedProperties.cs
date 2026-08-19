@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="sbeDeploymentPackageInfo"> Solution builder extension (SBE) deployment package information. </param>
         /// <param name="extensionProfile"> Extension details for edge machine. </param>
         /// <param name="workloadInventory"> Read-only Hyper-V VM inventory reported by the device management extension for VMs visible on this node. </param>
-        /// <param name="workloadInventoryLastUpdated"> Last time the device management extension refreshed the local Hyper-V workload inventory. </param>
+        /// <param name="workloadInventoryLastUpdatedOn"> Last time the device management extension refreshed the local Hyper-V workload inventory. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeMachineReportedProperties(DateTimeOffset? lastUpdatedOn, EdgeMachineNetworkProfile networkProfile, HciDeploymentOSProfile osProfile, HciDeploymentHardwareProfile hardwareProfile, StorageProfile storageProfile, SbeDeploymentPackageInfo sbeDeploymentPackageInfo, ExtensionProfile extensionProfile, IReadOnlyList<EdgeMachineWorkloadInventoryItem> workloadInventory, DateTimeOffset? workloadInventoryLastUpdated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeMachineReportedProperties(DateTimeOffset? lastUpdatedOn, EdgeMachineNetworkProfile networkProfile, HciDeploymentOSProfile osProfile, HciDeploymentHardwareProfile hardwareProfile, StorageProfile storageProfile, SbeDeploymentPackageInfo sbeDeploymentPackageInfo, ExtensionProfile extensionProfile, IReadOnlyList<EdgeMachineWorkloadInventoryItem> workloadInventory, DateTimeOffset? workloadInventoryLastUpdatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LastUpdatedOn = lastUpdatedOn;
             NetworkProfile = networkProfile;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Hci.Models
             SbeDeploymentPackageInfo = sbeDeploymentPackageInfo;
             ExtensionProfile = extensionProfile;
             WorkloadInventory = workloadInventory;
-            WorkloadInventoryLastUpdated = workloadInventoryLastUpdated;
+            WorkloadInventoryLastUpdatedOn = workloadInventoryLastUpdatedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -79,10 +79,6 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Read-only Hyper-V VM inventory reported by the device management extension for VMs visible on this node. </summary>
         [WirePath("workloadInventory")]
         public IReadOnlyList<EdgeMachineWorkloadInventoryItem> WorkloadInventory { get; }
-
-        /// <summary> Last time the device management extension refreshed the local Hyper-V workload inventory. </summary>
-        [WirePath("workloadInventoryLastUpdated")]
-        public DateTimeOffset? WorkloadInventoryLastUpdated { get; }
 
         /// <summary> Number of storage disks in the device with $CanPool as true. </summary>
         [WirePath("storageProfile.poolableDisksCount")]

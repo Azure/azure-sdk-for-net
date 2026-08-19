@@ -31,25 +31,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="type"> Specifies the type of the extension; an example is 'CustomScriptExtension'. </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
-        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
+        /// <param name="isAutoUpgradeMinorVersionEnabled"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
         /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
         /// <param name="settings"> JSON formatted public settings for the extension. </param>
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
-        /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
+        /// <param name="shouldSuppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
         /// <param name="protectedSettingsFromKeyVault"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
         /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkActionVirtualMachineExtensionProperties(string forceUpdateTag, string publisher, string @type, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> protectedSettings, bool? suppressFailures, KeyVaultSecretReference protectedSettingsFromKeyVault, IList<string> provisionAfterExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionVirtualMachineExtensionProperties(string forceUpdateTag, string publisher, string @type, string typeHandlerVersion, bool? isAutoUpgradeMinorVersionEnabled, bool? enableAutomaticUpgrade, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> protectedSettings, bool? shouldSuppressFailures, KeyVaultSecretReference protectedSettingsFromKeyVault, IList<string> provisionAfterExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;
             Type = @type;
             TypeHandlerVersion = typeHandlerVersion;
-            AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
+            IsAutoUpgradeMinorVersionEnabled = isAutoUpgradeMinorVersionEnabled;
             EnableAutomaticUpgrade = enableAutomaticUpgrade;
             Settings = settings;
             ProtectedSettings = protectedSettings;
-            SuppressFailures = suppressFailures;
+            ShouldSuppressFailures = shouldSuppressFailures;
             ProtectedSettingsFromKeyVault = protectedSettingsFromKeyVault;
             ProvisionAfterExtensions = provisionAfterExtensions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public string TypeHandlerVersion { get; set; }
 
         /// <summary> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </summary>
-        public bool? AutoUpgradeMinorVersion { get; set; }
+        public bool? IsAutoUpgradeMinorVersionEnabled { get; set; }
 
         /// <summary> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </summary>
         public bool? EnableAutomaticUpgrade { get; set; }
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public IDictionary<string, BinaryData> ProtectedSettings { get; }
 
         /// <summary> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </summary>
-        public bool? SuppressFailures { get; set; }
+        public bool? ShouldSuppressFailures { get; set; }
 
         /// <summary> The extensions protected settings that are passed by reference, and consumed from key vault. </summary>
         public KeyVaultSecretReference ProtectedSettingsFromKeyVault { get; set; }

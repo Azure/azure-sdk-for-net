@@ -10,6 +10,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.ComputeSchedule.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
@@ -524,13 +525,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                                         {
                                             Properties = new VirtualMachineNetworkInterfaceIPConfigurationProperties
                                             {
-                                                SubnetId = subnetId,
-                                                Primary = true,
+                                                Subnet = new WritableSubResource { Id = subnetId },
+                                                IsPrimary = true,
                                             }
                                         }
                                     })
                                 {
-                                    Primary = true,
+                                    IsPrimary = true,
                                     EnableIPForwarding = true,
                                 }
                             }
@@ -557,7 +558,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                         AdminPassword = "TestPassword123!",
                         WindowsConfiguration = new WindowsConfiguration
                         {
-                            ProvisionVmAgent = true,
+                            ShouldProvisionVmAgent = true,
                             IsAutomaticUpdatesEnabled = true
                         }
                     }
@@ -645,13 +646,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                                         {
                                             Properties = new VirtualMachineNetworkInterfaceIPConfigurationProperties
                                             {
-                                                SubnetId = subnetId,
-                                                Primary = true,
+                                                Subnet = new WritableSubResource { Id = subnetId },
+                                                IsPrimary = true,
                                             }
                                         }
                                     })
                                 {
-                                    Primary = true,
+                                    IsPrimary = true,
                                     EnableIPForwarding = true,
                                 }
                             }
@@ -678,7 +679,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                         AdminPassword = "TestPassword123!",
                         WindowsConfiguration = new WindowsConfiguration
                         {
-                            ProvisionVmAgent = true,
+                            ShouldProvisionVmAgent = true,
                             IsAutomaticUpdatesEnabled = true
                         }
                     }

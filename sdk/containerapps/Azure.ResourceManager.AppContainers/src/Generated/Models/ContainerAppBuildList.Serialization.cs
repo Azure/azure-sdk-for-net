@@ -14,64 +14,64 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The response of a BuilderResource list operation. </summary>
-    internal partial class BuilderList : IJsonModel<BuilderList>
+    /// <summary> The response of a BuildResource list operation. </summary>
+    internal partial class ContainerAppBuildList : IJsonModel<ContainerAppBuildList>
     {
-        /// <summary> Initializes a new instance of <see cref="BuilderList"/> for deserialization. </summary>
-        internal BuilderList()
+        /// <summary> Initializes a new instance of <see cref="ContainerAppBuildList"/> for deserialization. </summary>
+        internal ContainerAppBuildList()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BuilderList PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ContainerAppBuildList PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BuilderList>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppBuildList>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBuilderList(document.RootElement, options);
+                        return DeserializeContainerAppBuildList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BuilderList)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppBuildList)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BuilderList>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppBuildList>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BuilderList)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppBuildList)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BuilderList>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ContainerAppBuildList>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BuilderList IPersistableModel<BuilderList>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ContainerAppBuildList IPersistableModel<ContainerAppBuildList>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BuilderList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerAppBuildList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BuilderList"/> from. </param>
-        internal static BuilderList FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ContainerAppBuildList"/> from. </param>
+        internal static ContainerAppBuildList FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBuilderList(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeContainerAppBuildList(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BuilderList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerAppBuildList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BuilderList>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppBuildList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BuilderList)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppBuildList)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (BuilderData item in Value)
+            foreach (ContainerAppBuildData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BuilderList IJsonModel<BuilderList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ContainerAppBuildList IJsonModel<ContainerAppBuildList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BuilderList JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ContainerAppBuildList JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BuilderList>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppBuildList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BuilderList)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppBuildList)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBuilderList(document.RootElement, options);
+            return DeserializeContainerAppBuildList(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BuilderList DeserializeBuilderList(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContainerAppBuildList DeserializeContainerAppBuildList(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<BuilderData> value = default;
+            IList<ContainerAppBuildData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<BuilderData> array = new List<BuilderData>();
+                    List<ContainerAppBuildData> array = new List<ContainerAppBuildData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BuilderData.DeserializeBuilderData(item, options));
+                        array.Add(ContainerAppBuildData.DeserializeContainerAppBuildData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BuilderList(value, nextLink, additionalBinaryDataProperties);
+            return new ContainerAppBuildList(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

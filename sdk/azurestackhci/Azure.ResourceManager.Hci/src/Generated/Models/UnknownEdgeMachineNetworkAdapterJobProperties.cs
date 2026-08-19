@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
         /// <param name="provisioningState"> Provisioning state of the job. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
-        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="startOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of Edge device job. </param>
         /// <param name="error"> Error details if job failed. </param>
         /// <param name="reportedProperties"> Reported properties for Network Adapter Job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownEdgeMachineNetworkAdapterJobProperties(NetworkAdapterJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, HciJobStatus? status, ResponseError error, NetworkAdapterJobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(jobType != default ? jobType : "unknown", deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, error, reportedProperties, additionalBinaryDataProperties)
+        internal UnknownEdgeMachineNetworkAdapterJobProperties(NetworkAdapterJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startOn, DateTimeOffset? endOn, HciJobStatus? status, ResponseError error, NetworkAdapterJobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(jobType != default ? jobType : "unknown", deploymentMode, provisioningState, jobId, startOn, endOn, status, error, reportedProperties, additionalBinaryDataProperties)
         {
         }
     }

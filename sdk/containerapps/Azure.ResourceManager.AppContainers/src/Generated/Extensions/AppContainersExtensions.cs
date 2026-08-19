@@ -407,39 +407,39 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BuilderResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ContainerAppBuilderResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppContainersArmClient.GetBuilderResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppBuilderResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BuilderResource"/> object. </returns>
-        public static BuilderResource GetBuilderResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppBuilderResource"/> object. </returns>
+        public static ContainerAppBuilderResource GetContainerAppBuilderResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppContainersArmClient(client).GetBuilderResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppBuilderResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BuildResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ContainerAppBuildResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppContainersArmClient.GetBuildResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppBuildResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BuildResource"/> object. </returns>
-        public static BuildResource GetBuildResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppBuildResource"/> object. </returns>
+        public static ContainerAppBuildResource GetContainerAppBuildResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppContainersArmClient(client).GetBuildResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppBuildResource(id);
         }
 
         /// <summary>
@@ -1003,27 +1003,27 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Gets a collection of Builders in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of ContainerAppBuilders in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetBuilders()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetContainerAppBuilders()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of Builders and their operations over a BuilderResource. </returns>
-        public static BuilderCollection GetBuilders(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ContainerAppBuilders and their operations over a ContainerAppBuilderResource. </returns>
+        public static ContainerAppBuilderCollection GetContainerAppBuilders(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetBuilders();
+            return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerAppBuilders();
         }
 
         /// <summary>
         /// Get a BuilderResource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetBuilderAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetContainerAppBuilderAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1031,18 +1031,18 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<BuilderResource>> GetBuilderAsync(this ResourceGroupResource resourceGroupResource, string builderName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ContainerAppBuilderResource>> GetContainerAppBuilderAsync(this ResourceGroupResource resourceGroupResource, string builderName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetBuilderAsync(builderName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerAppBuilderAsync(builderName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a BuilderResource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetBuilder(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetContainerAppBuilder(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1050,11 +1050,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<BuilderResource> GetBuilder(this ResourceGroupResource resourceGroupResource, string builderName, CancellationToken cancellationToken = default)
+        public static Response<ContainerAppBuilderResource> GetContainerAppBuilder(this ResourceGroupResource resourceGroupResource, string builderName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetBuilder(builderName, cancellationToken);
+            return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerAppBuilder(builderName, cancellationToken);
         }
 
         /// <summary>
@@ -1298,36 +1298,36 @@ namespace Azure.ResourceManager.AppContainers
         /// List BuilderResource resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetBuildersAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetContainerAppBuildersAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="BuilderResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BuilderResource> GetBuildersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerAppBuilderResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContainerAppBuilderResource> GetContainerAppBuildersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetBuildersAsync(cancellationToken);
+            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetContainerAppBuildersAsync(cancellationToken);
         }
 
         /// <summary>
         /// List BuilderResource resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetBuilders(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetContainerAppBuilders(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="BuilderResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BuilderResource> GetBuilders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerAppBuilderResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContainerAppBuilderResource> GetContainerAppBuilders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetBuilders(cancellationToken);
+            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetContainerAppBuilders(cancellationToken);
         }
 
         /// <summary>

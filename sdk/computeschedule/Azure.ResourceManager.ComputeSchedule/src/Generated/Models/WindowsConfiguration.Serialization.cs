@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 throw new FormatException($"The model {nameof(WindowsConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ProvisionVmAgent))
+            if (Optional.IsDefined(ShouldProvisionVmAgent))
             {
                 writer.WritePropertyName("provisionVMAgent"u8);
-                writer.WriteBooleanValue(ProvisionVmAgent.Value);
+                writer.WriteBooleanValue(ShouldProvisionVmAgent.Value);
             }
             if (Optional.IsDefined(IsAutomaticUpdatesEnabled))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            bool? provisionVmAgent = default;
+            bool? shouldProvisionVmAgent = default;
             bool? isAutomaticUpdatesEnabled = default;
             string timeZone = default;
             IList<AdditionalUnattendContent> additionalUnattendContent = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    provisionVmAgent = prop.Value.GetBoolean();
+                    shouldProvisionVmAgent = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableAutomaticUpdates"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
             }
             return new WindowsConfiguration(
-                provisionVmAgent,
+                shouldProvisionVmAgent,
                 isAutomaticUpdatesEnabled,
                 timeZone,
                 additionalUnattendContent ?? new ChangeTrackingList<AdditionalUnattendContent>(),

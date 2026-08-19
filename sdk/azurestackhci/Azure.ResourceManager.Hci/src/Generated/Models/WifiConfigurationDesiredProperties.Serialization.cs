@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             string ssid = default;
             AuthenticationType? authenticationType = default;
-            EAPMethod? eapMethod = default;
+            EapMethod? eapMethod = default;
             string username = default;
             WifiSecret wifiSecret = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    eapMethod = new EAPMethod(prop.Value.GetString());
+                    eapMethod = new EapMethod(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("username"u8))

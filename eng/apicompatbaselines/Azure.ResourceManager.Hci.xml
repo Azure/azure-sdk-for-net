@@ -99,14 +99,46 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0015</DiagnosticId>
-    <Target>T:Azure.ResourceManager.Hci.HciEdgeDeviceData:[T:System.ClientModel.Primitives.PersistableModelProxyAttribute]</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0015</DiagnosticId>
     <Target>M:Azure.ResourceManager.Hci.ArcExtensionResource.Update(Azure.WaitUntil,Azure.ResourceManager.Hci.ArcExtensionData,System.Threading.CancellationToken):[T:System.ObsoleteAttribute]</Target>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0015</DiagnosticId>
     <Target>M:Azure.ResourceManager.Hci.ArcExtensionResource.UpdateAsync(Azure.WaitUntil,Azure.ResourceManager.Hci.ArcExtensionData,System.Threading.CancellationToken):[T:System.ObsoleteAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0015</DiagnosticId>
+    <Target>T:Azure.ResourceManager.Hci.HciEdgeDeviceData:[T:System.ClientModel.Primitives.PersistableModelProxyAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0017</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Hci.Models.ArmHciModelFactory.OfferData(Azure.Core.ResourceIdentifier,System.String,Azure.Core.ResourceType,Azure.ResourceManager.Models.SystemData,System.String,System.String,System.String,System.String,System.Collections.Generic.IEnumerable{Azure.ResourceManager.Hci.Models.HciSkuMappings})$4</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0017</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Hci.Models.ArmHciModelFactory.OfferData(Azure.Core.ResourceIdentifier,System.String,Azure.Core.ResourceType,Azure.ResourceManager.Models.SystemData,System.String,System.String,System.String,System.String,System.Collections.Generic.IEnumerable{Azure.ResourceManager.Hci.Models.HciSkuMappings})$5</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0017</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Hci.Models.ArmHciModelFactory.UpdateRunData(Azure.Core.ResourceIdentifier,System.String,Azure.Core.ResourceType,Azure.ResourceManager.Models.SystemData,System.Nullable{Azure.Core.AzureLocation},System.Nullable{Azure.ResourceManager.Hci.Models.HciProvisioningState},System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset},System.String,System.Nullable{Azure.ResourceManager.Hci.Models.UpdateRunPropertiesState},System.String,System.String,System.String,System.String,System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset},System.Collections.Generic.IEnumerable{Azure.ResourceManager.Hci.Models.HciUpdateStep})$14</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0017</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Hci.Models.ArmHciModelFactory.UpdateRunData(Azure.Core.ResourceIdentifier,System.String,Azure.Core.ResourceType,Azure.ResourceManager.Models.SystemData,System.Nullable{Azure.Core.AzureLocation},System.Nullable{Azure.ResourceManager.Hci.Models.HciProvisioningState},System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset},System.String,System.Nullable{Azure.ResourceManager.Hci.Models.UpdateRunPropertiesState},System.String,System.String,System.String,System.String,System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset},System.Collections.Generic.IEnumerable{Azure.ResourceManager.Hci.Models.HciUpdateStep})$15</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0017</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Hci.Models.ArmHciModelFactory.UpdateRunData(Azure.Core.ResourceIdentifier,System.String,Azure.Core.ResourceType,Azure.ResourceManager.Models.SystemData,System.Nullable{Azure.Core.AzureLocation},System.Nullable{Azure.ResourceManager.Hci.Models.HciProvisioningState},System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset},System.String,System.Nullable{Azure.ResourceManager.Hci.Models.UpdateRunPropertiesState},System.String,System.String,System.String,System.String,System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset},System.Collections.Generic.IEnumerable{Azure.ResourceManager.Hci.Models.HciUpdateStep})$16</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0017</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Hci.Models.ArmHciModelFactory.UpdateSummaryData(Azure.Core.ResourceIdentifier,System.String,Azure.Core.ResourceType,Azure.ResourceManager.Models.SystemData,System.Nullable{Azure.Core.AzureLocation},System.Nullable{Azure.ResourceManager.Hci.Models.HciProvisioningState},System.String,System.String,System.Collections.Generic.IEnumerable{Azure.ResourceManager.Hci.Models.HciPackageVersionInfo},System.String,System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset},System.Nullable{Azure.ResourceManager.Hci.Models.HciHealthState},System.Collections.Generic.IEnumerable{Azure.ResourceManager.Hci.Models.HciPrecheckResult},System.Nullable{System.DateTimeOffset},System.Nullable{Azure.ResourceManager.Hci.Models.UpdateSummariesPropertiesState})$10</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0017</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Hci.Models.ArmHciModelFactory.UpdateSummaryData(Azure.Core.ResourceIdentifier,System.String,Azure.Core.ResourceType,Azure.ResourceManager.Models.SystemData,System.Nullable{Azure.Core.AzureLocation},System.Nullable{Azure.ResourceManager.Hci.Models.HciProvisioningState},System.String,System.String,System.Collections.Generic.IEnumerable{Azure.ResourceManager.Hci.Models.HciPackageVersionInfo},System.String,System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset},System.Nullable{Azure.ResourceManager.Hci.Models.HciHealthState},System.Collections.Generic.IEnumerable{Azure.ResourceManager.Hci.Models.HciPrecheckResult},System.Nullable{System.DateTimeOffset},System.Nullable{Azure.ResourceManager.Hci.Models.UpdateSummariesPropertiesState})$11</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0017</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Hci.Models.ArmHciModelFactory.UpdateSummaryData(Azure.Core.ResourceIdentifier,System.String,Azure.Core.ResourceType,Azure.ResourceManager.Models.SystemData,System.Nullable{Azure.Core.AzureLocation},System.Nullable{Azure.ResourceManager.Hci.Models.HciProvisioningState},System.String,System.String,System.Collections.Generic.IEnumerable{Azure.ResourceManager.Hci.Models.HciPackageVersionInfo},System.String,System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset},System.Nullable{Azure.ResourceManager.Hci.Models.HciHealthState},System.Collections.Generic.IEnumerable{Azure.ResourceManager.Hci.Models.HciPrecheckResult},System.Nullable{System.DateTimeOffset},System.Nullable{Azure.ResourceManager.Hci.Models.UpdateSummariesPropertiesState})$7</Target>
   </Suppression>
 </Suppressions>

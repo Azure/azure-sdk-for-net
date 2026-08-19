@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="LifecycleStatus"/>. </summary>
         /// <param name="status"> Overall lifecycle status of the edge machine. </param>
         /// <param name="stage"> Depicts what is the current ongoing stage. </param>
-        /// <param name="lastUpdatedUtc"> Last time the lifecycle status was updated. </param>
+        /// <param name="lastUpdatedOn"> Last time the lifecycle status was updated. </param>
         /// <param name="message"> Message to provide more details on lifecycle status, especially in case of failures. </param>
         /// <param name="recommendedSteps"> Recommended steps to resolve failures. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LifecycleStatus(EdgeMachineLifecycleStatus status, string stage, DateTimeOffset lastUpdatedUtc, string message, IReadOnlyList<string> recommendedSteps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LifecycleStatus(EdgeMachineLifecycleStatus status, string stage, DateTimeOffset lastUpdatedOn, string message, IReadOnlyList<string> recommendedSteps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Stage = stage;
-            LastUpdatedUtc = lastUpdatedUtc;
+            LastUpdatedOn = lastUpdatedOn;
             Message = message;
             RecommendedSteps = recommendedSteps;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -47,10 +47,6 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Depicts what is the current ongoing stage. </summary>
         [WirePath("stage")]
         public string Stage { get; }
-
-        /// <summary> Last time the lifecycle status was updated. </summary>
-        [WirePath("lastUpdatedUtc")]
-        public DateTimeOffset LastUpdatedUtc { get; }
 
         /// <summary> Message to provide more details on lifecycle status, especially in case of failures. </summary>
         [WirePath("message")]

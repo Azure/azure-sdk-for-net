@@ -54,12 +54,6 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> SATA disk. </summary>
         public static DiskType SATA { get; } = new DiskType(SATAValue);
 
-        /// <summary> Solid State Drive. </summary>
-        public static DiskType SSD { get; } = new DiskType(SSDValue);
-
-        /// <summary> Hard Disk Drive. </summary>
-        public static DiskType HDD { get; } = new DiskType(HDDValue);
-
         /// <summary> Virtual disk. </summary>
         public static DiskType Virtual { get; } = new DiskType(VirtualValue);
 

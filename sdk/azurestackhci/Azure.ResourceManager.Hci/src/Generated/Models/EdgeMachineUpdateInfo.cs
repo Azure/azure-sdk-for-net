@@ -32,18 +32,18 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="displayName"> The display name of the update. </param>
         /// <param name="releaseNotesLink"> Link to the release notes for this update. </param>
         /// <param name="totalSizeBytes"> Total size of the update in bytes. </param>
-        /// <param name="rebootRequired"> Indicates whether a reboot is required after installing this update. </param>
+        /// <param name="isRebootRequired"> Indicates whether a reboot is required after installing this update. </param>
         /// <param name="estimatedInstallTimeMinutes"> Estimated time in minutes to install this update. </param>
         /// <param name="updateType"> The type of update (e.g., FullImage). </param>
         /// <param name="arcAgentVersion"> The Arc agent version included in this update. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeMachineUpdateInfo(string vsrVersion, string displayName, string releaseNotesLink, long? totalSizeBytes, bool? rebootRequired, int? estimatedInstallTimeMinutes, string updateType, string arcAgentVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeMachineUpdateInfo(string vsrVersion, string displayName, string releaseNotesLink, long? totalSizeBytes, bool? isRebootRequired, int? estimatedInstallTimeMinutes, string updateType, string arcAgentVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VsrVersion = vsrVersion;
             DisplayName = displayName;
             ReleaseNotesLink = releaseNotesLink;
             TotalSizeBytes = totalSizeBytes;
-            RebootRequired = rebootRequired;
+            IsRebootRequired = isRebootRequired;
             EstimatedInstallTimeMinutes = estimatedInstallTimeMinutes;
             UpdateType = updateType;
             ArcAgentVersion = arcAgentVersion;
@@ -65,10 +65,6 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Total size of the update in bytes. </summary>
         [WirePath("totalSizeBytes")]
         public long? TotalSizeBytes { get; set; }
-
-        /// <summary> Indicates whether a reboot is required after installing this update. </summary>
-        [WirePath("rebootRequired")]
-        public bool? RebootRequired { get; set; }
 
         /// <summary> Estimated time in minutes to install this update. </summary>
         [WirePath("estimatedInstallTimeMinutes")]

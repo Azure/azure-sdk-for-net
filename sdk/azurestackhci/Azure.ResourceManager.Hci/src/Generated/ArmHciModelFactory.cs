@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="clusterVersion"> Version of the cluster software. </param>
         /// <param name="nodes"> List of nodes reported by the cluster. </param>
         /// <param name="lastUpdatedOn"> Last time the cluster reported the data. </param>
-        /// <param name="msiExpirationTimeStamp"> Specifies the expiration timestamp of the cluster's Managed Service Identity (MSI). The value is expressed in Coordinated Universal Time (UTC). </param>
+        /// <param name="msiExpirationOn"> Specifies the expiration timestamp of the cluster's Managed Service Identity (MSI). The value is expressed in Coordinated Universal Time (UTC). </param>
         /// <param name="imdsAttestation"> IMDS attestation status of the cluster. </param>
         /// <param name="diagnosticLevel"> Level of diagnostic data emitted by the cluster. </param>
         /// <param name="supportedCapabilities"> Capabilities supported by the cluster. </param>
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="oemActivation"> OEM activation status of the cluster. </param>
         /// <param name="hardwareClass"> Hardware class of the cluster. </param>
         /// <returns> A new <see cref="Models.HciClusterReportedProperties"/> instance for mocking. </returns>
-        public static HciClusterReportedProperties HciClusterReportedProperties(string clusterName = default, Guid? clusterId = default, string clusterVersion = default, IEnumerable<HciClusterNode> nodes = default, DateTimeOffset? lastUpdatedOn = default, DateTimeOffset? msiExpirationTimeStamp = default, ImdsAttestationState? imdsAttestation = default, HciClusterDiagnosticLevel? diagnosticLevel = default, IEnumerable<string> supportedCapabilities = default, ClusterNodeType? clusterType = default, string manufacturer = default, OemActivation? oemActivation = default, HardwareClass? hardwareClass = default)
+        public static HciClusterReportedProperties HciClusterReportedProperties(string clusterName = default, Guid? clusterId = default, string clusterVersion = default, IEnumerable<HciClusterNode> nodes = default, DateTimeOffset? lastUpdatedOn = default, DateTimeOffset? msiExpirationOn = default, ImdsAttestationState? imdsAttestation = default, HciClusterDiagnosticLevel? diagnosticLevel = default, IEnumerable<string> supportedCapabilities = default, ClusterNodeType? clusterType = default, string manufacturer = default, OemActivation? oemActivation = default, HardwareClass? hardwareClass = default)
         {
             nodes ??= new ChangeTrackingList<HciClusterNode>();
             supportedCapabilities ??= new ChangeTrackingList<string>();
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Hci.Models
                 clusterVersion,
                 (nodes ?? new ChangeTrackingList<HciClusterNode>()).ToList(),
                 lastUpdatedOn,
-                msiExpirationTimeStamp,
+                msiExpirationOn,
                 imdsAttestation,
                 diagnosticLevel,
                 (supportedCapabilities ?? new ChangeTrackingList<string>()).ToList(),
@@ -2232,7 +2232,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="operationDetails"> operation status details for edge machine. </param>
         /// <param name="lastSyncedOn"> Last time data updated to service. </param>
         /// <returns> A new <see cref="Models.EdgeMachineProperties"/> instance for mocking. </returns>
-        public static EdgeMachineProperties EdgeMachineProperties(EdgeMachineKind? edgeMachineKind = default, HciProvisioningState? provisioningState = default, string cloudId = default, ResourceIdentifier arcMachineResourceGroupId = default, ResourceIdentifier arcMachineResourceId = default, LifecycleDetails lifecycleDetails = default, ResourceIdentifier arcGatewayResourceId = default, HciSiteDetails siteDetails = default, OwnershipVoucherDetails ownershipVoucherDetails = default, HciProvisioningDetails provisioningDetails = default, string devicePoolResourceId = default, EdgeMachineState? machineState = default, EdgeMachineConnectivityStatus? connectivityStatus = default, string claimedBy = default, EdgeMachineReportedProperties reportedProperties = default, IEnumerable<HciOperationDetail> operationDetails = default, DateTimeOffset? lastSyncedOn = default)
+        public static EdgeMachineProperties EdgeMachineProperties(EdgeMachineKind? edgeMachineKind = default, HciProvisioningState? provisioningState = default, string cloudId = default, ResourceIdentifier arcMachineResourceGroupId = default, ResourceIdentifier arcMachineResourceId = default, LifecycleDetails lifecycleDetails = default, ResourceIdentifier arcGatewayResourceId = default, HciSiteDetails siteDetails = default, OwnershipVoucherDetails ownershipVoucherDetails = default, HciProvisioningDetails provisioningDetails = default, ResourceIdentifier devicePoolResourceId = default, EdgeMachineState? machineState = default, EdgeMachineConnectivityStatus? connectivityStatus = default, string claimedBy = default, EdgeMachineReportedProperties reportedProperties = default, IEnumerable<HciOperationDetail> operationDetails = default, DateTimeOffset? lastSyncedOn = default)
         {
             operationDetails ??= new ChangeTrackingList<HciOperationDetail>();
 
@@ -2269,18 +2269,18 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="status"> Overall lifecycle status of the edge machine. </param>
         /// <param name="stage"> Depicts what is the current ongoing stage. </param>
-        /// <param name="lastUpdatedUtc"> Last time the lifecycle status was updated. </param>
+        /// <param name="lastUpdatedOn"> Last time the lifecycle status was updated. </param>
         /// <param name="message"> Message to provide more details on lifecycle status, especially in case of failures. </param>
         /// <param name="recommendedSteps"> Recommended steps to resolve failures. </param>
         /// <returns> A new <see cref="Models.LifecycleStatus"/> instance for mocking. </returns>
-        public static LifecycleStatus LifecycleStatus(EdgeMachineLifecycleStatus status = default, string stage = default, DateTimeOffset lastUpdatedUtc = default, string message = default, IEnumerable<string> recommendedSteps = default)
+        public static LifecycleStatus LifecycleStatus(EdgeMachineLifecycleStatus status = default, string stage = default, DateTimeOffset lastUpdatedOn = default, string message = default, IEnumerable<string> recommendedSteps = default)
         {
             recommendedSteps ??= new ChangeTrackingList<string>();
 
             return new LifecycleStatus(
                 status,
                 stage,
-                lastUpdatedUtc,
+                lastUpdatedOn,
                 message,
                 (recommendedSteps ?? new ChangeTrackingList<string>()).ToList(),
                 default);
@@ -2289,13 +2289,13 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="name"> Name of the stage. </param>
         /// <param name="description"> Description of the stage. </param>
         /// <param name="status"> Status of the stage. </param>
-        /// <param name="startTimeUtc"> Start time of the stage. </param>
-        /// <param name="endTimeUtc"> End time of the stage. </param>
-        /// <param name="lastUpdatedUtc"> Last time the stage was updated. </param>
+        /// <param name="startOn"> Start time of the stage. </param>
+        /// <param name="endOn"> End time of the stage. </param>
+        /// <param name="lastUpdatedOn"> Last time the stage was updated. </param>
         /// <param name="error"> Error details. </param>
         /// <param name="subStages"> Sub-stages for this stage. </param>
         /// <returns> A new <see cref="Models.LifecycleStage"/> instance for mocking. </returns>
-        public static LifecycleStage LifecycleStage(string name = default, string description = default, LifecycleOperationStatus status = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, DateTimeOffset? lastUpdatedUtc = default, ResponseError error = default, IEnumerable<LifecycleStage> subStages = default)
+        public static LifecycleStage LifecycleStage(string name = default, string description = default, LifecycleOperationStatus status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DateTimeOffset? lastUpdatedOn = default, ResponseError error = default, IEnumerable<LifecycleStage> subStages = default)
         {
             subStages ??= new ChangeTrackingList<LifecycleStage>();
 
@@ -2303,9 +2303,9 @@ namespace Azure.ResourceManager.Hci.Models
                 name,
                 description,
                 status,
-                startTimeUtc,
-                endTimeUtc,
-                lastUpdatedUtc,
+                startOn,
+                endOn,
+                lastUpdatedOn,
                 error,
                 (subStages ?? new ChangeTrackingList<LifecycleStage>()).ToList(),
                 default);
@@ -2476,9 +2476,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="sbeDeploymentPackageInfo"> Solution builder extension (SBE) deployment package information. </param>
         /// <param name="extensions"> List of Arc extensions installed on edge device. </param>
         /// <param name="workloadInventory"> Read-only Hyper-V VM inventory reported by the device management extension for VMs visible on this node. </param>
-        /// <param name="workloadInventoryLastUpdated"> Last time the device management extension refreshed the local Hyper-V workload inventory. </param>
+        /// <param name="workloadInventoryLastUpdatedOn"> Last time the device management extension refreshed the local Hyper-V workload inventory. </param>
         /// <returns> A new <see cref="Models.EdgeMachineReportedProperties"/> instance for mocking. </returns>
-        public static EdgeMachineReportedProperties EdgeMachineReportedProperties(DateTimeOffset? lastUpdatedOn = default, EdgeMachineNetworkProfile networkProfile = default, HciDeploymentOSProfile osProfile = default, HciDeploymentHardwareProfile hardwareProfile = default, long? storagePoolableDisksCount = default, SbeDeploymentPackageInfo sbeDeploymentPackageInfo = default, IEnumerable<HciEdgeDeviceArcExtension> extensions = default, IEnumerable<EdgeMachineWorkloadInventoryItem> workloadInventory = default, DateTimeOffset? workloadInventoryLastUpdated = default)
+        public static EdgeMachineReportedProperties EdgeMachineReportedProperties(DateTimeOffset? lastUpdatedOn = default, EdgeMachineNetworkProfile networkProfile = default, HciDeploymentOSProfile osProfile = default, HciDeploymentHardwareProfile hardwareProfile = default, long? storagePoolableDisksCount = default, SbeDeploymentPackageInfo sbeDeploymentPackageInfo = default, IEnumerable<HciEdgeDeviceArcExtension> extensions = default, IEnumerable<EdgeMachineWorkloadInventoryItem> workloadInventory = default, DateTimeOffset? workloadInventoryLastUpdatedOn = default)
         {
             workloadInventory ??= new ChangeTrackingList<EdgeMachineWorkloadInventoryItem>();
 
@@ -2491,7 +2491,7 @@ namespace Azure.ResourceManager.Hci.Models
                 sbeDeploymentPackageInfo,
                 extensions is null ? default : new ExtensionProfile((extensions ?? new ChangeTrackingList<HciEdgeDeviceArcExtension>()).ToList(), default),
                 (workloadInventory ?? new ChangeTrackingList<EdgeMachineWorkloadInventoryItem>()).ToList(),
-                workloadInventoryLastUpdated,
+                workloadInventoryLastUpdatedOn,
                 default);
         }
 
@@ -2968,19 +2968,19 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="displayName"> The display name of the update. </param>
         /// <param name="releaseNotesLink"> Link to the release notes for this update. </param>
         /// <param name="totalSizeBytes"> Total size of the update in bytes. </param>
-        /// <param name="rebootRequired"> Indicates whether a reboot is required after installing this update. </param>
+        /// <param name="isRebootRequired"> Indicates whether a reboot is required after installing this update. </param>
         /// <param name="estimatedInstallTimeMinutes"> Estimated time in minutes to install this update. </param>
         /// <param name="updateType"> The type of update (e.g., FullImage). </param>
         /// <param name="arcAgentVersion"> The Arc agent version included in this update. </param>
         /// <returns> A new <see cref="Models.EdgeMachineUpdateInfo"/> instance for mocking. </returns>
-        public static EdgeMachineUpdateInfo EdgeMachineUpdateInfo(string vsrVersion = default, string displayName = default, string releaseNotesLink = default, long? totalSizeBytes = default, bool? rebootRequired = default, int? estimatedInstallTimeMinutes = default, string updateType = default, string arcAgentVersion = default)
+        public static EdgeMachineUpdateInfo EdgeMachineUpdateInfo(string vsrVersion = default, string displayName = default, string releaseNotesLink = default, long? totalSizeBytes = default, bool? isRebootRequired = default, int? estimatedInstallTimeMinutes = default, string updateType = default, string arcAgentVersion = default)
         {
             return new EdgeMachineUpdateInfo(
                 vsrVersion,
                 displayName,
                 releaseNotesLink,
                 totalSizeBytes,
-                rebootRequired,
+                isRebootRequired,
                 estimatedInstallTimeMinutes,
                 updateType,
                 arcAgentVersion,
@@ -3404,8 +3404,8 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="model"> The model of the GPU. </param>
         /// <param name="status"> The status of the GPU. </param>
         /// <param name="pciLocation"> The PCI location of the GPU. </param>
-        /// <param name="assignable"> Indicates whether the GPU is assignable. </param>
-        /// <param name="partitionable"> Indicates whether the GPU is partitionable. </param>
+        /// <param name="isAssignable"> Indicates whether the GPU is assignable. </param>
+        /// <param name="isPartitionable"> Indicates whether the GPU is partitionable. </param>
         /// <param name="hostDriverVersion"> This is the host driver for the host on which GPU is assigned, only for DDA. </param>
         /// <param name="assignmentStatus"> This is the assignment status of the GPU. </param>
         /// <param name="gpuMode"> Specified by admin whether this GPU can be used as DDA, GPU-P with LM. Can only be updated when the GPU is not attached to any VM. </param>
@@ -3415,7 +3415,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="memoryModel"> The memory model of the GPU. Possible values are 'Dedicated VRAM', 'Unified (Shared System Memory)', and 'Unified (SoC LPDDR)'. </param>
         /// <param name="totalMemoryInBytes"> The total memory of the GPU in bytes. </param>
         /// <returns> A new <see cref="Models.EdgeMachineGpuProperties"/> instance for mocking. </returns>
-        public static EdgeMachineGpuProperties EdgeMachineGpuProperties(HciProvisioningState? provisioningState = default, string gpuId = default, string manufacturer = default, string model = default, string status = default, string pciLocation = default, bool? assignable = default, bool? partitionable = default, string hostDriverVersion = default, string assignmentStatus = default, GpuMode? gpuMode = default, DdaDetails ddaDetails = default, GpuPartitionDetails partitionDetails = default, string acceleratorType = default, string memoryModel = default, long? totalMemoryInBytes = default)
+        public static EdgeMachineGpuProperties EdgeMachineGpuProperties(HciProvisioningState? provisioningState = default, string gpuId = default, string manufacturer = default, string model = default, string status = default, string pciLocation = default, bool? isAssignable = default, bool? isPartitionable = default, string hostDriverVersion = default, string assignmentStatus = default, GpuMode? gpuMode = default, DdaDetails ddaDetails = default, GpuPartitionDetails partitionDetails = default, string acceleratorType = default, string memoryModel = default, long? totalMemoryInBytes = default)
         {
             return new EdgeMachineGpuProperties(
                 provisioningState,
@@ -3424,8 +3424,8 @@ namespace Azure.ResourceManager.Hci.Models
                 model,
                 status,
                 pciLocation,
-                assignable,
-                partitionable,
+                isAssignable,
+                isPartitionable,
                 hostDriverVersion,
                 assignmentStatus,
                 gpuMode,
@@ -3535,13 +3535,13 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode for the GPU job. </param>
         /// <param name="provisioningState"> Job provisioning state. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
-        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="startOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of GPU job. </param>
         /// <param name="error"> Error details. </param>
         /// <param name="reportedProperties"> Reported properties specific to the GPU job. </param>
         /// <returns> A new <see cref="Models.EdgeMachineGpuJobProperties"/> instance for mocking. </returns>
-        public static EdgeMachineGpuJobProperties EdgeMachineGpuJobProperties(string gpuId = default, string jobType = default, EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, HciJobStatus? status = default, ResponseError error = default, JobReportedProperties reportedProperties = default)
+        public static EdgeMachineGpuJobProperties EdgeMachineGpuJobProperties(string gpuId = default, string jobType = default, EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, HciJobStatus? status = default, ResponseError error = default, JobReportedProperties reportedProperties = default)
         {
             return new UnknownEdgeMachineGpuJobProperties(
                 gpuId,
@@ -3549,8 +3549,8 @@ namespace Azure.ResourceManager.Hci.Models
                 deploymentMode,
                 provisioningState,
                 jobId,
-                startTimeUtc,
-                endTimeUtc,
+                startOn,
+                endOn,
                 status,
                 error,
                 reportedProperties,
@@ -3561,14 +3561,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode for the GPU job. </param>
         /// <param name="provisioningState"> Job provisioning state. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
-        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="startOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of GPU job. </param>
         /// <param name="error"> Error details. </param>
         /// <param name="reportedProperties"> Reported properties specific to the GPU job. </param>
         /// <param name="partitionCount"> Number of partitions to be created on the GPU. </param>
         /// <returns> A new <see cref="Models.CreatePartitionGpuJobProperties"/> instance for mocking. </returns>
-        public static CreatePartitionGpuJobProperties CreatePartitionGpuJobProperties(string gpuId = default, EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, HciJobStatus? status = default, ResponseError error = default, JobReportedProperties reportedProperties = default, int partitionCount = default)
+        public static CreatePartitionGpuJobProperties CreatePartitionGpuJobProperties(string gpuId = default, EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, HciJobStatus? status = default, ResponseError error = default, JobReportedProperties reportedProperties = default, int partitionCount = default)
         {
             return new CreatePartitionGpuJobProperties(
                 gpuId,
@@ -3576,8 +3576,8 @@ namespace Azure.ResourceManager.Hci.Models
                 deploymentMode,
                 provisioningState,
                 jobId,
-                startTimeUtc,
-                endTimeUtc,
+                startOn,
+                endOn,
                 status,
                 error,
                 reportedProperties,
@@ -3589,14 +3589,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode for the GPU job. </param>
         /// <param name="provisioningState"> Job provisioning state. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
-        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="startOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of GPU job. </param>
         /// <param name="error"> Error details. </param>
         /// <param name="reportedProperties"> Reported properties specific to the GPU job. </param>
         /// <param name="mode"> Desired GPU mode to switch to. </param>
         /// <returns> A new <see cref="Models.SwitchModeGpuJobProperties"/> instance for mocking. </returns>
-        public static SwitchModeGpuJobProperties SwitchModeGpuJobProperties(string gpuId = default, EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, HciJobStatus? status = default, ResponseError error = default, JobReportedProperties reportedProperties = default, GpuMode mode = default)
+        public static SwitchModeGpuJobProperties SwitchModeGpuJobProperties(string gpuId = default, EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, HciJobStatus? status = default, ResponseError error = default, JobReportedProperties reportedProperties = default, GpuMode mode = default)
         {
             return new SwitchModeGpuJobProperties(
                 gpuId,
@@ -3604,8 +3604,8 @@ namespace Azure.ResourceManager.Hci.Models
                 deploymentMode,
                 provisioningState,
                 jobId,
-                startTimeUtc,
-                endTimeUtc,
+                startOn,
+                endOn,
                 status,
                 error,
                 reportedProperties,
@@ -3617,14 +3617,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode for the GPU job. </param>
         /// <param name="provisioningState"> Job provisioning state. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
-        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="startOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of GPU job. </param>
         /// <param name="error"> Error details. </param>
         /// <param name="reportedProperties"> Reported properties specific to the GPU job. </param>
         /// <param name="vmId"> Virtual machine ID to which the GPU partition is assigned. </param>
         /// <returns> A new <see cref="Models.AssignPartitionGpuJobProperties"/> instance for mocking. </returns>
-        public static AssignPartitionGpuJobProperties AssignPartitionGpuJobProperties(string gpuId = default, EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, HciJobStatus? status = default, ResponseError error = default, JobReportedProperties reportedProperties = default, string vmId = default)
+        public static AssignPartitionGpuJobProperties AssignPartitionGpuJobProperties(string gpuId = default, EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, HciJobStatus? status = default, ResponseError error = default, JobReportedProperties reportedProperties = default, string vmId = default)
         {
             return new AssignPartitionGpuJobProperties(
                 gpuId,
@@ -3632,8 +3632,8 @@ namespace Azure.ResourceManager.Hci.Models
                 deploymentMode,
                 provisioningState,
                 jobId,
-                startTimeUtc,
-                endTimeUtc,
+                startOn,
+                endOn,
                 status,
                 error,
                 reportedProperties,
@@ -3645,14 +3645,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode for the GPU job. </param>
         /// <param name="provisioningState"> Job provisioning state. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
-        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="startOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of GPU job. </param>
         /// <param name="error"> Error details. </param>
         /// <param name="reportedProperties"> Reported properties specific to the GPU job. </param>
         /// <param name="vmId"> Virtual machine ID from which the GPU partition is removed. </param>
         /// <returns> A new <see cref="Models.RemovePartitionGpuJobProperties"/> instance for mocking. </returns>
-        public static RemovePartitionGpuJobProperties RemovePartitionGpuJobProperties(string gpuId = default, EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, HciJobStatus? status = default, ResponseError error = default, JobReportedProperties reportedProperties = default, string vmId = default)
+        public static RemovePartitionGpuJobProperties RemovePartitionGpuJobProperties(string gpuId = default, EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, HciJobStatus? status = default, ResponseError error = default, JobReportedProperties reportedProperties = default, string vmId = default)
         {
             return new RemovePartitionGpuJobProperties(
                 gpuId,
@@ -3660,8 +3660,8 @@ namespace Azure.ResourceManager.Hci.Models
                 deploymentMode,
                 provisioningState,
                 jobId,
-                startTimeUtc,
-                endTimeUtc,
+                startOn,
+                endOn,
                 status,
                 error,
                 reportedProperties,
@@ -3728,7 +3728,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="username"> Username for enterprise WiFi authentication. </param>
         /// <param name="wifiSecret"> WiFi secret reference. </param>
         /// <returns> A new <see cref="Models.WifiConfigurationDesiredProperties"/> instance for mocking. </returns>
-        public static WifiConfigurationDesiredProperties WifiConfigurationDesiredProperties(string ssid = default, AuthenticationType? authenticationType = default, EAPMethod? eapMethod = default, string username = default, WifiSecret wifiSecret = default)
+        public static WifiConfigurationDesiredProperties WifiConfigurationDesiredProperties(string ssid = default, AuthenticationType? authenticationType = default, EapMethod? eapMethod = default, string username = default, WifiSecret wifiSecret = default)
         {
             return new WifiConfigurationDesiredProperties(
                 ssid,
@@ -3767,12 +3767,12 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="nicStatus"> The status of NIC (up, disconnected). </param>
         /// <param name="ipInterfaceType"> IP configuration type. </param>
         /// <param name="vlanId"> VLAN identifier (0-4096). </param>
-        /// <param name="managementInterface"> Indicates if this is a management interface. </param>
+        /// <param name="isManagementInterface"> Indicates if this is a management interface. </param>
         /// <param name="rdmaCapability"> RDMA capability of the network adapter. </param>
         /// <param name="networkAdapterStatus"> The observed state of network adapter. </param>
         /// <param name="wifiConfiguration"> WiFi configuration reported properties. </param>
         /// <returns> A new <see cref="Models.NetworkAdapterReportedProperties"/> instance for mocking. </returns>
-        public static NetworkAdapterReportedProperties NetworkAdapterReportedProperties(string adapterName = default, string ip4Address = default, string subnetMask = default, string defaultGateway = default, IEnumerable<string> dnsServers = default, string interfaceDescription = default, string componentId = default, string driverVersion = default, string defaultIsolationId = default, string macAddress = default, string slot = default, string switchName = default, NetworkInterfaceType? interfaceType = default, int? interfaceSpeed = default, InterfaceState? interfaceState = default, string nicType = default, string nicStatus = default, IPInterfaceType? ipInterfaceType = default, int? vlanId = default, bool? managementInterface = default, RdmaCapability? rdmaCapability = default, NetworkAdapterStatus networkAdapterStatus = default, WifiConfigurationReportedProperties wifiConfiguration = default)
+        public static NetworkAdapterReportedProperties NetworkAdapterReportedProperties(string adapterName = default, string ip4Address = default, string subnetMask = default, string defaultGateway = default, IEnumerable<string> dnsServers = default, string interfaceDescription = default, string componentId = default, string driverVersion = default, string defaultIsolationId = default, string macAddress = default, string slot = default, string switchName = default, NetworkInterfaceType? interfaceType = default, int? interfaceSpeed = default, InterfaceState? interfaceState = default, string nicType = default, string nicStatus = default, IPInterfaceType? ipInterfaceType = default, int? vlanId = default, bool? isManagementInterface = default, RdmaCapability? rdmaCapability = default, NetworkAdapterStatus networkAdapterStatus = default, WifiConfigurationReportedProperties wifiConfiguration = default)
         {
             dnsServers ??= new ChangeTrackingList<string>();
 
@@ -3796,7 +3796,7 @@ namespace Azure.ResourceManager.Hci.Models
                 nicStatus,
                 ipInterfaceType,
                 vlanId,
-                managementInterface,
+                isManagementInterface,
                 rdmaCapability,
                 networkAdapterStatus,
                 wifiConfiguration,
@@ -3828,7 +3828,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="connectionState"> Current WiFi connection state. </param>
         /// <param name="username"> Username for enterprise WiFi authentication. </param>
         /// <returns> A new <see cref="Models.WifiConfigurationReportedProperties"/> instance for mocking. </returns>
-        public static WifiConfigurationReportedProperties WifiConfigurationReportedProperties(string ssid = default, AuthenticationType? authenticationType = default, EAPMethod? eapMethod = default, int? signalStrength = default, string lastSuccessfulConnectionTimestamp = default, ConnectionState? connectionState = default, string username = default)
+        public static WifiConfigurationReportedProperties WifiConfigurationReportedProperties(string ssid = default, AuthenticationType? authenticationType = default, EapMethod? eapMethod = default, int? signalStrength = default, string lastSuccessfulConnectionTimestamp = default, ConnectionState? connectionState = default, string username = default)
         {
             return new WifiConfigurationReportedProperties(
                 ssid,
@@ -3862,21 +3862,21 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
         /// <param name="provisioningState"> Provisioning state of the job. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
-        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="startOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of Edge device job. </param>
         /// <param name="error"> Error details if job failed. </param>
         /// <param name="reportedProperties"> Reported properties for Network Adapter Job. </param>
         /// <returns> A new <see cref="Models.EdgeMachineNetworkAdapterJobProperties"/> instance for mocking. </returns>
-        public static EdgeMachineNetworkAdapterJobProperties EdgeMachineNetworkAdapterJobProperties(string jobType = default, EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, HciJobStatus? status = default, ResponseError error = default, NetworkAdapterJobReportedProperties reportedProperties = default)
+        public static EdgeMachineNetworkAdapterJobProperties EdgeMachineNetworkAdapterJobProperties(string jobType = default, EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, HciJobStatus? status = default, ResponseError error = default, NetworkAdapterJobReportedProperties reportedProperties = default)
         {
             return new UnknownEdgeMachineNetworkAdapterJobProperties(
                 default,
                 deploymentMode,
                 provisioningState,
                 jobId,
-                startTimeUtc,
-                endTimeUtc,
+                startOn,
+                endOn,
                 status,
                 error,
                 reportedProperties,
@@ -3931,22 +3931,22 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
         /// <param name="provisioningState"> Provisioning state of the job. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
-        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="startOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of Edge device job. </param>
         /// <param name="error"> Error details if job failed. </param>
         /// <param name="reportedProperties"> Reported properties for Network Adapter Job. </param>
         /// <param name="targetConfiguration"> The desired network configuration to apply. </param>
         /// <returns> A new <see cref="Models.ApplyConfigurationNetworkAdapterJobProperties"/> instance for mocking. </returns>
-        public static ApplyConfigurationNetworkAdapterJobProperties ApplyConfigurationNetworkAdapterJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, HciJobStatus? status = default, ResponseError error = default, NetworkAdapterJobReportedProperties reportedProperties = default, NetworkAdapterConfiguration targetConfiguration = default)
+        public static ApplyConfigurationNetworkAdapterJobProperties ApplyConfigurationNetworkAdapterJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, HciJobStatus? status = default, ResponseError error = default, NetworkAdapterJobReportedProperties reportedProperties = default, NetworkAdapterConfiguration targetConfiguration = default)
         {
             return new ApplyConfigurationNetworkAdapterJobProperties(
                 default,
                 deploymentMode,
                 provisioningState,
                 jobId,
-                startTimeUtc,
-                endTimeUtc,
+                startOn,
+                endOn,
                 status,
                 error,
                 reportedProperties,
@@ -3957,21 +3957,21 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
         /// <param name="provisioningState"> Provisioning state of the job. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
-        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="startOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of Edge device job. </param>
         /// <param name="error"> Error details if job failed. </param>
         /// <param name="reportedProperties"> Reported properties for Network Adapter Job. </param>
         /// <returns> A new <see cref="Models.ForcePushNetworkAdapterJobProperties"/> instance for mocking. </returns>
-        public static ForcePushNetworkAdapterJobProperties ForcePushNetworkAdapterJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, HciJobStatus? status = default, ResponseError error = default, NetworkAdapterJobReportedProperties reportedProperties = default)
+        public static ForcePushNetworkAdapterJobProperties ForcePushNetworkAdapterJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, HciJobStatus? status = default, ResponseError error = default, NetworkAdapterJobReportedProperties reportedProperties = default)
         {
             return new ForcePushNetworkAdapterJobProperties(
                 default,
                 deploymentMode,
                 provisioningState,
                 jobId,
-                startTimeUtc,
-                endTimeUtc,
+                startOn,
+                endOn,
                 status,
                 error,
                 reportedProperties,
@@ -3981,22 +3981,22 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
         /// <param name="provisioningState"> Provisioning state of the job. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
-        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="startOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of Edge device job. </param>
         /// <param name="error"> Error details if job failed. </param>
         /// <param name="reportedProperties"> Reported properties for Network Adapter Job. </param>
         /// <param name="resolutionStrategy"> The strategy to use for resolving the configuration drift. </param>
         /// <returns> A new <see cref="Models.SyncConfigurationNetworkAdapterJobProperties"/> instance for mocking. </returns>
-        public static SyncConfigurationNetworkAdapterJobProperties SyncConfigurationNetworkAdapterJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, HciJobStatus? status = default, ResponseError error = default, NetworkAdapterJobReportedProperties reportedProperties = default, ResolutionStrategy resolutionStrategy = default)
+        public static SyncConfigurationNetworkAdapterJobProperties SyncConfigurationNetworkAdapterJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, HciJobStatus? status = default, ResponseError error = default, NetworkAdapterJobReportedProperties reportedProperties = default, ResolutionStrategy resolutionStrategy = default)
         {
             return new SyncConfigurationNetworkAdapterJobProperties(
                 default,
                 deploymentMode,
                 provisioningState,
                 jobId,
-                startTimeUtc,
-                endTimeUtc,
+                startOn,
+                endOn,
                 status,
                 error,
                 reportedProperties,
@@ -4169,21 +4169,21 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
         /// <param name="provisioningState"> Job provisioning state. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
-        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="startOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of disk job. </param>
         /// <param name="error"> Error details if job failed. </param>
         /// <param name="reportedProperties"> Properties reported by the job execution. </param>
         /// <returns> A new <see cref="Models.EdgeMachineDiskJobProperties"/> instance for mocking. </returns>
-        public static EdgeMachineDiskJobProperties EdgeMachineDiskJobProperties(string jobType = default, EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, HciJobStatus? status = default, ResponseError error = default, DiskJobReportedProperties reportedProperties = default)
+        public static EdgeMachineDiskJobProperties EdgeMachineDiskJobProperties(string jobType = default, EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, HciJobStatus? status = default, ResponseError error = default, DiskJobReportedProperties reportedProperties = default)
         {
             return new UnknownEdgeMachineDiskJobProperties(
                 default,
                 deploymentMode,
                 provisioningState,
                 jobId,
-                startTimeUtc,
-                endTimeUtc,
+                startOn,
+                endOn,
                 status,
                 error,
                 reportedProperties,
@@ -4238,8 +4238,8 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
         /// <param name="provisioningState"> Job provisioning state. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
-        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="startOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of disk job. </param>
         /// <param name="error"> Error details if job failed. </param>
         /// <param name="reportedProperties"> Properties reported by the job execution. </param>
@@ -4248,15 +4248,15 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="fileSystem"> File system type to format the volume with. </param>
         /// <param name="createdVolumeId"> ARM resource ID of the created volume. </param>
         /// <returns> A new <see cref="Models.CreateVolumeJobProperties"/> instance for mocking. </returns>
-        public static CreateVolumeJobProperties CreateVolumeJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, HciJobStatus? status = default, ResponseError error = default, DiskJobReportedProperties reportedProperties = default, string sizeInBytes = default, string path = default, DiskFileSystemType? fileSystem = default, string createdVolumeId = default)
+        public static CreateVolumeJobProperties CreateVolumeJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, HciJobStatus? status = default, ResponseError error = default, DiskJobReportedProperties reportedProperties = default, string sizeInBytes = default, string path = default, DiskFileSystemType? fileSystem = default, string createdVolumeId = default)
         {
             return new CreateVolumeJobProperties(
                 default,
                 deploymentMode,
                 provisioningState,
                 jobId,
-                startTimeUtc,
-                endTimeUtc,
+                startOn,
+                endOn,
                 status,
                 error,
                 reportedProperties,
@@ -4270,22 +4270,22 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
         /// <param name="provisioningState"> Job provisioning state. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
-        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="startOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of disk job. </param>
         /// <param name="error"> Error details if job failed. </param>
         /// <param name="reportedProperties"> Properties reported by the job execution. </param>
         /// <param name="resolutionStrategy"> The strategy to use for resolving the configuration drift. </param>
         /// <returns> A new <see cref="Models.SyncConfigurationJobProperties"/> instance for mocking. </returns>
-        public static SyncConfigurationJobProperties SyncConfigurationJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, HciJobStatus? status = default, ResponseError error = default, DiskJobReportedProperties reportedProperties = default, ResolutionStrategy resolutionStrategy = default)
+        public static SyncConfigurationJobProperties SyncConfigurationJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, HciJobStatus? status = default, ResponseError error = default, DiskJobReportedProperties reportedProperties = default, ResolutionStrategy resolutionStrategy = default)
         {
             return new SyncConfigurationJobProperties(
                 default,
                 deploymentMode,
                 provisioningState,
                 jobId,
-                startTimeUtc,
-                endTimeUtc,
+                startOn,
+                endOn,
                 status,
                 error,
                 reportedProperties,
@@ -4314,21 +4314,21 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
         /// <param name="provisioningState"> Job provisioning state. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
-        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="startOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of disk job. </param>
         /// <param name="error"> Error details if job failed. </param>
         /// <param name="reportedProperties"> Properties reported by the job execution. </param>
         /// <returns> A new <see cref="Models.EdgeMachineDiskPrivilegedJobProperties"/> instance for mocking. </returns>
-        public static EdgeMachineDiskPrivilegedJobProperties EdgeMachineDiskPrivilegedJobProperties(string jobType = default, EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, HciJobStatus? status = default, ResponseError error = default, DiskJobReportedProperties reportedProperties = default)
+        public static EdgeMachineDiskPrivilegedJobProperties EdgeMachineDiskPrivilegedJobProperties(string jobType = default, EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, HciJobStatus? status = default, ResponseError error = default, DiskJobReportedProperties reportedProperties = default)
         {
             return new UnknownEdgeMachineDiskPrivilegedJobProperties(
                 default,
                 deploymentMode,
                 provisioningState,
                 jobId,
-                startTimeUtc,
-                endTimeUtc,
+                startOn,
+                endOn,
                 status,
                 error,
                 reportedProperties,
@@ -4338,29 +4338,29 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
         /// <param name="provisioningState"> Job provisioning state. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
-        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="startOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of disk job. </param>
         /// <param name="error"> Error details if job failed. </param>
         /// <param name="reportedProperties"> Properties reported by the job execution. </param>
         /// <param name="volumePath"> The mount path of the volume to delete. </param>
-        /// <param name="confirmDeletion"> Confirmation flag that must be set to true to proceed with deletion. </param>
+        /// <param name="isConfirmDeletion"> Confirmation flag that must be set to true to proceed with deletion. </param>
         /// <returns> A new <see cref="Models.DeleteVolumeJobProperties"/> instance for mocking. </returns>
-        public static DeleteVolumeJobProperties DeleteVolumeJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, HciJobStatus? status = default, ResponseError error = default, DiskJobReportedProperties reportedProperties = default, string volumePath = default, bool? confirmDeletion = default)
+        public static DeleteVolumeJobProperties DeleteVolumeJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, HciJobStatus? status = default, ResponseError error = default, DiskJobReportedProperties reportedProperties = default, string volumePath = default, bool? isConfirmDeletion = default)
         {
             return new DeleteVolumeJobProperties(
                 default,
                 deploymentMode,
                 provisioningState,
                 jobId,
-                startTimeUtc,
-                endTimeUtc,
+                startOn,
+                endOn,
                 status,
                 error,
                 reportedProperties,
                 default,
                 volumePath,
-                confirmDeletion);
+                isConfirmDeletion);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
