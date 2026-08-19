@@ -147,8 +147,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             BfdConfiguration bfdConfiguration = default;
-            IList<StaticRouteProperties> iPv4Routes = default;
-            IList<StaticRouteProperties> iPv6Routes = default;
+            IList<StaticRouteProperties> ipv4Routes = default;
+            IList<StaticRouteProperties> ipv6Routes = default;
             StaticRouteConfigurationExtension? extension = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         array.Add(StaticRouteProperties.DeserializeStaticRouteProperties(item, options));
                     }
-                    iPv4Routes = array;
+                    ipv4Routes = array;
                     continue;
                 }
                 if (prop.NameEquals("ipv6Routes"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         array.Add(StaticRouteProperties.DeserializeStaticRouteProperties(item, options));
                     }
-                    iPv6Routes = array;
+                    ipv6Routes = array;
                     continue;
                 }
                 if (prop.NameEquals("extension"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StaticRouteConfiguration(bfdConfiguration, iPv4Routes ?? new ChangeTrackingList<StaticRouteProperties>(), iPv6Routes ?? new ChangeTrackingList<StaticRouteProperties>(), extension, additionalBinaryDataProperties);
+            return new StaticRouteConfiguration(bfdConfiguration, ipv4Routes ?? new ChangeTrackingList<StaticRouteProperties>(), ipv6Routes ?? new ChangeTrackingList<StaticRouteProperties>(), extension, additionalBinaryDataProperties);
         }
     }
 }

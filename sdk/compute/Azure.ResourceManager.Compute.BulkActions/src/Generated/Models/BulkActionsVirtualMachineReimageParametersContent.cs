@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="exactVersion"> Specifies in decimal number, the version the OS disk should be reimaged to. If exact version is not provided, the OS disk is reimaged to the existing version of OS Disk. </param>
         /// <param name="osProfile"> Specifies information required for reimaging the non-ephemeral OS disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkActionsVirtualMachineReimageParametersContent(bool? isTempDisk, string exactVersion, BulkActionsOsProfileProvisioningContent osProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionsVirtualMachineReimageParametersContent(bool? isTempDisk, string exactVersion, BulkActionsOSProfileProvisioningContent osProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsTempDisk = isTempDisk;
             ExactVersion = exactVersion;
-            OsProfile = osProfile;
+            OSProfile = osProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public string ExactVersion { get; set; }
 
         /// <summary> Specifies information required for reimaging the non-ephemeral OS disk. </summary>
-        public BulkActionsOsProfileProvisioningContent OsProfile { get; set; }
+        public BulkActionsOSProfileProvisioningContent OSProfile { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="values"> The list of available updates. </param>
         /// <param name="provisioningState"> Provisioning state of the updates resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeMachineUpdateProperties(ProvisioningOsType? solutionType, IList<EdgeMachineUpdateInfo> values, HciProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeMachineUpdateProperties(ProvisioningOSType? solutionType, IList<EdgeMachineUpdateInfo> values, HciProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SolutionType = solutionType;
             Values = values;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> The solution type for the available updates. </summary>
         [WirePath("solutionType")]
-        public ProvisioningOsType? SolutionType { get; set; }
+        public ProvisioningOSType? SolutionType { get; set; }
 
         /// <summary> The list of available updates. </summary>
         [WirePath("values")]

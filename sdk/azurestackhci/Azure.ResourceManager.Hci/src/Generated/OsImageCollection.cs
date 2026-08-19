@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Hci
                 };
                 HttpMessage message = _osImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, osImageName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<OsImageData> response = Response.FromValue(OsImageData.FromResponse(result), result);
+                Response<OSImageData> response = Response.FromValue(OSImageData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Hci
                 };
                 HttpMessage message = _osImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, osImageName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<OsImageData> response = Response.FromValue(OsImageData.FromResponse(result), result);
+                Response<OSImageData> response = Response.FromValue(OSImageData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OsImageData, OsImageResource>(new OsImagesGetBySubscriptionLocationResourceAsyncCollectionResultOfT(_osImagesRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OsImageCollection.GetAll"), data => new OsImageResource(Client, data));
+            return new AsyncPageableWrapper<OSImageData, OsImageResource>(new OsImagesGetBySubscriptionLocationResourceAsyncCollectionResultOfT(_osImagesRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OsImageCollection.GetAll"), data => new OsImageResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Hci
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OsImageData, OsImageResource>(new OsImagesGetBySubscriptionLocationResourceCollectionResultOfT(_osImagesRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OsImageCollection.GetAll"), data => new OsImageResource(Client, data));
+            return new PageableWrapper<OSImageData, OsImageResource>(new OsImagesGetBySubscriptionLocationResourceCollectionResultOfT(_osImagesRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "OsImageCollection.GetAll"), data => new OsImageResource(Client, data));
         }
 
         /// <summary>
@@ -249,14 +249,14 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _osImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, osImageName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<OsImageData> response = default;
+                Response<OSImageData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(OsImageData.FromResponse(result), result);
+                        response = Response.FromValue(OSImageData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((OsImageData)null, result);
+                        response = Response.FromValue((OSImageData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -306,14 +306,14 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _osImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, osImageName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<OsImageData> response = default;
+                Response<OSImageData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(OsImageData.FromResponse(result), result);
+                        response = Response.FromValue(OSImageData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((OsImageData)null, result);
+                        response = Response.FromValue((OSImageData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -363,14 +363,14 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _osImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, osImageName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<OsImageData> response = default;
+                Response<OSImageData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(OsImageData.FromResponse(result), result);
+                        response = Response.FromValue(OSImageData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((OsImageData)null, result);
+                        response = Response.FromValue((OSImageData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -424,14 +424,14 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _osImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, osImageName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<OsImageData> response = default;
+                Response<OSImageData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(OsImageData.FromResponse(result), result);
+                        response = Response.FromValue(OSImageData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((OsImageData)null, result);
+                        response = Response.FromValue((OSImageData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

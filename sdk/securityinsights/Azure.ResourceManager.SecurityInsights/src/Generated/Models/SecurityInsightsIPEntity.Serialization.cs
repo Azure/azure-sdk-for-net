@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             SystemData systemData = default;
             SecurityInsightsEntityKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IpEntityProperties properties = default;
+            IPEntityProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    properties = IpEntityProperties.DeserializeIpEntityProperties(prop.Value, options);
+                    properties = IPEntityProperties.DeserializeIPEntityProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="NetworkAcls"/>. </summary>
         public NetworkAcls()
         {
-            IpRules = new ChangeTrackingList<IPRule>();
+            IPRules = new ChangeTrackingList<IPRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkAcls"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal NetworkAcls(DefaultActionType? defaultAction, IList<IPRule> ipRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DefaultAction = defaultAction;
-            IpRules = ipRules;
+            IPRules = ipRules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Rules governing the accessibility of a resource from a specific ip address or ip range. </summary>
         [WirePath("ipRules")]
-        public IList<IPRule> IpRules { get; }
+        public IList<IPRule> IPRules { get; }
     }
 }
