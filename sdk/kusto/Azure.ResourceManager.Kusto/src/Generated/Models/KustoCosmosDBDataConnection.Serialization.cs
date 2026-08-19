@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Kusto.Models
             AzureLocation? location = default;
             DataConnectionKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            CosmosDbDataConnectionProperties properties = default;
+            CosmosDBDataConnectionProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    properties = CosmosDbDataConnectionProperties.DeserializeCosmosDbDataConnectionProperties(prop.Value, options);
+                    properties = CosmosDBDataConnectionProperties.DeserializeCosmosDBDataConnectionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

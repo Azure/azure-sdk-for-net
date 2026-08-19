@@ -249,6 +249,66 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 writer.WritePropertyName("tlsStatus"u8);
                 writer.WriteStringValue(TlsStatus);
             }
+            if (options.Format != "W" && Optional.IsDefined(HostOsEdition))
+            {
+                writer.WritePropertyName("hostOsEdition"u8);
+                writer.WriteStringValue(HostOsEdition);
+            }
+            if (options.Format != "W" && Optional.IsDefined(HostOsVersion))
+            {
+                writer.WritePropertyName("hostOsVersion"u8);
+                writer.WriteStringValue(HostOsVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(HostOsBuild))
+            {
+                writer.WritePropertyName("hostOsBuild"u8);
+                writer.WriteStringValue(HostOsBuild);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DistroOsEditionWsl))
+            {
+                writer.WritePropertyName("distroOsEditionWsl"u8);
+                writer.WriteStringValue(DistroOsEditionWsl);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DistroOsVersionWsl))
+            {
+                writer.WritePropertyName("distroOsVersionWsl"u8);
+                writer.WriteStringValue(DistroOsVersionWsl);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DistroOsBuildWsl))
+            {
+                writer.WritePropertyName("distroOsBuildWsl"u8);
+                writer.WriteStringValue(DistroOsBuildWsl);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ContainerOsEdition))
+            {
+                writer.WritePropertyName("containerOsEdition"u8);
+                writer.WriteStringValue(ContainerOsEdition);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ContainerOsVersion))
+            {
+                writer.WritePropertyName("containerOsVersion"u8);
+                writer.WriteStringValue(ContainerOsVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ContainerOsBuild))
+            {
+                writer.WritePropertyName("containerOsBuild"u8);
+                writer.WriteStringValue(ContainerOsBuild);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InstallVersionMsix))
+            {
+                writer.WritePropertyName("installVersionMsix"u8);
+                writer.WriteStringValue(InstallVersionMsix);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InstallVersionScript))
+            {
+                writer.WritePropertyName("installVersionScript"u8);
+                writer.WriteStringValue(InstallVersionScript);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AppVersionWsl))
+            {
+                writer.WritePropertyName("appVersionWsl"u8);
+                writer.WriteStringValue(AppVersionWsl);
+            }
             if (Optional.IsDefined(OptionalProperty1))
             {
                 writer.WritePropertyName("optionalProperty1"u8);
@@ -346,6 +406,18 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             DateTimeOffset? autoUpdateLastTriggeredOn = default;
             int? creationMethod = default;
             string tlsStatus = default;
+            string hostOsEdition = default;
+            string hostOsVersion = default;
+            string hostOsBuild = default;
+            string distroOsEditionWsl = default;
+            string distroOsVersionWsl = default;
+            string distroOsBuildWsl = default;
+            string containerOsEdition = default;
+            string containerOsVersion = default;
+            string containerOsBuild = default;
+            string installVersionMsix = default;
+            string installVersionScript = default;
+            string appVersionWsl = default;
             string optionalProperty1 = default;
             string optionalProperty2 = default;
             string optionalProperty3 = default;
@@ -605,6 +677,66 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                     tlsStatus = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("hostOsEdition"u8))
+                {
+                    hostOsEdition = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("hostOsVersion"u8))
+                {
+                    hostOsVersion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("hostOsBuild"u8))
+                {
+                    hostOsBuild = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("distroOsEditionWsl"u8))
+                {
+                    distroOsEditionWsl = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("distroOsVersionWsl"u8))
+                {
+                    distroOsVersionWsl = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("distroOsBuildWsl"u8))
+                {
+                    distroOsBuildWsl = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("containerOsEdition"u8))
+                {
+                    containerOsEdition = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("containerOsVersion"u8))
+                {
+                    containerOsVersion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("containerOsBuild"u8))
+                {
+                    containerOsBuild = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("installVersionMsix"u8))
+                {
+                    installVersionMsix = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("installVersionScript"u8))
+                {
+                    installVersionScript = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("appVersionWsl"u8))
+                {
+                    appVersionWsl = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("optionalProperty1"u8))
                 {
                     optionalProperty1 = prop.Value.GetString();
@@ -666,6 +798,18 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 autoUpdateLastTriggeredOn,
                 creationMethod,
                 tlsStatus,
+                hostOsEdition,
+                hostOsVersion,
+                hostOsBuild,
+                distroOsEditionWsl,
+                distroOsVersionWsl,
+                distroOsBuildWsl,
+                containerOsEdition,
+                containerOsVersion,
+                containerOsBuild,
+                installVersionMsix,
+                installVersionScript,
+                appVersionWsl,
                 optionalProperty1,
                 optionalProperty2,
                 optionalProperty3,

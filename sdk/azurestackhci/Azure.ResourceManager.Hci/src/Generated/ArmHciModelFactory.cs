@@ -682,11 +682,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <param name="name"> NETBIOS name of each physical server on your Azure Stack HCI cluster. </param>
-        /// <param name="iPv4Address"> The IPv4 address assigned to each physical server on your Azure Stack HCI cluster. </param>
+        /// <param name="ipv4Address"> The IPv4 address assigned to each physical server on your Azure Stack HCI cluster. </param>
         /// <returns> A new <see cref="Models.DeploymentSettingPhysicalNodes"/> instance for mocking. </returns>
-        public static DeploymentSettingPhysicalNodes DeploymentSettingPhysicalNodes(string name = default, string iPv4Address = default)
+        public static DeploymentSettingPhysicalNodes DeploymentSettingPhysicalNodes(string name = default, string ipv4Address = default)
         {
-            return new DeploymentSettingPhysicalNodes(name, iPv4Address, default);
+            return new DeploymentSettingPhysicalNodes(name, ipv4Address, default);
         }
 
         /// <param name="intents"> The network intents assigned to the network reference pattern used for the deployment. Each intent will define its own name, traffic type, adapter names, and overrides as recommended by your OEM. </param>
@@ -776,12 +776,12 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <param name="physicalNode"> storage adapter physical node name. </param>
-        /// <param name="iPv4Address"> The IPv4 address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
+        /// <param name="ipv4Address"> The IPv4 address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
         /// <param name="subnetMask"> The SubnetMask address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
         /// <returns> A new <see cref="Models.DeploymentSettingStorageAdapterIPInfo"/> instance for mocking. </returns>
-        public static DeploymentSettingStorageAdapterIPInfo DeploymentSettingStorageAdapterIPInfo(string physicalNode = default, string iPv4Address = default, string subnetMask = default)
+        public static DeploymentSettingStorageAdapterIPInfo DeploymentSettingStorageAdapterIPInfo(string physicalNode = default, string ipv4Address = default, string subnetMask = default)
         {
-            return new DeploymentSettingStorageAdapterIPInfo(physicalNode, iPv4Address, subnetMask, default);
+            return new DeploymentSettingStorageAdapterIPInfo(physicalNode, ipv4Address, subnetMask, default);
         }
 
         /// <param name="adapterProperties"> QoS and adapter overrides for the cluster network. </param>
@@ -1221,7 +1221,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="interfaceDescription"> Interface Description of NIC. </param>
         /// <param name="componentId"> Component Id of NIC. </param>
         /// <param name="driverVersion"> Driver Version of NIC. </param>
-        /// <param name="iPv4Address"> Subnet Mask of NIC. </param>
+        /// <param name="ipv4Address"> Subnet Mask of NIC. </param>
         /// <param name="subnetMask"> Subnet Mask of NIC. </param>
         /// <param name="defaultGateway"> Default Gateway of NIC. </param>
         /// <param name="dnsServers"> DNS Servers for NIC. </param>
@@ -1234,7 +1234,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="nicStatus"> The status of NIC, up, disconnected. </param>
         /// <param name="rdmaCapability"> Describes the RDMA capability of the network adapter. </param>
         /// <returns> A new <see cref="Models.HciNicDetail"/> instance for mocking. </returns>
-        public static HciNicDetail HciNicDetail(string adapterName = default, string interfaceDescription = default, string componentId = default, string driverVersion = default, string iPv4Address = default, string subnetMask = default, string defaultGateway = default, IEnumerable<string> dnsServers = default, string defaultIsolationId = default, string macAddress = default, string slot = default, string switchName = default, string nicType = default, string vlanId = default, string nicStatus = default, RdmaCapability? rdmaCapability = default)
+        public static HciNicDetail HciNicDetail(string adapterName = default, string interfaceDescription = default, string componentId = default, string driverVersion = default, string ipv4Address = default, string subnetMask = default, string defaultGateway = default, IEnumerable<string> dnsServers = default, string defaultIsolationId = default, string macAddress = default, string slot = default, string switchName = default, string nicType = default, string vlanId = default, string nicStatus = default, RdmaCapability? rdmaCapability = default)
         {
             dnsServers ??= new ChangeTrackingList<string>();
 
@@ -1243,7 +1243,7 @@ namespace Azure.ResourceManager.Hci.Models
                 interfaceDescription,
                 componentId,
                 driverVersion,
-                iPv4Address,
+                ipv4Address,
                 subnetMask,
                 defaultGateway,
                 (dnsServers ?? new ChangeTrackingList<string>()).ToList(),
@@ -1477,13 +1477,13 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="interfaceDescription"> Interface Description of NIC. </param>
         /// <param name="componentId"> Component Id of NIC. </param>
         /// <param name="driverVersion"> Driver Version of NIC. </param>
-        /// <param name="iPv4Address"> Subnet Mask of NIC. </param>
+        /// <param name="ipv4Address"> Subnet Mask of NIC. </param>
         /// <param name="subnetMask"> Subnet Mask of NIC. </param>
         /// <param name="defaultGateway"> Default Gateway of NIC. </param>
         /// <param name="dnsServers"> DNS Servers for NIC. </param>
         /// <param name="defaultIsolationId"> Default Isolation of Management NIC. </param>
         /// <returns> A new <see cref="Models.HciEdgeDeviceNicDetail"/> instance for mocking. </returns>
-        public static HciEdgeDeviceNicDetail HciEdgeDeviceNicDetail(string adapterName = default, string interfaceDescription = default, string componentId = default, string driverVersion = default, string iPv4Address = default, string subnetMask = default, string defaultGateway = default, IEnumerable<string> dnsServers = default, string defaultIsolationId = default)
+        public static HciEdgeDeviceNicDetail HciEdgeDeviceNicDetail(string adapterName = default, string interfaceDescription = default, string componentId = default, string driverVersion = default, string ipv4Address = default, string subnetMask = default, string defaultGateway = default, IEnumerable<string> dnsServers = default, string defaultIsolationId = default)
         {
             dnsServers ??= new ChangeTrackingList<string>();
 
@@ -1492,7 +1492,7 @@ namespace Azure.ResourceManager.Hci.Models
                 interfaceDescription,
                 componentId,
                 driverVersion,
-                iPv4Address,
+                ipv4Address,
                 subnetMask,
                 defaultGateway,
                 (dnsServers ?? new ChangeTrackingList<string>()).ToList(),
