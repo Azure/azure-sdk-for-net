@@ -263,8 +263,21 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         {
             // Defense in depth: even if a credential returns a binding certificate on a transport that does not
             // override Update() at all (the HttpPipelineTransport base implementation throws
-            // NotSupportedException), the request must not crash.
+            // NotSupportedException), the request must not crash, and the token-bound header must not be sent for
+            // a certificate that was never actually applied.
+            bool sawAuthorizedVaultRequest = false;
             MockTransportBuilder builder = new MockTransportBuilder();
+            builder.Request += (_, args) =>
+            {
+                if (args.Request.Uri.Host == VaultHost &&
+                    args.Request.Headers.TryGetValue("Authorization", out string _))
+                {
+                    sawAuthorizedVaultRequest = true;
+                    Assert.IsFalse(args.Request.Headers.TryGetValue(TokenBoundAuthHeader, out string _),
+                        "The token-bound header must not be sent when the transport failed to apply the binding certificate.");
+                }
+            };
+
             MockTransport transport = builder.Build();
             using X509Certificate2 bindingCertificate = CreateSelfSignedCertificate();
             string expectedToken = Convert.ToBase64String(Encoding.UTF8.GetBytes(TenantId));
@@ -283,6 +296,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             KeyVaultSecret secret = await client.GetSecretAsync("test-secret").ConfigureAwait(false);
 
             Assert.AreEqual("secret-value", secret.Value);
+            Assert.IsTrue(sawAuthorizedVaultRequest);
         }
 
         private static X509Certificate2 CreateSelfSignedCertificate()
