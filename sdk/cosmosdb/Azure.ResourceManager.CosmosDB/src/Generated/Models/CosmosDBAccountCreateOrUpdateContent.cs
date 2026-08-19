@@ -62,6 +62,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [WirePath("properties")]
         internal DatabaseAccountCreateUpdateProperties Properties { get; set; }
 
+        /// <summary> The type of Azure resource. </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
+        /// <summary> Identity for the resource. </summary>
+        [WirePath("identity")]
+        public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> The consistency policy for the Cosmos DB account. </summary>
         [WirePath("properties.consistencyPolicy")]
         public ConsistencyPolicy ConsistencyPolicy

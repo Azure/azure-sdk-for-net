@@ -49,6 +49,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [WirePath("properties")]
         internal GremlinGraphCreateUpdateProperties Properties { get; set; }
 
+        /// <summary> The type of Azure resource. </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
+        /// <summary> Identity for the resource. </summary>
+        [WirePath("identity")]
+        public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> The standard JSON format of a Gremlin graph. </summary>
         [WirePath("properties.resource")]
         public GremlinGraphResourceInfo Resource

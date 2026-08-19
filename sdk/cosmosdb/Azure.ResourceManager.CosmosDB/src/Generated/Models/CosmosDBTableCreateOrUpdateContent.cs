@@ -49,6 +49,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [WirePath("properties")]
         internal TableCreateUpdateProperties Properties { get; set; }
 
+        /// <summary> The type of Azure resource. </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
+        /// <summary> Identity for the resource. </summary>
+        [WirePath("identity")]
+        public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> The standard JSON format of a Table. </summary>
         [WirePath("properties.resource")]
         public CosmosDBTableResourceInfo Resource

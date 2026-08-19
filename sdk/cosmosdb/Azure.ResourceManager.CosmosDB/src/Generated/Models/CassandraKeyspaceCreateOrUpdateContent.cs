@@ -49,6 +49,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [WirePath("properties")]
         internal CassandraKeyspaceCreateUpdateProperties Properties { get; set; }
 
+        /// <summary> The type of Azure resource. </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
+        /// <summary> Identity for the resource. </summary>
+        [WirePath("identity")]
+        public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </summary>
         [WirePath("properties.options")]
         public CosmosDBCreateUpdateConfig Options
