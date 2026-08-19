@@ -68,14 +68,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Listeners
 
         // The scaler only ever sees $logs entries, so a blob must resolve to the same path the host's
         // BlobTriggerExecutor would match. StorageAnalyticsLogEntry.ToBlobPath decodes the absolute-URL form
-        // of RequestedObjectKey but not the '/account/container/blob' form, so special characters can differ.
+        // of RequestedObjectKey but not the '/account/container/blob' form, so both must be handled.
         [Test]
         [TestCase("/teststorage/test-blobs/basic/test.txt", "test-blobs/{name}.txt", 1)]
         [TestCase("/teststorage/test-blobs/my%20folder/test.txt", "test-blobs/{name}", 1)]
         [TestCase("/teststorage/test-blobs/my%20folder/test.txt", "test-blobs/my folder/{name}", 1)]
         [TestCase("/teststorage/test-blobs/caf%C3%A9/test.txt", "test-blobs/café/{name}", 1)]
         [TestCase("/teststorage/test-blobs/report%2450.txt", "test-blobs/report$50.txt", 1)]
+        [TestCase("/teststorage/test-blobs/100%25.txt", "test-blobs/100%.txt", 1)]
         [TestCase("https://teststorage.blob.core.windows.net:443/test-blobs/my%20folder/test.txt", "test-blobs/my folder/{name}", 1)]
+        [TestCase("/teststorage/test-blobs/my%20folder/test.txt", "test-blobs/other folder/{name}", 0)]
+        [TestCase("/teststorage/test-blobs/caf%C3%A9/test.txt", "test-blobs/cafe/{name}", 0)]
         public async Task GetScaleResultAsync_MatchesBlobNamesWithSpecialCharacters(string requestedObjectKey, string blobPath, int expectedTargetWorkerCount)
         {
             var scaler = CreateScaler(BuildPutBlobLogContent(requestedObjectKey), blobPath, out _);

@@ -126,9 +126,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                                     if (entry != null && entry.IsBlobWrite)
                                     {
                                         var path = entry.ToBlobPath();
-
-                                        // A null binding data means the blob does not match the trigger's path pattern.
-                                        if (path != null && pathSource.CreateBindingData(path) != null)
+                                        if (path != null && MatchesTriggerPath(pathSource, path))
                                         {
                                             // If we found a valid write entry, we can stop searching.
                                             return entry;
@@ -153,6 +151,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                                                     select entry.ToBlobPath();
 
             return parsedBlobPaths.Where(p => p != null);
+        }
+
+        // ToBlobPath unescapes the absolute-URL form of RequestedObjectKey but not the '/account/container/blob'
+        // form, so a logged blob name can still be percent-encoded while the trigger pattern is not. Unlike the
+        // listener, scaling has no container-scan fallback, so accept either form rather than never scale from zero.
+        private static bool MatchesTriggerPath(IBlobPathSource pathSource, BlobPath path)
+        {
+            if (pathSource.CreateBindingData(path) != null)
+            {
+                return true;
+            }
+
+            if (string.IsNullOrEmpty(path.BlobName) || path.BlobName.IndexOf('%') < 0)
+            {
+                return false;
+            }
+
+            var unescapedPath = new BlobPath(path.ContainerName, Uri.UnescapeDataString(path.BlobName));
+
+            return pathSource.CreateBindingData(unescapedPath) != null;
         }
 
         // Return a search prefix for the given start,end time.
