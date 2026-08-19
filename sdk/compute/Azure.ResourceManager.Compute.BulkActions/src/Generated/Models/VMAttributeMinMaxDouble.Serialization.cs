@@ -11,18 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.Compute.BulkActions;
 
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/MemorySearchResultOptions.Serialization.cs
-namespace Azure.AI.Extensions.OpenAI
-{
-    /// <summary> Memory search options. </summary>
-    public partial class MemorySearchResultOptions : IJsonModel<MemorySearchResultOptions>
-    {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MemorySearchResultOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MemorySearchResultOptions>)this).GetFormatFromOptions(options) : options.Format;
-========
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> VMAttributes using double values. </summary>
@@ -33,38 +21,21 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         protected virtual VMAttributeMinMaxDouble PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VMAttributeMinMaxDouble>)this).GetFormatFromOptions(options) : options.Format;
->>>>>>>> 3eff0820fbe8ab973e154b09ff0ca48a66e36b43:sdk/compute/Azure.ResourceManager.Compute.BulkActions/src/Generated/Models/VMAttributeMinMaxDouble.Serialization.cs
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/MemorySearchResultOptions.Serialization.cs
-                        return DeserializeMemorySearchResultOptions(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MemorySearchResultOptions)} does not support reading '{options.Format}' format.");
-========
                         return DeserializeVMAttributeMinMaxDouble(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(VMAttributeMinMaxDouble)} does not support reading '{options.Format}' format.");
->>>>>>>> 3eff0820fbe8ab973e154b09ff0ca48a66e36b43:sdk/compute/Azure.ResourceManager.Compute.BulkActions/src/Generated/Models/VMAttributeMinMaxDouble.Serialization.cs
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/MemorySearchResultOptions.Serialization.cs
-            string format = options.Format == "W" ? ((IPersistableModel<MemorySearchResultOptions>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MemorySearchResultOptions)} does not support writing '{options.Format}' format.");
-========
             string format = options.Format == "W" ? ((IPersistableModel<VMAttributeMinMaxDouble>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
@@ -72,25 +43,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeBulkActionsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VMAttributeMinMaxDouble)} does not support writing '{options.Format}' format.");
->>>>>>>> 3eff0820fbe8ab973e154b09ff0ca48a66e36b43:sdk/compute/Azure.ResourceManager.Compute.BulkActions/src/Generated/Models/VMAttributeMinMaxDouble.Serialization.cs
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/MemorySearchResultOptions.Serialization.cs
-        BinaryData IPersistableModel<MemorySearchResultOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MemorySearchResultOptions IPersistableModel<MemorySearchResultOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MemorySearchResultOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MemorySearchResultOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-========
         BinaryData IPersistableModel<VMAttributeMinMaxDouble>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
@@ -103,7 +59,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VMAttributeMinMaxDouble>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
->>>>>>>> 3eff0820fbe8ab973e154b09ff0ca48a66e36b43:sdk/compute/Azure.ResourceManager.Compute.BulkActions/src/Generated/Models/VMAttributeMinMaxDouble.Serialization.cs
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -114,17 +69,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/MemorySearchResultOptions.Serialization.cs
-            string format = options.Format == "W" ? ((IPersistableModel<MemorySearchResultOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(MemorySearchResultOptions)} does not support writing '{format}' format.");
-========
             string format = options.Format == "W" ? ((IPersistableModel<VMAttributeMinMaxDouble>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VMAttributeMinMaxDouble)} does not support writing '{format}' format.");
->>>>>>>> 3eff0820fbe8ab973e154b09ff0ca48a66e36b43:sdk/compute/Azure.ResourceManager.Compute.BulkActions/src/Generated/Models/VMAttributeMinMaxDouble.Serialization.cs
             }
             if (Optional.IsDefined(Min))
             {
@@ -155,21 +103,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/MemorySearchResultOptions.Serialization.cs
-        MemorySearchResultOptions IJsonModel<MemorySearchResultOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MemorySearchResultOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MemorySearchResultOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(MemorySearchResultOptions)} does not support reading '{format}' format.");
-            }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMemorySearchResultOptions(document.RootElement, options);
-========
         VMAttributeMinMaxDouble IJsonModel<VMAttributeMinMaxDouble>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -183,16 +116,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVMAttributeMinMaxDouble(document.RootElement, options);
->>>>>>>> 3eff0820fbe8ab973e154b09ff0ca48a66e36b43:sdk/compute/Azure.ResourceManager.Compute.BulkActions/src/Generated/Models/VMAttributeMinMaxDouble.Serialization.cs
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/MemorySearchResultOptions.Serialization.cs
-        internal static MemorySearchResultOptions DeserializeMemorySearchResultOptions(JsonElement element, ModelReaderWriterOptions options)
-========
         internal static VMAttributeMinMaxDouble DeserializeVMAttributeMinMaxDouble(JsonElement element, ModelReaderWriterOptions options)
->>>>>>>> 3eff0820fbe8ab973e154b09ff0ca48a66e36b43:sdk/compute/Azure.ResourceManager.Compute.BulkActions/src/Generated/Models/VMAttributeMinMaxDouble.Serialization.cs
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -226,11 +154,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/MemorySearchResultOptions.Serialization.cs
-            return new MemorySearchResultOptions(maxMemories, additionalBinaryDataProperties);
-========
             return new VMAttributeMinMaxDouble(min, max, additionalBinaryDataProperties);
->>>>>>>> 3eff0820fbe8ab973e154b09ff0ca48a66e36b43:sdk/compute/Azure.ResourceManager.Compute.BulkActions/src/Generated/Models/VMAttributeMinMaxDouble.Serialization.cs
         }
     }
 }

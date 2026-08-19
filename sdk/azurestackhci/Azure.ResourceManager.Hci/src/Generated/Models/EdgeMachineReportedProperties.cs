@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Hci.Models
         {
             LastUpdatedOn = lastUpdatedOn;
             NetworkProfile = networkProfile;
-            OsProfile = osProfile;
+            OSProfile = osProfile;
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
             SbeDeploymentPackageInfo = sbeDeploymentPackageInfo;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> OS Properties for edge machine. </summary>
         [WirePath("osProfile")]
-        public HciDeploymentOSProfile OsProfile { get; }
+        public HciDeploymentOSProfile OSProfile { get; }
 
         /// <summary> Hardware related information for edge machine. </summary>
         [WirePath("hardwareProfile")]

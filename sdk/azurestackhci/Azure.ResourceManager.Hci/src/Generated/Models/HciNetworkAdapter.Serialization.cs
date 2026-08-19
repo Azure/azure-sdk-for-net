@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.Hci.Models
                 throw new FormatException($"The model {nameof(HciNetworkAdapter)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("ipAssignmentType"u8);
-            writer.WriteStringValue(IpAssignmentType.ToString());
-            if (Optional.IsDefined(IpAddress))
+            writer.WriteStringValue(IPAssignmentType.ToString());
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IpAddress);
+                writer.WriteStringValue(IPAddress);
             }
             if (Optional.IsDefined(AdapterName))
             {
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (Optional.IsDefined(IpAddressRange))
+            if (Optional.IsDefined(IPAddressRange))
             {
                 writer.WritePropertyName("ipAddressRange"u8);
-                writer.WriteObjectValue(IpAddressRange, options);
+                writer.WriteObjectValue(IPAddressRange, options);
             }
             if (Optional.IsDefined(Gateway))
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            IpAssignmentType ipAssignmentType = default;
+            IPAssignmentType ipAssignmentType = default;
             string ipAddress = default;
             string adapterName = default;
             string macAddress = default;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 if (prop.NameEquals("ipAssignmentType"u8))
                 {
-                    ipAssignmentType = new IpAssignmentType(prop.Value.GetString());
+                    ipAssignmentType = new IPAssignmentType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ipAddress"u8))

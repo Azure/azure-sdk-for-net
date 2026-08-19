@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             DateTimeOffset? endOn = default;
             IList<SecurityInsightsContentJobItem> items = default;
-            TriggeredAnalyticsRuleRunProvisioningState? provisioningState = default;
+            JobProvisioningState? provisioningState = default;
             DateTimeOffset? startOn = default;
             string errorMessage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    provisioningState = new TriggeredAnalyticsRuleRunProvisioningState(prop.Value.GetString());
+                    provisioningState = new JobProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("startTime"u8))

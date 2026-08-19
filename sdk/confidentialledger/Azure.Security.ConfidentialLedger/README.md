@@ -123,7 +123,15 @@ var ledgerClient = new ConfidentialLedgerClient(ledgerEndpoint, credential, opti
 
 `GetLedgerEntry` automatically re-polls a successful response whose state is `Loading`. The configured `Retry.MaxRetries` bounds the additional loading polls and `Retry.Delay` controls their spacing.
 
-Collection pruning can remove the live value while retaining its history. Archived fallback is enabled by default, so `GetCurrentLedgerEntry` handles a collection-specific 404 by querying history and returning the latest retained entry, including tags, without additional caller logic or configuration. A missing collection still surfaces the original 404 when history contains no entry. Set `EnableArchivedCollectionFallback = false` only to restore the legacy 404 behavior for pruned collections.
+Collection pruning can remove the live value while retaining its history. Archived fallback is disabled by default because the service returns the same 404 for a pruned collection and a collection that never existed, and searching ledger history can be expensive on a ledger with a long transaction history. To transparently query history and return the latest retained entry, including tags, explicitly set `EnableArchivedCollectionFallback = true`. A missing collection still surfaces the original 404 when history contains no entry.
+
+```C#
+var options = new ConfidentialLedgerClientOptions
+{
+    EnableArchivedCollectionFallback = true,
+};
+var ledgerClient = new ConfidentialLedgerClient(ledgerEndpoint, credential, options);
+```
 
 Each endpoint uses its own transport pipeline and the TLS identity certificate returned by the independently validated Identity Service is pinned specifically to that endpoint's ledger id. A certificate trusted for one ledger is not accepted for another ledger, including during concurrent failover. Custom transports remain in use; their TLS behavior remains the custom transport owner's responsibility. Do not disable `VerifyConnection` in production.
 

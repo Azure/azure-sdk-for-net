@@ -736,7 +736,7 @@ public class AgentsTests : AgentsTestBase
         MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(name: MEMORY_STORE_NAME, definition: memoryDefinitions, description: "Test memory store.");
         // Create an empty scope and make sure we cannot find anything.
         string scope = MEMORY_STORE_SCOPE;
-        Memory.MemorySearchOptions opts = new(scope)
+        MemorySearchOptions opts = new(scope)
         {
             Items = { ResponseItem.CreateUserMessageItem("Name your favorite animal") },
             ResultOptions = new MemorySearchResultOptions()

@@ -242,8 +242,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             int vlanId = default;
             BgpConfiguration bgpSettings = default;
             StaticRouteConfiguration staticRouteSettings = default;
-            NativeIpv4PrefixLimitProperties nativeIPv4PrefixLimit = default;
-            NativeIpv6PrefixLimitProperties nativeIPv6PrefixLimit = default;
+            NativeIPv4PrefixLimitProperties nativeIPv4PrefixLimit = default;
+            NativeIPv6PrefixLimitProperties nativeIPv6PrefixLimit = default;
             LastOperationProperties lastOperation = default;
             ResourceIdentifier networkFabricId = default;
             NetworkFabricConfigurationState? configurationState = default;
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    nativeIPv4PrefixLimit = NativeIpv4PrefixLimitProperties.DeserializeNativeIpv4PrefixLimitProperties(prop.Value, options);
+                    nativeIPv4PrefixLimit = NativeIPv4PrefixLimitProperties.DeserializeNativeIPv4PrefixLimitProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("nativeIpv6PrefixLimit"u8))
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    nativeIPv6PrefixLimit = NativeIpv6PrefixLimitProperties.DeserializeNativeIpv6PrefixLimitProperties(prop.Value, options);
+                    nativeIPv6PrefixLimit = NativeIPv6PrefixLimitProperties.DeserializeNativeIPv6PrefixLimitProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("lastOperation"u8))
