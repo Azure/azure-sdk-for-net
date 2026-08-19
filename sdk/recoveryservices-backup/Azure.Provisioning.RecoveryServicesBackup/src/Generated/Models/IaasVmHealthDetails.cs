@@ -5,72 +5,20 @@
 
 #nullable disable
 
-using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
-
 namespace Azure.Provisioning.RecoveryServicesBackup
 {
     /// <summary> Azure IaaS VM workload-specific Health Details. </summary>
-    public partial class IaasVmHealthDetails : ProvisionableConstruct
+    public partial class IaasVmHealthDetails : ResourceHealthDetails
     {
-        private BicepValue<int> _code;
-        private BicepValue<string> _title;
-        private BicepValue<string> _message;
-        private BicepList<string> _recommendations;
-
         /// <summary> Creates a new IaasVmHealthDetails. </summary>
         public IaasVmHealthDetails()
         {
-        }
-
-        /// <summary> Gets the Code. </summary>
-        public BicepValue<int> Code
-        {
-            get
-            {
-                Initialize();
-                return _code;
-            }
-        }
-
-        /// <summary> Gets the Title. </summary>
-        public BicepValue<string> Title
-        {
-            get
-            {
-                Initialize();
-                return _title;
-            }
-        }
-
-        /// <summary> Gets the Message. </summary>
-        public BicepValue<string> Message
-        {
-            get
-            {
-                Initialize();
-                return _message;
-            }
-        }
-
-        /// <summary> Gets the Recommendations. </summary>
-        public BicepList<string> Recommendations
-        {
-            get
-            {
-                Initialize();
-                return _recommendations;
-            }
         }
 
         /// <summary> Define all the provisionable properties for IaasVmHealthDetails. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _code = DefineProperty<int>(nameof(Code), new string[] { "code" }, isOutput: true);
-            _title = DefineProperty<string>(nameof(Title), new string[] { "title" }, isOutput: true);
-            _message = DefineProperty<string>(nameof(Message), new string[] { "message" }, isOutput: true);
-            _recommendations = DefineListProperty<string>(nameof(Recommendations), new string[] { "recommendations" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

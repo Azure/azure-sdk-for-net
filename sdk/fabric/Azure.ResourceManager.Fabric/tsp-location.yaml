@@ -1,4 +1,6 @@
 directory: specification/fabric/resource-manager/Microsoft.Fabric/Fabric
-commit: dc596edd6c19f889bd5f9089734dbabfae7bca77
+commit: a11c8d40bf2ab8aed7c8debec9528bff36a7ae2a
 repo: Azure/azure-rest-api-specs
-emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
+additionalDirectories: []
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

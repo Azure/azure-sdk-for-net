@@ -1,14 +1,11 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (2026-08-18)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Regenerated with the TypeSpec-based provisioning generator.
+- Updated default API version to `2026-05-01`.
 
 ## 1.2.0 (2025-12-09)
 

@@ -458,6 +458,16 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         public Azure.Provisioning.BicepValue<Azure.Provisioning.RecoveryServicesBackup.VaultXcoolState> XcoolState { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class BackupResourceEncryptionConfig : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public BackupResourceEncryptionConfig() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.RecoveryServicesBackup.BackupEncryptionAtRestType> EncryptionAtRestType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.RecoveryServicesBackup.InfrastructureEncryptionState> InfrastructureEncryptionState { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> KeyUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.RecoveryServicesBackup.LastUpdateStatus> LastUpdateStatus { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> SubscriptionId { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class BackupResourceEncryptionConfigExtended : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public BackupResourceEncryptionConfigExtended(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -477,14 +487,9 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             public static readonly string V2026_01_01;
         }
     }
-    public partial class BackupResourceEncryptionConfigExtendedProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class BackupResourceEncryptionConfigExtendedProperties : Azure.Provisioning.RecoveryServicesBackup.BackupResourceEncryptionConfig
     {
         public BackupResourceEncryptionConfigExtendedProperties() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.RecoveryServicesBackup.BackupEncryptionAtRestType> EncryptionAtRestType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.RecoveryServicesBackup.InfrastructureEncryptionState> InfrastructureEncryptionState { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.Uri> KeyUri { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.RecoveryServicesBackup.LastUpdateStatus> LastUpdateStatus { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> SubscriptionId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> UserAssignedIdentity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> UseSystemAssignedIdentity { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -921,13 +926,9 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         public Azure.Provisioning.BicepList<string> Recommendations { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class IaasVmHealthDetails : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class IaasVmHealthDetails : Azure.Provisioning.RecoveryServicesBackup.ResourceHealthDetails
     {
         public IaasVmHealthDetails() { }
-        public Azure.Provisioning.BicepValue<int> Code { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Message { get { throw null; } }
-        public Azure.Provisioning.BicepList<string> Recommendations { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Title { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum IaasVmPolicyType
@@ -1287,12 +1288,10 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         public Azure.Provisioning.BicepValue<Azure.Provisioning.RecoveryServicesBackup.RecoveryPointTierType> TierType { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class RecoveryPointTierInformationV2 : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class RecoveryPointTierInformationV2 : Azure.Provisioning.RecoveryServicesBackup.RecoveryPointTierInformation
     {
         public RecoveryPointTierInformationV2() { }
-        public Azure.Provisioning.BicepDictionary<string> ExtendedInfo { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.RecoveryServicesBackup.RecoveryPointTierStatus> Status { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.RecoveryServicesBackup.RecoveryPointTierType> TierType { get { throw null; } }
+        public new Azure.Provisioning.BicepValue<Azure.Provisioning.RecoveryServicesBackup.RecoveryPointTierStatus> Status { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.RecoveryServicesBackup.RecoveryPointTierType> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }

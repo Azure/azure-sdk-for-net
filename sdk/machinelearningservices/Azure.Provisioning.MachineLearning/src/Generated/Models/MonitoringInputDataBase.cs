@@ -13,7 +13,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Monitoring input data base definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FixedInputData"/>, <see cref="RollingInputData"/>, and <see cref="StaticInputData"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="FixedInputData"/>, <see cref="RollingInputData"/>, and <see cref="StaticInputData"/>.
     /// </summary>
     public partial class MonitoringInputDataBase : ProvisionableConstruct
     {

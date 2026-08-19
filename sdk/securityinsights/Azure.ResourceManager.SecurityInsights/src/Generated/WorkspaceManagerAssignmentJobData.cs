@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary> State of the job. </summary>
         [WirePath("properties.provisioningState")]
-        public TriggeredAnalyticsRuleRunProvisioningState? ProvisioningState
+        public JobProvisioningState? ProvisioningState
         {
             get
             {

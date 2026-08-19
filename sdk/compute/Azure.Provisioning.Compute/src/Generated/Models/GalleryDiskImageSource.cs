@@ -7,16 +7,14 @@
 
 using Azure.Core;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Compute
 {
     /// <summary> The source for the disk image. </summary>
-    public partial class GalleryDiskImageSource : ProvisionableConstruct
+    public partial class GalleryDiskImageSource : GalleryArtifactVersionSource
     {
         private BicepValue<string> _sourceUri;
         private BicepValue<ResourceIdentifier> _storageAccountId;
-        private BicepValue<ResourceIdentifier> _id;
 
         /// <summary> Creates a new GalleryDiskImageSource. </summary>
         public GalleryDiskImageSource()
@@ -53,28 +51,12 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the Id. </summary>
-        public BicepValue<ResourceIdentifier> Id
-        {
-            get
-            {
-                Initialize();
-                return _id;
-            }
-            set
-            {
-                Initialize();
-                _id.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for GalleryDiskImageSource. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _sourceUri = DefineProperty<string>(nameof(SourceUri), new string[] { "uri" });
             _storageAccountId = DefineProperty<ResourceIdentifier>(nameof(StorageAccountId), new string[] { "storageAccountId" });
-            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
             DefineAdditionalProperties();
         }
 
