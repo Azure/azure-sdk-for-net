@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="server"> The hostname of this registrar's whois server. </param>
         /// <param name="createdOn"> The timestamp at which this record was created. </param>
         /// <param name="updatedOn"> The timestamp at which this record was last updated. </param>
-        /// <param name="expireOn"> The timestamp at which this record will expire. </param>
+        /// <param name="expiresOn"> The timestamp at which this record will expire. </param>
         /// <param name="parsedWhois"> The whois record for a given domain. </param>
         /// <returns> A new <see cref="Models.EnrichmentDomainWhois"/> instance for mocking. </returns>
-        public static EnrichmentDomainWhois EnrichmentDomainWhois(string domain = default, string server = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, DateTimeOffset? expireOn = default, EnrichmentDomainWhoisDetails parsedWhois = default)
+        public static EnrichmentDomainWhois EnrichmentDomainWhois(string domain = default, string server = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, DateTimeOffset? expiresOn = default, EnrichmentDomainWhoisDetails parsedWhois = default)
         {
             return new EnrichmentDomainWhois(
                 domain,
                 server,
                 createdOn,
                 updatedOn,
-                expireOn,
+                expiresOn,
                 parsedWhois,
                 default);
         }
@@ -4809,17 +4809,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="state"> The state of the file import. </param>
         /// <param name="totalRecordCount"> The number of records in the file. </param>
         /// <param name="validRecordCount"> The number of records that have passed validation. </param>
-        /// <param name="filesExpireOn"> The time the files associated with this import are deleted from the storage account. </param>
-        /// <param name="importExpiresOn"> The time the file import record is soft deleted from the database and history. </param>
+        /// <param name="filesExpirationOn"> The time the files associated with this import are deleted from the storage account. </param>
+        /// <param name="importExpirationOn"> The time the file import record is soft deleted from the database and history. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsFileImportData"/> instance for mocking. </returns>
-        public static SecurityInsightsFileImportData SecurityInsightsFileImportData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IngestionMode? ingestionMode = default, SecurityInsightsFileImportContentType? contentType = default, DateTimeOffset? createdOn = default, SecurityInsightsFileMetadata errorFile = default, IEnumerable<SecurityInsightsFileValidationError> errorsPreview = default, SecurityInsightsFileMetadata importFile = default, int? ingestedRecordCount = default, string source = default, SecurityInsightsFileImportState? state = default, int? totalRecordCount = default, int? validRecordCount = default, DateTimeOffset? filesExpireOn = default, DateTimeOffset? importExpiresOn = default)
+        public static SecurityInsightsFileImportData SecurityInsightsFileImportData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IngestionMode? ingestionMode = default, SecurityInsightsFileImportContentType? contentType = default, DateTimeOffset? createdOn = default, SecurityInsightsFileMetadata errorFile = default, IEnumerable<SecurityInsightsFileValidationError> errorsPreview = default, SecurityInsightsFileMetadata importFile = default, int? ingestedRecordCount = default, string source = default, SecurityInsightsFileImportState? state = default, int? totalRecordCount = default, int? validRecordCount = default, DateTimeOffset? filesExpirationOn = default, DateTimeOffset? importExpirationOn = default)
         {
             return new SecurityInsightsFileImportData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                ingestionMode is null && contentType is null && createdOn is null && errorFile is null && errorsPreview is null && importFile is null && ingestedRecordCount is null && source is null && state is null && totalRecordCount is null && validRecordCount is null && filesExpireOn is null && importExpiresOn is null ? default : new FileImportProperties(
+                ingestionMode is null && contentType is null && createdOn is null && errorFile is null && errorsPreview is null && importFile is null && ingestedRecordCount is null && source is null && state is null && totalRecordCount is null && validRecordCount is null && filesExpirationOn is null && importExpirationOn is null ? default : new FileImportProperties(
                     ingestionMode.GetValueOrDefault(),
                     contentType.GetValueOrDefault(),
                     createdOn,
@@ -4831,8 +4831,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     state,
                     totalRecordCount,
                     validRecordCount,
-                    filesExpireOn,
-                    importExpiresOn,
+                    filesExpirationOn,
+                    importExpirationOn,
                     default),
                 default);
         }

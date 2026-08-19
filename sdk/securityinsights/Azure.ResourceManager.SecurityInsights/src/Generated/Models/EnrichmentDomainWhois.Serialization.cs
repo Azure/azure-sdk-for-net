@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("updated"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expires"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (Optional.IsDefined(ParsedWhois))
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string server = default;
             DateTimeOffset? createdOn = default;
             DateTimeOffset? updatedOn = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expiresOn = default;
             EnrichmentDomainWhoisDetails parsedWhois = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("parsedWhois"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 server,
                 createdOn,
                 updatedOn,
-                expireOn,
+                expiresOn,
                 parsedWhois,
                 additionalBinaryDataProperties);
         }
