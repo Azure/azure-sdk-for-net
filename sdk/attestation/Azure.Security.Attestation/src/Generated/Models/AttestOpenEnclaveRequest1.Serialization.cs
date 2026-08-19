@@ -87,7 +87,7 @@ namespace Azure.Security.Attestation
             if (Optional.IsDefined(Report))
             {
                 writer.WritePropertyName("report"u8);
-                writer.WriteBase64StringValue(Report.ToArray(), "U");
+                writer.WriteBase64StringValue(Report, "U");
             }
             if (Optional.IsDefined(RuntimeData))
             {

@@ -81,7 +81,7 @@ namespace Azure.Security.Attestation
             if (Optional.IsDefined(PolicyTokenHash))
             {
                 writer.WritePropertyName("x-ms-policy-token-hash"u8);
-                writer.WriteBase64StringValue(PolicyTokenHash.ToArray(), "U");
+                writer.WriteBase64StringValue(PolicyTokenHash, "U");
             }
             if (Optional.IsDefined(BasePolicySigner))
             {

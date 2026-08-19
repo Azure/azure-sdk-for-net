@@ -155,7 +155,7 @@ namespace Azure.Security.Attestation
             if (Optional.IsDefined(PolicyHash))
             {
                 writer.WritePropertyName("x-ms-policy-hash"u8);
-                writer.WriteBase64StringValue(PolicyHash.ToArray(), "U");
+                writer.WriteBase64StringValue(PolicyHash, "U");
             }
             if (Optional.IsDefined(IsDebuggable))
             {
@@ -185,7 +185,7 @@ namespace Azure.Security.Attestation
             if (Optional.IsDefined(EnclaveHeldData))
             {
                 writer.WritePropertyName("x-ms-sgx-ehd"u8);
-                writer.WriteBase64StringValue(EnclaveHeldData.ToArray(), "U");
+                writer.WriteBase64StringValue(EnclaveHeldData, "U");
             }
             if (Optional.IsDefined(SgxCollateral))
             {
@@ -210,12 +210,12 @@ namespace Azure.Security.Attestation
             if (Optional.IsDefined(DeprecatedEnclaveHeldData))
             {
                 writer.WritePropertyName("aas-ehd"u8);
-                writer.WriteBase64StringValue(DeprecatedEnclaveHeldData.ToArray(), "U");
+                writer.WriteBase64StringValue(DeprecatedEnclaveHeldData, "U");
             }
             if (Optional.IsDefined(DeprecatedEnclaveHeldData2))
             {
                 writer.WritePropertyName("maa-ehd"u8);
-                writer.WriteBase64StringValue(DeprecatedEnclaveHeldData2.ToArray(), "U");
+                writer.WriteBase64StringValue(DeprecatedEnclaveHeldData2, "U");
             }
             if (Optional.IsDefined(DeprecatedProductId))
             {
@@ -250,7 +250,7 @@ namespace Azure.Security.Attestation
             if (Optional.IsDefined(DeprecatedPolicyHash))
             {
                 writer.WritePropertyName("policy_hash"u8);
-                writer.WriteBase64StringValue(DeprecatedPolicyHash.ToArray(), "D");
+                writer.WriteBase64StringValue(DeprecatedPolicyHash, "D");
             }
             if (Optional.IsDefined(DeprecatedRpData))
             {

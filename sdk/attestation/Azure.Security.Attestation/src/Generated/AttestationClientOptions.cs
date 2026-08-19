@@ -14,14 +14,14 @@ namespace Azure.Security.Attestation
     /// <summary> Client options for <see cref="AttestationClient"/>. </summary>
     public partial class AttestationClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2020_10_01;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2025_06_01;
 
         /// <summary> Initializes a new instance of AttestationClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
         [Experimental("SCME0002")]
         internal AttestationClientOptions(IConfigurationSection section) : base(section, null)
         {
-            Version = "V2020_10_01";
+            Version = "2025-06-01";
             if (section is null || !section.Exists())
             {
                 return;
