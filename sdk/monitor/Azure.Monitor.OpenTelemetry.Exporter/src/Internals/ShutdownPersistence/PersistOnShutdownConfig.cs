@@ -37,6 +37,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ShutdownPersistence
         /// </summary>
         internal const int FallbackPostBudgetMilliseconds = 3000;
 
+        /// <summary>
+        /// Network timeout for the internal telemetry exporters (Statsbeat, customer SDK stats).
+        /// Their meter providers export once more as they are disposed, which is on the process exit
+        /// path, and the pipeline default of 100 seconds would make an unreachable endpoint stall it.
+        /// Losing internal telemetry is acceptable; stalling exit is not.
+        /// </summary>
+        internal static readonly TimeSpan InternalTelemetryNetworkTimeout = TimeSpan.FromSeconds(5);
+
         internal static bool IsPersistOnShutdownEnabled => !IsSwitchEnabled(DisablePersistOnShutdownSwitchName);
 
         internal static bool IsPersistOnForceFlushEnabled => IsSwitchEnabled(PersistOnForceFlushSwitchName);

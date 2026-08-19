@@ -16,6 +16,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ShutdownPersistence;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 
@@ -415,6 +416,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.False(second._disposed);
 
             second.Dispose();
+        }
+
+        [Fact]
+        public void InternalTelemetryExportersCannotStallProcessExit()
+        {
+            // Both meter providers export once more as they are disposed, which happens on the exit
+            // path. The pipeline default of 100 seconds would let an unreachable endpoint stall it.
+            var statsbeat = AzureMonitorStatsbeat.CreateExporterOptions($"InstrumentationKey={Guid.NewGuid()};IngestionEndpoint={TestEndpoint}");
+            var customerStats = CustomerSdkStatsRegistration.CreateCustomerSdkStatsOptions(new AzureMonitorExporterOptions
+            {
+                ConnectionString = $"InstrumentationKey={Guid.NewGuid()};IngestionEndpoint={TestEndpoint}",
+            });
+
+            Assert.Equal(PersistOnShutdownConfig.InternalTelemetryNetworkTimeout, statsbeat.Retry.NetworkTimeout);
+            Assert.Equal(PersistOnShutdownConfig.InternalTelemetryNetworkTimeout, customerStats.Retry.NetworkTimeout);
+            Assert.True(PersistOnShutdownConfig.InternalTelemetryNetworkTimeout < TimeSpan.FromSeconds(30));
         }
 
         [Theory]
