@@ -36,6 +36,9 @@ namespace Azure.ResourceManager.ManagedApplications
         /// <summary> The JIT request properties. </summary>
         internal JitRequestProperties Properties { get; set; }
 
+        /// <summary> Resource type. </summary>
+        public string Type { get; }
+
         /// <summary> The parent application id. </summary>
         public ResourceIdentifier ApplicationResourceId
         {

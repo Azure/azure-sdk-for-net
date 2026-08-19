@@ -39,6 +39,15 @@ namespace Azure.ResourceManager.ManagedApplications
         /// <summary> The managed application definition properties. </summary>
         internal ApplicationDefinitionProperties Properties { get; set; }
 
+        /// <summary> ID of the resource that manages this resource. </summary>
+        public string ManagedBy { get; set; }
+
+        /// <summary> The SKU of the resource. </summary>
+        public ManagedApplicationsSku Sku { get; set; }
+
+        /// <summary> Resource type. </summary>
+        public string Type { get; }
+
         /// <summary> The managed application lock level. </summary>
         public ApplicationLockLevel LockLevel
         {

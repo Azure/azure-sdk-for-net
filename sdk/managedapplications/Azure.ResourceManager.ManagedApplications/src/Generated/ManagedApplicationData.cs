@@ -56,6 +56,15 @@ namespace Azure.ResourceManager.ManagedApplications
         /// <summary> The identity of the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
 
+        /// <summary> ID of the resource that manages this resource. </summary>
+        public string ManagedBy { get; set; }
+
+        /// <summary> The SKU of the resource. </summary>
+        public ManagedApplicationsSku Sku { get; set; }
+
+        /// <summary> Resource type. </summary>
+        public string Type { get; }
+
         /// <summary> The managed resource group Id. </summary>
         public ResourceIdentifier ManagedResourceGroupId
         {
