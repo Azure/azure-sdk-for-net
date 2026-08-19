@@ -4262,97 +4262,121 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <param name="description"> Description for the output. </param>
         /// <param name="assetName"> Output Asset Name. </param>
+        /// <param name="assetVersion"> Output Asset Version. </param>
         /// <param name="mode"> Output data delivery mode enums. </param>
+        /// <param name="pathOnCompute"> Output Asset Delivery Path. </param>
         /// <param name="uri"> Output Asset URI. </param>
         /// <returns> A new <see cref="Models.MachineLearningCustomModelJobOutput"/> instance for mocking. </returns>
-        public static MachineLearningCustomModelJobOutput MachineLearningCustomModelJobOutput(string description = default, string assetName = default, MachineLearningOutputDeliveryMode? mode = default, Uri uri = default)
+        public static MachineLearningCustomModelJobOutput MachineLearningCustomModelJobOutput(string description = default, string assetName = default, string assetVersion = default, MachineLearningOutputDeliveryMode? mode = default, string pathOnCompute = default, Uri uri = default)
         {
             return new MachineLearningCustomModelJobOutput(
                 description,
                 default,
                 default,
                 assetName,
+                assetVersion,
                 mode,
+                pathOnCompute,
                 uri);
         }
 
         /// <param name="description"> Description for the output. </param>
         /// <param name="assetName"> Output Asset Name. </param>
+        /// <param name="assetVersion"> Output Asset Version. </param>
         /// <param name="mode"> Output data delivery mode enums. </param>
+        /// <param name="pathOnCompute"> Output Asset Delivery Path. </param>
         /// <param name="uri"> Output Asset URI. </param>
         /// <returns> A new <see cref="Models.MachineLearningFlowModelJobOutput"/> instance for mocking. </returns>
-        public static MachineLearningFlowModelJobOutput MachineLearningFlowModelJobOutput(string description = default, string assetName = default, MachineLearningOutputDeliveryMode? mode = default, Uri uri = default)
+        public static MachineLearningFlowModelJobOutput MachineLearningFlowModelJobOutput(string description = default, string assetName = default, string assetVersion = default, MachineLearningOutputDeliveryMode? mode = default, string pathOnCompute = default, Uri uri = default)
         {
             return new MachineLearningFlowModelJobOutput(
                 description,
                 default,
                 default,
                 assetName,
+                assetVersion,
                 mode,
+                pathOnCompute,
                 uri);
         }
 
         /// <param name="description"> Description for the output. </param>
         /// <param name="assetName"> Output Asset Name. </param>
+        /// <param name="assetVersion"> Output Asset Version. </param>
         /// <param name="mode"> Output data delivery mode enums. </param>
+        /// <param name="pathOnCompute"> Output Asset Delivery Path. </param>
         /// <param name="uri"> Output Asset URI. </param>
         /// <returns> A new <see cref="Models.MachineLearningTableJobOutput"/> instance for mocking. </returns>
-        public static MachineLearningTableJobOutput MachineLearningTableJobOutput(string description = default, string assetName = default, MachineLearningOutputDeliveryMode? mode = default, Uri uri = default)
+        public static MachineLearningTableJobOutput MachineLearningTableJobOutput(string description = default, string assetName = default, string assetVersion = default, MachineLearningOutputDeliveryMode? mode = default, string pathOnCompute = default, Uri uri = default)
         {
             return new MachineLearningTableJobOutput(
                 description,
                 default,
                 default,
                 assetName,
+                assetVersion,
                 mode,
+                pathOnCompute,
                 uri);
         }
 
         /// <param name="description"> Description for the output. </param>
         /// <param name="assetName"> Output Asset Name. </param>
+        /// <param name="assetVersion"> Output Asset Version. </param>
         /// <param name="mode"> Output data delivery mode enums. </param>
+        /// <param name="pathOnCompute"> Output Asset Delivery Path. </param>
         /// <param name="uri"> Output Asset URI. </param>
         /// <returns> A new <see cref="Models.MachineLearningTritonModelJobOutput"/> instance for mocking. </returns>
-        public static MachineLearningTritonModelJobOutput MachineLearningTritonModelJobOutput(string description = default, string assetName = default, MachineLearningOutputDeliveryMode? mode = default, Uri uri = default)
+        public static MachineLearningTritonModelJobOutput MachineLearningTritonModelJobOutput(string description = default, string assetName = default, string assetVersion = default, MachineLearningOutputDeliveryMode? mode = default, string pathOnCompute = default, Uri uri = default)
         {
             return new MachineLearningTritonModelJobOutput(
                 description,
                 default,
                 default,
                 assetName,
+                assetVersion,
                 mode,
+                pathOnCompute,
                 uri);
         }
 
         /// <param name="description"> Description for the output. </param>
         /// <param name="assetName"> Output Asset Name. </param>
+        /// <param name="assetVersion"> Output Asset Version. </param>
         /// <param name="mode"> Output data delivery mode enums. </param>
+        /// <param name="pathOnCompute"> Output Asset Delivery Path. </param>
         /// <param name="uri"> Output Asset URI. </param>
         /// <returns> A new <see cref="Models.MachineLearningUriFileJobOutput"/> instance for mocking. </returns>
-        public static MachineLearningUriFileJobOutput MachineLearningUriFileJobOutput(string description = default, string assetName = default, MachineLearningOutputDeliveryMode? mode = default, Uri uri = default)
+        public static MachineLearningUriFileJobOutput MachineLearningUriFileJobOutput(string description = default, string assetName = default, string assetVersion = default, MachineLearningOutputDeliveryMode? mode = default, string pathOnCompute = default, Uri uri = default)
         {
             return new MachineLearningUriFileJobOutput(
                 description,
                 default,
                 default,
                 assetName,
+                assetVersion,
                 mode,
+                pathOnCompute,
                 uri);
         }
 
         /// <param name="description"> Description for the output. </param>
         /// <param name="assetName"> Output Asset Name. </param>
+        /// <param name="assetVersion"> Output Asset Version. </param>
         /// <param name="mode"> Output data delivery mode enums. </param>
+        /// <param name="pathOnCompute"> Output Asset Delivery Path. </param>
         /// <param name="uri"> Output Asset URI. </param>
         /// <returns> A new <see cref="Models.MachineLearningUriFolderJobOutput"/> instance for mocking. </returns>
-        public static MachineLearningUriFolderJobOutput MachineLearningUriFolderJobOutput(string description = default, string assetName = default, MachineLearningOutputDeliveryMode? mode = default, Uri uri = default)
+        public static MachineLearningUriFolderJobOutput MachineLearningUriFolderJobOutput(string description = default, string assetName = default, string assetVersion = default, MachineLearningOutputDeliveryMode? mode = default, string pathOnCompute = default, Uri uri = default)
         {
             return new MachineLearningUriFolderJobOutput(
                 description,
                 default,
                 default,
                 assetName,
+                assetVersion,
                 mode,
+                pathOnCompute,
                 uri);
         }
 
