@@ -1236,7 +1236,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// See https://aka.ms/aks/BastionSKUs for more details.
         /// </param>
         /// <param name="scaleUnits"> The scale units of the managed bastion. Default value is 2. </param>
-        /// <param name="publicIpAddressId">
+        /// <param name="publicIPAddressId">
         /// The resource ID of the public IP address associated with the managed bastion.
         /// When provided during creation, the managed bastion will reference this existing public IP address instead of creating a new one.
         /// The referenced public IP address must be in the same subscription and region as the managed cluster.
@@ -1244,14 +1244,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// This field cannot be updated. To change IP address after creation, please disable and re-enable the managed bastion with the new public IP address.
         /// </param>
         /// <returns> A new <see cref="Models.ManagedClusterBastionProfile"/> instance for mocking. </returns>
-        public static ManagedClusterBastionProfile ManagedClusterBastionProfile(bool? enabled = default, ResourceIdentifier bastionId = default, ManagedClusterBastionSku? sku = default, int? scaleUnits = default, ResourceIdentifier publicIpAddressId = default)
+        public static ManagedClusterBastionProfile ManagedClusterBastionProfile(bool? enabled = default, ResourceIdentifier bastionId = default, ManagedClusterBastionSku? sku = default, int? scaleUnits = default, ResourceIdentifier publicIPAddressId = default)
         {
             return new ManagedClusterBastionProfile(
                 enabled,
                 bastionId,
                 sku,
                 scaleUnits,
-                publicIpAddressId,
+                publicIPAddressId,
                 default);
         }
 
@@ -1268,7 +1268,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ManagedClusterNatGatewayProfile(
                 managedOutboundIPProfile,
                 (effectiveOutboundIPs ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
-                outboundPublicIPPrefixes is null ? default : new ManagedClusterNATGatewayProfileOutboundIpPrefixes((outboundPublicIPPrefixes ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default),
+                outboundPublicIPPrefixes is null ? default : new ManagedClusterNATGatewayProfileOutboundIPPrefixes((outboundPublicIPPrefixes ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default),
                 outboundPublicIPs is null ? default : new ManagedClusterNATGatewayProfileOutboundIPs((outboundPublicIPs ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default),
                 idleTimeoutInMinutes,
                 default);
@@ -2473,11 +2473,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="ipAddresses"> IPv4, IPv6 addresses of the machine. </param>
         /// <param name="vnetSubnetId"> The ID of the subnet which node and optionally pods will join on startup. If this is not specified, a VNET and subnet will be generated and used. If no podSubnetID is specified, this applies to nodes and pods, otherwise it applies to just nodes. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </param>
         /// <param name="podSubnetId"> The ID of the subnet which pods will join when launched. If omitted, pod IPs are statically assigned on the node subnet (see vnetSubnetID for more details). This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </param>
-        /// <param name="isNodePublicIpEnabled"> Whether the machine is allocated its own public IP. Some scenarios may require the machine to receive their own dedicated public IP addresses. A common scenario is for gaming workloads, where a console needs to make a direct connection to a cloud virtual machine to minimize hops. The default is false. </param>
-        /// <param name="nodePublicIpPrefixId"> The public IP prefix ID which VM node should use IPs from. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}. </param>
+        /// <param name="isNodePublicIPEnabled"> Whether the machine is allocated its own public IP. Some scenarios may require the machine to receive their own dedicated public IP addresses. A common scenario is for gaming workloads, where a console needs to make a direct connection to a cloud virtual machine to minimize hops. The default is false. </param>
+        /// <param name="nodePublicIPPrefixId"> The public IP prefix ID which VM node should use IPs from. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}. </param>
         /// <param name="nodePublicIPTags"> IPTags of instance-level public IPs. </param>
         /// <returns> A new <see cref="Models.ContainerServiceMachineNetworkProperties"/> instance for mocking. </returns>
-        public static ContainerServiceMachineNetworkProperties ContainerServiceMachineNetworkProperties(IEnumerable<ContainerServiceMachineIPAddress> ipAddresses = default, ResourceIdentifier vnetSubnetId = default, ResourceIdentifier podSubnetId = default, bool? isNodePublicIpEnabled = default, ResourceIdentifier nodePublicIpPrefixId = default, IEnumerable<ContainerServiceIPTag> nodePublicIPTags = default)
+        public static ContainerServiceMachineNetworkProperties ContainerServiceMachineNetworkProperties(IEnumerable<ContainerServiceMachineIPAddress> ipAddresses = default, ResourceIdentifier vnetSubnetId = default, ResourceIdentifier podSubnetId = default, bool? isNodePublicIPEnabled = default, ResourceIdentifier nodePublicIPPrefixId = default, IEnumerable<ContainerServiceIPTag> nodePublicIPTags = default)
         {
             ipAddresses ??= new ChangeTrackingList<ContainerServiceMachineIPAddress>();
             nodePublicIPTags ??= new ChangeTrackingList<ContainerServiceIPTag>();
@@ -2486,8 +2486,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                 (ipAddresses ?? new ChangeTrackingList<ContainerServiceMachineIPAddress>()).ToList(),
                 vnetSubnetId,
                 podSubnetId,
-                isNodePublicIpEnabled,
-                nodePublicIpPrefixId,
+                isNodePublicIPEnabled,
+                nodePublicIPPrefixId,
                 (nodePublicIPTags ?? new ChangeTrackingList<ContainerServiceIPTag>()).ToList(),
                 default);
         }
@@ -2961,12 +2961,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ManagedClusterMeshMembershipProperties(provisioningState, privateConnectProfile, managedMeshId, default);
         }
 
-        /// <param name="privateIpAddress"> The private IP address of the member cluster private FQDN. This is a read-only property populated by the service. </param>
+        /// <param name="privateIPAddress"> The private IP address of the member cluster private FQDN. This is a read-only property populated by the service. </param>
         /// <param name="subnetResourceId"> The delegated subnet resource ID. Customer can provide their own subnet, or AKS will allocate one if not specified. When providing your own subnet, the minimum required size is /28. </param>
         /// <returns> A new <see cref="Models.MeshMembershipPrivateConnectProfile"/> instance for mocking. </returns>
-        public static MeshMembershipPrivateConnectProfile MeshMembershipPrivateConnectProfile(string privateIpAddress = default, ResourceIdentifier subnetResourceId = default)
+        public static MeshMembershipPrivateConnectProfile MeshMembershipPrivateConnectProfile(string privateIPAddress = default, ResourceIdentifier subnetResourceId = default)
         {
-            return new MeshMembershipPrivateConnectProfile(privateIpAddress, subnetResourceId, default);
+            return new MeshMembershipPrivateConnectProfile(privateIPAddress, subnetResourceId, default);
         }
 
         /// <param name="values"> Array of AKS supported Kubernetes versions. </param>

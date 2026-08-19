@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="Hci.OfferData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is now deprecated. Please use the new method `HciClusterOfferData` moving forward.")]
-        public static OfferData OfferData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string publisherId = default, string content = default, string contentVersion = default, string provisioningState = default, IEnumerable<HciSkuMappings> skuMappings = default)
+        public static OfferData OfferData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, string publisherId = default, string content = default, string contentVersion = default, IEnumerable<HciSkuMappings> skuMappings = default)
         {
             return new OfferData(id, name, resourceType, systemData, additionalBinaryDataProperties: null, publisherId, content, contentVersion, provisioningState, skuMappings is null ? null : new List<HciSkuMappings>(skuMappings));
         }
@@ -151,9 +151,9 @@ namespace Azure.ResourceManager.Hci.Models
             string description,
             string errorMessage,
             string status,
-            DateTimeOffset? startOn,
-            DateTimeOffset? endOn,
-            DateTimeOffset? lastCompletedOn,
+            DateTimeOffset? startTimeUtc,
+            DateTimeOffset? endTimeUtc,
+            DateTimeOffset? lastUpdatedTimeUtc,
             IEnumerable<HciUpdateStep> steps)
          => throw new NotSupportedException("This method is now deprecated. Please use the new method `HciClusterUpdateRunData` moving forward.");
 
@@ -168,11 +168,11 @@ namespace Azure.ResourceManager.Hci.Models
             AzureLocation? location,
             HciProvisioningState? provisioningState,
             string oemFamily,
-            string currentOemVersion,
+            string hardwareModel,
             IEnumerable<HciPackageVersionInfo> packageVersions,
             string currentVersion,
-            DateTimeOffset? lastUpdatedOn,
-            DateTimeOffset? lastCheckedOn,
+            DateTimeOffset? lastUpdated,
+            DateTimeOffset? lastChecked,
             HciHealthState? healthState,
             IEnumerable<HciPrecheckResult> healthCheckResult,
             DateTimeOffset? healthCheckOn,

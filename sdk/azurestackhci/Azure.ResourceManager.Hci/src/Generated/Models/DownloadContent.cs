@@ -21,31 +21,31 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="target"> Target operating system to support polymorphic resource. </param>
         /// <param name="osProfile"> Operating system profile. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="osProfile"/> is null. </exception>
-        public DownloadContent(ProvisioningOsType target, DownloadOsProfile osProfile)
+        public DownloadContent(ProvisioningOSType target, DownloadOSProfile osProfile)
         {
             Argument.AssertNotNull(osProfile, nameof(osProfile));
 
             Target = target;
-            OsProfile = osProfile;
+            OSProfile = osProfile;
         }
 
         /// <summary> Initializes a new instance of <see cref="DownloadContent"/>. </summary>
         /// <param name="target"> Target operating system to support polymorphic resource. </param>
         /// <param name="osProfile"> Operating system profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DownloadContent(ProvisioningOsType target, DownloadOsProfile osProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DownloadContent(ProvisioningOSType target, DownloadOSProfile osProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Target = target;
-            OsProfile = osProfile;
+            OSProfile = osProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Target operating system to support polymorphic resource. </summary>
         [WirePath("target")]
-        public ProvisioningOsType Target { get; set; }
+        public ProvisioningOSType Target { get; set; }
 
         /// <summary> Operating system profile. </summary>
         [WirePath("osProfile")]
-        public DownloadOsProfile OsProfile { get; set; }
+        public DownloadOSProfile OSProfile { get; set; }
     }
 }
