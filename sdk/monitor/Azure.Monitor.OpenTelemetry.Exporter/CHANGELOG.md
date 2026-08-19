@@ -6,7 +6,7 @@
 - Add support for project id attributes propagation
   ([#62052](https://github.com/Azure/azure-sdk-for-net/pull/62052))
 
-- Shutting down a provider (including `Dispose()`) now writes pending telemetry to offline storage and uploads it in the background instead of blocking on ingestion. Short-lived applications such as CLI tools previously lost this telemetry, because they exit before a transmission completes; process exit now costs a file write rather than an ingestion round trip, and delivery is completed by a background drain in this or a subsequent run. `ForceFlush` is unchanged by default and can be opted in with the `Azure.Monitor.OpenTelemetry.Exporter.PersistOnForceFlush` AppContext switch. The previous behavior can be restored with the `Azure.Monitor.OpenTelemetry.Exporter.DisablePersistOnShutdown` AppContext switch.
+- Shutting down a provider (including `Dispose()`) now writes pending telemetry to offline storage and uploads it in the background instead of blocking on ingestion. Short-lived applications such as CLI tools previously lost this telemetry, because they exit before a transmission completes; process exit now costs a file write rather than an ingestion round trip, and delivery is completed by a background drain in this or a subsequent run. `ForceFlush` is unchanged by default and can be opted in with the `Azure.Monitor.OpenTelemetry.Exporter.PersistOnForceFlush` AppContext switch, which applies to traces and logs only: a metric reader cannot distinguish a caller's flush from its periodic collection, so metric `ForceFlush` always transmits. The previous behavior can be restored with the `Azure.Monitor.OpenTelemetry.Exporter.DisablePersistOnShutdown` AppContext switch.
 
 ### Breaking Changes
 

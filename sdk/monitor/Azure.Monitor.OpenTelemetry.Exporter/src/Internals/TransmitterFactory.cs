@@ -34,11 +34,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             lock (_lockObj)
             {
-                if (!_transmitters.TryGetValue(key, out ITransmitter? transmitter))
+                _transmitters.TryGetValue(key, out ITransmitter? transmitter);
+
+                // An instance whose last reference was released has already torn down its storage
+                // handler and timers, so it cannot serve a provider created later in the process.
+                if (transmitter == null || (transmitter as AzureMonitorTransmitter)?._disposed == true)
                 {
                     transmitter = new AzureMonitorTransmitter(azureMonitorExporterOptions, platform);
 
-                    _transmitters.Add(key, transmitter);
+                    _transmitters[key] = transmitter;
                 }
 
                 // Each exporter handed this instance shares its lifetime, so the instance must

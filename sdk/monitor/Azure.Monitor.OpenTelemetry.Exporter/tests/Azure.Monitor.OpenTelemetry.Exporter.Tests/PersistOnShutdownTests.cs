@@ -390,6 +390,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 $"Lease {TransmitFromStorageHandler.LeasePeriodMilliseconds} ms leaves too little margin over a {TransmitFromStorageHandler.DrainPostBudgetMilliseconds} ms request.");
         }
 
+        [Fact]
+        public void FactoryReplacesATransmitterWhoseLastReferenceWasReleased()
+        {
+            var options = new AzureMonitorExporterOptions
+            {
+                ConnectionString = $"InstrumentationKey={Guid.NewGuid()};IngestionEndpoint={TestEndpoint}",
+                StorageDirectory = _storageRoot,
+                Transport = new MockTransport(_ => new MockResponse(200).SetContent("Ok")),
+                EnableStatsbeat = false,
+            };
+
+            var platform = new MockPlatform();
+
+            var first = (AzureMonitorTransmitter)TransmitterFactory.Instance.Get(options, platform);
+            first.Dispose();
+            Assert.True(first._disposed);
+
+            // A provider recreated in the same process must not be handed the torn-down instance,
+            // whose storage handler and timers are already gone.
+            var second = (AzureMonitorTransmitter)TransmitterFactory.Instance.Get(options, platform);
+
+            Assert.NotSame(first, second);
+            Assert.False(second._disposed);
+
+            second.Dispose();
+        }
+
         [Theory]
         [InlineData(Timeout.Infinite, 0)]
         [InlineData(-5, 0)]
