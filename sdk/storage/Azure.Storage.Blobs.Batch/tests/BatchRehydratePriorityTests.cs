@@ -60,9 +60,9 @@ namespace Azure.Storage.Blobs.Batch.Tests
         }
 
         [Test]
-        public void Equals_Object_String_ReturnsTrue()
+        public void Equals_Object_WrongType_ReturnsFalse()
         {
-            Assert.IsTrue(BatchRehydratePriority.High.Equals("High"));
+            Assert.IsFalse(BatchRehydratePriority.High.Equals((object)42));
         }
         #endregion
 

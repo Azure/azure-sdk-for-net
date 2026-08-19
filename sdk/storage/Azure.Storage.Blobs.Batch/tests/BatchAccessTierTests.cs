@@ -69,7 +69,7 @@ namespace Azure.Storage.Blobs.Batch.Tests
         [Test]
         public void Equals_Object_WrongType_ReturnsFalse()
         {
-            Assert.IsFalse(BatchAccessTier.Hot.Equals("Hot"));
+            Assert.IsFalse(BatchAccessTier.Hot.Equals((object)42));
         }
         #endregion
 
@@ -113,7 +113,8 @@ namespace Azure.Storage.Blobs.Batch.Tests
         public void ImplicitConversion_FromNull_ToNullable()
         {
             BatchAccessTier? tier = (string)null;
-            Assert.IsNull(tier);
+            Assert.IsTrue(tier.HasValue);
+            Assert.IsNull(tier.Value.ToString());
         }
         #endregion
 
