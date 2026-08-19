@@ -37,6 +37,11 @@ await foreach (string sessionId in client.GetMessageSessionsAsync(topicName, sub
 Pass a real cutoff to list only sessions whose stored session state was set or updated after that time:
 
 ```C# Snippet:ServiceBusGetMessageSessionsUpdatedAfter
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+string queueName = "<queue_name>";
+
+await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
+
 DateTimeOffset stateUpdatedAfter = DateTimeOffset.UtcNow.AddDays(-7);
 
 await foreach (string sessionId in client.GetMessageSessionsAsync(queueName, stateUpdatedAfter))
