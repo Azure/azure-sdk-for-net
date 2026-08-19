@@ -2491,7 +2491,7 @@ namespace Azure.AI.Projects
         /// <returns> A new <see cref="Evaluation.EvaluatorVersion"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Experimental("AAIP001")]
-        public static EvaluatorVersion EvaluatorVersion(string displayName, IDictionary<string, string> metadata, EvaluatorType evaluatorType, IEnumerable<EvaluatorCategory> categories, EvaluatorDefinition definition, string createdBy, string createdAt, string modifiedAt, string id, string name, string version, string description, IDictionary<string, string> tags)
+        public static EvaluatorVersion EvaluatorVersion(string displayName, IDictionary<string, string> metadata, EvaluatorType evaluatorType, IEnumerable<EvaluatorCategory> categories, EvaluatorDefinition definition, string createdBy = default, string createdAt = default, string modifiedAt = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
         {
             return EvaluatorVersion(displayName: displayName, metadata: metadata, evaluatorType: evaluatorType, categories: categories, supportedEvaluationLevels: default, definition: definition, generationArtifacts: default, generationJobId: default, warnings: default, createdBy: createdBy, createdAt: createdAt, modifiedAt: modifiedAt, id: id, name: name, version: version, description: description, tags: tags);
         }
