@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.HybridContainerService.Models;
 using Azure.ResourceManager.Models;
 
@@ -75,6 +76,7 @@ namespace Azure.ResourceManager.HybridContainerService
     [ModelReaderWriterBuildable(typeof(ProvisionedClusterUpgradeProfileData))]
     [ModelReaderWriterBuildable(typeof(ProvisionedClusterUpgradeProfileProperties))]
     [ModelReaderWriterBuildable(typeof(ProvisionedClusterUpgradeProfileResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SecurityProfileFipsImage))]
     [ModelReaderWriterBuildable(typeof(StorageProfile))]
     [ModelReaderWriterBuildable(typeof(StorageProfileNfsCSIDriver))]

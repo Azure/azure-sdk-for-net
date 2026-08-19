@@ -312,6 +312,7 @@ namespace Azure.ResourceManager.HybridContainerService
     }
     public partial class ProvisionedClusterUpgradeProfileData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileData>
     {
+        public ProvisionedClusterUpgradeProfileData() { }
         public ProvisionedClusterUpgradeProfileData(Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPoolUpgradeProfile controlPlaneProfile) { }
         public Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPoolUpgradeProfile ControlPlaneProfile { get { throw null; } set { } }
         public Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceResourceProvisioningState? ProvisioningState { get { throw null; } }
