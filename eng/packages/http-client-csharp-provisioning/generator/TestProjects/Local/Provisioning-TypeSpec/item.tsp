@@ -10,14 +10,16 @@ using Azure.Core;
 namespace ProvisioningTypeSpec;
 
 // ---- Model inheritance test (bug #57119) ----
-// ItemAttributes extends BaseItemAttributes with no own properties.
-// The provisioning generator must walk the baseModel chain to include
-// all inherited properties in the generated model.
+// The provisioning generator must preserve the TypeSpec base model and
+// generate inherited properties on that base model.
 
 /** Base attributes for items. */
 model BaseItemAttributes {
   /** Whether the item is enabled. */
   enabled?: boolean;
+
+  /** The optional name inherited by item attributes. */
+  displayName?: string;
 
   /** The creation date. */
   @visibility(Lifecycle.Read)
@@ -32,6 +34,9 @@ model BaseItemAttributes {
 model ItemAttributes extends BaseItemAttributes {
   /** The expiry date. */
   expires?: utcDateTime;
+
+  /** The required item attribute name. */
+  displayName: string;
 }
 
 // ---- Output-only resource with separate create body (bug #57120) ----

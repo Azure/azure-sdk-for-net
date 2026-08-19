@@ -76,12 +76,12 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         ProjectOpenAIClient openAIClientWithoutApp = new(
             projectEndpoint: new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT),
             tokenProvider: new MockCredential(),
-            options: WithExtraPolicy(new ProjectResponsesClientOptions()));
+            options: WithExtraPolicy(new ProjectOpenAIClientOptions()));
 
         ProjectOpenAIClient openAIClientWithApp = new(
             projectEndpoint: new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT),
             tokenProvider: new MockCredential(),
-            options: WithExtraPolicy(new ProjectResponsesClientOptions()
+            options: WithExtraPolicy(new ProjectOpenAIClientOptions()
             {
                 UserAgentApplicationId = "MyOtherApplication",
             }));
@@ -211,7 +211,7 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         ClientResult result;
         using BinaryContent optionsContent = BinaryContent.Create(options);
         {
-            result = await oaiClient.CompactResponseAsync("application/json", optionsContent);
+            result = await oaiClient.CompactResponseAsync(optionsContent, "application/json");
         }
         List<object> items = ParseAndValidateCompactedResponse(result);
         items.Add(new
@@ -227,8 +227,9 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         });
         using BinaryContent newOptionsContent = BinaryContent.Create(options);
         {
-            result = await oaiClient.CompactResponseAsync("application/json", newOptionsContent);
+            result = await oaiClient.CompactResponseAsync(newOptionsContent, "application/json");
         }
+
         ParseAndValidateCompactedResponse(result);
     }
 

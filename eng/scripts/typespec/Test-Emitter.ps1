@@ -51,9 +51,9 @@ Push-Location $packageRoot
 try {
     Build-Emitter -packageRoot $packageRoot -testResultsPath $testResultsPath
 
-    # we only run spector test for Azure emitter
-    if ($UnitTests -and $EmitterPackagePath.EndsWith("http-client-csharp")) {
-        Invoke-LoggedCommand "$packageRoot/eng/scripts/Get-Spector-Coverage.ps1" -GroupOutput
+    $spectorCoverageScript = "$packageRoot/eng/scripts/Get-Spector-Coverage.ps1"
+    if ($UnitTests -and (Test-Path $spectorCoverageScript)) {
+        Invoke-LoggedCommand $spectorCoverageScript -GroupOutput
 
         $testResultsFile = "$packageRoot/generator/artifacts/coverage/tsp-spector-coverage-azure.json"
 

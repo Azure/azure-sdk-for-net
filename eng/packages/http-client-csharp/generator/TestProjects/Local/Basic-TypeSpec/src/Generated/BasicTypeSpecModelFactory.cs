@@ -47,7 +47,7 @@ namespace BasicTypeSpec
                 requiredBadDescription,
                 optionalNullableList.ToList(),
                 requiredNullableList.ToList(),
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> this is a roundtrip model. </summary>
@@ -114,7 +114,7 @@ namespace BasicTypeSpec
                 readOnlyOptionalRecordUnknown,
                 modelWithRequiredNullable,
                 requiredBytes,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> A model with a few required nullable properties. </summary>
@@ -124,7 +124,7 @@ namespace BasicTypeSpec
         /// <returns> A new <see cref="BasicTypeSpec.ModelWithRequiredNullableProperties"/> instance for mocking. </returns>
         public static ModelWithRequiredNullableProperties ModelWithRequiredNullableProperties(int? requiredNullablePrimitive = default, StringExtensibleEnum? requiredExtensibleEnum = default, StringFixedEnum? requiredFixedEnum = default)
         {
-            return new ModelWithRequiredNullableProperties(requiredNullablePrimitive, requiredExtensibleEnum, requiredFixedEnum, additionalBinaryDataProperties: null);
+            return new ModelWithRequiredNullableProperties(requiredNullablePrimitive, requiredExtensibleEnum, requiredFixedEnum, default);
         }
 
         /// <summary> this is not a friendly model but with a friendly name. </summary>
@@ -349,6 +349,14 @@ namespace BasicTypeSpec
                 fixedEnumPart,
                 intExtensibleEnumPart,
                 intFixedEnumPart);
+        }
+
+        /// <summary> The StreamingItem. </summary>
+        /// <param name="message"></param>
+        /// <returns> A new <see cref="BasicTypeSpec.StreamingItem"/> instance for mocking. </returns>
+        public static StreamingItem StreamingItem(string message = default)
+        {
+            return new StreamingItem(message, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Tree is a specific type of plant. </summary>

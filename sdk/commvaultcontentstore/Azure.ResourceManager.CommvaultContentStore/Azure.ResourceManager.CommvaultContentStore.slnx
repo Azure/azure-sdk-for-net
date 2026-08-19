@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.CommvaultContentStore.csproj" />
+  <Project Path="tests/Azure.ResourceManager.CommvaultContentStore.Tests.csproj" />
+</Solution>

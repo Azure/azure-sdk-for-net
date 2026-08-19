@@ -24,37 +24,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> The provisioning state of the cluster mesh profile. </param>
-        /// <param name="status"> The cluster mesh profile status. </param>
-        /// <param name="memberSelectorByLabel"> Kubernetes-style label selector for selecting Fleet members, e.g. `env=production`. </param>
-        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="ContainerServiceFleet.ClusterMeshProfileData"/> instance for mocking. </returns>
-        public static ClusterMeshProfileData ClusterMeshProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ClusterMeshProfileProvisioningState? provisioningState = default, ClusterMeshProfileStatus status = default, string memberSelectorByLabel = default, ETag? eTag = default)
-        {
-            return new ClusterMeshProfileData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && memberSelectorByLabel is null && status is null ? default : new ClusterMeshProfileProperties(provisioningState, new MemberSelector(memberSelectorByLabel, default), status, default),
-                eTag,
-                default);
-        }
-
-        /// <param name="state"> The state of the cluster mesh. </param>
-        /// <param name="lastAppliedMemberSelectorByLabel"> Kubernetes-style label selector for selecting Fleet members, e.g. `env=production`. </param>
-        /// <param name="lastOperationId"> The last operation ID for the cluster mesh profile. </param>
-        /// <param name="lastOperationError"> The last operation error of the cluster mesh profile. </param>
-        /// <returns> A new <see cref="Models.ClusterMeshProfileStatus"/> instance for mocking. </returns>
-        public static ClusterMeshProfileStatus ClusterMeshProfileStatus(ClusterMeshState state = default, string lastAppliedMemberSelectorByLabel = default, string lastOperationId = default, ResponseError lastOperationError = default)
-        {
-            return new ClusterMeshProfileStatus(state, lastAppliedMemberSelectorByLabel is null ? default : new MemberSelector(lastAppliedMemberSelectorByLabel, default), lastOperationId, lastOperationError, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
@@ -160,23 +129,21 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="labels"> The labels for the fleet member. </param>
         /// <param name="status"> Status information of the last operation for fleet member. </param>
-        /// <param name="meshProperties"> The Mesh Member Properties associated with this Fleet Member. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <returns> A new <see cref="ContainerServiceFleet.ContainerServiceFleetMemberData"/> instance for mocking. </returns>
-        public static ContainerServiceFleetMemberData ContainerServiceFleetMemberData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier clusterResourceId = default, string @group = default, FleetMemberProvisioningState? provisioningState = default, IDictionary<string, string> labels = default, ContainerServiceFleetMemberStatus status = default, ContainerServiceFleetMeshMemberProperties meshProperties = default, ETag? eTag = default)
+        public static ContainerServiceFleetMemberData ContainerServiceFleetMemberData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier clusterResourceId = default, string @group = default, FleetMemberProvisioningState? provisioningState = default, IDictionary<string, string> labels = default, ContainerServiceFleetMemberStatus status = default, ETag? eTag = default)
         {
             return new ContainerServiceFleetMemberData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                clusterResourceId is null && @group is null && provisioningState is null && labels is null && status is null && meshProperties is null ? default : new FleetMemberProperties(
+                clusterResourceId is null && @group is null && provisioningState is null && labels is null && status is null ? default : new FleetMemberProperties(
                     clusterResourceId,
                     @group,
                     provisioningState,
                     labels ?? new ChangeTrackingDictionary<string, string>(),
                     status,
-                    meshProperties,
                     default),
                 eTag,
                 default);
@@ -188,33 +155,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static ContainerServiceFleetMemberStatus ContainerServiceFleetMemberStatus(string lastOperationId = default, ResponseError lastOperationError = default)
         {
             return new ContainerServiceFleetMemberStatus(lastOperationId, lastOperationError, default);
-        }
-
-        /// <param name="ciliumProperties"> The Cilium cluster properties. </param>
-        /// <param name="status"> The status of the mesh member. </param>
-        /// <param name="clusterMeshProfileResourceId"> Resource id of the cluster mesh profile associated with this mesh member. </param>
-        /// <returns> A new <see cref="Models.ContainerServiceFleetMeshMemberProperties"/> instance for mocking. </returns>
-        public static ContainerServiceFleetMeshMemberProperties ContainerServiceFleetMeshMemberProperties(ContainerServiceFleetCiliumProperties ciliumProperties = default, ContainerServiceFleetMeshMemberStatus status = default, ResourceIdentifier clusterMeshProfileResourceId = default)
-        {
-            return new ContainerServiceFleetMeshMemberProperties(ciliumProperties, status, clusterMeshProfileResourceId, default);
-        }
-
-        /// <param name="id"> Cilium requires each cluster to be assigned a unique numeric cluster id from 1 - 255. The id is managed by Fleet and cannot be set by the user. </param>
-        /// <param name="name"> Cilium requires each cluster to be assigned a unique human-readable name. The name is managed by Fleet, based on the Fleet Member name, and cannot be set by the user. </param>
-        /// <returns> A new <see cref="Models.ContainerServiceFleetCiliumProperties"/> instance for mocking. </returns>
-        public static ContainerServiceFleetCiliumProperties ContainerServiceFleetCiliumProperties(int id = default, string name = default)
-        {
-            return new ContainerServiceFleetCiliumProperties(id, name, default);
-        }
-
-        /// <param name="state"> The mesh member state. </param>
-        /// <param name="lastUpdatedOn"> When the status was last updated. </param>
-        /// <param name="lastOperationId"> The last operation ID that affected the mesh properties of the fleet member. </param>
-        /// <param name="error"> The error affecting this member. </param>
-        /// <returns> A new <see cref="Models.ContainerServiceFleetMeshMemberStatus"/> instance for mocking. </returns>
-        public static ContainerServiceFleetMeshMemberStatus ContainerServiceFleetMeshMemberStatus(ContainerServiceFleetMeshMemberState state = default, DateTimeOffset? lastUpdatedOn = default, string lastOperationId = default, ResponseError error = default)
-        {
-            return new ContainerServiceFleetMeshMemberStatus(state, lastUpdatedOn, lastOperationId, error, default);
         }
 
         /// <param name="group"> The group this member belongs to for multi-cluster update management. </param>
@@ -801,7 +741,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     provisioningState,
                     default,
                     status,
-                    default,
                     default),
                 eTag,
                 default);
@@ -816,22 +755,22 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="provisioningState"> The provisioning state of the UpdateRun resource. </param>
         /// <param name="updateStrategyId">
         /// The resource id of the FleetUpdateStrategy resource to reference.
-        ///             
-        ///              When creating a new run, there are three ways to define a strategy for the run:
-        ///              1. Define a new strategy in place: Set the "strategy" field.
-        ///              2. Use an existing strategy: Set the "updateStrategyId" field. (since 2023-08-15-preview)
-        ///              3. Use the default strategy to update all the members one by one: Leave both "updateStrategyId" and "strategy" unset. (since 2023-08-15-preview)
-        ///             
-        ///              Setting both "updateStrategyId" and "strategy" is invalid.
-        ///             
-        ///              UpdateRuns created by "updateStrategyId" snapshot the referenced UpdateStrategy at the time of creation and store it in the "strategy" field.
-        ///              Subsequent changes to the referenced FleetUpdateStrategy resource do not propagate.
-        ///              UpdateRunStrategy changes can be made directly on the "strategy" field before launching the UpdateRun.
+        ///                         
+        ///                          When creating a new run, there are three ways to define a strategy for the run:
+        ///                          1. Define a new strategy in place: Set the "strategy" field.
+        ///                          2. Use an existing strategy: Set the "updateStrategyId" field. (since 2023-08-15-preview)
+        ///                          3. Use the default strategy to update all the members one by one: Leave both "updateStrategyId" and "strategy" unset. (since 2023-08-15-preview)
+        ///                         
+        ///                          Setting both "updateStrategyId" and "strategy" is invalid.
+        ///                         
+        ///                          UpdateRuns created by "updateStrategyId" snapshot the referenced UpdateStrategy at the time of creation and store it in the "strategy" field.
+        ///                          Subsequent changes to the referenced FleetUpdateStrategy resource do not propagate.
+        ///                          UpdateRunStrategy changes can be made directly on the "strategy" field before launching the UpdateRun.
         /// </param>
         /// <param name="strategyStages">
         /// The strategy defines the order in which the clusters will be updated.
-        ///              If not set, all members will be updated sequentially. The UpdateRun status will show a single UpdateStage and a single UpdateGroup targeting all members.
-        ///              The strategy of the UpdateRun can be modified until the run is started.
+        ///                          If not set, all members will be updated sequentially. The UpdateRun status will show a single UpdateStage and a single UpdateGroup targeting all members.
+        ///                          The strategy of the UpdateRun can be modified until the run is started.
         /// </param>
         /// <param name="managedClusterUpdate"> The update to be applied to all clusters in the UpdateRun. The managedClusterUpdate can be modified until the run is started. </param>
         /// <param name="status"> The status of the UpdateRun. </param>
@@ -968,7 +907,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     provisioningState,
                     default,
                     default,
-                    default,
                     default),
                 eTag,
                 default);
@@ -983,19 +921,19 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="provisioningState"> The provisioning state of the UpdateRun resource. </param>
         /// <param name="updateStrategyId">
         /// The resource id of the FleetUpdateStrategy resource to reference.
-        ///             When creating a new run, there are three ways to define a strategy for the run:
-        ///             1. Define a new strategy in place: Set the "strategy" field.
-        ///             2. Use an existing strategy: Set the "updateStrategyId" field. (since 2023-08-15-preview)
-        ///             3. Use the default strategy to update all the members one by one: Leave both "updateStrategyId" and "strategy" unset. (since 2023-08-15-preview)
-        ///             Setting both "updateStrategyId" and "strategy" is invalid.
-        ///             UpdateRuns created by "updateStrategyId" snapshot the referenced UpdateStrategy at the time of creation and store it in the "strategy" field.
-        ///             Subsequent changes to the referenced FleetUpdateStrategy resource do not propagate.
-        ///             UpdateRunStrategy changes can be made directly on the "strategy" field before launching the UpdateRun.
+        ///                         When creating a new run, there are three ways to define a strategy for the run:
+        ///                         1. Define a new strategy in place: Set the "strategy" field.
+        ///                         2. Use an existing strategy: Set the "updateStrategyId" field. (since 2023-08-15-preview)
+        ///                         3. Use the default strategy to update all the members one by one: Leave both "updateStrategyId" and "strategy" unset. (since 2023-08-15-preview)
+        ///                         Setting both "updateStrategyId" and "strategy" is invalid.
+        ///                         UpdateRuns created by "updateStrategyId" snapshot the referenced UpdateStrategy at the time of creation and store it in the "strategy" field.
+        ///                         Subsequent changes to the referenced FleetUpdateStrategy resource do not propagate.
+        ///                         UpdateRunStrategy changes can be made directly on the "strategy" field before launching the UpdateRun.
         /// </param>
         /// <param name="strategyStages">
         /// The strategy defines the order in which the clusters will be updated.
-        ///             If not set, all members will be updated sequentially. The UpdateRun status will show a single UpdateStage and a single UpdateGroup targeting all members.
-        ///             The strategy of the UpdateRun can be modified until the run is started.
+        ///                         If not set, all members will be updated sequentially. The UpdateRun status will show a single UpdateStage and a single UpdateGroup targeting all members.
+        ///                         The strategy of the UpdateRun can be modified until the run is started.
         /// </param>
         /// <param name="managedClusterUpdate"> The update to be applied to all clusters in the UpdateRun. The managedClusterUpdate can be modified until the run is started. </param>
         /// <param name="status"> The status of the UpdateRun. </param>

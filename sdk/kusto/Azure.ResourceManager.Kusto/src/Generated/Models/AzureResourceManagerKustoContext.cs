@@ -6,8 +6,10 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Kusto.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
@@ -25,7 +27,7 @@ namespace Azure.ResourceManager.Kusto
     [ModelReaderWriterBuildable(typeof(ClusterPrincipalAssignmentListResult))]
     [ModelReaderWriterBuildable(typeof(ClusterPrincipalProperties))]
     [ModelReaderWriterBuildable(typeof(ClusterProperties))]
-    [ModelReaderWriterBuildable(typeof(CosmosDbDataConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBDataConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(DatabaseInviteFollowerContent))]
     [ModelReaderWriterBuildable(typeof(DatabaseInviteFollowerResult))]
     [ModelReaderWriterBuildable(typeof(DatabaseListResult))]
@@ -125,6 +127,7 @@ namespace Azure.ResourceManager.Kusto
     [ModelReaderWriterBuildable(typeof(PrivateEndpointProperty))]
     [ModelReaderWriterBuildable(typeof(ReadOnlyFollowingDatabaseProperties))]
     [ModelReaderWriterBuildable(typeof(ReadWriteDatabaseProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SandboxCustomImageData))]
     [ModelReaderWriterBuildable(typeof(SandboxCustomImageProperties))]
     [ModelReaderWriterBuildable(typeof(SandboxCustomImageResource))]
@@ -132,6 +135,7 @@ namespace Azure.ResourceManager.Kusto
     [ModelReaderWriterBuildable(typeof(SandboxCustomImagesListResult))]
     [ModelReaderWriterBuildable(typeof(ScriptListResult))]
     [ModelReaderWriterBuildable(typeof(ScriptProperties))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SuspensionDetails))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownKustoDatabase))]
