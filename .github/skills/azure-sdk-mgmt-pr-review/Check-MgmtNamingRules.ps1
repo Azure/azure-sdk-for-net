@@ -25,8 +25,8 @@
     This enables deterministic filtering without relying on LLM judgment.
 
 .PARAMETER BaselineVersion
-    Released package version represented by BaselineApiFilePath. Included in compatibility
-    findings so reviewers can identify the authoritative GA contract that was compared.
+    Released package version represented by BaselineApiFilePath. Included in source-
+    compatibility findings so reviewers know which GA contract was compared.
 
 .PARAMETER ExcludeRules
     Array of rule IDs to skip (e.g., 'SUFFIX001', 'BOOL001').
@@ -130,12 +130,12 @@ if (-not (Test-Path $ApiFilePath)) {
 }
 
 Write-Host "Scanning: $ApiFilePath" -ForegroundColor Cyan
-$lines = @(Get-Content $ApiFilePath)
+$lines = Get-Content $ApiFilePath
 $totalLines = $lines.Count
 
 # Load baseline API file for filtering (if provided)
-$baselineLines = [System.Collections.Generic.Dictionary[string, bool]]::new([System.StringComparer]::Ordinal)
-$baselineTypeKeys = [System.Collections.Generic.Dictionary[string, bool]]::new([System.StringComparer]::Ordinal)
+$baselineLines = @{}
+$baselineTypeKeys = @{}
 if ($BaselineApiFilePath) {
     if (-not (Test-Path $BaselineApiFilePath)) {
         throw "Baseline API file not found: $BaselineApiFilePath"
@@ -349,7 +349,6 @@ function Get-ApiMethodInfos([string[]]$apiLines) {
                 Name       = $Matches['name']
                 Type       = $parameterType
                 IsOptional = $defaultSeparator -ge 0
-                Default    = if ($defaultSeparator -ge 0) { $parameter.Substring($defaultSeparator + 1).Trim() } else { $null }
             })
         }
 
@@ -366,7 +365,6 @@ function Get-ApiMethodInfos([string[]]$apiLines) {
 
     return $methods
 }
-
 
 #endregion
 
@@ -418,20 +416,23 @@ if ($ListNewTypes) {
 #region --- Rule Checks ---
 
 # =====================================================
-# RULE: PARAM/OPTPARAM - Preserve GA parameter compatibility
+# RULE: OPTPARAM001 - Preserve callable optional parameters
 # =====================================================
-# ApiCompat primarily protects binary compatibility. Parameter names, positional
-# ordering among same-typed parameters, and optional metadata can still break source
-# callers. Compare against the released GA signature, then evaluate the complete
-# current overload set before reporting optionality differences.
-if ($BaselineApiFilePath -and
-    ($ExcludeRules -notcontains 'PARAMNAME001' -or
-     $ExcludeRules -notcontains 'PARAMORDER001' -or
-     $ExcludeRules -notcontains 'OPTPARAM001' -or
-     $ExcludeRules -notcontains 'OPTPARAM002')) {
+# ApiCompat primarily protects binary compatibility. An optional-to-required change
+# on a member with no sibling overload deterministically breaks the GA call that
+# omits that argument. When sibling overloads exist, textual metadata is not enough
+# to prove a source break, so suppress the candidate until a compiler-backed check
+# can evaluate the complete overload set. Required-to-optional changes are likewise
+# not emitted without compiler evidence.
+if ($BaselineApiFilePath -and $ExcludeRules -notcontains 'OPTPARAM001') {
     $currentMethods = Get-ApiMethodInfos $lines
     $baselineMethods = Get-ApiMethodInfos (Get-Content $BaselineApiFilePath)
-    $baselineLabel = if ($BaselineVersion) { "GA baseline $BaselineVersion" } else { 'GA baseline' }
+    $currentOverloadCounts = @{}
+
+    foreach ($method in $currentMethods.Values) {
+        $overloadKey = "$($method.Namespace)|$($method.TypeName)|$($method.MemberName)"
+        $currentOverloadCounts[$overloadKey] = 1 + [int]($currentOverloadCounts[$overloadKey])
+    }
 
     foreach ($key in $baselineMethods.Keys) {
         if (-not $currentMethods.ContainsKey($key)) {
@@ -440,71 +441,29 @@ if ($BaselineApiFilePath -and
 
         $currentMethod = $currentMethods[$key]
         $baselineMethod = $baselineMethods[$key]
-        $parameterCount = [Math]::Min($currentMethod.Parameters.Count, $baselineMethod.Parameters.Count)
-        $optionalToRequired = [System.Collections.Generic.List[string]]::new()
-        $requiredToOptional = [System.Collections.Generic.List[string]]::new()
-        $renamedParameters = [System.Collections.Generic.List[string]]::new()
-        $baselineNames = @($baselineMethod.Parameters | ForEach-Object { $_.Name })
-        $currentNames = @($currentMethod.Parameters | ForEach-Object { $_.Name })
-
-        for ($parameterIndex = 0; $parameterIndex -lt $parameterCount; $parameterIndex++) {
-            $currentParameter = $currentMethod.Parameters[$parameterIndex]
-            $baselineParameter = $baselineMethod.Parameters[$parameterIndex]
-
-            if ($baselineParameter.Name -cne $currentParameter.Name) {
-                $renamedParameters.Add("'$($baselineParameter.Name)' to '$($currentParameter.Name)'")
-            }
-
-            if ($baselineParameter.IsOptional -and
-                -not $currentParameter.IsOptional -and
-                $ExcludeRules -notcontains 'OPTPARAM001') {
-                $optionalToRequired.Add($currentParameter.Name)
-            }
-            elseif (-not $baselineParameter.IsOptional -and
-                    $currentParameter.IsOptional -and
-                    $ExcludeRules -notcontains 'OPTPARAM002') {
-                $requiredToOptional.Add($currentParameter.Name)
-            }
+        $overloadKey = "$($currentMethod.Namespace)|$($currentMethod.TypeName)|$($currentMethod.MemberName)"
+        if ($currentOverloadCounts[$overloadKey] -gt 1) {
+            Write-Verbose "Suppressed optionality candidate for $($currentMethod.TypeName).$($currentMethod.MemberName): sibling overloads require compiler evidence."
+            continue
         }
 
-        if ($renamedParameters.Count -gt 0) {
-            $sameNamesDifferentOrder = $baselineNames.Count -eq $currentNames.Count -and
-                @(Compare-Object ($baselineNames | Sort-Object -CaseSensitive) ($currentNames | Sort-Object -CaseSensitive) -CaseSensitive).Count -eq 0
-            $ruleId = if ($sameNamesDifferentOrder) { 'PARAMORDER001' } else { 'PARAMNAME001' }
-            if ($ExcludeRules -notcontains $ruleId) {
-                $changeDescription = if ($sameNamesDifferentOrder) {
-                    "Parameter order changed from '$($baselineNames -join ', ')' to '$($currentNames -join ', ')'."
-                } else {
-                    "Parameter name changes: $($renamedParameters -join ', ')."
-                }
-                $violations.Add([NamingViolation]::new(
-                    $ruleId, 'Error', 'Source Compatibility',
-                    $currentMethod.TypeName, $currentMethod.MemberName,
-                    "$changeDescription Named or positional callers compiled against $baselineLabel can bind differently or fail. Baseline signature: $($baselineMethod.Signature). Current signature: $($currentMethod.Signature).",
-                    "Preserve the exact parameter names and ordering from $baselineLabel. Investigate forwarding code separately for runtime-semantic correctness.",
-                    $currentMethod.Line
-                ))
+        $optionalToRequired = [System.Collections.Generic.List[string]]::new()
+        for ($parameterIndex = 0; $parameterIndex -lt $currentMethod.Parameters.Count; $parameterIndex++) {
+            $currentParameter = $currentMethod.Parameters[$parameterIndex]
+            $baselineParameter = $baselineMethod.Parameters[$parameterIndex]
+            if ($baselineParameter.IsOptional -and -not $currentParameter.IsOptional) {
+                $optionalToRequired.Add($currentParameter.Name)
             }
         }
 
         if ($optionalToRequired.Count -gt 0) {
             $parameterNames = ($optionalToRequired | ForEach-Object { "'$_'" }) -join ', '
+            $baselineLabel = if ($BaselineVersion) { "GA baseline $BaselineVersion" } else { 'the GA baseline' }
             $violations.Add([NamingViolation]::new(
-                'OPTPARAM001', 'Warning', 'Source Compatibility Candidate',
+                'OPTPARAM001', 'Error', 'Source Compatibility',
                 $currentMethod.TypeName, $currentMethod.MemberName,
-                "Parameter(s) $parameterNames changed from optional to required relative to $baselineLabel. This textual difference is not a blocking finding until the complete overload sets are compiled with representative GA calls. Baseline signature: $($baselineMethod.Signature). Current signature: $($currentMethod.Signature).",
-                "Compile positional, named, omitted, and default-literal calls against both GA and current overload sets; block only for a demonstrated source break.",
-                $currentMethod.Line
-            ))
-        }
-
-        if ($requiredToOptional.Count -gt 0) {
-            $parameterNames = ($requiredToOptional | ForEach-Object { "'$_'" }) -join ', '
-            $violations.Add([NamingViolation]::new(
-                'OPTPARAM002', 'Warning', 'Source Compatibility Candidate',
-                $currentMethod.TypeName, $currentMethod.MemberName,
-                "Parameter(s) $parameterNames changed from required to optional relative to $baselineLabel. This textual difference is not a blocking finding until the complete overload sets are compiled with representative GA calls. Baseline signature: $($baselineMethod.Signature). Current signature: $($currentMethod.Signature).",
-                "Compile positional, named, omitted, and default-literal calls against both GA and current overload sets; block only for demonstrated ambiguity or changed binding.",
+                "Parameter(s) $parameterNames changed from optional to required on the only current overload. The omitted-argument call accepted by $baselineLabel no longer compiles. Baseline signature: $($baselineMethod.Signature). Current signature: $($currentMethod.Signature).",
+                "Restore the optional defaults from $baselineLabel.",
                 $currentMethod.Line
             ))
         }
@@ -1084,10 +1043,6 @@ for ($i = 0; $i -lt $totalLines; $i++) {
 if ($BaselineApiFilePath -and $baselineLines.Count -gt 0) {
     $filteredViolations = [System.Collections.Generic.List[NamingViolation]]::new()
     foreach ($v in $violations) {
-        if ($v.Category -like 'Source Compatibility*') {
-            $filteredViolations.Add($v)
-            continue
-        }
         # For type-level violations, check if the type declaration line exists in baseline
         # For member-level violations, check if the member line exists in baseline
         $violationLine = $lines[$v.Line - 1].Trim()
