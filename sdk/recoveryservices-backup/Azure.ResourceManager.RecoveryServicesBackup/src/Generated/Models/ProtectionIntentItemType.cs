@@ -12,7 +12,7 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> backup protectionIntent type. </summary>
-    internal readonly partial struct ProtectionIntentItemType : IEquatable<ProtectionIntentItemType>
+    public readonly partial struct ProtectionIntentItemType : IEquatable<ProtectionIntentItemType>
     {
         private readonly string _value;
         private const string InvalidValue = "Invalid";
