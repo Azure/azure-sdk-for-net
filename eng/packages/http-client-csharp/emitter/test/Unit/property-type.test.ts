@@ -110,4 +110,56 @@ describe("Test GetInputType for enum", () => {
     strictEqual(type.isFixed, true);
     strictEqual(type.usage, UsageFlags.Input | UsageFlags.Json);
   });
+  it("Debug single member enum with alternateType", async () => {
+    const program = await typeSpecCompile(
+      `
+        enum Colors {
+          green,
+        }
+        model EmployeeProperties {
+          @Azure.ClientGenerator.Core.alternateType("green")
+          favoriteColor: Colors;
+        }
+        #suppress "@azure-tools/typespec-azure-core/use-standard-operations" "test"
+        op test(@body input: EmployeeProperties): string[];
+      `,
+      runner,
+      { IsNamespaceNeeded: true, IsTCGCNeeded: true }
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+    
+    // Find the model
+    const model = root.models.find((m: any) => m.name === "EmployeeProperties");
+    console.log("Model found:", model?.name);
+    
+    const prop = model?.properties?.find((p: any) => p.name === "favoriteColor");
+    console.log("favoriteColor type kind:", prop?.type?.kind);
+    console.log("favoriteColor type name:", prop?.type?.name);
+    if (prop?.type?.kind === "constant") {
+      console.log("  constant value:", prop.type.value);
+      console.log("  constant valueType.kind:", prop.type.valueType?.kind);
+    }
+    if (prop?.type?.kind === "enum") {
+      console.log("  enum isFixed:", prop.type.isFixed);
+      console.log("  enum values:", prop.type.values?.map((v: any) => `${v.name}=${v.value}`));
+    }
+    
+    console.log("\nEnums:", root.enums?.map((e: any) => ({
+      name: e.name,
+      isFixed: e.isFixed,
+      values: e.values?.map((v: any) => `${v.name}=${v.value}`)
+    })));
+    
+    console.log("Constants:", root.constants?.map((c: any) => ({
+      name: c.name,
+      value: c.value,
+      kind: c.kind
+    })));
+    
+    // The issue: type should be enum Colors, not constant "green"
+    strictEqual(model !== undefined, true);
+    strictEqual(prop !== undefined, true);
+  });
 });
