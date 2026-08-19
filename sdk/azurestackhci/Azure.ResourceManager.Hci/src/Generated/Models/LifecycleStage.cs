@@ -28,20 +28,20 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="name"> Name of the stage. </param>
         /// <param name="description"> Description of the stage. </param>
         /// <param name="status"> Status of the stage. </param>
-        /// <param name="startTimeUtc"> Start time of the stage. </param>
-        /// <param name="endTimeUtc"> End time of the stage. </param>
-        /// <param name="lastUpdatedUtc"> Last time the stage was updated. </param>
+        /// <param name="startOn"> Start time of the stage. </param>
+        /// <param name="endOn"> End time of the stage. </param>
+        /// <param name="lastUpdatedOn"> Last time the stage was updated. </param>
         /// <param name="error"> Error details. </param>
         /// <param name="subStages"> Sub-stages for this stage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LifecycleStage(string name, string description, LifecycleOperationStatus status, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, DateTimeOffset? lastUpdatedUtc, ResponseError error, IReadOnlyList<LifecycleStage> subStages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LifecycleStage(string name, string description, LifecycleOperationStatus status, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? lastUpdatedOn, ResponseError error, IReadOnlyList<LifecycleStage> subStages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
             Status = status;
-            StartTimeUtc = startTimeUtc;
-            EndTimeUtc = endTimeUtc;
-            LastUpdatedUtc = lastUpdatedUtc;
+            StartOn = startOn;
+            EndOn = endOn;
+            LastUpdatedOn = lastUpdatedOn;
             Error = error;
             SubStages = subStages;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -58,18 +58,6 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Status of the stage. </summary>
         [WirePath("status")]
         public LifecycleOperationStatus Status { get; }
-
-        /// <summary> Start time of the stage. </summary>
-        [WirePath("startTimeUtc")]
-        public DateTimeOffset? StartTimeUtc { get; }
-
-        /// <summary> End time of the stage. </summary>
-        [WirePath("endTimeUtc")]
-        public DateTimeOffset? EndTimeUtc { get; }
-
-        /// <summary> Last time the stage was updated. </summary>
-        [WirePath("lastUpdatedUtc")]
-        public DateTimeOffset? LastUpdatedUtc { get; }
 
         /// <summary> Error details. </summary>
         [WirePath("error")]

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
         /// <param name="provisioningState"> Job provisioning state. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
-        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="startOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of disk job. </param>
         /// <param name="error"> Error details if job failed. </param>
         /// <param name="reportedProperties"> Properties reported by the job execution. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resolutionStrategy"> The strategy to use for resolving the configuration drift. </param>
-        internal SyncConfigurationJobProperties(DiskJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, HciJobStatus? status, ResponseError error, DiskJobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResolutionStrategy resolutionStrategy) : base(jobType, deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, error, reportedProperties, additionalBinaryDataProperties)
+        internal SyncConfigurationJobProperties(DiskJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startOn, DateTimeOffset? endOn, HciJobStatus? status, ResponseError error, DiskJobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResolutionStrategy resolutionStrategy) : base(jobType, deploymentMode, provisioningState, jobId, startOn, endOn, status, error, reportedProperties, additionalBinaryDataProperties)
         {
             ResolutionStrategy = resolutionStrategy;
         }

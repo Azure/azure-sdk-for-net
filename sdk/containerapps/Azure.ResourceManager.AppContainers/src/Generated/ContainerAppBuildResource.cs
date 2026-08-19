@@ -18,44 +18,44 @@ using Azure.ResourceManager.AppContainers.Models;
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A class representing a Build along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BuildResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BuilderResource"/> using the GetBuilds method.
+    /// A class representing a ContainerAppBuild along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppBuildResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerAppBuilderResource"/> using the GetContainerAppBuilds method.
     /// </summary>
-    public partial class BuildResource : ArmResource
+    public partial class ContainerAppBuildResource : ArmResource
     {
         private readonly ClientDiagnostics _buildsClientDiagnostics;
         private readonly Builds _buildsRestClient;
         private readonly ClientDiagnostics _buildAuthTokenClientDiagnostics;
         private readonly BuildAuthToken _buildAuthTokenRestClient;
-        private readonly BuildData _data;
+        private readonly ContainerAppBuildData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.App/builders/builds";
 
-        /// <summary> Initializes a new instance of BuildResource for mocking. </summary>
-        protected BuildResource()
+        /// <summary> Initializes a new instance of ContainerAppBuildResource for mocking. </summary>
+        protected ContainerAppBuildResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BuildResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppBuildResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BuildResource(ArmClient client, BuildData data) : this(client, data.Id)
+        internal ContainerAppBuildResource(ArmClient client, ContainerAppBuildData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BuildResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppBuildResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal BuildResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ContainerAppBuildResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string buildApiVersion);
+            TryGetApiVersion(ResourceType, out string containerAppBuildApiVersion);
             _buildsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _buildsRestClient = new Builds(_buildsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, buildApiVersion ?? "2025-10-02-preview");
+            _buildsRestClient = new Builds(_buildsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppBuildApiVersion ?? "2025-10-02-preview");
             _buildAuthTokenClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _buildAuthTokenRestClient = new BuildAuthToken(_buildAuthTokenClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, buildApiVersion ?? "2025-10-02-preview");
+            _buildAuthTokenRestClient = new BuildAuthToken(_buildAuthTokenClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppBuildApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppContainers
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual BuildData Data
+        public virtual ContainerAppBuildData Data
         {
             get
             {
@@ -113,14 +113,14 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BuildResource"/>. </description>
+        /// <description> <see cref="ContainerAppBuildResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BuildResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppBuildResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("BuildResource.Get");
+            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("ContainerAppBuildResource.Get");
             scope.Start();
             try
             {
@@ -130,12 +130,12 @@ namespace Azure.ResourceManager.AppContainers
                 };
                 HttpMessage message = _buildsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BuildData> response = Response.FromValue(BuildData.FromResponse(result), result);
+                Response<ContainerAppBuildData> response = Response.FromValue(ContainerAppBuildData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new BuildResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppBuildResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BuildResource"/>. </description>
+        /// <description> <see cref="ContainerAppBuildResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BuildResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppBuildResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("BuildResource.Get");
+            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("ContainerAppBuildResource.Get");
             scope.Start();
             try
             {
@@ -178,12 +178,12 @@ namespace Azure.ResourceManager.AppContainers
                 };
                 HttpMessage message = _buildsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<BuildData> response = Response.FromValue(BuildData.FromResponse(result), result);
+                Response<ContainerAppBuildData> response = Response.FromValue(ContainerAppBuildData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new BuildResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppBuildResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BuildResource"/>. </description>
+        /// <description> <see cref="ContainerAppBuildResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("BuildResource.Delete");
+            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("ContainerAppBuildResource.Delete");
             scope.Start();
             try
             {
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BuildResource"/>. </description>
+        /// <description> <see cref="ContainerAppBuildResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("BuildResource.Delete");
+            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("ContainerAppBuildResource.Delete");
             scope.Start();
             try
             {
@@ -307,14 +307,14 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BuildResource"/>. </description>
+        /// <description> <see cref="ContainerAppBuildResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BuildToken>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _buildAuthTokenClientDiagnostics.CreateScope("BuildResource.GetAll");
+            using DiagnosticScope scope = _buildAuthTokenClientDiagnostics.CreateScope("ContainerAppBuildResource.GetAll");
             scope.Start();
             try
             {
@@ -355,14 +355,14 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BuildResource"/>. </description>
+        /// <description> <see cref="ContainerAppBuildResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BuildToken> GetAll(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _buildAuthTokenClientDiagnostics.CreateScope("BuildResource.GetAll");
+            using DiagnosticScope scope = _buildAuthTokenClientDiagnostics.CreateScope("ContainerAppBuildResource.GetAll");
             scope.Start();
             try
             {
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Update a Build.
+        /// Update a ContainerAppBuild.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BuildResource"/>. </description>
+        /// <description> <see cref="ContainerAppBuildResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -411,11 +411,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="data"> Resource create or update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<BuildResource>> UpdateAsync(WaitUntil waitUntil, BuildData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ContainerAppBuildResource>> UpdateAsync(WaitUntil waitUntil, ContainerAppBuildData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("BuildResource.Update");
+            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("ContainerAppBuildResource.Update");
             scope.Start();
             try
             {
@@ -423,10 +423,10 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _buildsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BuildData.ToRequestContent(data), context);
+                HttpMessage message = _buildsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerAppBuildData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AppContainersArmOperation<BuildResource> operation = new AppContainersArmOperation<BuildResource>(
-                    new BuildResourceOperationSource(Client),
+                AppContainersArmOperation<ContainerAppBuildResource> operation = new AppContainersArmOperation<ContainerAppBuildResource>(
+                    new ContainerAppBuildResourceOperationSource(Client),
                     _buildsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Update a Build.
+        /// Update a ContainerAppBuild.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BuildResource"/>. </description>
+        /// <description> <see cref="ContainerAppBuildResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -470,11 +470,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="data"> Resource create or update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<BuildResource> Update(WaitUntil waitUntil, BuildData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ContainerAppBuildResource> Update(WaitUntil waitUntil, ContainerAppBuildData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("BuildResource.Update");
+            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("ContainerAppBuildResource.Update");
             scope.Start();
             try
             {
@@ -482,10 +482,10 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _buildsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BuildData.ToRequestContent(data), context);
+                HttpMessage message = _buildsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerAppBuildData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                AppContainersArmOperation<BuildResource> operation = new AppContainersArmOperation<BuildResource>(
-                    new BuildResourceOperationSource(Client),
+                AppContainersArmOperation<ContainerAppBuildResource> operation = new AppContainersArmOperation<ContainerAppBuildResource>(
+                    new ContainerAppBuildResourceOperationSource(Client),
                     _buildsClientDiagnostics,
                     Pipeline,
                     message.Request,

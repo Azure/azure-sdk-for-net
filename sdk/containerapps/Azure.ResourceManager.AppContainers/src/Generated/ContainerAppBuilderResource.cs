@@ -20,40 +20,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A class representing a Builder along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BuilderResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetBuilders method.
+    /// A class representing a ContainerAppBuilder along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppBuilderResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetContainerAppBuilders method.
     /// </summary>
-    public partial class BuilderResource : ArmResource
+    public partial class ContainerAppBuilderResource : ArmResource
     {
         private readonly ClientDiagnostics _buildersClientDiagnostics;
         private readonly Builders _buildersRestClient;
-        private readonly BuilderData _data;
+        private readonly ContainerAppBuilderData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.App/builders";
 
-        /// <summary> Initializes a new instance of BuilderResource for mocking. </summary>
-        protected BuilderResource()
+        /// <summary> Initializes a new instance of ContainerAppBuilderResource for mocking. </summary>
+        protected ContainerAppBuilderResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BuilderResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppBuilderResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BuilderResource(ArmClient client, BuilderData data) : this(client, data.Id)
+        internal ContainerAppBuilderResource(ArmClient client, ContainerAppBuilderData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BuilderResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppBuilderResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal BuilderResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ContainerAppBuilderResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string builderApiVersion);
+            TryGetApiVersion(ResourceType, out string containerAppBuilderApiVersion);
             _buildersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _buildersRestClient = new Builders(_buildersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, builderApiVersion ?? "2025-10-02-preview");
+            _buildersRestClient = new Builders(_buildersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppBuilderApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppContainers
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual BuilderData Data
+        public virtual ContainerAppBuilderData Data
         {
             get
             {
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BuilderResource"/>. </description>
+        /// <description> <see cref="ContainerAppBuilderResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BuilderResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppBuilderResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _buildersClientDiagnostics.CreateScope("BuilderResource.Get");
+            using DiagnosticScope scope = _buildersClientDiagnostics.CreateScope("ContainerAppBuilderResource.Get");
             scope.Start();
             try
             {
@@ -127,12 +127,12 @@ namespace Azure.ResourceManager.AppContainers
                 };
                 HttpMessage message = _buildersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BuilderData> response = Response.FromValue(BuilderData.FromResponse(result), result);
+                Response<ContainerAppBuilderData> response = Response.FromValue(ContainerAppBuilderData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new BuilderResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppBuilderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BuilderResource"/>. </description>
+        /// <description> <see cref="ContainerAppBuilderResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BuilderResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppBuilderResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _buildersClientDiagnostics.CreateScope("BuilderResource.Get");
+            using DiagnosticScope scope = _buildersClientDiagnostics.CreateScope("ContainerAppBuilderResource.Get");
             scope.Start();
             try
             {
@@ -175,12 +175,12 @@ namespace Azure.ResourceManager.AppContainers
                 };
                 HttpMessage message = _buildersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<BuilderData> response = Response.FromValue(BuilderData.FromResponse(result), result);
+                Response<ContainerAppBuilderData> response = Response.FromValue(ContainerAppBuilderData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new BuilderResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppBuilderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BuilderResource"/>. </description>
+        /// <description> <see cref="ContainerAppBuilderResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,11 +214,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<BuilderResource>> UpdateAsync(WaitUntil waitUntil, BuilderPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ContainerAppBuilderResource>> UpdateAsync(WaitUntil waitUntil, ContainerAppBuilderPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _buildersClientDiagnostics.CreateScope("BuilderResource.Update");
+            using DiagnosticScope scope = _buildersClientDiagnostics.CreateScope("ContainerAppBuilderResource.Update");
             scope.Start();
             try
             {
@@ -226,10 +226,10 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _buildersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BuilderPatch.ToRequestContent(patch), context);
+                HttpMessage message = _buildersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerAppBuilderPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AppContainersArmOperation<BuilderResource> operation = new AppContainersArmOperation<BuilderResource>(
-                    new BuilderResourceOperationSource(Client),
+                AppContainersArmOperation<ContainerAppBuilderResource> operation = new AppContainersArmOperation<ContainerAppBuilderResource>(
+                    new ContainerAppBuilderResourceOperationSource(Client),
                     _buildersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BuilderResource"/>. </description>
+        /// <description> <see cref="ContainerAppBuilderResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,11 +273,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<BuilderResource> Update(WaitUntil waitUntil, BuilderPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ContainerAppBuilderResource> Update(WaitUntil waitUntil, ContainerAppBuilderPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _buildersClientDiagnostics.CreateScope("BuilderResource.Update");
+            using DiagnosticScope scope = _buildersClientDiagnostics.CreateScope("ContainerAppBuilderResource.Update");
             scope.Start();
             try
             {
@@ -285,10 +285,10 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _buildersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BuilderPatch.ToRequestContent(patch), context);
+                HttpMessage message = _buildersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerAppBuilderPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                AppContainersArmOperation<BuilderResource> operation = new AppContainersArmOperation<BuilderResource>(
-                    new BuilderResourceOperationSource(Client),
+                AppContainersArmOperation<ContainerAppBuilderResource> operation = new AppContainersArmOperation<ContainerAppBuilderResource>(
+                    new ContainerAppBuilderResourceOperationSource(Client),
                     _buildersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BuilderResource"/>. </description>
+        /// <description> <see cref="ContainerAppBuilderResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _buildersClientDiagnostics.CreateScope("BuilderResource.Delete");
+            using DiagnosticScope scope = _buildersClientDiagnostics.CreateScope("ContainerAppBuilderResource.Delete");
             scope.Start();
             try
             {
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BuilderResource"/>. </description>
+        /// <description> <see cref="ContainerAppBuilderResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _buildersClientDiagnostics.CreateScope("BuilderResource.Delete");
+            using DiagnosticScope scope = _buildersClientDiagnostics.CreateScope("ContainerAppBuilderResource.Delete");
             scope.Start();
             try
             {
@@ -410,12 +410,12 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<BuilderResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppBuilderResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _buildersClientDiagnostics.CreateScope("BuilderResource.AddTag");
+            using DiagnosticScope scope = _buildersClientDiagnostics.CreateScope("ContainerAppBuilderResource.AddTag");
             scope.Start();
             try
             {
@@ -430,19 +430,19 @@ namespace Azure.ResourceManager.AppContainers
                     };
                     HttpMessage message = _buildersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<BuilderData> response = Response.FromValue(BuilderData.FromResponse(result), result);
-                    return Response.FromValue(new BuilderResource(Client, response.Value), response.GetRawResponse());
+                    Response<ContainerAppBuilderData> response = Response.FromValue(ContainerAppBuilderData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerAppBuilderResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    BuilderData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BuilderPatch patch = new BuilderPatch();
+                    ContainerAppBuilderData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ContainerAppBuilderPatch patch = new ContainerAppBuilderPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<BuilderResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<ContainerAppBuilderResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -458,12 +458,12 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<BuilderResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppBuilderResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _buildersClientDiagnostics.CreateScope("BuilderResource.AddTag");
+            using DiagnosticScope scope = _buildersClientDiagnostics.CreateScope("ContainerAppBuilderResource.AddTag");
             scope.Start();
             try
             {
@@ -478,19 +478,19 @@ namespace Azure.ResourceManager.AppContainers
                     };
                     HttpMessage message = _buildersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<BuilderData> response = Response.FromValue(BuilderData.FromResponse(result), result);
-                    return Response.FromValue(new BuilderResource(Client, response.Value), response.GetRawResponse());
+                    Response<ContainerAppBuilderData> response = Response.FromValue(ContainerAppBuilderData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerAppBuilderResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    BuilderData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BuilderPatch patch = new BuilderPatch();
+                    ContainerAppBuilderData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ContainerAppBuilderPatch patch = new ContainerAppBuilderPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<BuilderResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<ContainerAppBuilderResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -505,11 +505,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<BuilderResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppBuilderResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _buildersClientDiagnostics.CreateScope("BuilderResource.SetTags");
+            using DiagnosticScope scope = _buildersClientDiagnostics.CreateScope("ContainerAppBuilderResource.SetTags");
             scope.Start();
             try
             {
@@ -525,15 +525,15 @@ namespace Azure.ResourceManager.AppContainers
                     };
                     HttpMessage message = _buildersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<BuilderData> response = Response.FromValue(BuilderData.FromResponse(result), result);
-                    return Response.FromValue(new BuilderResource(Client, response.Value), response.GetRawResponse());
+                    Response<ContainerAppBuilderData> response = Response.FromValue(ContainerAppBuilderData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerAppBuilderResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    BuilderData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BuilderPatch patch = new BuilderPatch();
+                    ContainerAppBuilderData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ContainerAppBuilderPatch patch = new ContainerAppBuilderPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<BuilderResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<ContainerAppBuilderResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -548,11 +548,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<BuilderResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppBuilderResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _buildersClientDiagnostics.CreateScope("BuilderResource.SetTags");
+            using DiagnosticScope scope = _buildersClientDiagnostics.CreateScope("ContainerAppBuilderResource.SetTags");
             scope.Start();
             try
             {
@@ -568,15 +568,15 @@ namespace Azure.ResourceManager.AppContainers
                     };
                     HttpMessage message = _buildersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<BuilderData> response = Response.FromValue(BuilderData.FromResponse(result), result);
-                    return Response.FromValue(new BuilderResource(Client, response.Value), response.GetRawResponse());
+                    Response<ContainerAppBuilderData> response = Response.FromValue(ContainerAppBuilderData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerAppBuilderResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    BuilderData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BuilderPatch patch = new BuilderPatch();
+                    ContainerAppBuilderData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ContainerAppBuilderPatch patch = new ContainerAppBuilderPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<BuilderResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<ContainerAppBuilderResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -591,11 +591,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<BuilderResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppBuilderResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _buildersClientDiagnostics.CreateScope("BuilderResource.RemoveTag");
+            using DiagnosticScope scope = _buildersClientDiagnostics.CreateScope("ContainerAppBuilderResource.RemoveTag");
             scope.Start();
             try
             {
@@ -610,19 +610,19 @@ namespace Azure.ResourceManager.AppContainers
                     };
                     HttpMessage message = _buildersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<BuilderData> response = Response.FromValue(BuilderData.FromResponse(result), result);
-                    return Response.FromValue(new BuilderResource(Client, response.Value), response.GetRawResponse());
+                    Response<ContainerAppBuilderData> response = Response.FromValue(ContainerAppBuilderData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerAppBuilderResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    BuilderData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BuilderPatch patch = new BuilderPatch();
+                    ContainerAppBuilderData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ContainerAppBuilderPatch patch = new ContainerAppBuilderPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<BuilderResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<ContainerAppBuilderResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -637,11 +637,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<BuilderResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppBuilderResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _buildersClientDiagnostics.CreateScope("BuilderResource.RemoveTag");
+            using DiagnosticScope scope = _buildersClientDiagnostics.CreateScope("ContainerAppBuilderResource.RemoveTag");
             scope.Start();
             try
             {
@@ -656,19 +656,19 @@ namespace Azure.ResourceManager.AppContainers
                     };
                     HttpMessage message = _buildersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<BuilderData> response = Response.FromValue(BuilderData.FromResponse(result), result);
-                    return Response.FromValue(new BuilderResource(Client, response.Value), response.GetRawResponse());
+                    Response<ContainerAppBuilderData> response = Response.FromValue(ContainerAppBuilderData.FromResponse(result), result);
+                    return Response.FromValue(new ContainerAppBuilderResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    BuilderData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BuilderPatch patch = new BuilderPatch();
+                    ContainerAppBuilderData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ContainerAppBuilderPatch patch = new ContainerAppBuilderPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<BuilderResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<ContainerAppBuilderResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -679,11 +679,11 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary> Gets a collection of Builds in the <see cref="BuilderResource"/>. </summary>
-        /// <returns> An object representing collection of Builds and their operations over a BuildResource. </returns>
-        public virtual BuildCollection GetBuilds()
+        /// <summary> Gets a collection of ContainerAppBuilds in the <see cref="ContainerAppBuilderResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerAppBuilds and their operations over a ContainerAppBuildResource. </returns>
+        public virtual ContainerAppBuildCollection GetContainerAppBuilds()
         {
-            return GetCachedClient(client => new BuildCollection(client, Id));
+            return GetCachedClient(client => new ContainerAppBuildCollection(client, Id));
         }
 
         /// <summary> Get a BuildResource. </summary>
@@ -692,11 +692,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="buildName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BuildResource>> GetBuildAsync(string buildName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppBuildResource>> GetContainerAppBuildAsync(string buildName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(buildName, nameof(buildName));
 
-            return await GetBuilds().GetAsync(buildName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerAppBuilds().GetAsync(buildName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a BuildResource. </summary>
@@ -705,11 +705,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="buildName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BuildResource> GetBuild(string buildName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppBuildResource> GetContainerAppBuild(string buildName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(buildName, nameof(buildName));
 
-            return GetBuilds().Get(buildName, cancellationToken);
+            return GetContainerAppBuilds().Get(buildName, cancellationToken);
         }
     }
 }

@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
         /// <param name="provisioningState"> Job provisioning state. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
-        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="startOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of disk job. </param>
         /// <param name="error"> Error details if job failed. </param>
         /// <param name="reportedProperties"> Properties reported by the job execution. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="path"> Absolute path where the volume should be mounted. </param>
         /// <param name="fileSystem"> File system type to format the volume with. </param>
         /// <param name="createdVolumeId"> ARM resource ID of the created volume. </param>
-        internal CreateVolumeJobProperties(DiskJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, HciJobStatus? status, ResponseError error, DiskJobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, string sizeInBytes, string path, DiskFileSystemType? fileSystem, string createdVolumeId) : base(jobType, deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, error, reportedProperties, additionalBinaryDataProperties)
+        internal CreateVolumeJobProperties(DiskJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startOn, DateTimeOffset? endOn, HciJobStatus? status, ResponseError error, DiskJobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, string sizeInBytes, string path, DiskFileSystemType? fileSystem, string createdVolumeId) : base(jobType, deploymentMode, provisioningState, jobId, startOn, endOn, status, error, reportedProperties, additionalBinaryDataProperties)
         {
             SizeInBytes = sizeInBytes;
             Path = path;

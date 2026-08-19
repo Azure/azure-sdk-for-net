@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Hci.Models
             HciSiteDetails siteDetails = default;
             OwnershipVoucherDetails ownershipVoucherDetails = default;
             HciProvisioningDetails provisioningDetails = default;
-            string devicePoolResourceId = default;
+            ResourceIdentifier devicePoolResourceId = default;
             EdgeMachineState? machineState = default;
             EdgeMachineConnectivityStatus? connectivityStatus = default;
             string claimedBy = default;
@@ -315,7 +315,11 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("devicePoolResourceId"u8))
                 {
-                    devicePoolResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    devicePoolResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("machineState"u8))

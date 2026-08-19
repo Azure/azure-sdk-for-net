@@ -19,32 +19,32 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BuildResource"/> and their operations.
-    /// Each <see cref="BuildResource"/> in the collection will belong to the same instance of <see cref="BuilderResource"/>.
-    /// To get a <see cref="BuildCollection"/> instance call the GetBuilds method from an instance of <see cref="BuilderResource"/>.
+    /// A class representing a collection of <see cref="ContainerAppBuildResource"/> and their operations.
+    /// Each <see cref="ContainerAppBuildResource"/> in the collection will belong to the same instance of <see cref="ContainerAppBuilderResource"/>.
+    /// To get a <see cref="ContainerAppBuildCollection"/> instance call the GetContainerAppBuilds method from an instance of <see cref="ContainerAppBuilderResource"/>.
     /// </summary>
-    public partial class BuildCollection : ArmCollection, IEnumerable<BuildResource>, IAsyncEnumerable<BuildResource>
+    public partial class ContainerAppBuildCollection : ArmCollection, IEnumerable<ContainerAppBuildResource>, IAsyncEnumerable<ContainerAppBuildResource>
     {
         private readonly ClientDiagnostics _buildsClientDiagnostics;
         private readonly Builds _buildsRestClient;
         private readonly ClientDiagnostics _buildsByBuilderResourceClientDiagnostics;
         private readonly BuildsByBuilderResource _buildsByBuilderResourceRestClient;
 
-        /// <summary> Initializes a new instance of BuildCollection for mocking. </summary>
-        protected BuildCollection()
+        /// <summary> Initializes a new instance of ContainerAppBuildCollection for mocking. </summary>
+        protected ContainerAppBuildCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BuildCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppBuildCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal BuildCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ContainerAppBuildCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(BuildResource.ResourceType, out string buildApiVersion);
-            _buildsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", BuildResource.ResourceType.Namespace, Diagnostics);
-            _buildsRestClient = new Builds(_buildsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, buildApiVersion ?? "2025-10-02-preview");
-            _buildsByBuilderResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", BuildResource.ResourceType.Namespace, Diagnostics);
-            _buildsByBuilderResourceRestClient = new BuildsByBuilderResource(_buildsByBuilderResourceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, buildApiVersion ?? "2025-10-02-preview");
+            TryGetApiVersion(ContainerAppBuildResource.ResourceType, out string containerAppBuildApiVersion);
+            _buildsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppBuildResource.ResourceType.Namespace, Diagnostics);
+            _buildsRestClient = new Builds(_buildsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppBuildApiVersion ?? "2025-10-02-preview");
+            _buildsByBuilderResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppBuildResource.ResourceType.Namespace, Diagnostics);
+            _buildsByBuilderResourceRestClient = new BuildsByBuilderResource(_buildsByBuilderResourceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppBuildApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.AppContainers
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != BuilderResource.ResourceType)
+            if (id.ResourceType != ContainerAppBuilderResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BuilderResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerAppBuilderResource.ResourceType), nameof(id));
             }
         }
 
@@ -81,12 +81,12 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="buildName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<BuildResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string buildName, BuildData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ContainerAppBuildResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string buildName, ContainerAppBuildData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(buildName, nameof(buildName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("BuildCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("ContainerAppBuildCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _buildsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, buildName, BuildData.ToRequestContent(data), context);
+                HttpMessage message = _buildsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, buildName, ContainerAppBuildData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AppContainersArmOperation<BuildResource> operation = new AppContainersArmOperation<BuildResource>(
-                    new BuildResourceOperationSource(Client),
+                AppContainersArmOperation<ContainerAppBuildResource> operation = new AppContainersArmOperation<ContainerAppBuildResource>(
+                    new ContainerAppBuildResourceOperationSource(Client),
                     _buildsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -139,12 +139,12 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="buildName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<BuildResource> CreateOrUpdate(WaitUntil waitUntil, string buildName, BuildData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ContainerAppBuildResource> CreateOrUpdate(WaitUntil waitUntil, string buildName, ContainerAppBuildData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(buildName, nameof(buildName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("BuildCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("ContainerAppBuildCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _buildsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, buildName, BuildData.ToRequestContent(data), context);
+                HttpMessage message = _buildsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, buildName, ContainerAppBuildData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                AppContainersArmOperation<BuildResource> operation = new AppContainersArmOperation<BuildResource>(
-                    new BuildResourceOperationSource(Client),
+                AppContainersArmOperation<ContainerAppBuildResource> operation = new AppContainersArmOperation<ContainerAppBuildResource>(
+                    new ContainerAppBuildResourceOperationSource(Client),
                     _buildsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -195,11 +195,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="buildName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<BuildResource>> GetAsync(string buildName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppBuildResource>> GetAsync(string buildName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(buildName, nameof(buildName));
 
-            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("BuildCollection.Get");
+            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("ContainerAppBuildCollection.Get");
             scope.Start();
             try
             {
@@ -209,12 +209,12 @@ namespace Azure.ResourceManager.AppContainers
                 };
                 HttpMessage message = _buildsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, buildName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BuildData> response = Response.FromValue(BuildData.FromResponse(result), result);
+                Response<ContainerAppBuildData> response = Response.FromValue(ContainerAppBuildData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new BuildResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppBuildResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -244,11 +244,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="buildName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<BuildResource> Get(string buildName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppBuildResource> Get(string buildName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(buildName, nameof(buildName));
 
-            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("BuildCollection.Get");
+            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("ContainerAppBuildCollection.Get");
             scope.Start();
             try
             {
@@ -258,12 +258,12 @@ namespace Azure.ResourceManager.AppContainers
                 };
                 HttpMessage message = _buildsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, buildName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<BuildData> response = Response.FromValue(BuildData.FromResponse(result), result);
+                Response<ContainerAppBuildData> response = Response.FromValue(ContainerAppBuildData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new BuildResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppBuildResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -290,20 +290,20 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BuildResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BuildResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerAppBuildResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerAppBuildResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BuildData, BuildResource>(new BuildsByBuilderResourceGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ContainerAppBuildData, ContainerAppBuildResource>(new BuildsByBuilderResourceGetAllAsyncCollectionResultOfT(
                 _buildsByBuilderResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "BuildCollection.GetAll"), data => new BuildResource(Client, data));
+                "ContainerAppBuildCollection.GetAll"), data => new ContainerAppBuildResource(Client, data));
         }
 
         /// <summary>
@@ -324,20 +324,20 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BuildResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BuildResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerAppBuildResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerAppBuildResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BuildData, BuildResource>(new BuildsByBuilderResourceGetAllCollectionResultOfT(
+            return new PageableWrapper<ContainerAppBuildData, ContainerAppBuildResource>(new BuildsByBuilderResourceGetAllCollectionResultOfT(
                 _buildsByBuilderResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "BuildCollection.GetAll"), data => new BuildResource(Client, data));
+                "ContainerAppBuildCollection.GetAll"), data => new ContainerAppBuildResource(Client, data));
         }
 
         /// <summary>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(buildName, nameof(buildName));
 
-            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("BuildCollection.Exists");
+            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("ContainerAppBuildCollection.Exists");
             scope.Start();
             try
             {
@@ -376,14 +376,14 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _buildsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, buildName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<BuildData> response = default;
+                Response<ContainerAppBuildData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(BuildData.FromResponse(result), result);
+                        response = Response.FromValue(ContainerAppBuildData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((BuildData)null, result);
+                        response = Response.FromValue((ContainerAppBuildData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(buildName, nameof(buildName));
 
-            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("BuildCollection.Exists");
+            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("ContainerAppBuildCollection.Exists");
             scope.Start();
             try
             {
@@ -433,14 +433,14 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _buildsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, buildName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<BuildData> response = default;
+                Response<ContainerAppBuildData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(BuildData.FromResponse(result), result);
+                        response = Response.FromValue(ContainerAppBuildData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((BuildData)null, result);
+                        response = Response.FromValue((ContainerAppBuildData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -475,11 +475,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="buildName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<BuildResource>> GetIfExistsAsync(string buildName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ContainerAppBuildResource>> GetIfExistsAsync(string buildName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(buildName, nameof(buildName));
 
-            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("BuildCollection.GetIfExists");
+            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("ContainerAppBuildCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -490,23 +490,23 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _buildsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, buildName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<BuildData> response = default;
+                Response<ContainerAppBuildData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(BuildData.FromResponse(result), result);
+                        response = Response.FromValue(ContainerAppBuildData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((BuildData)null, result);
+                        response = Response.FromValue((ContainerAppBuildData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<BuildResource>(response.GetRawResponse());
+                    return new NoValueResponse<ContainerAppBuildResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new BuildResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppBuildResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -536,11 +536,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="buildName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<BuildResource> GetIfExists(string buildName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ContainerAppBuildResource> GetIfExists(string buildName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(buildName, nameof(buildName));
 
-            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("BuildCollection.GetIfExists");
+            using DiagnosticScope scope = _buildsClientDiagnostics.CreateScope("ContainerAppBuildCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -551,23 +551,23 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _buildsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, buildName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<BuildData> response = default;
+                Response<ContainerAppBuildData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(BuildData.FromResponse(result), result);
+                        response = Response.FromValue(ContainerAppBuildData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((BuildData)null, result);
+                        response = Response.FromValue((ContainerAppBuildData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<BuildResource>(response.GetRawResponse());
+                    return new NoValueResponse<ContainerAppBuildResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new BuildResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppBuildResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        IEnumerator<BuildResource> IEnumerable<BuildResource>.GetEnumerator()
+        IEnumerator<ContainerAppBuildResource> IEnumerable<ContainerAppBuildResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<BuildResource> IAsyncEnumerable<BuildResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ContainerAppBuildResource> IAsyncEnumerable<ContainerAppBuildResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

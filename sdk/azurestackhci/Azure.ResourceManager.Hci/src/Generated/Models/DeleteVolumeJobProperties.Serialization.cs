@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Hci.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("volumePath"u8);
             writer.WriteStringValue(VolumePath);
-            if (Optional.IsDefined(ConfirmDeletion))
+            if (Optional.IsDefined(IsConfirmDeletion))
             {
                 writer.WritePropertyName("confirmDeletion"u8);
-                writer.WriteBooleanValue(ConfirmDeletion.Value);
+                writer.WriteBooleanValue(IsConfirmDeletion.Value);
             }
         }
 
@@ -120,14 +120,14 @@ namespace Azure.ResourceManager.Hci.Models
             EceDeploymentMode? deploymentMode = default;
             HciProvisioningState? provisioningState = default;
             string jobId = default;
-            DateTimeOffset? startTimeUtc = default;
-            DateTimeOffset? endTimeUtc = default;
+            DateTimeOffset? startOn = default;
+            DateTimeOffset? endOn = default;
             HciJobStatus? status = default;
             ResponseError error = default;
             DiskJobReportedProperties reportedProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string volumePath = default;
-            bool? confirmDeletion = default;
+            bool? isConfirmDeletion = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("jobType"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    startTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTimeUtc"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    endTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    confirmDeletion = prop.Value.GetBoolean();
+                    isConfirmDeletion = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -227,14 +227,14 @@ namespace Azure.ResourceManager.Hci.Models
                 deploymentMode,
                 provisioningState,
                 jobId,
-                startTimeUtc,
-                endTimeUtc,
+                startOn,
+                endOn,
                 status,
                 error,
                 reportedProperties,
                 additionalBinaryDataProperties,
                 volumePath,
-                confirmDeletion);
+                isConfirmDeletion);
         }
     }
 }

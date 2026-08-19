@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("lastUpdatedUtc"u8);
-                writer.WriteStringValue(LastUpdatedUtc, "O");
+                writer.WriteStringValue(LastUpdatedOn, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Message))
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             EdgeMachineLifecycleStatus status = default;
             string stage = default;
-            DateTimeOffset lastUpdatedUtc = default;
+            DateTimeOffset lastUpdatedOn = default;
             string message = default;
             IReadOnlyList<string> recommendedSteps = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("lastUpdatedUtc"u8))
                 {
-                    lastUpdatedUtc = prop.Value.GetDateTimeOffset("O");
+                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("message"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Hci.Models
             return new LifecycleStatus(
                 status,
                 stage,
-                lastUpdatedUtc,
+                lastUpdatedOn,
                 message,
                 recommendedSteps ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);

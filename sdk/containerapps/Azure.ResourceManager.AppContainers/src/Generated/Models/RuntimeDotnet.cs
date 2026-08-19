@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RuntimeDotnet"/>. </summary>
-        /// <param name="autoConfigureDataProtection"> Auto configure the ASP.NET Core Data Protection feature. </param>
+        /// <param name="isAutoConfigureDataProtectionEnabled"> Auto configure the ASP.NET Core Data Protection feature. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RuntimeDotnet(bool? autoConfigureDataProtection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RuntimeDotnet(bool? isAutoConfigureDataProtectionEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AutoConfigureDataProtection = autoConfigureDataProtection;
+            IsAutoConfigureDataProtectionEnabled = isAutoConfigureDataProtectionEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Auto configure the ASP.NET Core Data Protection feature. </summary>
         [WirePath("autoConfigureDataProtection")]
-        public bool? AutoConfigureDataProtection { get; set; }
+        public bool? IsAutoConfigureDataProtectionEnabled { get; set; }
     }
 }

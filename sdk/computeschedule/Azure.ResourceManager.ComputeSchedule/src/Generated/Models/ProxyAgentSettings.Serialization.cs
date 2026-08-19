@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 writer.WritePropertyName("imds"u8);
                 writer.WriteObjectValue(Imds, options);
             }
-            if (Optional.IsDefined(AddProxyAgentExtension))
+            if (Optional.IsDefined(ShouldAddProxyAgentExtension))
             {
                 writer.WritePropertyName("addProxyAgentExtension"u8);
-                writer.WriteBooleanValue(AddProxyAgentExtension.Value);
+                writer.WriteBooleanValue(ShouldAddProxyAgentExtension.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -147,11 +147,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 return null;
             }
             bool? enabled = default;
-            Mode? mode = default;
+            ProxyAgentMode? mode = default;
             int? keyIncarnationId = default;
             HostEndpointSettings wireServer = default;
             HostEndpointSettings imds = default;
-            bool? addProxyAgentExtension = default;
+            bool? shouldAddProxyAgentExtension = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    mode = new Mode(prop.Value.GetString());
+                    mode = new ProxyAgentMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("keyIncarnationId"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    addProxyAgentExtension = prop.Value.GetBoolean();
+                    shouldAddProxyAgentExtension = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 keyIncarnationId,
                 wireServer,
                 imds,
-                addProxyAgentExtension,
+                shouldAddProxyAgentExtension,
                 additionalBinaryDataProperties);
         }
     }

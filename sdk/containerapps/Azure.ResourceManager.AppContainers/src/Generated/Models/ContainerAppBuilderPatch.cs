@@ -14,23 +14,23 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The type used for update operations of the BuilderResource. </summary>
-    public partial class BuilderPatch
+    public partial class ContainerAppBuilderPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BuilderPatch"/>. </summary>
-        public BuilderPatch()
+        /// <summary> Initializes a new instance of <see cref="ContainerAppBuilderPatch"/>. </summary>
+        public ContainerAppBuilderPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BuilderPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppBuilderPatch"/>. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The updatable properties of the BuilderResource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BuilderPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, BuilderResourceUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerAppBuilderPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, BuilderResourceUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             Tags = tags;

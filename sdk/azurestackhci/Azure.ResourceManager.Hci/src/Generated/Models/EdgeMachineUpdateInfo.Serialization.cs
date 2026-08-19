@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("totalSizeBytes"u8);
                 writer.WriteNumberValue(TotalSizeBytes.Value);
             }
-            if (Optional.IsDefined(RebootRequired))
+            if (Optional.IsDefined(IsRebootRequired))
             {
                 writer.WritePropertyName("rebootRequired"u8);
-                writer.WriteBooleanValue(RebootRequired.Value);
+                writer.WriteBooleanValue(IsRebootRequired.Value);
             }
             if (Optional.IsDefined(EstimatedInstallTimeMinutes))
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Hci.Models
             string displayName = default;
             string releaseNotesLink = default;
             long? totalSizeBytes = default;
-            bool? rebootRequired = default;
+            bool? isRebootRequired = default;
             int? estimatedInstallTimeMinutes = default;
             string updateType = default;
             string arcAgentVersion = default;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    rebootRequired = prop.Value.GetBoolean();
+                    isRebootRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("estimatedInstallTimeMinutes"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Hci.Models
                 displayName,
                 releaseNotesLink,
                 totalSizeBytes,
-                rebootRequired,
+                isRebootRequired,
                 estimatedInstallTimeMinutes,
                 updateType,
                 arcAgentVersion,

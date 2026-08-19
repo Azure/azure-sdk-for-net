@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary></summary>
-    internal partial class BuilderResourceOperationSource : IOperationSource<BuilderResource>
+    internal partial class ContainerAppBuilderResourceOperationSource : IOperationSource<ContainerAppBuilderResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal BuilderResourceOperationSource(ArmClient client)
+        internal ContainerAppBuilderResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        BuilderResource IOperationSource<BuilderResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ContainerAppBuilderResource IOperationSource<ContainerAppBuilderResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            BuilderData data = BuilderData.DeserializeBuilderData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new BuilderResource(_client, data);
+            ContainerAppBuilderData data = ContainerAppBuilderData.DeserializeContainerAppBuilderData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ContainerAppBuilderResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<BuilderResource> IOperationSource<BuilderResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ContainerAppBuilderResource> IOperationSource<ContainerAppBuilderResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            BuilderData data = BuilderData.DeserializeBuilderData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new BuilderResource(_client, data);
+            ContainerAppBuilderData data = ContainerAppBuilderData.DeserializeContainerAppBuilderData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ContainerAppBuilderResource(_client, data);
         }
     }
 }

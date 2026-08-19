@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(MsiExpirationTimeStamp))
+            if (options.Format != "W" && Optional.IsDefined(MsiExpirationOn))
             {
                 writer.WritePropertyName("msiExpirationTimeStamp"u8);
-                writer.WriteStringValue(MsiExpirationTimeStamp.Value, "O");
+                writer.WriteStringValue(MsiExpirationOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ImdsAttestation))
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Hci.Models
             string clusterVersion = default;
             IReadOnlyList<HciClusterNode> nodes = default;
             DateTimeOffset? lastUpdatedOn = default;
-            DateTimeOffset? msiExpirationTimeStamp = default;
+            DateTimeOffset? msiExpirationOn = default;
             ImdsAttestationState? imdsAttestation = default;
             HciClusterDiagnosticLevel? diagnosticLevel = default;
             IReadOnlyList<string> supportedCapabilities = default;
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    msiExpirationTimeStamp = prop.Value.GetDateTimeOffset("O");
+                    msiExpirationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("imdsAttestation"u8))
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Hci.Models
                 clusterVersion,
                 nodes ?? new ChangeTrackingList<HciClusterNode>(),
                 lastUpdatedOn,
-                msiExpirationTimeStamp,
+                msiExpirationOn,
                 imdsAttestation,
                 diagnosticLevel,
                 supportedCapabilities ?? new ChangeTrackingList<string>(),

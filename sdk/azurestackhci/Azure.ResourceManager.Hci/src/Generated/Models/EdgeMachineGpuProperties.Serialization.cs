@@ -104,15 +104,15 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("pciLocation"u8);
                 writer.WriteStringValue(PciLocation);
             }
-            if (options.Format != "W" && Optional.IsDefined(Assignable))
+            if (options.Format != "W" && Optional.IsDefined(IsAssignable))
             {
                 writer.WritePropertyName("assignable"u8);
-                writer.WriteBooleanValue(Assignable.Value);
+                writer.WriteBooleanValue(IsAssignable.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Partitionable))
+            if (options.Format != "W" && Optional.IsDefined(IsPartitionable))
             {
                 writer.WritePropertyName("partitionable"u8);
-                writer.WriteBooleanValue(Partitionable.Value);
+                writer.WriteBooleanValue(IsPartitionable.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(HostDriverVersion))
             {
@@ -202,8 +202,8 @@ namespace Azure.ResourceManager.Hci.Models
             string model = default;
             string status = default;
             string pciLocation = default;
-            bool? assignable = default;
-            bool? partitionable = default;
+            bool? isAssignable = default;
+            bool? isPartitionable = default;
             string hostDriverVersion = default;
             string assignmentStatus = default;
             GpuMode? gpuMode = default;
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    assignable = prop.Value.GetBoolean();
+                    isAssignable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("partitionable"u8))
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    partitionable = prop.Value.GetBoolean();
+                    isPartitionable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("hostDriverVersion"u8))
@@ -335,8 +335,8 @@ namespace Azure.ResourceManager.Hci.Models
                 model,
                 status,
                 pciLocation,
-                assignable,
-                partitionable,
+                isAssignable,
+                isPartitionable,
                 hostDriverVersion,
                 assignmentStatus,
                 gpuMode,
