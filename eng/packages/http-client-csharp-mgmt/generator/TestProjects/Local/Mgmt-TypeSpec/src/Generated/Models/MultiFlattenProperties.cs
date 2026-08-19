@@ -20,10 +20,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> Initializes a new instance of <see cref="MultiFlattenProperties"/>. </summary>
         /// <param name="channel"> Required property that will be customized via [CodeGenMember] to change its position. </param>
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         public MultiFlattenProperties(FlattenChannel? channel)
         {
             Channel = channel;
+            _patch.SetPropagators(PropagateSet, PropagateGet);
         }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         /// <summary> Initializes a new instance of <see cref="MultiFlattenProperties"/>. </summary>
         /// <param name="channel"> Required property that will be customized via [CodeGenMember] to change its position. </param>

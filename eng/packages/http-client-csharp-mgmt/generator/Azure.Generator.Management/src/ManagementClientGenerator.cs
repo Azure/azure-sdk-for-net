@@ -97,6 +97,7 @@ namespace Azure.Generator.Management
             AddVisitor(new PaginationVisitor());
             AddVisitor(new ModelFactoryVisitor());
             AddVisitor(new ManagedIdentityV3Visitor());
+            AddVisitor(new DynamicSystemTextJsonConverterVisitor());
             if (IsWirePathEnabled())
             {
                 AddVisitor(new WirePathVisitor());

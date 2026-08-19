@@ -9446,6 +9446,10 @@
           "arguments": {}
         },
         {
+          "name": "TypeSpec.HttpClient.CSharp.@dynamicModel",
+          "arguments": {}
+        },
+        {
           "name": "Azure.ClientGenerator.Core.@clientOption",
           "arguments": {
             "name": "resource-rbac-roles",
