@@ -13,43 +13,11 @@ using Azure.ResourceManager.ScVmm.Models;
 
 namespace Azure.ResourceManager.ScVmm
 {
-    /// <summary>
-    /// A class representing the ScVmmGuestAgent data model.
-    /// Defines the GuestAgent.
-    /// </summary>
+    /// <summary> Defines the GuestAgent. </summary>
     public partial class ScVmmGuestAgentData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScVmmGuestAgentData"/>. </summary>
         public ScVmmGuestAgentData()
@@ -57,55 +25,123 @@ namespace Azure.ResourceManager.ScVmm
         }
 
         /// <summary> Initializes a new instance of <see cref="ScVmmGuestAgentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="uuid"> Gets a unique identifier for this resource. </param>
-        /// <param name="credentials"> Username / Password Credentials to provision guest agent. </param>
-        /// <param name="httpProxyConfig"> HTTP Proxy configuration for the VM. </param>
-        /// <param name="provisioningAction"> Gets or sets the guest agent provisioning action. </param>
-        /// <param name="status"> Gets the guest agent status. </param>
-        /// <param name="customResourceName"> Gets the name of the corresponding resource in Kubernetes. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScVmmGuestAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string uuid, ScVmmGuestCredential credentials, ScVmmHttpProxyConfiguration httpProxyConfig, ScVmmProvisioningAction? provisioningAction, string status, string customResourceName, ScVmmProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ScVmmGuestAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GuestAgentProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Uuid = uuid;
-            Credentials = credentials;
-            HttpProxyConfig = httpProxyConfig;
-            ProvisioningAction = provisioningAction;
-            Status = status;
-            CustomResourceName = customResourceName;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal GuestAgentProperties Properties { get; set; }
+
         /// <summary> Gets a unique identifier for this resource. </summary>
-        public string Uuid { get; }
-        /// <summary> Username / Password Credentials to provision guest agent. </summary>
-        public ScVmmGuestCredential Credentials { get; set; }
-        /// <summary> HTTP Proxy configuration for the VM. </summary>
-        internal ScVmmHttpProxyConfiguration HttpProxyConfig { get; set; }
-        /// <summary> Gets or sets httpsProxy url. </summary>
-        public string HttpsProxy
+        public string Uuid
         {
-            get => HttpProxyConfig is null ? default : HttpProxyConfig.HttpsProxy;
+            get
+            {
+                return Properties is null ? default : Properties.Uuid;
+            }
+        }
+
+        /// <summary> Username / Password Credentials to provision guest agent. </summary>
+        public ScVmmGuestCredential Credentials
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Credentials;
+            }
             set
             {
-                if (HttpProxyConfig is null)
-                    HttpProxyConfig = new ScVmmHttpProxyConfiguration();
-                HttpProxyConfig.HttpsProxy = value;
+                if (Properties is null)
+                {
+                    Properties = new GuestAgentProperties();
+                }
+                Properties.Credentials = value;
             }
         }
 
         /// <summary> Gets or sets the guest agent provisioning action. </summary>
-        public ScVmmProvisioningAction? ProvisioningAction { get; set; }
+        public ScVmmProvisioningAction? ProvisioningAction
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningAction;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GuestAgentProperties();
+                }
+                Properties.ProvisioningAction = value;
+            }
+        }
+
         /// <summary> Gets the guest agent status. </summary>
-        public string Status { get; }
+        public string Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
         /// <summary> Gets the name of the corresponding resource in Kubernetes. </summary>
-        public string CustomResourceName { get; }
+        public string CustomResourceName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomResourceName;
+            }
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
-        public ScVmmProvisioningState? ProvisioningState { get; }
+        public ScVmmProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The resource id of the private link scope this machine is assigned to, if any. </summary>
+        public ResourceIdentifier PrivateLinkScopeResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkScopeResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GuestAgentProperties();
+                }
+                Properties.PrivateLinkScopeResourceId = value;
+            }
+        }
+
+        /// <summary> Gets or sets httpsProxy url. </summary>
+        public string HttpsProxy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HttpsProxy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GuestAgentProperties();
+                }
+                Properties.HttpsProxy = value;
+            }
+        }
     }
 }

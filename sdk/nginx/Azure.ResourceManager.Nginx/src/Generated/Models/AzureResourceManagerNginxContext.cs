@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Nginx.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -78,6 +79,7 @@ namespace Azure.ResourceManager.Nginx
     [ModelReaderWriterBuildable(typeof(NginxScaleProfile))]
     [ModelReaderWriterBuildable(typeof(NginxScaleProfileCapacity))]
     [ModelReaderWriterBuildable(typeof(NginxStorageAccount))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WebApplicationFirewallComponentVersions))]

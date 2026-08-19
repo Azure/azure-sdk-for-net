@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Hci.OsImageData"/> instance for mocking. </returns>
-        public static OsImageData OsImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OsImageProperties properties = default)
+        /// <returns> A new <see cref="Hci.OSImageData"/> instance for mocking. </returns>
+        public static OSImageData OSImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OSImageProperties properties = default)
         {
-            return new OsImageData(
+            return new OSImageData(
                 id,
                 name,
                 resourceType,
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="composedImageVersion"> Represents composed image version of a os image. </param>
         /// <param name="composedImageIsoUri"> Represents composed image iso download url of a os image. </param>
         /// <param name="composedImageIsoHash"> Represents composed image iso hash of a os image. </param>
-        /// <returns> A new <see cref="Models.OsImageProperties"/> instance for mocking. </returns>
-        public static OsImageProperties OsImageProperties(string validatedSolutionRecipeVersion = default, string composedImageVersion = default, string composedImageIsoUri = default, string composedImageIsoHash = default)
+        /// <returns> A new <see cref="Models.OSImageProperties"/> instance for mocking. </returns>
+        public static OSImageProperties OSImageProperties(string validatedSolutionRecipeVersion = default, string composedImageVersion = default, string composedImageIsoUri = default, string composedImageIsoHash = default)
         {
-            return new OsImageProperties(validatedSolutionRecipeVersion, composedImageVersion, composedImageIsoUri, composedImageIsoHash, default);
+            return new OSImageProperties(validatedSolutionRecipeVersion, composedImageVersion, composedImageIsoUri, composedImageIsoHash, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -836,11 +836,11 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <param name="name"> NETBIOS name of each physical server on your Azure Stack HCI cluster. </param>
-        /// <param name="iPv4Address"> The IPv4 address assigned to each physical server on your Azure Stack HCI cluster. </param>
+        /// <param name="ipv4Address"> The IPv4 address assigned to each physical server on your Azure Stack HCI cluster. </param>
         /// <returns> A new <see cref="Models.DeploymentSettingPhysicalNodes"/> instance for mocking. </returns>
-        public static DeploymentSettingPhysicalNodes DeploymentSettingPhysicalNodes(string name = default, string iPv4Address = default)
+        public static DeploymentSettingPhysicalNodes DeploymentSettingPhysicalNodes(string name = default, string ipv4Address = default)
         {
-            return new DeploymentSettingPhysicalNodes(name, iPv4Address, default);
+            return new DeploymentSettingPhysicalNodes(name, ipv4Address, default);
         }
 
         /// <param name="intents"> The network intents assigned to the network reference pattern used for the deployment. Each intent will define its own name, traffic type, adapter names, and overrides as recommended by your OEM. </param>
@@ -930,12 +930,12 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <param name="physicalNode"> storage adapter physical node name. </param>
-        /// <param name="iPv4Address"> The IPv4 address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
+        /// <param name="ipv4Address"> The IPv4 address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
         /// <param name="subnetMask"> The SubnetMask address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
         /// <returns> A new <see cref="Models.DeploymentSettingStorageAdapterIPInfo"/> instance for mocking. </returns>
-        public static DeploymentSettingStorageAdapterIPInfo DeploymentSettingStorageAdapterIPInfo(string physicalNode = default, string iPv4Address = default, string subnetMask = default)
+        public static DeploymentSettingStorageAdapterIPInfo DeploymentSettingStorageAdapterIPInfo(string physicalNode = default, string ipv4Address = default, string subnetMask = default)
         {
-            return new DeploymentSettingStorageAdapterIPInfo(physicalNode, iPv4Address, subnetMask, default);
+            return new DeploymentSettingStorageAdapterIPInfo(physicalNode, ipv4Address, subnetMask, default);
         }
 
         /// <param name="adapterProperties"> QoS and adapter overrides for the cluster network. </param>
@@ -1380,7 +1380,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="interfaceDescription"> Interface Description of NIC. </param>
         /// <param name="componentId"> Component Id of NIC. </param>
         /// <param name="driverVersion"> Driver Version of NIC. </param>
-        /// <param name="iPv4Address"> Subnet Mask of NIC. </param>
+        /// <param name="ipv4Address"> Subnet Mask of NIC. </param>
         /// <param name="subnetMask"> Subnet Mask of NIC. </param>
         /// <param name="defaultGateway"> Default Gateway of NIC. </param>
         /// <param name="dnsServers"> DNS Servers for NIC. </param>
@@ -1393,7 +1393,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="nicStatus"> The status of NIC, up, disconnected. </param>
         /// <param name="rdmaCapability"> Describes the RDMA capability of the network adapter. </param>
         /// <returns> A new <see cref="Models.HciNicDetail"/> instance for mocking. </returns>
-        public static HciNicDetail HciNicDetail(string adapterName = default, string interfaceDescription = default, string componentId = default, string driverVersion = default, string iPv4Address = default, string subnetMask = default, string defaultGateway = default, IEnumerable<string> dnsServers = default, string defaultIsolationId = default, string macAddress = default, string slot = default, string switchName = default, string nicType = default, string vlanId = default, string nicStatus = default, RdmaCapability? rdmaCapability = default)
+        public static HciNicDetail HciNicDetail(string adapterName = default, string interfaceDescription = default, string componentId = default, string driverVersion = default, string ipv4Address = default, string subnetMask = default, string defaultGateway = default, IEnumerable<string> dnsServers = default, string defaultIsolationId = default, string macAddress = default, string slot = default, string switchName = default, string nicType = default, string vlanId = default, string nicStatus = default, RdmaCapability? rdmaCapability = default)
         {
             dnsServers ??= new ChangeTrackingList<string>();
 
@@ -1402,7 +1402,7 @@ namespace Azure.ResourceManager.Hci.Models
                 interfaceDescription,
                 componentId,
                 driverVersion,
-                iPv4Address,
+                ipv4Address,
                 subnetMask,
                 defaultGateway,
                 (dnsServers ?? new ChangeTrackingList<string>()).ToList(),
@@ -1664,13 +1664,13 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="interfaceDescription"> Interface Description of NIC. </param>
         /// <param name="componentId"> Component Id of NIC. </param>
         /// <param name="driverVersion"> Driver Version of NIC. </param>
-        /// <param name="iPv4Address"> Subnet Mask of NIC. </param>
+        /// <param name="ipv4Address"> Subnet Mask of NIC. </param>
         /// <param name="subnetMask"> Subnet Mask of NIC. </param>
         /// <param name="defaultGateway"> Default Gateway of NIC. </param>
         /// <param name="dnsServers"> DNS Servers for NIC. </param>
         /// <param name="defaultIsolationId"> Default Isolation of Management NIC. </param>
         /// <returns> A new <see cref="Models.HciEdgeDeviceNicDetail"/> instance for mocking. </returns>
-        public static HciEdgeDeviceNicDetail HciEdgeDeviceNicDetail(string adapterName = default, string interfaceDescription = default, string componentId = default, string driverVersion = default, string iPv4Address = default, string subnetMask = default, string defaultGateway = default, IEnumerable<string> dnsServers = default, string defaultIsolationId = default)
+        public static HciEdgeDeviceNicDetail HciEdgeDeviceNicDetail(string adapterName = default, string interfaceDescription = default, string componentId = default, string driverVersion = default, string ipv4Address = default, string subnetMask = default, string defaultGateway = default, IEnumerable<string> dnsServers = default, string defaultIsolationId = default)
         {
             dnsServers ??= new ChangeTrackingList<string>();
 
@@ -1679,7 +1679,7 @@ namespace Azure.ResourceManager.Hci.Models
                 interfaceDescription,
                 componentId,
                 driverVersion,
-                iPv4Address,
+                ipv4Address,
                 subnetMask,
                 defaultGateway,
                 (dnsServers ?? new ChangeTrackingList<string>()).ToList(),
@@ -2346,7 +2346,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="dnsAddressArray"> Array of DNS addresses. </param>
         /// <param name="vlanId"> VLAN ID for the network setup. </param>
         /// <returns> A new <see cref="Models.HciNetworkAdapter"/> instance for mocking. </returns>
-        public static HciNetworkAdapter HciNetworkAdapter(IpAssignmentType ipAssignmentType = default, string ipAddress = default, string adapterName = default, string macAddress = default, HciIPAddressRange ipAddressRange = default, string gateway = default, string subnetMask = default, IEnumerable<string> dnsAddressArray = default, string vlanId = default)
+        public static HciNetworkAdapter HciNetworkAdapter(IPAssignmentType ipAssignmentType = default, string ipAddress = default, string adapterName = default, string macAddress = default, HciIPAddressRange ipAddressRange = default, string gateway = default, string subnetMask = default, IEnumerable<string> dnsAddressArray = default, string vlanId = default)
         {
             dnsAddressArray ??= new ChangeTrackingList<string>();
 
@@ -2363,12 +2363,12 @@ namespace Azure.ResourceManager.Hci.Models
                 default);
         }
 
-        /// <param name="startIp"> Start IP address. </param>
-        /// <param name="endIp"> End IP address. </param>
+        /// <param name="startIP"> Start IP address. </param>
+        /// <param name="endIP"> End IP address. </param>
         /// <returns> A new <see cref="Models.HciIPAddressRange"/> instance for mocking. </returns>
-        public static HciIPAddressRange HciIPAddressRange(string startIp = default, string endIp = default)
+        public static HciIPAddressRange HciIPAddressRange(string startIP = default, string endIP = default)
         {
-            return new HciIPAddressRange(startIp, endIp, default);
+            return new HciIPAddressRange(startIP, endIP, default);
         }
 
         /// <param name="connectionUri"> Connection URI of the web proxy. </param>
@@ -2426,7 +2426,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="osProfile"> Operating system profile. </param>
         /// <param name="userDetails"> User configuration. </param>
         /// <returns> A new <see cref="Models.HciProvisioningDetails"/> instance for mocking. </returns>
-        public static HciProvisioningDetails HciProvisioningDetails(OsProvisionProfile osProfile = default, IEnumerable<HciUserDetails> userDetails = default)
+        public static HciProvisioningDetails HciProvisioningDetails(OSProvisionProfile osProfile = default, IEnumerable<HciUserDetails> userDetails = default)
         {
             userDetails ??= new ChangeTrackingList<HciUserDetails>();
 
@@ -2441,10 +2441,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="imageHash"> Hash of the OS package downloaded. </param>
         /// <param name="gpgPubKey"> GPG Public Key used for package verification. </param>
         /// <param name="operationType"> Operation sub type of OS Provisioning. </param>
-        /// <returns> A new <see cref="Models.OsProvisionProfile"/> instance for mocking. </returns>
-        public static OsProvisionProfile OsProvisionProfile(string osName = default, string osType = default, string osVersion = default, string osImageLocation = default, string vsrVersion = default, string imageHash = default, string gpgPubKey = default, OSOperationType? operationType = default)
+        /// <returns> A new <see cref="Models.OSProvisionProfile"/> instance for mocking. </returns>
+        public static OSProvisionProfile OSProvisionProfile(string osName = default, string osType = default, string osVersion = default, string osImageLocation = default, string vsrVersion = default, string imageHash = default, string gpgPubKey = default, OSOperationType? operationType = default)
         {
-            return new OsProvisionProfile(
+            return new OSProvisionProfile(
                 osName,
                 osType,
                 osVersion,
@@ -2775,10 +2775,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="error"> error details. </param>
         /// <param name="provisioningRequest"> Os Provisioning request. </param>
         /// <param name="reportedProperties"> Reported Properties for Provision Os job. </param>
-        /// <returns> A new <see cref="Models.ProvisionOsJobProperties"/> instance for mocking. </returns>
-        public static ProvisionOsJobProperties ProvisionOsJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, HciJobStatus? status = default, ResponseError error = default, ProvisioningContent provisioningRequest = default, ProvisionOsReportedProperties reportedProperties = default)
+        /// <returns> A new <see cref="Models.ProvisionOSJobProperties"/> instance for mocking. </returns>
+        public static ProvisionOSJobProperties ProvisionOSJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, HciJobStatus? status = default, ResponseError error = default, ProvisioningContent provisioningRequest = default, ProvisionOSReportedProperties reportedProperties = default)
         {
-            return new ProvisionOsJobProperties(
+            return new ProvisionOSJobProperties(
                 default,
                 deploymentMode,
                 provisioningState,
@@ -2799,7 +2799,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deviceConfiguration"> Device configuration. </param>
         /// <param name="customConfiguration"> Base64 encoded custom configuration for CAPI to use. </param>
         /// <returns> A new <see cref="Models.ProvisioningContent"/> instance for mocking. </returns>
-        public static ProvisioningContent ProvisioningContent(ProvisioningOsType target = default, OsProvisionProfile osProfile = default, IEnumerable<HciUserDetails> userDetails = default, OnboardingConfiguration onboardingConfiguration = default, TargetDeviceConfiguration deviceConfiguration = default, string customConfiguration = default)
+        public static ProvisioningContent ProvisioningContent(ProvisioningOSType target = default, OSProvisionProfile osProfile = default, IEnumerable<HciUserDetails> userDetails = default, OnboardingConfiguration onboardingConfiguration = default, TargetDeviceConfiguration deviceConfiguration = default, string customConfiguration = default)
         {
             userDetails ??= new ChangeTrackingList<HciUserDetails>();
 
@@ -2833,10 +2833,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="percentComplete"> The percentage of the job that is complete. </param>
         /// <param name="validationStatus"> Validation status of job. </param>
         /// <param name="deploymentStatus"> Deployment status of job. </param>
-        /// <returns> A new <see cref="Models.ProvisionOsReportedProperties"/> instance for mocking. </returns>
-        public static ProvisionOsReportedProperties ProvisionOsReportedProperties(int? percentComplete = default, EceActionStatus validationStatus = default, EceActionStatus deploymentStatus = default)
+        /// <returns> A new <see cref="Models.ProvisionOSReportedProperties"/> instance for mocking. </returns>
+        public static ProvisionOSReportedProperties ProvisionOSReportedProperties(int? percentComplete = default, EceActionStatus validationStatus = default, EceActionStatus deploymentStatus = default)
         {
-            return new ProvisionOsReportedProperties(percentComplete, validationStatus, deploymentStatus, default);
+            return new ProvisionOSReportedProperties(percentComplete, validationStatus, deploymentStatus, default);
         }
 
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
@@ -2848,10 +2848,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="error"> error details. </param>
         /// <param name="downloadRequest"> Download OS request. </param>
         /// <param name="reportedProperties"> Reported Properties for Download Os job. </param>
-        /// <returns> A new <see cref="Models.DownloadOsJobProperties"/> instance for mocking. </returns>
-        public static DownloadOsJobProperties DownloadOsJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, HciJobStatus? status = default, ResponseError error = default, DownloadContent downloadRequest = default, ProvisionOsReportedProperties reportedProperties = default)
+        /// <returns> A new <see cref="Models.DownloadOSJobProperties"/> instance for mocking. </returns>
+        public static DownloadOSJobProperties DownloadOSJobProperties(EceDeploymentMode? deploymentMode = default, HciProvisioningState? provisioningState = default, string jobId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, HciJobStatus? status = default, ResponseError error = default, DownloadContent downloadRequest = default, ProvisionOSReportedProperties reportedProperties = default)
         {
-            return new DownloadOsJobProperties(
+            return new DownloadOSJobProperties(
                 default,
                 deploymentMode,
                 provisioningState,
@@ -2868,7 +2868,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="target"> Target operating system to support polymorphic resource. </param>
         /// <param name="osProfile"> Operating system profile. </param>
         /// <returns> A new <see cref="Models.DownloadContent"/> instance for mocking. </returns>
-        public static DownloadContent DownloadContent(ProvisioningOsType target = default, DownloadOsProfile osProfile = default)
+        public static DownloadContent DownloadContent(ProvisioningOSType target = default, DownloadOSProfile osProfile = default)
         {
             return new DownloadContent(target, osProfile, default);
         }
@@ -2880,10 +2880,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="vsrVersion"> Validated Solution Recipe version to be used for the job. </param>
         /// <param name="imageHash"> Hash of the OS package downloaded. </param>
         /// <param name="gpgPubKey"> GPG Public Key used for package verification. </param>
-        /// <returns> A new <see cref="Models.DownloadOsProfile"/> instance for mocking. </returns>
-        public static DownloadOsProfile DownloadOsProfile(string osName = default, string osType = default, string osVersion = default, string osImageLocation = default, string vsrVersion = default, string imageHash = default, string gpgPubKey = default)
+        /// <returns> A new <see cref="Models.DownloadOSProfile"/> instance for mocking. </returns>
+        public static DownloadOSProfile DownloadOSProfile(string osName = default, string osType = default, string osVersion = default, string osImageLocation = default, string vsrVersion = default, string imageHash = default, string gpgPubKey = default)
         {
-            return new DownloadOsProfile(
+            return new DownloadOSProfile(
                 osName,
                 osType,
                 osVersion,
@@ -2957,7 +2957,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="values"> The list of available updates. </param>
         /// <param name="provisioningState"> Provisioning state of the updates resource. </param>
         /// <returns> A new <see cref="Models.EdgeMachineUpdateProperties"/> instance for mocking. </returns>
-        public static EdgeMachineUpdateProperties EdgeMachineUpdateProperties(ProvisioningOsType? solutionType = default, IEnumerable<EdgeMachineUpdateInfo> values = default, HciProvisioningState? provisioningState = default)
+        public static EdgeMachineUpdateProperties EdgeMachineUpdateProperties(ProvisioningOSType? solutionType = default, IEnumerable<EdgeMachineUpdateInfo> values = default, HciProvisioningState? provisioningState = default)
         {
             values ??= new ChangeTrackingList<EdgeMachineUpdateInfo>();
 
@@ -3140,13 +3140,13 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <param name="serverName"> Name of server to be added to cluster. </param>
-        /// <param name="hostIpv4Address"> Ip address of server to be added to cluster. </param>
+        /// <param name="hostIPv4Address"> Ip address of server to be added to cluster. </param>
         /// <param name="localAvailabilityZoneName"> Local availability zone name of server to be added to rack aware cluster. </param>
         /// <param name="serverResourceId"> Azure resource id of machine part of cluster for which job will be triggered. </param>
         /// <returns> A new <see cref="Models.AddServerJobServerDetails"/> instance for mocking. </returns>
-        public static AddServerJobServerDetails AddServerJobServerDetails(string serverName = default, string hostIpv4Address = default, string localAvailabilityZoneName = default, ResourceIdentifier serverResourceId = default)
+        public static AddServerJobServerDetails AddServerJobServerDetails(string serverName = default, string hostIPv4Address = default, string localAvailabilityZoneName = default, ResourceIdentifier serverResourceId = default)
         {
-            return new AddServerJobServerDetails(serverName, hostIpv4Address, localAvailabilityZoneName, serverResourceId, default);
+            return new AddServerJobServerDetails(serverName, hostIPv4Address, localAvailabilityZoneName, serverResourceId, default);
         }
 
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
@@ -3705,7 +3705,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="interfaceState"> Administrative state of the interface (up or down). </param>
         /// <param name="wifiConfiguration"> WiFi configuration desired properties. </param>
         /// <returns> A new <see cref="Models.NetworkAdapterConfiguration"/> instance for mocking. </returns>
-        public static NetworkAdapterConfiguration NetworkAdapterConfiguration(string adapterName = default, string ip4Address = default, string subnetMask = default, string defaultGateway = default, IEnumerable<string> dnsServers = default, IpInterfaceType? ipInterfaceType = default, int? vlanId = default, InterfaceState? interfaceState = default, WifiConfigurationDesiredProperties wifiConfiguration = default)
+        public static NetworkAdapterConfiguration NetworkAdapterConfiguration(string adapterName = default, string ip4Address = default, string subnetMask = default, string defaultGateway = default, IEnumerable<string> dnsServers = default, IPInterfaceType? ipInterfaceType = default, int? vlanId = default, InterfaceState? interfaceState = default, WifiConfigurationDesiredProperties wifiConfiguration = default)
         {
             dnsServers ??= new ChangeTrackingList<string>();
 
@@ -3772,7 +3772,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="networkAdapterStatus"> The observed state of network adapter. </param>
         /// <param name="wifiConfiguration"> WiFi configuration reported properties. </param>
         /// <returns> A new <see cref="Models.NetworkAdapterReportedProperties"/> instance for mocking. </returns>
-        public static NetworkAdapterReportedProperties NetworkAdapterReportedProperties(string adapterName = default, string ip4Address = default, string subnetMask = default, string defaultGateway = default, IEnumerable<string> dnsServers = default, string interfaceDescription = default, string componentId = default, string driverVersion = default, string defaultIsolationId = default, string macAddress = default, string slot = default, string switchName = default, NetworkInterfaceType? interfaceType = default, int? interfaceSpeed = default, InterfaceState? interfaceState = default, string nicType = default, string nicStatus = default, IpInterfaceType? ipInterfaceType = default, int? vlanId = default, bool? managementInterface = default, RdmaCapability? rdmaCapability = default, NetworkAdapterStatus networkAdapterStatus = default, WifiConfigurationReportedProperties wifiConfiguration = default)
+        public static NetworkAdapterReportedProperties NetworkAdapterReportedProperties(string adapterName = default, string ip4Address = default, string subnetMask = default, string defaultGateway = default, IEnumerable<string> dnsServers = default, string interfaceDescription = default, string componentId = default, string driverVersion = default, string defaultIsolationId = default, string macAddress = default, string slot = default, string switchName = default, NetworkInterfaceType? interfaceType = default, int? interfaceSpeed = default, InterfaceState? interfaceState = default, string nicType = default, string nicStatus = default, IPInterfaceType? ipInterfaceType = default, int? vlanId = default, bool? managementInterface = default, RdmaCapability? rdmaCapability = default, NetworkAdapterStatus networkAdapterStatus = default, WifiConfigurationReportedProperties wifiConfiguration = default)
         {
             dnsServers ??= new ChangeTrackingList<string>();
 

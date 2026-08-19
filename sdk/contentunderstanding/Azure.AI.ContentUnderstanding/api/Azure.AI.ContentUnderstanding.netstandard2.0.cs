@@ -7,6 +7,7 @@ namespace Azure.AI.ContentUnderstanding
         public string Category { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.AI.ContentUnderstanding.ContentField> Fields { get { throw null; } }
         public string Markdown { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public string MimeType { get { throw null; } }
         public string Path { get { throw null; } }
         protected virtual Azure.AI.ContentUnderstanding.AnalysisContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -44,6 +45,7 @@ namespace Azure.AI.ContentUnderstanding
         public string ApiVersion { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.ContentUnderstanding.AnalysisContent> Contents { get { throw null; } }
         public System.DateTimeOffset? CreatedAt { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResponseError> Infos { get { throw null; } }
         public string StringEncoding { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResponseError> Warnings { get { throw null; } }
         protected virtual Azure.AI.ContentUnderstanding.AnalysisResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -56,10 +58,33 @@ namespace Azure.AI.ContentUnderstanding
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.AnalysisResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.AnalysisResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AnalyzeBinaryOptions
+    {
+        public AnalyzeBinaryOptions(string analyzerId, System.BinaryData binaryInput) { }
+        public bool? AllowInputTruncation { get { throw null; } set { } }
+        public string AnalyzerId { get { throw null; } }
+        public System.BinaryData BinaryInput { get { throw null; } }
+        public Azure.AI.ContentUnderstanding.ContentRange? ContentRange { get { throw null; } set { } }
+        public string? ContentType { get { throw null; } set { } }
+        public Azure.AI.ContentUnderstanding.ProcessingLocation? ProcessingLocation { get { throw null; } set { } }
+    }
     public static partial class AnalyzeOperationExtensions
     {
+        [System.ObsoleteAttribute("Use GetUsageDetails instead.")]
         public static Azure.AI.ContentUnderstanding.AnalyzeUsageDetails? GetUsage(this Azure.Operation<Azure.AI.ContentUnderstanding.AnalysisResult> operation) { throw null; }
+        public static Azure.AI.ContentUnderstanding.UsageDetails? GetUsageDetails(this Azure.Operation<Azure.AI.ContentUnderstanding.AnalysisResult> operation) { throw null; }
+        public static Azure.AI.ContentUnderstanding.UsageDetails? GetUsageDetails(this Azure.Response<Azure.AI.ContentUnderstanding.AnalysisResult> response) { throw null; }
     }
+    public partial class AnalyzeOptions
+    {
+        public AnalyzeOptions(string analyzerId, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.AnalysisInput> inputs) { }
+        public bool? AllowInputTruncation { get { throw null; } set { } }
+        public string AnalyzerId { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.ContentUnderstanding.AnalysisInput> Inputs { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> ModelDeployments { get { throw null; } set { } }
+        public Azure.AI.ContentUnderstanding.ProcessingLocation? ProcessingLocation { get { throw null; } set { } }
+    }
+    [System.ObsoleteAttribute("Use UsageDetails with GetUsageDetails instead.")]
     public partial class AnalyzeUsageDetails
     {
         internal AnalyzeUsageDetails() { }
@@ -157,6 +182,19 @@ namespace Azure.AI.ContentUnderstanding
         public static bool operator !=(Azure.AI.ContentUnderstanding.ChartFormat left, Azure.AI.ContentUnderstanding.ChartFormat right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public abstract partial class ChunkingStrategy : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.ChunkingStrategy>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.ChunkingStrategy>
+    {
+        internal ChunkingStrategy() { }
+        protected virtual Azure.AI.ContentUnderstanding.ChunkingStrategy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.ContentUnderstanding.ChunkingStrategy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.ContentUnderstanding.ChunkingStrategy System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.ChunkingStrategy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.ChunkingStrategy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentUnderstanding.ChunkingStrategy System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.ChunkingStrategy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.ChunkingStrategy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.ChunkingStrategy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ContentAnalyzer : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.ContentAnalyzer>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.ContentAnalyzer>
     {
         public ContentAnalyzer() { }
@@ -190,8 +228,11 @@ namespace Azure.AI.ContentUnderstanding
     public partial class ContentAnalyzerConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.ContentAnalyzerConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.ContentAnalyzerConfig>
     {
         public ContentAnalyzerConfig() { }
+        public bool? AllowInPageSegments { get { throw null; } set { } }
+        public bool? AllowInputTruncation { get { throw null; } set { } }
         public Azure.AI.ContentUnderstanding.AnnotationFormat? AnnotationFormat { get { throw null; } set { } }
         public Azure.AI.ContentUnderstanding.ChartFormat? ChartFormat { get { throw null; } set { } }
+        public Azure.AI.ContentUnderstanding.ChunkingStrategy ChunkingStrategy { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.AI.ContentUnderstanding.ContentCategoryDefinition> ContentCategories { get { throw null; } }
         public bool? DisableFaceBlurring { get { throw null; } set { } }
         public bool? EnableFigureAnalysis { get { throw null; } set { } }
@@ -206,6 +247,7 @@ namespace Azure.AI.ContentUnderstanding
         public bool? ShouldOmitContent { get { throw null; } set { } }
         public bool? ShouldReturnDetails { get { throw null; } set { } }
         public Azure.AI.ContentUnderstanding.TableFormat? TableFormat { get { throw null; } set { } }
+        public Azure.AI.ContentUnderstanding.ContentAnalyzerWorkflow? Workflow { get { throw null; } set { } }
         protected virtual Azure.AI.ContentUnderstanding.ContentAnalyzerConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.ContentUnderstanding.ContentAnalyzerConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -233,6 +275,23 @@ namespace Azure.AI.ContentUnderstanding
         public static implicit operator Azure.AI.ContentUnderstanding.ContentAnalyzerStatus (string value) { throw null; }
         public static implicit operator Azure.AI.ContentUnderstanding.ContentAnalyzerStatus? (string value) { throw null; }
         public static bool operator !=(Azure.AI.ContentUnderstanding.ContentAnalyzerStatus left, Azure.AI.ContentUnderstanding.ContentAnalyzerStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContentAnalyzerWorkflow : System.IEquatable<Azure.AI.ContentUnderstanding.ContentAnalyzerWorkflow>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContentAnalyzerWorkflow(string value) { throw null; }
+        public static Azure.AI.ContentUnderstanding.ContentAnalyzerWorkflow Agentic { get { throw null; } }
+        public static Azure.AI.ContentUnderstanding.ContentAnalyzerWorkflow Default { get { throw null; } }
+        public bool Equals(Azure.AI.ContentUnderstanding.ContentAnalyzerWorkflow other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.ContentUnderstanding.ContentAnalyzerWorkflow left, Azure.AI.ContentUnderstanding.ContentAnalyzerWorkflow right) { throw null; }
+        public static implicit operator Azure.AI.ContentUnderstanding.ContentAnalyzerWorkflow (string value) { throw null; }
+        public static implicit operator Azure.AI.ContentUnderstanding.ContentAnalyzerWorkflow? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.ContentUnderstanding.ContentAnalyzerWorkflow left, Azure.AI.ContentUnderstanding.ContentAnalyzerWorkflow right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ContentArrayField : Azure.AI.ContentUnderstanding.ContentField, System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.ContentArrayField>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.ContentArrayField>
@@ -520,14 +579,36 @@ namespace Azure.AI.ContentUnderstanding
         public ContentUnderstandingClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public ContentUnderstandingClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.ContentUnderstanding.ContentUnderstandingClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Operation<System.BinaryData> Analyze(Azure.WaitUntil waitUntil, string analyzerId, Azure.Core.RequestContent content, string stringEncoding = null, string processingLocation = null, System.Guid? clientRequestId = default(System.Guid?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<Azure.AI.ContentUnderstanding.AnalysisResult> Analyze(Azure.WaitUntil waitUntil, Azure.AI.ContentUnderstanding.AnalyzeOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> Analyze(Azure.WaitUntil waitUntil, string analyzerId, Azure.Core.RequestContent content, string stringEncoding = null, string processingLocation = null, bool? allowInputTruncation = default(bool?), System.Guid? clientRequestId = default(System.Guid?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> Analyze(Azure.WaitUntil waitUntil, string analyzerId, Azure.Core.RequestContent content, string stringEncoding, string processingLocation, System.Guid? clientRequestId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Operation<Azure.AI.ContentUnderstanding.AnalysisResult> Analyze(Azure.WaitUntil waitUntil, string analyzerId, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.AnalysisInput> inputs, System.Collections.Generic.IDictionary<string, string>? modelDeployments = null, Azure.AI.ContentUnderstanding.ProcessingLocation? processingLocation = default(Azure.AI.ContentUnderstanding.ProcessingLocation?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> AnalyzeAsync(Azure.WaitUntil waitUntil, string analyzerId, Azure.Core.RequestContent content, string stringEncoding = null, string processingLocation = null, System.Guid? clientRequestId = default(System.Guid?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.ContentUnderstanding.AnalysisResult>> AnalyzeAsync(Azure.WaitUntil waitUntil, Azure.AI.ContentUnderstanding.AnalyzeOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> AnalyzeAsync(Azure.WaitUntil waitUntil, string analyzerId, Azure.Core.RequestContent content, string stringEncoding = null, string processingLocation = null, bool? allowInputTruncation = default(bool?), System.Guid? clientRequestId = default(System.Guid?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> AnalyzeAsync(Azure.WaitUntil waitUntil, string analyzerId, Azure.Core.RequestContent content, string stringEncoding, string processingLocation, System.Guid? clientRequestId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.ContentUnderstanding.AnalysisResult>> AnalyzeAsync(Azure.WaitUntil waitUntil, string analyzerId, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.AnalysisInput> inputs, System.Collections.Generic.IDictionary<string, string>? modelDeployments = null, Azure.AI.ContentUnderstanding.ProcessingLocation? processingLocation = default(Azure.AI.ContentUnderstanding.ProcessingLocation?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<Azure.AI.ContentUnderstanding.AnalysisResult> AnalyzeBinary(Azure.WaitUntil waitUntil, Azure.AI.ContentUnderstanding.AnalyzeBinaryOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation<Azure.AI.ContentUnderstanding.AnalysisResult> AnalyzeBinary(Azure.WaitUntil waitUntil, string analyzerId, System.BinaryData binaryInput, Azure.AI.ContentUnderstanding.ContentRange? contentRange = default(Azure.AI.ContentUnderstanding.ContentRange?), string? contentType = null, Azure.AI.ContentUnderstanding.ProcessingLocation? processingLocation = default(Azure.AI.ContentUnderstanding.ProcessingLocation?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> AnalyzeBinary(Azure.WaitUntil waitUntil, string analyzerId, string contentType, Azure.Core.RequestContent content, string stringEncoding = null, string processingLocation = null, string contentRange = null, System.Guid? clientRequestId = default(System.Guid?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> AnalyzeBinary(Azure.WaitUntil waitUntil, string analyzerId, string contentType, Azure.Core.RequestContent content, string stringEncoding = null, string processingLocation = null, bool? allowInputTruncation = default(bool?), string contentRange = null, System.Guid? clientRequestId = default(System.Guid?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> AnalyzeBinary(Azure.WaitUntil waitUntil, string analyzerId, string contentType, Azure.Core.RequestContent content, string stringEncoding, string processingLocation, string contentRange, System.Guid? clientRequestId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.ContentUnderstanding.AnalysisResult>> AnalyzeBinaryAsync(Azure.WaitUntil waitUntil, Azure.AI.ContentUnderstanding.AnalyzeBinaryOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.ContentUnderstanding.AnalysisResult>> AnalyzeBinaryAsync(Azure.WaitUntil waitUntil, string analyzerId, System.BinaryData binaryInput, Azure.AI.ContentUnderstanding.ContentRange? contentRange = default(Azure.AI.ContentUnderstanding.ContentRange?), string? contentType = null, Azure.AI.ContentUnderstanding.ProcessingLocation? processingLocation = default(Azure.AI.ContentUnderstanding.ProcessingLocation?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> AnalyzeBinaryAsync(Azure.WaitUntil waitUntil, string analyzerId, string contentType, Azure.Core.RequestContent content, string stringEncoding = null, string processingLocation = null, string contentRange = null, System.Guid? clientRequestId = default(System.Guid?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> AnalyzeBinaryAsync(Azure.WaitUntil waitUntil, string analyzerId, string contentType, Azure.Core.RequestContent content, string stringEncoding = null, string processingLocation = null, bool? allowInputTruncation = default(bool?), string contentRange = null, System.Guid? clientRequestId = default(System.Guid?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> AnalyzeBinaryAsync(Azure.WaitUntil waitUntil, string analyzerId, string contentType, Azure.Core.RequestContent content, string stringEncoding, string processingLocation, string contentRange, System.Guid? clientRequestId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<Azure.AI.ContentUnderstanding.AnalysisResult> AnalyzeBinaryInline(Azure.AI.ContentUnderstanding.AnalyzeBinaryOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response AnalyzeBinaryInline(string analyzerId, Azure.Core.RequestContent content, string contentType, string stringEncoding = null, string processingLocation = null, bool? allowInputTruncation = default(bool?), string contentRange = null, System.Guid? clientRequestId = default(System.Guid?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response AnalyzeBinaryInline(string analyzerId, Azure.Core.RequestContent content, string contentType, string stringEncoding, string processingLocation, string contentRange, System.Guid? clientRequestId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<Azure.AI.ContentUnderstanding.AnalysisResult> AnalyzeBinaryInline(string analyzerId, System.BinaryData binaryInput, Azure.AI.ContentUnderstanding.ContentRange? contentRange = default(Azure.AI.ContentUnderstanding.ContentRange?), string? contentType = null, Azure.AI.ContentUnderstanding.ProcessingLocation? processingLocation = default(Azure.AI.ContentUnderstanding.ProcessingLocation?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.ContentUnderstanding.AnalysisResult>> AnalyzeBinaryInlineAsync(Azure.AI.ContentUnderstanding.AnalyzeBinaryOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> AnalyzeBinaryInlineAsync(string analyzerId, Azure.Core.RequestContent content, string contentType, string stringEncoding = null, string processingLocation = null, bool? allowInputTruncation = default(bool?), string contentRange = null, System.Guid? clientRequestId = default(System.Guid?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> AnalyzeBinaryInlineAsync(string analyzerId, Azure.Core.RequestContent content, string contentType, string stringEncoding, string processingLocation, string contentRange, System.Guid? clientRequestId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.ContentUnderstanding.AnalysisResult>> AnalyzeBinaryInlineAsync(string analyzerId, System.BinaryData binaryInput, Azure.AI.ContentUnderstanding.ContentRange? contentRange = default(Azure.AI.ContentUnderstanding.ContentRange?), string? contentType = null, Azure.AI.ContentUnderstanding.ProcessingLocation? processingLocation = default(Azure.AI.ContentUnderstanding.ProcessingLocation?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.ContentUnderstanding.AnalysisResult> AnalyzeInline(Azure.AI.ContentUnderstanding.AnalyzeOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response AnalyzeInline(string analyzerId, Azure.Core.RequestContent content, string stringEncoding = null, string processingLocation = null, bool? allowInputTruncation = default(bool?), System.Guid? clientRequestId = default(System.Guid?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.AI.ContentUnderstanding.AnalysisResult> AnalyzeInline(string analyzerId, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.AnalysisInput> inputs, System.Collections.Generic.IDictionary<string, string>? modelDeployments = null, Azure.AI.ContentUnderstanding.ProcessingLocation? processingLocation = default(Azure.AI.ContentUnderstanding.ProcessingLocation?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.ContentUnderstanding.AnalysisResult>> AnalyzeInlineAsync(Azure.AI.ContentUnderstanding.AnalyzeOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> AnalyzeInlineAsync(string analyzerId, Azure.Core.RequestContent content, string stringEncoding = null, string processingLocation = null, bool? allowInputTruncation = default(bool?), System.Guid? clientRequestId = default(System.Guid?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.ContentUnderstanding.AnalysisResult>> AnalyzeInlineAsync(string analyzerId, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.AnalysisInput> inputs, System.Collections.Generic.IDictionary<string, string>? modelDeployments = null, Azure.AI.ContentUnderstanding.ProcessingLocation? processingLocation = default(Azure.AI.ContentUnderstanding.ProcessingLocation?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation<System.BinaryData> CopyAnalyzer(Azure.WaitUntil waitUntil, string analyzerId, Azure.Core.RequestContent content, bool? allowReplace = default(bool?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation<Azure.AI.ContentUnderstanding.ContentAnalyzer> CopyAnalyzer(Azure.WaitUntil waitUntil, string analyzerId, string sourceAnalyzerId, string sourceAzureResourceId = null, string sourceRegion = null, bool? allowReplace = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CopyAnalyzerAsync(Azure.WaitUntil waitUntil, string analyzerId, Azure.Core.RequestContent content, bool? allowReplace = default(bool?), Azure.RequestContext context = null) { throw null; }
@@ -582,10 +663,11 @@ namespace Azure.AI.ContentUnderstanding
     }
     public partial class ContentUnderstandingClientOptions : Azure.Core.ClientOptions
     {
-        public ContentUnderstandingClientOptions(Azure.AI.ContentUnderstanding.ContentUnderstandingClientOptions.ServiceVersion version = Azure.AI.ContentUnderstanding.ContentUnderstandingClientOptions.ServiceVersion.V2025_11_01) { }
+        public ContentUnderstandingClientOptions(Azure.AI.ContentUnderstanding.ContentUnderstandingClientOptions.ServiceVersion version = Azure.AI.ContentUnderstanding.ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview) { }
         public enum ServiceVersion
         {
             V2025_11_01 = 1,
+            V2026_06_01_Preview = 2,
         }
     }
     public partial class ContentUnderstandingClientSettings : System.ClientModel.Primitives.ClientSettings
@@ -612,14 +694,20 @@ namespace Azure.AI.ContentUnderstanding
     }
     public static partial class ContentUnderstandingModelFactory
     {
-        public static Azure.AI.ContentUnderstanding.AnalysisContent AnalysisContent(string kind = null, string mimeType = null, string analyzerId = null, string category = null, string path = null, string markdown = null, System.Collections.Generic.IDictionary<string, Azure.AI.ContentUnderstanding.ContentField> fields = null) { throw null; }
+        public static Azure.AI.ContentUnderstanding.AnalysisContent AnalysisContent(string? kind, string? mimeType, string? analyzerId, string? category, string? path, string? markdown, System.Collections.Generic.IDictionary<string, Azure.AI.ContentUnderstanding.ContentField>? fields) { throw null; }
+        public static Azure.AI.ContentUnderstanding.AnalysisContent AnalysisContent(string kind = null, string mimeType = null, string analyzerId = null, string category = null, string path = null, string markdown = null, System.Collections.Generic.IDictionary<string, Azure.AI.ContentUnderstanding.ContentField> fields = null, System.Collections.Generic.IDictionary<string, string> metadata = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.AnalysisInput AnalysisInput(System.Uri uri = null, System.BinaryData data = null, string name = null, string mimeType = null, string contentRangeValue = null) { throw null; }
-        public static Azure.AI.ContentUnderstanding.AnalysisResult AnalysisResult(string analyzerId = null, string apiVersion = null, System.DateTimeOffset? createdAt = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, string stringEncoding = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.AnalysisContent> contents = null) { throw null; }
+        public static Azure.AI.ContentUnderstanding.AnalysisResult AnalysisResult(string analyzerId = null, string apiVersion = null, System.DateTimeOffset? createdAt = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, System.Collections.Generic.IEnumerable<Azure.ResponseError> infos = null, string stringEncoding = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.AnalysisContent> contents = null) { throw null; }
+        public static Azure.AI.ContentUnderstanding.AnalysisResult AnalysisResult(string analyzerId, string apiVersion, System.DateTimeOffset? createdAt, System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings, string stringEncoding, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.AnalysisContent> contents) { throw null; }
+        [System.ObsoleteAttribute("Use ContentUnderstandingModelFactory.UsageDetails instead.")]
         public static Azure.AI.ContentUnderstanding.AnalyzeUsageDetails AnalyzeUsageDetails(int? documentPagesMinimal = default(int?), int? documentPagesBasic = default(int?), int? documentPagesStandard = default(int?), float? audioHours = default(float?), float? videoHours = default(float?), int? contextualizationTokens = default(int?), System.Collections.Generic.IDictionary<string, int>? tokens = null) { throw null; }
-        public static Azure.AI.ContentUnderstanding.AudioVisualContent AudioVisualContent(string mimeType = null, string analyzerId = null, string category = null, string path = null, string markdown = null, System.Collections.Generic.IDictionary<string, Azure.AI.ContentUnderstanding.ContentField> fields = null, long startTimeMsValue = (long)0, long endTimeMsValue = (long)0, int? width = default(int?), int? height = default(int?), System.Collections.Generic.IEnumerable<long> cameraShotTimesMsValues = null, System.Collections.Generic.IEnumerable<long> keyFrameTimesMsValues = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.TranscriptPhrase> transcriptPhrases = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.AudioVisualContentSegment> segments = null) { throw null; }
+        public static Azure.AI.ContentUnderstanding.AudioVisualContent AudioVisualContent(string mimeType = null, string analyzerId = null, string category = null, string path = null, string markdown = null, System.Collections.Generic.IDictionary<string, Azure.AI.ContentUnderstanding.ContentField> fields = null, System.Collections.Generic.IDictionary<string, string> metadata = null, long startTimeMsValue = (long)0, long endTimeMsValue = (long)0, int? width = default(int?), int? height = default(int?), System.Collections.Generic.IEnumerable<long> cameraShotTimesMsValues = null, System.Collections.Generic.IEnumerable<long> keyFrameTimesMsValues = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.TranscriptPhrase> transcriptPhrases = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.AudioVisualContentSegment> segments = null) { throw null; }
+        public static Azure.AI.ContentUnderstanding.AudioVisualContent AudioVisualContent(string mimeType, string analyzerId, string category, string path, string markdown, System.Collections.Generic.IDictionary<string, Azure.AI.ContentUnderstanding.ContentField> fields, long startTimeMsValue, long endTimeMsValue, int? width, int? height, System.Collections.Generic.IEnumerable<long> cameraShotTimesMsValues, System.Collections.Generic.IEnumerable<long> keyFrameTimesMsValues, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.TranscriptPhrase> transcriptPhrases, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.AudioVisualContentSegment> segments) { throw null; }
         public static Azure.AI.ContentUnderstanding.AudioVisualContentSegment AudioVisualContentSegment(string segmentId = null, string category = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, long startTimeMsValue = (long)0, long endTimeMsValue = (long)0) { throw null; }
+        public static Azure.AI.ContentUnderstanding.ChunkingStrategy ChunkingStrategy(string kind = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.ContentAnalyzer ContentAnalyzer(string analyzerId = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.AI.ContentUnderstanding.ContentAnalyzerStatus status = default(Azure.AI.ContentUnderstanding.ContentAnalyzerStatus), System.DateTimeOffset createdAt = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedAt = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.ResponseError> warnings = null, string baseAnalyzerId = null, Azure.AI.ContentUnderstanding.ContentAnalyzerConfig config = null, Azure.AI.ContentUnderstanding.ContentFieldSchema fieldSchema = null, bool? hasDynamicFieldSchema = default(bool?), Azure.AI.ContentUnderstanding.ProcessingLocation? processingLocation = default(Azure.AI.ContentUnderstanding.ProcessingLocation?), System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.KnowledgeSource> knowledgeSources = null, System.Collections.Generic.IDictionary<string, string> models = null, Azure.AI.ContentUnderstanding.SupportedModels supportedModels = null) { throw null; }
-        public static Azure.AI.ContentUnderstanding.ContentAnalyzerConfig ContentAnalyzerConfig(bool? shouldReturnDetails = default(bool?), System.Collections.Generic.IEnumerable<string> locales = null, bool? enableOcr = default(bool?), bool? enableLayout = default(bool?), bool? enableFigureDescription = default(bool?), bool? enableFigureAnalysis = default(bool?), bool? enableFormula = default(bool?), Azure.AI.ContentUnderstanding.TableFormat? tableFormat = default(Azure.AI.ContentUnderstanding.TableFormat?), Azure.AI.ContentUnderstanding.ChartFormat? chartFormat = default(Azure.AI.ContentUnderstanding.ChartFormat?), Azure.AI.ContentUnderstanding.AnnotationFormat? annotationFormat = default(Azure.AI.ContentUnderstanding.AnnotationFormat?), bool? disableFaceBlurring = default(bool?), bool? estimateFieldSourceAndConfidence = default(bool?), System.Collections.Generic.IDictionary<string, Azure.AI.ContentUnderstanding.ContentCategoryDefinition> contentCategories = null, bool? enableSegment = default(bool?), bool? segmentPerPage = default(bool?), bool? shouldOmitContent = default(bool?)) { throw null; }
+        public static Azure.AI.ContentUnderstanding.ContentAnalyzerConfig ContentAnalyzerConfig(bool? shouldReturnDetails, System.Collections.Generic.IEnumerable<string> locales, bool? enableOcr, bool? enableLayout, bool? enableFigureDescription, bool? enableFigureAnalysis, bool? enableFormula, Azure.AI.ContentUnderstanding.TableFormat? tableFormat, Azure.AI.ContentUnderstanding.ChartFormat? chartFormat, Azure.AI.ContentUnderstanding.AnnotationFormat? annotationFormat, bool? disableFaceBlurring, bool? estimateFieldSourceAndConfidence, System.Collections.Generic.IDictionary<string, Azure.AI.ContentUnderstanding.ContentCategoryDefinition> contentCategories, bool? enableSegment, bool? segmentPerPage, bool? shouldOmitContent) { throw null; }
+        public static Azure.AI.ContentUnderstanding.ContentAnalyzerConfig ContentAnalyzerConfig(bool? shouldReturnDetails = default(bool?), System.Collections.Generic.IEnumerable<string> locales = null, bool? enableOcr = default(bool?), bool? enableLayout = default(bool?), bool? enableFigureDescription = default(bool?), bool? enableFigureAnalysis = default(bool?), bool? enableFormula = default(bool?), Azure.AI.ContentUnderstanding.TableFormat? tableFormat = default(Azure.AI.ContentUnderstanding.TableFormat?), Azure.AI.ContentUnderstanding.ChartFormat? chartFormat = default(Azure.AI.ContentUnderstanding.ChartFormat?), Azure.AI.ContentUnderstanding.AnnotationFormat? annotationFormat = default(Azure.AI.ContentUnderstanding.AnnotationFormat?), bool? disableFaceBlurring = default(bool?), bool? estimateFieldSourceAndConfidence = default(bool?), System.Collections.Generic.IDictionary<string, Azure.AI.ContentUnderstanding.ContentCategoryDefinition> contentCategories = null, bool? enableSegment = default(bool?), bool? segmentPerPage = default(bool?), bool? shouldOmitContent = default(bool?), Azure.AI.ContentUnderstanding.ContentAnalyzerWorkflow? workflow = default(Azure.AI.ContentUnderstanding.ContentAnalyzerWorkflow?), bool? allowInputTruncation = default(bool?), bool? allowInPageSegments = default(bool?), Azure.AI.ContentUnderstanding.ChunkingStrategy chunkingStrategy = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.ContentArrayField ContentArrayField(System.Collections.Generic.IList<Azure.AI.ContentUnderstanding.ContentField>? value = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.ContentSpan>? spans = null, float? confidence = default(float?), string? source = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.ContentBooleanField ContentBooleanField(bool? value = default(bool?), System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.ContentSpan>? spans = null, float? confidence = default(float?), string? source = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.ContentCategoryDefinition ContentCategoryDefinition(string description = null, string analyzerId = null, Azure.AI.ContentUnderstanding.ContentAnalyzer analyzer = null) { throw null; }
@@ -641,8 +729,11 @@ namespace Azure.AI.ContentUnderstanding
         public static Azure.AI.ContentUnderstanding.DocumentBarcode DocumentBarcode(Azure.AI.ContentUnderstanding.DocumentBarcodeKind kind = default(Azure.AI.ContentUnderstanding.DocumentBarcodeKind), string value = null, string source = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, float? confidence = default(float?)) { throw null; }
         public static Azure.AI.ContentUnderstanding.DocumentCaption DocumentCaption(string content = null, string source = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, System.Collections.Generic.IEnumerable<string> elements = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.DocumentChartFigure DocumentChartFigure(string id = null, string source = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, System.Collections.Generic.IEnumerable<string> elements = null, Azure.AI.ContentUnderstanding.DocumentCaption caption = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentFootnote> footnotes = null, string description = null, Azure.AI.ContentUnderstanding.SemanticRole? role = default(Azure.AI.ContentUnderstanding.SemanticRole?), System.Collections.Generic.IDictionary<string, System.BinaryData> content = null) { throw null; }
-        public static Azure.AI.ContentUnderstanding.DocumentContent DocumentContent(string mimeType = null, string analyzerId = null, string category = null, string path = null, string markdown = null, System.Collections.Generic.IDictionary<string, Azure.AI.ContentUnderstanding.ContentField> fields = null, int startPageNumber = 0, int endPageNumber = 0, Azure.AI.ContentUnderstanding.LengthUnit? unit = default(Azure.AI.ContentUnderstanding.LengthUnit?), System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentPage> pages = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentParagraph> paragraphs = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentSection> sections = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentTable> tables = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentFigure> figures = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentAnnotation> annotations = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentHyperlink> hyperlinks = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentContentSegment> segments = null) { throw null; }
-        public static Azure.AI.ContentUnderstanding.DocumentContentSegment DocumentContentSegment(string segmentId = null, string category = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, int startPageNumber = 0, int endPageNumber = 0) { throw null; }
+        public static Azure.AI.ContentUnderstanding.DocumentChunk DocumentChunk(System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.ContentSpan> spans = null, string source = null) { throw null; }
+        public static Azure.AI.ContentUnderstanding.DocumentContent DocumentContent(string mimeType = null, string analyzerId = null, string category = null, string path = null, string markdown = null, System.Collections.Generic.IDictionary<string, Azure.AI.ContentUnderstanding.ContentField> fields = null, System.Collections.Generic.IDictionary<string, string> metadata = null, int startPageNumber = 0, int endPageNumber = 0, Azure.AI.ContentUnderstanding.LengthUnit? unit = default(Azure.AI.ContentUnderstanding.LengthUnit?), System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentPage> pages = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentParagraph> paragraphs = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentSection> sections = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentTable> tables = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentFigure> figures = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentAnnotation> annotations = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentSignature> signatures = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentHyperlink> hyperlinks = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentContentSegment> segments = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentChunk> chunks = null) { throw null; }
+        public static Azure.AI.ContentUnderstanding.DocumentContent DocumentContent(string mimeType, string analyzerId, string category, string path, string markdown, System.Collections.Generic.IDictionary<string, Azure.AI.ContentUnderstanding.ContentField> fields, int startPageNumber, int endPageNumber, Azure.AI.ContentUnderstanding.LengthUnit? unit, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentPage> pages, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentParagraph> paragraphs, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentSection> sections, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentTable> tables, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentFigure> figures, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentAnnotation> annotations, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentHyperlink> hyperlinks, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentContentSegment> segments) { throw null; }
+        public static Azure.AI.ContentUnderstanding.DocumentContentSegment DocumentContentSegment(string segmentId, string category, Azure.AI.ContentUnderstanding.ContentSpan span, int startPageNumber, int endPageNumber) { throw null; }
+        public static Azure.AI.ContentUnderstanding.DocumentContentSegment DocumentContentSegment(string segmentId = null, string category = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, int startPageNumber = 0, int endPageNumber = 0, float? confidence = default(float?), string source = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.DocumentFigure DocumentFigure(string kind = null, string id = null, string source = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, System.Collections.Generic.IEnumerable<string> elements = null, Azure.AI.ContentUnderstanding.DocumentCaption caption = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentFootnote> footnotes = null, string description = null, Azure.AI.ContentUnderstanding.SemanticRole? role = default(Azure.AI.ContentUnderstanding.SemanticRole?)) { throw null; }
         public static Azure.AI.ContentUnderstanding.DocumentFootnote DocumentFootnote(string content = null, string source = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, System.Collections.Generic.IEnumerable<string> elements = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.DocumentFormula DocumentFormula(Azure.AI.ContentUnderstanding.DocumentFormulaKind kind = default(Azure.AI.ContentUnderstanding.DocumentFormulaKind), string value = null, string source = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, float? confidence = default(float?)) { throw null; }
@@ -652,14 +743,17 @@ namespace Azure.AI.ContentUnderstanding
         public static Azure.AI.ContentUnderstanding.DocumentPage DocumentPage(int pageNumber = 0, float? width = default(float?), float? height = default(float?), System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.ContentSpan> spans = null, float? angle = default(float?), System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentWord> words = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentLine> lines = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentBarcode> barcodes = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentFormula> formulas = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.DocumentParagraph DocumentParagraph(Azure.AI.ContentUnderstanding.SemanticRole? role = default(Azure.AI.ContentUnderstanding.SemanticRole?), string content = null, string source = null, Azure.AI.ContentUnderstanding.ContentSpan span = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.DocumentSection DocumentSection(Azure.AI.ContentUnderstanding.ContentSpan span = null, System.Collections.Generic.IEnumerable<string> elements = null) { throw null; }
+        public static Azure.AI.ContentUnderstanding.DocumentSignature DocumentSignature(string id = null, string source = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, System.Collections.Generic.IEnumerable<string> elements = null, Azure.AI.ContentUnderstanding.SemanticRole? role = default(Azure.AI.ContentUnderstanding.SemanticRole?)) { throw null; }
         public static Azure.AI.ContentUnderstanding.DocumentTable DocumentTable(int rowCount = 0, int columnCount = 0, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentTableCell> cells = null, string source = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, Azure.AI.ContentUnderstanding.DocumentCaption caption = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentFootnote> footnotes = null, Azure.AI.ContentUnderstanding.SemanticRole? role = default(Azure.AI.ContentUnderstanding.SemanticRole?)) { throw null; }
         public static Azure.AI.ContentUnderstanding.DocumentTableCell DocumentTableCell(Azure.AI.ContentUnderstanding.DocumentTableCellKind? kind = default(Azure.AI.ContentUnderstanding.DocumentTableCellKind?), int rowIndex = 0, int columnIndex = 0, int? rowSpan = default(int?), int? columnSpan = default(int?), string content = null, string source = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, System.Collections.Generic.IEnumerable<string> elements = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.DocumentWord DocumentWord(string content = null, string source = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, float? confidence = default(float?)) { throw null; }
         public static Azure.AI.ContentUnderstanding.KnowledgeSource KnowledgeSource(string kind = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource LabeledDataKnowledgeSource(System.Uri containerUri = null, string prefix = null, string fileListPath = null) { throw null; }
+        public static Azure.AI.ContentUnderstanding.SemanticChunkingStrategy SemanticChunkingStrategy(int? maxTokens = default(int?)) { throw null; }
         public static Azure.AI.ContentUnderstanding.SupportedModels SupportedModels(System.Collections.Generic.IEnumerable<string> completion = null, System.Collections.Generic.IEnumerable<string> embedding = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.TranscriptPhrase TranscriptPhrase(string speaker = null, long startTimeMsValue = (long)0, long endTimeMsValue = (long)0, string locale = null, string text = null, float? confidence = default(float?), Azure.AI.ContentUnderstanding.ContentSpan span = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.TranscriptWord> words = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.TranscriptWord TranscriptWord(long startTimeMsValue = (long)0, long endTimeMsValue = (long)0, string text = null, Azure.AI.ContentUnderstanding.ContentSpan span = null) { throw null; }
+        public static Azure.AI.ContentUnderstanding.UsageDetails UsageDetails(int? documentPagesMinimal = default(int?), int? documentPagesBasic = default(int?), int? documentPagesStandard = default(int?), int? documentPagesMinimalInline = default(int?), int? documentPagesBasicInline = default(int?), int? documentPagesStandardInline = default(int?), float? audioHours = default(float?), float? videoHours = default(float?), int? contextualizationTokens = default(int?), int? advancedContextualizationTokens = default(int?), System.Collections.Generic.IDictionary<string, int> tokens = null) { throw null; }
     }
     public partial class CopyAuthorization : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.CopyAuthorization>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.CopyAuthorization>
     {
@@ -821,10 +915,26 @@ namespace Azure.AI.ContentUnderstanding
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.DocumentChartFigure>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.DocumentChartFigure>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class DocumentChunk : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.DocumentChunk>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.DocumentChunk>
+    {
+        internal DocumentChunk() { }
+        public string Source { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.ContentUnderstanding.ContentSpan> Spans { get { throw null; } }
+        protected virtual Azure.AI.ContentUnderstanding.DocumentChunk JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.ContentUnderstanding.DocumentChunk PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.ContentUnderstanding.DocumentChunk System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.DocumentChunk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.DocumentChunk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentUnderstanding.DocumentChunk System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.DocumentChunk>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.DocumentChunk>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.DocumentChunk>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class DocumentContent : Azure.AI.ContentUnderstanding.AnalysisContent, System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.DocumentContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.DocumentContent>
     {
         internal DocumentContent() { }
         public System.Collections.Generic.IList<Azure.AI.ContentUnderstanding.DocumentAnnotation> Annotations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.ContentUnderstanding.DocumentChunk> Chunks { get { throw null; } }
         public int EndPageNumber { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.ContentUnderstanding.DocumentFigure> Figures { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.ContentUnderstanding.DocumentHyperlink> Hyperlinks { get { throw null; } }
@@ -832,6 +942,7 @@ namespace Azure.AI.ContentUnderstanding
         public System.Collections.Generic.IList<Azure.AI.ContentUnderstanding.DocumentParagraph> Paragraphs { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.ContentUnderstanding.DocumentSection> Sections { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.ContentUnderstanding.DocumentContentSegment> Segments { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.ContentUnderstanding.DocumentSignature> Signatures { get { throw null; } }
         public int StartPageNumber { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.ContentUnderstanding.DocumentTable> Tables { get { throw null; } }
         public Azure.AI.ContentUnderstanding.LengthUnit? Unit { get { throw null; } }
@@ -849,8 +960,10 @@ namespace Azure.AI.ContentUnderstanding
     {
         internal DocumentContentSegment() { }
         public string Category { get { throw null; } }
+        public float? Confidence { get { throw null; } }
         public int EndPageNumber { get { throw null; } }
         public string SegmentId { get { throw null; } }
+        public string Source { get { throw null; } }
         public Azure.AI.ContentUnderstanding.ContentSpan Span { get { throw null; } }
         public int StartPageNumber { get { throw null; } }
         protected virtual Azure.AI.ContentUnderstanding.DocumentContentSegment JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1037,6 +1150,24 @@ namespace Azure.AI.ContentUnderstanding
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.DocumentSection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.DocumentSection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class DocumentSignature : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.DocumentSignature>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.DocumentSignature>
+    {
+        internal DocumentSignature() { }
+        public System.Collections.Generic.IList<string> Elements { get { throw null; } }
+        public string Id { get { throw null; } }
+        public Azure.AI.ContentUnderstanding.SemanticRole? Role { get { throw null; } }
+        public string Source { get { throw null; } }
+        public Azure.AI.ContentUnderstanding.ContentSpan Span { get { throw null; } }
+        protected virtual Azure.AI.ContentUnderstanding.DocumentSignature JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.ContentUnderstanding.DocumentSignature PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.ContentUnderstanding.DocumentSignature System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.DocumentSignature>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.DocumentSignature>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentUnderstanding.DocumentSignature System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.DocumentSignature>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.DocumentSignature>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.DocumentSignature>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class DocumentSource : Azure.AI.ContentUnderstanding.ContentSource
     {
         internal DocumentSource() : base (default(string)) { }
@@ -1191,7 +1322,7 @@ namespace Azure.AI.ContentUnderstanding
     }
     public static partial class LlmInputHelper
     {
-        public static string ToLlmInput(this Azure.AI.ContentUnderstanding.AnalysisResult result, System.Collections.Generic.IDictionary<string, object>? metadata = null, Azure.AI.ContentUnderstanding.LlmInputOptions? options = null) { throw null; }
+        public static string ToLlmInput(this Azure.AI.ContentUnderstanding.AnalysisResult result, System.Collections.Generic.IDictionary<string, object>? customMetadata = null, Azure.AI.ContentUnderstanding.LlmInputOptions? options = null) { throw null; }
     }
     public partial class LlmInputOptions
     {
@@ -1216,6 +1347,20 @@ namespace Azure.AI.ContentUnderstanding
         public static implicit operator Azure.AI.ContentUnderstanding.ProcessingLocation? (string value) { throw null; }
         public static bool operator !=(Azure.AI.ContentUnderstanding.ProcessingLocation left, Azure.AI.ContentUnderstanding.ProcessingLocation right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class SemanticChunkingStrategy : Azure.AI.ContentUnderstanding.ChunkingStrategy, System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.SemanticChunkingStrategy>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.SemanticChunkingStrategy>
+    {
+        public SemanticChunkingStrategy() { }
+        public int? MaxTokens { get { throw null; } set { } }
+        protected override Azure.AI.ContentUnderstanding.ChunkingStrategy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.ContentUnderstanding.ChunkingStrategy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.ContentUnderstanding.SemanticChunkingStrategy System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.SemanticChunkingStrategy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.SemanticChunkingStrategy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentUnderstanding.SemanticChunkingStrategy System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.SemanticChunkingStrategy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.SemanticChunkingStrategy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.SemanticChunkingStrategy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SemanticRole : System.IEquatable<Azure.AI.ContentUnderstanding.SemanticRole>
@@ -1308,6 +1453,30 @@ namespace Azure.AI.ContentUnderstanding
         Azure.AI.ContentUnderstanding.TranscriptWord System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.TranscriptWord>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.TranscriptWord>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.TranscriptWord>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class UsageDetails : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.UsageDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.UsageDetails>
+    {
+        internal UsageDetails() { }
+        public int? AdvancedContextualizationTokens { get { throw null; } }
+        public float? AudioHours { get { throw null; } }
+        public int? ContextualizationTokens { get { throw null; } }
+        public int? DocumentPagesBasic { get { throw null; } }
+        public int? DocumentPagesBasicInline { get { throw null; } }
+        public int? DocumentPagesMinimal { get { throw null; } }
+        public int? DocumentPagesMinimalInline { get { throw null; } }
+        public int? DocumentPagesStandard { get { throw null; } }
+        public int? DocumentPagesStandardInline { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, int> Tokens { get { throw null; } }
+        public float? VideoHours { get { throw null; } }
+        protected virtual Azure.AI.ContentUnderstanding.UsageDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.ContentUnderstanding.UsageDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.ContentUnderstanding.UsageDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.UsageDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.UsageDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentUnderstanding.UsageDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.UsageDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.UsageDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.UsageDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Microsoft.Extensions.Azure

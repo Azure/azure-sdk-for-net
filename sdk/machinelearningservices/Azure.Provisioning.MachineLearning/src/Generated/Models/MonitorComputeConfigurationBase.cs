@@ -11,7 +11,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Monitor compute configuration base definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MonitorServerlessSparkCompute"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MonitorServerlessSparkCompute"/>.
     /// </summary>
     public partial class MonitorComputeConfigurationBase : ProvisionableConstruct
     {

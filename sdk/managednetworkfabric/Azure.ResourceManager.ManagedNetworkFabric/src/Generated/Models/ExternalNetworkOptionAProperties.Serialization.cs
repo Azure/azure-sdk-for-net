@@ -172,8 +172,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ResourceIdentifier egressAclId = default;
             NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = default;
             NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = default;
-            NativeIpv4PrefixLimitProperties nativeIPv4PrefixLimit = default;
-            NativeIpv6PrefixLimitProperties nativeIPv6PrefixLimit = default;
+            NativeIPv4PrefixLimitProperties nativeIPv4PrefixLimit = default;
+            NativeIPv6PrefixLimitProperties nativeIPv6PrefixLimit = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("primaryIpv4Prefix"u8))
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    nativeIPv4PrefixLimit = NativeIpv4PrefixLimitProperties.DeserializeNativeIpv4PrefixLimitProperties(prop.Value, options);
+                    nativeIPv4PrefixLimit = NativeIPv4PrefixLimitProperties.DeserializeNativeIPv4PrefixLimitProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("nativeIpv6PrefixLimit"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    nativeIPv6PrefixLimit = NativeIpv6PrefixLimitProperties.DeserializeNativeIpv6PrefixLimitProperties(prop.Value, options);
+                    nativeIPv6PrefixLimit = NativeIPv6PrefixLimitProperties.DeserializeNativeIPv6PrefixLimitProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

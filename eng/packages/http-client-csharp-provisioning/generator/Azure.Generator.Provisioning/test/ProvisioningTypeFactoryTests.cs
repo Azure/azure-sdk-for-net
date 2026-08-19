@@ -251,7 +251,7 @@ namespace Azure.Generator.Provisioning.Tests
             var provider = factory.CreateModel(baseModel);
 
             Assert.That(provider, Is.Not.Null);
-            Assert.That(provider!.Description.ToString(), Does.StartWith("Base model.\nPlease note this is the abstract base class."));
+            Assert.That(provider!.Description.ToString(), Does.StartWith("Base model.\nPlease note this is the base class."));
             Assert.That(provider.Description.ToString(), Does.Contain("FirstDerivedModel"));
             Assert.That(provider.Description.ToString(), Does.Contain("SecondDerivedModel"));
         }

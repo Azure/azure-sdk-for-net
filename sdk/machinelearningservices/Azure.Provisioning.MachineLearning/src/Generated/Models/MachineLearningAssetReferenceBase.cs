@@ -11,7 +11,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Base definition for asset references.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningIdAssetReference"/>, <see cref="MachineLearningDataPathAssetReference"/>, and <see cref="MachineLearningOutputPathAssetReference"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MachineLearningIdAssetReference"/>, <see cref="MachineLearningDataPathAssetReference"/>, and <see cref="MachineLearningOutputPathAssetReference"/>.
     /// </summary>
     public partial class MachineLearningAssetReferenceBase : ProvisionableConstruct
     {

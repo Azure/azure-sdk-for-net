@@ -13,6 +13,7 @@ using System.Transactions;
 using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.Shared;
+using Azure.Messaging.ServiceBus.Amqp.Framing;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Messaging.ServiceBus.Primitives;
@@ -41,6 +42,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <c>true</c> if the receiver is closed; otherwise, <c>false</c>.
         /// </value>
         public bool IsClosed => _closed;
+
+        static AmqpReceiver()
+        {
+            // The non-exclusive session filter is a described composite type that the service echoes back on the
+            // attach response, so it must be registered before any attach response is decoded.
+            AmqpCodec.RegisterKnownTypes(
+                AmqpNonExclusiveSessionFilterCodec.Name,
+                AmqpNonExclusiveSessionFilterCodec.Code,
+                () => new AmqpNonExclusiveSessionFilterCodec());
+        }
 
         private volatile bool _closed;
 
@@ -77,6 +88,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly bool _isSessionReceiver;
 
         /// <summary>
+        /// Indicates whether the session is locked exclusively. Only meaningful when <see cref="_isSessionReceiver"/> is <c>true</c>.
+        /// </summary>
+        private readonly bool _isSessionExclusive;
+
+        /// <summary>
+        /// The session lock token to present when cooperatively taking over a non-exclusive session, or <c>null</c>.
+        /// </summary>
+        private readonly Guid? _sessionLockTokenToPresent;
+
+        /// <summary>
         /// The AMQP connection scope responsible for managing transport constructs for this instance.
         /// </summary>
         ///
@@ -101,6 +122,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         public override string SessionId { get; protected set; }
         public override DateTimeOffset SessionLockedUntil { get; protected set; }
+        public override Guid? SessionLockToken { get; protected set; }
+        public override bool IsSessionExclusive => _isSessionExclusive;
+
+        /// <summary>
+        /// Indicates whether dispositions must be routed over the management link rather than the receive link. A
+        /// non-exclusive session can be taken over, after which the current holder settles messages that were
+        /// delivered to the previous holder's link and so have no delivery on its own link. Routing every disposition for
+        /// such a session over the management link keeps settlement working across a takeover, at the cost of a
+        /// request/response exchange on the shared management link per settlement rather than a disposition on the
+        /// receiver's own link.
+        /// </summary>
+        private bool UseRequestResponseDisposition => _isSessionReceiver && !_isSessionExclusive;
 
         public override int PrefetchCount
         {
@@ -150,6 +183,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver link.</param>
         /// <param name="isProcessor">Whether or not the receiver is being created for a processor.</param>
         /// <param name="messageConverter">The converter to use for translating <see cref="ServiceBusMessage" /> into an AMQP-specific message.</param>
+        /// <param name="isSessionExclusive">Whether or not the session is locked exclusively. Only applicable for session receivers.</param>
+        /// <param name="sessionLockToken">The session lock token to present when cooperatively taking over a non-exclusive session. Only applicable for session receivers.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the
         /// open link operation. Only applicable for session receivers.</param>
         ///
@@ -171,7 +206,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             bool isSessionReceiver,
             bool isProcessor,
             AmqpMessageConverter messageConverter,
-            CancellationToken cancellationToken)
+            bool isSessionExclusive = true,
+            Guid? sessionLockToken = null,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
@@ -181,6 +218,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _connectionScope = connectionScope;
             _retryPolicy = retryPolicy;
             _isSessionReceiver = isSessionReceiver;
+            _isSessionExclusive = isSessionExclusive;
+            _sessionLockTokenToPresent = sessionLockToken;
             _isProcessor = isProcessor;
             _receiveMode = receiveMode;
             _prefetchCount = (int)prefetchCount;
@@ -238,6 +277,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     receiveMode: receiveMode,
                     sessionId: SessionId,
                     isSessionReceiver: _isSessionReceiver,
+                    isSessionExclusive: _isSessionExclusive,
+                    sessionLockToken: _sessionLockTokenToPresent,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (_isSessionReceiver)
                 {
@@ -247,20 +288,52 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         : DateTime.MinValue;
 
                     var source = (Source)link.Settings.Source;
-                    if (!source.FilterSet.TryGetValue<string>(AmqpClientConstants.SessionFilterName, out var tempSessionId))
-                    {
-                        link.Session.SafeClose();
-                        throw new ServiceBusException(true, Resources.SessionFilterMissing);
-                    }
 
-                    if (tempSessionId == null)
+                    // A non-exclusive session is identified by the composite filter echoed back on attach, carrying
+                    // the assigned session id and lock token. An exclusive session (the default) is never assigned a
+                    // token, so SessionLockToken stays null and the session id comes from the standard session filter.
+                    if (!_isSessionExclusive)
                     {
-                        link.Session.SafeClose();
-                        throw new ServiceBusException(true, Resources.AmqpFieldSessionId);
+                        if (source.FilterSet.TryGetValue<AmqpNonExclusiveSessionFilterCodec>(
+                                AmqpClientConstants.NonExclusiveSessionFilterName, out var nonExclusiveFilter))
+                        {
+                            SessionLockToken = nonExclusiveFilter.LockToken;
+                            SessionId = nonExclusiveFilter.SessionId;
+                        }
+
+                        // An endpoint that honors the attach without assigning a lock token is not offering
+                        // non-exclusive session locking, so report it as unavailable rather than continuing without
+                        // the token. The catch below reports the other shape an unsupporting endpoint produces, a
+                        // refusal naming the filter, as this same exception, so callers have one contract for both.
+                        if (SessionLockToken == null)
+                        {
+                            link.Session.SafeClose();
+                            throw new NotSupportedException(Resources.NonExclusiveSessionModeNotSupported);
+                        }
+
+                        if (string.IsNullOrEmpty(SessionId))
+                        {
+                            link.Session.SafeClose();
+                            throw new ServiceBusException(true, Resources.AmqpFieldSessionId);
+                        }
                     }
-                    // This will only have changed if sessionId was left blank when constructing the session
-                    // receiver.
-                    SessionId = tempSessionId;
+                    else
+                    {
+                        if (!source.FilterSet.TryGetValue<string>(AmqpClientConstants.SessionFilterName, out var tempSessionId))
+                        {
+                            link.Session.SafeClose();
+                            throw new ServiceBusException(true, Resources.SessionFilterMissing);
+                        }
+
+                        if (tempSessionId == null)
+                        {
+                            link.Session.SafeClose();
+                            throw new ServiceBusException(true, Resources.AmqpFieldSessionId);
+                        }
+                        // This will only have changed if sessionId was left blank when constructing the session
+                        // receiver.
+                        SessionId = tempSessionId;
+                    }
                 }
                 ServiceBusEventSource.Log.CreateReceiveLinkComplete(Identifier, SessionId);
                 link.Closed += OnReceiverLinkClosed;
@@ -297,11 +370,85 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // do not log this as the processor is shutting down
                 throw;
             }
+            catch (AmqpException amqpException)
+                when (_isSessionReceiver && !_isSessionExclusive && IsUnrecognizedFilterRejection(amqpException))
+            {
+                // An endpoint without non-exclusive session locking refuses the attach naming the composite filter
+                // as one it does not recognize. Report that refusal as the same exception the missing-token guard
+                // above throws, so the two shapes an unsupporting endpoint produces - an attach it refuses, and an
+                // attach it honors without assigning a lock token - give a caller one exception to detect that the
+                // endpoint does not offer the feature. The original error is kept as the inner exception for
+                // diagnostics. This sees the endpoint's own error because the attach is issued outside the scope's
+                // translating catch; moving it inside would map the refusal before it arrives here.
+                ServiceBusEventSource.Log.CreateReceiveLinkException(Identifier, amqpException.ToString());
+                throw new NotSupportedException(Resources.NonExclusiveSessionModeNotSupported, amqpException);
+            }
             catch (Exception ex)
             {
                 ServiceBusEventSource.Log.CreateReceiveLinkException(Identifier, ex.ToString());
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Determines whether an attach failure was the endpoint declining a filter it does not recognize, which is
+        /// how an endpoint without non-exclusive session locking refuses the composite filter.
+        /// </summary>
+        ///
+        /// <param name="amqpException">The exception raised while attaching the link.</param>
+        ///
+        /// <returns><c>true</c> if the endpoint refused the filter; otherwise, <c>false</c>.</returns>
+        ///
+        /// <remarks>
+        /// Both the condition and the description are required to match. <see cref="AmqpErrorCode.NotAllowed" /> is a
+        /// general refusal rather than one reserved for this case, so the description is what identifies the refusal
+        /// as the endpoint declining the filter, and any other refusal carrying that condition keeps the exception it
+        /// maps to.
+        /// </remarks>
+        private static bool IsUnrecognizedFilterRejection(AmqpException amqpException) =>
+            amqpException.Error != null
+                && amqpException.Error.Condition.Equals(AmqpErrorCode.NotAllowed)
+                && DescribesUnrecognizedFilter(amqpException.Error.Description);
+
+        /// <summary>
+        /// Determines whether a refusal description names the filter as one the endpoint does not recognize,
+        /// considering only the portion the service authored.
+        /// </summary>
+        ///
+        /// <param name="description">The description carried by the endpoint's refusal.</param>
+        ///
+        /// <returns><c>true</c> if the description names an unrecognized filter; otherwise, <c>false</c>.</returns>
+        ///
+        /// <remarks>
+        /// The description quotes the link name before naming the filter, and that name renders the session id, which
+        /// the caller chooses and may itself contain quotes. Only the text after the final quote is searched: every
+        /// caller-supplied character sits inside the quoted name, so that text is beyond the caller's reach whatever
+        /// the session id holds. A description carrying no quote at all is not the refusal this looks for, and is left
+        /// alone rather than searched whole, which would put the session id back in reach. A quote in the text after
+        /// the name would begin the search past the filter text, so a reworded refusal reports the exception its
+        /// condition maps to, as <see cref="AmqpClientConstants.UnrecognizedFilterErrorFragment" /> describes.
+        /// </remarks>
+        private static bool DescribesUnrecognizedFilter(string description)
+        {
+            if (string.IsNullOrEmpty(description))
+            {
+                return false;
+            }
+
+            var lastQuoteIndex = description.LastIndexOf('\'');
+
+            if (lastQuoteIndex < 0)
+            {
+                return false;
+            }
+
+            var serviceAuthoredStart = lastQuoteIndex + 1;
+
+            return description.IndexOf(
+                AmqpClientConstants.UnrecognizedFilterErrorFragment,
+                serviceAuthoredStart,
+                description.Length - serviceAuthoredStart,
+                StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         /// <summary>
@@ -487,7 +634,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout)
         {
             ThrowIfSessionLockLost();
-            if (RequestResponseLockedMessages.Contains(lockToken))
+            if (UseRequestResponseDisposition || RequestResponseLockedMessages.Contains(lockToken))
             {
                 await DisposeMessageRequestResponseAsync(
                     lockToken,
@@ -654,7 +801,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             IDictionary<string, object> propertiesToModify = null)
         {
             ThrowIfSessionLockLost();
-            if (RequestResponseLockedMessages.Contains(lockToken))
+            if (UseRequestResponseDisposition || RequestResponseLockedMessages.Contains(lockToken))
             {
                 return DisposeMessageRequestResponseAsync(
                     lockToken,
@@ -716,7 +863,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             IDictionary<string, object> propertiesToModify = null)
         {
             ThrowIfSessionLockLost();
-            if (RequestResponseLockedMessages.Contains(lockToken))
+            if (UseRequestResponseDisposition || RequestResponseLockedMessages.Contains(lockToken))
             {
                 return DisposeMessageRequestResponseAsync(
                     lockToken,
@@ -793,7 +940,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Argument.AssertNotTooLong(deadLetterErrorDescription, Constants.MaxDeadLetterReasonLength, nameof(deadLetterErrorDescription));
             ThrowIfSessionLockLost();
 
-            if (RequestResponseLockedMessages.Contains(lockToken))
+            if (UseRequestResponseDisposition || RequestResponseLockedMessages.Contains(lockToken))
             {
                 return DisposeMessageRequestResponseAsync(
                     lockToken,

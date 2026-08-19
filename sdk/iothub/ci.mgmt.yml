@@ -10,3 +10,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.IotHub
       safeName: AzureResourceManagerIotHub
+    - name: Azure.Provisioning.IotHub
+      safeName: AzureProvisioningIotHub

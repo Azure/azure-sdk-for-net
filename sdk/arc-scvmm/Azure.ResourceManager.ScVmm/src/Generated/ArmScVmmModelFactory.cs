@@ -7,16 +7,786 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.ScVmm;
 
 namespace Azure.ResourceManager.ScVmm.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmScVmmModelFactory
     {
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="credentials"> Credentials to connect to VmmServer. </param>
+        /// <param name="fqdn"> Fqdn is the hostname/ip of the vmmServer. </param>
+        /// <param name="port"> Port is the port on which the vmmServer is listening. </param>
+        /// <param name="connectionStatus"> Gets the connection status to the vmmServer. </param>
+        /// <param name="errorMessage"> Gets any error message if connection to vmmServer is having any issue. </param>
+        /// <param name="uuid"> Unique ID of vmmServer. </param>
+        /// <param name="version"> Version is the version of the vmmSever. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="extendedLocation"> The extended location. </param>
+        /// <returns> A new <see cref="ScVmm.ScVmmServerData"/> instance for mocking. </returns>
+        public static ScVmmServerData ScVmmServerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VmmCredential credentials = default, string fqdn = default, int? port = default, string connectionStatus = default, string errorMessage = default, string uuid = default, string version = default, ScVmmProvisioningState? provisioningState = default, ExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ScVmmServerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                credentials is null && fqdn is null && port is null && connectionStatus is null && errorMessage is null && uuid is null && version is null && provisioningState is null ? default : new VmmServerProperties(
+                    credentials,
+                    fqdn,
+                    port,
+                    connectionStatus,
+                    errorMessage,
+                    uuid,
+                    version,
+                    provisioningState,
+                    default),
+                extendedLocation,
+                default);
+        }
+
+        /// <param name="username"> Username to use to connect to VmmServer. </param>
+        /// <param name="password"> Password to use to connect to VmmServer. </param>
+        /// <returns> A new <see cref="Models.VmmCredential"/> instance for mocking. </returns>
+        public static VmmCredential VmmCredential(string username = default, string password = default)
+        {
+            return new VmmCredential(username, password, default);
+        }
+
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.ScVmmResourcePatch"/> instance for mocking. </returns>
+        public static ScVmmResourcePatch ScVmmResourcePatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ScVmmResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="inventoryItemId"> Gets or sets the inventory Item ID for the resource. </param>
+        /// <param name="uuid"> Unique ID of the cloud. </param>
+        /// <param name="vmmServerId"> ARM Id of the vmmServer resource in which this resource resides. </param>
+        /// <param name="cloudName"> Name of the cloud in VmmServer. </param>
+        /// <param name="cloudCapacity"> Capacity of the cloud. </param>
+        /// <param name="storageQosPolicies"> List of QoS policies available for the cloud. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="extendedLocation"> The extended location. </param>
+        /// <returns> A new <see cref="ScVmm.ScVmmCloudData"/> instance for mocking. </returns>
+        public static ScVmmCloudData ScVmmCloudData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string inventoryItemId = default, string uuid = default, ResourceIdentifier vmmServerId = default, string cloudName = default, ScVmmCloudCapacity cloudCapacity = default, IEnumerable<ScVmmStorageQosPolicy> storageQosPolicies = default, ScVmmProvisioningState? provisioningState = default, ExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ScVmmCloudData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                inventoryItemId is null && uuid is null && vmmServerId is null && cloudName is null && cloudCapacity is null && storageQosPolicies is null && provisioningState is null ? default : new CloudProperties(
+                    inventoryItemId,
+                    uuid,
+                    vmmServerId,
+                    cloudName,
+                    cloudCapacity,
+                    (storageQosPolicies ?? new ChangeTrackingList<ScVmmStorageQosPolicy>()).ToList(),
+                    provisioningState,
+                    default),
+                extendedLocation,
+                default);
+        }
+
+        /// <param name="cpuCount"> CPUCount specifies the maximum number of CPUs that can be allocated in the cloud. </param>
+        /// <param name="memoryMB"> MemoryMB specifies a memory usage limit in megabytes. </param>
+        /// <param name="vmCount"> VMCount gives the max number of VMs that can be deployed in the cloud. </param>
+        /// <param name="storageGB"> StorageGB gives the storage in GB present in the cloud. </param>
+        /// <returns> A new <see cref="Models.ScVmmCloudCapacity"/> instance for mocking. </returns>
+        public static ScVmmCloudCapacity ScVmmCloudCapacity(long? cpuCount = default, long? memoryMB = default, long? vmCount = default, long? storageGB = default)
+        {
+            return new ScVmmCloudCapacity(cpuCount, memoryMB, vmCount, storageGB, default);
+        }
+
+        /// <param name="name"> The name of the policy. </param>
+        /// <param name="id"> The ID of the QoS policy. </param>
+        /// <param name="iopsMaximum"> The maximum IO operations per second. </param>
+        /// <param name="iopsMinimum"> The minimum IO operations per second. </param>
+        /// <param name="bandwidthLimit"> The Bandwidth Limit for internet traffic. </param>
+        /// <param name="policyId"> The underlying policy. </param>
+        /// <returns> A new <see cref="Models.ScVmmStorageQosPolicy"/> instance for mocking. </returns>
+        public static ScVmmStorageQosPolicy ScVmmStorageQosPolicy(string name = default, string id = default, long? iopsMaximum = default, long? iopsMinimum = default, long? bandwidthLimit = default, string policyId = default)
+        {
+            return new ScVmmStorageQosPolicy(
+                name,
+                id,
+                iopsMaximum,
+                iopsMinimum,
+                bandwidthLimit,
+                policyId,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="inventoryItemId"> Gets or sets the inventory Item ID for the resource. </param>
+        /// <param name="uuid"> Unique ID of the virtual network. </param>
+        /// <param name="vmmServerId"> ARM Id of the vmmServer resource in which this resource resides. </param>
+        /// <param name="networkName"> Name of the virtual network in vmmServer. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="extendedLocation"> The extended location. </param>
+        /// <returns> A new <see cref="ScVmm.ScVmmVirtualNetworkData"/> instance for mocking. </returns>
+        public static ScVmmVirtualNetworkData ScVmmVirtualNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string inventoryItemId = default, string uuid = default, ResourceIdentifier vmmServerId = default, string networkName = default, ScVmmProvisioningState? provisioningState = default, ExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ScVmmVirtualNetworkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                inventoryItemId is null && uuid is null && vmmServerId is null && networkName is null && provisioningState is null ? default : new VirtualNetworkProperties(
+                    inventoryItemId,
+                    uuid,
+                    vmmServerId,
+                    networkName,
+                    provisioningState,
+                    default),
+                extendedLocation,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="inventoryItemId"> Gets or sets the inventory Item ID for the resource. </param>
+        /// <param name="uuid"> Unique ID of the virtual machine template. </param>
+        /// <param name="vmmServerId"> ARM Id of the vmmServer resource in which this resource resides. </param>
+        /// <param name="osType"> Gets the type of the os. </param>
+        /// <param name="osName"> Gets os name. </param>
+        /// <param name="computerName"> Gets computer name. </param>
+        /// <param name="memoryMB"> MemoryMB is the desired size of a virtual machine's memory, in MB. </param>
+        /// <param name="cpuCount"> Gets the desired number of vCPUs for the vm. </param>
+        /// <param name="limitCpuForMigration"> Gets a value indicating whether to enable processor compatibility mode for live migration of VMs. </param>
+        /// <param name="dynamicMemoryEnabled"> Gets a value indicating whether to enable dynamic memory or not. </param>
+        /// <param name="isCustomizable"> Gets a value indicating whether the vm template is customizable or not. </param>
+        /// <param name="dynamicMemoryMaxMB"> Gets the max dynamic memory for the vm. </param>
+        /// <param name="dynamicMemoryMinMB"> Gets the min dynamic memory for the vm. </param>
+        /// <param name="isHighlyAvailable"> Gets highly available property. </param>
+        /// <param name="generation"> Gets the generation for the vm. </param>
+        /// <param name="networkInterfaces"> Gets the network interfaces of the template. </param>
+        /// <param name="disks"> Gets the disks of the template. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="extendedLocation"> The extended location. </param>
+        /// <returns> A new <see cref="ScVmm.ScVmmVirtualMachineTemplateData"/> instance for mocking. </returns>
+        public static ScVmmVirtualMachineTemplateData ScVmmVirtualMachineTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string inventoryItemId = default, string uuid = default, ResourceIdentifier vmmServerId = default, ScVmmOSType? osType = default, string osName = default, string computerName = default, int? memoryMB = default, int? cpuCount = default, LimitCpuForMigration? limitCpuForMigration = default, DynamicMemoryEnabled? dynamicMemoryEnabled = default, IsCustomizable? isCustomizable = default, int? dynamicMemoryMaxMB = default, int? dynamicMemoryMinMB = default, IsHighlyAvailable? isHighlyAvailable = default, int? generation = default, IEnumerable<ScVmmNetworkInterface> networkInterfaces = default, IEnumerable<ScVmmVirtualDisk> disks = default, ScVmmProvisioningState? provisioningState = default, ExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ScVmmVirtualMachineTemplateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                inventoryItemId is null && uuid is null && vmmServerId is null && osType is null && osName is null && computerName is null && memoryMB is null && cpuCount is null && limitCpuForMigration is null && dynamicMemoryEnabled is null && isCustomizable is null && dynamicMemoryMaxMB is null && dynamicMemoryMinMB is null && isHighlyAvailable is null && generation is null && networkInterfaces is null && disks is null && provisioningState is null ? default : new VirtualMachineTemplateProperties(
+                    inventoryItemId,
+                    uuid,
+                    vmmServerId,
+                    osType,
+                    osName,
+                    computerName,
+                    memoryMB,
+                    cpuCount,
+                    limitCpuForMigration,
+                    dynamicMemoryEnabled,
+                    isCustomizable,
+                    dynamicMemoryMaxMB,
+                    dynamicMemoryMinMB,
+                    isHighlyAvailable,
+                    generation,
+                    (networkInterfaces ?? new ChangeTrackingList<ScVmmNetworkInterface>()).ToList(),
+                    (disks ?? new ChangeTrackingList<ScVmmVirtualDisk>()).ToList(),
+                    provisioningState,
+                    default),
+                extendedLocation,
+                default);
+        }
+
+        /// <param name="name"> Gets or sets the name of the network interface. </param>
+        /// <param name="displayName"> Gets the display name of the network interface as shown in the vmmServer. This is the fallback label for a NIC when the name is not set. </param>
+        /// <param name="ipv4Addresses"> Gets the nic ipv4 addresses. </param>
+        /// <param name="ipv6Addresses"> Gets the nic ipv6 addresses. </param>
+        /// <param name="macAddress"> Gets or sets the nic MAC address. </param>
+        /// <param name="virtualNetworkId"> Gets or sets the ARM Id of the Microsoft.ScVmm/virtualNetwork resource to connect the nic. </param>
+        /// <param name="networkName"> Gets the name of the virtual network in vmmServer that the nic is connected to. </param>
+        /// <param name="ipv4AddressType"> Gets or sets the ipv4 address type. </param>
+        /// <param name="ipv6AddressType"> Gets or sets the ipv6 address type. </param>
+        /// <param name="macAddressType"> Gets or sets the mac address type. </param>
+        /// <param name="nicId"> Gets or sets the nic id. </param>
+        /// <returns> A new <see cref="Models.ScVmmNetworkInterface"/> instance for mocking. </returns>
+        public static ScVmmNetworkInterface ScVmmNetworkInterface(string name = default, string displayName = default, IEnumerable<string> ipv4Addresses = default, IEnumerable<string> ipv6Addresses = default, string macAddress = default, ResourceIdentifier virtualNetworkId = default, string networkName = default, AllocationMethod? ipv4AddressType = default, AllocationMethod? ipv6AddressType = default, AllocationMethod? macAddressType = default, string nicId = default)
+        {
+            ipv4Addresses ??= new ChangeTrackingList<string>();
+            ipv6Addresses ??= new ChangeTrackingList<string>();
+
+            return new ScVmmNetworkInterface(
+                name,
+                displayName,
+                (ipv4Addresses ?? new ChangeTrackingList<string>()).ToList(),
+                (ipv6Addresses ?? new ChangeTrackingList<string>()).ToList(),
+                macAddress,
+                virtualNetworkId,
+                networkName,
+                ipv4AddressType,
+                ipv6AddressType,
+                macAddressType,
+                nicId,
+                default);
+        }
+
+        /// <param name="name"> Gets or sets the name of the disk. </param>
+        /// <param name="displayName"> Gets the display name of the virtual disk as shown in the vmmServer. This is the fallback label for a disk when the name is not set. </param>
+        /// <param name="diskId"> Gets or sets the disk id. </param>
+        /// <param name="diskSizeGB"> Gets or sets the disk total size. </param>
+        /// <param name="maxDiskSizeGB"> Gets the max disk size. </param>
+        /// <param name="bus"> Gets or sets the disk bus. </param>
+        /// <param name="lun"> Gets or sets the disk lun. </param>
+        /// <param name="busType"> Gets or sets the disk bus type. </param>
+        /// <param name="vhdType"> Gets or sets the disk vhd type. </param>
+        /// <param name="volumeType"> Gets the disk volume type. </param>
+        /// <param name="vhdFormatType"> Gets the disk vhd format type. </param>
+        /// <param name="templateDiskId"> Gets or sets the disk id in the template. </param>
+        /// <param name="storageQosPolicy"> The QoS policy for the disk. </param>
+        /// <param name="createDiffDisk"> Gets or sets a value indicating diff disk. </param>
+        /// <returns> A new <see cref="Models.ScVmmVirtualDisk"/> instance for mocking. </returns>
+        public static ScVmmVirtualDisk ScVmmVirtualDisk(string name = default, string displayName = default, string diskId = default, int? diskSizeGB = default, int? maxDiskSizeGB = default, int? bus = default, int? lun = default, string busType = default, string vhdType = default, string volumeType = default, string vhdFormatType = default, string templateDiskId = default, ScVmmStorageQosPolicyDetails storageQosPolicy = default, CreateDiffDisk? createDiffDisk = default)
+        {
+            return new ScVmmVirtualDisk(
+                name,
+                displayName,
+                diskId,
+                diskSizeGB,
+                maxDiskSizeGB,
+                bus,
+                lun,
+                busType,
+                vhdType,
+                volumeType,
+                vhdFormatType,
+                templateDiskId,
+                storageQosPolicy,
+                createDiffDisk,
+                default);
+        }
+
+        /// <param name="name"> The name of the policy. </param>
+        /// <param name="id"> The ID of the QoS policy. </param>
+        /// <returns> A new <see cref="Models.ScVmmStorageQosPolicyDetails"/> instance for mocking. </returns>
+        public static ScVmmStorageQosPolicyDetails ScVmmStorageQosPolicyDetails(string name = default, string id = default)
+        {
+            return new ScVmmStorageQosPolicyDetails(name, id, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="availabilitySetName"> Name of the availability set. </param>
+        /// <param name="vmmServerId"> ARM Id of the vmmServer resource in which this resource resides. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="extendedLocation"> The extended location. </param>
+        /// <returns> A new <see cref="ScVmm.ScVmmAvailabilitySetData"/> instance for mocking. </returns>
+        public static ScVmmAvailabilitySetData ScVmmAvailabilitySetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string availabilitySetName = default, ResourceIdentifier vmmServerId = default, ScVmmProvisioningState? provisioningState = default, ExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ScVmmAvailabilitySetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                availabilitySetName is null && vmmServerId is null && provisioningState is null ? default : new AvailabilitySetProperties(availabilitySetName, vmmServerId, provisioningState, default),
+                extendedLocation,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <returns> A new <see cref="ScVmm.ScVmmInventoryItemData"/> instance for mocking. </returns>
+        public static ScVmmInventoryItemData ScVmmInventoryItemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScVmmInventoryItemProperties properties = default, string kind = default)
+        {
+            return new ScVmmInventoryItemData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                kind,
+                default);
+        }
+
+        /// <param name="inventoryType"> They inventory type. </param>
+        /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
+        /// <param name="uuid"> Gets the UUID (which is assigned by Vmm) for the inventory item. </param>
+        /// <param name="inventoryItemName"> Gets the Managed Object name in Vmm for the inventory item. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.ScVmmInventoryItemProperties"/> instance for mocking. </returns>
+        public static ScVmmInventoryItemProperties ScVmmInventoryItemProperties(string inventoryType = default, string managedResourceId = default, string uuid = default, string inventoryItemName = default, ScVmmProvisioningState? provisioningState = default)
+        {
+            return new UnknownInventoryItemProperties(
+                default,
+                managedResourceId,
+                uuid,
+                inventoryItemName,
+                provisioningState,
+                default);
+        }
+
+        /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
+        /// <param name="uuid"> Gets the UUID (which is assigned by Vmm) for the inventory item. </param>
+        /// <param name="inventoryItemName"> Gets the Managed Object name in Vmm for the inventory item. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.CloudInventoryItem"/> instance for mocking. </returns>
+        public static CloudInventoryItem CloudInventoryItem(string managedResourceId = default, string uuid = default, string inventoryItemName = default, ScVmmProvisioningState? provisioningState = default)
+        {
+            return new CloudInventoryItem(
+                default,
+                managedResourceId,
+                uuid,
+                inventoryItemName,
+                provisioningState,
+                default);
+        }
+
+        /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
+        /// <param name="uuid"> Gets the UUID (which is assigned by Vmm) for the inventory item. </param>
+        /// <param name="inventoryItemName"> Gets the Managed Object name in Vmm for the inventory item. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.VirtualNetworkInventoryItem"/> instance for mocking. </returns>
+        public static VirtualNetworkInventoryItem VirtualNetworkInventoryItem(string managedResourceId = default, string uuid = default, string inventoryItemName = default, ScVmmProvisioningState? provisioningState = default)
+        {
+            return new VirtualNetworkInventoryItem(
+                default,
+                managedResourceId,
+                uuid,
+                inventoryItemName,
+                provisioningState,
+                default);
+        }
+
+        /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
+        /// <param name="uuid"> Gets the UUID (which is assigned by Vmm) for the inventory item. </param>
+        /// <param name="inventoryItemName"> Gets the Managed Object name in Vmm for the inventory item. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="cpuCount"> Gets the desired number of vCPUs for the vm. </param>
+        /// <param name="memoryMB"> MemoryMB is the desired size of a virtual machine's memory, in MB. </param>
+        /// <param name="osType"> Gets the type of the os. </param>
+        /// <param name="osName"> Gets os name. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineTemplateInventoryItem"/> instance for mocking. </returns>
+        public static VirtualMachineTemplateInventoryItem VirtualMachineTemplateInventoryItem(string managedResourceId = default, string uuid = default, string inventoryItemName = default, ScVmmProvisioningState? provisioningState = default, int? cpuCount = default, int? memoryMB = default, ScVmmOSType? osType = default, string osName = default)
+        {
+            return new VirtualMachineTemplateInventoryItem(
+                default,
+                managedResourceId,
+                uuid,
+                inventoryItemName,
+                provisioningState,
+                default,
+                cpuCount,
+                memoryMB,
+                osType,
+                osName);
+        }
+
+        /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
+        /// <param name="uuid"> Gets the UUID (which is assigned by Vmm) for the inventory item. </param>
+        /// <param name="inventoryItemName"> Gets the Managed Object name in Vmm for the inventory item. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="osType"> Gets the type of the os. </param>
+        /// <param name="osName"> Gets os name. </param>
+        /// <param name="osVersion"> Gets os version. </param>
+        /// <param name="powerState"> Gets the power state of the virtual machine. </param>
+        /// <param name="generation"> Gets vm generation. </param>
+        /// <param name="ipAddresses"> Gets or sets the nic ip addresses. </param>
+        /// <param name="cloud"> Cloud inventory resource details where the VM is present. </param>
+        /// <param name="biosGuid"> Gets the bios guid. </param>
+        /// <param name="managedMachineResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineInventoryItem"/> instance for mocking. </returns>
+        public static VirtualMachineInventoryItem VirtualMachineInventoryItem(string managedResourceId = default, string uuid = default, string inventoryItemName = default, ScVmmProvisioningState? provisioningState = default, ScVmmOSType? osType = default, string osName = default, string osVersion = default, string powerState = default, long? generation = default, IEnumerable<string> ipAddresses = default, ScVmmInventoryItemDetails cloud = default, string biosGuid = default, ResourceIdentifier managedMachineResourceId = default)
+        {
+            ipAddresses ??= new ChangeTrackingList<string>();
+
+            return new VirtualMachineInventoryItem(
+                default,
+                managedResourceId,
+                uuid,
+                inventoryItemName,
+                provisioningState,
+                default,
+                osType,
+                osName,
+                osVersion,
+                powerState,
+                generation,
+                (ipAddresses ?? new ChangeTrackingList<string>()).ToList(),
+                cloud,
+                biosGuid,
+                managedMachineResourceId);
+        }
+
+        /// <param name="inventoryItemId"> Gets or sets the inventory Item ID for the resource. </param>
+        /// <param name="inventoryItemName"> Gets or sets the Managed Object name in Vmm for the resource. </param>
+        /// <returns> A new <see cref="Models.ScVmmInventoryItemDetails"/> instance for mocking. </returns>
+        public static ScVmmInventoryItemDetails ScVmmInventoryItemDetails(string inventoryItemId = default, string inventoryItemName = default)
+        {
+            return new ScVmmInventoryItemDetails(inventoryItemId, inventoryItemName, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="availabilitySets"> Availability Sets in vm. </param>
+        /// <param name="osProfile"> OS properties. </param>
+        /// <param name="hardwareProfile"> Hardware properties. </param>
+        /// <param name="infrastructureProfile"> Gets the infrastructure profile. </param>
+        /// <param name="powerState"> Gets the power state of the virtual machine. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="networkInterfaces"> Gets or sets the list of network interfaces associated with the virtual machine. </param>
+        /// <param name="storageDisks"> Gets or sets the list of virtual disks associated with the virtual machine. </param>
+        /// <param name="extendedLocation"> Gets or sets the extended location. </param>
+        /// <returns> A new <see cref="ScVmm.ScVmmVirtualMachineInstanceData"/> instance for mocking. </returns>
+        public static ScVmmVirtualMachineInstanceData ScVmmVirtualMachineInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<ScVmmAvailabilitySetItem> availabilitySets = default, OSProfileForVmInstance osProfile = default, ScVmmHardwareProfile hardwareProfile = default, ScVmmInfrastructureProfile infrastructureProfile = default, string powerState = default, ScVmmProvisioningState? provisioningState = default, IEnumerable<ScVmmNetworkInterface> networkInterfaces = default, IEnumerable<ScVmmVirtualDisk> storageDisks = default, ExtendedLocation extendedLocation = default)
+        {
+            return new ScVmmVirtualMachineInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                availabilitySets is null && osProfile is null && hardwareProfile is null && networkInterfaces is null && storageDisks is null && infrastructureProfile is null && powerState is null && provisioningState is null ? default : new VirtualMachineInstanceProperties(
+                    (availabilitySets ?? new ChangeTrackingList<ScVmmAvailabilitySetItem>()).ToList(),
+                    osProfile,
+                    hardwareProfile,
+                    new ScVmmNetworkProfile((networkInterfaces ?? new ChangeTrackingList<ScVmmNetworkInterface>()).ToList(), default),
+                    new ScVmmStorageProfile((storageDisks ?? new ChangeTrackingList<ScVmmVirtualDisk>()).ToList(), default),
+                    infrastructureProfile,
+                    powerState,
+                    provisioningState,
+                    default),
+                extendedLocation,
+                default);
+        }
+
+        /// <param name="id"> Gets the ARM Id of the microsoft.scvmm/availabilitySets resource. </param>
+        /// <param name="name"> Gets or sets the name of the availability set. </param>
+        /// <returns> A new <see cref="Models.ScVmmAvailabilitySetItem"/> instance for mocking. </returns>
+        public static ScVmmAvailabilitySetItem ScVmmAvailabilitySetItem(ResourceIdentifier id = default, string name = default)
+        {
+            return new ScVmmAvailabilitySetItem(id, name, default);
+        }
+
+        /// <param name="adminUsername"> Gets or sets the admin username. </param>
+        /// <param name="adminPassword"> Admin password of the virtual machine. </param>
+        /// <param name="computerName"> Gets or sets computer name. </param>
+        /// <param name="osType"> Gets the type of the os. </param>
+        /// <param name="osSku"> Gets os sku. </param>
+        /// <param name="osVersion"> Gets os version. </param>
+        /// <param name="domainName"> Gets or sets the domain name. </param>
+        /// <param name="domainUsername"> Gets or sets the domain username. </param>
+        /// <param name="domainPassword"> Password of the domain the VM has to join. </param>
+        /// <param name="workgroup"> Gets or sets the workgroup. </param>
+        /// <param name="productKey"> Gets or sets the product key.Input format xxxxx-xxxxx-xxxxx-xxxxx-xxxxx. </param>
+        /// <param name="timezone"> Gets or sets the index value of the timezone. </param>
+        /// <param name="runOnceCommands"> Get or sets the commands to be run once at the time of creation separated by semicolons. </param>
+        /// <returns> A new <see cref="Models.OSProfileForVmInstance"/> instance for mocking. </returns>
+        public static OSProfileForVmInstance OSProfileForVmInstance(string adminUsername = default, string adminPassword = default, string computerName = default, ScVmmOSType? osType = default, string osSku = default, string osVersion = default, string domainName = default, string domainUsername = default, string domainPassword = default, string workgroup = default, string productKey = default, int? timezone = default, string runOnceCommands = default)
+        {
+            return new OSProfileForVmInstance(
+                adminUsername,
+                adminPassword,
+                computerName,
+                osType,
+                osSku,
+                osVersion,
+                domainName,
+                domainUsername,
+                domainPassword,
+                workgroup,
+                productKey,
+                timezone,
+                runOnceCommands,
+                default);
+        }
+
+        /// <param name="memoryMB"> MemoryMB is the size of a virtual machine's memory, in MB. </param>
+        /// <param name="cpuCount"> Gets or sets the number of vCPUs for the vm. </param>
+        /// <param name="limitCpuForMigration"> Gets or sets a value indicating whether to enable processor compatibility mode for live migration of VMs. </param>
+        /// <param name="dynamicMemoryEnabled"> Gets or sets a value indicating whether to enable dynamic memory or not. </param>
+        /// <param name="dynamicMemoryMaxMB"> Gets or sets the max dynamic memory for the vm. </param>
+        /// <param name="dynamicMemoryMinMB"> Gets or sets the min dynamic memory for the vm. </param>
+        /// <param name="isHighlyAvailable"> Gets highly available property. </param>
+        /// <returns> A new <see cref="Models.ScVmmHardwareProfile"/> instance for mocking. </returns>
+        public static ScVmmHardwareProfile ScVmmHardwareProfile(int? memoryMB = default, int? cpuCount = default, LimitCpuForMigration? limitCpuForMigration = default, DynamicMemoryEnabled? dynamicMemoryEnabled = default, int? dynamicMemoryMaxMB = default, int? dynamicMemoryMinMB = default, IsHighlyAvailable? isHighlyAvailable = default)
+        {
+            return new ScVmmHardwareProfile(
+                memoryMB,
+                cpuCount,
+                limitCpuForMigration,
+                dynamicMemoryEnabled,
+                dynamicMemoryMaxMB,
+                dynamicMemoryMinMB,
+                isHighlyAvailable,
+                default);
+        }
+
+        /// <param name="inventoryItemId"> Gets or sets the inventory Item ID for the resource. </param>
+        /// <param name="vmmServerId"> ARM Id of the vmmServer resource in which this resource resides. </param>
+        /// <param name="cloudId"> ARM Id of the cloud resource to use for deploying the vm. </param>
+        /// <param name="templateId"> ARM Id of the template resource to use for deploying the vm. </param>
+        /// <param name="vmName"> VMName is the name of VM on the SCVmm server. </param>
+        /// <param name="uuid"> Unique ID of the virtual machine. </param>
+        /// <param name="lastRestoredVmCheckpoint"> Last restored checkpoint in the vm. </param>
+        /// <param name="checkpoints"> Checkpoints in the vm. </param>
+        /// <param name="checkpointType"> Type of checkpoint supported for the vm. </param>
+        /// <param name="generation"> Gets or sets the generation for the vm. </param>
+        /// <param name="biosGuid"> Gets or sets the bios guid for the vm. </param>
+        /// <returns> A new <see cref="Models.ScVmmInfrastructureProfile"/> instance for mocking. </returns>
+        public static ScVmmInfrastructureProfile ScVmmInfrastructureProfile(string inventoryItemId = default, ResourceIdentifier vmmServerId = default, ResourceIdentifier cloudId = default, ResourceIdentifier templateId = default, string vmName = default, string uuid = default, ScVmmCheckpoint lastRestoredVmCheckpoint = default, IEnumerable<ScVmmCheckpoint> checkpoints = default, string checkpointType = default, int? generation = default, string biosGuid = default)
+        {
+            checkpoints ??= new ChangeTrackingList<ScVmmCheckpoint>();
+
+            return new ScVmmInfrastructureProfile(
+                inventoryItemId,
+                vmmServerId,
+                cloudId,
+                templateId,
+                vmName,
+                uuid,
+                lastRestoredVmCheckpoint,
+                (checkpoints ?? new ChangeTrackingList<ScVmmCheckpoint>()).ToList(),
+                checkpointType,
+                generation,
+                biosGuid,
+                default);
+        }
+
+        /// <param name="parentCheckpointId"> Gets ID of parent of the checkpoint. </param>
+        /// <param name="checkpointId"> Gets ID of the checkpoint. </param>
+        /// <param name="name"> Gets name of the checkpoint. </param>
+        /// <param name="description"> Gets description of the checkpoint. </param>
+        /// <returns> A new <see cref="Models.ScVmmCheckpoint"/> instance for mocking. </returns>
+        public static ScVmmCheckpoint ScVmmCheckpoint(string parentCheckpointId = default, string checkpointId = default, string name = default, string description = default)
+        {
+            return new ScVmmCheckpoint(parentCheckpointId, checkpointId, name, description, default);
+        }
+
+        /// <param name="availabilitySets"> Availability Sets in vm. </param>
+        /// <param name="hardwareProfile"> Hardware properties. </param>
+        /// <param name="networkInterfaces"> Gets or sets the list of network interfaces associated with the virtual machine. </param>
+        /// <param name="storageDisks"> Gets or sets the list of virtual disks associated with the virtual machine. </param>
+        /// <param name="infrastructureCheckpointType"> Type of checkpoint supported for the vm. </param>
+        /// <returns> A new <see cref="Models.ScVmmVirtualMachineInstancePatch"/> instance for mocking. </returns>
+        public static ScVmmVirtualMachineInstancePatch ScVmmVirtualMachineInstancePatch(IEnumerable<ScVmmAvailabilitySetItem> availabilitySets = default, ScVmmHardwareProfileUpdate hardwareProfile = default, IEnumerable<ScVmmNetworkInterfaceUpdate> networkInterfaces = default, IEnumerable<ScVmmVirtualDiskUpdate> storageDisks = default, string infrastructureCheckpointType = default)
+        {
+            return new ScVmmVirtualMachineInstancePatch(availabilitySets is null && hardwareProfile is null && networkInterfaces is null && storageDisks is null && infrastructureCheckpointType is null ? default : new VirtualMachineInstanceUpdateProperties(
+                (availabilitySets ?? new ChangeTrackingList<ScVmmAvailabilitySetItem>()).ToList(),
+                hardwareProfile,
+                new ScVmmNetworkProfileUpdate((networkInterfaces ?? new ChangeTrackingList<ScVmmNetworkInterfaceUpdate>()).ToList(), default),
+                new ScVmmStorageProfileUpdate((storageDisks ?? new ChangeTrackingList<ScVmmVirtualDiskUpdate>()).ToList(), default),
+                new ScVmmInfrastructureProfileUpdate(infrastructureCheckpointType, default),
+                default), default);
+        }
+
+        /// <param name="memoryMB"> MemoryMB is the size of a virtual machine's memory, in MB. </param>
+        /// <param name="cpuCount"> Gets or sets the number of vCPUs for the vm. </param>
+        /// <param name="limitCpuForMigration"> Gets or sets a value indicating whether to enable processor compatibility mode for live migration of VMs. </param>
+        /// <param name="dynamicMemoryEnabled"> Gets or sets a value indicating whether to enable dynamic memory or not. </param>
+        /// <param name="dynamicMemoryMaxMB"> Gets or sets the max dynamic memory for the vm. </param>
+        /// <param name="dynamicMemoryMinMB"> Gets or sets the min dynamic memory for the vm. </param>
+        /// <returns> A new <see cref="Models.ScVmmHardwareProfileUpdate"/> instance for mocking. </returns>
+        public static ScVmmHardwareProfileUpdate ScVmmHardwareProfileUpdate(int? memoryMB = default, int? cpuCount = default, LimitCpuForMigration? limitCpuForMigration = default, DynamicMemoryEnabled? dynamicMemoryEnabled = default, int? dynamicMemoryMaxMB = default, int? dynamicMemoryMinMB = default)
+        {
+            return new ScVmmHardwareProfileUpdate(
+                memoryMB,
+                cpuCount,
+                limitCpuForMigration,
+                dynamicMemoryEnabled,
+                dynamicMemoryMaxMB,
+                dynamicMemoryMinMB,
+                default);
+        }
+
+        /// <param name="name"> Gets or sets the name of the network interface. </param>
+        /// <param name="macAddress"> Gets or sets the nic MAC address. </param>
+        /// <param name="virtualNetworkId"> Gets or sets the ARM Id of the Microsoft.ScVmm/virtualNetwork resource to connect the nic. </param>
+        /// <param name="ipv4AddressType"> Gets or sets the ipv4 address type. </param>
+        /// <param name="ipv6AddressType"> Gets or sets the ipv6 address type. </param>
+        /// <param name="macAddressType"> Gets or sets the mac address type. </param>
+        /// <param name="nicId"> Gets or sets the nic id. </param>
+        /// <returns> A new <see cref="Models.ScVmmNetworkInterfaceUpdate"/> instance for mocking. </returns>
+        public static ScVmmNetworkInterfaceUpdate ScVmmNetworkInterfaceUpdate(string name = default, string macAddress = default, string virtualNetworkId = default, AllocationMethod? ipv4AddressType = default, AllocationMethod? ipv6AddressType = default, AllocationMethod? macAddressType = default, string nicId = default)
+        {
+            return new ScVmmNetworkInterfaceUpdate(
+                name,
+                macAddress,
+                virtualNetworkId,
+                ipv4AddressType,
+                ipv6AddressType,
+                macAddressType,
+                nicId,
+                default);
+        }
+
+        /// <param name="name"> Gets or sets the name of the disk. </param>
+        /// <param name="diskId"> Gets or sets the disk id. </param>
+        /// <param name="diskSizeGB"> Gets or sets the disk total size. </param>
+        /// <param name="bus"> Gets or sets the disk bus. </param>
+        /// <param name="lun"> Gets or sets the disk lun. </param>
+        /// <param name="busType"> Gets or sets the disk bus type. </param>
+        /// <param name="vhdType"> Gets or sets the disk vhd type. </param>
+        /// <param name="storageQosPolicy"> The QoS policy for the disk. </param>
+        /// <returns> A new <see cref="Models.ScVmmVirtualDiskUpdate"/> instance for mocking. </returns>
+        public static ScVmmVirtualDiskUpdate ScVmmVirtualDiskUpdate(string name = default, string diskId = default, int? diskSizeGB = default, int? bus = default, int? lun = default, string busType = default, string vhdType = default, ScVmmStorageQosPolicyDetails storageQosPolicy = default)
+        {
+            return new ScVmmVirtualDiskUpdate(
+                name,
+                diskId,
+                diskSizeGB,
+                bus,
+                lun,
+                busType,
+                vhdType,
+                storageQosPolicy,
+                default);
+        }
+
+        /// <param name="skipShutdown"> Gets or sets a value indicating whether to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Defaults to false. </param>
+        /// <returns> A new <see cref="Models.StopVirtualMachineContent"/> instance for mocking. </returns>
+        public static StopVirtualMachineContent StopVirtualMachineContent(SkipShutdown? skipShutdown = default)
+        {
+            return new StopVirtualMachineContent(skipShutdown, default);
+        }
+
+        /// <param name="name"> Name of the checkpoint. </param>
+        /// <param name="description"> Description of the checkpoint. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineCreateCheckpointContent"/> instance for mocking. </returns>
+        public static VirtualMachineCreateCheckpointContent VirtualMachineCreateCheckpointContent(string name = default, string description = default)
+        {
+            return new VirtualMachineCreateCheckpointContent(name, description, default);
+        }
+
+        /// <param name="id"> ID of the checkpoint to be deleted. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineDeleteCheckpointContent"/> instance for mocking. </returns>
+        public static VirtualMachineDeleteCheckpointContent VirtualMachineDeleteCheckpointContent(string id = default)
+        {
+            return new VirtualMachineDeleteCheckpointContent(id, default);
+        }
+
+        /// <param name="id"> ID of the checkpoint to be restored to. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineRestoreCheckpointContent"/> instance for mocking. </returns>
+        public static VirtualMachineRestoreCheckpointContent VirtualMachineRestoreCheckpointContent(string id = default)
+        {
+            return new VirtualMachineRestoreCheckpointContent(id, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="resourceUid"> The unique identifier for the resource. </param>
+        /// <param name="publicKey"> Gets or sets the Public Key. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="ScVmm.ScVmmHybridIdentityMetadataData"/> instance for mocking. </returns>
+        public static ScVmmHybridIdentityMetadataData ScVmmHybridIdentityMetadataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string resourceUid = default, string publicKey = default, ScVmmProvisioningState? provisioningState = default)
+        {
+            return new ScVmmHybridIdentityMetadataData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                resourceUid is null && publicKey is null && provisioningState is null ? default : new VmInstanceHybridIdentityMetadataProperties(resourceUid, publicKey, provisioningState, default),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="uuid"> Gets a unique identifier for this resource. </param>
+        /// <param name="credentials"> Username / Password Credentials to provision guest agent. </param>
+        /// <param name="provisioningAction"> Gets or sets the guest agent provisioning action. </param>
+        /// <param name="status"> Gets the guest agent status. </param>
+        /// <param name="customResourceName"> Gets the name of the corresponding resource in Kubernetes. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="privateLinkScopeResourceId"> The resource id of the private link scope this machine is assigned to, if any. </param>
+        /// <param name="httpsProxy"> Gets or sets httpsProxy url. </param>
+        /// <returns> A new <see cref="ScVmm.ScVmmGuestAgentData"/> instance for mocking. </returns>
+        public static ScVmmGuestAgentData ScVmmGuestAgentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string uuid = default, ScVmmGuestCredential credentials = default, ScVmmProvisioningAction? provisioningAction = default, string status = default, string customResourceName = default, ScVmmProvisioningState? provisioningState = default, ResourceIdentifier privateLinkScopeResourceId = default, string httpsProxy = default)
+        {
+            return new ScVmmGuestAgentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                uuid is null && credentials is null && httpsProxy is null && provisioningAction is null && status is null && customResourceName is null && provisioningState is null && privateLinkScopeResourceId is null ? default : new GuestAgentProperties(
+                    uuid,
+                    credentials,
+                    new ScVmmHttpProxyConfiguration(httpsProxy, default),
+                    provisioningAction,
+                    status,
+                    customResourceName,
+                    provisioningState,
+                    privateLinkScopeResourceId,
+                    default),
+                default);
+        }
+
+        /// <param name="username"> Gets or sets username to connect with the guest. </param>
+        /// <param name="password"> Gets or sets the password to connect with the guest. </param>
+        /// <returns> A new <see cref="Models.ScVmmGuestCredential"/> instance for mocking. </returns>
+        public static ScVmmGuestCredential ScVmmGuestCredential(string username = default, string password = default)
+        {
+            return new ScVmmGuestCredential(username, password, default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="ScVmm.ScVmmServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -34,27 +804,28 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="version"> Version is the version of the vmmSever. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="ScVmm.ScVmmServerData"/> instance for mocking. </returns>
-        public static ScVmmServerData ScVmmServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, VmmCredential credentials = null, string fqdn = null, int? port = null, string connectionStatus = null, string errorMessage = null, string uuid = null, string version = null, ScVmmProvisioningState? provisioningState = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ScVmmServerData ScVmmServerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedLocation extendedLocation = default, VmmCredential credentials = default, string fqdn = default, int? port = default, string connectionStatus = default, string errorMessage = default, string uuid = default, string version = default, ScVmmProvisioningState? provisioningState = default)
         {
-            tags ??= new Dictionary<string, string>();
-
             return new ScVmmServerData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                credentials is null && fqdn is null && port is null && connectionStatus is null && errorMessage is null && uuid is null && version is null && provisioningState is null ? default : new VmmServerProperties(
+                    credentials,
+                    fqdn,
+                    port,
+                    connectionStatus,
+                    errorMessage,
+                    uuid,
+                    version,
+                    provisioningState,
+                    default),
                 extendedLocation,
-                credentials,
-                fqdn,
-                port,
-                connectionStatus,
-                errorMessage,
-                uuid,
-                version,
-                provisioningState,
-                serializedAdditionalRawData: null);
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ScVmm.ScVmmCloudData"/>. </summary>
@@ -73,27 +844,27 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="storageQosPolicies"> List of QoS policies available for the cloud. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="ScVmm.ScVmmCloudData"/> instance for mocking. </returns>
-        public static ScVmmCloudData ScVmmCloudData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, string inventoryItemId = null, string uuid = null, ResourceIdentifier vmmServerId = null, string cloudName = null, ScVmmCloudCapacity cloudCapacity = null, IEnumerable<ScVmmStorageQosPolicy> storageQosPolicies = null, ScVmmProvisioningState? provisioningState = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ScVmmCloudData ScVmmCloudData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedLocation extendedLocation = default, string inventoryItemId = default, string uuid = default, ResourceIdentifier vmmServerId = default, string cloudName = default, ScVmmCloudCapacity cloudCapacity = default, IEnumerable<ScVmmStorageQosPolicy> storageQosPolicies = default, ScVmmProvisioningState? provisioningState = default)
         {
-            tags ??= new Dictionary<string, string>();
-            storageQosPolicies ??= new List<ScVmmStorageQosPolicy>();
-
             return new ScVmmCloudData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                inventoryItemId is null && uuid is null && vmmServerId is null && cloudName is null && cloudCapacity is null && storageQosPolicies is null && provisioningState is null ? default : new CloudProperties(
+                    inventoryItemId,
+                    uuid,
+                    vmmServerId,
+                    cloudName,
+                    cloudCapacity,
+                    (storageQosPolicies ?? new ChangeTrackingList<ScVmmStorageQosPolicy>()).ToList(),
+                    provisioningState,
+                    default),
                 extendedLocation,
-                inventoryItemId,
-                uuid,
-                vmmServerId,
-                cloudName,
-                cloudCapacity,
-                storageQosPolicies?.ToList(),
-                provisioningState,
-                serializedAdditionalRawData: null);
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ScVmmCloudCapacity"/>. </summary>
@@ -101,29 +872,10 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="memoryMB"> MemoryMB specifies a memory usage limit in megabytes. </param>
         /// <param name="vmCount"> VMCount gives the max number of VMs that can be deployed in the cloud. </param>
         /// <returns> A new <see cref="Models.ScVmmCloudCapacity"/> instance for mocking. </returns>
-        public static ScVmmCloudCapacity ScVmmCloudCapacity(long? cpuCount = null, long? memoryMB = null, long? vmCount = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ScVmmCloudCapacity ScVmmCloudCapacity(long? cpuCount = default, long? memoryMB = default, long? vmCount = default)
         {
-            return new ScVmmCloudCapacity(cpuCount, memoryMB, vmCount, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ScVmmStorageQosPolicy"/>. </summary>
-        /// <param name="name"> The name of the policy. </param>
-        /// <param name="id"> The ID of the QoS policy. </param>
-        /// <param name="iopsMaximum"> The maximum IO operations per second. </param>
-        /// <param name="iopsMinimum"> The minimum IO operations per second. </param>
-        /// <param name="bandwidthLimit"> The Bandwidth Limit for internet traffic. </param>
-        /// <param name="policyId"> The underlying policy. </param>
-        /// <returns> A new <see cref="Models.ScVmmStorageQosPolicy"/> instance for mocking. </returns>
-        public static ScVmmStorageQosPolicy ScVmmStorageQosPolicy(string name = null, string id = null, long? iopsMaximum = null, long? iopsMinimum = null, long? bandwidthLimit = null, string policyId = null)
-        {
-            return new ScVmmStorageQosPolicy(
-                name,
-                id,
-                iopsMaximum,
-                iopsMinimum,
-                bandwidthLimit,
-                policyId,
-                serializedAdditionalRawData: null);
+            return new ScVmmCloudCapacity(cpuCount, memoryMB, vmCount, default, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ScVmm.ScVmmVirtualNetworkData"/>. </summary>
@@ -140,24 +892,25 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="networkName"> Name of the virtual network in vmmServer. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="ScVmm.ScVmmVirtualNetworkData"/> instance for mocking. </returns>
-        public static ScVmmVirtualNetworkData ScVmmVirtualNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, string inventoryItemId = null, string uuid = null, ResourceIdentifier vmmServerId = null, string networkName = null, ScVmmProvisioningState? provisioningState = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ScVmmVirtualNetworkData ScVmmVirtualNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedLocation extendedLocation = default, string inventoryItemId = default, string uuid = default, ResourceIdentifier vmmServerId = default, string networkName = default, ScVmmProvisioningState? provisioningState = default)
         {
-            tags ??= new Dictionary<string, string>();
-
             return new ScVmmVirtualNetworkData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                inventoryItemId is null && uuid is null && vmmServerId is null && networkName is null && provisioningState is null ? default : new VirtualNetworkProperties(
+                    inventoryItemId,
+                    uuid,
+                    vmmServerId,
+                    networkName,
+                    provisioningState,
+                    default),
                 extendedLocation,
-                inventoryItemId,
-                uuid,
-                vmmServerId,
-                networkName,
-                provisioningState,
-                serializedAdditionalRawData: null);
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ScVmm.ScVmmVirtualMachineTemplateData"/>. </summary>
@@ -187,108 +940,38 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="disks"> Gets the disks of the template. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="ScVmm.ScVmmVirtualMachineTemplateData"/> instance for mocking. </returns>
-        public static ScVmmVirtualMachineTemplateData ScVmmVirtualMachineTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, string inventoryItemId = null, string uuid = null, ResourceIdentifier vmmServerId = null, ScVmmOSType? osType = null, string osName = null, string computerName = null, int? memoryMB = null, int? cpuCount = null, LimitCpuForMigration? limitCpuForMigration = null, DynamicMemoryEnabled? dynamicMemoryEnabled = null, IsCustomizable? isCustomizable = null, int? dynamicMemoryMaxMB = null, int? dynamicMemoryMinMB = null, IsHighlyAvailable? isHighlyAvailable = null, int? generation = null, IEnumerable<ScVmmNetworkInterface> networkInterfaces = null, IEnumerable<ScVmmVirtualDisk> disks = null, ScVmmProvisioningState? provisioningState = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ScVmmVirtualMachineTemplateData ScVmmVirtualMachineTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedLocation extendedLocation = default, string inventoryItemId = default, string uuid = default, ResourceIdentifier vmmServerId = default, ScVmmOSType? osType = default, string osName = default, string computerName = default, int? memoryMB = default, int? cpuCount = default, LimitCpuForMigration? limitCpuForMigration = default, DynamicMemoryEnabled? dynamicMemoryEnabled = default, IsCustomizable? isCustomizable = default, int? dynamicMemoryMaxMB = default, int? dynamicMemoryMinMB = default, IsHighlyAvailable? isHighlyAvailable = default, int? generation = default, IEnumerable<ScVmmNetworkInterface> networkInterfaces = default, IEnumerable<ScVmmVirtualDisk> disks = default, ScVmmProvisioningState? provisioningState = default)
         {
-            tags ??= new Dictionary<string, string>();
-            networkInterfaces ??= new List<ScVmmNetworkInterface>();
-            disks ??= new List<ScVmmVirtualDisk>();
-
             return new ScVmmVirtualMachineTemplateData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                inventoryItemId is null && uuid is null && vmmServerId is null && osType is null && osName is null && computerName is null && memoryMB is null && cpuCount is null && limitCpuForMigration is null && dynamicMemoryEnabled is null && isCustomizable is null && dynamicMemoryMaxMB is null && dynamicMemoryMinMB is null && isHighlyAvailable is null && generation is null && networkInterfaces is null && disks is null && provisioningState is null ? default : new VirtualMachineTemplateProperties(
+                    inventoryItemId,
+                    uuid,
+                    vmmServerId,
+                    osType,
+                    osName,
+                    computerName,
+                    memoryMB,
+                    cpuCount,
+                    limitCpuForMigration,
+                    dynamicMemoryEnabled,
+                    isCustomizable,
+                    dynamicMemoryMaxMB,
+                    dynamicMemoryMinMB,
+                    isHighlyAvailable,
+                    generation,
+                    (networkInterfaces ?? new ChangeTrackingList<ScVmmNetworkInterface>()).ToList(),
+                    (disks ?? new ChangeTrackingList<ScVmmVirtualDisk>()).ToList(),
+                    provisioningState,
+                    default),
                 extendedLocation,
-                inventoryItemId,
-                uuid,
-                vmmServerId,
-                osType,
-                osName,
-                computerName,
-                memoryMB,
-                cpuCount,
-                limitCpuForMigration,
-                dynamicMemoryEnabled,
-                isCustomizable,
-                dynamicMemoryMaxMB,
-                dynamicMemoryMinMB,
-                isHighlyAvailable,
-                generation,
-                networkInterfaces?.ToList(),
-                disks?.ToList(),
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ScVmmNetworkInterface"/>. </summary>
-        /// <param name="name"> Gets or sets the name of the network interface. </param>
-        /// <param name="displayName"> Gets the display name of the network interface as shown in the vmmServer. This is the fallback label for a NIC when the name is not set. </param>
-        /// <param name="ipv4Addresses"> Gets the nic ipv4 addresses. </param>
-        /// <param name="ipv6Addresses"> Gets the nic ipv6 addresses. </param>
-        /// <param name="macAddress"> Gets or sets the nic MAC address. </param>
-        /// <param name="virtualNetworkId"> Gets or sets the ARM Id of the Microsoft.ScVmm/virtualNetwork resource to connect the nic. </param>
-        /// <param name="networkName"> Gets the name of the virtual network in vmmServer that the nic is connected to. </param>
-        /// <param name="ipv4AddressType"> Gets or sets the ipv4 address type. </param>
-        /// <param name="ipv6AddressType"> Gets or sets the ipv6 address type. </param>
-        /// <param name="macAddressType"> Gets or sets the mac address type. </param>
-        /// <param name="nicId"> Gets or sets the nic id. </param>
-        /// <returns> A new <see cref="Models.ScVmmNetworkInterface"/> instance for mocking. </returns>
-        public static ScVmmNetworkInterface ScVmmNetworkInterface(string name = null, string displayName = null, IEnumerable<string> ipv4Addresses = null, IEnumerable<string> ipv6Addresses = null, string macAddress = null, ResourceIdentifier virtualNetworkId = null, string networkName = null, AllocationMethod? ipv4AddressType = null, AllocationMethod? ipv6AddressType = null, AllocationMethod? macAddressType = null, string nicId = null)
-        {
-            ipv4Addresses ??= new List<string>();
-            ipv6Addresses ??= new List<string>();
-
-            return new ScVmmNetworkInterface(
-                name,
-                displayName,
-                ipv4Addresses?.ToList(),
-                ipv6Addresses?.ToList(),
-                macAddress,
-                virtualNetworkId,
-                networkName,
-                ipv4AddressType,
-                ipv6AddressType,
-                macAddressType,
-                nicId,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ScVmmVirtualDisk"/>. </summary>
-        /// <param name="name"> Gets or sets the name of the disk. </param>
-        /// <param name="displayName"> Gets the display name of the virtual disk as shown in the vmmServer. This is the fallback label for a disk when the name is not set. </param>
-        /// <param name="diskId"> Gets or sets the disk id. </param>
-        /// <param name="diskSizeGB"> Gets or sets the disk total size. </param>
-        /// <param name="maxDiskSizeGB"> Gets the max disk size. </param>
-        /// <param name="bus"> Gets or sets the disk bus. </param>
-        /// <param name="lun"> Gets or sets the disk lun. </param>
-        /// <param name="busType"> Gets or sets the disk bus type. </param>
-        /// <param name="vhdType"> Gets or sets the disk vhd type. </param>
-        /// <param name="volumeType"> Gets the disk volume type. </param>
-        /// <param name="vhdFormatType"> Gets the disk vhd format type. </param>
-        /// <param name="templateDiskId"> Gets or sets the disk id in the template. </param>
-        /// <param name="storageQosPolicy"> The QoS policy for the disk. </param>
-        /// <param name="createDiffDisk"> Gets or sets a value indicating diff disk. </param>
-        /// <returns> A new <see cref="Models.ScVmmVirtualDisk"/> instance for mocking. </returns>
-        public static ScVmmVirtualDisk ScVmmVirtualDisk(string name = null, string displayName = null, string diskId = null, int? diskSizeGB = null, int? maxDiskSizeGB = null, int? bus = null, int? lun = null, string busType = null, string vhdType = null, string volumeType = null, string vhdFormatType = null, string templateDiskId = null, ScVmmStorageQosPolicyDetails storageQosPolicy = null, CreateDiffDisk? createDiffDisk = null)
-        {
-            return new ScVmmVirtualDisk(
-                name,
-                displayName,
-                diskId,
-                diskSizeGB,
-                maxDiskSizeGB,
-                bus,
-                lun,
-                busType,
-                vhdType,
-                volumeType,
-                vhdFormatType,
-                templateDiskId,
-                storageQosPolicy,
-                createDiffDisk,
-                serializedAdditionalRawData: null);
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ScVmm.ScVmmAvailabilitySetData"/>. </summary>
@@ -303,64 +986,19 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="vmmServerId"> ARM Id of the vmmServer resource in which this resource resides. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="ScVmm.ScVmmAvailabilitySetData"/> instance for mocking. </returns>
-        public static ScVmmAvailabilitySetData ScVmmAvailabilitySetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, string availabilitySetName = null, ResourceIdentifier vmmServerId = null, ScVmmProvisioningState? provisioningState = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ScVmmAvailabilitySetData ScVmmAvailabilitySetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedLocation extendedLocation = default, string availabilitySetName = default, ResourceIdentifier vmmServerId = default, ScVmmProvisioningState? provisioningState = default)
         {
-            tags ??= new Dictionary<string, string>();
-
             return new ScVmmAvailabilitySetData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                availabilitySetName is null && vmmServerId is null && provisioningState is null ? default : new AvailabilitySetProperties(availabilitySetName, vmmServerId, provisioningState, default),
                 extendedLocation,
-                availabilitySetName,
-                vmmServerId,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ScVmm.ScVmmInventoryItemData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Resource properties.
-        /// Please note <see cref="Models.ScVmmInventoryItemProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.CloudInventoryItem"/>, <see cref="Models.VirtualMachineInventoryItem"/>, <see cref="Models.VirtualMachineTemplateInventoryItem"/> and <see cref="Models.VirtualNetworkInventoryItem"/>.
-        /// </param>
-        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
-        /// <returns> A new <see cref="ScVmm.ScVmmInventoryItemData"/> instance for mocking. </returns>
-        public static ScVmmInventoryItemData ScVmmInventoryItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ScVmmInventoryItemProperties properties = null, string kind = null)
-        {
-            return new ScVmmInventoryItemData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                kind,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ScVmmInventoryItemProperties"/>. </summary>
-        /// <param name="inventoryType"> They inventory type. </param>
-        /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
-        /// <param name="uuid"> Gets the UUID (which is assigned by VMM) for the inventory item. </param>
-        /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Models.ScVmmInventoryItemProperties"/> instance for mocking. </returns>
-        public static ScVmmInventoryItemProperties ScVmmInventoryItemProperties(string inventoryType = null, string managedResourceId = null, string uuid = null, string inventoryItemName = null, ScVmmProvisioningState? provisioningState = null)
-        {
-            return new UnknownInventoryItemProperties(
-                inventoryType == null ? default : new ScVmmInventoryType(inventoryType),
-                managedResourceId,
-                uuid,
-                inventoryItemName,
-                provisioningState,
-                serializedAdditionalRawData: null);
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ScVmm.ScVmmVirtualMachineInstanceData"/>. </summary>
@@ -378,27 +1016,26 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="powerState"> Gets the power state of the virtual machine. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="ScVmm.ScVmmVirtualMachineInstanceData"/> instance for mocking. </returns>
-        public static ScVmmVirtualMachineInstanceData ScVmmVirtualMachineInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExtendedLocation extendedLocation = null, IEnumerable<ScVmmAvailabilitySetItem> availabilitySets = null, OSProfileForVmInstance osProfile = null, ScVmmHardwareProfile hardwareProfile = null, IEnumerable<ScVmmNetworkInterface> networkInterfaces = null, IEnumerable<ScVmmVirtualDisk> storageDisks = null, ScVmmInfrastructureProfile infrastructureProfile = null, string powerState = null, ScVmmProvisioningState? provisioningState = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ScVmmVirtualMachineInstanceData ScVmmVirtualMachineInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ExtendedLocation extendedLocation = default, IEnumerable<ScVmmAvailabilitySetItem> availabilitySets = default, OSProfileForVmInstance osProfile = default, ScVmmHardwareProfile hardwareProfile = default, IEnumerable<ScVmmNetworkInterface> networkInterfaces = default, IEnumerable<ScVmmVirtualDisk> storageDisks = default, ScVmmInfrastructureProfile infrastructureProfile = default, string powerState = default, ScVmmProvisioningState? provisioningState = default)
         {
-            availabilitySets ??= new List<ScVmmAvailabilitySetItem>();
-            networkInterfaces ??= new List<ScVmmNetworkInterface>();
-            storageDisks ??= new List<ScVmmVirtualDisk>();
-
             return new ScVmmVirtualMachineInstanceData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                availabilitySets is null && osProfile is null && hardwareProfile is null && networkInterfaces is null && storageDisks is null && infrastructureProfile is null && powerState is null && provisioningState is null ? default : new VirtualMachineInstanceProperties(
+                    (availabilitySets ?? new ChangeTrackingList<ScVmmAvailabilitySetItem>()).ToList(),
+                    osProfile,
+                    hardwareProfile,
+                    new ScVmmNetworkProfile((networkInterfaces ?? new ChangeTrackingList<ScVmmNetworkInterface>()).ToList(), default),
+                    new ScVmmStorageProfile((storageDisks ?? new ChangeTrackingList<ScVmmVirtualDisk>()).ToList(), default),
+                    infrastructureProfile,
+                    powerState,
+                    provisioningState,
+                    default),
                 extendedLocation,
-                availabilitySets?.ToList(),
-                osProfile,
-                hardwareProfile,
-                networkInterfaces != null ? new ScVmmNetworkProfile(networkInterfaces?.ToList(), serializedAdditionalRawData: null) : null,
-                storageDisks != null ? new ScVmmStorageProfile(storageDisks?.ToList(), serializedAdditionalRawData: null) : null,
-                infrastructureProfile,
-                powerState,
-                provisioningState,
-                serializedAdditionalRawData: null);
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OSProfileForVmInstance"/>. </summary>
@@ -408,91 +1045,24 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="osSku"> Gets os sku. </param>
         /// <param name="osVersion"> Gets os version. </param>
         /// <returns> A new <see cref="Models.OSProfileForVmInstance"/> instance for mocking. </returns>
-        public static OSProfileForVmInstance OSProfileForVmInstance(string adminPassword = null, string computerName = null, ScVmmOSType? osType = null, string osSku = null, string osVersion = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static OSProfileForVmInstance OSProfileForVmInstance(string adminPassword = default, string computerName = default, ScVmmOSType? osType = default, string osSku = default, string osVersion = default)
         {
             return new OSProfileForVmInstance(
+                default,
                 adminPassword,
                 computerName,
                 osType,
                 osSku,
                 osVersion,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ScVmmHardwareProfile"/>. </summary>
-        /// <param name="memoryMB"> MemoryMB is the size of a virtual machine's memory, in MB. </param>
-        /// <param name="cpuCount"> Gets or sets the number of vCPUs for the vm. </param>
-        /// <param name="limitCpuForMigration"> Gets or sets a value indicating whether to enable processor compatibility mode for live migration of VMs. </param>
-        /// <param name="dynamicMemoryEnabled"> Gets or sets a value indicating whether to enable dynamic memory or not. </param>
-        /// <param name="dynamicMemoryMaxMB"> Gets or sets the max dynamic memory for the vm. </param>
-        /// <param name="dynamicMemoryMinMB"> Gets or sets the min dynamic memory for the vm. </param>
-        /// <param name="isHighlyAvailable"> Gets highly available property. </param>
-        /// <returns> A new <see cref="Models.ScVmmHardwareProfile"/> instance for mocking. </returns>
-        public static ScVmmHardwareProfile ScVmmHardwareProfile(int? memoryMB = null, int? cpuCount = null, LimitCpuForMigration? limitCpuForMigration = null, DynamicMemoryEnabled? dynamicMemoryEnabled = null, int? dynamicMemoryMaxMB = null, int? dynamicMemoryMinMB = null, IsHighlyAvailable? isHighlyAvailable = null)
-        {
-            return new ScVmmHardwareProfile(
-                memoryMB,
-                cpuCount,
-                limitCpuForMigration,
-                dynamicMemoryEnabled,
-                dynamicMemoryMaxMB,
-                dynamicMemoryMinMB,
-                isHighlyAvailable,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ScVmmInfrastructureProfile"/>. </summary>
-        /// <param name="inventoryItemId"> Gets or sets the inventory Item ID for the resource. </param>
-        /// <param name="vmmServerId"> ARM Id of the vmmServer resource in which this resource resides. </param>
-        /// <param name="cloudId"> ARM Id of the cloud resource to use for deploying the vm. </param>
-        /// <param name="templateId"> ARM Id of the template resource to use for deploying the vm. </param>
-        /// <param name="vmName"> VMName is the name of VM on the SCVMM server. </param>
-        /// <param name="uuid"> Unique ID of the virtual machine. </param>
-        /// <param name="lastRestoredVmCheckpoint"> Last restored checkpoint in the vm. </param>
-        /// <param name="checkpoints"> Checkpoints in the vm. </param>
-        /// <param name="checkpointType"> Type of checkpoint supported for the vm. </param>
-        /// <param name="generation"> Gets or sets the generation for the vm. </param>
-        /// <param name="biosGuid"> Gets or sets the bios guid for the vm. </param>
-        /// <returns> A new <see cref="Models.ScVmmInfrastructureProfile"/> instance for mocking. </returns>
-        public static ScVmmInfrastructureProfile ScVmmInfrastructureProfile(string inventoryItemId = null, ResourceIdentifier vmmServerId = null, ResourceIdentifier cloudId = null, ResourceIdentifier templateId = null, string vmName = null, string uuid = null, ScVmmCheckpoint lastRestoredVmCheckpoint = null, IEnumerable<ScVmmCheckpoint> checkpoints = null, string checkpointType = null, int? generation = null, string biosGuid = null)
-        {
-            checkpoints ??= new List<ScVmmCheckpoint>();
-
-            return new ScVmmInfrastructureProfile(
-                inventoryItemId,
-                vmmServerId,
-                cloudId,
-                templateId,
-                vmName,
-                uuid,
-                lastRestoredVmCheckpoint,
-                checkpoints?.ToList(),
-                checkpointType,
-                generation,
-                biosGuid,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ScVmm.ScVmmHybridIdentityMetadataData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="resourceUid"> The unique identifier for the resource. </param>
-        /// <param name="publicKey"> Gets or sets the Public Key. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="ScVmm.ScVmmHybridIdentityMetadataData"/> instance for mocking. </returns>
-        public static ScVmmHybridIdentityMetadataData ScVmmHybridIdentityMetadataData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string resourceUid = null, string publicKey = null, ScVmmProvisioningState? provisioningState = null)
-        {
-            return new ScVmmHybridIdentityMetadataData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                resourceUid,
-                publicKey,
-                provisioningState,
-                serializedAdditionalRawData: null);
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ScVmm.ScVmmGuestAgentData"/>. </summary>
@@ -508,80 +1078,25 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="customResourceName"> Gets the name of the corresponding resource in Kubernetes. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="ScVmm.ScVmmGuestAgentData"/> instance for mocking. </returns>
-        public static ScVmmGuestAgentData ScVmmGuestAgentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string uuid = null, ScVmmGuestCredential credentials = null, string httpsProxy = null, ScVmmProvisioningAction? provisioningAction = null, string status = null, string customResourceName = null, ScVmmProvisioningState? provisioningState = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ScVmmGuestAgentData ScVmmGuestAgentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string uuid = default, ScVmmGuestCredential credentials = default, string httpsProxy = default, ScVmmProvisioningAction? provisioningAction = default, string status = default, string customResourceName = default, ScVmmProvisioningState? provisioningState = default)
         {
             return new ScVmmGuestAgentData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                uuid,
-                credentials,
-                httpsProxy != null ? new ScVmmHttpProxyConfiguration(httpsProxy, serializedAdditionalRawData: null) : null,
-                provisioningAction,
-                status,
-                customResourceName,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CloudInventoryItem"/>. </summary>
-        /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
-        /// <param name="uuid"> Gets the UUID (which is assigned by VMM) for the inventory item. </param>
-        /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Models.CloudInventoryItem"/> instance for mocking. </returns>
-        public static CloudInventoryItem CloudInventoryItem(string managedResourceId = null, string uuid = null, string inventoryItemName = null, ScVmmProvisioningState? provisioningState = null)
-        {
-            return new CloudInventoryItem(
-                ScVmmInventoryType.Cloud,
-                managedResourceId,
-                uuid,
-                inventoryItemName,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkInventoryItem"/>. </summary>
-        /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
-        /// <param name="uuid"> Gets the UUID (which is assigned by VMM) for the inventory item. </param>
-        /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Models.VirtualNetworkInventoryItem"/> instance for mocking. </returns>
-        public static VirtualNetworkInventoryItem VirtualNetworkInventoryItem(string managedResourceId = null, string uuid = null, string inventoryItemName = null, ScVmmProvisioningState? provisioningState = null)
-        {
-            return new VirtualNetworkInventoryItem(
-                ScVmmInventoryType.VirtualNetwork,
-                managedResourceId,
-                uuid,
-                inventoryItemName,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineTemplateInventoryItem"/>. </summary>
-        /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
-        /// <param name="uuid"> Gets the UUID (which is assigned by VMM) for the inventory item. </param>
-        /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="cpuCount"> Gets the desired number of vCPUs for the vm. </param>
-        /// <param name="memoryMB"> MemoryMB is the desired size of a virtual machine's memory, in MB. </param>
-        /// <param name="osType"> Gets the type of the os. </param>
-        /// <param name="osName"> Gets os name. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineTemplateInventoryItem"/> instance for mocking. </returns>
-        public static VirtualMachineTemplateInventoryItem VirtualMachineTemplateInventoryItem(string managedResourceId = null, string uuid = null, string inventoryItemName = null, ScVmmProvisioningState? provisioningState = null, int? cpuCount = null, int? memoryMB = null, ScVmmOSType? osType = null, string osName = null)
-        {
-            return new VirtualMachineTemplateInventoryItem(
-                ScVmmInventoryType.VirtualMachineTemplate,
-                managedResourceId,
-                uuid,
-                inventoryItemName,
-                provisioningState,
-                serializedAdditionalRawData: null,
-                cpuCount,
-                memoryMB,
-                osType,
-                osName);
+                uuid is null && credentials is null && httpsProxy is null && provisioningAction is null && status is null && customResourceName is null && provisioningState is null ? default : new GuestAgentProperties(
+                    uuid,
+                    credentials,
+                    new ScVmmHttpProxyConfiguration(httpsProxy, default),
+                    provisioningAction,
+                    status,
+                    customResourceName,
+                    provisioningState,
+                    default,
+                    default),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineInventoryItem"/>. </summary>
@@ -598,22 +1113,22 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="biosGuid"> Gets the bios guid. </param>
         /// <param name="managedMachineResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
         /// <returns> A new <see cref="Models.VirtualMachineInventoryItem"/> instance for mocking. </returns>
-        public static VirtualMachineInventoryItem VirtualMachineInventoryItem(string managedResourceId = null, string uuid = null, string inventoryItemName = null, ScVmmProvisioningState? provisioningState = null, ScVmmOSType? osType = null, string osName = null, string osVersion = null, string powerState = null, IEnumerable<string> ipAddresses = null, ScVmmInventoryItemDetails cloud = null, string biosGuid = null, ResourceIdentifier managedMachineResourceId = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachineInventoryItem VirtualMachineInventoryItem(string managedResourceId = default, string uuid = default, string inventoryItemName = default, ScVmmProvisioningState? provisioningState = default, ScVmmOSType? osType = default, string osName = default, string osVersion = default, string powerState = default, IEnumerable<string> ipAddresses = default, ScVmmInventoryItemDetails cloud = default, string biosGuid = default, ResourceIdentifier managedMachineResourceId = default)
         {
-            ipAddresses ??= new List<string>();
-
             return new VirtualMachineInventoryItem(
-                ScVmmInventoryType.VirtualMachine,
+                default,
                 managedResourceId,
                 uuid,
                 inventoryItemName,
                 provisioningState,
-                serializedAdditionalRawData: null,
+                default,
                 osType,
                 osName,
                 osVersion,
                 powerState,
-                ipAddresses?.ToList(),
+                default,
+                (ipAddresses ?? new ChangeTrackingList<string>()).ToList(),
                 cloud,
                 biosGuid,
                 managedMachineResourceId);

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Initializes a new instance of <see cref="HciNetworkAdapter"/>. </summary>
         /// <param name="ipAssignmentType"> Type of IP assignment. </param>
-        public HciNetworkAdapter(IpAssignmentType ipAssignmentType)
+        public HciNetworkAdapter(IPAssignmentType ipAssignmentType)
         {
-            IpAssignmentType = ipAssignmentType;
+            IPAssignmentType = ipAssignmentType;
             DnsAddressArray = new ChangeTrackingList<string>();
         }
 
@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="dnsAddressArray"> Array of DNS addresses. </param>
         /// <param name="vlanId"> VLAN ID for the network setup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciNetworkAdapter(IpAssignmentType ipAssignmentType, string ipAddress, string adapterName, string macAddress, HciIPAddressRange ipAddressRange, string gateway, string subnetMask, IList<string> dnsAddressArray, string vlanId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciNetworkAdapter(IPAssignmentType ipAssignmentType, string ipAddress, string adapterName, string macAddress, HciIPAddressRange ipAddressRange, string gateway, string subnetMask, IList<string> dnsAddressArray, string vlanId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpAssignmentType = ipAssignmentType;
-            IpAddress = ipAddress;
+            IPAssignmentType = ipAssignmentType;
+            IPAddress = ipAddress;
             AdapterName = adapterName;
             MacAddress = macAddress;
-            IpAddressRange = ipAddressRange;
+            IPAddressRange = ipAddressRange;
             Gateway = gateway;
             SubnetMask = subnetMask;
             DnsAddressArray = dnsAddressArray;
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Type of IP assignment. </summary>
         [WirePath("ipAssignmentType")]
-        public IpAssignmentType IpAssignmentType { get; set; }
+        public IPAssignmentType IPAssignmentType { get; set; }
 
         /// <summary> IP address. </summary>
         [WirePath("ipAddress")]
-        public string IpAddress { get; set; }
+        public string IPAddress { get; set; }
 
         /// <summary> Adapter Name. </summary>
         [WirePath("adapterName")]
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> IP address range. </summary>
         [WirePath("ipAddressRange")]
-        public HciIPAddressRange IpAddressRange { get; set; }
+        public HciIPAddressRange IPAddressRange { get; set; }
 
         /// <summary> Gateway id. </summary>
         [WirePath("gateway")]

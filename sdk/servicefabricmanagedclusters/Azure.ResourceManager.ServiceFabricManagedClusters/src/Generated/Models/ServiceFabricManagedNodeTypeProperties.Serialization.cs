@@ -416,10 +416,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("isOutboundOnly"u8);
                 writer.WriteBooleanValue(IsOutboundOnly.Value);
             }
-            if (Optional.IsDefined(EnableResilientEphemeralOsDisk))
+            if (Optional.IsDefined(EnableResilientEphemeralOSDisk))
             {
                 writer.WritePropertyName("enableResilientEphemeralOsDisk"u8);
-                writer.WriteBooleanValue(EnableResilientEphemeralOsDisk.Value);
+                writer.WriteBooleanValue(EnableResilientEphemeralOSDisk.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             IList<ServiceFabricManagedVmApplication> vmApplications = default;
             bool? isZoneBalanceEnabled = default;
             bool? isOutboundOnly = default;
-            bool? enableResilientEphemeralOsDisk = default;
+            bool? enableResilientEphemeralOSDisk = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -1040,7 +1040,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    enableResilientEphemeralOsDisk = prop.Value.GetBoolean();
+                    enableResilientEphemeralOSDisk = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -1102,7 +1102,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 vmApplications ?? new ChangeTrackingList<ServiceFabricManagedVmApplication>(),
                 isZoneBalanceEnabled,
                 isOutboundOnly,
-                enableResilientEphemeralOsDisk,
+                enableResilientEphemeralOSDisk,
                 additionalBinaryDataProperties);
         }
     }
