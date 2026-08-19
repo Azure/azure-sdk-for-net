@@ -266,10 +266,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateIpAddressV6))
+            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddressV6))
             {
                 writer.WritePropertyName("privateIpAddressV6"u8);
-                writer.WriteStringValue(PrivateIpAddressV6);
+                writer.WriteStringValue(PrivateIPAddressV6);
             }
             if (options.Format != "W" && Optional.IsDefined(MigrationStatus))
             {
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Network.Models
             IList<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations = default;
             IList<NetworkIPVersion> addressFamily = default;
             string privateIPAddress = default;
-            string privateIpAddressV6 = default;
+            string privateIPAddressV6 = default;
             NetworkVirtualApplianceMigrationStatus migrationStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("privateIpAddressV6"u8))
                 {
-                    privateIpAddressV6 = prop.Value.GetString();
+                    privateIPAddressV6 = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("migrationStatus"u8))
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.Network.Models
                 nvaInterfaceConfigurations ?? new ChangeTrackingList<NvaInterfaceConfigurationsProperties>(),
                 addressFamily ?? new ChangeTrackingList<NetworkIPVersion>(),
                 privateIPAddress,
-                privateIpAddressV6,
+                privateIPAddressV6,
                 migrationStatus,
                 additionalBinaryDataProperties);
         }

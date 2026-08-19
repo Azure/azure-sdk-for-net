@@ -285,11 +285,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> An Internal Load Balancer's HA port frontend IPv6 address. Can be used to set routes &amp; UDR to load balance traffic between NVA instances. This field appears in dual-stack NVAs. </summary>
         [WirePath("properties.privateIpAddressV6")]
-        public string PrivateIpAddressV6
+        public string PrivateIPAddressV6
         {
             get
             {
-                return Properties is null ? default : Properties.PrivateIpAddressV6;
+                return Properties is null ? default : Properties.PrivateIPAddressV6;
             }
         }
 

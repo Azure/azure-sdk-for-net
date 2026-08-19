@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="GatewayEffectiveRoute"/>. </summary>
         /// <param name="localAddress"> The gateway's local address. </param>
         /// <param name="addressPrefixes"> The list of address prefixes for the effective route. </param>
-        /// <param name="nextHopIpAddress"> The IP address of the next hop for the effective route. </param>
+        /// <param name="nextHopIPAddress"> The IP address of the next hop for the effective route. </param>
         /// <param name="nextHopType"> The next hop type of the effective route. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GatewayEffectiveRoute(string localAddress, IReadOnlyList<string> addressPrefixes, string nextHopIpAddress, GatewayEffectiveRouteNextHopType? nextHopType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GatewayEffectiveRoute(string localAddress, IReadOnlyList<string> addressPrefixes, string nextHopIPAddress, GatewayEffectiveRouteNextHopType? nextHopType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LocalAddress = localAddress;
             AddressPrefixes = addressPrefixes;
-            NextHopIpAddress = nextHopIpAddress;
+            NextHopIPAddress = nextHopIPAddress;
             NextHopType = nextHopType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The IP address of the next hop for the effective route. </summary>
         [WirePath("nextHopIpAddress")]
-        public string NextHopIpAddress { get; }
+        public string NextHopIPAddress { get; }
 
         /// <summary> The next hop type of the effective route. </summary>
         [WirePath("nextHopType")]

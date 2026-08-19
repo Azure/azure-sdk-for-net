@@ -15,56 +15,56 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Reference to an IP configuration resource by ARM resource ID. </summary>
-    internal partial class MoveIpConfigurationResourceReference : IJsonModel<MoveIpConfigurationResourceReference>
+    internal partial class MoveIPConfigurationResourceReference : IJsonModel<MoveIPConfigurationResourceReference>
     {
-        /// <summary> Initializes a new instance of <see cref="MoveIpConfigurationResourceReference"/> for deserialization. </summary>
-        internal MoveIpConfigurationResourceReference()
+        /// <summary> Initializes a new instance of <see cref="MoveIPConfigurationResourceReference"/> for deserialization. </summary>
+        internal MoveIPConfigurationResourceReference()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MoveIpConfigurationResourceReference PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MoveIPConfigurationResourceReference PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MoveIpConfigurationResourceReference>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MoveIPConfigurationResourceReference>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMoveIpConfigurationResourceReference(document.RootElement, options);
+                        return DeserializeMoveIPConfigurationResourceReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoveIpConfigurationResourceReference)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoveIPConfigurationResourceReference)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MoveIpConfigurationResourceReference>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MoveIPConfigurationResourceReference>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MoveIpConfigurationResourceReference)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoveIPConfigurationResourceReference)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MoveIpConfigurationResourceReference>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MoveIPConfigurationResourceReference>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MoveIpConfigurationResourceReference IPersistableModel<MoveIpConfigurationResourceReference>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MoveIPConfigurationResourceReference IPersistableModel<MoveIPConfigurationResourceReference>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MoveIpConfigurationResourceReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MoveIPConfigurationResourceReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MoveIpConfigurationResourceReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MoveIPConfigurationResourceReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MoveIpConfigurationResourceReference>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MoveIPConfigurationResourceReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoveIpConfigurationResourceReference)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MoveIPConfigurationResourceReference)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -101,24 +101,24 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MoveIpConfigurationResourceReference IJsonModel<MoveIpConfigurationResourceReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MoveIPConfigurationResourceReference IJsonModel<MoveIPConfigurationResourceReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MoveIpConfigurationResourceReference JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MoveIPConfigurationResourceReference JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MoveIpConfigurationResourceReference>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MoveIPConfigurationResourceReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoveIpConfigurationResourceReference)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MoveIPConfigurationResourceReference)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMoveIpConfigurationResourceReference(document.RootElement, options);
+            return DeserializeMoveIPConfigurationResourceReference(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MoveIpConfigurationResourceReference DeserializeMoveIpConfigurationResourceReference(JsonElement element, ModelReaderWriterOptions options)
+        internal static MoveIPConfigurationResourceReference DeserializeMoveIPConfigurationResourceReference(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MoveIpConfigurationResourceReference(id, additionalBinaryDataProperties);
+            return new MoveIPConfigurationResourceReference(id, additionalBinaryDataProperties);
         }
     }
 }

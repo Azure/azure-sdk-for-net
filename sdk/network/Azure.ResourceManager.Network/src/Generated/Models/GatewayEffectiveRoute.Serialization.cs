@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextHopIpAddress))
+            if (options.Format != "W" && Optional.IsDefined(NextHopIPAddress))
             {
                 writer.WritePropertyName("nextHopIpAddress"u8);
-                writer.WriteStringValue(NextHopIpAddress);
+                writer.WriteStringValue(NextHopIPAddress);
             }
             if (options.Format != "W" && Optional.IsDefined(NextHopType))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             string localAddress = default;
             IReadOnlyList<string> addressPrefixes = default;
-            string nextHopIpAddress = default;
+            string nextHopIPAddress = default;
             GatewayEffectiveRouteNextHopType? nextHopType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("nextHopIpAddress"u8))
                 {
-                    nextHopIpAddress = prop.Value.GetString();
+                    nextHopIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("nextHopType"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GatewayEffectiveRoute(localAddress, addressPrefixes ?? new ChangeTrackingList<string>(), nextHopIpAddress, nextHopType, additionalBinaryDataProperties);
+            return new GatewayEffectiveRoute(localAddress, addressPrefixes ?? new ChangeTrackingList<string>(), nextHopIPAddress, nextHopType, additionalBinaryDataProperties);
         }
     }
 }

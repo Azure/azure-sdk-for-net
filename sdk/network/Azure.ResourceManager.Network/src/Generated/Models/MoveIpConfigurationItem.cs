@@ -13,60 +13,60 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> An item representing a source and target IP configuration for a move operation. </summary>
-    public partial class MoveIpConfigurationItem
+    public partial class MoveIPConfigurationItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MoveIpConfigurationItem"/>. </summary>
-        /// <param name="sourceIpConfigurationId"> The ARM resource ID of the IP configuration. </param>
-        /// <param name="targetIpConfigurationId"> The ARM resource ID of the IP configuration. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceIpConfigurationId"/> or <paramref name="targetIpConfigurationId"/> is null. </exception>
-        public MoveIpConfigurationItem(ResourceIdentifier sourceIpConfigurationId, ResourceIdentifier targetIpConfigurationId)
+        /// <summary> Initializes a new instance of <see cref="MoveIPConfigurationItem"/>. </summary>
+        /// <param name="sourceIPConfigurationId"> The ARM resource ID of the IP configuration. </param>
+        /// <param name="targetIPConfigurationId"> The ARM resource ID of the IP configuration. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceIPConfigurationId"/> or <paramref name="targetIPConfigurationId"/> is null. </exception>
+        public MoveIPConfigurationItem(ResourceIdentifier sourceIPConfigurationId, ResourceIdentifier targetIPConfigurationId)
         {
-            Argument.AssertNotNull(sourceIpConfigurationId, nameof(sourceIpConfigurationId));
-            Argument.AssertNotNull(targetIpConfigurationId, nameof(targetIpConfigurationId));
+            Argument.AssertNotNull(sourceIPConfigurationId, nameof(sourceIPConfigurationId));
+            Argument.AssertNotNull(targetIPConfigurationId, nameof(targetIPConfigurationId));
 
-            SourceIpConfiguration = new MoveIpConfigurationResourceReference(sourceIpConfigurationId);
-            TargetIpConfiguration = new MoveIpConfigurationResourceReference(targetIpConfigurationId);
+            SourceIPConfiguration = new MoveIPConfigurationResourceReference(sourceIPConfigurationId);
+            TargetIPConfiguration = new MoveIPConfigurationResourceReference(targetIPConfigurationId);
         }
 
-        /// <summary> Initializes a new instance of <see cref="MoveIpConfigurationItem"/>. </summary>
-        /// <param name="sourceIpConfiguration"> The source IP configuration to move from. </param>
-        /// <param name="targetIpConfiguration"> The target IP configuration to move to. </param>
+        /// <summary> Initializes a new instance of <see cref="MoveIPConfigurationItem"/>. </summary>
+        /// <param name="sourceIPConfiguration"> The source IP configuration to move from. </param>
+        /// <param name="targetIPConfiguration"> The target IP configuration to move to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MoveIpConfigurationItem(MoveIpConfigurationResourceReference sourceIpConfiguration, MoveIpConfigurationResourceReference targetIpConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MoveIPConfigurationItem(MoveIPConfigurationResourceReference sourceIPConfiguration, MoveIPConfigurationResourceReference targetIPConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SourceIpConfiguration = sourceIpConfiguration;
-            TargetIpConfiguration = targetIpConfiguration;
+            SourceIPConfiguration = sourceIPConfiguration;
+            TargetIPConfiguration = targetIPConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The source IP configuration to move from. </summary>
         [WirePath("sourceIpConfiguration")]
-        internal MoveIpConfigurationResourceReference SourceIpConfiguration { get; }
+        internal MoveIPConfigurationResourceReference SourceIPConfiguration { get; }
 
         /// <summary> The target IP configuration to move to. </summary>
         [WirePath("targetIpConfiguration")]
-        internal MoveIpConfigurationResourceReference TargetIpConfiguration { get; }
+        internal MoveIPConfigurationResourceReference TargetIPConfiguration { get; }
 
         /// <summary> The ARM resource ID of the IP configuration. </summary>
         [WirePath("sourceIpConfiguration.id")]
-        public ResourceIdentifier SourceIpConfigurationId
+        public ResourceIdentifier SourceIPConfigurationId
         {
             get
             {
-                return SourceIpConfiguration.Id;
+                return SourceIPConfiguration.Id;
             }
         }
 
         /// <summary> The ARM resource ID of the IP configuration. </summary>
         [WirePath("targetIpConfiguration.id")]
-        public ResourceIdentifier TargetIpConfigurationId
+        public ResourceIdentifier TargetIPConfigurationId
         {
             get
             {
-                return TargetIpConfiguration.Id;
+                return TargetIPConfiguration.Id;
             }
         }
     }

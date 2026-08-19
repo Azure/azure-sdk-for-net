@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to move IP configurations from one virtual network to another. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> MoveIpConfigurationsAsync(WaitUntil waitUntil, MoveIpConfigurationsContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> MoveIpConfigurationsAsync(WaitUntil waitUntil, MoveIPConfigurationsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworksRestClient.CreateMoveIpConfigurationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MoveIpConfigurationsContent.ToRequestContent(content), context);
+                HttpMessage message = _virtualNetworksRestClient.CreateMoveIpConfigurationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MoveIPConfigurationsContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_virtualNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to move IP configurations from one virtual network to another. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation MoveIpConfigurations(WaitUntil waitUntil, MoveIpConfigurationsContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation MoveIpConfigurations(WaitUntil waitUntil, MoveIPConfigurationsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -783,7 +783,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworksRestClient.CreateMoveIpConfigurationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MoveIpConfigurationsContent.ToRequestContent(content), context);
+                HttpMessage message = _virtualNetworksRestClient.CreateMoveIpConfigurationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MoveIPConfigurationsContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_virtualNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)

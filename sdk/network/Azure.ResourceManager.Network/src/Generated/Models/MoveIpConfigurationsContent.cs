@@ -13,32 +13,32 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Request body for the MoveIpConfigurations operation. </summary>
-    public partial class MoveIpConfigurationsContent
+    public partial class MoveIPConfigurationsContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MoveIpConfigurationsContent"/>. </summary>
-        /// <param name="moveIpConfigurationItems"> A list of IP configuration move items. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="moveIpConfigurationItems"/> is null. </exception>
-        public MoveIpConfigurationsContent(IEnumerable<MoveIpConfigurationItem> moveIpConfigurationItems)
+        /// <summary> Initializes a new instance of <see cref="MoveIPConfigurationsContent"/>. </summary>
+        /// <param name="moveIPConfigurationItems"> A list of IP configuration move items. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="moveIPConfigurationItems"/> is null. </exception>
+        public MoveIPConfigurationsContent(IEnumerable<MoveIPConfigurationItem> moveIPConfigurationItems)
         {
-            Argument.AssertNotNull(moveIpConfigurationItems, nameof(moveIpConfigurationItems));
+            Argument.AssertNotNull(moveIPConfigurationItems, nameof(moveIPConfigurationItems));
 
-            MoveIpConfigurationItems = moveIpConfigurationItems.ToList();
+            MoveIPConfigurationItems = moveIPConfigurationItems.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MoveIpConfigurationsContent"/>. </summary>
-        /// <param name="moveIpConfigurationItems"> A list of IP configuration move items. </param>
+        /// <summary> Initializes a new instance of <see cref="MoveIPConfigurationsContent"/>. </summary>
+        /// <param name="moveIPConfigurationItems"> A list of IP configuration move items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MoveIpConfigurationsContent(IList<MoveIpConfigurationItem> moveIpConfigurationItems, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MoveIPConfigurationsContent(IList<MoveIPConfigurationItem> moveIPConfigurationItems, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            MoveIpConfigurationItems = moveIpConfigurationItems;
+            MoveIPConfigurationItems = moveIPConfigurationItems;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A list of IP configuration move items. </summary>
         [WirePath("moveIpConfigurationItems")]
-        public IList<MoveIpConfigurationItem> MoveIpConfigurationItems { get; }
+        public IList<MoveIPConfigurationItem> MoveIPConfigurationItems { get; }
     }
 }

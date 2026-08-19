@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The state of IPv6 peering. </summary>
-    public readonly partial struct EnableOnlyIpv6PeeringState : IEquatable<EnableOnlyIpv6PeeringState>
+    public readonly partial struct EnableOnlyIPv6PeeringState : IEquatable<EnableOnlyIPv6PeeringState>
     {
         private readonly string _value;
         /// <summary> IPv6 peering is enabled. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> IPv6 peering is disabled. </summary>
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Initializes a new instance of <see cref="EnableOnlyIpv6PeeringState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnableOnlyIPv6PeeringState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EnableOnlyIpv6PeeringState(string value)
+        public EnableOnlyIPv6PeeringState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> IPv6 peering is enabled. </summary>
-        public static EnableOnlyIpv6PeeringState Enabled { get; } = new EnableOnlyIpv6PeeringState(EnabledValue);
+        public static EnableOnlyIPv6PeeringState Enabled { get; } = new EnableOnlyIPv6PeeringState(EnabledValue);
 
         /// <summary> IPv6 peering is disabled. </summary>
-        public static EnableOnlyIpv6PeeringState Disabled { get; } = new EnableOnlyIpv6PeeringState(DisabledValue);
+        public static EnableOnlyIPv6PeeringState Disabled { get; } = new EnableOnlyIPv6PeeringState(DisabledValue);
 
-        /// <summary> Determines if two <see cref="EnableOnlyIpv6PeeringState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="EnableOnlyIPv6PeeringState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(EnableOnlyIpv6PeeringState left, EnableOnlyIpv6PeeringState right) => left.Equals(right);
+        public static bool operator ==(EnableOnlyIPv6PeeringState left, EnableOnlyIPv6PeeringState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="EnableOnlyIpv6PeeringState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="EnableOnlyIPv6PeeringState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(EnableOnlyIpv6PeeringState left, EnableOnlyIpv6PeeringState right) => !left.Equals(right);
+        public static bool operator !=(EnableOnlyIPv6PeeringState left, EnableOnlyIPv6PeeringState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="EnableOnlyIpv6PeeringState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EnableOnlyIPv6PeeringState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EnableOnlyIpv6PeeringState(string value) => new EnableOnlyIpv6PeeringState(value);
+        public static implicit operator EnableOnlyIPv6PeeringState(string value) => new EnableOnlyIPv6PeeringState(value);
 
-        /// <summary> Converts a string to a <see cref="EnableOnlyIpv6PeeringState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EnableOnlyIPv6PeeringState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EnableOnlyIpv6PeeringState?(string value) => value == null ? null : new EnableOnlyIpv6PeeringState(value);
+        public static implicit operator EnableOnlyIPv6PeeringState?(string value) => value == null ? null : new EnableOnlyIPv6PeeringState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is EnableOnlyIpv6PeeringState other && Equals(other);
+        public override bool Equals(object obj) => obj is EnableOnlyIPv6PeeringState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(EnableOnlyIpv6PeeringState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EnableOnlyIPv6PeeringState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
