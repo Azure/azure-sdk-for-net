@@ -54,14 +54,11 @@ namespace Azure.Identity
             => TryResolveInternal(credentialSection, ResolveThroughSelf, out provider);
 
         /// <inheritdoc />
-        public override bool TryResolve(
+        protected override bool TryResolveCore(
             IConfigurationSection credentialSection,
             Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild,
             [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
-        {
-            Argument.AssertNotNull(resolveChild, nameof(resolveChild));
-            return TryResolveInternal(credentialSection, resolveChild, out provider);
-        }
+            => TryResolveInternal(credentialSection, resolveChild, out provider);
 
         // resolveChild for the single-argument overload, which has no engine behind it:
         // chain entries are resolved through this resolver alone.
