@@ -1,0 +1,6 @@
+directory: specification/redhatopenshift/resource-manager/Microsoft.RedHatOpenShift/hcpopenshiftclusters
+commit: 73596619eb5eee265ffb62bad6afe37216a838c7
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
