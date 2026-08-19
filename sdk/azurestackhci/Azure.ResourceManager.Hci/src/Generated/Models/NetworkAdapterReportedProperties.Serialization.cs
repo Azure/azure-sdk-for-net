@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("nicStatus"u8);
                 writer.WriteStringValue(NicStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(IpInterfaceType))
+            if (options.Format != "W" && Optional.IsDefined(IPInterfaceType))
             {
                 writer.WritePropertyName("ipInterfaceType"u8);
-                writer.WriteStringValue(IpInterfaceType.Value.ToString());
+                writer.WriteStringValue(IPInterfaceType.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(VlanId))
             {
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Hci.Models
             InterfaceState? interfaceState = default;
             string nicType = default;
             string nicStatus = default;
-            IpInterfaceType? ipInterfaceType = default;
+            IPInterfaceType? ipInterfaceType = default;
             int? vlanId = default;
             bool? managementInterface = default;
             RdmaCapability? rdmaCapability = default;
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    ipInterfaceType = new IpInterfaceType(prop.Value.GetString());
+                    ipInterfaceType = new IPInterfaceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("vlanId"u8))

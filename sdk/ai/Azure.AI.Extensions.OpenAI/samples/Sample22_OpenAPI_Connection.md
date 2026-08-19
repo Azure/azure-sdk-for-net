@@ -32,7 +32,7 @@ OpenApiFunctionDefinition toolDefinition = new(
     ))
 );
 toolDefinition.Description = "Trip Advisor API to get travel information.";
-OpenAPITool openapiTool = new(toolDefinition);
+OpenApiTool openapiTool = new(toolDefinition);
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
@@ -56,7 +56,7 @@ OpenApiFunctionDefinition toolDefinition = new(
     ))
 );
 toolDefinition.Description = "Trip Advisor API to get travel information.";
-OpenAPITool openapiTool = new(toolDefinition);
+OpenApiTool openapiTool = new(toolDefinition);
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
