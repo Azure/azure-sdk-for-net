@@ -14,7 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.PostgreSql
 {
     /// <summary> Pair of virtual endpoints for a server. </summary>
-    public partial class VirtualEndpointResource : ProvisionableResource
+    public partial class VirtualEndpoint : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -22,10 +22,10 @@ namespace Azure.Provisioning.PostgreSql
         private VirtualEndpointResourceProperties _properties;
         private ResourceReference<PostgreSqlFlexibleServer> _parent;
 
-        /// <summary> Creates a new VirtualEndpointResource. </summary>
+        /// <summary> Creates a new VirtualEndpoint. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public VirtualEndpointResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/virtualendpoints", resourceVersion ?? "2025-08-01")
+        public VirtualEndpoint(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/virtualendpoints", resourceVersion ?? "2025-08-01")
         {
         }
 
@@ -141,7 +141,7 @@ namespace Azure.Provisioning.PostgreSql
             }
         }
 
-        /// <summary> Define all the provisionable properties for VirtualEndpointResource. </summary>
+        /// <summary> Define all the provisionable properties for VirtualEndpoint. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -153,17 +153,17 @@ namespace Azure.Provisioning.PostgreSql
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing VirtualEndpointResource. </summary>
+        /// <summary> Creates a reference to an existing VirtualEndpoint. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static VirtualEndpointResource FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static VirtualEndpoint FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            VirtualEndpointResource result = new VirtualEndpointResource(bicepIdentifier, resourceVersion);
+            VirtualEndpoint result = new VirtualEndpoint(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for VirtualEndpointResource that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for VirtualEndpoint that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary> Get the requirements for naming this resource. </summary>

@@ -1310,7 +1310,6 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<string> ValidationSummaryItemType { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use VirtualEndpointResource instead.")]
     public partial class VirtualEndpoint : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public VirtualEndpoint(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -1323,29 +1322,12 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepList<string> VirtualEndpoints { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.PostgreSql.VirtualEndpoint FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_06_01;
             public static readonly string V2022_12_01;
             public static readonly string V2024_08_01;
-            public static readonly string V2025_08_01;
-        }
-    }
-    public partial class VirtualEndpointResource : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public VirtualEndpointResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.VirtualEndpointType> EndpointType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepList<string> Members { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer Parent { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepList<string> VirtualEndpoints { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.PostgreSql.VirtualEndpointResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
-        public static partial class ResourceVersions
-        {
             public static readonly string V2025_08_01;
         }
     }
