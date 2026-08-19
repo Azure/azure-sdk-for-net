@@ -18,24 +18,8 @@ nowarn:AAIP001 M:Azure.AI.Projects.Evaluation.EvaluationRuleAction.DeserializeEv
 nowarn:AAIP002 M:Azure.AI.Projects.Evaluation.AzureAIAgentTarget.#ctor(System.String)
 nowarn:AAIP002 M:Azure.AI.Projects.Evaluation.AzureAIAgentTarget.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
 nowarn:AAIP002 M:Azure.AI.Projects.Evaluation.AzureAIAgentTarget.DeserializeAzureAIAgentTarget(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
-# Internal class InputItem Patch classes contain two experimental properties, though it technicallyy can ne created without them.
-nowarn:AAIP002 M:Azure.AI.Projects.InputItemApplyPatchToolCallItemParam.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
-nowarn:AAIP002 M:Azure.AI.Projects.InputItemApplyPatchToolCallItemParam.DeserializeInputItemApplyPatchToolCallItemParam(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
-nowarn:AAIP002 M:Azure.AI.Projects.InputItemApplyPatchToolCallOutputItemParam.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
-nowarn:AAIP002 M:Azure.AI.Projects.InputItemApplyPatchToolCallOutputItemParam.DeserializeInputItemApplyPatchToolCallOutputItemParam(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
-# Input items, using OpenAI tools.
-nowarn:AAIP002 M:Azure.AI.Projects.InputItemMcpListTools.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
-nowarn:AAIP002 M:Azure.AI.Projects.InputItemMcpListTools.DeserializeInputItemMcpListTools(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
-nowarn:AAIP002 M:Azure.AI.Projects.InputItemToolSearchOutputItemParam.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
-nowarn:AAIP002 M:Azure.AI.Projects.InputItemToolSearchOutputItemParam.DeserializeInputItemToolSearchOutputItemParam(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
-nowarn:AAIP002 M:Azure.AI.Projects.InputItemComputerCallOutputItemParam.#ctor(System.String,Azure.AI.Projects.ComputerScreenshotImage)
-nowarn:AAIP002 M:Azure.AI.Projects.InputItemComputerCallOutputItemParam.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
-nowarn:AAIP002 M:Azure.AI.Projects.InputItemComputerCallOutputItemParam.DeserializeInputItemComputerCallOutputItemParam(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
-nowarn:AAIP002 M:Azure.AI.Projects.InputItemComputerToolCall.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
-nowarn:AAIP002 M:Azure.AI.Projects.InputItemComputerToolCall.DeserializeInputItemComputerToolCall(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
-# OutputMessageContentOutputTextContent uses Annotation and Logprobs.
-nowarn:AAIP002 M:Azure.AI.Projects.OutputMessageContentOutputTextContent.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
-nowarn:AAIP002 M:Azure.AI.Projects.OutputMessageContentOutputTextContent.DeserializeOutputMessageContentOutputTextContent(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
+# Response Items are experimental according to OpenAI; they are used internally in InternalMemoryUpdateOptions
+nowarn:AAIP002 M:Azure.AI.Projects.Memory.MemoryUpdateOptions.DeserializeMemoryUpdateOptions(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
 
 # OPENAI001 is the [Experimental] marker on the OpenAI SDK types this library
 # wraps (ResponseItem, OpenAIContext, etc.). The library is intentionally a

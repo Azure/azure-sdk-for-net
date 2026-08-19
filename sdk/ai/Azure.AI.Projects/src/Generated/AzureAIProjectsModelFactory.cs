@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects.Evaluation;
 using Azure.AI.Projects.Memory;
 using OpenAI.Responses;
@@ -1789,6 +1790,20 @@ namespace Azure.AI.Projects
             return new DeleteMemoryStoreResponse("memory_store.deleted", name, isDeleted, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The MemorySearchOptions. </summary>
+        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
+        /// <param name="items"> Items for which to search for relevant memories. </param>
+        /// <param name="previousSearchId"> The unique ID of the previous search request, enabling incremental memory search from where the last operation left off. </param>
+        /// <param name="resultOptions"> Memory search options. </param>
+        /// <returns> A new <see cref="Memory.MemorySearchOptions"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static MemorySearchOptions MemorySearchOptions(string scope = default, IEnumerable<ResponseItem> items = default, string previousSearchId = default, MemorySearchResultOptions resultOptions = default)
+        {
+            items ??= new ChangeTrackingList<ResponseItem>();
+
+            return new MemorySearchOptions(scope, items.ToList(), previousSearchId, resultOptions, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Memory search response. </summary>
         /// <param name="searchId"> The unique ID of this search request. Use this value as previous_search_id in subsequent requests to perform incremental searches. </param>
         /// <param name="memories"> Related memory items found during the search operation. </param>
@@ -1840,9 +1855,9 @@ namespace Azure.AI.Projects
         /// <param name="content"> The content of the memory. </param>
         /// <returns> A new <see cref="Memory.UserProfileMemoryItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static UserProfileMemoryItem UserProfileMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
+        public static Memory.UserProfileMemoryItem UserProfileMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
         {
-            return new UserProfileMemoryItem(
+            return new Memory.UserProfileMemoryItem(
                 memoryId,
                 updatedAt,
                 scope,
@@ -1858,9 +1873,9 @@ namespace Azure.AI.Projects
         /// <param name="content"> The content of the memory. </param>
         /// <returns> A new <see cref="Memory.ChatSummaryMemoryItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ChatSummaryMemoryItem ChatSummaryMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
+        public static Memory.ChatSummaryMemoryItem ChatSummaryMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
         {
-            return new ChatSummaryMemoryItem(
+            return new Memory.ChatSummaryMemoryItem(
                 memoryId,
                 updatedAt,
                 scope,
@@ -1906,6 +1921,25 @@ namespace Azure.AI.Projects
                 outputTokensDetails,
                 totalTokens,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The MemoryUpdateOptions. </summary>
+        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
+        /// <param name="items"> Conversation items to be stored in memory. </param>
+        /// <param name="previousUpdateId"> The unique ID of the previous update request, enabling incremental memory updates from where the last operation left off. </param>
+        /// <param name="updateDelay">
+        /// Timeout period before processing the memory update in seconds.
+        /// If a new update request is received during this period, it will cancel the current request and reset the timeout.
+        /// Set to 0 to immediately trigger the update without delay.
+        /// Defaults to 300 (5 minutes).
+        /// </param>
+        /// <returns> A new <see cref="Memory.MemoryUpdateOptions"/> instance for mocking. </returns>
+        [Experimental("AAIP002")]
+        public static MemoryUpdateOptions MemoryUpdateOptions(string scope = default, IEnumerable<ResponseItem> items = default, string previousUpdateId = default, int? updateDelay = default)
+        {
+            items ??= new ChangeTrackingList<ResponseItem>();
+
+            return new MemoryUpdateOptions(scope, items.ToList(), previousUpdateId, updateDelay, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Memory update result. </summary>
