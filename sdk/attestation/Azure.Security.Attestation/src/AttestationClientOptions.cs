@@ -23,7 +23,7 @@ namespace Azure.Security.Attestation
 
         /// <summary>Initializes a new instance of the <see cref="AttestationClientOptions"/>.</summary>
         public AttestationClientOptions(
-            ServiceVersion version = ServiceVersion.V2020_10_01,
+            ServiceVersion version = ServiceVersion.V2025_06_01,
             AttestationTokenValidationOptions tokenOptions = default
             )
         {
@@ -35,6 +35,7 @@ namespace Azure.Security.Attestation
             Version = version switch
             {
                 ServiceVersion.V2020_10_01 => "2020-10-01",
+                ServiceVersion.V2025_06_01 => "2025-06-01",
                 _ => throw new ArgumentException($"The service version {version} is not supported by this library.", nameof(version))
             };
 
@@ -53,6 +54,11 @@ namespace Azure.Security.Attestation
             /// Version 2020-10-01 of the Microsoft Azure Attestation Service - corresponds to the General Availability of the MAA service.
             /// </summary>
             V2020_10_01 = 1,
+
+            /// <summary>
+            /// Version 2025-06-01 of the Microsoft Azure Attestation Service. Required for attestation types introduced after 2020-10-01, such as TdxVm.
+            /// </summary>
+            V2025_06_01 = 2,
         };
 #pragma warning restore CA1707
     }

@@ -51,11 +51,12 @@ namespace Azure.Security.Attestation
     }
     public partial class AttestationClientOptions : Azure.Core.ClientOptions
     {
-        public AttestationClientOptions(Azure.Security.Attestation.AttestationClientOptions.ServiceVersion version = Azure.Security.Attestation.AttestationClientOptions.ServiceVersion.V2020_10_01, Azure.Security.Attestation.AttestationTokenValidationOptions tokenOptions = null) { }
+        public AttestationClientOptions(Azure.Security.Attestation.AttestationClientOptions.ServiceVersion version = Azure.Security.Attestation.AttestationClientOptions.ServiceVersion.V2025_06_01, Azure.Security.Attestation.AttestationTokenValidationOptions tokenOptions = null) { }
         public Azure.Security.Attestation.AttestationTokenValidationOptions TokenOptions { get { throw null; } }
         public enum ServiceVersion
         {
             V2020_10_01 = 1,
+            V2025_06_01 = 2,
         }
     }
     public partial class AttestationClientSettings : System.ClientModel.Primitives.ClientSettings

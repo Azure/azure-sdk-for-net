@@ -5,6 +5,7 @@
 ### Features Added
 
 - Updated the client library to target the `2025-06-01` Azure Attestation service API version.
+- Added `AttestationClientOptions.ServiceVersion.V2025_06_01`, which is now the default service version. `V2020_10_01` remains available for callers that need to continue targeting the previous service API version.
 
 ### Other Changes
 
