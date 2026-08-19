@@ -123,11 +123,11 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Gets or sets the creation time. </summary>
-        public DateTimeOffset? CreatedOn
+        public DateTimeOffset? CreationOn
         {
             get
             {
-                return Properties is null ? default : Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreationOn;
             }
         }
 

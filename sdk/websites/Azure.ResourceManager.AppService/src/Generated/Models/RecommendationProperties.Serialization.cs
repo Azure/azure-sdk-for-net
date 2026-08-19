@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 throw new FormatException($"The model {nameof(RecommendationProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (Optional.IsDefined(RecommendationId))
             {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? creationOn = default;
             Guid? recommendationId = default;
             ResourceIdentifier resourceId = default;
             ResourceScopeType? resourceScope = default;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("recommendationId"u8))
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             return new RecommendationProperties(
-                createdOn,
+                creationOn,
                 recommendationId,
                 resourceId,
                 resourceScope,

@@ -165,9 +165,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="status"> Status of the Provisioning for the managed network of a machine learning workspace. </param>
         /// <param name="firewallSku"> Firewall Sku used for FQDN Rules. </param>
         /// <param name="managedNetworkKind"> The Kind of the managed network. Users can switch from V1 to V2 for granular access controls, but cannot switch back to V1 once V2 is enabled. </param>
-        /// <param name="firewallPublicIpAddress"> Public IP address assigned to the Azure Firewall. </param>
+        /// <param name="firewallPublicIPAddress"> Public IP address assigned to the Azure Firewall. </param>
         /// <returns> A new <see cref="Models.ManagedNetworkSettings"/> instance for mocking. </returns>
-        public static ManagedNetworkSettings ManagedNetworkSettings(bool? enableNetworkMonitor = default, IsolationMode? isolationMode = default, string networkId = default, IDictionary<string, MachineLearningOutboundRule> outboundRules = default, ManagedNetworkProvisionStatus status = default, FirewallSku? firewallSku = default, ManagedNetworkKind? managedNetworkKind = default, string firewallPublicIpAddress = default)
+        public static ManagedNetworkSettings ManagedNetworkSettings(bool? enableNetworkMonitor = default, IsolationMode? isolationMode = default, string networkId = default, IDictionary<string, MachineLearningOutboundRule> outboundRules = default, ManagedNetworkProvisionStatus status = default, FirewallSku? firewallSku = default, ManagedNetworkKind? managedNetworkKind = default, string firewallPublicIPAddress = default)
         {
             outboundRules ??= new ChangeTrackingDictionary<string, MachineLearningOutboundRule>();
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 status,
                 firewallSku,
                 managedNetworkKind,
-                firewallPublicIpAddress,
+                firewallPublicIPAddress,
                 default);
         }
 
@@ -411,16 +411,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="softDeleteRetentionInDays"> Retention time in days after workspace get soft deleted. </param>
         /// <param name="systemDatastoresAuthMode"> The auth mode used for accessing the system datastores of the workspace. </param>
         /// <param name="isV1LegacyMode"> Enabling v1_legacy_mode may prevent you from using features provided by the v2 API. </param>
-        /// <param name="serviceManagedResourcesCosmosDbCollectionsThroughput"> Gets or sets the CollectionsThroughput. </param>
+        /// <param name="serviceManagedResourcesCosmosDBCollectionsThroughput"> Gets or sets the CollectionsThroughput. </param>
         /// <param name="encryptionKeyIdentifier"> Gets or sets the EncryptionKeyIdentifier. </param>
         /// <param name="sku"> Optional. This field is required to be implemented by the RP because AML is supporting more than one tier. </param>
         /// <param name="tags"> The resource tags for the machine learning workspace. </param>
         /// <returns> A new <see cref="Models.MachineLearningWorkspacePatch"/> instance for mocking. </returns>
-        public static MachineLearningWorkspacePatch MachineLearningWorkspacePatch(ManagedServiceIdentity identity = default, bool? allowRoleAssignmentOnRG = default, string applicationInsights = default, string containerRegistry = default, string description = default, bool? enableDataIsolation = default, bool? enableSoftwareBillOfMaterials = default, FeatureStoreSettings featureStoreSettings = default, string friendlyName = default, string imageBuildCompute = default, IEnumerable<string> ipAllowlist = default, ManagedNetworkSettings managedNetwork = default, NetworkAcls networkAcls = default, string primaryUserAssignedIdentity = default, PublicNetworkAccess? publicNetworkAccessType = default, ServerlessComputeSettings serverlessComputeSettings = default, int? softDeleteRetentionInDays = default, SystemDatastoresAuthMode? systemDatastoresAuthMode = default, bool? isV1LegacyMode = default, int? serviceManagedResourcesCosmosDbCollectionsThroughput = default, string encryptionKeyIdentifier = default, MachineLearningSku sku = default, IDictionary<string, string> tags = default)
+        public static MachineLearningWorkspacePatch MachineLearningWorkspacePatch(ManagedServiceIdentity identity = default, bool? allowRoleAssignmentOnRG = default, string applicationInsights = default, string containerRegistry = default, string description = default, bool? enableDataIsolation = default, bool? enableSoftwareBillOfMaterials = default, FeatureStoreSettings featureStoreSettings = default, string friendlyName = default, string imageBuildCompute = default, IEnumerable<string> ipAllowlist = default, ManagedNetworkSettings managedNetwork = default, NetworkAcls networkAcls = default, string primaryUserAssignedIdentity = default, PublicNetworkAccess? publicNetworkAccessType = default, ServerlessComputeSettings serverlessComputeSettings = default, int? softDeleteRetentionInDays = default, SystemDatastoresAuthMode? systemDatastoresAuthMode = default, bool? isV1LegacyMode = default, int? serviceManagedResourcesCosmosDBCollectionsThroughput = default, string encryptionKeyIdentifier = default, MachineLearningSku sku = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new MachineLearningWorkspacePatch(identity, allowRoleAssignmentOnRG is null && applicationInsights is null && containerRegistry is null && description is null && enableDataIsolation is null && enableSoftwareBillOfMaterials is null && featureStoreSettings is null && friendlyName is null && imageBuildCompute is null && ipAllowlist is null && managedNetwork is null && networkAcls is null && primaryUserAssignedIdentity is null && publicNetworkAccessType is null && serverlessComputeSettings is null && serviceManagedResourcesCosmosDbCollectionsThroughput is null && softDeleteRetentionInDays is null && systemDatastoresAuthMode is null && isV1LegacyMode is null ? default : new MachineLearningWorkspacePropertiesPatch(
+            return new MachineLearningWorkspacePatch(identity, allowRoleAssignmentOnRG is null && applicationInsights is null && containerRegistry is null && description is null && enableDataIsolation is null && enableSoftwareBillOfMaterials is null && featureStoreSettings is null && friendlyName is null && imageBuildCompute is null && ipAllowlist is null && managedNetwork is null && networkAcls is null && primaryUserAssignedIdentity is null && publicNetworkAccessType is null && serverlessComputeSettings is null && serviceManagedResourcesCosmosDBCollectionsThroughput is null && softDeleteRetentionInDays is null && systemDatastoresAuthMode is null && isV1LegacyMode is null ? default : new MachineLearningWorkspacePropertiesPatch(
                 allowRoleAssignmentOnRG,
                 applicationInsights,
                 containerRegistry,
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 primaryUserAssignedIdentity,
                 publicNetworkAccessType,
                 serverlessComputeSettings,
-                new ServiceManagedResourcesSettings(new CosmosDbSettings(serviceManagedResourcesCosmosDbCollectionsThroughput, default), default),
+                new ServiceManagedResourcesSettings(new CosmosDBSettings(serviceManagedResourcesCosmosDBCollectionsThroughput, default), default),
                 softDeleteRetentionInDays,
                 systemDatastoresAuthMode,
                 isV1LegacyMode,
@@ -460,12 +460,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="primaryUserAssignedIdentity"> The user assigned identity resource id that represents the workspace identity. </param>
         /// <param name="publicNetworkAccessType"> Whether requests from Public Network are allowed. </param>
         /// <param name="serverlessComputeSettings"> Settings for serverless compute in a workspace. </param>
-        /// <param name="serviceManagedResourcesCosmosDbCollectionsThroughput"> Gets or sets the CollectionsThroughput. </param>
+        /// <param name="serviceManagedResourcesCosmosDBCollectionsThroughput"> Gets or sets the CollectionsThroughput. </param>
         /// <param name="softDeleteRetentionInDays"> Retention time in days after workspace get soft deleted. </param>
         /// <param name="systemDatastoresAuthMode"> The auth mode used for accessing the system datastores of the workspace. </param>
         /// <param name="isV1LegacyMode"> Enabling v1_legacy_mode may prevent you from using features provided by the v2 API. </param>
         /// <returns> A new <see cref="Models.MachineLearningWorkspacePropertiesPatch"/> instance for mocking. </returns>
-        public static MachineLearningWorkspacePropertiesPatch MachineLearningWorkspacePropertiesPatch(bool? allowRoleAssignmentOnRG = default, string applicationInsights = default, string containerRegistry = default, string description = default, bool? enableDataIsolation = default, bool? enableSoftwareBillOfMaterials = default, string encryptionKeyIdentifier = default, FeatureStoreSettings featureStoreSettings = default, string friendlyName = default, string imageBuildCompute = default, IEnumerable<string> ipAllowlist = default, ManagedNetworkSettings managedNetwork = default, NetworkAcls networkAcls = default, string primaryUserAssignedIdentity = default, PublicNetworkAccess? publicNetworkAccessType = default, ServerlessComputeSettings serverlessComputeSettings = default, int? serviceManagedResourcesCosmosDbCollectionsThroughput = default, int? softDeleteRetentionInDays = default, SystemDatastoresAuthMode? systemDatastoresAuthMode = default, bool? isV1LegacyMode = default)
+        public static MachineLearningWorkspacePropertiesPatch MachineLearningWorkspacePropertiesPatch(bool? allowRoleAssignmentOnRG = default, string applicationInsights = default, string containerRegistry = default, string description = default, bool? enableDataIsolation = default, bool? enableSoftwareBillOfMaterials = default, string encryptionKeyIdentifier = default, FeatureStoreSettings featureStoreSettings = default, string friendlyName = default, string imageBuildCompute = default, IEnumerable<string> ipAllowlist = default, ManagedNetworkSettings managedNetwork = default, NetworkAcls networkAcls = default, string primaryUserAssignedIdentity = default, PublicNetworkAccess? publicNetworkAccessType = default, ServerlessComputeSettings serverlessComputeSettings = default, int? serviceManagedResourcesCosmosDBCollectionsThroughput = default, int? softDeleteRetentionInDays = default, SystemDatastoresAuthMode? systemDatastoresAuthMode = default, bool? isV1LegacyMode = default)
         {
             ipAllowlist ??= new ChangeTrackingList<string>();
 
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 primaryUserAssignedIdentity,
                 publicNetworkAccessType,
                 serverlessComputeSettings,
-                serviceManagedResourcesCosmosDbCollectionsThroughput is null ? default : new ServiceManagedResourcesSettings(new CosmosDbSettings(serviceManagedResourcesCosmosDbCollectionsThroughput, default), default),
+                serviceManagedResourcesCosmosDBCollectionsThroughput is null ? default : new ServiceManagedResourcesSettings(new CosmosDBSettings(serviceManagedResourcesCosmosDBCollectionsThroughput, default), default),
                 softDeleteRetentionInDays,
                 systemDatastoresAuthMode,
                 isV1LegacyMode,
@@ -6722,12 +6722,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <param name="systemServiceType"> The type of this system service. </param>
-        /// <param name="publicIPAddress"> Public IP address. </param>
         /// <param name="version"> The version for this type. </param>
         /// <returns> A new <see cref="Models.MachineLearningComputeSystemService"/> instance for mocking. </returns>
-        public static MachineLearningComputeSystemService MachineLearningComputeSystemService(string systemServiceType = default, string publicIPAddress = default, string version = default)
+        public static MachineLearningComputeSystemService MachineLearningComputeSystemService(string systemServiceType = default, string version = default)
         {
-            return new MachineLearningComputeSystemService(systemServiceType, publicIPAddress, version, default);
+            return new MachineLearningComputeSystemService(systemServiceType, version, default);
         }
 
         /// <param name="status"> Enable or disable ssl for scoring. </param>
@@ -6916,17 +6915,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="name"> Name of the Endpoint. </param>
         /// <param name="target"> Application port inside the container. </param>
         /// <param name="published"> Port over which the application is exposed from container. </param>
-        /// <param name="hostIp"> Host IP over which the application is exposed from the container. </param>
         /// <returns> A new <see cref="Models.ContainerEndpoint"/> instance for mocking. </returns>
-        public static ContainerEndpoint ContainerEndpoint(ContainerCommunicationProtocol? protocol = default, string name = default, int? target = default, int? published = default, string hostIp = default)
+        public static ContainerEndpoint ContainerEndpoint(ContainerCommunicationProtocol? protocol = default, string name = default, int? target = default, int? published = default)
         {
-            return new ContainerEndpoint(
-                protocol,
-                name,
-                target,
-                published,
-                hostIp,
-                default);
+            return new ContainerEndpoint(protocol, name, target, published, default);
         }
 
         /// <param name="definitionType"> Type of Volume Definition. Possible Values: bind,volume,tmpfs,npipe. </param>
@@ -6974,12 +6966,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <param name="currentImageVersion"> Specifies the current operating system image version this compute instance is running on. </param>
         /// <param name="latestImageVersion"> Specifies the latest available operating system image version. </param>
-        /// <param name="isLatestOsImageVersion"> Specifies whether this compute instance is running on the latest operating system image. </param>
         /// <param name="osPatchingStatus"> Metadata about the os patching. </param>
         /// <returns> A new <see cref="Models.ImageMetadata"/> instance for mocking. </returns>
-        public static ImageMetadata ImageMetadata(string currentImageVersion = default, string latestImageVersion = default, bool? isLatestOsImageVersion = default, OsPatchingStatus osPatchingStatus = default)
+        public static ImageMetadata ImageMetadata(string currentImageVersion = default, string latestImageVersion = default, OSPatchingStatus osPatchingStatus = default)
         {
-            return new ImageMetadata(currentImageVersion, latestImageVersion, isLatestOsImageVersion, osPatchingStatus, default);
+            return new ImageMetadata(currentImageVersion, latestImageVersion, osPatchingStatus, default);
         }
 
         /// <param name="patchStatus"> The os patching status. </param>
@@ -6987,12 +6978,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="isRebootPending"> Specifies whether this compute instance is pending for reboot to finish os patching. </param>
         /// <param name="scheduledRebootTime"> Time of scheduled reboot. </param>
         /// <param name="osPatchingErrors"> Collection of errors encountered when doing os patching. </param>
-        /// <returns> A new <see cref="Models.OsPatchingStatus"/> instance for mocking. </returns>
-        public static OsPatchingStatus OsPatchingStatus(PatchStatus? patchStatus = default, string latestPatchTime = default, bool? isRebootPending = default, string scheduledRebootTime = default, IEnumerable<MachineLearningError> osPatchingErrors = default)
+        /// <returns> A new <see cref="Models.OSPatchingStatus"/> instance for mocking. </returns>
+        public static OSPatchingStatus OSPatchingStatus(PatchStatus? patchStatus = default, string latestPatchTime = default, bool? isRebootPending = default, string scheduledRebootTime = default, IEnumerable<MachineLearningError> osPatchingErrors = default)
         {
             osPatchingErrors ??= new ChangeTrackingList<MachineLearningError>();
 
-            return new OsPatchingStatus(
+            return new OSPatchingStatus(
                 patchStatus,
                 latestPatchTime,
                 isRebootPending,
@@ -7001,12 +6992,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 default);
         }
 
-        /// <param name="publicIPAddress"> Public IP Address of this ComputeInstance. </param>
-        /// <param name="privateIPAddress"> Private IP Address of this ComputeInstance (local to the VNET in which the compute instance is deployed). </param>
         /// <returns> A new <see cref="Models.MachineLearningComputeInstanceConnectivityEndpoints"/> instance for mocking. </returns>
-        public static MachineLearningComputeInstanceConnectivityEndpoints MachineLearningComputeInstanceConnectivityEndpoints(string publicIPAddress = default, string privateIPAddress = default)
+        public static MachineLearningComputeInstanceConnectivityEndpoints MachineLearningComputeInstanceConnectivityEndpoints()
         {
-            return new MachineLearningComputeInstanceConnectivityEndpoints(publicIPAddress, privateIPAddress, default);
+            return new MachineLearningComputeInstanceConnectivityEndpoints(default);
         }
 
         /// <param name="displayName"> Name of the ComputeInstance application. </param>
@@ -7285,22 +7274,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <param name="nodeId"> ID of the compute node. </param>
-        /// <param name="privateIPAddress"> Private IP address of the compute node. </param>
-        /// <param name="publicIPAddress"> Public IP address of the compute node. </param>
         /// <param name="port"> SSH port number of the node. </param>
         /// <param name="nodeState"> State of the compute node. Values are idle, running, preparing, unusable, leaving and preempted. </param>
         /// <param name="runId"> ID of the Experiment running on the node, if any else null. </param>
         /// <returns> A new <see cref="Models.AmlComputeNodeInformation"/> instance for mocking. </returns>
-        public static AmlComputeNodeInformation AmlComputeNodeInformation(string nodeId = default, IPAddress privateIPAddress = default, IPAddress publicIPAddress = default, int? port = default, MachineLearningNodeState? nodeState = default, string runId = default)
+        public static AmlComputeNodeInformation AmlComputeNodeInformation(string nodeId = default, int? port = default, MachineLearningNodeState? nodeState = default, string runId = default)
         {
-            return new AmlComputeNodeInformation(
-                nodeId,
-                privateIPAddress,
-                publicIPAddress,
-                port,
-                nodeState,
-                runId,
-                default);
+            return new AmlComputeNodeInformation(nodeId, port, nodeState, runId, default);
         }
 
         /// <param name="computeType"> The type of compute. </param>
@@ -7351,30 +7331,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <param name="name"> The name of the virtual machine size. </param>
         /// <param name="family"> The family name of the virtual machine size. </param>
-        /// <param name="vCpus"> The number of vCPUs supported by the virtual machine size. </param>
+        /// <param name="vcpUs"> The number of vCPUs supported by the virtual machine size. </param>
         /// <param name="gpus"> The number of gPUs supported by the virtual machine size. </param>
-        /// <param name="osVhdSizeMB"> The OS VHD disk size, in MB, allowed by the virtual machine size. </param>
         /// <param name="maxResourceVolumeMB"> The resource volume size, in MB, allowed by the virtual machine size. </param>
         /// <param name="memoryGB"> The amount of memory, in GB, supported by the virtual machine size. </param>
         /// <param name="lowPriorityCapable"> Specifies if the virtual machine size supports low priority VMs. </param>
-        /// <param name="isPremiumIOSupported"> Specifies if the virtual machine size supports premium IO. </param>
+        /// <param name="supportsPremiumIO"> Specifies if the virtual machine size supports premium IO. </param>
         /// <param name="estimatedVmPrices"> The estimated price information for using a VM. </param>
         /// <param name="supportedComputeTypes"> Specifies the compute types supported by the virtual machine size. </param>
         /// <returns> A new <see cref="Models.MachineLearningVmSize"/> instance for mocking. </returns>
-        public static MachineLearningVmSize MachineLearningVmSize(string name = default, string family = default, int? vCpus = default, int? gpus = default, int? osVhdSizeMB = default, int? maxResourceVolumeMB = default, double? memoryGB = default, bool? lowPriorityCapable = default, bool? isPremiumIOSupported = default, MachineLearningEstimatedVmPrices estimatedVmPrices = default, IEnumerable<string> supportedComputeTypes = default)
+        public static MachineLearningVmSize MachineLearningVmSize(string name = default, string family = default, int? vcpUs = default, int? gpus = default, int? maxResourceVolumeMB = default, double? memoryGB = default, bool? lowPriorityCapable = default, bool? supportsPremiumIO = default, MachineLearningEstimatedVmPrices estimatedVmPrices = default, IEnumerable<string> supportedComputeTypes = default)
         {
             supportedComputeTypes ??= new ChangeTrackingList<string>();
 
             return new MachineLearningVmSize(
                 name,
                 family,
-                vCpus,
+                vcpUs,
                 gpus,
-                osVhdSizeMB,
                 maxResourceVolumeMB,
                 memoryGB,
                 lowPriorityCapable,
-                default,
+                supportsPremiumIO,
                 estimatedVmPrices,
                 (supportedComputeTypes ?? new ChangeTrackingList<string>()).ToList(),
                 default);
@@ -8606,10 +8584,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="status"> Status of the Provisioning for the managed network of a machine learning workspace. </param>
         /// <param name="firewallSku"> Firewall Sku used for FQDN Rules. </param>
         /// <param name="managedNetworkKind"> The Kind of the managed network. Users can switch from V1 to V2 for granular access controls, but cannot switch back to V1 once V2 is enabled. </param>
-        /// <param name="firewallPublicIpAddress"> Public IP address assigned to the Azure Firewall. </param>
+        /// <param name="firewallPublicIPAddress"> Public IP address assigned to the Azure Firewall. </param>
         /// <param name="changeableIsolationModes"></param>
         /// <returns> A new <see cref="Models.MachineLearningManagedNetworkSettingsDetails"/> instance for mocking. </returns>
-        public static MachineLearningManagedNetworkSettingsDetails MachineLearningManagedNetworkSettingsDetails(bool? enableNetworkMonitor = default, IsolationMode? isolationMode = default, string networkId = default, IDictionary<string, MachineLearningOutboundRule> outboundRules = default, ManagedNetworkProvisionStatus status = default, FirewallSku? firewallSku = default, ManagedNetworkKind? managedNetworkKind = default, string firewallPublicIpAddress = default, IEnumerable<IsolationMode> changeableIsolationModes = default)
+        public static MachineLearningManagedNetworkSettingsDetails MachineLearningManagedNetworkSettingsDetails(bool? enableNetworkMonitor = default, IsolationMode? isolationMode = default, string networkId = default, IDictionary<string, MachineLearningOutboundRule> outboundRules = default, ManagedNetworkProvisionStatus status = default, FirewallSku? firewallSku = default, ManagedNetworkKind? managedNetworkKind = default, string firewallPublicIPAddress = default, IEnumerable<IsolationMode> changeableIsolationModes = default)
         {
             outboundRules ??= new ChangeTrackingDictionary<string, MachineLearningOutboundRule>();
             changeableIsolationModes ??= new ChangeTrackingList<IsolationMode>();
@@ -8622,7 +8600,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 status,
                 firewallSku,
                 managedNetworkKind,
-                firewallPublicIpAddress,
+                firewallPublicIPAddress,
                 default,
                 (changeableIsolationModes ?? new ChangeTrackingList<IsolationMode>()).ToList());
         }
@@ -8860,7 +8838,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     provisioningState,
                     default,
                     serverlessComputeSettings,
-                    new ServiceManagedResourcesSettings(new CosmosDbSettings(cosmosDbCollectionsThroughput, default), default),
+                    new ServiceManagedResourcesSettings(new CosmosDBSettings(cosmosDbCollectionsThroughput, default), default),
                     serviceProvisionedResourceGroup,
                     (sharedPrivateLinkResources ?? new ChangeTrackingList<MachineLearningSharedPrivateLinkResource>()).ToList(),
                     default,
@@ -8963,6 +8941,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 default);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningVmSize"/>. </summary>
+        /// <param name="name"> The name of the virtual machine size. </param>
+        /// <param name="family"> The family name of the virtual machine size. </param>
+        /// <param name="vCpus"> The number of vCPUs supported by the virtual machine size. </param>
+        /// <param name="gpus"> The number of gPUs supported by the virtual machine size. </param>
+        /// <param name="osVhdSizeMB"> The OS VHD disk size, in MB, allowed by the virtual machine size. </param>
+        /// <param name="maxResourceVolumeMB"> The resource volume size, in MB, allowed by the virtual machine size. </param>
+        /// <param name="memoryGB"> The amount of memory, in GB, supported by the virtual machine size. </param>
+        /// <param name="lowPriorityCapable"> Specifies if the virtual machine size supports low priority VMs. </param>
+        /// <param name="isPremiumIOSupported"> Specifies if the virtual machine size supports premium IO. </param>
+        /// <param name="estimatedVmPrices"> The estimated price information for using a VM. </param>
+        /// <param name="supportedComputeTypes"> Specifies the compute types supported by the virtual machine size. </param>
+        /// <returns> A new <see cref="Models.MachineLearningVmSize"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MachineLearningVmSize MachineLearningVmSize(string name = default, string family = default, int? vCpus = default, int? gpus = default, int? osVhdSizeMB = default, int? maxResourceVolumeMB = default, double? memoryGB = default, bool? lowPriorityCapable = default, bool? isPremiumIOSupported = default, MachineLearningEstimatedVmPrices estimatedVmPrices = default, IEnumerable<string> supportedComputeTypes = default)
+        {
+            return new MachineLearningVmSize(
+                name,
+                family,
+                vCpus,
+                gpus,
+                maxResourceVolumeMB,
+                memoryGB,
+                lowPriorityCapable,
+                default,
+                estimatedVmPrices,
+                (supportedComputeTypes ?? new ChangeTrackingList<string>()).ToList(),
+                default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="MachineLearning.MachineLearningComputeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -8992,6 +9000,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 sku,
                 identity,
                 default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AmlComputeNodeInformation"/>. </summary>
+        /// <param name="nodeId"> ID of the compute node. </param>
+        /// <param name="privateIPAddress"> Private IP address of the compute node. </param>
+        /// <param name="publicIPAddress"> Public IP address of the compute node. </param>
+        /// <param name="port"> SSH port number of the node. </param>
+        /// <param name="nodeState"> State of the compute node. Values are idle, running, preparing, unusable, leaving and preempted. </param>
+        /// <param name="runId"> ID of the Experiment running on the node, if any else null. </param>
+        /// <returns> A new <see cref="Models.AmlComputeNodeInformation"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AmlComputeNodeInformation AmlComputeNodeInformation(string nodeId = default, IPAddress privateIPAddress = default, IPAddress publicIPAddress = default, int? port = default, MachineLearningNodeState? nodeState = default, string runId = default)
+        {
+            return new AmlComputeNodeInformation(nodeId, port, nodeState, runId, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningWorkspaceNotebookAccessTokenResult"/>. </summary>
@@ -9824,6 +9846,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 default);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningComputeSystemService"/>. </summary>
+        /// <param name="systemServiceType"> The type of this system service. </param>
+        /// <param name="publicIPAddress"> Public IP address. </param>
+        /// <param name="version"> The version for this type. </param>
+        /// <returns> A new <see cref="Models.MachineLearningComputeSystemService"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MachineLearningComputeSystemService MachineLearningComputeSystemService(string systemServiceType = default, string publicIPAddress = default, string version = default)
+        {
+            return new MachineLearningComputeSystemService(systemServiceType, version, default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ImageMetadata"/>. </summary>
         /// <param name="currentImageVersion"> Specifies the current operating system image version this compute instance is running on. </param>
         /// <param name="latestImageVersion"> Specifies the latest available operating system image version. </param>
@@ -9832,7 +9865,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ImageMetadata ImageMetadata(string currentImageVersion = default, string latestImageVersion = default, bool? isLatestOSImageVersion = default)
         {
-            return new ImageMetadata(currentImageVersion, latestImageVersion, isLatestOSImageVersion, default, default);
+            return new ImageMetadata(currentImageVersion, latestImageVersion, default, default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningComputeInstanceConnectivityEndpoints"/>. </summary>
+        /// <param name="publicIPAddress"> Public IP Address of this ComputeInstance. </param>
+        /// <param name="privateIPAddress"> Private IP Address of this ComputeInstance (local to the VNET in which the compute instance is deployed). </param>
+        /// <returns> A new <see cref="Models.MachineLearningComputeInstanceConnectivityEndpoints"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MachineLearningComputeInstanceConnectivityEndpoints MachineLearningComputeInstanceConnectivityEndpoints(string publicIPAddress = default, string privateIPAddress = default)
+        {
+            return new MachineLearningComputeInstanceConnectivityEndpoints(default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningComputeInstanceDataMount"/>. </summary>

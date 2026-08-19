@@ -79,20 +79,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (Optional.IsDefined(OldestRestorableOn))
             {
                 writer.WritePropertyName("oldestRestorableTime"u8);
                 writer.WriteStringValue(OldestRestorableOn.Value, "O");
             }
-            if (Optional.IsDefined(DeletedOn))
+            if (Optional.IsDefined(DeletionOn))
             {
                 writer.WritePropertyName("deletionTime"u8);
-                writer.WriteStringValue(DeletedOn.Value, "O");
+                writer.WriteStringValue(DeletionOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ApiType))
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string accountName = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? creationOn = default;
             DateTimeOffset? oldestRestorableOn = default;
-            DateTimeOffset? deletedOn = default;
+            DateTimeOffset? deletionOn = default;
             CosmosDBApiType? apiType = default;
             IReadOnlyList<RestorableLocationResourceInfo> restorableLocations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("oldestRestorableTime"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    deletedOn = prop.Value.GetDateTimeOffset("O");
+                    deletionOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("apiType"u8))
@@ -222,9 +222,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             return new RestorableDatabaseAccountProperties(
                 accountName,
-                createdOn,
+                creationOn,
                 oldestRestorableOn,
-                deletedOn,
+                deletionOn,
                 apiType,
                 restorableLocations ?? new ChangeTrackingList<RestorableLocationResourceInfo>(),
                 additionalBinaryDataProperties);

@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="SqlDatabaseKey"/>. </summary>
         /// <param name="keyType"> The database key type. Only supported value is 'AzureKeyVault'. </param>
         /// <param name="thumbprint"> Thumbprint of the database key. </param>
-        /// <param name="createdOn"> The database key creation date. </param>
+        /// <param name="creationOn"> The database key creation date. </param>
         /// <param name="subregion"> Subregion of the server key. </param>
         /// <param name="keyVersion"> The database key's version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlDatabaseKey(SqlDatabaseKeyType? keyType, string thumbprint, DateTimeOffset? createdOn, string subregion, string keyVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlDatabaseKey(SqlDatabaseKeyType? keyType, string thumbprint, DateTimeOffset? creationOn, string subregion, string keyVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyType = keyType;
             Thumbprint = thumbprint;
-            CreatedOn = createdOn;
+            CreationOn = creationOn;
             Subregion = subregion;
             KeyVersion = keyVersion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The database key creation date. </summary>
         [WirePath("creationDate")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreationOn { get; }
 
         /// <summary> Subregion of the server key. </summary>
         [WirePath("subregion")]

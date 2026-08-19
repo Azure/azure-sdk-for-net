@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             ResourceIdentifier targetResourceId = default;
             RedisEnterpriseMigrationProvisioningState? provisioningState = default;
             string statusDetails = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? creationOn = default;
             DateTimeOffset? lastModifiedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedTime"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 targetResourceId,
                 provisioningState,
                 statusDetails,
-                createdOn,
+                creationOn,
                 lastModifiedOn,
                 additionalBinaryDataProperties);
         }

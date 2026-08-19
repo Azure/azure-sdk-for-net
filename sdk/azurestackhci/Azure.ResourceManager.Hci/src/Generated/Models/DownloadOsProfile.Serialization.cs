@@ -14,51 +14,51 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Operating system profile. </summary>
-    public partial class DownloadOsProfile : IJsonModel<DownloadOsProfile>
+    public partial class DownloadOSProfile : IJsonModel<DownloadOSProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DownloadOsProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DownloadOSProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DownloadOsProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DownloadOSProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDownloadOsProfile(document.RootElement, options);
+                        return DeserializeDownloadOSProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DownloadOsProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DownloadOSProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DownloadOsProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DownloadOSProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DownloadOsProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DownloadOSProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DownloadOsProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DownloadOSProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DownloadOsProfile IPersistableModel<DownloadOsProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DownloadOSProfile IPersistableModel<DownloadOSProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DownloadOsProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DownloadOSProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DownloadOsProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DownloadOSProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,30 +69,30 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DownloadOsProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DownloadOSProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DownloadOsProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DownloadOSProfile)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(OsName))
+            if (Optional.IsDefined(OSName))
             {
                 writer.WritePropertyName("osName"u8);
-                writer.WriteStringValue(OsName);
+                writer.WriteStringValue(OSName);
             }
-            if (Optional.IsDefined(OsType))
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OsType);
+                writer.WriteStringValue(OSType);
             }
-            if (Optional.IsDefined(OsVersion))
+            if (Optional.IsDefined(OSVersion))
             {
                 writer.WritePropertyName("osVersion"u8);
-                writer.WriteStringValue(OsVersion);
+                writer.WriteStringValue(OSVersion);
             }
-            if (Optional.IsDefined(OsImageLocation))
+            if (Optional.IsDefined(OSImageLocation))
             {
                 writer.WritePropertyName("osImageLocation"u8);
-                writer.WriteStringValue(OsImageLocation);
+                writer.WriteStringValue(OSImageLocation);
             }
             if (Optional.IsDefined(VsrVersion))
             {
@@ -128,24 +128,24 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DownloadOsProfile IJsonModel<DownloadOsProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DownloadOSProfile IJsonModel<DownloadOSProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DownloadOsProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DownloadOSProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DownloadOsProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DownloadOSProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DownloadOsProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DownloadOSProfile)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDownloadOsProfile(document.RootElement, options);
+            return DeserializeDownloadOSProfile(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DownloadOsProfile DeserializeDownloadOsProfile(JsonElement element, ModelReaderWriterOptions options)
+        internal static DownloadOSProfile DeserializeDownloadOSProfile(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DownloadOsProfile(
+            return new DownloadOSProfile(
                 osName,
                 osType,
                 osVersion,

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class SqlDedicatedGatewayServiceProperties : CosmosDBServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="SqlDedicatedGatewayServiceProperties"/>. </summary>
-        /// <param name="createdOn"> Time of the last state change (ISO-8601 format). </param>
+        /// <param name="creationOn"> Time of the last state change (ISO-8601 format). </param>
         /// <param name="instanceSize"> Instance type for the service. </param>
         /// <param name="instanceCount"> Instance count for the service. </param>
         /// <param name="serviceType"> ServiceType for the service. </param>
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="sqlDedicatedGatewayEndpoint"> SqlDedicatedGateway endpoint for the service. </param>
         /// <param name="dedicatedGatewayType"> DedicatedGatewayType for the service. </param>
         /// <param name="locations"> An array that contains all of the locations for the service. </param>
-        internal SqlDedicatedGatewayServiceProperties(DateTimeOffset? createdOn, CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, CosmosDBServiceStatus? status, IDictionary<string, BinaryData> additionalProperties, string sqlDedicatedGatewayEndpoint, DedicatedGatewayType? dedicatedGatewayType, IReadOnlyList<SqlDedicatedGatewayRegionalService> locations) : base(createdOn, instanceSize, instanceCount, serviceType, status, additionalProperties)
+        internal SqlDedicatedGatewayServiceProperties(DateTimeOffset? creationOn, CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, CosmosDBServiceStatus? status, IDictionary<string, BinaryData> additionalProperties, string sqlDedicatedGatewayEndpoint, DedicatedGatewayType? dedicatedGatewayType, IReadOnlyList<SqlDedicatedGatewayRegionalService> locations) : base(creationOn, instanceSize, instanceCount, serviceType, status, additionalProperties)
         {
             SqlDedicatedGatewayEndpoint = sqlDedicatedGatewayEndpoint;
             DedicatedGatewayType = dedicatedGatewayType;

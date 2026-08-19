@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="clusterVersion"> Version of the cluster software. </param>
         /// <param name="nodes"> List of nodes reported by the cluster. </param>
         /// <param name="lastUpdatedOn"> Last time the cluster reported the data. </param>
-        /// <param name="msiExpirationTimeStamp"> Specifies the expiration timestamp of the cluster's Managed Service Identity (MSI). The value is expressed in Coordinated Universal Time (UTC). </param>
+        /// <param name="msiExpirationOn"> Specifies the expiration timestamp of the cluster's Managed Service Identity (MSI). The value is expressed in Coordinated Universal Time (UTC). </param>
         /// <param name="imdsAttestation"> IMDS attestation status of the cluster. </param>
         /// <param name="diagnosticLevel"> Level of diagnostic data emitted by the cluster. </param>
         /// <param name="supportedCapabilities"> Capabilities supported by the cluster. </param>
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="oemActivation"> OEM activation status of the cluster. </param>
         /// <param name="hardwareClass"> Hardware class of the cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciClusterReportedProperties(string clusterName, Guid? clusterId, string clusterVersion, IReadOnlyList<HciClusterNode> nodes, DateTimeOffset? lastUpdatedOn, DateTimeOffset? msiExpirationTimeStamp, ImdsAttestationState? imdsAttestation, HciClusterDiagnosticLevel? diagnosticLevel, IReadOnlyList<string> supportedCapabilities, ClusterNodeType? clusterType, string manufacturer, OemActivation? oemActivation, HardwareClass? hardwareClass, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciClusterReportedProperties(string clusterName, Guid? clusterId, string clusterVersion, IReadOnlyList<HciClusterNode> nodes, DateTimeOffset? lastUpdatedOn, DateTimeOffset? msiExpirationOn, ImdsAttestationState? imdsAttestation, HciClusterDiagnosticLevel? diagnosticLevel, IReadOnlyList<string> supportedCapabilities, ClusterNodeType? clusterType, string manufacturer, OemActivation? oemActivation, HardwareClass? hardwareClass, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClusterName = clusterName;
             ClusterId = clusterId;
             ClusterVersion = clusterVersion;
             Nodes = nodes;
             LastUpdatedOn = lastUpdatedOn;
-            MsiExpirationTimeStamp = msiExpirationTimeStamp;
+            MsiExpirationOn = msiExpirationOn;
             ImdsAttestation = imdsAttestation;
             DiagnosticLevel = diagnosticLevel;
             SupportedCapabilities = supportedCapabilities;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Specifies the expiration timestamp of the cluster's Managed Service Identity (MSI). The value is expressed in Coordinated Universal Time (UTC). </summary>
         [WirePath("msiExpirationTimeStamp")]
-        public DateTimeOffset? MsiExpirationTimeStamp { get; }
+        public DateTimeOffset? MsiExpirationOn { get; }
 
         /// <summary> IMDS attestation status of the cluster. </summary>
         [WirePath("imdsAttestation")]

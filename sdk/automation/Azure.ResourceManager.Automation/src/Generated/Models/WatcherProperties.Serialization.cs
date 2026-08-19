@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Automation.Models
             IDictionary<string, string> scriptParameters = default;
             string scriptRunOn = default;
             string status = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? creationOn = default;
             DateTimeOffset? lastModifiedOn = default;
             string lastModifiedBy = default;
             string description = default;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedTime"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Automation.Models
                 scriptParameters ?? new ChangeTrackingDictionary<string, string>(),
                 scriptRunOn,
                 status,
-                createdOn,
+                creationOn,
                 lastModifiedOn,
                 lastModifiedBy,
                 description,

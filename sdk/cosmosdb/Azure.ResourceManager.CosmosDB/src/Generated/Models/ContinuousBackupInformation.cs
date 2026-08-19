@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContinuousBackupInformation"/>. </summary>
-        /// <param name="latestRestorableTimestamp"> The latest restorable timestamp for a resource. </param>
+        /// <param name="latestRestorableOn"> The latest restorable timestamp for a resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContinuousBackupInformation(DateTimeOffset? latestRestorableTimestamp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContinuousBackupInformation(DateTimeOffset? latestRestorableOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            LatestRestorableTimestamp = latestRestorableTimestamp;
+            LatestRestorableOn = latestRestorableOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The latest restorable timestamp for a resource. </summary>
         [WirePath("latestRestorableTimestamp")]
-        public DateTimeOffset? LatestRestorableTimestamp { get; }
+        public DateTimeOffset? LatestRestorableOn { get; }
     }
 }

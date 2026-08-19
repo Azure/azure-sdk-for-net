@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("InstrumentationKey"u8);
                 writer.WriteStringValue(InstrumentationKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("CreationDate"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             ComponentFlowType? flowType = default;
             ComponentRequestSource? requestSource = default;
             string instrumentationKey = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? creationOn = default;
             Guid? tenantId = default;
             string hockeyAppId = default;
             string hockeyAppToken = default;
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("TenantId"u8))
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 flowType,
                 requestSource,
                 instrumentationKey,
-                createdOn,
+                creationOn,
                 tenantId,
                 hockeyAppId,
                 hockeyAppToken,

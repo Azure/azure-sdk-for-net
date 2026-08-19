@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
             EncryptionScopeSource? source = default;
             EncryptionScopeState? state = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? creationOn = default;
             DateTimeOffset? lastModifiedOn = default;
             EncryptionScopeKeyVaultProperties keyVaultProperties = default;
             bool? requireInfrastructureEncryption = default;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedTime"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new EncryptionScopeProperties(
                 source,
                 state,
-                createdOn,
+                creationOn,
                 lastModifiedOn,
                 keyVaultProperties,
                 requireInfrastructureEncryption,

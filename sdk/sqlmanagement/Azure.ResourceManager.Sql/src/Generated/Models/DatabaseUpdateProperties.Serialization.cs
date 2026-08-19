@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("databaseId"u8);
                 writer.WriteStringValue(DatabaseId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationDate"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(CurrentServiceObjectiveName))
             {
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier sourceDatabaseId = default;
             SqlDatabaseStatus? status = default;
             Guid? databaseId = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? creationOn = default;
             string currentServiceObjectiveName = default;
             string requestedServiceObjectiveName = default;
             AzureLocation? defaultSecondaryLocation = default;
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("currentServiceObjectiveName"u8))
@@ -830,7 +830,7 @@ namespace Azure.ResourceManager.Sql.Models
                 sourceDatabaseId,
                 status,
                 databaseId,
-                createdOn,
+                creationOn,
                 currentServiceObjectiveName,
                 requestedServiceObjectiveName,
                 defaultSecondaryLocation,

@@ -13,16 +13,16 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> MongoDB linked service properties. </summary>
-    internal partial class MongoDbV2LinkedServiceTypeProperties
+    internal partial class MongoDBV2LinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MongoDbV2LinkedServiceTypeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBV2LinkedServiceTypeProperties"/>. </summary>
         /// <param name="connectionString"> The MongoDB connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="database"> The name of the MongoDB database that you want to access. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="database"/> is null. </exception>
-        public MongoDbV2LinkedServiceTypeProperties(DataFactoryElement<string> connectionString, DataFactoryElement<string> database)
+        public MongoDBV2LinkedServiceTypeProperties(DataFactoryElement<string> connectionString, DataFactoryElement<string> database)
         {
             Argument.AssertNotNull(connectionString, nameof(connectionString));
             Argument.AssertNotNull(database, nameof(database));
@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Database = database;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MongoDbV2LinkedServiceTypeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBV2LinkedServiceTypeProperties"/>. </summary>
         /// <param name="connectionString"> The MongoDB connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="database"> The name of the MongoDB database that you want to access. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MongoDbV2LinkedServiceTypeProperties(DataFactoryElement<string> connectionString, DataFactoryElement<string> database, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MongoDBV2LinkedServiceTypeProperties(DataFactoryElement<string> connectionString, DataFactoryElement<string> database, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
             Database = database;

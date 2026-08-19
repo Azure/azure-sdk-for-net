@@ -12,31 +12,31 @@ using Azure.ResourceManager.MachineLearning;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Returns metadata about the os patching. </summary>
-    public partial class OsPatchingStatus
+    public partial class OSPatchingStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OsPatchingStatus"/>. </summary>
-        internal OsPatchingStatus()
+        /// <summary> Initializes a new instance of <see cref="OSPatchingStatus"/>. </summary>
+        internal OSPatchingStatus()
         {
-            OsPatchingErrors = new ChangeTrackingList<MachineLearningError>();
+            OSPatchingErrors = new ChangeTrackingList<MachineLearningError>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OsPatchingStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSPatchingStatus"/>. </summary>
         /// <param name="patchStatus"> The os patching status. </param>
         /// <param name="latestPatchTime"> Time of the latest os patching. </param>
         /// <param name="isRebootPending"> Specifies whether this compute instance is pending for reboot to finish os patching. </param>
         /// <param name="scheduledRebootTime"> Time of scheduled reboot. </param>
         /// <param name="osPatchingErrors"> Collection of errors encountered when doing os patching. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OsPatchingStatus(PatchStatus? patchStatus, string latestPatchTime, bool? isRebootPending, string scheduledRebootTime, IList<MachineLearningError> osPatchingErrors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OSPatchingStatus(PatchStatus? patchStatus, string latestPatchTime, bool? isRebootPending, string scheduledRebootTime, IList<MachineLearningError> osPatchingErrors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PatchStatus = patchStatus;
             LatestPatchTime = latestPatchTime;
             IsRebootPending = isRebootPending;
             ScheduledRebootTime = scheduledRebootTime;
-            OsPatchingErrors = osPatchingErrors;
+            OSPatchingErrors = osPatchingErrors;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -58,6 +58,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Collection of errors encountered when doing os patching. </summary>
         [WirePath("osPatchingErrors")]
-        public IList<MachineLearningError> OsPatchingErrors { get; }
+        public IList<MachineLearningError> OSPatchingErrors { get; }
     }
 }

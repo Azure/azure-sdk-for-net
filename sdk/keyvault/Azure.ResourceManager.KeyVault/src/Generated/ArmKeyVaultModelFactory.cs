@@ -253,19 +253,17 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <param name="vaultId"> The resource id of the original vault. </param>
         /// <param name="location"> The location of the original vault. </param>
-        /// <param name="deletedOn"> The deleted date. </param>
         /// <param name="scheduledPurgeOn"> The scheduled purged date. </param>
         /// <param name="tags"> Tags of the original vault. </param>
         /// <param name="purgeProtectionEnabled"> Purge protection status of the original vault. </param>
         /// <returns> A new <see cref="Models.DeletedKeyVaultProperties"/> instance for mocking. </returns>
-        public static DeletedKeyVaultProperties DeletedKeyVaultProperties(ResourceIdentifier vaultId = default, AzureLocation? location = default, DateTimeOffset? deletedOn = default, DateTimeOffset? scheduledPurgeOn = default, IReadOnlyDictionary<string, string> tags = default, bool? purgeProtectionEnabled = default)
+        public static DeletedKeyVaultProperties DeletedKeyVaultProperties(ResourceIdentifier vaultId = default, AzureLocation? location = default, DateTimeOffset? scheduledPurgeOn = default, IReadOnlyDictionary<string, string> tags = default, bool? purgeProtectionEnabled = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DeletedKeyVaultProperties(
                 vaultId,
                 location,
-                deletedOn,
                 scheduledPurgeOn,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 purgeProtectionEnabled,
@@ -446,19 +444,17 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <param name="managedHsmId"> The resource id of the original managed HSM. </param>
         /// <param name="location"> The location of the original managed HSM. </param>
-        /// <param name="deletedOn"> The deleted date. </param>
         /// <param name="scheduledPurgeOn"> The scheduled purged date. </param>
         /// <param name="purgeProtectionEnabled"> Purge protection status of the original managed HSM. </param>
         /// <param name="tags"> Tags of the original managed HSM. </param>
         /// <returns> A new <see cref="Models.DeletedManagedHsmProperties"/> instance for mocking. </returns>
-        public static DeletedManagedHsmProperties DeletedManagedHsmProperties(ResourceIdentifier managedHsmId = default, AzureLocation? location = default, DateTimeOffset? deletedOn = default, DateTimeOffset? scheduledPurgeOn = default, bool? purgeProtectionEnabled = default, IReadOnlyDictionary<string, string> tags = default)
+        public static DeletedManagedHsmProperties DeletedManagedHsmProperties(ResourceIdentifier managedHsmId = default, AzureLocation? location = default, DateTimeOffset? scheduledPurgeOn = default, bool? purgeProtectionEnabled = default, IReadOnlyDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DeletedManagedHsmProperties(
                 managedHsmId,
                 location,
-                deletedOn,
                 scheduledPurgeOn,
                 purgeProtectionEnabled,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
@@ -641,6 +637,46 @@ namespace Azure.ResourceManager.KeyVault.Models
                 systemData,
                 location,
                 accessPolicies is null ? default : new KeyVaultAccessPolicyProperties((accessPolicies ?? new ChangeTrackingList<KeyVaultAccessPolicy>()).ToList(), default),
+                default);
+        }
+
+        /// <summary> Properties of the deleted vault. </summary>
+        /// <param name="vaultId"> The resource id of the original vault. </param>
+        /// <param name="location"> The location of the original vault. </param>
+        /// <param name="deletedOn"> The deleted date. </param>
+        /// <param name="scheduledPurgeOn"> The scheduled purged date. </param>
+        /// <param name="tags"> Tags of the original vault. </param>
+        /// <param name="purgeProtectionEnabled"> Purge protection status of the original vault. </param>
+        /// <returns> A new <see cref="Models.DeletedKeyVaultProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DeletedKeyVaultProperties DeletedKeyVaultProperties(ResourceIdentifier vaultId = default, AzureLocation? location = default, DateTimeOffset? deletedOn = default, DateTimeOffset? scheduledPurgeOn = default, IReadOnlyDictionary<string, string> tags = default, bool? purgeProtectionEnabled = default)
+        {
+            return new DeletedKeyVaultProperties(
+                vaultId,
+                location,
+                scheduledPurgeOn,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                purgeProtectionEnabled,
+                default);
+        }
+
+        /// <summary> Properties of the deleted managed HSM. </summary>
+        /// <param name="managedHsmId"> The resource id of the original managed HSM. </param>
+        /// <param name="location"> The location of the original managed HSM. </param>
+        /// <param name="deletedOn"> The deleted date. </param>
+        /// <param name="scheduledPurgeOn"> The scheduled purged date. </param>
+        /// <param name="purgeProtectionEnabled"> Purge protection status of the original managed HSM. </param>
+        /// <param name="tags"> Tags of the original managed HSM. </param>
+        /// <returns> A new <see cref="Models.DeletedManagedHsmProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DeletedManagedHsmProperties DeletedManagedHsmProperties(ResourceIdentifier managedHsmId = default, AzureLocation? location = default, DateTimeOffset? deletedOn = default, DateTimeOffset? scheduledPurgeOn = default, bool? purgeProtectionEnabled = default, IReadOnlyDictionary<string, string> tags = default)
+        {
+            return new DeletedManagedHsmProperties(
+                managedHsmId,
+                location,
+                scheduledPurgeOn,
+                purgeProtectionEnabled,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
         }
     }

@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Initializes a new instance of <see cref="SourceControlSyncJobProperties"/>. </summary>
         /// <param name="sourceControlSyncJobId"> The source control sync job id. </param>
-        /// <param name="createdOn"> The creation time of the job. </param>
+        /// <param name="creationOn"> The creation time of the job. </param>
         /// <param name="provisioningState"> The provisioning state of the job. </param>
         /// <param name="startOn"> The start time of the job. </param>
         /// <param name="endOn"> The end time of the job. </param>
         /// <param name="syncType"> The sync type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SourceControlSyncJobProperties(string sourceControlSyncJobId, DateTimeOffset? createdOn, SourceControlProvisioningState? provisioningState, DateTimeOffset? startOn, DateTimeOffset? endOn, SourceControlSyncType? syncType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SourceControlSyncJobProperties(string sourceControlSyncJobId, DateTimeOffset? creationOn, SourceControlProvisioningState? provisioningState, DateTimeOffset? startOn, DateTimeOffset? endOn, SourceControlSyncType? syncType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceControlSyncJobId = sourceControlSyncJobId;
-            CreatedOn = createdOn;
+            CreationOn = creationOn;
             ProvisioningState = provisioningState;
             StartOn = startOn;
             EndOn = endOn;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Automation.Models
         public string SourceControlSyncJobId { get; }
 
         /// <summary> The creation time of the job. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreationOn { get; }
 
         /// <summary> The provisioning state of the job. </summary>
         public SourceControlProvisioningState? ProvisioningState { get; }

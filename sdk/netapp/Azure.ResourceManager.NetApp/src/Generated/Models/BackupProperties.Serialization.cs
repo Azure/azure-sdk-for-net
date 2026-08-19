@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("backupId"u8);
                 writer.WriteStringValue(BackupId);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationDate"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(SnapshotCreationOn))
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             string backupId = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? creationOn = default;
             DateTimeOffset? snapshotCreationOn = default;
             DateTimeOffset? completionOn = default;
             string provisioningState = default;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("snapshotCreationDate"u8))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             return new BackupProperties(
                 backupId,
-                createdOn,
+                creationOn,
                 snapshotCreationOn,
                 completionOn,
                 provisioningState,

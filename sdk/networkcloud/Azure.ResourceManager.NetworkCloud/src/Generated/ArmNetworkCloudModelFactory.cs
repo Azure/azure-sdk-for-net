@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="ipv4ConnectedPrefix"> The IPv4 subnet from which the access bridge allocates an address. This subnet must be part of the internal network specified by networkId. </param>
-        /// <param name="ipv6ConnectedPrefix"> The IPv6 subnet from which the access bridge allocates an address. This subnet must be part of the internal network specified by networkId. </param>
+        /// <param name="iPv4ConnectedPrefix"> The IPv4 subnet from which the access bridge allocates an address. This subnet must be part of the internal network specified by networkId. </param>
+        /// <param name="iPv6ConnectedPrefix"> The IPv6 subnet from which the access bridge allocates an address. This subnet must be part of the internal network specified by networkId. </param>
         /// <param name="networkId"> The resource ID of the internal network in a layer 3 isolation domain containing the IP subnets to use. </param>
         /// <param name="securityRules"> The list of security rules enforced by the access bridge. </param>
         /// <param name="detailedStatus"> The detailed status reported by the access bridge. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkId"/> is null. </exception>
         /// <returns> A new <see cref="NetworkCloud.NetworkCloudAccessBridgeData"/> instance for mocking. </returns>
-        public static NetworkCloudAccessBridgeData NetworkCloudAccessBridgeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string ipv4ConnectedPrefix = default, string ipv6ConnectedPrefix = default, ResourceIdentifier networkId = default, IEnumerable<NetworkCloudAccessBridgeSecurityRule> securityRules = default, NetworkCloudAccessBridgeDetailedStatus? detailedStatus = default, string detailedStatusMessage = default, IEnumerable<NetworkCloudAccessBridgeEndpoint> endpoints = default, NetworkCloudTransportProtocol? protocol = default, NetworkCloudAccessBridgeProvisioningState? provisioningState = default, ETag? eTag = default, Resources.Models.ExtendedLocation extendedLocation = default)
+        public static NetworkCloudAccessBridgeData NetworkCloudAccessBridgeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string iPv4ConnectedPrefix = default, string iPv6ConnectedPrefix = default, ResourceIdentifier networkId = default, IEnumerable<NetworkCloudAccessBridgeSecurityRule> securityRules = default, NetworkCloudAccessBridgeDetailedStatus? detailedStatus = default, string detailedStatusMessage = default, IEnumerable<NetworkCloudAccessBridgeEndpoint> endpoints = default, NetworkCloudTransportProtocol? protocol = default, NetworkCloudAccessBridgeProvisioningState? provisioningState = default, ETag? eTag = default, Resources.Models.ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -60,32 +60,32 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <param name="description"> The user provided value describing this rule. </param>
         /// <param name="direction"> The direction of allowed network traffic based on the rule. </param>
-        /// <param name="ipv4Addresses"> The set of IPv4 addresses permitted as the source or destination of the security rule. For as single address, utilize a /32 (CIDR notation). One or both Ipv4Addresses and Ipv6Addresses must be specified. Example formats: 10.10.10.10-10.10.10.20 or 10.10.10.10/24. </param>
-        /// <param name="ipv6Addresses"> The set of IPv6 addresses permitted as the source or destination of the security rule. For as single address, utilize a /128 (CIDR notation). One or both Ipv4Addresses and Ipv6Addresses must be specified. Example formats: 2001:db8:abcd::1-2001:db8:abcd::ff or 2001:db8:abcd::1/64. </param>
+        /// <param name="iPv4Addresses"> The set of IPv4 addresses permitted as the source or destination of the security rule. For as single address, utilize a /32 (CIDR notation). One or both Ipv4Addresses and Ipv6Addresses must be specified. Example formats: 10.10.10.10-10.10.10.20 or 10.10.10.10/24. </param>
+        /// <param name="iPv6Addresses"> The set of IPv6 addresses permitted as the source or destination of the security rule. For as single address, utilize a /128 (CIDR notation). One or both Ipv4Addresses and Ipv6Addresses must be specified. Example formats: 2001:db8:abcd::1-2001:db8:abcd::ff or 2001:db8:abcd::1/64. </param>
         /// <param name="port"> The source or destination port or port range. Example 24562 or 24562-24570. </param>
         /// <returns> A new <see cref="Models.NetworkCloudAccessBridgeSecurityRule"/> instance for mocking. </returns>
-        public static NetworkCloudAccessBridgeSecurityRule NetworkCloudAccessBridgeSecurityRule(string description = default, NetworkCloudSecurityRuleDirection direction = default, IEnumerable<string> ipv4Addresses = default, IEnumerable<string> ipv6Addresses = default, string port = default)
+        public static NetworkCloudAccessBridgeSecurityRule NetworkCloudAccessBridgeSecurityRule(string description = default, NetworkCloudSecurityRuleDirection direction = default, IEnumerable<string> iPv4Addresses = default, IEnumerable<string> iPv6Addresses = default, string port = default)
         {
-            ipv4Addresses ??= new ChangeTrackingList<string>();
-            ipv6Addresses ??= new ChangeTrackingList<string>();
+            iPv4Addresses ??= new ChangeTrackingList<string>();
+            iPv6Addresses ??= new ChangeTrackingList<string>();
 
             return new NetworkCloudAccessBridgeSecurityRule(
                 description,
                 direction,
-                (ipv4Addresses ?? new ChangeTrackingList<string>()).ToList(),
-                (ipv6Addresses ?? new ChangeTrackingList<string>()).ToList(),
+                (iPv4Addresses ?? new ChangeTrackingList<string>()).ToList(),
+                (iPv6Addresses ?? new ChangeTrackingList<string>()).ToList(),
                 port,
                 default);
         }
 
         /// <param name="fqdn"> The fully qualified domain name used to describe the certificate name for the endpoint. </param>
-        /// <param name="ipv4Address"> The IPv4 address associated with the endpoint. </param>
-        /// <param name="ipv6Address"> The IPv6 address associated with the endpoint. </param>
+        /// <param name="iPv4Address"> The IPv4 address associated with the endpoint. </param>
+        /// <param name="iPv6Address"> The IPv6 address associated with the endpoint. </param>
         /// <param name="name"> The name that identifies the type of endpoint (for example VIP or host). </param>
         /// <returns> A new <see cref="Models.NetworkCloudAccessBridgeEndpoint"/> instance for mocking. </returns>
-        public static NetworkCloudAccessBridgeEndpoint NetworkCloudAccessBridgeEndpoint(string fqdn = default, string ipv4Address = default, string ipv6Address = default, string name = default)
+        public static NetworkCloudAccessBridgeEndpoint NetworkCloudAccessBridgeEndpoint(string fqdn = default, string iPv4Address = default, string iPv6Address = default, string name = default)
         {
-            return new NetworkCloudAccessBridgeEndpoint(fqdn, ipv4Address, ipv6Address, name, default);
+            return new NetworkCloudAccessBridgeEndpoint(fqdn, iPv4Address, iPv6Address, name, default);
         }
 
         /// <param name="accessBridgePatchSecurityRules"> The list of security rules enforced by the access bridge. </param>
@@ -148,8 +148,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="serialNumber"> The serial number of the bare metal machine. </param>
         /// <param name="actionStates"> The current state of any in progress or completed actions. The most recent known instance of each action type is shown. </param>
         /// <param name="associatedResourceIds"> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </param>
-        /// <param name="bmcIpv4Address"> The IPv4 address of the BMC interface for the bare metal machine. </param>
-        /// <param name="bmcIpv6Address"> The IPv6 address of the BMC interface for the bare metal machine. </param>
+        /// <param name="bmcIPv4Address"> The IPv4 address of the BMC interface for the bare metal machine. </param>
+        /// <param name="bmcIPv6Address"> The IPv6 address of the BMC interface for the bare metal machine. </param>
         /// <param name="caCertificate"> The CA certificate information issued by the platform for connecting to TLS interfaces for the bare metal machine. Callers add this certificate to the trusted CA store on the Kubernetes control plane nodes to allow secure communication with the bare metal machine. </param>
         /// <param name="clusterId"> The resource ID of the cluster this bare metal machine is associated with. </param>
         /// <param name="cordonStatus"> The cordon status of the bare metal machine. </param>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="bmcConnectionString"/>, <paramref name="bmcCredentials"/>, <paramref name="bmcMacAddress"/>, <paramref name="bootMacAddress"/>, <paramref name="machineDetails"/>, <paramref name="machineName"/>, <paramref name="machineSkuId"/>, <paramref name="rackId"/> or <paramref name="serialNumber"/> is null. </exception>
         /// <returns> A new <see cref="NetworkCloud.NetworkCloudBareMetalMachineData"/> instance for mocking. </returns>
-        public static NetworkCloudBareMetalMachineData NetworkCloudBareMetalMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string bmcConnectionString = default, AdministrativeCredentials bmcCredentials = default, string bmcMacAddress = default, string bootMacAddress = default, string machineDetails = default, string machineName = default, string machineSkuId = default, ResourceIdentifier rackId = default, long rackSlot = default, string serialNumber = default, IEnumerable<NetworkCloudActionState> actionStates = default, IEnumerable<ResourceIdentifier> associatedResourceIds = default, string bmcIpv4Address = default, string bmcIpv6Address = default, NetworkCloudCertificateInfo caCertificate = default, ResourceIdentifier clusterId = default, BareMetalMachineCordonStatus? cordonStatus = default, BareMetalMachineDetailedStatus? detailedStatus = default, string detailedStatusMessage = default, HardwareInventory hardwareInventory = default, HardwareValidationStatus hardwareValidationStatus = default, IEnumerable<string> hybridAksClustersAssociatedIds = default, string kubernetesNodeName = default, string kubernetesVersion = default, string machineClusterVersion = default, IEnumerable<string> machineRoles = default, BareMetalMachineMonitoringConfigurationStatus monitoringConfigurationStatus = default, IPAddress oamIPv4Address = default, string oamIPv6Address = default, string osImage = default, BareMetalMachinePowerState? powerState = default, BareMetalMachineReadyState? readyState = default, RuntimeProtectionStatus runtimeProtectionStatus = default, IEnumerable<SecretRotationStatus> secretRotationStatus = default, string serviceTag = default, IEnumerable<string> virtualMachinesAssociatedIds = default, BareMetalMachineProvisioningState? provisioningState = default, ETag? eTag = default, ExtendedLocation extendedLocation = default)
+        public static NetworkCloudBareMetalMachineData NetworkCloudBareMetalMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string bmcConnectionString = default, AdministrativeCredentials bmcCredentials = default, string bmcMacAddress = default, string bootMacAddress = default, string machineDetails = default, string machineName = default, string machineSkuId = default, ResourceIdentifier rackId = default, long rackSlot = default, string serialNumber = default, IEnumerable<NetworkCloudActionState> actionStates = default, IEnumerable<ResourceIdentifier> associatedResourceIds = default, string bmcIPv4Address = default, string bmcIPv6Address = default, NetworkCloudCertificateInfo caCertificate = default, ResourceIdentifier clusterId = default, BareMetalMachineCordonStatus? cordonStatus = default, BareMetalMachineDetailedStatus? detailedStatus = default, string detailedStatusMessage = default, HardwareInventory hardwareInventory = default, HardwareValidationStatus hardwareValidationStatus = default, IEnumerable<string> hybridAksClustersAssociatedIds = default, string kubernetesNodeName = default, string kubernetesVersion = default, string machineClusterVersion = default, IEnumerable<string> machineRoles = default, BareMetalMachineMonitoringConfigurationStatus monitoringConfigurationStatus = default, IPAddress oamIPv4Address = default, string oamIPv6Address = default, string osImage = default, BareMetalMachinePowerState? powerState = default, BareMetalMachineReadyState? readyState = default, RuntimeProtectionStatus runtimeProtectionStatus = default, IEnumerable<SecretRotationStatus> secretRotationStatus = default, string serviceTag = default, IEnumerable<string> virtualMachinesAssociatedIds = default, BareMetalMachineProvisioningState? provisioningState = default, ETag? eTag = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

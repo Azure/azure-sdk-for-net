@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <summary> The timestamp of the status. </summary>
         [WirePath("properties.statusTimestamp")]
-        public DateTimeOffset? StatusTimestamp
+        public DateTimeOffset? StatusOn
         {
             get
             {
-                return Properties is null ? default : Properties.StatusTimestamp;
+                return Properties is null ? default : Properties.StatusOn;
             }
         }
 

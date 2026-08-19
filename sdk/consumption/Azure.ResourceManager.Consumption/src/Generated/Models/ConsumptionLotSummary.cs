@@ -82,11 +82,11 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> The expiration date of a lot. </summary>
-        public DateTimeOffset? ExpireOn
+        public DateTimeOffset? ExpirationOn
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpirationOn;
             }
         }
 

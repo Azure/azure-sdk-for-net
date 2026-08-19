@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("isExportable"u8);
                 writer.WriteBooleanValue(IsExportable.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Automation.Models
             string thumbprintString = default;
             DateTimeOffset? expireOn = default;
             bool? isExportable = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? creationOn = default;
             DateTimeOffset? lastModifiedOn = default;
             string description = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedTime"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Automation.Models
                 thumbprintString,
                 expireOn,
                 isExportable,
-                createdOn,
+                creationOn,
                 lastModifiedOn,
                 description,
                 additionalBinaryDataProperties);

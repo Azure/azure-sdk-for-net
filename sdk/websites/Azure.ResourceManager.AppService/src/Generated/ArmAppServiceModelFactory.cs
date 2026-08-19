@@ -1587,7 +1587,7 @@ namespace Azure.ResourceManager.AppService.Models
                 (errors ?? new ChangeTrackingList<ResponseError>()).ToList(),
                 createdOn,
                 modifiedOn,
-                expireOn,
+                default,
                 geoMasterOperationId,
                 default);
         }
@@ -1959,8 +1959,8 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                createdOn is null && recommendationId is null && resourceId is null && resourceScope is null && ruleName is null && displayName is null && message is null && level is null && channels is null && categoryTags is null && actionName is null && enabled is null && states is null && startOn is null && endOn is null && nextNotificationOn is null && notificationExpirationOn is null && notifiedOn is null && score is null && isDynamic is null && extensionName is null && bladeName is null && forwardLink is null ? default : new RecommendationProperties(
-                    createdOn,
+                recommendationId is null && resourceId is null && resourceScope is null && ruleName is null && displayName is null && message is null && level is null && channels is null && categoryTags is null && actionName is null && enabled is null && states is null && startOn is null && endOn is null && nextNotificationOn is null && notificationExpirationOn is null && notifiedOn is null && score is null && isDynamic is null && extensionName is null && bladeName is null && forwardLink is null ? default : new RecommendationProperties(
+                    default,
                     recommendationId,
                     resourceId,
                     resourceScope,
@@ -6253,7 +6253,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                identifier is null && deploymentName is null && href is null && minidump is null && isProfileRunning is null && isIisProfileRunning is null && iisProfileTimeoutInSeconds is null && parent is null && children is null && processThreads is null && openFileHandles is null && modules is null && fileName is null && commandLine is null && userName is null && handleCount is null && moduleCount is null && threadCount is null && startOn is null && totalCpuTime is null && userCpuTime is null && privilegedCpuTime is null && workingSet is null && peakWorkingSet is null && privateMemory is null && virtualMemory is null && peakVirtualMemory is null && pagedSystemMemory is null && nonPagedSystemMemory is null && pagedMemory is null && peakPagedMemory is null && timeStamp is null && environmentVariables is null && isScmSite is null && isWebjob is null && description is null ? default : new ProcessInfoProperties(
+                identifier is null && deploymentName is null && href is null && minidump is null && isProfileRunning is null && isIisProfileRunning is null && iisProfileTimeoutInSeconds is null && parent is null && children is null && processThreads is null && openFileHandles is null && modules is null && fileName is null && commandLine is null && userName is null && handleCount is null && moduleCount is null && threadCount is null && startOn is null && totalCpuTime is null && userCpuTime is null && privilegedCpuTime is null && workingSet is null && peakWorkingSet is null && privateMemory is null && virtualMemory is null && peakVirtualMemory is null && pagedSystemMemory is null && nonPagedSystemMemory is null && pagedMemory is null && peakPagedMemory is null && environmentVariables is null && isScmSite is null && isWebjob is null && description is null ? default : new ProcessInfoProperties(
                     identifier,
                     deploymentName,
                     href,
@@ -6285,7 +6285,7 @@ namespace Azure.ResourceManager.AppService.Models
                     nonPagedSystemMemory,
                     pagedMemory,
                     peakPagedMemory,
-                    timeStamp,
+                    default,
                     environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
                     isScmSite,
                     isWebjob,
@@ -9430,7 +9430,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                token is null && tokenSecret is null && refreshToken is null && expireOn is null ? default : new SourceControlProperties(token, tokenSecret, refreshToken, expireOn, default),
+                token is null && tokenSecret is null && refreshToken is null ? default : new SourceControlProperties(token, tokenSecret, refreshToken, default, default),
                 kind,
                 default);
         }
@@ -10803,7 +10803,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                password is null && friendlyName is null && subjectName is null && hostNames is null && siteName is null && selfLink is null && issuer is null && issueOn is null && expireOn is null && thumbprintString is null && isValid is null && publicKeyHash is null && hostingEnvironmentProfile is null && keyVaultId is null && keyVaultSecretName is null && keyVaultSecretStatus is null && serverFarmId is null && canonicalName is null && domainValidationMethod is null ? default : new CertificatePatchResourceProperties(
+                password is null && friendlyName is null && subjectName is null && hostNames is null && siteName is null && selfLink is null && issuer is null && issueOn is null && thumbprintString is null && isValid is null && publicKeyHash is null && hostingEnvironmentProfile is null && keyVaultId is null && keyVaultSecretName is null && keyVaultSecretStatus is null && serverFarmId is null && canonicalName is null && domainValidationMethod is null ? default : new CertificatePatchResourceProperties(
                     password,
                     friendlyName,
                     subjectName,
@@ -10813,7 +10813,7 @@ namespace Azure.ResourceManager.AppService.Models
                     selfLink,
                     issuer,
                     issueOn,
-                    expireOn,
+                    default,
                     thumbprintString,
                     isValid,
                     default,
@@ -13018,7 +13018,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                identifier is null && deploymentName is null && href is null && minidump is null && isProfileRunning is null && isIisProfileRunning is null && iisProfileTimeoutInSeconds is null && parent is null && children is null && processThreads is null && openFileHandles is null && modules is null && fileName is null && commandLine is null && userName is null && handleCount is null && moduleCount is null && threadCount is null && startOn is null && totalCpuTime is null && userCpuTime is null && privilegedCpuTime is null && workingSet is null && peakWorkingSet is null && privateMemory is null && virtualMemory is null && peakVirtualMemory is null && pagedSystemMemory is null && nonPagedSystemMemory is null && pagedMemory is null && peakPagedMemory is null && timeStamp is null && environmentVariables is null && isScmSite is null && isWebjob is null && description is null ? default : new ProcessInfoProperties(
+                identifier is null && deploymentName is null && href is null && minidump is null && isProfileRunning is null && isIisProfileRunning is null && iisProfileTimeoutInSeconds is null && parent is null && children is null && processThreads is null && openFileHandles is null && modules is null && fileName is null && commandLine is null && userName is null && handleCount is null && moduleCount is null && threadCount is null && startOn is null && totalCpuTime is null && userCpuTime is null && privilegedCpuTime is null && workingSet is null && peakWorkingSet is null && privateMemory is null && virtualMemory is null && peakVirtualMemory is null && pagedSystemMemory is null && nonPagedSystemMemory is null && pagedMemory is null && peakPagedMemory is null && environmentVariables is null && isScmSite is null && isWebjob is null && description is null ? default : new ProcessInfoProperties(
                     identifier,
                     deploymentName,
                     href,
@@ -13050,7 +13050,7 @@ namespace Azure.ResourceManager.AppService.Models
                     nonPagedSystemMemory,
                     pagedMemory,
                     peakPagedMemory,
-                    timeStamp,
+                    default,
                     environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
                     isScmSite,
                     isWebjob,

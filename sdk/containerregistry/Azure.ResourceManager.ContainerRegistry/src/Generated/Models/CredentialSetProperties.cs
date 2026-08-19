@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// List of authentication credentials stored for an upstream.
         /// Usually consists of a primary and an optional secondary credential.
         /// </param>
-        /// <param name="createdOn"> The creation date of credential store resource. </param>
+        /// <param name="creationOn"> The creation date of credential store resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CredentialSetProperties(string loginServer, IList<ContainerRegistryAuthCredential> authCredentials, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CredentialSetProperties(string loginServer, IList<ContainerRegistryAuthCredential> authCredentials, DateTimeOffset? creationOn, ContainerRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LoginServer = loginServer;
             AuthCredentials = authCredentials;
-            CreatedOn = createdOn;
+            CreationOn = creationOn;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The creation date of credential store resource. </summary>
         [WirePath("creationDate")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreationOn { get; }
 
         /// <summary> Provisioning state of the resource. </summary>
         [WirePath("provisioningState")]

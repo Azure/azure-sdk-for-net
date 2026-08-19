@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> The deletion time of the deleted server. </summary>
         [WirePath("properties.deletionTime")]
-        public DateTimeOffset? DeletedOn
+        public DateTimeOffset? DeletionOn
         {
             get
             {
-                return Properties is null ? default : Properties.DeletedOn;
+                return Properties is null ? default : Properties.DeletionOn;
             }
         }
 

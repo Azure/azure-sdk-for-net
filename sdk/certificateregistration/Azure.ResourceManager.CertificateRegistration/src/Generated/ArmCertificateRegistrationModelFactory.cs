@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 name,
                 resourceType,
                 systemData,
-                certificates is null && distinguishedName is null && domainVerificationToken is null && validityInYears is null && keySize is null && certificateProductType is null && isAutoRenew is null && provisioningState is null && status is null && signedCertificate is null && csr is null && intermediate is null && root is null && serialNumber is null && lastCertificateIssuedOn is null && expireOn is null && isPrivateKeyExternal is null && appServiceCertificateNotRenewableReasons is null && nextAutoRenewOn is null && contact is null ? default : new AppServiceCertificateOrderPatchResourceProperties(
+                certificates is null && distinguishedName is null && domainVerificationToken is null && validityInYears is null && keySize is null && certificateProductType is null && isAutoRenew is null && provisioningState is null && status is null && signedCertificate is null && csr is null && intermediate is null && root is null && serialNumber is null && lastCertificateIssuedOn is null && isPrivateKeyExternal is null && appServiceCertificateNotRenewableReasons is null && nextAutoRenewOn is null && contact is null ? default : new AppServiceCertificateOrderPatchResourceProperties(
                     certificates ?? new ChangeTrackingDictionary<string, AppServiceCertificateProperties>(),
                     distinguishedName,
                     domainVerificationToken,
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                     root,
                     serialNumber,
                     lastCertificateIssuedOn,
-                    expireOn,
+                    default,
                     isPrivateKeyExternal,
                     (appServiceCertificateNotRenewableReasons ?? new ChangeTrackingList<AppServiceCertificateNotRenewableReason>()).ToList(),
                     nextAutoRenewOn,

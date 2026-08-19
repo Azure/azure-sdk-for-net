@@ -285,10 +285,10 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="timestamp"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
+        /// <param name="on"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthModelDiscoveryRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HealthModelDiscoveryRuleResource> GetAllAsync(DateTimeOffset? timestamp = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<HealthModelDiscoveryRuleResource> GetAllAsync(DateTimeOffset? @on = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.CloudHealth
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
-                timestamp,
+                @on,
                 context,
                 "HealthModelDiscoveryRuleCollection.GetAll"), data => new HealthModelDiscoveryRuleResource(Client, data));
         }
@@ -321,10 +321,10 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="timestamp"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
+        /// <param name="on"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthModelDiscoveryRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HealthModelDiscoveryRuleResource> GetAll(DateTimeOffset? timestamp = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<HealthModelDiscoveryRuleResource> GetAll(DateTimeOffset? @on = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.CloudHealth
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
-                timestamp,
+                @on,
                 context,
                 "HealthModelDiscoveryRuleCollection.GetAll"), data => new HealthModelDiscoveryRuleResource(Client, data));
         }

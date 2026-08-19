@@ -1737,7 +1737,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <param name="ownerId"> User identifier path: /users/{userId}. </param>
         /// <param name="scope"> Scope like /products/{productId} or /apis or /apis/{apiId}. </param>
-        /// <param name="expireOn"> Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="expirationOn"> Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <param name="displayName"> Subscription name. </param>
         /// <param name="primaryKey"> Primary subscription key. </param>
         /// <param name="secondaryKey"> Secondary subscription key. </param>
@@ -1745,12 +1745,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="stateComment"> Comments describing subscription state change by the administrator when the state is changed to the 'rejected'. </param>
         /// <param name="allowTracing"> Determines whether tracing can be enabled. </param>
         /// <returns> A new <see cref="Models.ApiManagementSubscriptionPatch"/> instance for mocking. </returns>
-        public static ApiManagementSubscriptionPatch ApiManagementSubscriptionPatch(string ownerId = default, string scope = default, DateTimeOffset? expireOn = default, string displayName = default, string primaryKey = default, string secondaryKey = default, SubscriptionState? state = default, string stateComment = default, bool? allowTracing = default)
+        public static ApiManagementSubscriptionPatch ApiManagementSubscriptionPatch(string ownerId = default, string scope = default, DateTimeOffset? expirationOn = default, string displayName = default, string primaryKey = default, string secondaryKey = default, SubscriptionState? state = default, string stateComment = default, bool? allowTracing = default)
         {
-            return new ApiManagementSubscriptionPatch(ownerId is null && scope is null && expireOn is null && displayName is null && primaryKey is null && secondaryKey is null && state is null && stateComment is null && allowTracing is null ? default : new SubscriptionUpdateParameterProperties(
+            return new ApiManagementSubscriptionPatch(ownerId is null && scope is null && expirationOn is null && displayName is null && primaryKey is null && secondaryKey is null && state is null && stateComment is null && allowTracing is null ? default : new SubscriptionUpdateParameterProperties(
                 ownerId,
                 scope,
-                expireOn,
+                expirationOn,
                 displayName,
                 primaryKey,
                 secondaryKey,

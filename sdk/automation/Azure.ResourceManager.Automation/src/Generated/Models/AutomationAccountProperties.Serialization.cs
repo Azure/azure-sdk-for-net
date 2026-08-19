@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Automation.Models
             AutomationSku sku = default;
             string lastModifiedBy = default;
             AutomationAccountState? state = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? creationOn = default;
             DateTimeOffset? lastModifiedOn = default;
             string description = default;
             AutomationEncryptionProperties encryption = default;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedTime"u8))
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Automation.Models
                 sku,
                 lastModifiedBy,
                 state,
-                createdOn,
+                creationOn,
                 lastModifiedOn,
                 description,
                 encryption,

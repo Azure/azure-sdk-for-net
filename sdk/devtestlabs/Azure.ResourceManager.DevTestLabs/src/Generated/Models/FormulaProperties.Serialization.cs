@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationDate"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (Optional.IsDefined(FormulaContent))
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             string description = default;
             string author = default;
             string osType = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? creationOn = default;
             DevTestLabVmCreationContent formulaContent = default;
             FormulaPropertiesFromVm vm = default;
             string provisioningState = default;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("formulaContent"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 description,
                 author,
                 osType,
-                createdOn,
+                creationOn,
                 formulaContent,
                 vm,
                 provisioningState,

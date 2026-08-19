@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="BgpPatchConfiguration"/>. </summary>
         public BgpPatchConfiguration()
         {
-            Ipv4ListenRangePrefixes = new ChangeTrackingList<string>();
-            Ipv6ListenRangePrefixes = new ChangeTrackingList<string>();
-            Ipv4NeighborAddress = new ChangeTrackingList<NeighborAddressPatch>();
-            Ipv6NeighborAddress = new ChangeTrackingList<NeighborAddressPatch>();
+            IPv4ListenRangePrefixes = new ChangeTrackingList<string>();
+            IPv6ListenRangePrefixes = new ChangeTrackingList<string>();
+            IPv4NeighborAddress = new ChangeTrackingList<NeighborAddressPatch>();
+            IPv6NeighborAddress = new ChangeTrackingList<NeighborAddressPatch>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BgpPatchConfiguration"/>. </summary>
@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="allowASOverride"> Enable Or Disable state. </param>
         /// <param name="fabricAsn"> ASN of Network Fabric. Example: 65048. </param>
         /// <param name="peerAsn"> Peer ASN. Example: 65047. </param>
-        /// <param name="ipv4ListenRangePrefixes"> List of BGP IPv4 Listen Range prefixes. </param>
-        /// <param name="ipv6ListenRangePrefixes"> List of BGP IPv6 Listen Ranges prefixes. </param>
-        /// <param name="ipv4NeighborAddress"> List with stringified IPv4 Neighbor Addresses. </param>
-        /// <param name="ipv6NeighborAddress"> List with stringified IPv6 Neighbor Address. </param>
+        /// <param name="iPv4ListenRangePrefixes"> List of BGP IPv4 Listen Range prefixes. </param>
+        /// <param name="iPv6ListenRangePrefixes"> List of BGP IPv6 Listen Ranges prefixes. </param>
+        /// <param name="iPv4NeighborAddress"> List with stringified IPv4 Neighbor Addresses. </param>
+        /// <param name="iPv6NeighborAddress"> List with stringified IPv6 Neighbor Address. </param>
         /// <param name="bmpConfiguration"> InternalNetwork BMP Configuration. </param>
         /// <param name="v4OverV6BgpSession"> V4 over V6 bgp session. </param>
         /// <param name="v6OverV4BgpSession"> v6 over v4 bgp session. </param>
-        internal BgpPatchConfiguration(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, BfdPatchConfiguration bfdConfiguration, NetworkFabricBooleanValue? defaultRouteOriginate, int? allowAS, AllowASOverride? allowASOverride, long? fabricAsn, long? peerAsn, IList<string> ipv4ListenRangePrefixes, IList<string> ipv6ListenRangePrefixes, IList<NeighborAddressPatch> ipv4NeighborAddress, IList<NeighborAddressPatch> ipv6NeighborAddress, InternalNetworkBmpPatchProperties bmpConfiguration, NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession, NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession) : base(annotation, additionalBinaryDataProperties)
+        internal BgpPatchConfiguration(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, BfdPatchConfiguration bfdConfiguration, NetworkFabricBooleanValue? defaultRouteOriginate, int? allowAS, AllowASOverride? allowASOverride, long? fabricAsn, long? peerAsn, IList<string> iPv4ListenRangePrefixes, IList<string> iPv6ListenRangePrefixes, IList<NeighborAddressPatch> iPv4NeighborAddress, IList<NeighborAddressPatch> iPv6NeighborAddress, InternalNetworkBmpPatchProperties bmpConfiguration, NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession, NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession) : base(annotation, additionalBinaryDataProperties)
         {
             BfdConfiguration = bfdConfiguration;
             DefaultRouteOriginate = defaultRouteOriginate;
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             AllowASOverride = allowASOverride;
             FabricAsn = fabricAsn;
             PeerAsn = peerAsn;
-            Ipv4ListenRangePrefixes = ipv4ListenRangePrefixes;
-            Ipv6ListenRangePrefixes = ipv6ListenRangePrefixes;
-            Ipv4NeighborAddress = ipv4NeighborAddress;
-            Ipv6NeighborAddress = ipv6NeighborAddress;
+            IPv4ListenRangePrefixes = iPv4ListenRangePrefixes;
+            IPv6ListenRangePrefixes = iPv6ListenRangePrefixes;
+            IPv4NeighborAddress = iPv4NeighborAddress;
+            IPv6NeighborAddress = iPv6NeighborAddress;
             BmpConfiguration = bmpConfiguration;
             V4OverV6BgpSession = v4OverV6BgpSession;
             V6OverV4BgpSession = v6OverV4BgpSession;
@@ -75,16 +75,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public long? PeerAsn { get; set; }
 
         /// <summary> List of BGP IPv4 Listen Range prefixes. </summary>
-        public IList<string> Ipv4ListenRangePrefixes { get; }
+        public IList<string> IPv4ListenRangePrefixes { get; }
 
         /// <summary> List of BGP IPv6 Listen Ranges prefixes. </summary>
-        public IList<string> Ipv6ListenRangePrefixes { get; }
+        public IList<string> IPv6ListenRangePrefixes { get; }
 
         /// <summary> List with stringified IPv4 Neighbor Addresses. </summary>
-        public IList<NeighborAddressPatch> Ipv4NeighborAddress { get; }
+        public IList<NeighborAddressPatch> IPv4NeighborAddress { get; }
 
         /// <summary> List with stringified IPv6 Neighbor Address. </summary>
-        public IList<NeighborAddressPatch> Ipv6NeighborAddress { get; }
+        public IList<NeighborAddressPatch> IPv6NeighborAddress { get; }
 
         /// <summary> InternalNetwork BMP Configuration. </summary>
         public InternalNetworkBmpPatchProperties BmpConfiguration { get; set; }

@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> The creation date of the backup. </summary>
-        public DateTimeOffset? CreatedOn
+        public DateTimeOffset? CreationOn
         {
             get
             {
-                return Properties is null ? default : Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreationOn;
             }
         }
 

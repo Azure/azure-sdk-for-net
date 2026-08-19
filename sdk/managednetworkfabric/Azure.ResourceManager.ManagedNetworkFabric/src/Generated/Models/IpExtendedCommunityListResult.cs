@@ -13,23 +13,23 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The response of a IpExtendedCommunity list operation. </summary>
-    internal partial class IpExtendedCommunityListResult
+    internal partial class IPExtendedCommunityListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IpExtendedCommunityListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPExtendedCommunityListResult"/>. </summary>
         /// <param name="value"> The IpExtendedCommunity items on this page. </param>
-        internal IpExtendedCommunityListResult(IEnumerable<NetworkFabricIPExtendedCommunityData> value)
+        internal IPExtendedCommunityListResult(IEnumerable<NetworkFabricIPExtendedCommunityData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IpExtendedCommunityListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPExtendedCommunityListResult"/>. </summary>
         /// <param name="value"> The IpExtendedCommunity items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IpExtendedCommunityListResult(IList<NetworkFabricIPExtendedCommunityData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IPExtendedCommunityListResult(IList<NetworkFabricIPExtendedCommunityData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;

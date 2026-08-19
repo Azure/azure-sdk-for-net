@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="runbookType"> Type of the runbook. </param>
         /// <param name="runtime"> Gets or sets runtime of the runbook. </param>
         /// <param name="runtimeEnvironment"> Environment of the runbook. </param>
-        /// <param name="createdOn"> Gets or sets the creation time. </param>
-        /// <param name="deletedOn"> Gets or sets the last modified time. </param>
+        /// <param name="creationOn"> Gets or sets the creation time. </param>
+        /// <param name="deletionOn"> Gets or sets the last modified time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedRunbookProperties(string runbookId, string runbookType, string runtime, string runtimeEnvironment, DateTimeOffset? createdOn, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeletedRunbookProperties(string runbookId, string runbookType, string runtime, string runtimeEnvironment, DateTimeOffset? creationOn, DateTimeOffset? deletionOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RunbookId = runbookId;
             RunbookType = runbookType;
             Runtime = runtime;
             RuntimeEnvironment = runtimeEnvironment;
-            CreatedOn = createdOn;
-            DeletedOn = deletedOn;
+            CreationOn = creationOn;
+            DeletionOn = deletionOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.Automation.Models
         public string RuntimeEnvironment { get; }
 
         /// <summary> Gets or sets the creation time. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreationOn { get; }
 
         /// <summary> Gets or sets the last modified time. </summary>
-        public DateTimeOffset? DeletedOn { get; }
+        public DateTimeOffset? DeletionOn { get; }
     }
 }

@@ -16,10 +16,10 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Represents the properties of an Azure Linux restricted operating environment Provision Os job. </summary>
-    public partial class ProvisionOsJobProperties : EdgeMachineJobProperties, IJsonModel<ProvisionOsJobProperties>
+    public partial class ProvisionOSJobProperties : EdgeMachineJobProperties, IJsonModel<ProvisionOSJobProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="ProvisionOsJobProperties"/> for deserialization. </summary>
-        internal ProvisionOsJobProperties()
+        /// <summary> Initializes a new instance of <see cref="ProvisionOSJobProperties"/> for deserialization. </summary>
+        internal ProvisionOSJobProperties()
         {
         }
 
@@ -27,45 +27,45 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EdgeMachineJobProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisionOsJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProvisionOSJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeProvisionOsJobProperties(document.RootElement, options);
+                        return DeserializeProvisionOSJobProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProvisionOsJobProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProvisionOSJobProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisionOsJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProvisionOSJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProvisionOsJobProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProvisionOSJobProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProvisionOsJobProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ProvisionOSJobProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProvisionOsJobProperties IPersistableModel<ProvisionOsJobProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (ProvisionOsJobProperties)PersistableModelCreateCore(data, options);
+        ProvisionOSJobProperties IPersistableModel<ProvisionOSJobProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (ProvisionOSJobProperties)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProvisionOsJobProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProvisionOSJobProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProvisionOsJobProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProvisionOSJobProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisionOsJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProvisionOSJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisionOsJobProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ProvisionOSJobProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("provisioningRequest"u8);
@@ -93,24 +93,24 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProvisionOsJobProperties IJsonModel<ProvisionOsJobProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ProvisionOsJobProperties)JsonModelCreateCore(ref reader, options);
+        ProvisionOSJobProperties IJsonModel<ProvisionOSJobProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ProvisionOSJobProperties)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EdgeMachineJobProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisionOsJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProvisionOSJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisionOsJobProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ProvisionOSJobProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProvisionOsJobProperties(document.RootElement, options);
+            return DeserializeProvisionOSJobProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProvisionOsJobProperties DeserializeProvisionOsJobProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ProvisionOSJobProperties DeserializeProvisionOSJobProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Hci.Models
             ResponseError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ProvisioningContent provisioningRequest = default;
-            ProvisionOsReportedProperties reportedProperties = default;
+            ProvisionOSReportedProperties reportedProperties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("jobType"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    reportedProperties = ProvisionOsReportedProperties.DeserializeProvisionOsReportedProperties(prop.Value, options);
+                    reportedProperties = ProvisionOSReportedProperties.DeserializeProvisionOSReportedProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProvisionOsJobProperties(
+            return new ProvisionOSJobProperties(
                 jobType,
                 deploymentMode,
                 provisioningState,

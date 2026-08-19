@@ -85,11 +85,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
-            {
-                writer.WritePropertyName("deletionDate"u8);
-                writer.WriteStringValue(DeletedOn.Value, "O");
-            }
             if (options.Format != "W" && Optional.IsDefined(ScheduledPurgeOn))
             {
                 writer.WritePropertyName("scheduledPurgeDate"u8);
@@ -160,7 +155,6 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             ResourceIdentifier managedHsmId = default;
             AzureLocation? location = default;
-            DateTimeOffset? deletedOn = default;
             DateTimeOffset? scheduledPurgeOn = default;
             bool? purgeProtectionEnabled = default;
             IReadOnlyDictionary<string, string> tags = default;
@@ -183,15 +177,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                         continue;
                     }
                     location = new AzureLocation(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("deletionDate"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    deletedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("scheduledPurgeDate"u8))
@@ -241,7 +226,6 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new DeletedManagedHsmProperties(
                 managedHsmId,
                 location,
-                deletedOn,
                 scheduledPurgeOn,
                 purgeProtectionEnabled,
                 tags ?? new ChangeTrackingDictionary<string, string>(),

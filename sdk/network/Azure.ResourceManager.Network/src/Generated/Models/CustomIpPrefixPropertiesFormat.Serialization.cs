@@ -15,51 +15,51 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Custom IP prefix properties. </summary>
-    internal partial class CustomIpPrefixPropertiesFormat : IJsonModel<CustomIpPrefixPropertiesFormat>
+    internal partial class CustomIPPrefixPropertiesFormat : IJsonModel<CustomIPPrefixPropertiesFormat>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CustomIpPrefixPropertiesFormat PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CustomIPPrefixPropertiesFormat PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomIpPrefixPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomIPPrefixPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCustomIpPrefixPropertiesFormat(document.RootElement, options);
+                        return DeserializeCustomIPPrefixPropertiesFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomIpPrefixPropertiesFormat)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomIPPrefixPropertiesFormat)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomIpPrefixPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomIPPrefixPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CustomIpPrefixPropertiesFormat)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomIPPrefixPropertiesFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CustomIpPrefixPropertiesFormat>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CustomIPPrefixPropertiesFormat>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CustomIpPrefixPropertiesFormat IPersistableModel<CustomIpPrefixPropertiesFormat>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CustomIPPrefixPropertiesFormat IPersistableModel<CustomIPPrefixPropertiesFormat>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CustomIpPrefixPropertiesFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CustomIPPrefixPropertiesFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CustomIpPrefixPropertiesFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CustomIPPrefixPropertiesFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomIpPrefixPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomIPPrefixPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomIpPrefixPropertiesFormat)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomIPPrefixPropertiesFormat)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Asn))
             {
@@ -179,24 +179,24 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CustomIpPrefixPropertiesFormat IJsonModel<CustomIpPrefixPropertiesFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CustomIPPrefixPropertiesFormat IJsonModel<CustomIPPrefixPropertiesFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CustomIpPrefixPropertiesFormat JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CustomIPPrefixPropertiesFormat JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomIpPrefixPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomIPPrefixPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomIpPrefixPropertiesFormat)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomIPPrefixPropertiesFormat)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCustomIpPrefixPropertiesFormat(document.RootElement, options);
+            return DeserializeCustomIPPrefixPropertiesFormat(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CustomIpPrefixPropertiesFormat DeserializeCustomIpPrefixPropertiesFormat(JsonElement element, ModelReaderWriterOptions options)
+        internal static CustomIPPrefixPropertiesFormat DeserializeCustomIPPrefixPropertiesFormat(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CustomIpPrefixPropertiesFormat(
+            return new CustomIPPrefixPropertiesFormat(
                 asn,
                 cidr,
                 signedMessage,

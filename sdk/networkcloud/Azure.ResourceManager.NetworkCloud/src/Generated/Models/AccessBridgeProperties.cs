@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AccessBridgeProperties"/>. </summary>
-        /// <param name="ipv4ConnectedPrefix"> The IPv4 subnet from which the access bridge allocates an address. This subnet must be part of the internal network specified by networkId. </param>
-        /// <param name="ipv6ConnectedPrefix"> The IPv6 subnet from which the access bridge allocates an address. This subnet must be part of the internal network specified by networkId. </param>
+        /// <param name="iPv4ConnectedPrefix"> The IPv4 subnet from which the access bridge allocates an address. This subnet must be part of the internal network specified by networkId. </param>
+        /// <param name="iPv6ConnectedPrefix"> The IPv6 subnet from which the access bridge allocates an address. This subnet must be part of the internal network specified by networkId. </param>
         /// <param name="networkId"> The resource ID of the internal network in a layer 3 isolation domain containing the IP subnets to use. </param>
         /// <param name="securityRules"> The list of security rules enforced by the access bridge. </param>
         /// <param name="detailedStatus"> The detailed status reported by the access bridge. </param>
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="protocol"> The protocol advertised by the access bridge endpoints. </param>
         /// <param name="provisioningState"> The provisioning state of the access bridge. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessBridgeProperties(string ipv4ConnectedPrefix, string ipv6ConnectedPrefix, ResourceIdentifier networkId, IList<NetworkCloudAccessBridgeSecurityRule> securityRules, NetworkCloudAccessBridgeDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<NetworkCloudAccessBridgeEndpoint> endpoints, NetworkCloudTransportProtocol? protocol, NetworkCloudAccessBridgeProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccessBridgeProperties(string iPv4ConnectedPrefix, string iPv6ConnectedPrefix, ResourceIdentifier networkId, IList<NetworkCloudAccessBridgeSecurityRule> securityRules, NetworkCloudAccessBridgeDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<NetworkCloudAccessBridgeEndpoint> endpoints, NetworkCloudTransportProtocol? protocol, NetworkCloudAccessBridgeProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Ipv4ConnectedPrefix = ipv4ConnectedPrefix;
-            Ipv6ConnectedPrefix = ipv6ConnectedPrefix;
+            IPv4ConnectedPrefix = iPv4ConnectedPrefix;
+            IPv6ConnectedPrefix = iPv6ConnectedPrefix;
             NetworkId = networkId;
             SecurityRules = securityRules;
             DetailedStatus = detailedStatus;
@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> The IPv4 subnet from which the access bridge allocates an address. This subnet must be part of the internal network specified by networkId. </summary>
-        public string Ipv4ConnectedPrefix { get; set; }
+        public string IPv4ConnectedPrefix { get; set; }
 
         /// <summary> The IPv6 subnet from which the access bridge allocates an address. This subnet must be part of the internal network specified by networkId. </summary>
-        public string Ipv6ConnectedPrefix { get; set; }
+        public string IPv6ConnectedPrefix { get; set; }
 
         /// <summary> The resource ID of the internal network in a layer 3 isolation domain containing the IP subnets to use. </summary>
         public ResourceIdentifier NetworkId { get; set; }

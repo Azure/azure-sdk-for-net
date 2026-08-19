@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.DataBoxEdge
         internal DeviceCapacityInfoProperties Properties { get; set; }
 
         /// <summary> Timestamp of request in UTC. </summary>
-        public DateTimeOffset? TimeStamp
+        public DateTimeOffset? On
         {
             get
             {
-                return Properties is null ? default : Properties.TimeStamp;
+                return Properties is null ? default : Properties.On;
             }
             set
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     Properties = new DeviceCapacityInfoProperties();
                 }
-                Properties.TimeStamp = value;
+                Properties.On = value;
             }
         }
 

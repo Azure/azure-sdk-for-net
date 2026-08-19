@@ -13,23 +13,23 @@ using Azure.ResourceManager.HorizonDB;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> The response of a HorizonDbCluster list operation. </summary>
-    internal partial class HorizonDbClusterListResult
+    internal partial class HorizonDBClusterListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbClusterListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBClusterListResult"/>. </summary>
         /// <param name="value"> The HorizonDbCluster items on this page. </param>
-        internal HorizonDbClusterListResult(IEnumerable<HorizonDBClusterData> value)
+        internal HorizonDBClusterListResult(IEnumerable<HorizonDBClusterData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbClusterListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBClusterListResult"/>. </summary>
         /// <param name="value"> The HorizonDbCluster items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDbClusterListResult(IList<HorizonDBClusterData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBClusterListResult(IList<HorizonDBClusterData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;

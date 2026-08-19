@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="serverKeyType"> The server key type like 'ServiceManaged', 'AzureKeyVault'. </param>
         /// <param name="uri"> The URI of the server key. If the ServerKeyType is AzureKeyVault, then the URI is required. The AKV URI is required to be in this format: 'https://YourVaultName.vault.azure.net/keys/YourKeyName/YourKeyVersion' or can be 'https://YourVaultName.vault.azure.net/keys/YourKeyName'. </param>
         /// <param name="thumbprint"> Thumbprint of the server key. </param>
-        /// <param name="createdOn"> The server key creation date. </param>
+        /// <param name="creationOn"> The server key creation date. </param>
         /// <param name="isAutoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
         /// <param name="keyVersion"> The version of the server key. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServerKeyProperties(string subregion, SqlServerKeyType serverKeyType, Uri uri, string thumbprint, DateTimeOffset? createdOn, bool? isAutoRotationEnabled, string keyVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServerKeyProperties(string subregion, SqlServerKeyType serverKeyType, Uri uri, string thumbprint, DateTimeOffset? creationOn, bool? isAutoRotationEnabled, string keyVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subregion = subregion;
             ServerKeyType = serverKeyType;
             Uri = uri;
             Thumbprint = thumbprint;
-            CreatedOn = createdOn;
+            CreationOn = creationOn;
             IsAutoRotationEnabled = isAutoRotationEnabled;
             KeyVersion = keyVersion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The server key creation date. </summary>
         [WirePath("creationDate")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreationOn { get; }
 
         /// <summary> Key auto rotation opt-in flag. Either true or false. </summary>
         [WirePath("autoRotationEnabled")]

@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (options.Format != "W" && Optional.IsDefined(Timestamp))
+            if (options.Format != "W" && Optional.IsDefined(On))
             {
                 writer.WritePropertyName("timestamp"u8);
-                writer.WriteStringValue(Timestamp.Value, "O");
+                writer.WriteStringValue(On.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             string severity = default;
             string message = default;
             string target = default;
-            DateTimeOffset? timestamp = default;
+            DateTimeOffset? @on = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    timestamp = prop.Value.GetDateTimeOffset("O");
+                    @on = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 severity,
                 message,
                 target,
-                timestamp,
+                @on,
                 additionalBinaryDataProperties);
         }
     }

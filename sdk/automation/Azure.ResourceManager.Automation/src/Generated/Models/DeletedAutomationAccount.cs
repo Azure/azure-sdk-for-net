@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Gets the deletion time. </summary>
-        public DateTimeOffset? DeletedOn
+        public DateTimeOffset? DeletionOn
         {
             get
             {
-                return Properties is null ? default : Properties.DeletedOn;
+                return Properties is null ? default : Properties.DeletionOn;
             }
         }
     }

@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (options.Format != "W" && Optional.IsDefined(Ipv4Address))
+            if (options.Format != "W" && Optional.IsDefined(IPv4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
-                writer.WriteStringValue(Ipv4Address);
+                writer.WriteStringValue(IPv4Address);
             }
-            if (options.Format != "W" && Optional.IsDefined(Ipv6Address))
+            if (options.Format != "W" && Optional.IsDefined(IPv6Address))
             {
                 writer.WritePropertyName("ipv6Address"u8);
-                writer.WriteStringValue(Ipv6Address);
+                writer.WriteStringValue(IPv6Address);
             }
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             string fqdn = default;
-            string ipv4Address = default;
-            string ipv6Address = default;
+            string iPv4Address = default;
+            string iPv6Address = default;
             string name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,12 +150,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (prop.NameEquals("ipv4Address"u8))
                 {
-                    ipv4Address = prop.Value.GetString();
+                    iPv4Address = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("ipv6Address"u8))
                 {
-                    ipv6Address = prop.Value.GetString();
+                    iPv6Address = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetworkCloudAccessBridgeEndpoint(fqdn, ipv4Address, ipv6Address, name, additionalBinaryDataProperties);
+            return new NetworkCloudAccessBridgeEndpoint(fqdn, iPv4Address, iPv6Address, name, additionalBinaryDataProperties);
         }
     }
 }

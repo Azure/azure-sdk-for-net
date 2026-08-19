@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 throw new FormatException($"The model {nameof(DataProtectionResourceDeletionInfo)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
+            if (options.Format != "W" && Optional.IsDefined(DeletionOn))
             {
                 writer.WritePropertyName("deletionTime"u8);
-                writer.WriteStringValue(DeletedOn.Value, "O");
+                writer.WriteStringValue(DeletionOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ScheduledPurgeOn))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            DateTimeOffset? deletedOn = default;
+            DateTimeOffset? deletionOn = default;
             DateTimeOffset? scheduledPurgeOn = default;
             string deleteActivityId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    deletedOn = prop.Value.GetDateTimeOffset("O");
+                    deletionOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("scheduledPurgeTime"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataProtectionResourceDeletionInfo(deletedOn, scheduledPurgeOn, deleteActivityId, additionalBinaryDataProperties);
+            return new DataProtectionResourceDeletionInfo(deletionOn, scheduledPurgeOn, deleteActivityId, additionalBinaryDataProperties);
         }
     }
 }

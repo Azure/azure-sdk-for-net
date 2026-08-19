@@ -1122,19 +1122,19 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerRegistryWithCustomImage(server, image, default);
         }
 
-        /// <param name="baseOs"> Base OS used to build and run the app. </param>
+        /// <param name="baseOS"> Base OS used to build and run the app. </param>
         /// <param name="platform"> Platform to be used to build and run the app. </param>
         /// <param name="platformVersion"> Platform version to be used to build and run the app. </param>
         /// <param name="environmentVariables"> List of environment variables to be passed to the build, secrets should not be used in environment variable. </param>
         /// <param name="preBuildSteps"> List of steps to perform before the build. </param>
         /// <returns> A new <see cref="Models.ContainerAppsBuildConfiguration"/> instance for mocking. </returns>
-        public static ContainerAppsBuildConfiguration ContainerAppsBuildConfiguration(string baseOs = default, string platform = default, string platformVersion = default, IEnumerable<EnvironmentVariable> environmentVariables = default, IEnumerable<PreBuildStep> preBuildSteps = default)
+        public static ContainerAppsBuildConfiguration ContainerAppsBuildConfiguration(string baseOS = default, string platform = default, string platformVersion = default, IEnumerable<EnvironmentVariable> environmentVariables = default, IEnumerable<PreBuildStep> preBuildSteps = default)
         {
             environmentVariables ??= new ChangeTrackingList<EnvironmentVariable>();
             preBuildSteps ??= new ChangeTrackingList<PreBuildStep>();
 
             return new ContainerAppsBuildConfiguration(
-                baseOs,
+                baseOS,
                 platform,
                 platformVersion,
                 (environmentVariables ?? new ChangeTrackingList<EnvironmentVariable>()).ToList(),
@@ -2213,19 +2213,19 @@ namespace Azure.ResourceManager.AppContainers.Models
                 default);
         }
 
-        /// <param name="baseOs"> Base OS used to build and run the app. </param>
+        /// <param name="baseOS"> Base OS used to build and run the app. </param>
         /// <param name="platform"> Platform to be used to build and run the app. </param>
         /// <param name="platformVersion"> Platform version to be used to build and run the app. </param>
         /// <param name="environmentVariables"> List of environment variables to be passed to the build, secrets should not be used in environment variable. </param>
         /// <param name="preBuildSteps"> List of steps to perform before the build. </param>
         /// <returns> A new <see cref="Models.BuildConfiguration"/> instance for mocking. </returns>
-        public static BuildConfiguration BuildConfiguration(string baseOs = default, string platform = default, string platformVersion = default, IEnumerable<EnvironmentVariable> environmentVariables = default, IEnumerable<PreBuildStep> preBuildSteps = default)
+        public static BuildConfiguration BuildConfiguration(string baseOS = default, string platform = default, string platformVersion = default, IEnumerable<EnvironmentVariable> environmentVariables = default, IEnumerable<PreBuildStep> preBuildSteps = default)
         {
             environmentVariables ??= new ChangeTrackingList<EnvironmentVariable>();
             preBuildSteps ??= new ChangeTrackingList<PreBuildStep>();
 
             return new BuildConfiguration(
-                baseOs,
+                baseOS,
                 platform,
                 platformVersion,
                 (environmentVariables ?? new ChangeTrackingList<EnvironmentVariable>()).ToList(),
@@ -2287,7 +2287,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 certificateKeyVaultProperties,
                 certificateValue,
                 certificatePassword,
-                expireOn,
+                default,
                 thumbprint,
                 subjectName,
                 default);
@@ -2368,13 +2368,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="value"> PFX or PEM blob. </param>
         /// <param name="issuer"> Certificate issuer. </param>
         /// <param name="issueOn"> Certificate issue Date. </param>
-        /// <param name="expireOn"> Certificate expiration date. </param>
+        /// <param name="expirationOn"> Certificate expiration date. </param>
         /// <param name="thumbprint"> Certificate thumbprint. </param>
         /// <param name="isValid"> Is the certificate valid?. </param>
         /// <param name="publicKeyHash"> Public key hash. </param>
         /// <param name="certificateType"> The type of the certificate. Allowed values are `ServerSSLCertificate` and `ImagePullTrustedCA`. </param>
         /// <returns> A new <see cref="Models.ContainerAppCertificateProperties"/> instance for mocking. </returns>
-        public static ContainerAppCertificateProperties ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState = default, string deploymentErrors = default, ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties = default, string password = default, string subjectName = default, IEnumerable<string> subjectAlternativeNames = default, byte[] value = default, string issuer = default, DateTimeOffset? issueOn = default, DateTimeOffset? expireOn = default, string thumbprint = default, bool? isValid = default, string publicKeyHash = default, CertificateType? certificateType = default)
+        public static ContainerAppCertificateProperties ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState = default, string deploymentErrors = default, ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties = default, string password = default, string subjectName = default, IEnumerable<string> subjectAlternativeNames = default, byte[] value = default, string issuer = default, DateTimeOffset? issueOn = default, DateTimeOffset? expirationOn = default, string thumbprint = default, bool? isValid = default, string publicKeyHash = default, CertificateType? certificateType = default)
         {
             subjectAlternativeNames ??= new ChangeTrackingList<string>();
 
@@ -2388,7 +2388,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 value,
                 issuer,
                 issueOn,
-                expireOn,
+                expirationOn,
                 thumbprint,
                 isValid,
                 publicKeyHash,
@@ -3849,7 +3849,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 value,
                 issuer,
                 issueOn,
-                expireOn,
+                default,
                 thumbprint,
                 isValid,
                 publicKeyHash,
@@ -4373,7 +4373,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 value,
                 issuer,
                 issueOn,
-                expireOn,
+                default,
                 thumbprint,
                 isValid,
                 publicKeyHash,
@@ -4564,7 +4564,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 default,
                 certificateValue,
                 certificatePassword,
-                expireOn,
+                default,
                 thumbprint,
                 subjectName,
                 default);
@@ -4596,7 +4596,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 value,
                 issuer,
                 issueOn,
-                expireOn,
+                default,
                 thumbprint,
                 isValid,
                 publicKeyHash,

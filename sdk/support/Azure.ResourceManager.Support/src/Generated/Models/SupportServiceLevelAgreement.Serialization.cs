@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Support.Models
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(ExpirationOn))
             {
                 writer.WritePropertyName("expirationTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpirationOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(SlaInMinutes))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Support.Models
                 return null;
             }
             DateTimeOffset? startOn = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expirationOn = default;
             int? slaInMinutes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Support.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expirationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("slaMinutes"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Support.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SupportServiceLevelAgreement(startOn, expireOn, slaInMinutes, additionalBinaryDataProperties);
+            return new SupportServiceLevelAgreement(startOn, expirationOn, slaInMinutes, additionalBinaryDataProperties);
         }
     }
 }

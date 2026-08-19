@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Education.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(ExpirationOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpirationOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Role))
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Education.Models
             }
             string displayName = default;
             string description = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expirationOn = default;
             StudentRole? role = default;
             EducationAmount budget = default;
             string subscriptionId = default;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Education.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expirationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("role"u8))
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Education.Models
             return new StudentLabProperties(
                 displayName,
                 description,
-                expireOn,
+                expirationOn,
                 role,
                 budget,
                 subscriptionId,

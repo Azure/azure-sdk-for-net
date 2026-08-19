@@ -86,20 +86,20 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Gets or sets the creation time. </summary>
-        public DateTimeOffset? CreatedOn
+        public DateTimeOffset? CreationOn
         {
             get
             {
-                return Properties is null ? default : Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreationOn;
             }
         }
 
         /// <summary> Gets or sets the last modified time. </summary>
-        public DateTimeOffset? DeletedOn
+        public DateTimeOffset? DeletionOn
         {
             get
             {
-                return Properties is null ? default : Properties.DeletedOn;
+                return Properties is null ? default : Properties.DeletionOn;
             }
         }
     }

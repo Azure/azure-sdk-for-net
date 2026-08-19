@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="automationAccountResourceId"> Gets or sets the Automation Account Resource Id. </param>
         /// <param name="automationAccountId"> Gets or sets the Automation Account Id. </param>
         /// <param name="locationPropertiesLocation"> Gets or sets the location of the resource. </param>
-        /// <param name="deletedOn"> Gets the deletion time. </param>
+        /// <param name="deletionOn"> Gets the deletion time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedAutomationAccountProperties(ResourceIdentifier automationAccountResourceId, string automationAccountId, string locationPropertiesLocation, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeletedAutomationAccountProperties(ResourceIdentifier automationAccountResourceId, string automationAccountId, string locationPropertiesLocation, DateTimeOffset? deletionOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AutomationAccountResourceId = automationAccountResourceId;
             AutomationAccountId = automationAccountId;
             LocationPropertiesLocation = locationPropertiesLocation;
-            DeletedOn = deletedOn;
+            DeletionOn = deletionOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.Automation.Models
         public string LocationPropertiesLocation { get; }
 
         /// <summary> Gets the deletion time. </summary>
-        public DateTimeOffset? DeletedOn { get; }
+        public DateTimeOffset? DeletionOn { get; }
     }
 }

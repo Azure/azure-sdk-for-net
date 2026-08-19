@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="namespace"> The namespace of the statefulset. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
         /// <param name="readyNumberOfPods"> Number of ready pods. </param>
-        /// <param name="createdOn"> Creation Time of statefulset. </param>
+        /// <param name="creationOn"> Creation Time of statefulset. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KubernetesStatefulSet(string name, string @namespace, int? desiredNumberOfPods, int? readyNumberOfPods, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KubernetesStatefulSet(string name, string @namespace, int? desiredNumberOfPods, int? readyNumberOfPods, DateTimeOffset? creationOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Namespace = @namespace;
             DesiredNumberOfPods = desiredNumberOfPods;
             ReadyNumberOfPods = readyNumberOfPods;
-            CreatedOn = createdOn;
+            CreationOn = creationOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public int? ReadyNumberOfPods { get; }
 
         /// <summary> Creation Time of statefulset. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreationOn { get; }
     }
 }

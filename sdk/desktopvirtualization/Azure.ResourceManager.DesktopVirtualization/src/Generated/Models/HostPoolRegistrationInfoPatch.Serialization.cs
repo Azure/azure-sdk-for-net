@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 throw new FormatException($"The model {nameof(HostPoolRegistrationInfoPatch)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpirationOn))
             {
                 writer.WritePropertyName("expirationTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpirationOn.Value, "O");
             }
             if (Optional.IsDefined(RegistrationTokenOperation))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expirationOn = default;
             HostPoolRegistrationTokenOperation? registrationTokenOperation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expirationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("registrationTokenOperation"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HostPoolRegistrationInfoPatch(expireOn, registrationTokenOperation, additionalBinaryDataProperties);
+            return new HostPoolRegistrationInfoPatch(expirationOn, registrationTokenOperation, additionalBinaryDataProperties);
         }
     }
 }

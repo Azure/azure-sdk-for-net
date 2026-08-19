@@ -15,56 +15,56 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> MongoDB Atlas linked service properties. </summary>
-    internal partial class MongoDbAtlasLinkedServiceTypeProperties : IJsonModel<MongoDbAtlasLinkedServiceTypeProperties>
+    internal partial class MongoDBAtlasLinkedServiceTypeProperties : IJsonModel<MongoDBAtlasLinkedServiceTypeProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="MongoDbAtlasLinkedServiceTypeProperties"/> for deserialization. </summary>
-        internal MongoDbAtlasLinkedServiceTypeProperties()
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasLinkedServiceTypeProperties"/> for deserialization. </summary>
+        internal MongoDBAtlasLinkedServiceTypeProperties()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MongoDbAtlasLinkedServiceTypeProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MongoDBAtlasLinkedServiceTypeProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MongoDbAtlasLinkedServiceTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasLinkedServiceTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMongoDbAtlasLinkedServiceTypeProperties(document.RootElement, options);
+                        return DeserializeMongoDBAtlasLinkedServiceTypeProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MongoDbAtlasLinkedServiceTypeProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBAtlasLinkedServiceTypeProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MongoDbAtlasLinkedServiceTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasLinkedServiceTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MongoDbAtlasLinkedServiceTypeProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBAtlasLinkedServiceTypeProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MongoDbAtlasLinkedServiceTypeProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MongoDBAtlasLinkedServiceTypeProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MongoDbAtlasLinkedServiceTypeProperties IPersistableModel<MongoDbAtlasLinkedServiceTypeProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MongoDBAtlasLinkedServiceTypeProperties IPersistableModel<MongoDBAtlasLinkedServiceTypeProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MongoDbAtlasLinkedServiceTypeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MongoDBAtlasLinkedServiceTypeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MongoDbAtlasLinkedServiceTypeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MongoDBAtlasLinkedServiceTypeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MongoDbAtlasLinkedServiceTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasLinkedServiceTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDbAtlasLinkedServiceTypeProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBAtlasLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("connectionString"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(ConnectionString, options);
@@ -108,24 +108,24 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MongoDbAtlasLinkedServiceTypeProperties IJsonModel<MongoDbAtlasLinkedServiceTypeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MongoDBAtlasLinkedServiceTypeProperties IJsonModel<MongoDBAtlasLinkedServiceTypeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MongoDbAtlasLinkedServiceTypeProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MongoDBAtlasLinkedServiceTypeProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MongoDbAtlasLinkedServiceTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasLinkedServiceTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDbAtlasLinkedServiceTypeProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBAtlasLinkedServiceTypeProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMongoDbAtlasLinkedServiceTypeProperties(document.RootElement, options);
+            return DeserializeMongoDBAtlasLinkedServiceTypeProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MongoDbAtlasLinkedServiceTypeProperties DeserializeMongoDbAtlasLinkedServiceTypeProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static MongoDBAtlasLinkedServiceTypeProperties DeserializeMongoDBAtlasLinkedServiceTypeProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MongoDbAtlasLinkedServiceTypeProperties(connectionString, database, driverVersion, additionalBinaryDataProperties);
+            return new MongoDBAtlasLinkedServiceTypeProperties(connectionString, database, driverVersion, additionalBinaryDataProperties);
         }
     }
 }

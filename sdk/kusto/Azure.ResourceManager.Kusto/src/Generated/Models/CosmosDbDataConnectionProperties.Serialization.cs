@@ -15,56 +15,56 @@ using Azure.ResourceManager.Kusto;
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> Class representing the Kusto CosmosDb data connection properties. </summary>
-    internal partial class CosmosDbDataConnectionProperties : IJsonModel<CosmosDbDataConnectionProperties>
+    internal partial class CosmosDBDataConnectionProperties : IJsonModel<CosmosDBDataConnectionProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="CosmosDbDataConnectionProperties"/> for deserialization. </summary>
-        internal CosmosDbDataConnectionProperties()
+        /// <summary> Initializes a new instance of <see cref="CosmosDBDataConnectionProperties"/> for deserialization. </summary>
+        internal CosmosDBDataConnectionProperties()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CosmosDbDataConnectionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CosmosDBDataConnectionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CosmosDbDataConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosDBDataConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCosmosDbDataConnectionProperties(document.RootElement, options);
+                        return DeserializeCosmosDBDataConnectionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDbDataConnectionProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBDataConnectionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CosmosDbDataConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosDBDataConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDbDataConnectionProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBDataConnectionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CosmosDbDataConnectionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CosmosDBDataConnectionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CosmosDbDataConnectionProperties IPersistableModel<CosmosDbDataConnectionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CosmosDBDataConnectionProperties IPersistableModel<CosmosDBDataConnectionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CosmosDbDataConnectionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CosmosDBDataConnectionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CosmosDbDataConnectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CosmosDBDataConnectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CosmosDbDataConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosDBDataConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDbDataConnectionProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBDataConnectionProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("tableName"u8);
             writer.WriteStringValue(TableName);
@@ -129,24 +129,24 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CosmosDbDataConnectionProperties IJsonModel<CosmosDbDataConnectionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CosmosDBDataConnectionProperties IJsonModel<CosmosDBDataConnectionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CosmosDbDataConnectionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CosmosDBDataConnectionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CosmosDbDataConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosDBDataConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDbDataConnectionProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBDataConnectionProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCosmosDbDataConnectionProperties(document.RootElement, options);
+            return DeserializeCosmosDBDataConnectionProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CosmosDbDataConnectionProperties DeserializeCosmosDbDataConnectionProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static CosmosDBDataConnectionProperties DeserializeCosmosDBDataConnectionProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CosmosDbDataConnectionProperties(
+            return new CosmosDBDataConnectionProperties(
                 tableName,
                 mappingRuleName,
                 managedIdentityResourceId,

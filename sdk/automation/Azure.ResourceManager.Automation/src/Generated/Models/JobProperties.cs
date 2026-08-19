@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="runOn"> Gets or sets the runOn which specifies the group name where the job is to be executed. </param>
         /// <param name="jobRuntimeEnvironment"> Runtime Environment Property. </param>
         /// <param name="jobId"> Gets or sets the id of the job. </param>
-        /// <param name="createdOn"> Gets or sets the creation time of the job. </param>
+        /// <param name="creationOn"> Gets or sets the creation time of the job. </param>
         /// <param name="status"> Gets or sets the status of the job. </param>
         /// <param name="statusDetails"> Gets or sets the status details of the job. </param>
         /// <param name="startOn"> Gets or sets the start time of the job. </param>
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="parameters"> Gets or sets the parameters of the job. </param>
         /// <param name="provisioningState"> The current provisioning state of the job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobProperties(RunbookAssociationProperty runbook, string startedBy, string runOn, JobRuntimeEnvironment jobRuntimeEnvironment, Guid? jobId, DateTimeOffset? createdOn, AutomationJobStatus? status, string statusDetails, DateTimeOffset? startOn, DateTimeOffset? endOn, string exception, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastStatusModifiedOn, IDictionary<string, string> parameters, JobProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobProperties(RunbookAssociationProperty runbook, string startedBy, string runOn, JobRuntimeEnvironment jobRuntimeEnvironment, Guid? jobId, DateTimeOffset? creationOn, AutomationJobStatus? status, string statusDetails, DateTimeOffset? startOn, DateTimeOffset? endOn, string exception, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastStatusModifiedOn, IDictionary<string, string> parameters, JobProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Runbook = runbook;
             StartedBy = startedBy;
             RunOn = runOn;
             JobRuntimeEnvironment = jobRuntimeEnvironment;
             JobId = jobId;
-            CreatedOn = createdOn;
+            CreationOn = creationOn;
             Status = status;
             StatusDetails = statusDetails;
             StartOn = startOn;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Automation.Models
         public Guid? JobId { get; set; }
 
         /// <summary> Gets or sets the creation time of the job. </summary>
-        public DateTimeOffset? CreatedOn { get; set; }
+        public DateTimeOffset? CreationOn { get; set; }
 
         /// <summary> Gets or sets the status of the job. </summary>
         public AutomationJobStatus? Status { get; set; }

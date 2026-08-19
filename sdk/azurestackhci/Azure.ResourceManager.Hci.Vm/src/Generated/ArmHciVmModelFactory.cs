@@ -295,16 +295,16 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="severity"> issue severity. </param>
         /// <param name="message"> Description of the issue. </param>
         /// <param name="target"> specific property or resource that has the issue. </param>
-        /// <param name="timestamp"> Timestamp of the issue as ISO 8601 string. </param>
+        /// <param name="on"> Timestamp of the issue as ISO 8601 string. </param>
         /// <returns> A new <see cref="Models.HciVmFabricIssue"/> instance for mocking. </returns>
-        public static HciVmFabricIssue HciVmFabricIssue(string code = default, string severity = default, string message = default, string target = default, DateTimeOffset? timestamp = default)
+        public static HciVmFabricIssue HciVmFabricIssue(string code = default, string severity = default, string message = default, string target = default, DateTimeOffset? @on = default)
         {
             return new HciVmFabricIssue(
                 code,
                 severity,
                 message,
                 target,
-                timestamp,
+                @on,
                 default);
         }
 

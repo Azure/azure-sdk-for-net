@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 throw new FormatException($"The model {nameof(RunbookTestJob)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (Optional.IsDefined(Status))
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? creationOn = default;
             string status = default;
             string statusDetails = default;
             string runOn = default;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             return new RunbookTestJob(
-                createdOn,
+                creationOn,
                 status,
                 statusDetails,
                 runOn,

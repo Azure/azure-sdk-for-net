@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Creation time of the software update configuration, which only appears in the response. </summary>
-        public DateTimeOffset? CreatedOn
+        public DateTimeOffset? CreationOn
         {
             get
             {
-                return Properties.CreatedOn;
+                return Properties.CreationOn;
             }
         }
 

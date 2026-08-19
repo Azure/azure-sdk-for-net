@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("available"u8);
                 writer.WriteNumberValue(AvailableNumberOfPods.Value);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             int? readyNumberOfPods = default;
             int? upToDateNumberOfPods = default;
             int? availableNumberOfPods = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? creationOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 readyNumberOfPods,
                 upToDateNumberOfPods,
                 availableNumberOfPods,
-                createdOn,
+                creationOn,
                 additionalBinaryDataProperties);
         }
     }

@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> Initializes a new instance of <see cref="DeletedConfigurationStoreProperties"/>. </summary>
         /// <param name="configurationStoreId"> The resource id of the original configuration store. </param>
         /// <param name="location"> The location of the original configuration store. </param>
-        /// <param name="deletedOn"> The deleted date. </param>
+        /// <param name="deletionOn"> The deleted date. </param>
         /// <param name="scheduledPurgeOn"> The scheduled purged date. </param>
         /// <param name="tags"> Tags of the original configuration store. </param>
         /// <param name="isPurgeProtectionEnabled"> Purge protection status of the original configuration store. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedConfigurationStoreProperties(ResourceIdentifier configurationStoreId, AzureLocation? location, DateTimeOffset? deletedOn, DateTimeOffset? scheduledPurgeOn, IReadOnlyDictionary<string, string> tags, bool? isPurgeProtectionEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeletedConfigurationStoreProperties(ResourceIdentifier configurationStoreId, AzureLocation? location, DateTimeOffset? deletionOn, DateTimeOffset? scheduledPurgeOn, IReadOnlyDictionary<string, string> tags, bool? isPurgeProtectionEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConfigurationStoreId = configurationStoreId;
             Location = location;
-            DeletedOn = deletedOn;
+            DeletionOn = deletionOn;
             ScheduledPurgeOn = scheduledPurgeOn;
             Tags = tags;
             IsPurgeProtectionEnabled = isPurgeProtectionEnabled;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> The deleted date. </summary>
         [WirePath("deletionDate")]
-        public DateTimeOffset? DeletedOn { get; }
+        public DateTimeOffset? DeletionOn { get; }
 
         /// <summary> The scheduled purged date. </summary>
         [WirePath("scheduledPurgeDate")]

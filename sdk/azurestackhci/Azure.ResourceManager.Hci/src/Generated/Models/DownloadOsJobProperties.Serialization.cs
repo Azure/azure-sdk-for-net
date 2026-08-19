@@ -16,10 +16,10 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Represents the properties of Download Os job. </summary>
-    public partial class DownloadOsJobProperties : EdgeMachineJobProperties, IJsonModel<DownloadOsJobProperties>
+    public partial class DownloadOSJobProperties : EdgeMachineJobProperties, IJsonModel<DownloadOSJobProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="DownloadOsJobProperties"/> for deserialization. </summary>
-        internal DownloadOsJobProperties()
+        /// <summary> Initializes a new instance of <see cref="DownloadOSJobProperties"/> for deserialization. </summary>
+        internal DownloadOSJobProperties()
         {
         }
 
@@ -27,45 +27,45 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EdgeMachineJobProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DownloadOsJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DownloadOSJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDownloadOsJobProperties(document.RootElement, options);
+                        return DeserializeDownloadOSJobProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DownloadOsJobProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DownloadOSJobProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DownloadOsJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DownloadOSJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DownloadOsJobProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DownloadOSJobProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DownloadOsJobProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DownloadOSJobProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DownloadOsJobProperties IPersistableModel<DownloadOsJobProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (DownloadOsJobProperties)PersistableModelCreateCore(data, options);
+        DownloadOSJobProperties IPersistableModel<DownloadOSJobProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (DownloadOSJobProperties)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DownloadOsJobProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DownloadOSJobProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DownloadOsJobProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DownloadOSJobProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DownloadOsJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DownloadOSJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DownloadOsJobProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DownloadOSJobProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("downloadRequest"u8);
@@ -93,24 +93,24 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DownloadOsJobProperties IJsonModel<DownloadOsJobProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DownloadOsJobProperties)JsonModelCreateCore(ref reader, options);
+        DownloadOSJobProperties IJsonModel<DownloadOSJobProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DownloadOSJobProperties)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EdgeMachineJobProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DownloadOsJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DownloadOSJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DownloadOsJobProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DownloadOSJobProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDownloadOsJobProperties(document.RootElement, options);
+            return DeserializeDownloadOSJobProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DownloadOsJobProperties DeserializeDownloadOsJobProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static DownloadOSJobProperties DeserializeDownloadOSJobProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Hci.Models
             ResponseError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DownloadContent downloadRequest = default;
-            ProvisionOsReportedProperties reportedProperties = default;
+            ProvisionOSReportedProperties reportedProperties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("jobType"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    reportedProperties = ProvisionOsReportedProperties.DeserializeProvisionOsReportedProperties(prop.Value, options);
+                    reportedProperties = ProvisionOSReportedProperties.DeserializeProvisionOSReportedProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DownloadOsJobProperties(
+            return new DownloadOSJobProperties(
                 jobType,
                 deploymentMode,
                 provisioningState,

@@ -473,17 +473,17 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="targetResourceId"> The Azure resource ID of the Azure Managed Redis destination cache to migrate. </param>
         /// <param name="provisioningState"> Current provisioning status of the migration. </param>
         /// <param name="statusDetails"> Additional details about the migration operation's status in free text format. </param>
-        /// <param name="createdOn"> The timestamp when the migration operation was created. </param>
+        /// <param name="creationOn"> The timestamp when the migration operation was created. </param>
         /// <param name="lastModifiedOn"> The timestamp when the migration operation was last updated. </param>
         /// <returns> A new <see cref="Models.RedisEnterpriseMigrationProperties"/> instance for mocking. </returns>
-        public static RedisEnterpriseMigrationProperties RedisEnterpriseMigrationProperties(string sourceType = default, ResourceIdentifier targetResourceId = default, RedisEnterpriseMigrationProvisioningState? provisioningState = default, string statusDetails = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default)
+        public static RedisEnterpriseMigrationProperties RedisEnterpriseMigrationProperties(string sourceType = default, ResourceIdentifier targetResourceId = default, RedisEnterpriseMigrationProvisioningState? provisioningState = default, string statusDetails = default, DateTimeOffset? creationOn = default, DateTimeOffset? lastModifiedOn = default)
         {
             return new UnknownRedisEnterpriseMigrationProperties(
                 default,
                 targetResourceId,
                 provisioningState,
                 statusDetails,
-                createdOn,
+                creationOn,
                 lastModifiedOn,
                 default);
         }
@@ -491,21 +491,21 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="targetResourceId"> The Azure resource ID of the Azure Managed Redis destination cache to migrate. </param>
         /// <param name="provisioningState"> Current provisioning status of the migration. </param>
         /// <param name="statusDetails"> Additional details about the migration operation's status in free text format. </param>
-        /// <param name="createdOn"> The timestamp when the migration operation was created. </param>
+        /// <param name="creationOn"> The timestamp when the migration operation was created. </param>
         /// <param name="lastModifiedOn"> The timestamp when the migration operation was last updated. </param>
         /// <param name="sourceResourceId"> The source resource ID to migrate from. This is the resource ID of the Azure Cache for Redis. </param>
         /// <param name="isSwitchDns"> Sets whether the DNS is switched automatically after the data is transferred from the source cache to the target cache. This property must be true during the preview. </param>
         /// <param name="isSkipDataMigration"> Sets whether the data is migrated from source to target or not. This property must be true during the preview. </param>
         /// <param name="isForceMigrate"> Sets whether to ignore warnings when performing validation of the migration request. If this property is true, warning-level disparities between the source and target resources will be ignored, and the request will only fail validation if there are error-level disparities. The default value is false. </param>
         /// <returns> A new <see cref="Models.AzureCacheForRedisMigrationProperties"/> instance for mocking. </returns>
-        public static AzureCacheForRedisMigrationProperties AzureCacheForRedisMigrationProperties(ResourceIdentifier targetResourceId = default, RedisEnterpriseMigrationProvisioningState? provisioningState = default, string statusDetails = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, ResourceIdentifier sourceResourceId = default, bool isSwitchDns = default, bool isSkipDataMigration = default, bool? isForceMigrate = default)
+        public static AzureCacheForRedisMigrationProperties AzureCacheForRedisMigrationProperties(ResourceIdentifier targetResourceId = default, RedisEnterpriseMigrationProvisioningState? provisioningState = default, string statusDetails = default, DateTimeOffset? creationOn = default, DateTimeOffset? lastModifiedOn = default, ResourceIdentifier sourceResourceId = default, bool isSwitchDns = default, bool isSkipDataMigration = default, bool? isForceMigrate = default)
         {
             return new AzureCacheForRedisMigrationProperties(
                 default,
                 targetResourceId,
                 provisioningState,
                 statusDetails,
-                createdOn,
+                creationOn,
                 lastModifiedOn,
                 default,
                 sourceResourceId,

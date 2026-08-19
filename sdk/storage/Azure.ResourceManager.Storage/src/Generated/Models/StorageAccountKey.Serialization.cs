@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStringValue(Permissions.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Storage.Models
             string keyName = default;
             string value = default;
             StorageAccountKeyPermission? permissions = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? creationOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StorageAccountKey(keyName, value, permissions, createdOn, additionalBinaryDataProperties);
+            return new StorageAccountKey(keyName, value, permissions, creationOn, additionalBinaryDataProperties);
         }
     }
 }

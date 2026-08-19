@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="ManagedDatabaseProperties"/>. </summary>
         /// <param name="collation"> Collation of the managed database. </param>
         /// <param name="status"> Status of the database. </param>
-        /// <param name="createdOn"> Creation date of the database. </param>
+        /// <param name="creationOn"> Creation date of the database. </param>
         /// <param name="earliestRestorePoint"> Earliest restore point in time for point in time restore. </param>
         /// <param name="restorePointInTime"> Conditional. If createMode is PointInTimeRestore, this value is required. Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
         /// <param name="defaultSecondaryLocation"> Geo paired region. </param>
@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isLedgerOn"> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </param>
         /// <param name="extendedAccessibilityInfo"> Additional observability and troubleshooting information for databases in ‘Inaccessible’ state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedDatabaseProperties(string collation, ManagedDatabaseStatus? status, DateTimeOffset? createdOn, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, AzureLocation? defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, Uri storageContainerUri, ResourceIdentifier sourceDatabaseId, ResourceIdentifier crossSubscriptionSourceDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId, string storageContainerIdentity, string storageContainerSasToken, ResourceIdentifier failoverGroupId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier longTermRetentionBackupResourceId, bool? allowAutoCompleteRestore, string lastBackupName, ResourceIdentifier crossSubscriptionTargetManagedInstanceId, bool? isLedgerOn, ManagedDatabaseExtendedAccessibilityInfo extendedAccessibilityInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedDatabaseProperties(string collation, ManagedDatabaseStatus? status, DateTimeOffset? creationOn, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, AzureLocation? defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, Uri storageContainerUri, ResourceIdentifier sourceDatabaseId, ResourceIdentifier crossSubscriptionSourceDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId, string storageContainerIdentity, string storageContainerSasToken, ResourceIdentifier failoverGroupId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier longTermRetentionBackupResourceId, bool? allowAutoCompleteRestore, string lastBackupName, ResourceIdentifier crossSubscriptionTargetManagedInstanceId, bool? isLedgerOn, ManagedDatabaseExtendedAccessibilityInfo extendedAccessibilityInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Collation = collation;
             Status = status;
-            CreatedOn = createdOn;
+            CreationOn = creationOn;
             EarliestRestorePoint = earliestRestorePoint;
             RestorePointInTime = restorePointInTime;
             DefaultSecondaryLocation = defaultSecondaryLocation;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Creation date of the database. </summary>
         [WirePath("creationDate")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreationOn { get; }
 
         /// <summary> Earliest restore point in time for point in time restore. </summary>
         [WirePath("earliestRestorePoint")]

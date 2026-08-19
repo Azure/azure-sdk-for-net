@@ -259,10 +259,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("peak_paged_memory"u8);
                 writer.WriteNumberValue(PeakPagedMemory.Value);
             }
-            if (Optional.IsDefined(TimeStamp))
+            if (Optional.IsDefined(On))
             {
                 writer.WritePropertyName("time_stamp"u8);
-                writer.WriteStringValue(TimeStamp.Value, "O");
+                writer.WriteStringValue(On.Value, "O");
             }
             if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.AppService.Models
             long? nonPagedSystemMemory = default;
             long? pagedMemory = default;
             long? peakPagedMemory = default;
-            DateTimeOffset? timeStamp = default;
+            DateTimeOffset? @on = default;
             IDictionary<string, string> environmentVariables = default;
             bool? isScmSite = default;
             bool? isWebjob = default;
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    timeStamp = prop.Value.GetDateTimeOffset("O");
+                    @on = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("environment_variables"u8))
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.AppService.Models
                 nonPagedSystemMemory,
                 pagedMemory,
                 peakPagedMemory,
-                timeStamp,
+                @on,
                 environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
                 isScmSite,
                 isWebjob,

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 throw new FormatException($"The model {nameof(DesktopVirtualizationRegistrationTokenMinimal)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpirationOn))
             {
                 writer.WritePropertyName("expirationTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpirationOn.Value, "O");
             }
             if (Optional.IsDefined(Token))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expirationOn = default;
             string token = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expirationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("token"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DesktopVirtualizationRegistrationTokenMinimal(expireOn, token, additionalBinaryDataProperties);
+            return new DesktopVirtualizationRegistrationTokenMinimal(expirationOn, token, additionalBinaryDataProperties);
         }
     }
 }

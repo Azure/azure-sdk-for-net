@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 throw new FormatException($"The model {nameof(DeviceCapacityInfoProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(TimeStamp))
+            if (Optional.IsDefined(On))
             {
                 writer.WritePropertyName("timeStamp"u8);
-                writer.WriteStringValue(TimeStamp.Value, "O");
+                writer.WriteStringValue(On.Value, "O");
             }
             if (Optional.IsDefined(ClusterStorageCapacityInfo))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            DateTimeOffset? timeStamp = default;
+            DateTimeOffset? @on = default;
             EdgeClusterStorageViewInfo clusterStorageCapacityInfo = default;
             EdgeClusterCapacityViewInfo clusterComputeCapacityInfo = default;
             IDictionary<string, HostCapacity> nodeCapacityInfos = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    timeStamp = prop.Value.GetDateTimeOffset("O");
+                    @on = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("clusterStorageCapacityInfo"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeviceCapacityInfoProperties(timeStamp, clusterStorageCapacityInfo, clusterComputeCapacityInfo, nodeCapacityInfos ?? new ChangeTrackingDictionary<string, HostCapacity>(), additionalBinaryDataProperties);
+            return new DeviceCapacityInfoProperties(@on, clusterStorageCapacityInfo, clusterComputeCapacityInfo, nodeCapacityInfos ?? new ChangeTrackingDictionary<string, HostCapacity>(), additionalBinaryDataProperties);
         }
     }
 }

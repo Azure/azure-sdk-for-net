@@ -13,23 +13,23 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The response of a IpAllocation list operation. </summary>
-    internal partial class IpAllocationListResult
+    internal partial class IPAllocationListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IpAllocationListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPAllocationListResult"/>. </summary>
         /// <param name="value"> The IpAllocation items on this page. </param>
-        internal IpAllocationListResult(IEnumerable<IPAllocationData> value)
+        internal IPAllocationListResult(IEnumerable<IPAllocationData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IpAllocationListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPAllocationListResult"/>. </summary>
         /// <param name="value"> The IpAllocation items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IpAllocationListResult(IList<IPAllocationData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IPAllocationListResult(IList<IPAllocationData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;

@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (Optional.IsDefined(Configuration))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             DateTimeOffset? lastModifiedOn = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? creationOn = default;
             DscConfigurationAssociationProperty configuration = default;
             string source = default;
             long? nodeCount = default;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("configuration"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             return new DscNodeConfigurationProperties(
                 lastModifiedOn,
-                createdOn,
+                creationOn,
                 configuration,
                 source,
                 nodeCount,

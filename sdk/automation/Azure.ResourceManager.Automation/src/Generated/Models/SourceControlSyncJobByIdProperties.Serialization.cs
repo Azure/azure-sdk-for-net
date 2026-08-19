@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("sourceControlSyncJobId"u8);
                 writer.WriteStringValue(SourceControlSyncJobId);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             string sourceControlSyncJobId = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? creationOn = default;
             SourceControlProvisioningState? provisioningState = default;
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             return new SourceControlSyncJobByIdProperties(
                 sourceControlSyncJobId,
-                createdOn,
+                creationOn,
                 provisioningState,
                 startOn,
                 endOn,

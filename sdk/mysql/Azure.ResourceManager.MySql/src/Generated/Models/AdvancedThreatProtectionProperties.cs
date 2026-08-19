@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AdvancedThreatProtectionProperties"/>. </summary>
-        /// <param name="createdOn"> Specifies the UTC creation time of the policy. </param>
+        /// <param name="creationOn"> Specifies the UTC creation time of the policy. </param>
         /// <param name="state"> Specifies the state of the Advanced Threat Protection, whether it is enabled or disabled or a state has not been applied yet on the specific database or server. </param>
         /// <param name="provisioningState"> Provisioning state of the Threat Protection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AdvancedThreatProtectionProperties(DateTimeOffset? createdOn, AdvancedThreatProtectionState? state, AdvancedThreatProtectionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AdvancedThreatProtectionProperties(DateTimeOffset? creationOn, AdvancedThreatProtectionState? state, AdvancedThreatProtectionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            CreatedOn = createdOn;
+            CreationOn = creationOn;
             State = state;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the UTC creation time of the policy. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreationOn { get; }
 
         /// <summary> Specifies the state of the Advanced Threat Protection, whether it is enabled or disabled or a state has not been applied yet on the specific database or server. </summary>
         public AdvancedThreatProtectionState? State { get; set; }

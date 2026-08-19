@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("direction"u8);
             writer.WriteStringValue(Direction.ToString());
-            if (Optional.IsCollectionDefined(Ipv4Addresses))
+            if (Optional.IsCollectionDefined(IPv4Addresses))
             {
                 writer.WritePropertyName("ipv4Addresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in Ipv4Addresses)
+                foreach (string item in IPv4Addresses)
                 {
                     if (item == null)
                     {
@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Ipv6Addresses))
+            if (Optional.IsCollectionDefined(IPv6Addresses))
             {
                 writer.WritePropertyName("ipv6Addresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in Ipv6Addresses)
+                foreach (string item in IPv6Addresses)
                 {
                     if (item == null)
                     {
@@ -162,8 +162,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             string description = default;
             NetworkCloudSecurityRuleDirection direction = default;
-            IList<string> ipv4Addresses = default;
-            IList<string> ipv6Addresses = default;
+            IList<string> iPv4Addresses = default;
+            IList<string> iPv6Addresses = default;
             string port = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             array.Add(item.GetString());
                         }
                     }
-                    ipv4Addresses = array;
+                    iPv4Addresses = array;
                     continue;
                 }
                 if (prop.NameEquals("ipv6Addresses"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             array.Add(item.GetString());
                         }
                     }
-                    ipv6Addresses = array;
+                    iPv6Addresses = array;
                     continue;
                 }
                 if (prop.NameEquals("port"u8))
@@ -233,8 +233,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return new NetworkCloudAccessBridgeSecurityRule(
                 description,
                 direction,
-                ipv4Addresses ?? new ChangeTrackingList<string>(),
-                ipv6Addresses ?? new ChangeTrackingList<string>(),
+                iPv4Addresses ?? new ChangeTrackingList<string>(),
+                iPv6Addresses ?? new ChangeTrackingList<string>(),
                 port,
                 additionalBinaryDataProperties);
         }

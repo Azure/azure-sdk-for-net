@@ -12,22 +12,22 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> IP Prefix patchable properties. </summary>
-    internal partial class IpPrefixPatchProperties
+    internal partial class IPPrefixPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IpPrefixPatchProperties"/>. </summary>
-        public IpPrefixPatchProperties()
+        /// <summary> Initializes a new instance of <see cref="IPPrefixPatchProperties"/>. </summary>
+        public IPPrefixPatchProperties()
         {
             IPPrefixRules = new ChangeTrackingList<IPPrefixRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IpPrefixPatchProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPPrefixPatchProperties"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="ipPrefixRules"> The list of IP Prefix Rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IpPrefixPatchProperties(string annotation, IList<IPPrefixRule> ipPrefixRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IPPrefixPatchProperties(string annotation, IList<IPPrefixRule> ipPrefixRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             IPPrefixRules = ipPrefixRules;

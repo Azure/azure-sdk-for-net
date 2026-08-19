@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="webEndpoint"> The web endpoint URL for accessing the workbench. </param>
         /// <param name="provisioningState"> Provisioning state of the workbench resource. </param>
         /// <param name="errors"> Error details for the workbench resource. </param>
-        /// <param name="createdOn"> Creation time of the workbench resource. </param>
+        /// <param name="creationOn"> Creation time of the workbench resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesWorkbenchProperties(string targetClusterId, string imageLink, string idleTimeBeforeShutdown, string datasetId, CognitiveServicesComputeSshSettings sshSettings, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints, string webEndpoint, CognitiveServicesComputeProvisioningState? provisioningState, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesWorkbenchProperties(string targetClusterId, string imageLink, string idleTimeBeforeShutdown, string datasetId, CognitiveServicesComputeSshSettings sshSettings, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints, string webEndpoint, CognitiveServicesComputeProvisioningState? provisioningState, IReadOnlyList<ResponseError> errors, DateTimeOffset? creationOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetClusterId = targetClusterId;
             ImageLink = imageLink;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             WebEndpoint = webEndpoint;
             ProvisioningState = provisioningState;
             Errors = errors;
-            CreatedOn = createdOn;
+            CreationOn = creationOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -97,6 +97,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Creation time of the workbench resource. </summary>
         [WirePath("creationTime")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreationOn { get; }
     }
 }

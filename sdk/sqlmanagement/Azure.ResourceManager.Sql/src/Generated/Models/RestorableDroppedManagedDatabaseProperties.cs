@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Initializes a new instance of <see cref="RestorableDroppedManagedDatabaseProperties"/>. </summary>
         /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="createdOn"> The creation date of the database (ISO8601 format). </param>
-        /// <param name="deletedOn"> The deletion date of the database (ISO8601 format). </param>
+        /// <param name="creationOn"> The creation date of the database (ISO8601 format). </param>
+        /// <param name="deletionOn"> The deletion date of the database (ISO8601 format). </param>
         /// <param name="earliestRestoreOn"> The earliest restore date of the database (ISO8601 format). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorableDroppedManagedDatabaseProperties(string databaseName, DateTimeOffset? createdOn, DateTimeOffset? deletedOn, DateTimeOffset? earliestRestoreOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorableDroppedManagedDatabaseProperties(string databaseName, DateTimeOffset? creationOn, DateTimeOffset? deletionOn, DateTimeOffset? earliestRestoreOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DatabaseName = databaseName;
-            CreatedOn = createdOn;
-            DeletedOn = deletedOn;
+            CreationOn = creationOn;
+            DeletionOn = deletionOn;
             EarliestRestoreOn = earliestRestoreOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The creation date of the database (ISO8601 format). </summary>
         [WirePath("creationDate")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreationOn { get; }
 
         /// <summary> The deletion date of the database (ISO8601 format). </summary>
         [WirePath("deletionDate")]
-        public DateTimeOffset? DeletedOn { get; }
+        public DateTimeOffset? DeletionOn { get; }
 
         /// <summary> The earliest restore date of the database (ISO8601 format). </summary>
         [WirePath("earliestRestoreDate")]

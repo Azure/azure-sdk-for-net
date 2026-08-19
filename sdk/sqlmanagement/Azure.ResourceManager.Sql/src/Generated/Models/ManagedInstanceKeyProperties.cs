@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="serverKeyType"> The key type like 'ServiceManaged', 'AzureKeyVault'. </param>
         /// <param name="uri"> The URI of the key. If the ServerKeyType is AzureKeyVault, then the URI is required. </param>
         /// <param name="thumbprint"> Thumbprint of the key. </param>
-        /// <param name="createdOn"> The key creation date. </param>
+        /// <param name="creationOn"> The key creation date. </param>
         /// <param name="isAutoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceKeyProperties(SqlServerKeyType serverKeyType, Uri uri, string thumbprint, DateTimeOffset? createdOn, bool? isAutoRotationEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedInstanceKeyProperties(SqlServerKeyType serverKeyType, Uri uri, string thumbprint, DateTimeOffset? creationOn, bool? isAutoRotationEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServerKeyType = serverKeyType;
             Uri = uri;
             Thumbprint = thumbprint;
-            CreatedOn = createdOn;
+            CreationOn = creationOn;
             IsAutoRotationEnabled = isAutoRotationEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The key creation date. </summary>
         [WirePath("creationDate")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreationOn { get; }
 
         /// <summary> Key auto rotation opt-in flag. Either true or false. </summary>
         [WirePath("autoRotationEnabled")]

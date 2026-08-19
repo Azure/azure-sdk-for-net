@@ -14,51 +14,51 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> IP Community patchable properties. </summary>
-    internal partial class IpCommunityPatchableProperties : IJsonModel<IpCommunityPatchableProperties>
+    internal partial class IPCommunityPatchableProperties : IJsonModel<IPCommunityPatchableProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IpCommunityPatchableProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual IPCommunityPatchableProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpCommunityPatchableProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPCommunityPatchableProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIpCommunityPatchableProperties(document.RootElement, options);
+                        return DeserializeIPCommunityPatchableProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IpCommunityPatchableProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPCommunityPatchableProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpCommunityPatchableProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPCommunityPatchableProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IpCommunityPatchableProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPCommunityPatchableProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IpCommunityPatchableProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IPCommunityPatchableProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IpCommunityPatchableProperties IPersistableModel<IpCommunityPatchableProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        IPCommunityPatchableProperties IPersistableModel<IPCommunityPatchableProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IpCommunityPatchableProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IPCommunityPatchableProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IpCommunityPatchableProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IPCommunityPatchableProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpCommunityPatchableProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPCommunityPatchableProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IpCommunityPatchableProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IPCommunityPatchableProperties)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(IPCommunityRules))
             {
@@ -103,24 +103,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IpCommunityPatchableProperties IJsonModel<IpCommunityPatchableProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        IPCommunityPatchableProperties IJsonModel<IPCommunityPatchableProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IpCommunityPatchableProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual IPCommunityPatchableProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpCommunityPatchableProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPCommunityPatchableProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IpCommunityPatchableProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IPCommunityPatchableProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIpCommunityPatchableProperties(document.RootElement, options);
+            return DeserializeIPCommunityPatchableProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static IpCommunityPatchableProperties DeserializeIpCommunityPatchableProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static IPCommunityPatchableProperties DeserializeIPCommunityPatchableProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IpCommunityPatchableProperties(ipCommunityRules ?? new ChangeTrackingList<IPCommunityRule>(), additionalBinaryDataProperties);
+            return new IPCommunityPatchableProperties(ipCommunityRules ?? new ChangeTrackingList<IPCommunityRule>(), additionalBinaryDataProperties);
         }
     }
 }

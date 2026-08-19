@@ -80,15 +80,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 throw new FormatException($"The model {nameof(AccessBridgeProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Ipv4ConnectedPrefix))
+            if (Optional.IsDefined(IPv4ConnectedPrefix))
             {
                 writer.WritePropertyName("ipv4ConnectedPrefix"u8);
-                writer.WriteStringValue(Ipv4ConnectedPrefix);
+                writer.WriteStringValue(IPv4ConnectedPrefix);
             }
-            if (Optional.IsDefined(Ipv6ConnectedPrefix))
+            if (Optional.IsDefined(IPv6ConnectedPrefix))
             {
                 writer.WritePropertyName("ipv6ConnectedPrefix"u8);
-                writer.WriteStringValue(Ipv6ConnectedPrefix);
+                writer.WriteStringValue(IPv6ConnectedPrefix);
             }
             writer.WritePropertyName("networkId"u8);
             writer.WriteStringValue(NetworkId);
@@ -174,8 +174,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            string ipv4ConnectedPrefix = default;
-            string ipv6ConnectedPrefix = default;
+            string iPv4ConnectedPrefix = default;
+            string iPv6ConnectedPrefix = default;
             ResourceIdentifier networkId = default;
             IList<NetworkCloudAccessBridgeSecurityRule> securityRules = default;
             NetworkCloudAccessBridgeDetailedStatus? detailedStatus = default;
@@ -188,12 +188,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 if (prop.NameEquals("ipv4ConnectedPrefix"u8))
                 {
-                    ipv4ConnectedPrefix = prop.Value.GetString();
+                    iPv4ConnectedPrefix = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("ipv6ConnectedPrefix"u8))
                 {
-                    ipv6ConnectedPrefix = prop.Value.GetString();
+                    iPv6ConnectedPrefix = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("networkId"u8))
@@ -267,8 +267,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             return new AccessBridgeProperties(
-                ipv4ConnectedPrefix,
-                ipv6ConnectedPrefix,
+                iPv4ConnectedPrefix,
+                iPv6ConnectedPrefix,
                 networkId,
                 securityRules ?? new ChangeTrackingList<NetworkCloudAccessBridgeSecurityRule>(),
                 detailedStatus,

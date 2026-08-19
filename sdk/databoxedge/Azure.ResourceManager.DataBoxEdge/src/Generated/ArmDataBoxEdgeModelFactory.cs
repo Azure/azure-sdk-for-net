@@ -1278,7 +1278,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                timeStamp is null && clusterStorageCapacityInfo is null && clusterComputeCapacityInfo is null && nodeCapacityInfos is null ? default : new DeviceCapacityInfoProperties(timeStamp, clusterStorageCapacityInfo, clusterComputeCapacityInfo, nodeCapacityInfos ?? new ChangeTrackingDictionary<string, HostCapacity>(), default),
+                clusterStorageCapacityInfo is null && clusterComputeCapacityInfo is null && nodeCapacityInfos is null ? default : new DeviceCapacityInfoProperties(default, clusterStorageCapacityInfo, clusterComputeCapacityInfo, nodeCapacityInfos ?? new ChangeTrackingDictionary<string, HostCapacity>(), default),
                 default);
         }
 

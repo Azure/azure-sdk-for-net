@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="category"> The category of the agreement. </param>
         /// <param name="displayName"> The name of the agreement signed by a customer. </param>
         /// <param name="effectiveOn"> The date from which the agreement is effective. </param>
-        /// <param name="expireOn"> The date when the agreement expires. </param>
+        /// <param name="expirationOn"> The date when the agreement expires. </param>
         /// <param name="participants"> The list of participants that participates in acceptance of an agreement. </param>
         /// <param name="status"> The current status of the agreement. </param>
         /// <param name="leadBillingAccountName"> The ID of the lead billing account if this agreement is part of the Customer Affiliate Purchase Terms. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingAgreementProperties(AgreementAcceptanceMode? acceptanceMode, string agreementLink, IReadOnlyList<BillingProfileInfo> billingProfileInfo, BillingAgreementCategory? category, string displayName, DateTimeOffset? effectiveOn, DateTimeOffset? expireOn, IReadOnlyList<BillingAgreementParticipant> participants, string status, string leadBillingAccountName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingAgreementProperties(AgreementAcceptanceMode? acceptanceMode, string agreementLink, IReadOnlyList<BillingProfileInfo> billingProfileInfo, BillingAgreementCategory? category, string displayName, DateTimeOffset? effectiveOn, DateTimeOffset? expirationOn, IReadOnlyList<BillingAgreementParticipant> participants, string status, string leadBillingAccountName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AcceptanceMode = acceptanceMode;
             AgreementLink = agreementLink;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Billing.Models
             Category = category;
             DisplayName = displayName;
             EffectiveOn = effectiveOn;
-            ExpireOn = expireOn;
+            ExpirationOn = expirationOn;
             Participants = participants;
             Status = status;
             LeadBillingAccountName = leadBillingAccountName;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The date when the agreement expires. </summary>
         [WirePath("expirationDate")]
-        public DateTimeOffset? ExpireOn { get; }
+        public DateTimeOffset? ExpirationOn { get; }
 
         /// <summary> The list of participants that participates in acceptance of an agreement. </summary>
         [WirePath("participants")]

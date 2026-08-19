@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity);
             }
-            if (Optional.IsDefined(Timestamp))
+            if (Optional.IsDefined(On))
             {
                 writer.WritePropertyName("timestamp"u8);
-                writer.WriteStringValue(Timestamp.Value, "O");
+                writer.WriteStringValue(On.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             string status = default;
             string message = default;
             string severity = default;
-            DateTimeOffset? timestamp = default;
+            DateTimeOffset? @on = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     {
                         continue;
                     }
-                    timestamp = prop.Value.GetDateTimeOffset("O");
+                    @on = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 status,
                 message,
                 severity,
-                timestamp,
+                @on,
                 additionalBinaryDataProperties);
         }
     }

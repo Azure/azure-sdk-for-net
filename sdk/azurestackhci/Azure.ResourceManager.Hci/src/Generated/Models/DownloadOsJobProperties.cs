@@ -13,19 +13,19 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Represents the properties of Download Os job. </summary>
-    public partial class DownloadOsJobProperties : EdgeMachineJobProperties
+    public partial class DownloadOSJobProperties : EdgeMachineJobProperties
     {
-        /// <summary> Initializes a new instance of <see cref="DownloadOsJobProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DownloadOSJobProperties"/>. </summary>
         /// <param name="downloadRequest"> Download OS request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="downloadRequest"/> is null. </exception>
-        public DownloadOsJobProperties(DownloadContent downloadRequest) : base(EdgeMachineJobType.DownloadOs)
+        public DownloadOSJobProperties(DownloadContent downloadRequest) : base(EdgeMachineJobType.DownloadOs)
         {
             Argument.AssertNotNull(downloadRequest, nameof(downloadRequest));
 
             DownloadRequest = downloadRequest;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DownloadOsJobProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DownloadOSJobProperties"/>. </summary>
         /// <param name="jobType"> Job Type to support polymorphic resource. </param>
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
         /// <param name="provisioningState"> Job provisioning state. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="downloadRequest"> Download OS request. </param>
         /// <param name="reportedProperties"> Reported Properties for Download Os job. </param>
-        internal DownloadOsJobProperties(EdgeMachineJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startOn, DateTimeOffset? endOn, HciJobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, DownloadContent downloadRequest, ProvisionOsReportedProperties reportedProperties) : base(jobType, deploymentMode, provisioningState, jobId, startOn, endOn, status, error, additionalBinaryDataProperties)
+        internal DownloadOSJobProperties(EdgeMachineJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startOn, DateTimeOffset? endOn, HciJobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, DownloadContent downloadRequest, ProvisionOSReportedProperties reportedProperties) : base(jobType, deploymentMode, provisioningState, jobId, startOn, endOn, status, error, additionalBinaryDataProperties)
         {
             DownloadRequest = downloadRequest;
             ReportedProperties = reportedProperties;
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Reported Properties for Download Os job. </summary>
         [WirePath("reportedProperties")]
-        public ProvisionOsReportedProperties ReportedProperties { get; set; }
+        public ProvisionOSReportedProperties ReportedProperties { get; set; }
     }
 }

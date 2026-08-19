@@ -156,16 +156,16 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
             return new RulePreviewEvaluation(evaluationOn, alertState, (evaluatedPeriods ?? new ChangeTrackingList<RulePreviewEvaluatedPeriod>()).ToList(), isThresholdMet, default);
         }
 
-        /// <param name="timestamp"> The timestamp of the evaluated period. </param>
+        /// <param name="on"> The timestamp of the evaluated period. </param>
         /// <param name="highThreshold"> The high threshold value for the evaluation period. </param>
         /// <param name="lowThreshold"> The low threshold value for the evaluation period. </param>
         /// <param name="metricValue"> The metric value for the evaluation period. </param>
         /// <param name="isThresholdMet"> Indicates whether the threshold was met during the evaluation period. </param>
         /// <returns> A new <see cref="Models.RulePreviewEvaluatedPeriod"/> instance for mocking. </returns>
-        public static RulePreviewEvaluatedPeriod RulePreviewEvaluatedPeriod(DateTimeOffset? timestamp = default, double? highThreshold = default, double? lowThreshold = default, double? metricValue = default, bool? isThresholdMet = default)
+        public static RulePreviewEvaluatedPeriod RulePreviewEvaluatedPeriod(DateTimeOffset? @on = default, double? highThreshold = default, double? lowThreshold = default, double? metricValue = default, bool? isThresholdMet = default)
         {
             return new RulePreviewEvaluatedPeriod(
-                timestamp,
+                @on,
                 highThreshold,
                 lowThreshold,
                 metricValue,

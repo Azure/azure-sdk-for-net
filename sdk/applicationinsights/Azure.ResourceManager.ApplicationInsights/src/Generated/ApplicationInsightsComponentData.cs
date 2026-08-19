@@ -161,11 +161,11 @@ namespace Azure.ResourceManager.ApplicationInsights
 
         /// <summary> Creation Date for the Application Insights component, in ISO 8601 format. </summary>
         [WirePath("properties.CreationDate")]
-        public DateTimeOffset? CreatedOn
+        public DateTimeOffset? CreationOn
         {
             get
             {
-                return Properties is null ? default : Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreationOn;
             }
         }
 

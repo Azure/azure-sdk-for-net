@@ -224,11 +224,11 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         }
 
         /// <summary> Certificate expiration time. </summary>
-        public DateTimeOffset? ExpireOn
+        public DateTimeOffset? ExpirationOn
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpirationOn;
             }
         }
 

@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <returns> A new <see cref="Models.SupportServiceLevelAgreement"/> instance for mocking. </returns>
         public static SupportServiceLevelAgreement SupportServiceLevelAgreement(DateTimeOffset? startOn = default, DateTimeOffset? expireOn = default, int? slaInMinutes = default)
         {
-            return new SupportServiceLevelAgreement(startOn, expireOn, slaInMinutes, default);
+            return new SupportServiceLevelAgreement(startOn, default, slaInMinutes, default);
         }
 
         /// <param name="quotaChangeRequestSubType"> Required for certain quota types when there is a sub type, such as Batch, for which you are requesting a quota increase. </param>
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Support.Models
                 name,
                 resourceType,
                 systemData,
-                createdOn is null && expireOn is null ? default : new FileWorkspaceDetailsProperties(createdOn, expireOn, default),
+                createdOn is null ? default : new FileWorkspaceDetailsProperties(createdOn, default, default),
                 default);
         }
 

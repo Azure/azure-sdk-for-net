@@ -25,18 +25,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="RestorableDatabaseAccountProperties"/>. </summary>
         /// <param name="accountName"> The name of the global database account. </param>
-        /// <param name="createdOn"> The creation time of the restorable database account (ISO-8601 format). </param>
+        /// <param name="creationOn"> The creation time of the restorable database account (ISO-8601 format). </param>
         /// <param name="oldestRestorableOn"> The least recent time at which the database account can be restored to (ISO-8601 format). </param>
-        /// <param name="deletedOn"> The time at which the restorable database account has been deleted (ISO-8601 format). </param>
+        /// <param name="deletionOn"> The time at which the restorable database account has been deleted (ISO-8601 format). </param>
         /// <param name="apiType"> The API type of the restorable database account. </param>
         /// <param name="restorableLocations"> List of regions where the of the database account can be restored from. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorableDatabaseAccountProperties(string accountName, DateTimeOffset? createdOn, DateTimeOffset? oldestRestorableOn, DateTimeOffset? deletedOn, CosmosDBApiType? apiType, IReadOnlyList<RestorableLocationResourceInfo> restorableLocations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorableDatabaseAccountProperties(string accountName, DateTimeOffset? creationOn, DateTimeOffset? oldestRestorableOn, DateTimeOffset? deletionOn, CosmosDBApiType? apiType, IReadOnlyList<RestorableLocationResourceInfo> restorableLocations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccountName = accountName;
-            CreatedOn = createdOn;
+            CreationOn = creationOn;
             OldestRestorableOn = oldestRestorableOn;
-            DeletedOn = deletedOn;
+            DeletionOn = deletionOn;
             ApiType = apiType;
             RestorableLocations = restorableLocations;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The creation time of the restorable database account (ISO-8601 format). </summary>
         [WirePath("creationTime")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreationOn { get; }
 
         /// <summary> The least recent time at which the database account can be restored to (ISO-8601 format). </summary>
         [WirePath("oldestRestorableTime")]
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The time at which the restorable database account has been deleted (ISO-8601 format). </summary>
         [WirePath("deletionTime")]
-        public DateTimeOffset? DeletedOn { get; }
+        public DateTimeOffset? DeletionOn { get; }
 
         /// <summary> The API type of the restorable database account. </summary>
         [WirePath("apiType")]

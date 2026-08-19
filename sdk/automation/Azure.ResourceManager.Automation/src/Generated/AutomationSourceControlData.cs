@@ -160,11 +160,11 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> The creation time. </summary>
-        public DateTimeOffset? CreatedOn
+        public DateTimeOffset? CreationOn
         {
             get
             {
-                return Properties is null ? default : Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreationOn;
             }
             set
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     Properties = new SourceControlProperties();
                 }
-                Properties.CreatedOn = value;
+                Properties.CreationOn = value;
             }
         }
 

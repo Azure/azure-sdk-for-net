@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (Optional.IsDefined(LastModifiedOn))
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Automation.Models
             AutomationRunbookDraft draft = default;
             RunbookProvisioningState? provisioningState = default;
             string lastModifiedBy = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? creationOn = default;
             DateTimeOffset? lastModifiedOn = default;
             string description = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedTime"u8))
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Automation.Models
                 draft,
                 provisioningState,
                 lastModifiedBy,
-                createdOn,
+                creationOn,
                 lastModifiedOn,
                 description,
                 additionalBinaryDataProperties);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Initializes a new instance of <see cref="AdvancedThreatProtectionProperties"/>. </summary>
         /// <param name="state"> Specifies the state of the Advanced Threat Protection, whether it is enabled or disabled or a state has not been applied yet on the specific database or server. </param>
-        /// <param name="createdOn"> Specifies the UTC creation time of the policy. </param>
+        /// <param name="creationOn"> Specifies the UTC creation time of the policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AdvancedThreatProtectionProperties(AdvancedThreatProtectionState state, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AdvancedThreatProtectionProperties(AdvancedThreatProtectionState state, DateTimeOffset? creationOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
-            CreatedOn = createdOn;
+            CreationOn = creationOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Specifies the UTC creation time of the policy. </summary>
         [WirePath("creationTime")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreationOn { get; }
     }
 }

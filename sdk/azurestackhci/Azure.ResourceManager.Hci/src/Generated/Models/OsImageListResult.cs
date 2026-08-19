@@ -13,23 +13,23 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> The response of a OsImage list operation. </summary>
-    internal partial class OsImageListResult
+    internal partial class OSImageListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OsImageListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSImageListResult"/>. </summary>
         /// <param name="value"> The OsImage items on this page. </param>
-        internal OsImageListResult(IEnumerable<OsImageData> value)
+        internal OSImageListResult(IEnumerable<OSImageData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OsImageListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSImageListResult"/>. </summary>
         /// <param name="value"> The OsImage items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OsImageListResult(IList<OsImageData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OSImageListResult(IList<OSImageData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> The OsImage items on this page. </summary>
         [WirePath("value")]
-        public IList<OsImageData> Value { get; }
+        public IList<OSImageData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HostPoolRegistrationInfoPatch"/>. </summary>
-        /// <param name="expireOn"> Expiration time of registration token. </param>
+        /// <param name="expirationOn"> Expiration time of registration token. </param>
         /// <param name="registrationTokenOperation"> The type of resetting the token. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HostPoolRegistrationInfoPatch(DateTimeOffset? expireOn, HostPoolRegistrationTokenOperation? registrationTokenOperation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HostPoolRegistrationInfoPatch(DateTimeOffset? expirationOn, HostPoolRegistrationTokenOperation? registrationTokenOperation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ExpireOn = expireOn;
+            ExpirationOn = expirationOn;
             RegistrationTokenOperation = registrationTokenOperation;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Expiration time of registration token. </summary>
         [WirePath("expirationTime")]
-        public DateTimeOffset? ExpireOn { get; set; }
+        public DateTimeOffset? ExpirationOn { get; set; }
 
         /// <summary> The type of resetting the token. </summary>
         [WirePath("registrationTokenOperation")]

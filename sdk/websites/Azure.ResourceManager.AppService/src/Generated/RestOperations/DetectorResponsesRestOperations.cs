@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetHostingEnvironmentDetectorResponseRequest(Guid subscriptionId, string resourceGroupName, string name, string detectorName, DateTimeOffset? startTime, DateTimeOffset? endTime, string timeGrain, RequestContext context)
+        internal HttpMessage CreateGetHostingEnvironmentDetectorResponseRequest(Guid subscriptionId, string resourceGroupName, string name, string detectorName, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -59,14 +59,6 @@ namespace Azure.ResourceManager.AppService
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (startTime != null)
-            {
-                uri.AppendQuery("startTime", TypeFormatters.ConvertToString(startTime, SerializationFormat.DateTime_RFC3339), true);
-            }
-            if (endTime != null)
-            {
-                uri.AppendQuery("endTime", TypeFormatters.ConvertToString(endTime, SerializationFormat.DateTime_RFC3339), true);
             }
             if (timeGrain != null)
             {

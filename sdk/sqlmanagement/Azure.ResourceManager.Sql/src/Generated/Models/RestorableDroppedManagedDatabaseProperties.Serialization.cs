@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationDate"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
+            if (options.Format != "W" && Optional.IsDefined(DeletionOn))
             {
                 writer.WritePropertyName("deletionDate"u8);
-                writer.WriteStringValue(DeletedOn.Value, "O");
+                writer.WriteStringValue(DeletionOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(EarliestRestoreOn))
             {
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             string databaseName = default;
-            DateTimeOffset? createdOn = default;
-            DateTimeOffset? deletedOn = default;
+            DateTimeOffset? creationOn = default;
+            DateTimeOffset? deletionOn = default;
             DateTimeOffset? earliestRestoreOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("deletionDate"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    deletedOn = prop.Value.GetDateTimeOffset("O");
+                    deletionOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("earliestRestoreDate"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RestorableDroppedManagedDatabaseProperties(databaseName, createdOn, deletedOn, earliestRestoreOn, additionalBinaryDataProperties);
+            return new RestorableDroppedManagedDatabaseProperties(databaseName, creationOn, deletionOn, earliestRestoreOn, additionalBinaryDataProperties);
         }
     }
 }

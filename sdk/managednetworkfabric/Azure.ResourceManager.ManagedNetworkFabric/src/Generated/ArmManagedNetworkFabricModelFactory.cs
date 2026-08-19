@@ -898,7 +898,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                ipCommunityRules is null && lastOperationDetails is null ? default : new IpCommunityProperties(
+                ipCommunityRules is null && lastOperationDetails is null ? default : new IPCommunityProperties(
                     default,
                     default,
                     (ipCommunityRules ?? new ChangeTrackingList<IPCommunityRule>()).ToList(),
@@ -930,7 +930,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkFabricIPCommunityPatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), default, ipCommunityRules is null ? default : new IpCommunityPatchableProperties((ipCommunityRules ?? new ChangeTrackingList<IPCommunityRule>()).ToList(), default));
+            return new NetworkFabricIPCommunityPatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), default, ipCommunityRules is null ? default : new IPCommunityPatchableProperties((ipCommunityRules ?? new ChangeTrackingList<IPCommunityRule>()).ToList(), default));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -959,7 +959,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                ipExtendedCommunityRules is null && lastOperationDetails is null ? default : new IpExtendedCommunityProperties(
+                ipExtendedCommunityRules is null && lastOperationDetails is null ? default : new IPExtendedCommunityProperties(
                     default,
                     (ipExtendedCommunityRules ?? new ChangeTrackingList<IPExtendedCommunityRule>()).ToList(),
                     default,
@@ -990,7 +990,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkFabricIPExtendedCommunityPatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), default, annotation is null && ipExtendedCommunityRules is null ? default : new IpExtendedCommunityPatchProperties(annotation, (ipExtendedCommunityRules ?? new ChangeTrackingList<IPExtendedCommunityRule>()).ToList(), default));
+            return new NetworkFabricIPExtendedCommunityPatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), default, annotation is null && ipExtendedCommunityRules is null ? default : new IPExtendedCommunityPatchProperties(annotation, (ipExtendedCommunityRules ?? new ChangeTrackingList<IPExtendedCommunityRule>()).ToList(), default));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1019,7 +1019,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                ipPrefixRules is null && lastOperationDetails is null ? default : new IpPrefixProperties(
+                ipPrefixRules is null && lastOperationDetails is null ? default : new IPPrefixProperties(
                     default,
                     default,
                     (ipPrefixRules ?? new ChangeTrackingList<IPPrefixRule>()).ToList(),
@@ -1056,7 +1056,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkFabricIPPrefixPatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), default, annotation is null && ipPrefixRules is null ? default : new IpPrefixPatchProperties(annotation, (ipPrefixRules ?? new ChangeTrackingList<IPPrefixRule>()).ToList(), default));
+            return new NetworkFabricIPPrefixPatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), default, annotation is null && ipPrefixRules is null ? default : new IPPrefixPatchProperties(annotation, (ipPrefixRules ?? new ChangeTrackingList<IPPrefixRule>()).ToList(), default));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1328,8 +1328,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     default,
                     default,
                     default,
-                    new NativeIpv4PrefixLimitProperties((nativeIPv4PrefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>()).ToList(), default),
-                    new NativeIpv6PrefixLimitProperties((nativeIPv6PrefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>()).ToList(), default),
+                    new NativeIPv4PrefixLimitProperties((nativeIPv4PrefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>()).ToList(), default),
+                    new NativeIPv6PrefixLimitProperties((nativeIPv6PrefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>()).ToList(), default),
                     new LastOperationProperties(lastOperationDetails, default),
                     networkFabricId,
                     default,
@@ -1493,8 +1493,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 isMonitoringEnabled,
                 bgpSettings,
                 staticRouteSettings,
-                new NativeIpv4PrefixLimitPatchProperties((nativeIPv4PrefixLimits ?? new ChangeTrackingList<PrefixLimitPatchProperties>()).ToList(), default),
-                new NativeIpv6PrefixLimitPatchProperties((nativeIPv6PrefixLimits ?? new ChangeTrackingList<PrefixLimitPatchProperties>()).ToList(), default),
+                new NativeIPv4PrefixLimitPatchProperties((nativeIPv4PrefixLimits ?? new ChangeTrackingList<PrefixLimitPatchProperties>()).ToList(), default),
+                new NativeIPv6PrefixLimitPatchProperties((nativeIPv6PrefixLimits ?? new ChangeTrackingList<PrefixLimitPatchProperties>()).ToList(), default),
                 default), default);
         }
 
@@ -1513,20 +1513,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="allowASOverride"> Enable Or Disable state. </param>
         /// <param name="fabricAsn"> ASN of Network Fabric. Example: 65048. </param>
         /// <param name="peerAsn"> Peer ASN. Example: 65047. </param>
-        /// <param name="ipv4ListenRangePrefixes"> List of BGP IPv4 Listen Range prefixes. </param>
-        /// <param name="ipv6ListenRangePrefixes"> List of BGP IPv6 Listen Ranges prefixes. </param>
-        /// <param name="ipv4NeighborAddress"> List with stringified IPv4 Neighbor Addresses. </param>
-        /// <param name="ipv6NeighborAddress"> List with stringified IPv6 Neighbor Address. </param>
+        /// <param name="iPv4ListenRangePrefixes"> List of BGP IPv4 Listen Range prefixes. </param>
+        /// <param name="iPv6ListenRangePrefixes"> List of BGP IPv6 Listen Ranges prefixes. </param>
+        /// <param name="iPv4NeighborAddress"> List with stringified IPv4 Neighbor Addresses. </param>
+        /// <param name="iPv6NeighborAddress"> List with stringified IPv6 Neighbor Address. </param>
         /// <param name="bmpConfiguration"> InternalNetwork BMP Configuration. </param>
         /// <param name="v4OverV6BgpSession"> V4 over V6 bgp session. </param>
         /// <param name="v6OverV4BgpSession"> v6 over v4 bgp session. </param>
         /// <returns> A new <see cref="Models.BgpPatchConfiguration"/> instance for mocking. </returns>
-        public static BgpPatchConfiguration BgpPatchConfiguration(string annotation = default, BfdPatchConfiguration bfdConfiguration = default, NetworkFabricBooleanValue? defaultRouteOriginate = default, int? allowAS = default, AllowASOverride? allowASOverride = default, long? fabricAsn = default, long? peerAsn = default, IEnumerable<string> ipv4ListenRangePrefixes = default, IEnumerable<string> ipv6ListenRangePrefixes = default, IEnumerable<NeighborAddressPatch> ipv4NeighborAddress = default, IEnumerable<NeighborAddressPatch> ipv6NeighborAddress = default, InternalNetworkBmpPatchProperties bmpConfiguration = default, NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = default, NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = default)
+        public static BgpPatchConfiguration BgpPatchConfiguration(string annotation = default, BfdPatchConfiguration bfdConfiguration = default, NetworkFabricBooleanValue? defaultRouteOriginate = default, int? allowAS = default, AllowASOverride? allowASOverride = default, long? fabricAsn = default, long? peerAsn = default, IEnumerable<string> iPv4ListenRangePrefixes = default, IEnumerable<string> iPv6ListenRangePrefixes = default, IEnumerable<NeighborAddressPatch> iPv4NeighborAddress = default, IEnumerable<NeighborAddressPatch> iPv6NeighborAddress = default, InternalNetworkBmpPatchProperties bmpConfiguration = default, NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = default, NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = default)
         {
-            ipv4ListenRangePrefixes ??= new ChangeTrackingList<string>();
-            ipv6ListenRangePrefixes ??= new ChangeTrackingList<string>();
-            ipv4NeighborAddress ??= new ChangeTrackingList<NeighborAddressPatch>();
-            ipv6NeighborAddress ??= new ChangeTrackingList<NeighborAddressPatch>();
+            iPv4ListenRangePrefixes ??= new ChangeTrackingList<string>();
+            iPv6ListenRangePrefixes ??= new ChangeTrackingList<string>();
+            iPv4NeighborAddress ??= new ChangeTrackingList<NeighborAddressPatch>();
+            iPv6NeighborAddress ??= new ChangeTrackingList<NeighborAddressPatch>();
 
             return new BgpPatchConfiguration(
                 annotation,
@@ -1537,10 +1537,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 allowASOverride,
                 fabricAsn,
                 peerAsn,
-                (ipv4ListenRangePrefixes ?? new ChangeTrackingList<string>()).ToList(),
-                (ipv6ListenRangePrefixes ?? new ChangeTrackingList<string>()).ToList(),
-                (ipv4NeighborAddress ?? new ChangeTrackingList<NeighborAddressPatch>()).ToList(),
-                (ipv6NeighborAddress ?? new ChangeTrackingList<NeighborAddressPatch>()).ToList(),
+                (iPv4ListenRangePrefixes ?? new ChangeTrackingList<string>()).ToList(),
+                (iPv6ListenRangePrefixes ?? new ChangeTrackingList<string>()).ToList(),
+                (iPv4NeighborAddress ?? new ChangeTrackingList<NeighborAddressPatch>()).ToList(),
+                (iPv6NeighborAddress ?? new ChangeTrackingList<NeighborAddressPatch>()).ToList(),
                 bmpConfiguration,
                 v4OverV6BgpSession,
                 v6OverV4BgpSession);
@@ -1804,8 +1804,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 egressAclId,
                 v4OverV6BgpSession,
                 v6OverV4BgpSession,
-                nativeIPv4PrefixLimits is null ? default : new NativeIpv4PrefixLimitProperties((nativeIPv4PrefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>()).ToList(), default),
-                nativeIPv6PrefixLimits is null ? default : new NativeIpv6PrefixLimitProperties((nativeIPv6PrefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>()).ToList(), default));
+                nativeIPv4PrefixLimits is null ? default : new NativeIPv4PrefixLimitProperties((nativeIPv4PrefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>()).ToList(), default),
+                nativeIPv6PrefixLimits is null ? default : new NativeIPv6PrefixLimitProperties((nativeIPv6PrefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>()).ToList(), default));
         }
 
         /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
@@ -1931,8 +1931,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 bmpConfigurationState is null ? default : new ExternalNetworkBmpPatchProperties(bmpConfigurationState, default),
                 v4OverV6BgpSession,
                 v6OverV4BgpSession,
-                nativeIPv4PrefixLimits is null ? default : new NativeIpv4PrefixLimitPatchProperties((nativeIPv4PrefixLimits ?? new ChangeTrackingList<PrefixLimitPatchProperties>()).ToList(), default),
-                nativeIPv6PrefixLimits is null ? default : new NativeIpv6PrefixLimitPatchProperties((nativeIPv6PrefixLimits ?? new ChangeTrackingList<PrefixLimitPatchProperties>()).ToList(), default));
+                nativeIPv4PrefixLimits is null ? default : new NativeIPv4PrefixLimitPatchProperties((nativeIPv4PrefixLimits ?? new ChangeTrackingList<PrefixLimitPatchProperties>()).ToList(), default),
+                nativeIPv6PrefixLimits is null ? default : new NativeIPv6PrefixLimitPatchProperties((nativeIPv6PrefixLimits ?? new ChangeTrackingList<PrefixLimitPatchProperties>()).ToList(), default));
         }
 
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
@@ -5293,7 +5293,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                annotation is null && networkFabricId is null && ipCommunityRules is null && lastOperationDetails is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IpCommunityProperties(
+                annotation is null && networkFabricId is null && ipCommunityRules is null && lastOperationDetails is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IPCommunityProperties(
                     annotation,
                     networkFabricId,
                     (ipCommunityRules ?? new ChangeTrackingList<IPCommunityRule>()).ToList(),
@@ -5330,7 +5330,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                annotation is null && ipExtendedCommunityRules is null && networkFabricId is null && lastOperationDetails is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IpExtendedCommunityProperties(
+                annotation is null && ipExtendedCommunityRules is null && networkFabricId is null && lastOperationDetails is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IPExtendedCommunityProperties(
                     annotation,
                     (ipExtendedCommunityRules ?? new ChangeTrackingList<IPExtendedCommunityRule>()).ToList(),
                     networkFabricId,
@@ -5367,7 +5367,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                annotation is null && networkFabricId is null && ipPrefixRules is null && lastOperationDetails is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IpPrefixProperties(
+                annotation is null && networkFabricId is null && ipPrefixRules is null && lastOperationDetails is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IPPrefixProperties(
                     annotation,
                     networkFabricId,
                     (ipPrefixRules ?? new ChangeTrackingList<IPPrefixRule>()).ToList(),
@@ -6050,7 +6050,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                annotation is null && ipCommunityRules is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IpCommunityProperties(
+                annotation is null && ipCommunityRules is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IPCommunityProperties(
                     annotation,
                     default,
                     (ipCommunityRules ?? new ChangeTrackingList<IPCommunityRule>()).ToList(),
@@ -6085,7 +6085,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                annotation is null && ipExtendedCommunityRules is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IpExtendedCommunityProperties(
+                annotation is null && ipExtendedCommunityRules is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IPExtendedCommunityProperties(
                     annotation,
                     (ipExtendedCommunityRules ?? new ChangeTrackingList<IPExtendedCommunityRule>()).ToList(),
                     default,
@@ -6120,7 +6120,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                annotation is null && ipPrefixRules is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IpPrefixProperties(
+                annotation is null && ipPrefixRules is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IPPrefixProperties(
                     annotation,
                     default,
                     (ipPrefixRules ?? new ChangeTrackingList<IPPrefixRule>()).ToList(),

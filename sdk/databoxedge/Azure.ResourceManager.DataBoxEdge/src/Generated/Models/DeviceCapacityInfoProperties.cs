@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeviceCapacityInfoProperties"/>. </summary>
-        /// <param name="timeStamp"> Timestamp of request in UTC. </param>
+        /// <param name="on"> Timestamp of request in UTC. </param>
         /// <param name="clusterStorageCapacityInfo"> Cluster capacity data for storage resources (CSV). </param>
         /// <param name="clusterComputeCapacityInfo"> Cluster capacity data for compute resources (Memory and GPU). </param>
         /// <param name="nodeCapacityInfos"> The dictionary of individual node names and node capacities in the cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceCapacityInfoProperties(DateTimeOffset? timeStamp, EdgeClusterStorageViewInfo clusterStorageCapacityInfo, EdgeClusterCapacityViewInfo clusterComputeCapacityInfo, IDictionary<string, HostCapacity> nodeCapacityInfos, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeviceCapacityInfoProperties(DateTimeOffset? @on, EdgeClusterStorageViewInfo clusterStorageCapacityInfo, EdgeClusterCapacityViewInfo clusterComputeCapacityInfo, IDictionary<string, HostCapacity> nodeCapacityInfos, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            TimeStamp = timeStamp;
+            On = @on;
             ClusterStorageCapacityInfo = clusterStorageCapacityInfo;
             ClusterComputeCapacityInfo = clusterComputeCapacityInfo;
             NodeCapacityInfos = nodeCapacityInfos;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Timestamp of request in UTC. </summary>
-        public DateTimeOffset? TimeStamp { get; set; }
+        public DateTimeOffset? On { get; set; }
 
         /// <summary> Cluster capacity data for storage resources (CSV). </summary>
         public EdgeClusterStorageViewInfo ClusterStorageCapacityInfo { get; set; }

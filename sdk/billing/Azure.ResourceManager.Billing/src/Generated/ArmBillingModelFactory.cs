@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Billing.Models
                 category,
                 displayName,
                 effectiveOn,
-                expireOn,
+                default,
                 (participants ?? new ChangeTrackingList<BillingAgreementParticipant>()).ToList(),
                 status,
                 leadBillingAccountName,
@@ -187,8 +187,8 @@ namespace Azure.ResourceManager.Billing.Models
                 billingProfileName,
                 billingProfileDisplayName,
                 createdBy,
-                createdOn,
-                expireOn,
+                default,
+                default,
                 decisionReason,
                 invoiceSectionId,
                 invoiceSectionName,
@@ -2304,8 +2304,8 @@ namespace Azure.ResourceManager.Billing.Models
                 name,
                 resourceType,
                 systemData,
-                expireOn is null && transferStatus is null && recipientEmailId is null && initiatorEmailId is null && canceledBy is null && detailedTransferStatus is null ? default : new TransferProperties(
-                    expireOn,
+                transferStatus is null && recipientEmailId is null && initiatorEmailId is null && canceledBy is null && detailedTransferStatus is null ? default : new TransferProperties(
+                    default,
                     transferStatus,
                     recipientEmailId,
                     initiatorEmailId,
@@ -2374,8 +2374,8 @@ namespace Azure.ResourceManager.Billing.Models
                 name,
                 resourceType,
                 systemData,
-                expireOn is null && transferStatus is null && recipientEmailId is null && initiatorCustomerType is null && initiatorEmailId is null && resellerId is null && resellerName is null && canceledBy is null && detailedTransferStatus is null ? default : new PartnerTransferProperties(
-                    expireOn,
+                transferStatus is null && recipientEmailId is null && initiatorCustomerType is null && initiatorEmailId is null && resellerId is null && resellerName is null && canceledBy is null && detailedTransferStatus is null ? default : new PartnerTransferProperties(
+                    default,
                     transferStatus,
                     recipientEmailId,
                     initiatorCustomerType,
@@ -2424,8 +2424,8 @@ namespace Azure.ResourceManager.Billing.Models
                 name,
                 resourceType,
                 systemData,
-                expireOn is null && allowedProductType is null && transferStatus is null && recipientEmailId is null && initiatorEmailId is null && resellerId is null && resellerName is null && initiatorCustomerType is null && canceledBy is null && detailedTransferStatus is null && customerTenantId is null && supportedAccounts is null ? default : new RecipientTransferProperties(
-                    expireOn,
+                allowedProductType is null && transferStatus is null && recipientEmailId is null && initiatorEmailId is null && resellerId is null && resellerName is null && initiatorCustomerType is null && canceledBy is null && detailedTransferStatus is null && customerTenantId is null && supportedAccounts is null ? default : new RecipientTransferProperties(
+                    default,
                     (allowedProductType ?? new ChangeTrackingList<EligibleProductType>()).ToList(),
                     transferStatus,
                     recipientEmailId,

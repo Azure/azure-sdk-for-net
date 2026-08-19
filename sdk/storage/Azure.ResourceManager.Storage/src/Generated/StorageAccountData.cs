@@ -144,11 +144,11 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Gets the creation date and time of the storage account in UTC. </summary>
         [WirePath("properties.creationTime")]
-        public DateTimeOffset? CreatedOn
+        public DateTimeOffset? CreationOn
         {
             get
             {
-                return Properties is null ? default : Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreationOn;
             }
         }
 

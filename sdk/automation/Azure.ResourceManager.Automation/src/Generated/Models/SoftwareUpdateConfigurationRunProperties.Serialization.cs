@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("failedCount"u8);
                 writer.WriteNumberValue(FailedCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Automation.Models
             DateTimeOffset? endOn = default;
             int? computerCount = default;
             int? failedCount = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? creationOn = default;
             string createdBy = default;
             DateTimeOffset? lastModifiedOn = default;
             string lastModifiedBy = default;
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("createdBy"u8))
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Automation.Models
                 endOn,
                 computerCount,
                 failedCount,
-                createdOn,
+                creationOn,
                 createdBy,
                 lastModifiedOn,
                 lastModifiedBy,

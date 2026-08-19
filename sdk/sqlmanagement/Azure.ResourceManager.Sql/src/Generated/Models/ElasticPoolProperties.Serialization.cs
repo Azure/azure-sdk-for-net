@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationDate"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (Optional.IsDefined(MaxSizeBytes))
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             ElasticPoolState? state = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? creationOn = default;
             long? maxSizeBytes = default;
             double? minCapacity = default;
             ElasticPoolPerDatabaseSettings perDatabaseSettings = default;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("maxSizeBytes"u8))
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             return new ElasticPoolProperties(
                 state,
-                createdOn,
+                creationOn,
                 maxSizeBytes,
                 minCapacity,
                 perDatabaseSettings,

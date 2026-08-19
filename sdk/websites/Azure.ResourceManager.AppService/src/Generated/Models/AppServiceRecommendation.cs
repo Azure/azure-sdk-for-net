@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Timestamp when this instance was created. </summary>
         [WirePath("properties.creationTime")]
-        public DateTimeOffset? CreatedOn
+        public DateTimeOffset? CreationOn
         {
             get
             {
-                return Properties is null ? default : Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreationOn;
             }
             set
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new RecommendationProperties();
                 }
-                Properties.CreatedOn = value;
+                Properties.CreationOn = value;
             }
         }
 

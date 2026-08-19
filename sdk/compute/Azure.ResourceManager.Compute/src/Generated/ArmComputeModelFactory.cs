@@ -4597,13 +4597,13 @@ namespace Azure.ResourceManager.Compute.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                encryptionType is null && activeKey is null && previousKeys is null && provisioningState is null && rotationToLatestKeyVersionEnabled is null && lastKeyRotationTimestamp is null && autoKeyRotationError is null && federatedClientId is null ? default : new EncryptionSetProperties(
+                encryptionType is null && activeKey is null && previousKeys is null && provisioningState is null && rotationToLatestKeyVersionEnabled is null && autoKeyRotationError is null && federatedClientId is null ? default : new EncryptionSetProperties(
                     encryptionType,
                     activeKey,
                     (previousKeys ?? new ChangeTrackingList<KeyForDiskEncryptionSet>()).ToList(),
                     provisioningState,
                     rotationToLatestKeyVersionEnabled,
-                    lastKeyRotationTimestamp,
+                    default,
                     autoKeyRotationError,
                     federatedClientId,
                     default),
@@ -8741,13 +8741,13 @@ namespace Azure.ResourceManager.Compute.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                encryptionType is null && activeKey is null && previousKeys is null && provisioningState is null && rotationToLatestKeyVersionEnabled is null && lastKeyRotationTimestamp is null && autoKeyRotationError is null && federatedClientId is null ? default : new EncryptionSetProperties(
+                encryptionType is null && activeKey is null && previousKeys is null && provisioningState is null && rotationToLatestKeyVersionEnabled is null && autoKeyRotationError is null && federatedClientId is null ? default : new EncryptionSetProperties(
                     encryptionType,
                     activeKey,
                     (previousKeys ?? new ChangeTrackingList<KeyForDiskEncryptionSet>()).ToList(),
                     provisioningState,
                     rotationToLatestKeyVersionEnabled,
-                    lastKeyRotationTimestamp,
+                    default,
                     autoKeyRotationError,
                     federatedClientId,
                     default),

@@ -13,23 +13,23 @@ using Azure.ResourceManager.HorizonDB;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> The response of a HorizonDbPrivateLinkResource list operation. </summary>
-    internal partial class HorizonDbPrivateLinkResourceListResult
+    internal partial class HorizonDBPrivateLinkResourceListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbPrivateLinkResourceListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> The HorizonDbPrivateLinkResource items on this page. </param>
-        internal HorizonDbPrivateLinkResourceListResult(IEnumerable<HorizonDBPrivateLinkResourceData> value)
+        internal HorizonDBPrivateLinkResourceListResult(IEnumerable<HorizonDBPrivateLinkResourceData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbPrivateLinkResourceListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> The HorizonDbPrivateLinkResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDbPrivateLinkResourceListResult(IList<HorizonDBPrivateLinkResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBPrivateLinkResourceListResult(IList<HorizonDBPrivateLinkResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;

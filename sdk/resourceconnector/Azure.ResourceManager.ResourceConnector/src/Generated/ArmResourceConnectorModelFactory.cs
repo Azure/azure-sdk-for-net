@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <param name="status"> Status is used to represent the outcome of the event. </param>
         /// <param name="message"> Message is intended to be actionable and should be used to inform the user of the event. </param>
         /// <param name="severity"> Severity is the classification of the event to relay the importance of the event. </param>
-        /// <param name="timestamp"> Timestamp is the time the event occurred. </param>
+        /// <param name="on"> Timestamp is the time the event occurred. </param>
         /// <returns> A new <see cref="Models.ApplianceEvent"/> instance for mocking. </returns>
-        public static ApplianceEvent ApplianceEvent(string @type = default, string code = default, string status = default, string message = default, string severity = default, DateTimeOffset? timestamp = default)
+        public static ApplianceEvent ApplianceEvent(string @type = default, string code = default, string status = default, string message = default, string severity = default, DateTimeOffset? @on = default)
         {
             return new ApplianceEvent(
                 @type,
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 status,
                 message,
                 severity,
-                timestamp,
+                @on,
                 default);
         }
 

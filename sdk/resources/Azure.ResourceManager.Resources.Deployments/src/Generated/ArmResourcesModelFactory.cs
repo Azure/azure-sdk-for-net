@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <param name="provisioningState"> Denotes the state of provisioning. </param>
         /// <param name="correlationId"> The correlation ID of the deployment. </param>
-        /// <param name="timestamp"> The timestamp of the template deployment. </param>
+        /// <param name="on"> The timestamp of the template deployment. </param>
         /// <param name="duration"> The duration of the template deployment. </param>
         /// <param name="outputs"> Key/value pairs that represent deployment output. </param>
         /// <param name="providers"> The list of resource providers needed for the deployment. </param>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="diagnostics"> Contains diagnostic information collected during validation process. </param>
         /// <param name="validationLevel"> The validation level of the deployment. </param>
         /// <returns> A new <see cref="Models.ArmDeploymentPropertiesExtended"/> instance for mocking. </returns>
-        public static ArmDeploymentPropertiesExtended ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState = default, string correlationId = default, DateTimeOffset? timestamp = default, TimeSpan? duration = default, BinaryData outputs = default, IEnumerable<ResourceProviderData> providers = default, IEnumerable<ArmDependency> dependencies = default, ArmDeploymentTemplateLink templateLink = default, BinaryData parameters = default, ArmDeploymentParametersLink parametersLink = default, IEnumerable<ArmDeploymentExtensionDefinition> extensions = default, ArmDeploymentMode? mode = default, string debugSettingDetailLevel = default, ErrorDeploymentExtended errorDeployment = default, string templateHash = default, IEnumerable<ArmResourceReference> outputResourceDetails = default, IEnumerable<ArmResourceReference> validatedResourceDetails = default, ResponseError error = default, IEnumerable<DeploymentDiagnosticsDefinition> diagnostics = default, ValidationLevel? validationLevel = default)
+        public static ArmDeploymentPropertiesExtended ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState = default, string correlationId = default, DateTimeOffset? @on = default, TimeSpan? duration = default, BinaryData outputs = default, IEnumerable<ResourceProviderData> providers = default, IEnumerable<ArmDependency> dependencies = default, ArmDeploymentTemplateLink templateLink = default, BinaryData parameters = default, ArmDeploymentParametersLink parametersLink = default, IEnumerable<ArmDeploymentExtensionDefinition> extensions = default, ArmDeploymentMode? mode = default, string debugSettingDetailLevel = default, ErrorDeploymentExtended errorDeployment = default, string templateHash = default, IEnumerable<ArmResourceReference> outputResourceDetails = default, IEnumerable<ArmResourceReference> validatedResourceDetails = default, ResponseError error = default, IEnumerable<DeploymentDiagnosticsDefinition> diagnostics = default, ValidationLevel? validationLevel = default)
         {
             providers ??= new ChangeTrackingList<ResourceProviderData>();
             dependencies ??= new ChangeTrackingList<ArmDependency>();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmDeploymentPropertiesExtended(
                 provisioningState,
                 correlationId,
-                timestamp,
+                @on,
                 duration,
                 outputs,
                 (providers ?? new ChangeTrackingList<ResourceProviderData>()).ToList(),
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <param name="provisioningOperation"> The name of the current provisioning operation. </param>
         /// <param name="provisioningState"> The state of the provisioning. </param>
-        /// <param name="timestamp"> The date and time of the operation. </param>
+        /// <param name="on"> The date and time of the operation. </param>
         /// <param name="duration"> The duration of the operation. </param>
         /// <param name="serviceRequestId"> Deployment operation service request id. </param>
         /// <param name="statusCode"> Operation status code from the resource provider. This property may not be set if a response has not yet been received. </param>
@@ -358,12 +358,12 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="requestContent"> HTTP message content. </param>
         /// <param name="responseContent"> HTTP message content. </param>
         /// <returns> A new <see cref="Models.ArmDeploymentOperationProperties"/> instance for mocking. </returns>
-        public static ArmDeploymentOperationProperties ArmDeploymentOperationProperties(ProvisioningOperationKind? provisioningOperation = default, string provisioningState = default, DateTimeOffset? timestamp = default, TimeSpan? duration = default, string serviceRequestId = default, string statusCode = default, StatusMessage statusMessage = default, TargetResource targetResource = default, BinaryData requestContent = default, BinaryData responseContent = default)
+        public static ArmDeploymentOperationProperties ArmDeploymentOperationProperties(ProvisioningOperationKind? provisioningOperation = default, string provisioningState = default, DateTimeOffset? @on = default, TimeSpan? duration = default, string serviceRequestId = default, string statusCode = default, StatusMessage statusMessage = default, TargetResource targetResource = default, BinaryData requestContent = default, BinaryData responseContent = default)
         {
             return new ArmDeploymentOperationProperties(
                 provisioningOperation,
                 provisioningState,
-                timestamp,
+                @on,
                 duration,
                 serviceRequestId,
                 statusCode,

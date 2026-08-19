@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (Optional.IsDefined(LastModifiedOn))
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Automation.Models
             IDictionary<string, string> parameters = default;
             RunbookAssociationProperty runbook = default;
             string runOn = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? creationOn = default;
             DateTimeOffset? lastModifiedOn = default;
             string lastModifiedBy = default;
             string description = default;
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedTime"u8))
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Automation.Models
                 parameters ?? new ChangeTrackingDictionary<string, string>(),
                 runbook,
                 runOn,
-                createdOn,
+                creationOn,
                 lastModifiedOn,
                 lastModifiedBy,
                 description,

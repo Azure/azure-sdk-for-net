@@ -13,19 +13,19 @@ using Azure.ResourceManager.Kusto;
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> Class representing the Kusto CosmosDb data connection properties. </summary>
-    internal partial class CosmosDbDataConnectionProperties
+    internal partial class CosmosDBDataConnectionProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDbDataConnectionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBDataConnectionProperties"/>. </summary>
         /// <param name="tableName"> The case-sensitive name of the existing target table in your cluster. Retrieved data is ingested into this table. </param>
         /// <param name="managedIdentityResourceId"> The resource ID of a managed system or user-assigned identity. The identity is used to authenticate with Cosmos DB. </param>
         /// <param name="cosmosDBAccountResourceId"> The resource ID of the Cosmos DB account used to create the data connection. </param>
         /// <param name="cosmosDBDatabase"> The name of an existing database in the Cosmos DB account. </param>
         /// <param name="cosmosDBContainer"> The name of an existing container in the Cosmos DB database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/>, <paramref name="managedIdentityResourceId"/>, <paramref name="cosmosDBAccountResourceId"/>, <paramref name="cosmosDBDatabase"/> or <paramref name="cosmosDBContainer"/> is null. </exception>
-        public CosmosDbDataConnectionProperties(string tableName, ResourceIdentifier managedIdentityResourceId, ResourceIdentifier cosmosDBAccountResourceId, string cosmosDBDatabase, string cosmosDBContainer)
+        public CosmosDBDataConnectionProperties(string tableName, ResourceIdentifier managedIdentityResourceId, ResourceIdentifier cosmosDBAccountResourceId, string cosmosDBDatabase, string cosmosDBContainer)
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
             Argument.AssertNotNull(managedIdentityResourceId, nameof(managedIdentityResourceId));
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Kusto.Models
             CosmosDBContainer = cosmosDBContainer;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDbDataConnectionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBDataConnectionProperties"/>. </summary>
         /// <param name="tableName"> The case-sensitive name of the existing target table in your cluster. Retrieved data is ingested into this table. </param>
         /// <param name="mappingRuleName"> The name of an existing mapping rule to use when ingesting the retrieved data. </param>
         /// <param name="managedIdentityResourceId"> The resource ID of a managed system or user-assigned identity. The identity is used to authenticate with Cosmos DB. </param>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="retrievalStartOn"> Optional. If defined, the data connection retrieves Cosmos DB documents created or updated after the specified retrieval start date. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDbDataConnectionProperties(string tableName, string mappingRuleName, ResourceIdentifier managedIdentityResourceId, Guid? managedIdentityObjectId, ResourceIdentifier cosmosDBAccountResourceId, string cosmosDBDatabase, string cosmosDBContainer, DateTimeOffset? retrievalStartOn, KustoProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CosmosDBDataConnectionProperties(string tableName, string mappingRuleName, ResourceIdentifier managedIdentityResourceId, Guid? managedIdentityObjectId, ResourceIdentifier cosmosDBAccountResourceId, string cosmosDBDatabase, string cosmosDBContainer, DateTimeOffset? retrievalStartOn, KustoProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TableName = tableName;
             MappingRuleName = mappingRuleName;

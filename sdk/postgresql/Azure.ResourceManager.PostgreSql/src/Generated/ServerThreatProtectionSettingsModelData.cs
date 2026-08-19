@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         /// <summary> Specifies the creation time (UTC) of the policy. </summary>
         [WirePath("properties.creationTime")]
-        public DateTimeOffset? CreatedOn
+        public DateTimeOffset? CreationOn
         {
             get
             {
-                return Properties is null ? default : Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreationOn;
             }
         }
     }

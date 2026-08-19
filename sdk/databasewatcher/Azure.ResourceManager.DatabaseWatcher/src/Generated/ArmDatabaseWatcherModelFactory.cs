@@ -112,17 +112,17 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
 
         /// <param name="alertRuleResourceId"> The resource ID of the alert rule resource. </param>
         /// <param name="createdWithProperties"> The properties with which the alert rule resource was created. </param>
-        /// <param name="createdOn"> The creation time of the alert rule resource. </param>
+        /// <param name="creationOn"> The creation time of the alert rule resource. </param>
         /// <param name="provisioningState"> The provisioning state of the alert rule resource. </param>
         /// <param name="alertRuleTemplateId"> The template ID associated with alert rule resource. </param>
         /// <param name="alertRuleTemplateVersion"> The alert rule template version. </param>
         /// <returns> A new <see cref="Models.DatabaseWatcherAlertRuleProperties"/> instance for mocking. </returns>
-        public static DatabaseWatcherAlertRuleProperties DatabaseWatcherAlertRuleProperties(ResourceIdentifier alertRuleResourceId = default, AlertRuleCreationProperty createdWithProperties = default, DateTimeOffset createdOn = default, DatabaseWatcherResourceProvisioningState? provisioningState = default, string alertRuleTemplateId = default, string alertRuleTemplateVersion = default)
+        public static DatabaseWatcherAlertRuleProperties DatabaseWatcherAlertRuleProperties(ResourceIdentifier alertRuleResourceId = default, AlertRuleCreationProperty createdWithProperties = default, DateTimeOffset creationOn = default, DatabaseWatcherResourceProvisioningState? provisioningState = default, string alertRuleTemplateId = default, string alertRuleTemplateVersion = default)
         {
             return new DatabaseWatcherAlertRuleProperties(
                 alertRuleResourceId,
                 createdWithProperties,
-                createdOn,
+                creationOn,
                 provisioningState,
                 alertRuleTemplateId,
                 alertRuleTemplateVersion,
@@ -233,10 +233,10 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="targetVault"> To use SQL authentication when connecting to targets, specify the vault where the login name and password secrets are stored. </param>
         /// <param name="connectionServerName"> The FQDN host name of the server to use in the connection string when connecting to a target. For example, for an Azure SQL logical server in the Azure commercial cloud, the value might be 'sql-logical-server-22092780.database.windows.net'; for an Azure SQL managed instance in the Azure commercial cloud, the value might be 'sql-mi-39441134.767d5869f605.database.windows.net'. Port number and instance name must be specified separately. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="sqlDbResourceId"> The Azure resource ID of an Azure SQL DB database target. </param>
+        /// <param name="sqlDBResourceId"> The Azure resource ID of an Azure SQL DB database target. </param>
         /// <param name="readIntent"> Set to true to monitor a high availability replica of specified target, if any. </param>
         /// <returns> A new <see cref="Models.SqlDBSingleDatabaseTargetProperties"/> instance for mocking. </returns>
-        public static SqlDBSingleDatabaseTargetProperties SqlDBSingleDatabaseTargetProperties(TargetAuthenticationType targetAuthenticationType = default, TargetAuthenticationVaultSecret targetVault = default, string connectionServerName = default, DatabaseWatcherResourceProvisioningState? provisioningState = default, ResourceIdentifier sqlDbResourceId = default, bool? readIntent = default)
+        public static SqlDBSingleDatabaseTargetProperties SqlDBSingleDatabaseTargetProperties(TargetAuthenticationType targetAuthenticationType = default, TargetAuthenticationVaultSecret targetVault = default, string connectionServerName = default, DatabaseWatcherResourceProvisioningState? provisioningState = default, ResourceIdentifier sqlDBResourceId = default, bool? readIntent = default)
         {
             return new SqlDBSingleDatabaseTargetProperties(
                 default,
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                 connectionServerName,
                 provisioningState,
                 default,
-                sqlDbResourceId,
+                sqlDBResourceId,
                 readIntent);
         }
 

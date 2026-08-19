@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="nonPagedSystemMemory"> Non-paged system memory. </param>
         /// <param name="pagedMemory"> Paged memory. </param>
         /// <param name="peakPagedMemory"> Peak paged memory. </param>
-        /// <param name="timeStamp"> Time stamp. </param>
+        /// <param name="on"> Time stamp. </param>
         /// <param name="environmentVariables"> List of environment variables. </param>
         /// <param name="isScmSite"> Is this the SCM site?. </param>
         /// <param name="isWebjob"> Is this a Web Job?. </param>
         /// <param name="description"> Description of process. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProcessInfoProperties(int? identifier, string deploymentName, string href, string minidump, bool? isProfileRunning, bool? isIisProfileRunning, double? iisProfileTimeoutInSeconds, string parent, IList<string> children, IList<WebAppProcessThreadProperties> processThreads, IList<string> openFileHandles, IList<ProcessModuleInfoData> modules, string fileName, string commandLine, string userName, int? handleCount, int? moduleCount, int? threadCount, DateTimeOffset? startOn, string totalCpuTime, string userCpuTime, string privilegedCpuTime, long? workingSet, long? peakWorkingSet, long? privateMemory, long? virtualMemory, long? peakVirtualMemory, long? pagedSystemMemory, long? nonPagedSystemMemory, long? pagedMemory, long? peakPagedMemory, DateTimeOffset? timeStamp, IDictionary<string, string> environmentVariables, bool? isScmSite, bool? isWebjob, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProcessInfoProperties(int? identifier, string deploymentName, string href, string minidump, bool? isProfileRunning, bool? isIisProfileRunning, double? iisProfileTimeoutInSeconds, string parent, IList<string> children, IList<WebAppProcessThreadProperties> processThreads, IList<string> openFileHandles, IList<ProcessModuleInfoData> modules, string fileName, string commandLine, string userName, int? handleCount, int? moduleCount, int? threadCount, DateTimeOffset? startOn, string totalCpuTime, string userCpuTime, string privilegedCpuTime, long? workingSet, long? peakWorkingSet, long? privateMemory, long? virtualMemory, long? peakVirtualMemory, long? pagedSystemMemory, long? nonPagedSystemMemory, long? pagedMemory, long? peakPagedMemory, DateTimeOffset? @on, IDictionary<string, string> environmentVariables, bool? isScmSite, bool? isWebjob, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identifier = identifier;
             DeploymentName = deploymentName;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
             NonPagedSystemMemory = nonPagedSystemMemory;
             PagedMemory = pagedMemory;
             PeakPagedMemory = peakPagedMemory;
-            TimeStamp = timeStamp;
+            On = @on;
             EnvironmentVariables = environmentVariables;
             IsScmSite = isScmSite;
             IsWebjob = isWebjob;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Time stamp. </summary>
         [WirePath("time_stamp")]
-        public DateTimeOffset? TimeStamp { get; set; }
+        public DateTimeOffset? On { get; set; }
 
         /// <summary> List of environment variables. </summary>
         [WirePath("environment_variables")]

@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RulePreviewEvaluatedPeriod"/>. </summary>
-        /// <param name="timestamp"> The timestamp of the evaluated period. </param>
+        /// <param name="on"> The timestamp of the evaluated period. </param>
         /// <param name="highThreshold"> The high threshold value for the evaluation period. </param>
         /// <param name="lowThreshold"> The low threshold value for the evaluation period. </param>
         /// <param name="metricValue"> The metric value for the evaluation period. </param>
         /// <param name="isThresholdMet"> Indicates whether the threshold was met during the evaluation period. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RulePreviewEvaluatedPeriod(DateTimeOffset? timestamp, double? highThreshold, double? lowThreshold, double? metricValue, bool? isThresholdMet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RulePreviewEvaluatedPeriod(DateTimeOffset? @on, double? highThreshold, double? lowThreshold, double? metricValue, bool? isThresholdMet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Timestamp = timestamp;
+            On = @on;
             HighThreshold = highThreshold;
             LowThreshold = lowThreshold;
             MetricValue = metricValue;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         }
 
         /// <summary> The timestamp of the evaluated period. </summary>
-        public DateTimeOffset? Timestamp { get; }
+        public DateTimeOffset? On { get; }
 
         /// <summary> The high threshold value for the evaluation period. </summary>
         public double? HighThreshold { get; }

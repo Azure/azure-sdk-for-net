@@ -13,23 +13,23 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The response of a CustomIpPrefix list operation. </summary>
-    internal partial class CustomIpPrefixListResult
+    internal partial class CustomIPPrefixListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CustomIpPrefixListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomIPPrefixListResult"/>. </summary>
         /// <param name="value"> The CustomIpPrefix items on this page. </param>
-        internal CustomIpPrefixListResult(IEnumerable<CustomIPPrefixData> value)
+        internal CustomIPPrefixListResult(IEnumerable<CustomIPPrefixData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomIpPrefixListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomIPPrefixListResult"/>. </summary>
         /// <param name="value"> The CustomIpPrefix items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomIpPrefixListResult(IList<CustomIPPrefixData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomIPPrefixListResult(IList<CustomIPPrefixData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;

@@ -226,11 +226,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> The creation date of the database (ISO8601 format). </summary>
         [WirePath("properties.creationDate")]
-        public DateTimeOffset? CreatedOn
+        public DateTimeOffset? CreationOn
         {
             get
             {
-                return Properties is null ? default : Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreationOn;
             }
         }
 

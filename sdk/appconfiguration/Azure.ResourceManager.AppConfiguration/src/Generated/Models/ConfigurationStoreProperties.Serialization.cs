@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationDate"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Endpoint))
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 return null;
             }
             AppConfigurationProvisioningState? provisioningState = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? creationOn = default;
             string endpoint = default;
             AppConfigurationStoreEncryptionProperties encryption = default;
             IReadOnlyList<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections = default;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endpoint"u8))
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
             return new ConfigurationStoreProperties(
                 provisioningState,
-                createdOn,
+                creationOn,
                 endpoint,
                 encryption,
                 privateEndpointConnections ?? new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionReference>(),

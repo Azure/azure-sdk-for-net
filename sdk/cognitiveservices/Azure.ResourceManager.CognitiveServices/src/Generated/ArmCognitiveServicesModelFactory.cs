@@ -2603,11 +2603,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="managedNetworkStatus"> Status for the managed network of a cognitive services account. </param>
         /// <param name="firewallSku"> Firewall Sku used for FQDN Rules. </param>
         /// <param name="managedNetworkKind"> The Kind of the managed network. Users can switch from V1 to V2 for granular access controls, but cannot switch back to V1 once V2 is enabled. </param>
-        /// <param name="firewallPublicIpAddress"> Public IP address assigned to the Azure Firewall. </param>
+        /// <param name="firewallPublicIPAddress"> Public IP address assigned to the Azure Firewall. </param>
         /// <param name="provisioningState"> The provisioning state of the managed network settings. </param>
         /// <param name="changeableIsolationModes"></param>
         /// <returns> A new <see cref="Models.CognitiveServicesManagedNetworkConfigurationExtended"/> instance for mocking. </returns>
-        public static CognitiveServicesManagedNetworkConfigurationExtended CognitiveServicesManagedNetworkConfigurationExtended(CognitiveServicesIsolationMode? isolationMode = default, string networkId = default, IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> outboundRules = default, CognitiveServicesManagedNetworkStatus? managedNetworkStatus = default, CognitiveServicesFirewallSku? firewallSku = default, CognitiveServicesManagedNetworkKind? managedNetworkKind = default, string firewallPublicIpAddress = default, CognitiveServicesManagedNetworkProvisioningState? provisioningState = default, IEnumerable<CognitiveServicesIsolationMode> changeableIsolationModes = default)
+        public static CognitiveServicesManagedNetworkConfigurationExtended CognitiveServicesManagedNetworkConfigurationExtended(CognitiveServicesIsolationMode? isolationMode = default, string networkId = default, IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> outboundRules = default, CognitiveServicesManagedNetworkStatus? managedNetworkStatus = default, CognitiveServicesFirewallSku? firewallSku = default, CognitiveServicesManagedNetworkKind? managedNetworkKind = default, string firewallPublicIPAddress = default, CognitiveServicesManagedNetworkProvisioningState? provisioningState = default, IEnumerable<CognitiveServicesIsolationMode> changeableIsolationModes = default)
         {
             outboundRules ??= new ChangeTrackingDictionary<string, CognitiveServicesOutboundRuleBasicProperties>();
             changeableIsolationModes ??= new ChangeTrackingList<CognitiveServicesIsolationMode>();
@@ -2619,7 +2619,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 managedNetworkStatus is null ? default : new CognitiveServicesManagedNetworkProvisionStatus(managedNetworkStatus, default),
                 firewallSku,
                 managedNetworkKind,
-                firewallPublicIpAddress,
+                firewallPublicIPAddress,
                 provisioningState,
                 default,
                 (changeableIsolationModes ?? new ChangeTrackingList<CognitiveServicesIsolationMode>()).ToList());
@@ -2631,10 +2631,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="managedNetworkStatus"> Status for the managed network of a cognitive services account. </param>
         /// <param name="firewallSku"> Firewall Sku used for FQDN Rules. </param>
         /// <param name="managedNetworkKind"> The Kind of the managed network. Users can switch from V1 to V2 for granular access controls, but cannot switch back to V1 once V2 is enabled. </param>
-        /// <param name="firewallPublicIpAddress"> Public IP address assigned to the Azure Firewall. </param>
+        /// <param name="firewallPublicIPAddress"> Public IP address assigned to the Azure Firewall. </param>
         /// <param name="provisioningState"> The provisioning state of the managed network settings. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesManagedNetworkConfiguration"/> instance for mocking. </returns>
-        public static CognitiveServicesManagedNetworkConfiguration CognitiveServicesManagedNetworkConfiguration(CognitiveServicesIsolationMode? isolationMode = default, string networkId = default, IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> outboundRules = default, CognitiveServicesManagedNetworkStatus? managedNetworkStatus = default, CognitiveServicesFirewallSku? firewallSku = default, CognitiveServicesManagedNetworkKind? managedNetworkKind = default, string firewallPublicIpAddress = default, CognitiveServicesManagedNetworkProvisioningState? provisioningState = default)
+        public static CognitiveServicesManagedNetworkConfiguration CognitiveServicesManagedNetworkConfiguration(CognitiveServicesIsolationMode? isolationMode = default, string networkId = default, IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> outboundRules = default, CognitiveServicesManagedNetworkStatus? managedNetworkStatus = default, CognitiveServicesFirewallSku? firewallSku = default, CognitiveServicesManagedNetworkKind? managedNetworkKind = default, string firewallPublicIPAddress = default, CognitiveServicesManagedNetworkProvisioningState? provisioningState = default)
         {
             outboundRules ??= new ChangeTrackingDictionary<string, CognitiveServicesOutboundRuleBasicProperties>();
 
@@ -2645,7 +2645,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 managedNetworkStatus is null ? default : new CognitiveServicesManagedNetworkProvisionStatus(managedNetworkStatus, default),
                 firewallSku,
                 managedNetworkKind,
-                firewallPublicIpAddress,
+                firewallPublicIPAddress,
                 provisioningState,
                 default);
         }
@@ -3088,22 +3088,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="computeType"> The type of compute resource. </param>
         /// <param name="provisioningState"> Provisioning state of the compute resource. </param>
         /// <param name="errors"> Error details for the compute resource. </param>
-        /// <param name="createdOn"> Creation time of the compute resource. </param>
+        /// <param name="creationOn"> Creation time of the compute resource. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesComputeProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesComputeProperties CognitiveServicesComputeProperties(string computeType = default, CognitiveServicesComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? createdOn = default)
+        public static CognitiveServicesComputeProperties CognitiveServicesComputeProperties(string computeType = default, CognitiveServicesComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? creationOn = default)
         {
             errors ??= new ChangeTrackingList<ResponseError>();
 
-            return new UnknownCognitiveServicesComputeProperties(default, provisioningState, (errors ?? new ChangeTrackingList<ResponseError>()).ToList(), createdOn, default);
+            return new UnknownCognitiveServicesComputeProperties(default, provisioningState, (errors ?? new ChangeTrackingList<ResponseError>()).ToList(), creationOn, default);
         }
 
         /// <param name="provisioningState"> Provisioning state of the compute resource. </param>
         /// <param name="errors"> Error details for the compute resource. </param>
-        /// <param name="createdOn"> Creation time of the compute resource. </param>
+        /// <param name="creationOn"> Creation time of the compute resource. </param>
         /// <param name="pools"> Pools attached to this compute cluster. </param>
         /// <param name="subnetArmId"> ARM ID of the subnet used for compute. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesClusterComputeProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesClusterComputeProperties CognitiveServicesClusterComputeProperties(CognitiveServicesComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? createdOn = default, IEnumerable<CognitiveServicesComputePool> pools = default, string subnetArmId = default)
+        public static CognitiveServicesClusterComputeProperties CognitiveServicesClusterComputeProperties(CognitiveServicesComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? creationOn = default, IEnumerable<CognitiveServicesComputePool> pools = default, string subnetArmId = default)
         {
             errors ??= new ChangeTrackingList<ResponseError>();
             pools ??= new ChangeTrackingList<CognitiveServicesComputePool>();
@@ -3112,7 +3112,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 default,
                 provisioningState,
                 (errors ?? new ChangeTrackingList<ResponseError>()).ToList(),
-                createdOn,
+                creationOn,
                 default,
                 (pools ?? new ChangeTrackingList<CognitiveServicesComputePool>()).ToList(),
                 subnetArmId);
@@ -3130,14 +3130,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="provisioningState"> Provisioning state of the compute resource. </param>
         /// <param name="errors"> Error details for the compute resource. </param>
-        /// <param name="createdOn"> Creation time of the compute resource. </param>
+        /// <param name="creationOn"> Creation time of the compute resource. </param>
         /// <param name="targetClusterId"> ARM resource ID of the parent cluster that hosts this container instance. </param>
         /// <param name="imageLink"> Container image URI (e.g., MCR or ACR image path) for the container instance. </param>
         /// <param name="idleTimeBeforeShutdown"> ISO 8601 duration before the idle instance is automatically shut down (e.g., 'PT30M'). </param>
         /// <param name="sshSettings"> SSH configuration for remote access to the container instance. </param>
         /// <param name="connectivityEndpoints"> Network connectivity endpoints assigned to the container instance. </param>
         /// <returns> A new <see cref="Models.ContainerInstanceComputeProperties"/> instance for mocking. </returns>
-        public static ContainerInstanceComputeProperties ContainerInstanceComputeProperties(CognitiveServicesComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? createdOn = default, string targetClusterId = default, string imageLink = default, string idleTimeBeforeShutdown = default, CognitiveServicesComputeSshSettings sshSettings = default, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints = default)
+        public static ContainerInstanceComputeProperties ContainerInstanceComputeProperties(CognitiveServicesComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? creationOn = default, string targetClusterId = default, string imageLink = default, string idleTimeBeforeShutdown = default, CognitiveServicesComputeSshSettings sshSettings = default, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints = default)
         {
             errors ??= new ChangeTrackingList<ResponseError>();
 
@@ -3145,7 +3145,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 default,
                 provisioningState,
                 (errors ?? new ChangeTrackingList<ResponseError>()).ToList(),
-                createdOn,
+                creationOn,
                 default,
                 targetClusterId,
                 imageLink,
@@ -3162,12 +3162,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesComputeSshSettings(sshPublicKey, isAdminEnabled, default);
         }
 
-        /// <param name="publicIpAddress"> The public IP address of the compute instance. </param>
+        /// <param name="publicIPAddress"> The public IP address of the compute instance. </param>
         /// <param name="sshPort"> The SSH port for the compute instance. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesComputeConnectivityEndpoints"/> instance for mocking. </returns>
-        public static CognitiveServicesComputeConnectivityEndpoints CognitiveServicesComputeConnectivityEndpoints(string publicIpAddress = default, int? sshPort = default)
+        public static CognitiveServicesComputeConnectivityEndpoints CognitiveServicesComputeConnectivityEndpoints(string publicIPAddress = default, int? sshPort = default)
         {
-            return new CognitiveServicesComputeConnectivityEndpoints(publicIpAddress, sshPort, default);
+            return new CognitiveServicesComputeConnectivityEndpoints(publicIPAddress, sshPort, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3206,9 +3206,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="webEndpoint"> The web endpoint URL for accessing the workbench. </param>
         /// <param name="provisioningState"> Provisioning state of the workbench resource. </param>
         /// <param name="errors"> Error details for the workbench resource. </param>
-        /// <param name="createdOn"> Creation time of the workbench resource. </param>
+        /// <param name="creationOn"> Creation time of the workbench resource. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesWorkbenchProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesWorkbenchProperties CognitiveServicesWorkbenchProperties(string targetClusterId = default, string imageLink = default, string idleTimeBeforeShutdown = default, string datasetId = default, CognitiveServicesComputeSshSettings sshSettings = default, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints = default, string webEndpoint = default, CognitiveServicesComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? createdOn = default)
+        public static CognitiveServicesWorkbenchProperties CognitiveServicesWorkbenchProperties(string targetClusterId = default, string imageLink = default, string idleTimeBeforeShutdown = default, string datasetId = default, CognitiveServicesComputeSshSettings sshSettings = default, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints = default, string webEndpoint = default, CognitiveServicesComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? creationOn = default)
         {
             errors ??= new ChangeTrackingList<ResponseError>();
 
@@ -3222,7 +3222,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 webEndpoint,
                 provisioningState,
                 (errors ?? new ChangeTrackingList<ResponseError>()).ToList(),
-                createdOn,
+                creationOn,
                 default);
         }
 

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> The provisioning state of the configuration store. </param>
-        /// <param name="createdOn"> The creation date of configuration store. </param>
+        /// <param name="creationOn"> The creation date of configuration store. </param>
         /// <param name="endpoint"> The DNS endpoint where the configuration store API will be available. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections that are set up for this resource. </param>
         /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="skuName"> The SKU name of the configuration store. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         /// <returns> A new <see cref="AppConfiguration.AppConfigurationStoreData"/> instance for mocking. </returns>
-        public static AppConfigurationStoreData AppConfigurationStoreData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AppConfigurationProvisioningState? provisioningState = default, DateTimeOffset? createdOn = default, string endpoint = default, IEnumerable<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections = default, AppConfigurationPublicNetworkAccess? publicNetworkAccess = default, bool? disableLocalAuth = default, int? softDeleteRetentionInDays = default, long? defaultKeyValueRevisionRetentionPeriodInSeconds = default, bool? enablePurgeProtection = default, AppConfigurationDataPlaneProxyProperties dataPlaneProxy = default, AppConfigurationCreateMode? createMode = default, AppConfigurationKeyVaultProperties encryptionKeyVaultProperties = default, ResourceIdentifier telemetryResourceId = default, IEnumerable<AppConfigurationMoboBrokerResourceInfo> managedOnBehalfOfMoboBrokerResources = default, ResourceIdentifier azureFrontDoorResourceId = default, ManagedServiceIdentity identity = default, string skuName = default)
+        public static AppConfigurationStoreData AppConfigurationStoreData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AppConfigurationProvisioningState? provisioningState = default, DateTimeOffset? creationOn = default, string endpoint = default, IEnumerable<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections = default, AppConfigurationPublicNetworkAccess? publicNetworkAccess = default, bool? disableLocalAuth = default, int? softDeleteRetentionInDays = default, long? defaultKeyValueRevisionRetentionPeriodInSeconds = default, bool? enablePurgeProtection = default, AppConfigurationDataPlaneProxyProperties dataPlaneProxy = default, AppConfigurationCreateMode? createMode = default, AppConfigurationKeyVaultProperties encryptionKeyVaultProperties = default, ResourceIdentifier telemetryResourceId = default, IEnumerable<AppConfigurationMoboBrokerResourceInfo> managedOnBehalfOfMoboBrokerResources = default, ResourceIdentifier azureFrontDoorResourceId = default, ManagedServiceIdentity identity = default, string skuName = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState is null && createdOn is null && endpoint is null && encryptionKeyVaultProperties is null && privateEndpointConnections is null && publicNetworkAccess is null && disableLocalAuth is null && softDeleteRetentionInDays is null && defaultKeyValueRevisionRetentionPeriodInSeconds is null && enablePurgeProtection is null && dataPlaneProxy is null && createMode is null && telemetryResourceId is null && managedOnBehalfOfMoboBrokerResources is null && azureFrontDoorResourceId is null ? default : new ConfigurationStoreProperties(
+                provisioningState is null && creationOn is null && endpoint is null && encryptionKeyVaultProperties is null && privateEndpointConnections is null && publicNetworkAccess is null && disableLocalAuth is null && softDeleteRetentionInDays is null && defaultKeyValueRevisionRetentionPeriodInSeconds is null && enablePurgeProtection is null && dataPlaneProxy is null && createMode is null && telemetryResourceId is null && managedOnBehalfOfMoboBrokerResources is null && azureFrontDoorResourceId is null ? default : new ConfigurationStoreProperties(
                     provisioningState,
-                    createdOn,
+                    creationOn,
                     endpoint,
                     new AppConfigurationStoreEncryptionProperties(encryptionKeyVaultProperties, default),
                     (privateEndpointConnections ?? new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionReference>()).ToList(),
@@ -207,10 +207,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 name,
                 resourceType,
                 systemData,
-                configurationStoreId is null && location is null && deletedOn is null && scheduledPurgeOn is null && tags is null && isPurgeProtectionEnabled is null ? default : new DeletedConfigurationStoreProperties(
+                configurationStoreId is null && location is null && scheduledPurgeOn is null && tags is null && isPurgeProtectionEnabled is null ? default : new DeletedConfigurationStoreProperties(
                     configurationStoreId,
                     location,
-                    deletedOn,
+                    default,
                     scheduledPurgeOn,
                     tags ?? new ChangeTrackingDictionary<string, string>(),
                     isPurgeProtectionEnabled,
@@ -549,9 +549,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState is null && createdOn is null && endpoint is null && encryptionKeyVaultProperties is null && privateEndpointConnections is null && publicNetworkAccess is null && disableLocalAuth is null && softDeleteRetentionInDays is null && enablePurgeProtection is null && dataPlaneProxy is null && createMode is null ? default : new ConfigurationStoreProperties(
+                provisioningState is null && endpoint is null && encryptionKeyVaultProperties is null && privateEndpointConnections is null && publicNetworkAccess is null && disableLocalAuth is null && softDeleteRetentionInDays is null && enablePurgeProtection is null && dataPlaneProxy is null && createMode is null ? default : new ConfigurationStoreProperties(
                     provisioningState,
-                    createdOn,
+                    default,
                     endpoint,
                     new AppConfigurationStoreEncryptionProperties(encryptionKeyVaultProperties, default),
                     (privateEndpointConnections ?? new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionReference>()).ToList(),
@@ -707,9 +707,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState is null && createdOn is null && endpoint is null && encryptionKeyVaultProperties is null && privateEndpointConnections is null && publicNetworkAccess is null && disableLocalAuth is null && softDeleteRetentionInDays is null && enablePurgeProtection is null && createMode is null ? default : new ConfigurationStoreProperties(
+                provisioningState is null && endpoint is null && encryptionKeyVaultProperties is null && privateEndpointConnections is null && publicNetworkAccess is null && disableLocalAuth is null && softDeleteRetentionInDays is null && enablePurgeProtection is null && createMode is null ? default : new ConfigurationStoreProperties(
                     provisioningState,
-                    createdOn,
+                    default,
                     endpoint,
                     new AppConfigurationStoreEncryptionProperties(encryptionKeyVaultProperties, default),
                     (privateEndpointConnections ?? new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionReference>()).ToList(),

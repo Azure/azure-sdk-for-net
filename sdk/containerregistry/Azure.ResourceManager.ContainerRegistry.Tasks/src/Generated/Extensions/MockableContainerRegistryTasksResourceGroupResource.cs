@@ -435,11 +435,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ContainerRegistryTaskSourceUploadResult>> GetBuildSourceUploadUrlAsync(string registryName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerRegistryTaskSourceUploadResult>> GetBuildSourceUploadUriAsync(string registryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
-            using DiagnosticScope scope = RegistriesClientDiagnostics.CreateScope("MockableContainerRegistryTasksResourceGroupResource.GetBuildSourceUploadUrl");
+            using DiagnosticScope scope = RegistriesClientDiagnostics.CreateScope("MockableContainerRegistryTasksResourceGroupResource.GetBuildSourceUploadUri");
             scope.Start();
             try
             {
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RegistriesRestClient.CreateGetBuildSourceUploadUrlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, context);
+                HttpMessage message = RegistriesRestClient.CreateGetBuildSourceUploadUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerRegistryTaskSourceUploadResult> response = Response.FromValue(ContainerRegistryTaskSourceUploadResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -484,11 +484,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ContainerRegistryTaskSourceUploadResult> GetBuildSourceUploadUrl(string registryName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerRegistryTaskSourceUploadResult> GetBuildSourceUploadUri(string registryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
-            using DiagnosticScope scope = RegistriesClientDiagnostics.CreateScope("MockableContainerRegistryTasksResourceGroupResource.GetBuildSourceUploadUrl");
+            using DiagnosticScope scope = RegistriesClientDiagnostics.CreateScope("MockableContainerRegistryTasksResourceGroupResource.GetBuildSourceUploadUri");
             scope.Start();
             try
             {
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RegistriesRestClient.CreateGetBuildSourceUploadUrlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, context);
+                HttpMessage message = RegistriesRestClient.CreateGetBuildSourceUploadUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerRegistryTaskSourceUploadResult> response = Response.FromValue(ContainerRegistryTaskSourceUploadResult.FromResponse(result), result);
                 if (response.Value == null)

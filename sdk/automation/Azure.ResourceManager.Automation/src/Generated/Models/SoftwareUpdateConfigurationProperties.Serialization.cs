@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Automation.Models
             SoftwareUpdateConfigurationScheduleProperties scheduleInfo = default;
             string provisioningState = default;
             AutomationResponseError error = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? creationOn = default;
             string createdBy = default;
             DateTimeOffset? lastModifiedOn = default;
             string lastModifiedBy = default;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("createdBy"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Automation.Models
                 scheduleInfo,
                 provisioningState,
                 error,
-                createdOn,
+                creationOn,
                 createdBy,
                 lastModifiedOn,
                 lastModifiedBy,

@@ -14,22 +14,22 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> IP Extended Community Properties defines the resource properties. </summary>
-    internal partial class IpExtendedCommunityProperties
+    internal partial class IPExtendedCommunityProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IpExtendedCommunityProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPExtendedCommunityProperties"/>. </summary>
         /// <param name="ipExtendedCommunityRules"> List of IP Extended Community Rules. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityRules"/> is null. </exception>
-        public IpExtendedCommunityProperties(IEnumerable<IPExtendedCommunityRule> ipExtendedCommunityRules)
+        public IPExtendedCommunityProperties(IEnumerable<IPExtendedCommunityRule> ipExtendedCommunityRules)
         {
             Argument.AssertNotNull(ipExtendedCommunityRules, nameof(ipExtendedCommunityRules));
 
             IPExtendedCommunityRules = ipExtendedCommunityRules.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IpExtendedCommunityProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPExtendedCommunityProperties"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="ipExtendedCommunityRules"> List of IP Extended Community Rules. </param>
         /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IpExtendedCommunityProperties(string annotation, IList<IPExtendedCommunityRule> ipExtendedCommunityRules, ResourceIdentifier networkFabricId, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IPExtendedCommunityProperties(string annotation, IList<IPExtendedCommunityRule> ipExtendedCommunityRules, ResourceIdentifier networkFabricId, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             IPExtendedCommunityRules = ipExtendedCommunityRules;

@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(PfxBlob))
             {
                 writer.WritePropertyName("pfxBlob"u8);
-                writer.WriteBase64StringValue(PfxBlob.ToArray(), "D");
+                writer.WriteBase64StringValue(PfxBlob, "D");
             }
             if (options.Format != "W" && Optional.IsDefined(SiteName))
             {
@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("issueDate"u8);
                 writer.WriteStringValue(IssueOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(ExpirationOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpirationOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ThumbprintString))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(CerBlob))
             {
                 writer.WritePropertyName("cerBlob"u8);
-                writer.WriteBase64StringValue(CerBlob.ToArray(), "D");
+                writer.WriteBase64StringValue(CerBlob, "D");
             }
             if (options.Format != "W" && Optional.IsDefined(PublicKeyHash))
             {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.AppService.Models
             string selfLink = default;
             string issuer = default;
             DateTimeOffset? issueOn = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expirationOn = default;
             string thumbprintString = default;
             bool? isValid = default;
             BinaryData cerBlob = default;
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expirationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("thumbprint"u8))
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.AppService.Models
                 selfLink,
                 issuer,
                 issueOn,
-                expireOn,
+                expirationOn,
                 thumbprintString,
                 isValid,
                 cerBlob,

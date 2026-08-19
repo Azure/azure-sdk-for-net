@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.CloudHealth
             return message;
         }
 
-        internal HttpMessage CreateGetByHealthModelRequest(Guid subscriptionId, string resourceGroupName, string healthModelName, DateTimeOffset? timestamp, RequestContext context)
+        internal HttpMessage CreateGetByHealthModelRequest(Guid subscriptionId, string resourceGroupName, string healthModelName, DateTimeOffset? @on, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -135,10 +135,6 @@ namespace Azure.ResourceManager.CloudHealth
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (timestamp != null)
-            {
-                uri.AppendQuery("timestamp", TypeFormatters.ConvertToString(timestamp, SerializationFormat.DateTime_RFC3339), true);
-            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -148,7 +144,7 @@ namespace Azure.ResourceManager.CloudHealth
             return message;
         }
 
-        internal HttpMessage CreateNextGetByHealthModelRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string healthModelName, DateTimeOffset? timestamp, RequestContext context)
+        internal HttpMessage CreateNextGetByHealthModelRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string healthModelName, DateTimeOffset? @on, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

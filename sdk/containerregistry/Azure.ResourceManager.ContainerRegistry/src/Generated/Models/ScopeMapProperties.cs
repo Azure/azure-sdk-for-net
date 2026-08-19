@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of <see cref="ScopeMapProperties"/>. </summary>
         /// <param name="description"> The user friendly description of the scope map. </param>
         /// <param name="scopeMapType"> The type of the scope map. E.g. BuildIn scope map. </param>
-        /// <param name="createdOn"> The creation date of scope map. </param>
+        /// <param name="creationOn"> The creation date of scope map. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="actions">
         /// The list of scoped permissions for registry artifacts.
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// repositories/repository-name/metadata/write
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScopeMapProperties(string description, string scopeMapType, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, IList<string> actions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScopeMapProperties(string description, string scopeMapType, DateTimeOffset? creationOn, ContainerRegistryProvisioningState? provisioningState, IList<string> actions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             ScopeMapType = scopeMapType;
-            CreatedOn = createdOn;
+            CreationOn = creationOn;
             ProvisioningState = provisioningState;
             Actions = actions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The creation date of scope map. </summary>
         [WirePath("creationDate")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreationOn { get; }
 
         /// <summary> Provisioning state of the resource. </summary>
         [WirePath("provisioningState")]

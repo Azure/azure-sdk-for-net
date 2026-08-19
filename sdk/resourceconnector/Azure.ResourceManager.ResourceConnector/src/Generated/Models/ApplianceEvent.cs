@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <param name="status"> Status is used to represent the outcome of the event. </param>
         /// <param name="message"> Message is intended to be actionable and should be used to inform the user of the event. </param>
         /// <param name="severity"> Severity is the classification of the event to relay the importance of the event. </param>
-        /// <param name="timestamp"> Timestamp is the time the event occurred. </param>
+        /// <param name="on"> Timestamp is the time the event occurred. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplianceEvent(string @type, string code, string status, string message, string severity, DateTimeOffset? timestamp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplianceEvent(string @type, string code, string status, string message, string severity, DateTimeOffset? @on, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Code = code;
             Status = status;
             Message = message;
             Severity = severity;
-            Timestamp = timestamp;
+            On = @on;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         public string Severity { get; }
 
         /// <summary> Timestamp is the time the event occurred. </summary>
-        public DateTimeOffset? Timestamp { get; }
+        public DateTimeOffset? On { get; }
     }
 }

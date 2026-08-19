@@ -13,25 +13,25 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> CosmosDB (MongoDB API) database dataset properties. </summary>
-    internal partial class CosmosDbMongoDbApiCollectionDatasetTypeProperties
+    internal partial class CosmosDBMongoDBApiCollectionDatasetTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDbMongoDbApiCollectionDatasetTypeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMongoDBApiCollectionDatasetTypeProperties"/>. </summary>
         /// <param name="collection"> The collection name of the CosmosDB (MongoDB API) database. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collection"/> is null. </exception>
-        public CosmosDbMongoDbApiCollectionDatasetTypeProperties(DataFactoryElement<string> collection)
+        public CosmosDBMongoDBApiCollectionDatasetTypeProperties(DataFactoryElement<string> collection)
         {
             Argument.AssertNotNull(collection, nameof(collection));
 
             Collection = collection;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDbMongoDbApiCollectionDatasetTypeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMongoDBApiCollectionDatasetTypeProperties"/>. </summary>
         /// <param name="collection"> The collection name of the CosmosDB (MongoDB API) database. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDbMongoDbApiCollectionDatasetTypeProperties(DataFactoryElement<string> collection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CosmosDBMongoDBApiCollectionDatasetTypeProperties(DataFactoryElement<string> collection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Collection = collection;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 name,
                 resourceType,
                 systemData,
-                createdOn is null && state is null && provisioningState is null ? default : new AdvancedThreatProtectionProperties(createdOn, state, provisioningState, default),
+                state is null && provisioningState is null ? default : new AdvancedThreatProtectionProperties(default, state, provisioningState, default),
                 default);
         }
 

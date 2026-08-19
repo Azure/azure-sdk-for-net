@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
+            DateTimeOffset? creationOn = default;
             NetAppProvisioningState? provisioningState = default;
             long? size = default;
             string label = default;
@@ -43,6 +44,15 @@ namespace Azure.ResourceManager.NetApp.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("creationDate"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (prop.NameEquals("provisioningState"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -127,6 +137,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             return new ElasticBackupProperties(
+                creationOn,
                 provisioningState,
                 size,
                 label,

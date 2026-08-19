@@ -35,19 +35,19 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="scheduleInfo"> Schedule information for the Software update configuration. </param>
         /// <param name="provisioningState"> Provisioning state for the software update configuration, which only appears in the response. </param>
         /// <param name="error"> Details of provisioning error. </param>
-        /// <param name="createdOn"> Creation time of the resource, which only appears in the response. </param>
+        /// <param name="creationOn"> Creation time of the resource, which only appears in the response. </param>
         /// <param name="createdBy"> CreatedBy property, which only appears in the response. </param>
         /// <param name="lastModifiedOn"> Last time resource was modified, which only appears in the response. </param>
         /// <param name="lastModifiedBy"> LastModifiedBy property, which only appears in the response. </param>
         /// <param name="tasks"> Tasks information for the Software update configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SoftwareUpdateConfigurationProperties(SoftwareUpdateConfigurationSpecificProperties updateConfiguration, SoftwareUpdateConfigurationScheduleProperties scheduleInfo, string provisioningState, AutomationResponseError error, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, SoftwareUpdateConfigurationTasks tasks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SoftwareUpdateConfigurationProperties(SoftwareUpdateConfigurationSpecificProperties updateConfiguration, SoftwareUpdateConfigurationScheduleProperties scheduleInfo, string provisioningState, AutomationResponseError error, DateTimeOffset? creationOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, SoftwareUpdateConfigurationTasks tasks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UpdateConfiguration = updateConfiguration;
             ScheduleInfo = scheduleInfo;
             ProvisioningState = provisioningState;
             Error = error;
-            CreatedOn = createdOn;
+            CreationOn = creationOn;
             CreatedBy = createdBy;
             LastModifiedOn = lastModifiedOn;
             LastModifiedBy = lastModifiedBy;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Automation.Models
         public AutomationResponseError Error { get; set; }
 
         /// <summary> Creation time of the resource, which only appears in the response. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreationOn { get; }
 
         /// <summary> CreatedBy property, which only appears in the response. </summary>
         public string CreatedBy { get; }

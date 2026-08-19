@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Initializes a new instance of <see cref="OperationErrorsResult"/>. </summary>
         /// <param name="operationId"> The operationId identifying a vm operation. </param>
-        /// <param name="createdOn"> The creation time of the error result. </param>
+        /// <param name="creationOn"> The creation time of the error result. </param>
         /// <param name="activationOn"> The activation time of a vm operation. </param>
         /// <param name="completedOn"> The completion time of the operation if the operation was completed. </param>
         /// <param name="operationErrors"> A list of errors associated with the operationid. </param>
         /// <param name="requestErrorCode"> Request level error code. </param>
         /// <param name="requestErrorDetails"> Request level error details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationErrorsResult(string operationId, DateTimeOffset? createdOn, DateTimeOffset? activationOn, DateTimeOffset? completedOn, IReadOnlyList<OperationErrorDetails> operationErrors, string requestErrorCode, string requestErrorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationErrorsResult(string operationId, DateTimeOffset? creationOn, DateTimeOffset? activationOn, DateTimeOffset? completedOn, IReadOnlyList<OperationErrorDetails> operationErrors, string requestErrorCode, string requestErrorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationId = operationId;
-            CreatedOn = createdOn;
+            CreationOn = creationOn;
             ActivationOn = activationOn;
             CompletedOn = completedOn;
             OperationErrors = operationErrors;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public string OperationId { get; }
 
         /// <summary> The creation time of the error result. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreationOn { get; }
 
         /// <summary> The activation time of a vm operation. </summary>
         public DateTimeOffset? ActivationOn { get; }

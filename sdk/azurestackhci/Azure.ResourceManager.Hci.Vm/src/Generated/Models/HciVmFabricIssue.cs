@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="severity"> issue severity. </param>
         /// <param name="message"> Description of the issue. </param>
         /// <param name="target"> specific property or resource that has the issue. </param>
-        /// <param name="timestamp"> Timestamp of the issue as ISO 8601 string. </param>
+        /// <param name="on"> Timestamp of the issue as ISO 8601 string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmFabricIssue(string code, string severity, string message, string target, DateTimeOffset? timestamp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmFabricIssue(string code, string severity, string message, string target, DateTimeOffset? @on, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Severity = severity;
             Message = message;
             Target = target;
-            Timestamp = timestamp;
+            On = @on;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public string Target { get; }
 
         /// <summary> Timestamp of the issue as ISO 8601 string. </summary>
-        public DateTimeOffset? Timestamp { get; }
+        public DateTimeOffset? On { get; }
     }
 }

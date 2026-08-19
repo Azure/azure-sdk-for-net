@@ -12,21 +12,21 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> External Network native IPv6 prefix limits patch properties. </summary>
-    internal partial class NativeIpv6PrefixLimitPatchProperties
+    internal partial class NativeIPv6PrefixLimitPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NativeIpv6PrefixLimitPatchProperties"/>. </summary>
-        public NativeIpv6PrefixLimitPatchProperties()
+        /// <summary> Initializes a new instance of <see cref="NativeIPv6PrefixLimitPatchProperties"/>. </summary>
+        public NativeIPv6PrefixLimitPatchProperties()
         {
             PrefixLimits = new ChangeTrackingList<PrefixLimitPatchProperties>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NativeIpv6PrefixLimitPatchProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NativeIPv6PrefixLimitPatchProperties"/>. </summary>
         /// <param name="prefixLimits"> Prefix limits. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NativeIpv6PrefixLimitPatchProperties(IList<PrefixLimitPatchProperties> prefixLimits, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NativeIPv6PrefixLimitPatchProperties(IList<PrefixLimitPatchProperties> prefixLimits, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrefixLimits = prefixLimits;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

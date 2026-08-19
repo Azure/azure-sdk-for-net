@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
+            if (options.Format != "W" && Optional.IsDefined(DeletionOn))
             {
                 writer.WritePropertyName("deletionTime"u8);
-                writer.WriteStringValue(DeletedOn.Value, "O");
+                writer.WriteStringValue(DeletionOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(OriginalId))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             string version = default;
-            DateTimeOffset? deletedOn = default;
+            DateTimeOffset? deletionOn = default;
             ResourceIdentifier originalId = default;
             string fullyQualifiedDomainName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    deletedOn = prop.Value.GetDateTimeOffset("O");
+                    deletionOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("originalId"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeletedServerProperties(version, deletedOn, originalId, fullyQualifiedDomainName, additionalBinaryDataProperties);
+            return new DeletedServerProperties(version, deletionOn, originalId, fullyQualifiedDomainName, additionalBinaryDataProperties);
         }
     }
 }

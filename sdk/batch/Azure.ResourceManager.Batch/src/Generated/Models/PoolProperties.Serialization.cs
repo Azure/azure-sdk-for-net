@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
             string displayName = default;
             DateTimeOffset? lastModifiedOn = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? creationOn = default;
             BatchAccountPoolProvisioningState? provisioningState = default;
             DateTimeOffset? provisioningStateTransitOn = default;
             BatchAccountPoolAllocationState? allocationState = default;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new PoolProperties(
                 displayName,
                 lastModifiedOn,
-                createdOn,
+                creationOn,
                 provisioningState,
                 provisioningStateTransitOn,
                 allocationState,

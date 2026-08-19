@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
             {
                 throw new FormatException($"The model {nameof(RulePreviewEvaluatedPeriod)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Timestamp))
+            if (Optional.IsDefined(On))
             {
                 writer.WritePropertyName("timestamp"u8);
-                writer.WriteStringValue(Timestamp.Value, "O");
+                writer.WriteStringValue(On.Value, "O");
             }
             if (Optional.IsDefined(HighThreshold))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
             {
                 return null;
             }
-            DateTimeOffset? timestamp = default;
+            DateTimeOffset? @on = default;
             double? highThreshold = default;
             double? lowThreshold = default;
             double? metricValue = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
                     {
                         continue;
                     }
-                    timestamp = prop.Value.GetDateTimeOffset("O");
+                    @on = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("highThreshold"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
                 }
             }
             return new RulePreviewEvaluatedPeriod(
-                timestamp,
+                @on,
                 highThreshold,
                 lowThreshold,
                 metricValue,

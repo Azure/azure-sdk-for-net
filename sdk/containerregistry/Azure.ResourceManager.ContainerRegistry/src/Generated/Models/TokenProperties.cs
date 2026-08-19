@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TokenProperties"/>. </summary>
-        /// <param name="createdOn"> The creation date of scope map. </param>
+        /// <param name="creationOn"> The creation date of scope map. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="scopeMapId"> The resource ID of the scope map to which the token will be associated with. </param>
         /// <param name="credentials"> The credentials that can be used for authenticating the token. </param>
         /// <param name="status"> The status of the token example enabled or disabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TokenProperties(DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, ResourceIdentifier scopeMapId, ContainerRegistryTokenCredentials credentials, ContainerRegistryTokenStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TokenProperties(DateTimeOffset? creationOn, ContainerRegistryProvisioningState? provisioningState, ResourceIdentifier scopeMapId, ContainerRegistryTokenCredentials credentials, ContainerRegistryTokenStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            CreatedOn = createdOn;
+            CreationOn = creationOn;
             ProvisioningState = provisioningState;
             ScopeMapId = scopeMapId;
             Credentials = credentials;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The creation date of scope map. </summary>
         [WirePath("creationDate")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreationOn { get; }
 
         /// <summary> Provisioning state of the resource. </summary>
         [WirePath("provisioningState")]

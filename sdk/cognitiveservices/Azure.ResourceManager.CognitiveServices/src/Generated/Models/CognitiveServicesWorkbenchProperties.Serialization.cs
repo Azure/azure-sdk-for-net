@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string webEndpoint = default;
             CognitiveServicesComputeProvisioningState? provisioningState = default;
             IReadOnlyList<ResponseError> errors = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? creationOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 webEndpoint,
                 provisioningState,
                 errors ?? new ChangeTrackingList<ResponseError>(),
-                createdOn,
+                creationOn,
                 additionalBinaryDataProperties);
         }
     }

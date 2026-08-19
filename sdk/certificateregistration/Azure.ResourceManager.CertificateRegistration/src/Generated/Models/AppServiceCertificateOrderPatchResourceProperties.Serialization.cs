@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 writer.WritePropertyName("lastCertificateIssuanceTime"u8);
                 writer.WriteStringValue(LastCertificateIssuedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(ExpirationOn))
             {
                 writer.WritePropertyName("expirationTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpirationOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(IsPrivateKeyExternal))
             {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             AppServiceCertificateDetails root = default;
             string serialNumber = default;
             DateTimeOffset? lastCertificateIssuedOn = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expirationOn = default;
             bool? isPrivateKeyExternal = default;
             IReadOnlyList<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons = default;
             DateTimeOffset? nextAutoRenewOn = default;
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expirationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("isPrivateKeyExternal"u8))
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 root,
                 serialNumber,
                 lastCertificateIssuedOn,
-                expireOn,
+                expirationOn,
                 isPrivateKeyExternal,
                 appServiceCertificateNotRenewableReasons ?? new ChangeTrackingList<AppServiceCertificateNotRenewableReason>(),
                 nextAutoRenewOn,

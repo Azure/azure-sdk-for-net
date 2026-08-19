@@ -1293,7 +1293,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.CosmosDBBackupInformation"/> instance for mocking. </returns>
         public static CosmosDBBackupInformation CosmosDBBackupInformation(DateTimeOffset? continuousBackupInformationLatestRestorableTimestamp = default)
         {
-            return new CosmosDBBackupInformation(continuousBackupInformationLatestRestorableTimestamp is null ? default : new ContinuousBackupInformation(continuousBackupInformationLatestRestorableTimestamp, default), default);
+            return new CosmosDBBackupInformation(default, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3119,11 +3119,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 name,
                 resourceType,
                 systemData,
-                accountName is null && createdOn is null && oldestRestorableOn is null && deletedOn is null && apiType is null && restorableLocations is null ? default : new RestorableDatabaseAccountProperties(
+                accountName is null && oldestRestorableOn is null && apiType is null && restorableLocations is null ? default : new RestorableDatabaseAccountProperties(
                     accountName,
-                    createdOn,
+                    default,
                     oldestRestorableOn,
-                    deletedOn,
+                    default,
                     apiType,
                     (restorableLocations ?? new ChangeTrackingList<RestorableLocationResourceInfo>()).ToList(),
                     default),
@@ -3138,7 +3138,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.RestorableLocationResourceInfo"/> instance for mocking. </returns>
         public static RestorableLocationResourceInfo RestorableLocationResourceInfo(AzureLocation? locationName = default, string regionalDatabaseAccountInstanceId = default, DateTimeOffset? createdOn = default, DateTimeOffset? deletedOn = default)
         {
-            return new RestorableLocationResourceInfo(locationName, regionalDatabaseAccountInstanceId, createdOn, deletedOn, default);
+            return new RestorableLocationResourceInfo(locationName, regionalDatabaseAccountInstanceId, default, default, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3580,7 +3580,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new CosmosDBServiceProperties(
-                createdOn,
+                default,
                 instanceSize,
                 instanceCount,
                 default,
@@ -3601,7 +3601,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             locations ??= new ChangeTrackingList<DataTransferRegionalService>();
 
             return new DataTransferServiceProperties(
-                createdOn,
+                default,
                 instanceSize,
                 instanceCount,
                 default,
@@ -3643,7 +3643,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             locations ??= new ChangeTrackingList<SqlDedicatedGatewayRegionalService>();
 
             return new SqlDedicatedGatewayServiceProperties(
-                createdOn,
+                default,
                 instanceSize,
                 instanceCount,
                 default,
@@ -3678,7 +3678,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             locations ??= new ChangeTrackingList<GraphApiComputeRegionalService>();
 
             return new GraphApiComputeServiceProperties(
-                createdOn,
+                default,
                 instanceSize,
                 instanceCount,
                 default,
@@ -3711,7 +3711,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             locations ??= new ChangeTrackingList<MaterializedViewsBuilderRegionalService>();
 
             return new MaterializedViewsBuilderServiceProperties(
-                createdOn,
+                default,
                 instanceSize,
                 instanceCount,
                 default,
@@ -4706,11 +4706,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 name,
                 resourceType,
                 systemData,
-                accountName is null && createdOn is null && oldestRestorableOn is null && deletedOn is null && apiType is null && restorableLocations is null ? default : new RestorableDatabaseAccountProperties(
+                accountName is null && oldestRestorableOn is null && apiType is null && restorableLocations is null ? default : new RestorableDatabaseAccountProperties(
                     accountName,
-                    createdOn,
+                    default,
                     oldestRestorableOn,
-                    deletedOn,
+                    default,
                     apiType,
                     (restorableLocations ?? new ChangeTrackingList<RestorableLocationResourceInfo>()).ToList(),
                     default),

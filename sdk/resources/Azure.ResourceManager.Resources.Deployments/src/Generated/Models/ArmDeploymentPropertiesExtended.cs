@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of <see cref="ArmDeploymentPropertiesExtended"/>. </summary>
         /// <param name="provisioningState"> Denotes the state of provisioning. </param>
         /// <param name="correlationId"> The correlation ID of the deployment. </param>
-        /// <param name="timestamp"> The timestamp of the template deployment. </param>
+        /// <param name="on"> The timestamp of the template deployment. </param>
         /// <param name="duration"> The duration of the template deployment. </param>
         /// <param name="outputs"> Key/value pairs that represent deployment output. </param>
         /// <param name="providers"> The list of resource providers needed for the deployment. </param>
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="diagnostics"> Contains diagnostic information collected during validation process. </param>
         /// <param name="validationLevel"> The validation level of the deployment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, TimeSpan? duration, BinaryData outputs, IReadOnlyList<ResourceProviderData> providers, IReadOnlyList<ArmDependency> dependencies, ArmDeploymentTemplateLink templateLink, BinaryData parameters, ArmDeploymentParametersLink parametersLink, IReadOnlyList<ArmDeploymentExtensionDefinition> extensions, ArmDeploymentMode? mode, DebugSetting debugSetting, ErrorDeploymentExtended errorDeployment, string templateHash, IReadOnlyList<ArmResourceReference> outputResourceDetails, IReadOnlyList<ArmResourceReference> validatedResourceDetails, ResponseError error, IReadOnlyList<DeploymentDiagnosticsDefinition> diagnostics, ValidationLevel? validationLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState, string correlationId, DateTimeOffset? @on, TimeSpan? duration, BinaryData outputs, IReadOnlyList<ResourceProviderData> providers, IReadOnlyList<ArmDependency> dependencies, ArmDeploymentTemplateLink templateLink, BinaryData parameters, ArmDeploymentParametersLink parametersLink, IReadOnlyList<ArmDeploymentExtensionDefinition> extensions, ArmDeploymentMode? mode, DebugSetting debugSetting, ErrorDeploymentExtended errorDeployment, string templateHash, IReadOnlyList<ArmResourceReference> outputResourceDetails, IReadOnlyList<ArmResourceReference> validatedResourceDetails, ResponseError error, IReadOnlyList<DeploymentDiagnosticsDefinition> diagnostics, ValidationLevel? validationLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             CorrelationId = correlationId;
-            Timestamp = timestamp;
+            On = @on;
             Duration = duration;
             Outputs = outputs;
             Providers = providers;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> The timestamp of the template deployment. </summary>
         [WirePath("timestamp")]
-        public DateTimeOffset? Timestamp { get; }
+        public DateTimeOffset? On { get; }
 
         /// <summary> The duration of the template deployment. </summary>
         [WirePath("duration")]

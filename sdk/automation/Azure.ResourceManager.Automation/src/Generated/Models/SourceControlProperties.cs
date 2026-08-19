@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="isAutoPublishRunbookEnabled"> The auto publish of the source control. Default is true. </param>
         /// <param name="sourceType"> The source type. Must be one of VsoGit, VsoTfvc, GitHub. </param>
         /// <param name="description"> The description. </param>
-        /// <param name="createdOn"> The creation time. </param>
+        /// <param name="creationOn"> The creation time. </param>
         /// <param name="lastModifiedOn"> The last modified time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SourceControlProperties(Uri repoUri, string branch, string folderPath, bool? isAutoSyncEnabled, bool? isAutoPublishRunbookEnabled, SourceControlSourceType? sourceType, string description, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SourceControlProperties(Uri repoUri, string branch, string folderPath, bool? isAutoSyncEnabled, bool? isAutoPublishRunbookEnabled, SourceControlSourceType? sourceType, string description, DateTimeOffset? creationOn, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RepoUri = repoUri;
             Branch = branch;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation.Models
             IsAutoPublishRunbookEnabled = isAutoPublishRunbookEnabled;
             SourceType = sourceType;
             Description = description;
-            CreatedOn = createdOn;
+            CreationOn = creationOn;
             LastModifiedOn = lastModifiedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Automation.Models
         public string Description { get; set; }
 
         /// <summary> The creation time. </summary>
-        public DateTimeOffset? CreatedOn { get; set; }
+        public DateTimeOffset? CreationOn { get; set; }
 
         /// <summary> The last modified time. </summary>
         public DateTimeOffset? LastModifiedOn { get; set; }

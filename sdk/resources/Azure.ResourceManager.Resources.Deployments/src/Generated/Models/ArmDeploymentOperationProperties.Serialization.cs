@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(Timestamp))
+            if (options.Format != "W" && Optional.IsDefined(On))
             {
                 writer.WritePropertyName("timestamp"u8);
-                writer.WriteStringValue(Timestamp.Value, "O");
+                writer.WriteStringValue(On.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Duration))
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
             ProvisioningOperationKind? provisioningOperation = default;
             string provisioningState = default;
-            DateTimeOffset? timestamp = default;
+            DateTimeOffset? @on = default;
             TimeSpan? duration = default;
             string serviceRequestId = default;
             string statusCode = default;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    timestamp = prop.Value.GetDateTimeOffset("O");
+                    @on = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("duration"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmDeploymentOperationProperties(
                 provisioningOperation,
                 provisioningState,
-                timestamp,
+                @on,
                 duration,
                 serviceRequestId,
                 statusCode,

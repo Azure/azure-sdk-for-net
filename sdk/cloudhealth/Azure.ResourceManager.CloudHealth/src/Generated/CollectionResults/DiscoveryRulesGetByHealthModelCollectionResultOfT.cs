@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CloudHealth
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _healthModelName;
-        private readonly DateTimeOffset? _timestamp;
+        private readonly DateTimeOffset? _on;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -29,16 +29,16 @@ namespace Azure.ResourceManager.CloudHealth
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="healthModelName"> Name of health model resource. </param>
-        /// <param name="timestamp"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
+        /// <param name="on"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DiscoveryRulesGetByHealthModelCollectionResultOfT(DiscoveryRules client, Guid subscriptionId, string resourceGroupName, string healthModelName, DateTimeOffset? timestamp, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DiscoveryRulesGetByHealthModelCollectionResultOfT(DiscoveryRules client, Guid subscriptionId, string resourceGroupName, string healthModelName, DateTimeOffset? @on, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _healthModelName = healthModelName;
-            _timestamp = timestamp;
+            _on = @on;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByHealthModelRequest(nextLink, _subscriptionId, _resourceGroupName, _healthModelName, _timestamp, _context) : _client.CreateGetByHealthModelRequest(_subscriptionId, _resourceGroupName, _healthModelName, _timestamp, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByHealthModelRequest(nextLink, _subscriptionId, _resourceGroupName, _healthModelName, _on, _context) : _client.CreateGetByHealthModelRequest(_subscriptionId, _resourceGroupName, _healthModelName, _on, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

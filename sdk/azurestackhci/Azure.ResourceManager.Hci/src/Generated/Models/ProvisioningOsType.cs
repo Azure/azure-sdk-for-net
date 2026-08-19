@@ -12,7 +12,7 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Represents the provisioning operating system type. </summary>
-    public readonly partial struct ProvisioningOsType : IEquatable<ProvisioningOsType>
+    public readonly partial struct ProvisioningOSType : IEquatable<ProvisioningOSType>
     {
         private readonly string _value;
         /// <summary> AzureLinux OS. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> HCI OS. </summary>
         private const string HCIValue = "HCI";
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningOsType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisioningOSType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProvisioningOsType(string value)
+        public ProvisioningOSType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> AzureLinux OS. </summary>
-        public static ProvisioningOsType AzureLinux { get; } = new ProvisioningOsType(AzureLinuxValue);
+        public static ProvisioningOSType AzureLinux { get; } = new ProvisioningOSType(AzureLinuxValue);
 
         /// <summary> HCI OS. </summary>
-        public static ProvisioningOsType HCI { get; } = new ProvisioningOsType(HCIValue);
+        public static ProvisioningOSType HCI { get; } = new ProvisioningOSType(HCIValue);
 
-        /// <summary> Determines if two <see cref="ProvisioningOsType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ProvisioningOSType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ProvisioningOsType left, ProvisioningOsType right) => left.Equals(right);
+        public static bool operator ==(ProvisioningOSType left, ProvisioningOSType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ProvisioningOsType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ProvisioningOSType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ProvisioningOsType left, ProvisioningOsType right) => !left.Equals(right);
+        public static bool operator !=(ProvisioningOSType left, ProvisioningOSType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ProvisioningOsType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ProvisioningOSType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProvisioningOsType(string value) => new ProvisioningOsType(value);
+        public static implicit operator ProvisioningOSType(string value) => new ProvisioningOSType(value);
 
-        /// <summary> Converts a string to a <see cref="ProvisioningOsType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ProvisioningOSType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProvisioningOsType?(string value) => value == null ? null : new ProvisioningOsType(value);
+        public static implicit operator ProvisioningOSType?(string value) => value == null ? null : new ProvisioningOSType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ProvisioningOsType other && Equals(other);
+        public override bool Equals(object obj) => obj is ProvisioningOSType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ProvisioningOsType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ProvisioningOSType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

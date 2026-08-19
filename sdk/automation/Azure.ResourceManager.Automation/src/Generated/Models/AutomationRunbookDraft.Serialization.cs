@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("draftContentLink"u8);
                 writer.WriteObjectValue(DraftContentLink, options);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (Optional.IsDefined(LastModifiedOn))
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             bool? isInEditMode = default;
             AutomationContentLink draftContentLink = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? creationOn = default;
             DateTimeOffset? lastModifiedOn = default;
             IDictionary<string, RunbookParameterDefinition> parameters = default;
             IList<string> outputTypes = default;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedTime"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Automation.Models
             return new AutomationRunbookDraft(
                 isInEditMode,
                 draftContentLink,
-                createdOn,
+                creationOn,
                 lastModifiedOn,
                 parameters ?? new ChangeTrackingDictionary<string, RunbookParameterDefinition>(),
                 outputTypes ?? new ChangeTrackingList<string>(),

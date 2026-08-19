@@ -27,16 +27,14 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of <see cref="DeletedKeyVaultProperties"/>. </summary>
         /// <param name="vaultId"> The resource id of the original vault. </param>
         /// <param name="location"> The location of the original vault. </param>
-        /// <param name="deletedOn"> The deleted date. </param>
         /// <param name="scheduledPurgeOn"> The scheduled purged date. </param>
         /// <param name="tags"> Tags of the original vault. </param>
         /// <param name="purgeProtectionEnabled"> Purge protection status of the original vault. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedKeyVaultProperties(ResourceIdentifier vaultId, AzureLocation? location, DateTimeOffset? deletedOn, DateTimeOffset? scheduledPurgeOn, IReadOnlyDictionary<string, string> tags, bool? purgeProtectionEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeletedKeyVaultProperties(ResourceIdentifier vaultId, AzureLocation? location, DateTimeOffset? scheduledPurgeOn, IReadOnlyDictionary<string, string> tags, bool? purgeProtectionEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VaultId = vaultId;
             Location = location;
-            DeletedOn = deletedOn;
             ScheduledPurgeOn = scheduledPurgeOn;
             Tags = tags;
             PurgeProtectionEnabled = purgeProtectionEnabled;
@@ -50,10 +48,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> The location of the original vault. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
-
-        /// <summary> The deleted date. </summary>
-        [WirePath("deletionDate")]
-        public DateTimeOffset? DeletedOn { get; }
 
         /// <summary> The scheduled purged date. </summary>
         [WirePath("scheduledPurgeDate")]

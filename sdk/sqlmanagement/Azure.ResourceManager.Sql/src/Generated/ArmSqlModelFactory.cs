@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="sourceDatabaseId"> The resource identifier of the source database associated with create operation of this database. </param>
         /// <param name="status"> The status of the database. </param>
         /// <param name="databaseId"> The ID of the database. </param>
-        /// <param name="createdOn"> The creation date of the database (ISO8601 format). </param>
+        /// <param name="creationOn"> The creation date of the database (ISO8601 format). </param>
         /// <param name="currentServiceObjectiveName"> The current service level objective name of the database. </param>
         /// <param name="requestedServiceObjectiveName"> The requested service level objective name of the database. </param>
         /// <param name="defaultSecondaryLocation"> The default secondary region for this database. </param>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="managedBy"> Resource that manages the database. </param>
         /// <param name="identity"> The Azure Active Directory identity of the database. </param>
         /// <returns> A new <see cref="Sql.SqlDatabaseData"/> instance for mocking. </returns>
-        public static SqlDatabaseData SqlDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SqlDatabaseCreateMode? createMode = default, string collation = default, long? maxSizeBytes = default, SampleSchemaName? sampleName = default, ResourceIdentifier elasticPoolId = default, ResourceIdentifier sourceDatabaseId = default, SqlDatabaseStatus? status = default, Guid? databaseId = default, DateTimeOffset? createdOn = default, string currentServiceObjectiveName = default, string requestedServiceObjectiveName = default, AzureLocation? defaultSecondaryLocation = default, ResourceIdentifier failoverGroupId = default, DateTimeOffset? restorePointInTime = default, DateTimeOffset? sourceDatabaseDeletedOn = default, ResourceIdentifier recoveryServicesRecoveryPointId = default, ResourceIdentifier longTermRetentionBackupResourceId = default, ResourceIdentifier recoverableDatabaseId = default, ResourceIdentifier restorableDroppedDatabaseId = default, CatalogCollationType? catalogCollation = default, bool? isZoneRedundant = default, DatabaseLicenseType? licenseType = default, long? maxLogSizeBytes = default, DateTimeOffset? earliestRestoreOn = default, DatabaseReadScale? readScale = default, int? highAvailabilityReplicaCount = default, SecondaryType? secondaryType = default, SqlSku currentSku = default, int? autoPauseDelay = default, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default, double? minCapacity = default, DateTimeOffset? pausedOn = default, DateTimeOffset? resumedOn = default, ResourceIdentifier maintenanceConfigurationId = default, bool? isLedgerOn = default, bool? isInfraEncryptionEnabled = default, Guid? federatedClientId = default, IDictionary<string, SqlDatabaseKey> keys = default, string encryptionProtector = default, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default, bool? useFreeLimit = default, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior = default, ResourceIdentifier sourceResourceId = default, bool? manualCutover = default, bool? performCutover = default, SqlAvailabilityZoneType? availabilityZone = default, bool? encryptionProtectorAutoRotation = default, string provisioningState = default, SqlSku sku = default, string kind = default, string managedBy = default, DatabaseIdentity identity = default)
+        public static SqlDatabaseData SqlDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SqlDatabaseCreateMode? createMode = default, string collation = default, long? maxSizeBytes = default, SampleSchemaName? sampleName = default, ResourceIdentifier elasticPoolId = default, ResourceIdentifier sourceDatabaseId = default, SqlDatabaseStatus? status = default, Guid? databaseId = default, DateTimeOffset? creationOn = default, string currentServiceObjectiveName = default, string requestedServiceObjectiveName = default, AzureLocation? defaultSecondaryLocation = default, ResourceIdentifier failoverGroupId = default, DateTimeOffset? restorePointInTime = default, DateTimeOffset? sourceDatabaseDeletedOn = default, ResourceIdentifier recoveryServicesRecoveryPointId = default, ResourceIdentifier longTermRetentionBackupResourceId = default, ResourceIdentifier recoverableDatabaseId = default, ResourceIdentifier restorableDroppedDatabaseId = default, CatalogCollationType? catalogCollation = default, bool? isZoneRedundant = default, DatabaseLicenseType? licenseType = default, long? maxLogSizeBytes = default, DateTimeOffset? earliestRestoreOn = default, DatabaseReadScale? readScale = default, int? highAvailabilityReplicaCount = default, SecondaryType? secondaryType = default, SqlSku currentSku = default, int? autoPauseDelay = default, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default, double? minCapacity = default, DateTimeOffset? pausedOn = default, DateTimeOffset? resumedOn = default, ResourceIdentifier maintenanceConfigurationId = default, bool? isLedgerOn = default, bool? isInfraEncryptionEnabled = default, Guid? federatedClientId = default, IDictionary<string, SqlDatabaseKey> keys = default, string encryptionProtector = default, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default, bool? useFreeLimit = default, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior = default, ResourceIdentifier sourceResourceId = default, bool? manualCutover = default, bool? performCutover = default, SqlAvailabilityZoneType? availabilityZone = default, bool? encryptionProtectorAutoRotation = default, string provisioningState = default, SqlSku sku = default, string kind = default, string managedBy = default, DatabaseIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Sql.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                createMode is null && collation is null && maxSizeBytes is null && sampleName is null && elasticPoolId is null && sourceDatabaseId is null && status is null && databaseId is null && createdOn is null && currentServiceObjectiveName is null && requestedServiceObjectiveName is null && defaultSecondaryLocation is null && failoverGroupId is null && restorePointInTime is null && sourceDatabaseDeletedOn is null && recoveryServicesRecoveryPointId is null && longTermRetentionBackupResourceId is null && recoverableDatabaseId is null && restorableDroppedDatabaseId is null && catalogCollation is null && isZoneRedundant is null && licenseType is null && maxLogSizeBytes is null && earliestRestoreOn is null && readScale is null && highAvailabilityReplicaCount is null && secondaryType is null && currentSku is null && autoPauseDelay is null && currentBackupStorageRedundancy is null && requestedBackupStorageRedundancy is null && minCapacity is null && pausedOn is null && resumedOn is null && maintenanceConfigurationId is null && isLedgerOn is null && isInfraEncryptionEnabled is null && federatedClientId is null && keys is null && encryptionProtector is null && preferredEnclaveType is null && useFreeLimit is null && freeLimitExhaustionBehavior is null && sourceResourceId is null && manualCutover is null && performCutover is null && availabilityZone is null && encryptionProtectorAutoRotation is null && provisioningState is null ? default : new DatabaseProperties(
+                createMode is null && collation is null && maxSizeBytes is null && sampleName is null && elasticPoolId is null && sourceDatabaseId is null && status is null && databaseId is null && creationOn is null && currentServiceObjectiveName is null && requestedServiceObjectiveName is null && defaultSecondaryLocation is null && failoverGroupId is null && restorePointInTime is null && sourceDatabaseDeletedOn is null && recoveryServicesRecoveryPointId is null && longTermRetentionBackupResourceId is null && recoverableDatabaseId is null && restorableDroppedDatabaseId is null && catalogCollation is null && isZoneRedundant is null && licenseType is null && maxLogSizeBytes is null && earliestRestoreOn is null && readScale is null && highAvailabilityReplicaCount is null && secondaryType is null && currentSku is null && autoPauseDelay is null && currentBackupStorageRedundancy is null && requestedBackupStorageRedundancy is null && minCapacity is null && pausedOn is null && resumedOn is null && maintenanceConfigurationId is null && isLedgerOn is null && isInfraEncryptionEnabled is null && federatedClientId is null && keys is null && encryptionProtector is null && preferredEnclaveType is null && useFreeLimit is null && freeLimitExhaustionBehavior is null && sourceResourceId is null && manualCutover is null && performCutover is null && availabilityZone is null && encryptionProtectorAutoRotation is null && provisioningState is null ? default : new DatabaseProperties(
                     createMode,
                     collation,
                     maxSizeBytes,
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Sql.Models
                     sourceDatabaseId,
                     status,
                     databaseId,
-                    createdOn,
+                    creationOn,
                     currentServiceObjectiveName,
                     requestedServiceObjectiveName,
                     defaultSecondaryLocation,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlDatabaseKey(
                 keyType,
                 thumbprint,
-                createdOn,
+                default,
                 subregion,
                 keyVersion,
                 default);
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="sourceDatabaseId"> The resource identifier of the source database associated with create operation of this database. </param>
         /// <param name="status"> The status of the database. </param>
         /// <param name="databaseId"> The ID of the database. </param>
-        /// <param name="createdOn"> The creation date of the database (ISO8601 format). </param>
+        /// <param name="creationOn"> The creation date of the database (ISO8601 format). </param>
         /// <param name="currentServiceObjectiveName"> The current service level objective name of the database. </param>
         /// <param name="requestedServiceObjectiveName"> The requested service level objective name of the database. </param>
         /// <param name="defaultSecondaryLocation"> The default secondary region for this database. </param>
@@ -425,11 +425,11 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="provisioningState"> Specifies the provisioning state for this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.SqlDatabasePatch"/> instance for mocking. </returns>
-        public static SqlDatabasePatch SqlDatabasePatch(SqlSku sku = default, DatabaseIdentity identity = default, SqlDatabaseCreateMode? createMode = default, string collation = default, long? maxSizeBytes = default, SampleSchemaName? sampleName = default, ResourceIdentifier elasticPoolId = default, ResourceIdentifier sourceDatabaseId = default, SqlDatabaseStatus? status = default, Guid? databaseId = default, DateTimeOffset? createdOn = default, string currentServiceObjectiveName = default, string requestedServiceObjectiveName = default, AzureLocation? defaultSecondaryLocation = default, ResourceIdentifier failoverGroupId = default, DateTimeOffset? restorePointInTime = default, DateTimeOffset? sourceDatabaseDeletedOn = default, ResourceIdentifier recoveryServicesRecoveryPointId = default, ResourceIdentifier longTermRetentionBackupResourceId = default, ResourceIdentifier recoverableDatabaseId = default, ResourceIdentifier restorableDroppedDatabaseId = default, CatalogCollationType? catalogCollation = default, bool? isZoneRedundant = default, DatabaseLicenseType? licenseType = default, long? maxLogSizeBytes = default, DateTimeOffset? earliestRestoreOn = default, DatabaseReadScale? readScale = default, int? highAvailabilityReplicaCount = default, SecondaryType? secondaryType = default, SqlSku currentSku = default, int? autoPauseDelay = default, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default, double? minCapacity = default, DateTimeOffset? pausedOn = default, DateTimeOffset? resumedOn = default, ResourceIdentifier maintenanceConfigurationId = default, bool? isLedgerOn = default, bool? isInfraEncryptionEnabled = default, Guid? federatedClientId = default, IDictionary<string, SqlDatabaseKey> keys = default, string encryptionProtector = default, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default, bool? useFreeLimit = default, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior = default, bool? manualCutover = default, bool? performCutover = default, bool? encryptionProtectorAutoRotation = default, string provisioningState = default, IDictionary<string, string> tags = default)
+        public static SqlDatabasePatch SqlDatabasePatch(SqlSku sku = default, DatabaseIdentity identity = default, SqlDatabaseCreateMode? createMode = default, string collation = default, long? maxSizeBytes = default, SampleSchemaName? sampleName = default, ResourceIdentifier elasticPoolId = default, ResourceIdentifier sourceDatabaseId = default, SqlDatabaseStatus? status = default, Guid? databaseId = default, DateTimeOffset? creationOn = default, string currentServiceObjectiveName = default, string requestedServiceObjectiveName = default, AzureLocation? defaultSecondaryLocation = default, ResourceIdentifier failoverGroupId = default, DateTimeOffset? restorePointInTime = default, DateTimeOffset? sourceDatabaseDeletedOn = default, ResourceIdentifier recoveryServicesRecoveryPointId = default, ResourceIdentifier longTermRetentionBackupResourceId = default, ResourceIdentifier recoverableDatabaseId = default, ResourceIdentifier restorableDroppedDatabaseId = default, CatalogCollationType? catalogCollation = default, bool? isZoneRedundant = default, DatabaseLicenseType? licenseType = default, long? maxLogSizeBytes = default, DateTimeOffset? earliestRestoreOn = default, DatabaseReadScale? readScale = default, int? highAvailabilityReplicaCount = default, SecondaryType? secondaryType = default, SqlSku currentSku = default, int? autoPauseDelay = default, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default, double? minCapacity = default, DateTimeOffset? pausedOn = default, DateTimeOffset? resumedOn = default, ResourceIdentifier maintenanceConfigurationId = default, bool? isLedgerOn = default, bool? isInfraEncryptionEnabled = default, Guid? federatedClientId = default, IDictionary<string, SqlDatabaseKey> keys = default, string encryptionProtector = default, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default, bool? useFreeLimit = default, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior = default, bool? manualCutover = default, bool? performCutover = default, bool? encryptionProtectorAutoRotation = default, string provisioningState = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SqlDatabasePatch(sku, identity, createMode is null && collation is null && maxSizeBytes is null && sampleName is null && elasticPoolId is null && sourceDatabaseId is null && status is null && databaseId is null && createdOn is null && currentServiceObjectiveName is null && requestedServiceObjectiveName is null && defaultSecondaryLocation is null && failoverGroupId is null && restorePointInTime is null && sourceDatabaseDeletedOn is null && recoveryServicesRecoveryPointId is null && longTermRetentionBackupResourceId is null && recoverableDatabaseId is null && restorableDroppedDatabaseId is null && catalogCollation is null && isZoneRedundant is null && licenseType is null && maxLogSizeBytes is null && earliestRestoreOn is null && readScale is null && highAvailabilityReplicaCount is null && secondaryType is null && currentSku is null && autoPauseDelay is null && currentBackupStorageRedundancy is null && requestedBackupStorageRedundancy is null && minCapacity is null && pausedOn is null && resumedOn is null && maintenanceConfigurationId is null && isLedgerOn is null && isInfraEncryptionEnabled is null && federatedClientId is null && keys is null && encryptionProtector is null && preferredEnclaveType is null && useFreeLimit is null && freeLimitExhaustionBehavior is null && manualCutover is null && performCutover is null && encryptionProtectorAutoRotation is null && provisioningState is null ? default : new DatabaseUpdateProperties(
+            return new SqlDatabasePatch(sku, identity, createMode is null && collation is null && maxSizeBytes is null && sampleName is null && elasticPoolId is null && sourceDatabaseId is null && status is null && databaseId is null && creationOn is null && currentServiceObjectiveName is null && requestedServiceObjectiveName is null && defaultSecondaryLocation is null && failoverGroupId is null && restorePointInTime is null && sourceDatabaseDeletedOn is null && recoveryServicesRecoveryPointId is null && longTermRetentionBackupResourceId is null && recoverableDatabaseId is null && restorableDroppedDatabaseId is null && catalogCollation is null && isZoneRedundant is null && licenseType is null && maxLogSizeBytes is null && earliestRestoreOn is null && readScale is null && highAvailabilityReplicaCount is null && secondaryType is null && currentSku is null && autoPauseDelay is null && currentBackupStorageRedundancy is null && requestedBackupStorageRedundancy is null && minCapacity is null && pausedOn is null && resumedOn is null && maintenanceConfigurationId is null && isLedgerOn is null && isInfraEncryptionEnabled is null && federatedClientId is null && keys is null && encryptionProtector is null && preferredEnclaveType is null && useFreeLimit is null && freeLimitExhaustionBehavior is null && manualCutover is null && performCutover is null && encryptionProtectorAutoRotation is null && provisioningState is null ? default : new DatabaseUpdateProperties(
                 createMode,
                 collation,
                 maxSizeBytes,
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Sql.Models
                 sourceDatabaseId,
                 status,
                 databaseId,
-                createdOn,
+                creationOn,
                 currentServiceObjectiveName,
                 requestedServiceObjectiveName,
                 defaultSecondaryLocation,
@@ -1557,7 +1557,7 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                state is null && disabledAlerts is null && emailAddresses is null && sendToEmailAccountAdmins is null && storageEndpoint is null && storageAccountAccessKey is null && retentionDays is null && createdOn is null ? default : new SecurityAlertsPolicyProperties(
+                state is null && disabledAlerts is null && emailAddresses is null && sendToEmailAccountAdmins is null && storageEndpoint is null && storageAccountAccessKey is null && retentionDays is null ? default : new SecurityAlertsPolicyProperties(
                     state.GetValueOrDefault(),
                     (disabledAlerts ?? new ChangeTrackingList<string>()).ToList(),
                     (emailAddresses ?? new ChangeTrackingList<string>()).ToList(),
@@ -1565,7 +1565,7 @@ namespace Azure.ResourceManager.Sql.Models
                     storageEndpoint,
                     storageAccountAccessKey,
                     retentionDays,
-                    createdOn,
+                    default,
                     default),
                 default);
         }
@@ -1950,7 +1950,7 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                version is null && deletedOn is null && originalId is null && fullyQualifiedDomainName is null ? default : new DeletedServerProperties(version, deletedOn, originalId, fullyQualifiedDomainName, default),
+                version is null && originalId is null && fullyQualifiedDomainName is null ? default : new DeletedServerProperties(version, default, originalId, fullyQualifiedDomainName, default),
                 default);
         }
 
@@ -2106,10 +2106,10 @@ namespace Azure.ResourceManager.Sql.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                collation is null && status is null && createdOn is null && earliestRestorePoint is null && restorePointInTime is null && defaultSecondaryLocation is null && catalogCollation is null && createMode is null && storageContainerUri is null && sourceDatabaseId is null && crossSubscriptionSourceDatabaseId is null && restorableDroppedDatabaseId is null && crossSubscriptionRestorableDroppedDatabaseId is null && storageContainerIdentity is null && storageContainerSasToken is null && failoverGroupId is null && recoverableDatabaseId is null && longTermRetentionBackupResourceId is null && allowAutoCompleteRestore is null && lastBackupName is null && crossSubscriptionTargetManagedInstanceId is null && isLedgerOn is null && extendedAccessibilityInfo is null ? default : new ManagedDatabaseProperties(
+                collation is null && status is null && earliestRestorePoint is null && restorePointInTime is null && defaultSecondaryLocation is null && catalogCollation is null && createMode is null && storageContainerUri is null && sourceDatabaseId is null && crossSubscriptionSourceDatabaseId is null && restorableDroppedDatabaseId is null && crossSubscriptionRestorableDroppedDatabaseId is null && storageContainerIdentity is null && storageContainerSasToken is null && failoverGroupId is null && recoverableDatabaseId is null && longTermRetentionBackupResourceId is null && allowAutoCompleteRestore is null && lastBackupName is null && crossSubscriptionTargetManagedInstanceId is null && isLedgerOn is null && extendedAccessibilityInfo is null ? default : new ManagedDatabaseProperties(
                     collation,
                     status,
-                    createdOn,
+                    default,
                     earliestRestorePoint,
                     restorePointInTime,
                     defaultSecondaryLocation,
@@ -2146,7 +2146,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <param name="collation"> Collation of the managed database. </param>
         /// <param name="status"> Status of the database. </param>
-        /// <param name="createdOn"> Creation date of the database. </param>
+        /// <param name="creationOn"> Creation date of the database. </param>
         /// <param name="earliestRestorePoint"> Earliest restore point in time for point in time restore. </param>
         /// <param name="restorePointInTime"> Conditional. If createMode is PointInTimeRestore, this value is required. Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
         /// <param name="defaultSecondaryLocation"> Geo paired region. </param>
@@ -2169,14 +2169,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="extendedAccessibilityInfo"> Additional observability and troubleshooting information for databases in ‘Inaccessible’ state. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ManagedDatabasePatch"/> instance for mocking. </returns>
-        public static ManagedDatabasePatch ManagedDatabasePatch(string collation = default, ManagedDatabaseStatus? status = default, DateTimeOffset? createdOn = default, DateTimeOffset? earliestRestorePoint = default, DateTimeOffset? restorePointInTime = default, AzureLocation? defaultSecondaryLocation = default, CatalogCollationType? catalogCollation = default, ManagedDatabaseCreateMode? createMode = default, Uri storageContainerUri = default, ResourceIdentifier sourceDatabaseId = default, ResourceIdentifier crossSubscriptionSourceDatabaseId = default, ResourceIdentifier restorableDroppedDatabaseId = default, ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId = default, string storageContainerIdentity = default, string storageContainerSasToken = default, ResourceIdentifier failoverGroupId = default, ResourceIdentifier recoverableDatabaseId = default, ResourceIdentifier longTermRetentionBackupResourceId = default, bool? allowAutoCompleteRestore = default, string lastBackupName = default, ResourceIdentifier crossSubscriptionTargetManagedInstanceId = default, bool? isLedgerOn = default, ManagedDatabaseExtendedAccessibilityInfo extendedAccessibilityInfo = default, IDictionary<string, string> tags = default)
+        public static ManagedDatabasePatch ManagedDatabasePatch(string collation = default, ManagedDatabaseStatus? status = default, DateTimeOffset? creationOn = default, DateTimeOffset? earliestRestorePoint = default, DateTimeOffset? restorePointInTime = default, AzureLocation? defaultSecondaryLocation = default, CatalogCollationType? catalogCollation = default, ManagedDatabaseCreateMode? createMode = default, Uri storageContainerUri = default, ResourceIdentifier sourceDatabaseId = default, ResourceIdentifier crossSubscriptionSourceDatabaseId = default, ResourceIdentifier restorableDroppedDatabaseId = default, ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId = default, string storageContainerIdentity = default, string storageContainerSasToken = default, ResourceIdentifier failoverGroupId = default, ResourceIdentifier recoverableDatabaseId = default, ResourceIdentifier longTermRetentionBackupResourceId = default, bool? allowAutoCompleteRestore = default, string lastBackupName = default, ResourceIdentifier crossSubscriptionTargetManagedInstanceId = default, bool? isLedgerOn = default, ManagedDatabaseExtendedAccessibilityInfo extendedAccessibilityInfo = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ManagedDatabasePatch(collation is null && status is null && createdOn is null && earliestRestorePoint is null && restorePointInTime is null && defaultSecondaryLocation is null && catalogCollation is null && createMode is null && storageContainerUri is null && sourceDatabaseId is null && crossSubscriptionSourceDatabaseId is null && restorableDroppedDatabaseId is null && crossSubscriptionRestorableDroppedDatabaseId is null && storageContainerIdentity is null && storageContainerSasToken is null && failoverGroupId is null && recoverableDatabaseId is null && longTermRetentionBackupResourceId is null && allowAutoCompleteRestore is null && lastBackupName is null && crossSubscriptionTargetManagedInstanceId is null && isLedgerOn is null && extendedAccessibilityInfo is null ? default : new ManagedDatabaseProperties(
+            return new ManagedDatabasePatch(collation is null && status is null && creationOn is null && earliestRestorePoint is null && restorePointInTime is null && defaultSecondaryLocation is null && catalogCollation is null && createMode is null && storageContainerUri is null && sourceDatabaseId is null && crossSubscriptionSourceDatabaseId is null && restorableDroppedDatabaseId is null && crossSubscriptionRestorableDroppedDatabaseId is null && storageContainerIdentity is null && storageContainerSasToken is null && failoverGroupId is null && recoverableDatabaseId is null && longTermRetentionBackupResourceId is null && allowAutoCompleteRestore is null && lastBackupName is null && crossSubscriptionTargetManagedInstanceId is null && isLedgerOn is null && extendedAccessibilityInfo is null ? default : new ManagedDatabaseProperties(
                 collation,
                 status,
-                createdOn,
+                creationOn,
                 earliestRestorePoint,
                 restorePointInTime,
                 defaultSecondaryLocation,
@@ -2680,7 +2680,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="state"> The state of the elastic pool. </param>
-        /// <param name="createdOn"> The creation date of the elastic pool (ISO8601 format). </param>
+        /// <param name="creationOn"> The creation date of the elastic pool (ISO8601 format). </param>
         /// <param name="maxSizeBytes"> The storage limit for the database elastic pool in bytes. </param>
         /// <param name="minCapacity"> Minimal capacity that serverless pool will not shrink below, if not paused. </param>
         /// <param name="perDatabaseSettings"> The per database settings for the elastic pool. </param>
@@ -2701,7 +2701,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// </param>
         /// <param name="kind"> Kind of elastic pool. This is metadata used for the Azure portal experience. </param>
         /// <returns> A new <see cref="Sql.ElasticPoolData"/> instance for mocking. </returns>
-        public static ElasticPoolData ElasticPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticPoolState? state = default, DateTimeOffset? createdOn = default, long? maxSizeBytes = default, double? minCapacity = default, ElasticPoolPerDatabaseSettings perDatabaseSettings = default, bool? isZoneRedundant = default, ElasticPoolLicenseType? licenseType = default, ResourceIdentifier maintenanceConfigurationId = default, int? highAvailabilityReplicaCount = default, int? autoPauseDelay = default, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default, SqlAvailabilityZoneType? availabilityZone = default, SqlSku currentSku = default, SqlSku sku = default, string kind = default)
+        public static ElasticPoolData ElasticPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticPoolState? state = default, DateTimeOffset? creationOn = default, long? maxSizeBytes = default, double? minCapacity = default, ElasticPoolPerDatabaseSettings perDatabaseSettings = default, bool? isZoneRedundant = default, ElasticPoolLicenseType? licenseType = default, ResourceIdentifier maintenanceConfigurationId = default, int? highAvailabilityReplicaCount = default, int? autoPauseDelay = default, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default, SqlAvailabilityZoneType? availabilityZone = default, SqlSku currentSku = default, SqlSku sku = default, string kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2712,9 +2712,9 @@ namespace Azure.ResourceManager.Sql.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                state is null && createdOn is null && maxSizeBytes is null && minCapacity is null && perDatabaseSettings is null && isZoneRedundant is null && licenseType is null && maintenanceConfigurationId is null && highAvailabilityReplicaCount is null && autoPauseDelay is null && preferredEnclaveType is null && availabilityZone is null && currentSku is null ? default : new ElasticPoolProperties(
+                state is null && creationOn is null && maxSizeBytes is null && minCapacity is null && perDatabaseSettings is null && isZoneRedundant is null && licenseType is null && maintenanceConfigurationId is null && highAvailabilityReplicaCount is null && autoPauseDelay is null && preferredEnclaveType is null && availabilityZone is null && currentSku is null ? default : new ElasticPoolProperties(
                     state,
-                    createdOn,
+                    creationOn,
                     maxSizeBytes,
                     minCapacity,
                     perDatabaseSettings,
@@ -3584,7 +3584,7 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                state is null && disabledAlerts is null && emailAddresses is null && sendToEmailAccountAdmins is null && storageEndpoint is null && storageAccountAccessKey is null && retentionDays is null && createdOn is null ? default : new SecurityAlertPolicyProperties(
+                state is null && disabledAlerts is null && emailAddresses is null && sendToEmailAccountAdmins is null && storageEndpoint is null && storageAccountAccessKey is null && retentionDays is null ? default : new SecurityAlertPolicyProperties(
                     state.GetValueOrDefault(),
                     (disabledAlerts ?? new ChangeTrackingList<string>()).ToList(),
                     (emailAddresses ?? new ChangeTrackingList<string>()).ToList(),
@@ -3592,7 +3592,7 @@ namespace Azure.ResourceManager.Sql.Models
                     storageEndpoint,
                     storageAccountAccessKey,
                     retentionDays,
-                    createdOn,
+                    default,
                     default),
                 default);
         }
@@ -3725,22 +3725,22 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="serverKeyType"> The key type like 'ServiceManaged', 'AzureKeyVault'. </param>
         /// <param name="uri"> The URI of the key. If the ServerKeyType is AzureKeyVault, then the URI is required. </param>
         /// <param name="thumbprint"> Thumbprint of the key. </param>
-        /// <param name="createdOn"> The key creation date. </param>
+        /// <param name="creationOn"> The key creation date. </param>
         /// <param name="isAutoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
         /// <param name="kind"> Kind of encryption protector. This is metadata used for the Azure portal experience. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceKeyData"/> instance for mocking. </returns>
-        public static ManagedInstanceKeyData ManagedInstanceKeyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SqlServerKeyType? serverKeyType = default, Uri uri = default, string thumbprint = default, DateTimeOffset? createdOn = default, bool? isAutoRotationEnabled = default, string kind = default)
+        public static ManagedInstanceKeyData ManagedInstanceKeyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SqlServerKeyType? serverKeyType = default, Uri uri = default, string thumbprint = default, DateTimeOffset? creationOn = default, bool? isAutoRotationEnabled = default, string kind = default)
         {
             return new ManagedInstanceKeyData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                serverKeyType is null && uri is null && thumbprint is null && createdOn is null && isAutoRotationEnabled is null ? default : new ManagedInstanceKeyProperties(
+                serverKeyType is null && uri is null && thumbprint is null && creationOn is null && isAutoRotationEnabled is null ? default : new ManagedInstanceKeyProperties(
                     serverKeyType.GetValueOrDefault(),
                     uri,
                     thumbprint,
-                    createdOn,
+                    creationOn,
                     isAutoRotationEnabled,
                     default),
                 kind,
@@ -3960,7 +3960,7 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                state is null && disabledAlerts is null && emailAddresses is null && sendToEmailAccountAdmins is null && storageEndpoint is null && storageAccountAccessKey is null && retentionDays is null && createdOn is null ? default : new SecurityAlertsPolicyProperties(
+                state is null && disabledAlerts is null && emailAddresses is null && sendToEmailAccountAdmins is null && storageEndpoint is null && storageAccountAccessKey is null && retentionDays is null ? default : new SecurityAlertsPolicyProperties(
                     state.GetValueOrDefault(),
                     (disabledAlerts ?? new ChangeTrackingList<string>()).ToList(),
                     (emailAddresses ?? new ChangeTrackingList<string>()).ToList(),
@@ -3968,7 +3968,7 @@ namespace Azure.ResourceManager.Sql.Models
                     storageEndpoint,
                     storageAccountAccessKey,
                     retentionDays,
-                    createdOn,
+                    default,
                     default),
                 default);
         }
@@ -4216,14 +4216,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="maxSizeBytes"> The max size of the database expressed in bytes. </param>
-        /// <param name="createdOn"> The creation date of the database (ISO8601 format). </param>
-        /// <param name="deletedOn"> The deletion date of the database (ISO8601 format). </param>
+        /// <param name="creationOn"> The creation date of the database (ISO8601 format). </param>
+        /// <param name="deletionOn"> The deletion date of the database (ISO8601 format). </param>
         /// <param name="earliestRestoreOn"> The earliest restore date of the database (ISO8601 format). </param>
         /// <param name="backupStorageRedundancy"> The storage account type used to store backups for this database. </param>
         /// <param name="keys"> The resource ids of the user assigned identities to use. </param>
         /// <param name="sku"> The name and tier of the SKU. </param>
         /// <returns> A new <see cref="Sql.RestorableDroppedDatabaseData"/> instance for mocking. </returns>
-        public static RestorableDroppedDatabaseData RestorableDroppedDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string databaseName = default, long? maxSizeBytes = default, DateTimeOffset? createdOn = default, DateTimeOffset? deletedOn = default, DateTimeOffset? earliestRestoreOn = default, SqlBackupStorageRedundancy? backupStorageRedundancy = default, IDictionary<string, SqlDatabaseKey> keys = default, SqlSku sku = default)
+        public static RestorableDroppedDatabaseData RestorableDroppedDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string databaseName = default, long? maxSizeBytes = default, DateTimeOffset? creationOn = default, DateTimeOffset? deletionOn = default, DateTimeOffset? earliestRestoreOn = default, SqlBackupStorageRedundancy? backupStorageRedundancy = default, IDictionary<string, SqlDatabaseKey> keys = default, SqlSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -4234,11 +4234,11 @@ namespace Azure.ResourceManager.Sql.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                databaseName is null && maxSizeBytes is null && createdOn is null && deletedOn is null && earliestRestoreOn is null && backupStorageRedundancy is null && keys is null ? default : new RestorableDroppedDatabaseProperties(
+                databaseName is null && maxSizeBytes is null && creationOn is null && deletionOn is null && earliestRestoreOn is null && backupStorageRedundancy is null && keys is null ? default : new RestorableDroppedDatabaseProperties(
                     databaseName,
                     maxSizeBytes,
-                    createdOn,
-                    deletedOn,
+                    creationOn,
+                    deletionOn,
                     earliestRestoreOn,
                     backupStorageRedundancy,
                     keys ?? new ChangeTrackingDictionary<string, SqlDatabaseKey>(),
@@ -4269,7 +4269,7 @@ namespace Azure.ResourceManager.Sql.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                databaseName is null && createdOn is null && deletedOn is null && earliestRestoreOn is null ? default : new RestorableDroppedManagedDatabaseProperties(databaseName, createdOn, deletedOn, earliestRestoreOn, default),
+                databaseName is null && earliestRestoreOn is null ? default : new RestorableDroppedManagedDatabaseProperties(databaseName, default, default, earliestRestoreOn, default),
                 default);
         }
 
@@ -4431,25 +4431,25 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="serverKeyType"> The server key type like 'ServiceManaged', 'AzureKeyVault'. </param>
         /// <param name="uri"> The URI of the server key. If the ServerKeyType is AzureKeyVault, then the URI is required. The AKV URI is required to be in this format: 'https://YourVaultName.vault.azure.net/keys/YourKeyName/YourKeyVersion' or can be 'https://YourVaultName.vault.azure.net/keys/YourKeyName'. </param>
         /// <param name="thumbprint"> Thumbprint of the server key. </param>
-        /// <param name="createdOn"> The server key creation date. </param>
+        /// <param name="creationOn"> The server key creation date. </param>
         /// <param name="isAutoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
         /// <param name="keyVersion"> The version of the server key. </param>
         /// <param name="kind"> Kind of encryption protector. This is metadata used for the Azure portal experience. </param>
         /// <param name="location"> Resource location. </param>
         /// <returns> A new <see cref="Sql.SqlServerKeyData"/> instance for mocking. </returns>
-        public static SqlServerKeyData SqlServerKeyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string subregion = default, SqlServerKeyType? serverKeyType = default, Uri uri = default, string thumbprint = default, DateTimeOffset? createdOn = default, bool? isAutoRotationEnabled = default, string keyVersion = default, string kind = default, AzureLocation? location = default)
+        public static SqlServerKeyData SqlServerKeyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string subregion = default, SqlServerKeyType? serverKeyType = default, Uri uri = default, string thumbprint = default, DateTimeOffset? creationOn = default, bool? isAutoRotationEnabled = default, string keyVersion = default, string kind = default, AzureLocation? location = default)
         {
             return new SqlServerKeyData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                subregion is null && serverKeyType is null && uri is null && thumbprint is null && createdOn is null && isAutoRotationEnabled is null && keyVersion is null ? default : new ServerKeyProperties(
+                subregion is null && serverKeyType is null && uri is null && thumbprint is null && creationOn is null && isAutoRotationEnabled is null && keyVersion is null ? default : new ServerKeyProperties(
                     subregion,
                     serverKeyType.GetValueOrDefault(),
                     uri,
                     thumbprint,
-                    createdOn,
+                    creationOn,
                     isAutoRotationEnabled,
                     keyVersion,
                     default),
@@ -4478,7 +4478,7 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                state is null && disabledAlerts is null && emailAddresses is null && sendToEmailAccountAdmins is null && storageEndpoint is null && storageAccountAccessKey is null && retentionDays is null && createdOn is null ? default : new SecurityAlertsPolicyProperties(
+                state is null && disabledAlerts is null && emailAddresses is null && sendToEmailAccountAdmins is null && storageEndpoint is null && storageAccountAccessKey is null && retentionDays is null ? default : new SecurityAlertsPolicyProperties(
                     state.GetValueOrDefault(),
                     (disabledAlerts ?? new ChangeTrackingList<string>()).ToList(),
                     (emailAddresses ?? new ChangeTrackingList<string>()).ToList(),
@@ -4486,7 +4486,7 @@ namespace Azure.ResourceManager.Sql.Models
                     storageEndpoint,
                     storageAccountAccessKey,
                     retentionDays,
-                    createdOn,
+                    default,
                     default),
                 default);
         }
@@ -5231,7 +5231,7 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                state is null && createdOn is null ? default : new AdvancedThreatProtectionProperties(state.GetValueOrDefault(), createdOn, default),
+                state is null ? default : new AdvancedThreatProtectionProperties(state.GetValueOrDefault(), default, default),
                 default);
         }
 
@@ -5582,7 +5582,7 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                state is null && createdOn is null ? default : new AdvancedThreatProtectionProperties(state.GetValueOrDefault(), createdOn, default),
+                state is null ? default : new AdvancedThreatProtectionProperties(state.GetValueOrDefault(), default, default),
                 default);
         }
 
@@ -5748,7 +5748,7 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                state is null && createdOn is null ? default : new AdvancedThreatProtectionProperties(state.GetValueOrDefault(), createdOn, default),
+                state is null ? default : new AdvancedThreatProtectionProperties(state.GetValueOrDefault(), default, default),
                 default);
         }
 
@@ -5813,7 +5813,7 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                state is null && createdOn is null ? default : new AdvancedThreatProtectionProperties(state.GetValueOrDefault(), createdOn, default),
+                state is null ? default : new AdvancedThreatProtectionProperties(state.GetValueOrDefault(), default, default),
                 default);
         }
 
@@ -6916,7 +6916,7 @@ namespace Azure.ResourceManager.Sql.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                createMode is null && collation is null && maxSizeBytes is null && sampleName is null && elasticPoolId is null && sourceDatabaseId is null && status is null && databaseId is null && createdOn is null && currentServiceObjectiveName is null && requestedServiceObjectiveName is null && defaultSecondaryLocation is null && failoverGroupId is null && restorePointInTime is null && sourceDatabaseDeletedOn is null && recoveryServicesRecoveryPointId is null && longTermRetentionBackupResourceId is null && recoverableDatabaseId is null && restorableDroppedDatabaseId is null && catalogCollation is null && isZoneRedundant is null && licenseType is null && maxLogSizeBytes is null && earliestRestoreOn is null && readScale is null && highAvailabilityReplicaCount is null && secondaryType is null && currentSku is null && autoPauseDelay is null && currentBackupStorageRedundancy is null && requestedBackupStorageRedundancy is null && minCapacity is null && pausedOn is null && resumedOn is null && maintenanceConfigurationId is null && isLedgerOn is null && isInfraEncryptionEnabled is null && federatedClientId is null && keys is null && encryptionProtector is null && preferredEnclaveType is null && useFreeLimit is null && freeLimitExhaustionBehavior is null && sourceResourceId is null && manualCutover is null && performCutover is null && availabilityZone is null && encryptionProtectorAutoRotation is null ? default : new DatabaseProperties(
+                createMode is null && collation is null && maxSizeBytes is null && sampleName is null && elasticPoolId is null && sourceDatabaseId is null && status is null && databaseId is null && currentServiceObjectiveName is null && requestedServiceObjectiveName is null && defaultSecondaryLocation is null && failoverGroupId is null && restorePointInTime is null && sourceDatabaseDeletedOn is null && recoveryServicesRecoveryPointId is null && longTermRetentionBackupResourceId is null && recoverableDatabaseId is null && restorableDroppedDatabaseId is null && catalogCollation is null && isZoneRedundant is null && licenseType is null && maxLogSizeBytes is null && earliestRestoreOn is null && readScale is null && highAvailabilityReplicaCount is null && secondaryType is null && currentSku is null && autoPauseDelay is null && currentBackupStorageRedundancy is null && requestedBackupStorageRedundancy is null && minCapacity is null && pausedOn is null && resumedOn is null && maintenanceConfigurationId is null && isLedgerOn is null && isInfraEncryptionEnabled is null && federatedClientId is null && keys is null && encryptionProtector is null && preferredEnclaveType is null && useFreeLimit is null && freeLimitExhaustionBehavior is null && sourceResourceId is null && manualCutover is null && performCutover is null && availabilityZone is null && encryptionProtectorAutoRotation is null ? default : new DatabaseProperties(
                     createMode,
                     collation,
                     maxSizeBytes,
@@ -6925,7 +6925,7 @@ namespace Azure.ResourceManager.Sql.Models
                     sourceDatabaseId,
                     status,
                     databaseId,
-                    createdOn,
+                    default,
                     currentServiceObjectiveName,
                     requestedServiceObjectiveName,
                     defaultSecondaryLocation,
@@ -7068,7 +7068,7 @@ namespace Azure.ResourceManager.Sql.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SqlDatabasePatch SqlDatabasePatch(SqlSku sku = default, DatabaseIdentity identity = default, IDictionary<string, string> tags = default, SqlDatabaseCreateMode? createMode = default, string collation = default, long? maxSizeBytes = default, SampleSchemaName? sampleName = default, ResourceIdentifier elasticPoolId = default, ResourceIdentifier sourceDatabaseId = default, SqlDatabaseStatus? status = default, Guid? databaseId = default, DateTimeOffset? createdOn = default, string currentServiceObjectiveName = default, string requestedServiceObjectiveName = default, AzureLocation? defaultSecondaryLocation = default, ResourceIdentifier failoverGroupId = default, DateTimeOffset? restorePointInTime = default, DateTimeOffset? sourceDatabaseDeletedOn = default, ResourceIdentifier recoveryServicesRecoveryPointId = default, ResourceIdentifier longTermRetentionBackupResourceId = default, ResourceIdentifier recoverableDatabaseId = default, ResourceIdentifier restorableDroppedDatabaseId = default, CatalogCollationType? catalogCollation = default, bool? isZoneRedundant = default, DatabaseLicenseType? licenseType = default, long? maxLogSizeBytes = default, DateTimeOffset? earliestRestoreOn = default, DatabaseReadScale? readScale = default, int? highAvailabilityReplicaCount = default, SecondaryType? secondaryType = default, SqlSku currentSku = default, int? autoPauseDelay = default, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default, double? minCapacity = default, DateTimeOffset? pausedOn = default, DateTimeOffset? resumedOn = default, ResourceIdentifier maintenanceConfigurationId = default, bool? isLedgerOn = default, bool? isInfraEncryptionEnabled = default, Guid? federatedClientId = default, IDictionary<string, SqlDatabaseKey> keys = default, string encryptionProtector = default, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default, bool? useFreeLimit = default, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior = default, bool? manualCutover = default, bool? performCutover = default, bool? encryptionProtectorAutoRotation = default)
         {
-            return new SqlDatabasePatch(sku, identity, createMode is null && collation is null && maxSizeBytes is null && sampleName is null && elasticPoolId is null && sourceDatabaseId is null && status is null && databaseId is null && createdOn is null && currentServiceObjectiveName is null && requestedServiceObjectiveName is null && defaultSecondaryLocation is null && failoverGroupId is null && restorePointInTime is null && sourceDatabaseDeletedOn is null && recoveryServicesRecoveryPointId is null && longTermRetentionBackupResourceId is null && recoverableDatabaseId is null && restorableDroppedDatabaseId is null && catalogCollation is null && isZoneRedundant is null && licenseType is null && maxLogSizeBytes is null && earliestRestoreOn is null && readScale is null && highAvailabilityReplicaCount is null && secondaryType is null && currentSku is null && autoPauseDelay is null && currentBackupStorageRedundancy is null && requestedBackupStorageRedundancy is null && minCapacity is null && pausedOn is null && resumedOn is null && maintenanceConfigurationId is null && isLedgerOn is null && isInfraEncryptionEnabled is null && federatedClientId is null && keys is null && encryptionProtector is null && preferredEnclaveType is null && useFreeLimit is null && freeLimitExhaustionBehavior is null && manualCutover is null && performCutover is null && encryptionProtectorAutoRotation is null ? default : new DatabaseUpdateProperties(
+            return new SqlDatabasePatch(sku, identity, createMode is null && collation is null && maxSizeBytes is null && sampleName is null && elasticPoolId is null && sourceDatabaseId is null && status is null && databaseId is null && currentServiceObjectiveName is null && requestedServiceObjectiveName is null && defaultSecondaryLocation is null && failoverGroupId is null && restorePointInTime is null && sourceDatabaseDeletedOn is null && recoveryServicesRecoveryPointId is null && longTermRetentionBackupResourceId is null && recoverableDatabaseId is null && restorableDroppedDatabaseId is null && catalogCollation is null && isZoneRedundant is null && licenseType is null && maxLogSizeBytes is null && earliestRestoreOn is null && readScale is null && highAvailabilityReplicaCount is null && secondaryType is null && currentSku is null && autoPauseDelay is null && currentBackupStorageRedundancy is null && requestedBackupStorageRedundancy is null && minCapacity is null && pausedOn is null && resumedOn is null && maintenanceConfigurationId is null && isLedgerOn is null && isInfraEncryptionEnabled is null && federatedClientId is null && keys is null && encryptionProtector is null && preferredEnclaveType is null && useFreeLimit is null && freeLimitExhaustionBehavior is null && manualCutover is null && performCutover is null && encryptionProtectorAutoRotation is null ? default : new DatabaseUpdateProperties(
                 createMode,
                 collation,
                 maxSizeBytes,
@@ -7077,7 +7077,7 @@ namespace Azure.ResourceManager.Sql.Models
                 sourceDatabaseId,
                 status,
                 databaseId,
-                createdOn,
+                default,
                 currentServiceObjectiveName,
                 requestedServiceObjectiveName,
                 defaultSecondaryLocation,
@@ -7272,9 +7272,9 @@ namespace Azure.ResourceManager.Sql.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                state is null && createdOn is null && maxSizeBytes is null && minCapacity is null && perDatabaseSettings is null && isZoneRedundant is null && licenseType is null && maintenanceConfigurationId is null && highAvailabilityReplicaCount is null && autoPauseDelay is null && preferredEnclaveType is null && availabilityZone is null ? default : new ElasticPoolProperties(
+                state is null && maxSizeBytes is null && minCapacity is null && perDatabaseSettings is null && isZoneRedundant is null && licenseType is null && maintenanceConfigurationId is null && highAvailabilityReplicaCount is null && autoPauseDelay is null && preferredEnclaveType is null && availabilityZone is null ? default : new ElasticPoolProperties(
                     state,
-                    createdOn,
+                    default,
                     maxSizeBytes,
                     minCapacity,
                     perDatabaseSettings,
@@ -7536,10 +7536,10 @@ namespace Azure.ResourceManager.Sql.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ManagedDatabasePatch ManagedDatabasePatch(IDictionary<string, string> tags = default, string collation = default, ManagedDatabaseStatus? status = default, DateTimeOffset? createdOn = default, DateTimeOffset? earliestRestorePoint = default, DateTimeOffset? restorePointInTime = default, AzureLocation? defaultSecondaryLocation = default, CatalogCollationType? catalogCollation = default, ManagedDatabaseCreateMode? createMode = default, Uri storageContainerUri = default, ResourceIdentifier sourceDatabaseId = default, ResourceIdentifier crossSubscriptionSourceDatabaseId = default, ResourceIdentifier restorableDroppedDatabaseId = default, ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId = default, string storageContainerIdentity = default, string storageContainerSasToken = default, ResourceIdentifier failoverGroupId = default, ResourceIdentifier recoverableDatabaseId = default, ResourceIdentifier longTermRetentionBackupResourceId = default, bool? allowAutoCompleteRestore = default, string lastBackupName = default, ResourceIdentifier crossSubscriptionTargetManagedInstanceId = default, bool? isLedgerOn = default, ManagedDatabaseExtendedAccessibilityInfo extendedAccessibilityInfo = default)
         {
-            return new ManagedDatabasePatch(collation is null && status is null && createdOn is null && earliestRestorePoint is null && restorePointInTime is null && defaultSecondaryLocation is null && catalogCollation is null && createMode is null && storageContainerUri is null && sourceDatabaseId is null && crossSubscriptionSourceDatabaseId is null && restorableDroppedDatabaseId is null && crossSubscriptionRestorableDroppedDatabaseId is null && storageContainerIdentity is null && storageContainerSasToken is null && failoverGroupId is null && recoverableDatabaseId is null && longTermRetentionBackupResourceId is null && allowAutoCompleteRestore is null && lastBackupName is null && crossSubscriptionTargetManagedInstanceId is null && isLedgerOn is null && extendedAccessibilityInfo is null ? default : new ManagedDatabaseProperties(
+            return new ManagedDatabasePatch(collation is null && status is null && earliestRestorePoint is null && restorePointInTime is null && defaultSecondaryLocation is null && catalogCollation is null && createMode is null && storageContainerUri is null && sourceDatabaseId is null && crossSubscriptionSourceDatabaseId is null && restorableDroppedDatabaseId is null && crossSubscriptionRestorableDroppedDatabaseId is null && storageContainerIdentity is null && storageContainerSasToken is null && failoverGroupId is null && recoverableDatabaseId is null && longTermRetentionBackupResourceId is null && allowAutoCompleteRestore is null && lastBackupName is null && crossSubscriptionTargetManagedInstanceId is null && isLedgerOn is null && extendedAccessibilityInfo is null ? default : new ManagedDatabaseProperties(
                 collation,
                 status,
-                createdOn,
+                default,
                 earliestRestorePoint,
                 restorePointInTime,
                 defaultSecondaryLocation,
@@ -7736,11 +7736,11 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                serverKeyType is null && uri is null && thumbprint is null && createdOn is null && isAutoRotationEnabled is null ? default : new ManagedInstanceKeyProperties(
+                serverKeyType is null && uri is null && thumbprint is null && isAutoRotationEnabled is null ? default : new ManagedInstanceKeyProperties(
                     serverKeyType.GetValueOrDefault(),
                     uri,
                     thumbprint,
-                    createdOn,
+                    default,
                     isAutoRotationEnabled,
                     default),
                 kind,
@@ -8049,11 +8049,11 @@ namespace Azure.ResourceManager.Sql.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                databaseName is null && maxSizeBytes is null && createdOn is null && deletedOn is null && earliestRestoreOn is null && backupStorageRedundancy is null && keys is null ? default : new RestorableDroppedDatabaseProperties(
+                databaseName is null && maxSizeBytes is null && earliestRestoreOn is null && backupStorageRedundancy is null && keys is null ? default : new RestorableDroppedDatabaseProperties(
                     databaseName,
                     maxSizeBytes,
-                    createdOn,
-                    deletedOn,
+                    default,
+                    default,
                     earliestRestoreOn,
                     backupStorageRedundancy,
                     keys ?? new ChangeTrackingDictionary<string, SqlDatabaseKey>(),
@@ -8132,12 +8132,12 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                subregion is null && serverKeyType is null && uri is null && thumbprint is null && createdOn is null && isAutoRotationEnabled is null && keyVersion is null ? default : new ServerKeyProperties(
+                subregion is null && serverKeyType is null && uri is null && thumbprint is null && isAutoRotationEnabled is null && keyVersion is null ? default : new ServerKeyProperties(
                     subregion,
                     serverKeyType.GetValueOrDefault(),
                     uri,
                     thumbprint,
-                    createdOn,
+                    default,
                     isAutoRotationEnabled,
                     keyVersion,
                     default),
@@ -8402,7 +8402,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlDatabaseKey(
                 keyType,
                 thumbprint,
-                createdOn,
+                default,
                 subregion,
                 default,
                 default);
@@ -8577,10 +8577,10 @@ namespace Azure.ResourceManager.Sql.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                collation is null && status is null && createdOn is null && earliestRestorePoint is null && restorePointInTime is null && defaultSecondaryLocation is null && catalogCollation is null && createMode is null && storageContainerUri is null && sourceDatabaseId is null && crossSubscriptionSourceDatabaseId is null && restorableDroppedDatabaseId is null && crossSubscriptionRestorableDroppedDatabaseId is null && storageContainerIdentity is null && storageContainerSasToken is null && failoverGroupId is null && recoverableDatabaseId is null && longTermRetentionBackupResourceId is null && allowAutoCompleteRestore is null && lastBackupName is null && crossSubscriptionTargetManagedInstanceId is null && isLedgerOn is null ? default : new ManagedDatabaseProperties(
+                collation is null && status is null && earliestRestorePoint is null && restorePointInTime is null && defaultSecondaryLocation is null && catalogCollation is null && createMode is null && storageContainerUri is null && sourceDatabaseId is null && crossSubscriptionSourceDatabaseId is null && restorableDroppedDatabaseId is null && crossSubscriptionRestorableDroppedDatabaseId is null && storageContainerIdentity is null && storageContainerSasToken is null && failoverGroupId is null && recoverableDatabaseId is null && longTermRetentionBackupResourceId is null && allowAutoCompleteRestore is null && lastBackupName is null && crossSubscriptionTargetManagedInstanceId is null && isLedgerOn is null ? default : new ManagedDatabaseProperties(
                     collation,
                     status,
-                    createdOn,
+                    default,
                     earliestRestorePoint,
                     restorePointInTime,
                     defaultSecondaryLocation,
@@ -8633,10 +8633,10 @@ namespace Azure.ResourceManager.Sql.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ManagedDatabasePatch ManagedDatabasePatch(IDictionary<string, string> tags, string collation, ManagedDatabaseStatus? status, DateTimeOffset? createdOn, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, AzureLocation? defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, Uri storageContainerUri, ResourceIdentifier sourceDatabaseId, ResourceIdentifier crossSubscriptionSourceDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId, string storageContainerIdentity, string storageContainerSasToken, ResourceIdentifier failoverGroupId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier longTermRetentionBackupResourceId, bool? allowAutoCompleteRestore, string lastBackupName, ResourceIdentifier crossSubscriptionTargetManagedInstanceId, bool? isLedgerOn)
         {
-            return new ManagedDatabasePatch(collation is null && status is null && createdOn is null && earliestRestorePoint is null && restorePointInTime is null && defaultSecondaryLocation is null && catalogCollation is null && createMode is null && storageContainerUri is null && sourceDatabaseId is null && crossSubscriptionSourceDatabaseId is null && restorableDroppedDatabaseId is null && crossSubscriptionRestorableDroppedDatabaseId is null && storageContainerIdentity is null && storageContainerSasToken is null && failoverGroupId is null && recoverableDatabaseId is null && longTermRetentionBackupResourceId is null && allowAutoCompleteRestore is null && lastBackupName is null && crossSubscriptionTargetManagedInstanceId is null && isLedgerOn is null ? default : new ManagedDatabaseProperties(
+            return new ManagedDatabasePatch(collation is null && status is null && earliestRestorePoint is null && restorePointInTime is null && defaultSecondaryLocation is null && catalogCollation is null && createMode is null && storageContainerUri is null && sourceDatabaseId is null && crossSubscriptionSourceDatabaseId is null && restorableDroppedDatabaseId is null && crossSubscriptionRestorableDroppedDatabaseId is null && storageContainerIdentity is null && storageContainerSasToken is null && failoverGroupId is null && recoverableDatabaseId is null && longTermRetentionBackupResourceId is null && allowAutoCompleteRestore is null && lastBackupName is null && crossSubscriptionTargetManagedInstanceId is null && isLedgerOn is null ? default : new ManagedDatabaseProperties(
                 collation,
                 status,
-                createdOn,
+                default,
                 earliestRestorePoint,
                 restorePointInTime,
                 defaultSecondaryLocation,
@@ -8907,12 +8907,12 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                subregion is null && serverKeyType is null && uri is null && thumbprint is null && createdOn is null && isAutoRotationEnabled is null ? default : new ServerKeyProperties(
+                subregion is null && serverKeyType is null && uri is null && thumbprint is null && isAutoRotationEnabled is null ? default : new ServerKeyProperties(
                     subregion,
                     serverKeyType.GetValueOrDefault(),
                     uri,
                     thumbprint,
-                    createdOn,
+                    default,
                     isAutoRotationEnabled,
                     default,
                     default),

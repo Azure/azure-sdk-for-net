@@ -583,11 +583,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Time stamp. </summary>
         [WirePath("properties.time_stamp")]
-        public DateTimeOffset? TimeStamp
+        public DateTimeOffset? On
         {
             get
             {
-                return Properties is null ? default : Properties.TimeStamp;
+                return Properties is null ? default : Properties.On;
             }
             set
             {
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new ProcessInfoProperties();
                 }
-                Properties.TimeStamp = value;
+                Properties.On = value;
             }
         }
 

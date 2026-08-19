@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="endOn"> End time of the software update configuration run. </param>
         /// <param name="computerCount"> Number of computers in the software update configuration run. </param>
         /// <param name="failedCount"> Number of computers with failed status. </param>
-        /// <param name="createdOn"> Creation time of the resource, which only appears in the response. </param>
+        /// <param name="creationOn"> Creation time of the resource, which only appears in the response. </param>
         /// <param name="createdBy"> CreatedBy property, which only appears in the response. </param>
         /// <param name="lastModifiedOn"> Last time resource was modified, which only appears in the response. </param>
         /// <param name="lastModifiedBy"> LastModifiedBy property, which only appears in the response. </param>
         /// <param name="tasks"> Software update configuration tasks triggered in this run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SoftwareUpdateConfigurationRunProperties(UpdateConfigurationNavigation softwareUpdateConfiguration, string status, TimeSpan? configuredDuration, string osType, DateTimeOffset? startOn, DateTimeOffset? endOn, int? computerCount, int? failedCount, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, SoftwareUpdateConfigurationRunTasks tasks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SoftwareUpdateConfigurationRunProperties(UpdateConfigurationNavigation softwareUpdateConfiguration, string status, TimeSpan? configuredDuration, string osType, DateTimeOffset? startOn, DateTimeOffset? endOn, int? computerCount, int? failedCount, DateTimeOffset? creationOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, SoftwareUpdateConfigurationRunTasks tasks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SoftwareUpdateConfiguration = softwareUpdateConfiguration;
             Status = status;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Automation.Models
             EndOn = endOn;
             ComputerCount = computerCount;
             FailedCount = failedCount;
-            CreatedOn = createdOn;
+            CreationOn = creationOn;
             CreatedBy = createdBy;
             LastModifiedOn = lastModifiedOn;
             LastModifiedBy = lastModifiedBy;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Automation.Models
         public int? FailedCount { get; }
 
         /// <summary> Creation time of the resource, which only appears in the response. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreationOn { get; }
 
         /// <summary> CreatedBy property, which only appears in the response. </summary>
         public string CreatedBy { get; }

@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(LocationPropertiesLocation);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
+            if (options.Format != "W" && Optional.IsDefined(DeletionOn))
             {
                 writer.WritePropertyName("deletionTime"u8);
-                writer.WriteStringValue(DeletedOn.Value, "O");
+                writer.WriteStringValue(DeletionOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Automation.Models
             ResourceIdentifier automationAccountResourceId = default;
             string automationAccountId = default;
             string locationPropertiesLocation = default;
-            DateTimeOffset? deletedOn = default;
+            DateTimeOffset? deletionOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    deletedOn = prop.Value.GetDateTimeOffset("O");
+                    deletionOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Automation.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeletedAutomationAccountProperties(automationAccountResourceId, automationAccountId, locationPropertiesLocation, deletedOn, additionalBinaryDataProperties);
+            return new DeletedAutomationAccountProperties(automationAccountResourceId, automationAccountId, locationPropertiesLocation, deletionOn, additionalBinaryDataProperties);
         }
     }
 }

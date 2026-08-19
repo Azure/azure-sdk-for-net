@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of <see cref="ArmDeploymentOperationProperties"/>. </summary>
         /// <param name="provisioningOperation"> The name of the current provisioning operation. </param>
         /// <param name="provisioningState"> The state of the provisioning. </param>
-        /// <param name="timestamp"> The date and time of the operation. </param>
+        /// <param name="on"> The date and time of the operation. </param>
         /// <param name="duration"> The duration of the operation. </param>
         /// <param name="serviceRequestId"> Deployment operation service request id. </param>
         /// <param name="statusCode"> Operation status code from the resource provider. This property may not be set if a response has not yet been received. </param>
@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="request"> The HTTP request message. </param>
         /// <param name="response"> The HTTP response message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentOperationProperties(ProvisioningOperationKind? provisioningOperation, string provisioningState, DateTimeOffset? timestamp, TimeSpan? duration, string serviceRequestId, string statusCode, StatusMessage statusMessage, TargetResource targetResource, HttpMessage request, HttpMessage response, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArmDeploymentOperationProperties(ProvisioningOperationKind? provisioningOperation, string provisioningState, DateTimeOffset? @on, TimeSpan? duration, string serviceRequestId, string statusCode, StatusMessage statusMessage, TargetResource targetResource, HttpMessage request, HttpMessage response, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningOperation = provisioningOperation;
             ProvisioningState = provisioningState;
-            Timestamp = timestamp;
+            On = @on;
             Duration = duration;
             ServiceRequestId = serviceRequestId;
             StatusCode = statusCode;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> The date and time of the operation. </summary>
         [WirePath("timestamp")]
-        public DateTimeOffset? Timestamp { get; }
+        public DateTimeOffset? On { get; }
 
         /// <summary> The duration of the operation. </summary>
         [WirePath("duration")]

@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(ExpirationOn))
             {
                 writer.WritePropertyName("expirationTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpirationOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastRenewedOn))
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
             IReadOnlyList<string> nameServers = default;
             bool? isDomainPrivacyEnabled = default;
             DateTimeOffset? createdOn = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expirationOn = default;
             DateTimeOffset? lastRenewedOn = default;
             bool? isAutoRenew = default;
             bool? isDnsRecordManagementReady = default;
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expirationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastRenewedTime"u8))
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 nameServers ?? new ChangeTrackingList<string>(),
                 isDomainPrivacyEnabled,
                 createdOn,
-                expireOn,
+                expirationOn,
                 lastRenewedOn,
                 isAutoRenew,
                 isDnsRecordManagementReady,

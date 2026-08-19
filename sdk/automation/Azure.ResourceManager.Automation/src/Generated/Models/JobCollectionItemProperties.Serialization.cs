@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("startedBy"u8);
                 writer.WriteStringValue(StartedBy);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Automation.Models
             RunbookAssociationProperty runbook = default;
             Guid? jobId = default;
             string startedBy = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? creationOn = default;
             AutomationJobStatus? status = default;
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    creationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Automation.Models
                 runbook,
                 jobId,
                 startedBy,
-                createdOn,
+                creationOn,
                 status,
                 startOn,
                 endOn,

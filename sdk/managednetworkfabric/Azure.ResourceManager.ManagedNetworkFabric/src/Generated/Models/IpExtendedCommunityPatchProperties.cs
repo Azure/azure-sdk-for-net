@@ -12,22 +12,22 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> IP Extended Community patchable properties. </summary>
-    internal partial class IpExtendedCommunityPatchProperties
+    internal partial class IPExtendedCommunityPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IpExtendedCommunityPatchProperties"/>. </summary>
-        public IpExtendedCommunityPatchProperties()
+        /// <summary> Initializes a new instance of <see cref="IPExtendedCommunityPatchProperties"/>. </summary>
+        public IPExtendedCommunityPatchProperties()
         {
             IPExtendedCommunityRules = new ChangeTrackingList<IPExtendedCommunityRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IpExtendedCommunityPatchProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPExtendedCommunityPatchProperties"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="ipExtendedCommunityRules"> List of IP Extended Community Rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IpExtendedCommunityPatchProperties(string annotation, IList<IPExtendedCommunityRule> ipExtendedCommunityRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IPExtendedCommunityPatchProperties(string annotation, IList<IPExtendedCommunityRule> ipExtendedCommunityRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             IPExtendedCommunityRules = ipExtendedCommunityRules;

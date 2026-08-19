@@ -107,11 +107,11 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary> UTC Date and time when project was created. </summary>
-        public DateTimeOffset? CreatedOn
+        public DateTimeOffset? CreationOn
         {
             get
             {
-                return Properties is null ? default : Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreationOn;
             }
         }
 

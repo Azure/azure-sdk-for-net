@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Timestamp))
+            if (options.Format != "W" && Optional.IsDefined(On))
             {
                 writer.WritePropertyName("timestamp"u8);
-                writer.WriteStringValue(Timestamp.Value, "O");
+                writer.WriteStringValue(On.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Duration))
             {
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
             ResourcesProvisioningState? provisioningState = default;
             string correlationId = default;
-            DateTimeOffset? timestamp = default;
+            DateTimeOffset? @on = default;
             TimeSpan? duration = default;
             BinaryData outputs = default;
             IReadOnlyList<ResourceProviderData> providers = default;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    timestamp = prop.Value.GetDateTimeOffset("O");
+                    @on = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("duration"u8))
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmDeploymentPropertiesExtended(
                 provisioningState,
                 correlationId,
-                timestamp,
+                @on,
                 duration,
                 outputs,
                 providers ?? new ChangeTrackingList<ResourceProviderData>(),
