@@ -15,66 +15,66 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Request body for the MoveIpConfigurations operation. </summary>
-    public partial class MoveIpConfigurationsRequest : IJsonModel<MoveIpConfigurationsRequest>
+    public partial class MoveIpConfigurationsContent : IJsonModel<MoveIpConfigurationsContent>
     {
-        /// <summary> Initializes a new instance of <see cref="MoveIpConfigurationsRequest"/> for deserialization. </summary>
-        internal MoveIpConfigurationsRequest()
+        /// <summary> Initializes a new instance of <see cref="MoveIpConfigurationsContent"/> for deserialization. </summary>
+        internal MoveIpConfigurationsContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MoveIpConfigurationsRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MoveIpConfigurationsContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MoveIpConfigurationsRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MoveIpConfigurationsContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMoveIpConfigurationsRequest(document.RootElement, options);
+                        return DeserializeMoveIpConfigurationsContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoveIpConfigurationsRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoveIpConfigurationsContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MoveIpConfigurationsRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MoveIpConfigurationsContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MoveIpConfigurationsRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoveIpConfigurationsContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MoveIpConfigurationsRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MoveIpConfigurationsContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MoveIpConfigurationsRequest IPersistableModel<MoveIpConfigurationsRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MoveIpConfigurationsContent IPersistableModel<MoveIpConfigurationsContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MoveIpConfigurationsRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MoveIpConfigurationsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="moveIpConfigurationsRequest"> The <see cref="MoveIpConfigurationsRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(MoveIpConfigurationsRequest moveIpConfigurationsRequest)
+        /// <param name="moveIpConfigurationsContent"> The <see cref="MoveIpConfigurationsContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MoveIpConfigurationsContent moveIpConfigurationsContent)
         {
-            if (moveIpConfigurationsRequest == null)
+            if (moveIpConfigurationsContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(moveIpConfigurationsRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(moveIpConfigurationsContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MoveIpConfigurationsRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MoveIpConfigurationsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MoveIpConfigurationsRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MoveIpConfigurationsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoveIpConfigurationsRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MoveIpConfigurationsContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("moveIpConfigurationItems"u8);
             writer.WriteStartArray();
@@ -116,24 +116,24 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MoveIpConfigurationsRequest IJsonModel<MoveIpConfigurationsRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MoveIpConfigurationsContent IJsonModel<MoveIpConfigurationsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MoveIpConfigurationsRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MoveIpConfigurationsContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MoveIpConfigurationsRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MoveIpConfigurationsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoveIpConfigurationsRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MoveIpConfigurationsContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMoveIpConfigurationsRequest(document.RootElement, options);
+            return DeserializeMoveIpConfigurationsContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MoveIpConfigurationsRequest DeserializeMoveIpConfigurationsRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static MoveIpConfigurationsContent DeserializeMoveIpConfigurationsContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MoveIpConfigurationsRequest(moveIpConfigurationItems, additionalBinaryDataProperties);
+            return new MoveIpConfigurationsContent(moveIpConfigurationItems, additionalBinaryDataProperties);
         }
     }
 }

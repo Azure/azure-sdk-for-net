@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to commit the migration of the Network Virtual Appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> CommitMigrationAsync(WaitUntil waitUntil, NetworkVirtualApplianceCommitMigrationRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> CommitMigrationAsync(WaitUntil waitUntil, NetworkVirtualApplianceCommitMigrationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkVirtualAppliancesRestClient.CreateCommitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkVirtualApplianceCommitMigrationRequest.ToRequestContent(content), context);
+                HttpMessage message = _networkVirtualAppliancesRestClient.CreateCommitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkVirtualApplianceCommitMigrationContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_networkVirtualAppliancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to commit the migration of the Network Virtual Appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation CommitMigration(WaitUntil waitUntil, NetworkVirtualApplianceCommitMigrationRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation CommitMigration(WaitUntil waitUntil, NetworkVirtualApplianceCommitMigrationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkVirtualAppliancesRestClient.CreateCommitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkVirtualApplianceCommitMigrationRequest.ToRequestContent(content), context);
+                HttpMessage message = _networkVirtualAppliancesRestClient.CreateCommitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkVirtualApplianceCommitMigrationContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_networkVirtualAppliancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to execute the migration of the Network Virtual Appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> ExecuteMigrationAsync(WaitUntil waitUntil, NetworkVirtualApplianceExecuteMigrationRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ExecuteMigrationAsync(WaitUntil waitUntil, NetworkVirtualApplianceExecuteMigrationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkVirtualAppliancesRestClient.CreateExecuteMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkVirtualApplianceExecuteMigrationRequest.ToRequestContent(content), context);
+                HttpMessage message = _networkVirtualAppliancesRestClient.CreateExecuteMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkVirtualApplianceExecuteMigrationContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_networkVirtualAppliancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to execute the migration of the Network Virtual Appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation ExecuteMigration(WaitUntil waitUntil, NetworkVirtualApplianceExecuteMigrationRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ExecuteMigration(WaitUntil waitUntil, NetworkVirtualApplianceExecuteMigrationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkVirtualAppliancesRestClient.CreateExecuteMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkVirtualApplianceExecuteMigrationRequest.ToRequestContent(content), context);
+                HttpMessage message = _networkVirtualAppliancesRestClient.CreateExecuteMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkVirtualApplianceExecuteMigrationContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_networkVirtualAppliancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -846,7 +846,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to prepare the migration of the Network Virtual Appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> PrepareMigrationAsync(WaitUntil waitUntil, NetworkVirtualAppliancePrepareMigrationRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> PrepareMigrationAsync(WaitUntil waitUntil, NetworkVirtualAppliancePrepareMigrationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -858,7 +858,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkVirtualAppliancesRestClient.CreatePrepareMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkVirtualAppliancePrepareMigrationRequest.ToRequestContent(content), context);
+                HttpMessage message = _networkVirtualAppliancesRestClient.CreatePrepareMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkVirtualAppliancePrepareMigrationContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_networkVirtualAppliancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to prepare the migration of the Network Virtual Appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation PrepareMigration(WaitUntil waitUntil, NetworkVirtualAppliancePrepareMigrationRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation PrepareMigration(WaitUntil waitUntil, NetworkVirtualAppliancePrepareMigrationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -911,7 +911,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkVirtualAppliancesRestClient.CreatePrepareMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkVirtualAppliancePrepareMigrationRequest.ToRequestContent(content), context);
+                HttpMessage message = _networkVirtualAppliancesRestClient.CreatePrepareMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkVirtualAppliancePrepareMigrationContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_networkVirtualAppliancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

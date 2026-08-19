@@ -15,61 +15,61 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Parameters supplied to commit the migration of a Network Virtual Appliance. </summary>
-    public partial class NetworkVirtualApplianceCommitMigrationRequest : IJsonModel<NetworkVirtualApplianceCommitMigrationRequest>
+    public partial class NetworkVirtualApplianceCommitMigrationContent : IJsonModel<NetworkVirtualApplianceCommitMigrationContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NetworkVirtualApplianceCommitMigrationRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual NetworkVirtualApplianceCommitMigrationContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceCommitMigrationRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceCommitMigrationContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNetworkVirtualApplianceCommitMigrationRequest(document.RootElement, options);
+                        return DeserializeNetworkVirtualApplianceCommitMigrationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceCommitMigrationRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceCommitMigrationContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceCommitMigrationRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceCommitMigrationContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceCommitMigrationRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceCommitMigrationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NetworkVirtualApplianceCommitMigrationRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NetworkVirtualApplianceCommitMigrationContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkVirtualApplianceCommitMigrationRequest IPersistableModel<NetworkVirtualApplianceCommitMigrationRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        NetworkVirtualApplianceCommitMigrationContent IPersistableModel<NetworkVirtualApplianceCommitMigrationContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NetworkVirtualApplianceCommitMigrationRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkVirtualApplianceCommitMigrationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="networkVirtualApplianceCommitMigrationRequest"> The <see cref="NetworkVirtualApplianceCommitMigrationRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(NetworkVirtualApplianceCommitMigrationRequest networkVirtualApplianceCommitMigrationRequest)
+        /// <param name="networkVirtualApplianceCommitMigrationContent"> The <see cref="NetworkVirtualApplianceCommitMigrationContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NetworkVirtualApplianceCommitMigrationContent networkVirtualApplianceCommitMigrationContent)
         {
-            if (networkVirtualApplianceCommitMigrationRequest == null)
+            if (networkVirtualApplianceCommitMigrationContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(networkVirtualApplianceCommitMigrationRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(networkVirtualApplianceCommitMigrationContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NetworkVirtualApplianceCommitMigrationRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkVirtualApplianceCommitMigrationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceCommitMigrationRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceCommitMigrationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkVirtualApplianceCommitMigrationRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkVirtualApplianceCommitMigrationContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Properties))
             {
@@ -109,24 +109,24 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkVirtualApplianceCommitMigrationRequest IJsonModel<NetworkVirtualApplianceCommitMigrationRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        NetworkVirtualApplianceCommitMigrationContent IJsonModel<NetworkVirtualApplianceCommitMigrationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NetworkVirtualApplianceCommitMigrationRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual NetworkVirtualApplianceCommitMigrationContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceCommitMigrationRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceCommitMigrationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkVirtualApplianceCommitMigrationRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkVirtualApplianceCommitMigrationContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetworkVirtualApplianceCommitMigrationRequest(document.RootElement, options);
+            return DeserializeNetworkVirtualApplianceCommitMigrationContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NetworkVirtualApplianceCommitMigrationRequest DeserializeNetworkVirtualApplianceCommitMigrationRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static NetworkVirtualApplianceCommitMigrationContent DeserializeNetworkVirtualApplianceCommitMigrationContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetworkVirtualApplianceCommitMigrationRequest(properties, additionalBinaryDataProperties);
+            return new NetworkVirtualApplianceCommitMigrationContent(properties, additionalBinaryDataProperties);
         }
     }
 }

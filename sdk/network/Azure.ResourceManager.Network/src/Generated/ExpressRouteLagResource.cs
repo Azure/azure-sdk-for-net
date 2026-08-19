@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Request parameters supplied to generate a letter of authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<GenerateExpressRouteLagsLOAResult>> GenerateLoaAsync(GenerateExpressRouteLagsLOARequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GenerateExpressRouteLagsLOAResult>> GenerateLoaAsync(GenerateExpressRouteLagsLoaContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteLagsRestClient.CreateGenerateLoaRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GenerateExpressRouteLagsLOARequest.ToRequestContent(content), context);
+                HttpMessage message = _expressRouteLagsRestClient.CreateGenerateLoaRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GenerateExpressRouteLagsLoaContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GenerateExpressRouteLagsLOAResult> response = Response.FromValue(GenerateExpressRouteLagsLOAResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Request parameters supplied to generate a letter of authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<GenerateExpressRouteLagsLOAResult> GenerateLoa(GenerateExpressRouteLagsLOARequest content, CancellationToken cancellationToken = default)
+        public virtual Response<GenerateExpressRouteLagsLOAResult> GenerateLoa(GenerateExpressRouteLagsLoaContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteLagsRestClient.CreateGenerateLoaRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GenerateExpressRouteLagsLOARequest.ToRequestContent(content), context);
+                HttpMessage message = _expressRouteLagsRestClient.CreateGenerateLoaRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GenerateExpressRouteLagsLoaContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GenerateExpressRouteLagsLOAResult> response = Response.FromValue(GenerateExpressRouteLagsLOAResult.FromResponse(result), result);
                 if (response.Value == null)

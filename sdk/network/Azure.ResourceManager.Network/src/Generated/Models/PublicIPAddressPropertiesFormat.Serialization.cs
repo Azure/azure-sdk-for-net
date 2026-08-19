@@ -159,10 +159,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(UpgradedToV2))
+            if (options.Format != "W" && Optional.IsDefined(IsUpgradedToV2))
             {
                 writer.WritePropertyName("upgradedToV2"u8);
-                writer.WriteBooleanValue(UpgradedToV2.Value);
+                writer.WriteBooleanValue(IsUpgradedToV2.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Network.Models
             PublicIPAddressMigrationPhase? migrationPhase = default;
             PublicIPAddressData linkedPublicIPAddress = default;
             IPAddressDeleteOption? deleteOption = default;
-            bool? upgradedToV2 = default;
+            bool? isUpgradedToV2 = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    upgradedToV2 = prop.Value.GetBoolean();
+                    isUpgradedToV2 = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Network.Models
                 migrationPhase,
                 linkedPublicIPAddress,
                 deleteOption,
-                upgradedToV2,
+                isUpgradedToV2,
                 additionalBinaryDataProperties);
         }
     }

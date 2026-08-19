@@ -12,15 +12,15 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The customer name to be printed on a letter of authorization for ExpressRouteLag. </summary>
-    public partial class GenerateExpressRouteLagsLOARequest
+    public partial class GenerateExpressRouteLagsLoaContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GenerateExpressRouteLagsLOARequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerateExpressRouteLagsLoaContent"/>. </summary>
         /// <param name="customerName"> The customer name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customerName"/> is null. </exception>
-        public GenerateExpressRouteLagsLOARequest(string customerName)
+        public GenerateExpressRouteLagsLoaContent(string customerName)
         {
             Argument.AssertNotNull(customerName, nameof(customerName));
 
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.Network.Models
             Members = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GenerateExpressRouteLagsLOARequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerateExpressRouteLagsLoaContent"/>. </summary>
         /// <param name="customerName"> The customer name. </param>
         /// <param name="members"> The list of member names for which LOA should be generated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GenerateExpressRouteLagsLOARequest(string customerName, IList<string> members, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GenerateExpressRouteLagsLoaContent(string customerName, IList<string> members, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CustomerName = customerName;
             Members = members;

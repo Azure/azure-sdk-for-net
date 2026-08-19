@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityCheckSettings"/>. </summary>
-        /// <param name="generatePath"> Whether to generate a hop-by-hop path during the connectivity check. Default value is true. </param>
+        /// <param name="shouldGeneratePath"> Whether to generate a hop-by-hop path during the connectivity check. Default value is true. </param>
         /// <param name="preferredIPVersion"> Preferred IP version for the connectivity check. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectivityCheckSettings(bool? generatePath, TestEvalPreferredIPVersion? preferredIPVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectivityCheckSettings(bool? shouldGeneratePath, TestEvalPreferredIPVersion? preferredIPVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            GeneratePath = generatePath;
+            ShouldGeneratePath = shouldGeneratePath;
             PreferredIPVersion = preferredIPVersion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether to generate a hop-by-hop path during the connectivity check. Default value is true. </summary>
         [WirePath("generatePath")]
-        public bool? GeneratePath { get; set; }
+        public bool? ShouldGeneratePath { get; set; }
 
         /// <summary> Preferred IP version for the connectivity check. </summary>
         [WirePath("preferredIPVersion")]

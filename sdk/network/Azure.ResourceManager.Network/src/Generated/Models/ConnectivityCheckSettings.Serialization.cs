@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(ConnectivityCheckSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(GeneratePath))
+            if (Optional.IsDefined(ShouldGeneratePath))
             {
                 writer.WritePropertyName("generatePath"u8);
-                writer.WriteBooleanValue(GeneratePath.Value);
+                writer.WriteBooleanValue(ShouldGeneratePath.Value);
             }
             if (Optional.IsDefined(PreferredIPVersion))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            bool? generatePath = default;
+            bool? shouldGeneratePath = default;
             TestEvalPreferredIPVersion? preferredIPVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    generatePath = prop.Value.GetBoolean();
+                    shouldGeneratePath = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("preferredIPVersion"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConnectivityCheckSettings(generatePath, preferredIPVersion, additionalBinaryDataProperties);
+            return new ConnectivityCheckSettings(shouldGeneratePath, preferredIPVersion, additionalBinaryDataProperties);
         }
     }
 }

@@ -196,10 +196,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(AfcManaged))
+            if (options.Format != "W" && Optional.IsDefined(IsAfcManaged))
             {
                 writer.WritePropertyName("afcManaged"u8);
-                writer.WriteBooleanValue(AfcManaged.Value);
+                writer.WriteBooleanValue(IsAfcManaged.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Network.Models
             FirewallPolicyIntrusionDetection intrusionDetection = default;
             FirewallPolicyTransportSecurity transportSecurity = default;
             FirewallPolicySku sku = default;
-            bool? afcManaged = default;
+            bool? isAfcManaged = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    afcManaged = prop.Value.GetBoolean();
+                    isAfcManaged = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.Network.Models
                 intrusionDetection,
                 transportSecurity,
                 sku,
-                afcManaged,
+                isAfcManaged,
                 additionalBinaryDataProperties);
         }
     }

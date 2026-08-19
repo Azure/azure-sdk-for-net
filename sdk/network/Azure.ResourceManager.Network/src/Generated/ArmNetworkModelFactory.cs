@@ -1352,14 +1352,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="migrationPhase"> Migration phase of Public IP Address. </param>
         /// <param name="linkedPublicIPAddress"> The linked public IP address of the public IP address resource. </param>
         /// <param name="deleteOption"> Specify what happens to the public IP address when the VM using it is deleted. </param>
-        /// <param name="upgradedToV2"> Whether the public IP address SKU has been upgraded from Standard to StandardV2. </param>
+        /// <param name="isUpgradedToV2"> Whether the public IP address SKU has been upgraded from Standard to StandardV2. </param>
         /// <param name="publicIPPrefixId"> Resource ID. </param>
         /// <param name="extendedLocation"> The extended location of the public ip address. </param>
         /// <param name="sku"> The public IP address SKU. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="zones"> A list of availability zones denoting the IP allocated for the resource needs to come from. </param>
         /// <returns> A new <see cref="Network.PublicIPAddressData"/> instance for mocking. </returns>
-        public static PublicIPAddressData PublicIPAddressData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, NetworkIPAllocationMethod? publicIPAllocationMethod = default, NetworkIPVersion? publicIPAddressVersion = default, NetworkIPConfiguration ipConfiguration = default, PublicIPAddressDnsSettings dnsSettings = default, DdosSettings ddosSettings = default, IEnumerable<IPTag> ipTags = default, string ipAddress = default, int? idleTimeoutInMinutes = default, Guid? resourceGuid = default, NetworkProvisioningState? provisioningState = default, PublicIPAddressData servicePublicIPAddress = default, NatGatewayData natGateway = default, PublicIPAddressMigrationPhase? migrationPhase = default, PublicIPAddressData linkedPublicIPAddress = default, IPAddressDeleteOption? deleteOption = default, bool? upgradedToV2 = default, ResourceIdentifier publicIPPrefixId = default, ExtendedLocation extendedLocation = default, PublicIPAddressSku sku = default, ETag? eTag = default, IEnumerable<string> zones = default)
+        public static PublicIPAddressData PublicIPAddressData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, NetworkIPAllocationMethod? publicIPAllocationMethod = default, NetworkIPVersion? publicIPAddressVersion = default, NetworkIPConfiguration ipConfiguration = default, PublicIPAddressDnsSettings dnsSettings = default, DdosSettings ddosSettings = default, IEnumerable<IPTag> ipTags = default, string ipAddress = default, int? idleTimeoutInMinutes = default, Guid? resourceGuid = default, NetworkProvisioningState? provisioningState = default, PublicIPAddressData servicePublicIPAddress = default, NatGatewayData natGateway = default, PublicIPAddressMigrationPhase? migrationPhase = default, PublicIPAddressData linkedPublicIPAddress = default, IPAddressDeleteOption? deleteOption = default, bool? isUpgradedToV2 = default, ResourceIdentifier publicIPPrefixId = default, ExtendedLocation extendedLocation = default, PublicIPAddressSku sku = default, ETag? eTag = default, IEnumerable<string> zones = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -1371,7 +1371,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                publicIPAllocationMethod is null && publicIPAddressVersion is null && ipConfiguration is null && dnsSettings is null && ddosSettings is null && ipTags is null && ipAddress is null && publicIPPrefixId is null && idleTimeoutInMinutes is null && resourceGuid is null && provisioningState is null && servicePublicIPAddress is null && natGateway is null && migrationPhase is null && linkedPublicIPAddress is null && deleteOption is null && upgradedToV2 is null ? default : new PublicIPAddressPropertiesFormat(
+                publicIPAllocationMethod is null && publicIPAddressVersion is null && ipConfiguration is null && dnsSettings is null && ddosSettings is null && ipTags is null && ipAddress is null && publicIPPrefixId is null && idleTimeoutInMinutes is null && resourceGuid is null && provisioningState is null && servicePublicIPAddress is null && natGateway is null && migrationPhase is null && linkedPublicIPAddress is null && deleteOption is null && isUpgradedToV2 is null ? default : new PublicIPAddressPropertiesFormat(
                     publicIPAllocationMethod,
                     publicIPAddressVersion,
                     ipConfiguration,
@@ -1388,7 +1388,7 @@ namespace Azure.ResourceManager.Network.Models
                     migrationPhase,
                     linkedPublicIPAddress,
                     deleteOption,
-                    upgradedToV2,
+                    isUpgradedToV2,
                     default),
                 extendedLocation,
                 sku,
@@ -4144,12 +4144,12 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="customerName"> The customer name. </param>
         /// <param name="members"> The list of member names for which LOA should be generated. </param>
-        /// <returns> A new <see cref="Models.GenerateExpressRouteLagsLOARequest"/> instance for mocking. </returns>
-        public static GenerateExpressRouteLagsLOARequest GenerateExpressRouteLagsLOARequest(string customerName = default, IEnumerable<string> members = default)
+        /// <returns> A new <see cref="Models.GenerateExpressRouteLagsLoaContent"/> instance for mocking. </returns>
+        public static GenerateExpressRouteLagsLoaContent GenerateExpressRouteLagsLoaContent(string customerName = default, IEnumerable<string> members = default)
         {
             members ??= new ChangeTrackingList<string>();
 
-            return new GenerateExpressRouteLagsLOARequest(customerName, (members ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new GenerateExpressRouteLagsLoaContent(customerName, (members ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="encodedContent"> The content as a base64 encoded string. </param>
@@ -4177,7 +4177,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="dnsSettings"> DNS Proxy Settings definition. </param>
         /// <param name="explicitProxy"> Explicit Proxy Settings definition. </param>
         /// <param name="intrusionDetection"> The configuration for Intrusion detection. </param>
-        /// <param name="afcManaged"> Indicates that the Firewall Policy is managed by AFC (Azure Firewall for Containers). When set, the policy is treated as read-only for callers that do not supply the AFC-managed sync marker on write operations. </param>
+        /// <param name="isAfcManaged"> Indicates that the Firewall Policy is managed by AFC (Azure Firewall for Containers). When set, the policy is treated as read-only for callers that do not supply the AFC-managed sync marker on write operations. </param>
         /// <param name="basePolicyId"> Resource ID. </param>
         /// <param name="allowSqlRedirect"> A flag to indicate if SQL Redirect traffic filtering is enabled. Turning on the flag requires no rule using port 11000-11999. </param>
         /// <param name="transportSecurityCertificateAuthority"> The CA used for intermediate CA generation. </param>
@@ -4185,7 +4185,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="identity"> The identity of the firewall policy. </param>
         /// <returns> A new <see cref="Network.FirewallPolicyData"/> instance for mocking. </returns>
-        public static FirewallPolicyData FirewallPolicyData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, string size = default, IEnumerable<WritableSubResource> ruleCollectionGroups = default, IEnumerable<NetworkSubResource> kubeSelectorGroups = default, NetworkProvisioningState? provisioningState = default, IEnumerable<WritableSubResource> firewalls = default, IEnumerable<WritableSubResource> childPolicies = default, AzureFirewallThreatIntelMode? threatIntelMode = default, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist = default, FirewallPolicyInsights insights = default, FirewallPolicySnat snat = default, DnsSettings dnsSettings = default, FirewallPolicyExplicitProxy explicitProxy = default, FirewallPolicyIntrusionDetection intrusionDetection = default, bool? afcManaged = default, ResourceIdentifier basePolicyId = default, bool? allowSqlRedirect = default, FirewallPolicyCertificateAuthority transportSecurityCertificateAuthority = default, FirewallPolicySkuTier? skuTier = default, ETag? eTag = default, ManagedServiceIdentity identity = default)
+        public static FirewallPolicyData FirewallPolicyData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, string size = default, IEnumerable<WritableSubResource> ruleCollectionGroups = default, IEnumerable<NetworkSubResource> kubeSelectorGroups = default, NetworkProvisioningState? provisioningState = default, IEnumerable<WritableSubResource> firewalls = default, IEnumerable<WritableSubResource> childPolicies = default, AzureFirewallThreatIntelMode? threatIntelMode = default, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist = default, FirewallPolicyInsights insights = default, FirewallPolicySnat snat = default, DnsSettings dnsSettings = default, FirewallPolicyExplicitProxy explicitProxy = default, FirewallPolicyIntrusionDetection intrusionDetection = default, bool? isAfcManaged = default, ResourceIdentifier basePolicyId = default, bool? allowSqlRedirect = default, FirewallPolicyCertificateAuthority transportSecurityCertificateAuthority = default, FirewallPolicySkuTier? skuTier = default, ETag? eTag = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -4196,7 +4196,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                size is null && ruleCollectionGroups is null && kubeSelectorGroups is null && provisioningState is null && basePolicyId is null && firewalls is null && childPolicies is null && threatIntelMode is null && threatIntelWhitelist is null && insights is null && snat is null && allowSqlRedirect is null && dnsSettings is null && explicitProxy is null && intrusionDetection is null && transportSecurityCertificateAuthority is null && skuTier is null && afcManaged is null ? default : new FirewallPolicyPropertiesFormat(
+                size is null && ruleCollectionGroups is null && kubeSelectorGroups is null && provisioningState is null && basePolicyId is null && firewalls is null && childPolicies is null && threatIntelMode is null && threatIntelWhitelist is null && insights is null && snat is null && allowSqlRedirect is null && dnsSettings is null && explicitProxy is null && intrusionDetection is null && transportSecurityCertificateAuthority is null && skuTier is null && isAfcManaged is null ? default : new FirewallPolicyPropertiesFormat(
                     size,
                     (ruleCollectionGroups ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (kubeSelectorGroups ?? new ChangeTrackingList<NetworkSubResource>()).ToList(),
@@ -4214,7 +4214,7 @@ namespace Azure.ResourceManager.Network.Models
                     intrusionDetection,
                     new FirewallPolicyTransportSecurity(transportSecurityCertificateAuthority, default),
                     new FirewallPolicySku(skuTier, default),
-                    afcManaged,
+                    isAfcManaged,
                     default),
                 eTag,
                 identity);
@@ -6365,10 +6365,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <param name="properties"> Properties of the prepare migration request. </param>
-        /// <returns> A new <see cref="Models.NetworkVirtualAppliancePrepareMigrationRequest"/> instance for mocking. </returns>
-        public static NetworkVirtualAppliancePrepareMigrationRequest NetworkVirtualAppliancePrepareMigrationRequest(NetworkVirtualAppliancePrepareMigrationProperties properties = default)
+        /// <returns> A new <see cref="Models.NetworkVirtualAppliancePrepareMigrationContent"/> instance for mocking. </returns>
+        public static NetworkVirtualAppliancePrepareMigrationContent NetworkVirtualAppliancePrepareMigrationContent(NetworkVirtualAppliancePrepareMigrationProperties properties = default)
         {
-            return new NetworkVirtualAppliancePrepareMigrationRequest(properties, default);
+            return new NetworkVirtualAppliancePrepareMigrationContent(properties, default);
         }
 
         /// <param name="migrationType"> The type of migration workflow to prepare. </param>
@@ -6380,17 +6380,17 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <param name="migrationType"> The type of migration workflow to execute. </param>
-        /// <returns> A new <see cref="Models.NetworkVirtualApplianceExecuteMigrationRequest"/> instance for mocking. </returns>
-        public static NetworkVirtualApplianceExecuteMigrationRequest NetworkVirtualApplianceExecuteMigrationRequest(MigrationType? migrationType = default)
+        /// <returns> A new <see cref="Models.NetworkVirtualApplianceExecuteMigrationContent"/> instance for mocking. </returns>
+        public static NetworkVirtualApplianceExecuteMigrationContent NetworkVirtualApplianceExecuteMigrationContent(MigrationType? migrationType = default)
         {
-            return new NetworkVirtualApplianceExecuteMigrationRequest(migrationType is null ? default : new NetworkVirtualApplianceExecuteMigrationProperties(migrationType.GetValueOrDefault(), default), default);
+            return new NetworkVirtualApplianceExecuteMigrationContent(migrationType is null ? default : new NetworkVirtualApplianceExecuteMigrationProperties(migrationType.GetValueOrDefault(), default), default);
         }
 
         /// <param name="migrationType"> The type of migration workflow to commit. </param>
-        /// <returns> A new <see cref="Models.NetworkVirtualApplianceCommitMigrationRequest"/> instance for mocking. </returns>
-        public static NetworkVirtualApplianceCommitMigrationRequest NetworkVirtualApplianceCommitMigrationRequest(MigrationType? migrationType = default)
+        /// <returns> A new <see cref="Models.NetworkVirtualApplianceCommitMigrationContent"/> instance for mocking. </returns>
+        public static NetworkVirtualApplianceCommitMigrationContent NetworkVirtualApplianceCommitMigrationContent(MigrationType? migrationType = default)
         {
-            return new NetworkVirtualApplianceCommitMigrationRequest(migrationType is null ? default : new NetworkVirtualApplianceCommitMigrationProperties(migrationType.GetValueOrDefault(), default), default);
+            return new NetworkVirtualApplianceCommitMigrationContent(migrationType is null ? default : new NetworkVirtualApplianceCommitMigrationProperties(migrationType.GetValueOrDefault(), default), default);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -7119,12 +7119,12 @@ namespace Azure.ResourceManager.Network.Models
             return new DiagnosticOperationsSettings(connectivityCheckSettings, expressRouteDiagnosticsSettings, default);
         }
 
-        /// <param name="generatePath"> Whether to generate a hop-by-hop path during the connectivity check. Default value is true. </param>
+        /// <param name="shouldGeneratePath"> Whether to generate a hop-by-hop path during the connectivity check. Default value is true. </param>
         /// <param name="preferredIPVersion"> Preferred IP version for the connectivity check. </param>
         /// <returns> A new <see cref="Models.ConnectivityCheckSettings"/> instance for mocking. </returns>
-        public static ConnectivityCheckSettings ConnectivityCheckSettings(bool? generatePath = default, TestEvalPreferredIPVersion? preferredIPVersion = default)
+        public static ConnectivityCheckSettings ConnectivityCheckSettings(bool? shouldGeneratePath = default, TestEvalPreferredIPVersion? preferredIPVersion = default)
         {
-            return new ConnectivityCheckSettings(generatePath, preferredIPVersion, default);
+            return new ConnectivityCheckSettings(shouldGeneratePath, preferredIPVersion, default);
         }
 
         /// <param name="erCircuitResourceId"> Resource ID of the Express Route circuit. </param>
@@ -7213,7 +7213,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceGuid"> The resource GUID property of the public IP prefix resource. </param>
         /// <param name="provisioningState"> The provisioning state of the public IP prefix resource. </param>
         /// <param name="natGateway"> NatGateway of Public IP Prefix. </param>
-        /// <param name="upgradedToV2"> Whether the public IP prefix SKU has been upgraded from Standard to StandardV2. </param>
+        /// <param name="isUpgradedToV2"> Whether the public IP prefix SKU has been upgraded from Standard to StandardV2. </param>
         /// <param name="loadBalancerFrontendIPConfigurationId"> Resource ID. </param>
         /// <param name="customIPPrefixId"> Resource ID. </param>
         /// <param name="extendedLocation"> The extended location of the public ip address. </param>
@@ -7221,7 +7221,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="zones"> A list of availability zones denoting the IP allocated for the resource needs to come from. </param>
         /// <returns> A new <see cref="Network.PublicIPPrefixData"/> instance for mocking. </returns>
-        public static PublicIPPrefixData PublicIPPrefixData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, NetworkIPVersion? publicIPAddressVersion = default, IEnumerable<IPTag> ipTags = default, int? prefixLength = default, string ipPrefix = default, IEnumerable<ReferencedPublicIpAddress> publicIPAddresses = default, Guid? resourceGuid = default, NetworkProvisioningState? provisioningState = default, NatGatewayData natGateway = default, bool? upgradedToV2 = default, ResourceIdentifier loadBalancerFrontendIPConfigurationId = default, ResourceIdentifier customIPPrefixId = default, ExtendedLocation extendedLocation = default, PublicIPPrefixSku sku = default, ETag? eTag = default, IEnumerable<string> zones = default)
+        public static PublicIPPrefixData PublicIPPrefixData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, NetworkIPVersion? publicIPAddressVersion = default, IEnumerable<IPTag> ipTags = default, int? prefixLength = default, string ipPrefix = default, IEnumerable<ReferencedPublicIpAddress> publicIPAddresses = default, Guid? resourceGuid = default, NetworkProvisioningState? provisioningState = default, NatGatewayData natGateway = default, bool? isUpgradedToV2 = default, ResourceIdentifier loadBalancerFrontendIPConfigurationId = default, ResourceIdentifier customIPPrefixId = default, ExtendedLocation extendedLocation = default, PublicIPPrefixSku sku = default, ETag? eTag = default, IEnumerable<string> zones = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -7233,7 +7233,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                publicIPAddressVersion is null && ipTags is null && prefixLength is null && ipPrefix is null && publicIPAddresses is null && loadBalancerFrontendIPConfigurationId is null && customIPPrefixId is null && resourceGuid is null && provisioningState is null && natGateway is null && upgradedToV2 is null ? default : new PublicIPPrefixPropertiesFormat(
+                publicIPAddressVersion is null && ipTags is null && prefixLength is null && ipPrefix is null && publicIPAddresses is null && loadBalancerFrontendIPConfigurationId is null && customIPPrefixId is null && resourceGuid is null && provisioningState is null && natGateway is null && isUpgradedToV2 is null ? default : new PublicIPPrefixPropertiesFormat(
                     publicIPAddressVersion,
                     (ipTags ?? new ChangeTrackingList<IPTag>()).ToList(),
                     prefixLength,
@@ -7244,7 +7244,7 @@ namespace Azure.ResourceManager.Network.Models
                     resourceGuid,
                     provisioningState,
                     natGateway,
-                    upgradedToV2,
+                    isUpgradedToV2,
                     default),
                 extendedLocation,
                 sku,
@@ -7538,12 +7538,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <param name="moveIpConfigurationItems"> A list of IP configuration move items. </param>
-        /// <returns> A new <see cref="Models.MoveIpConfigurationsRequest"/> instance for mocking. </returns>
-        public static MoveIpConfigurationsRequest MoveIpConfigurationsRequest(IEnumerable<MoveIpConfigurationItem> moveIpConfigurationItems = default)
+        /// <returns> A new <see cref="Models.MoveIpConfigurationsContent"/> instance for mocking. </returns>
+        public static MoveIpConfigurationsContent MoveIpConfigurationsContent(IEnumerable<MoveIpConfigurationItem> moveIpConfigurationItems = default)
         {
             moveIpConfigurationItems ??= new ChangeTrackingList<MoveIpConfigurationItem>();
 
-            return new MoveIpConfigurationsRequest((moveIpConfigurationItems ?? new ChangeTrackingList<MoveIpConfigurationItem>()).ToList(), default);
+            return new MoveIpConfigurationsContent((moveIpConfigurationItems ?? new ChangeTrackingList<MoveIpConfigurationItem>()).ToList(), default);
         }
 
         /// <param name="sourceIpConfigurationId"> The ARM resource ID of the IP configuration. </param>

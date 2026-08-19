@@ -12,20 +12,20 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Parameters supplied to execute the migration of a Network Virtual Appliance. </summary>
-    public partial class NetworkVirtualApplianceExecuteMigrationRequest
+    public partial class NetworkVirtualApplianceExecuteMigrationContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceExecuteMigrationRequest"/>. </summary>
-        public NetworkVirtualApplianceExecuteMigrationRequest()
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceExecuteMigrationContent"/>. </summary>
+        public NetworkVirtualApplianceExecuteMigrationContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceExecuteMigrationRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceExecuteMigrationContent"/>. </summary>
         /// <param name="properties"> Properties of the execute migration request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkVirtualApplianceExecuteMigrationRequest(NetworkVirtualApplianceExecuteMigrationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkVirtualApplianceExecuteMigrationContent(NetworkVirtualApplianceExecuteMigrationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

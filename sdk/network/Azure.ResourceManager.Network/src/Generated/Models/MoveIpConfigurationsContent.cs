@@ -13,25 +13,25 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Request body for the MoveIpConfigurations operation. </summary>
-    public partial class MoveIpConfigurationsRequest
+    public partial class MoveIpConfigurationsContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MoveIpConfigurationsRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoveIpConfigurationsContent"/>. </summary>
         /// <param name="moveIpConfigurationItems"> A list of IP configuration move items. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="moveIpConfigurationItems"/> is null. </exception>
-        public MoveIpConfigurationsRequest(IEnumerable<MoveIpConfigurationItem> moveIpConfigurationItems)
+        public MoveIpConfigurationsContent(IEnumerable<MoveIpConfigurationItem> moveIpConfigurationItems)
         {
             Argument.AssertNotNull(moveIpConfigurationItems, nameof(moveIpConfigurationItems));
 
             MoveIpConfigurationItems = moveIpConfigurationItems.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MoveIpConfigurationsRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoveIpConfigurationsContent"/>. </summary>
         /// <param name="moveIpConfigurationItems"> A list of IP configuration move items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MoveIpConfigurationsRequest(IList<MoveIpConfigurationItem> moveIpConfigurationItems, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MoveIpConfigurationsContent(IList<MoveIpConfigurationItem> moveIpConfigurationItems, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MoveIpConfigurationItems = moveIpConfigurationItems;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

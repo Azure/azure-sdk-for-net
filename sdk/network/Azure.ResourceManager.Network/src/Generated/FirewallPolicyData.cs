@@ -213,11 +213,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Indicates that the Firewall Policy is managed by AFC (Azure Firewall for Containers). When set, the policy is treated as read-only for callers that do not supply the AFC-managed sync marker on write operations. </summary>
         [WirePath("properties.afcManaged")]
-        public bool? AfcManaged
+        public bool? IsAfcManaged
         {
             get
             {
-                return Properties is null ? default : Properties.AfcManaged;
+                return Properties is null ? default : Properties.IsAfcManaged;
             }
         }
 

@@ -15,66 +15,66 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The customer name to be printed on a letter of authorization for ExpressRouteLag. </summary>
-    public partial class GenerateExpressRouteLagsLOARequest : IJsonModel<GenerateExpressRouteLagsLOARequest>
+    public partial class GenerateExpressRouteLagsLoaContent : IJsonModel<GenerateExpressRouteLagsLoaContent>
     {
-        /// <summary> Initializes a new instance of <see cref="GenerateExpressRouteLagsLOARequest"/> for deserialization. </summary>
-        internal GenerateExpressRouteLagsLOARequest()
+        /// <summary> Initializes a new instance of <see cref="GenerateExpressRouteLagsLoaContent"/> for deserialization. </summary>
+        internal GenerateExpressRouteLagsLoaContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GenerateExpressRouteLagsLOARequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual GenerateExpressRouteLagsLoaContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GenerateExpressRouteLagsLOARequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GenerateExpressRouteLagsLoaContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGenerateExpressRouteLagsLOARequest(document.RootElement, options);
+                        return DeserializeGenerateExpressRouteLagsLoaContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GenerateExpressRouteLagsLOARequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenerateExpressRouteLagsLoaContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GenerateExpressRouteLagsLOARequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GenerateExpressRouteLagsLoaContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GenerateExpressRouteLagsLOARequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenerateExpressRouteLagsLoaContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GenerateExpressRouteLagsLOARequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GenerateExpressRouteLagsLoaContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GenerateExpressRouteLagsLOARequest IPersistableModel<GenerateExpressRouteLagsLOARequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        GenerateExpressRouteLagsLoaContent IPersistableModel<GenerateExpressRouteLagsLoaContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GenerateExpressRouteLagsLOARequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GenerateExpressRouteLagsLoaContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="generateExpressRouteLagsLOARequest"> The <see cref="GenerateExpressRouteLagsLOARequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(GenerateExpressRouteLagsLOARequest generateExpressRouteLagsLOARequest)
+        /// <param name="generateExpressRouteLagsLoaContent"> The <see cref="GenerateExpressRouteLagsLoaContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(GenerateExpressRouteLagsLoaContent generateExpressRouteLagsLoaContent)
         {
-            if (generateExpressRouteLagsLOARequest == null)
+            if (generateExpressRouteLagsLoaContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(generateExpressRouteLagsLOARequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(generateExpressRouteLagsLoaContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GenerateExpressRouteLagsLOARequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GenerateExpressRouteLagsLoaContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GenerateExpressRouteLagsLOARequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GenerateExpressRouteLagsLoaContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenerateExpressRouteLagsLOARequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GenerateExpressRouteLagsLoaContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("customerName"u8);
             writer.WriteStringValue(CustomerName);
@@ -126,24 +126,24 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GenerateExpressRouteLagsLOARequest IJsonModel<GenerateExpressRouteLagsLOARequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        GenerateExpressRouteLagsLoaContent IJsonModel<GenerateExpressRouteLagsLoaContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GenerateExpressRouteLagsLOARequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual GenerateExpressRouteLagsLoaContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GenerateExpressRouteLagsLOARequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GenerateExpressRouteLagsLoaContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenerateExpressRouteLagsLOARequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GenerateExpressRouteLagsLoaContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGenerateExpressRouteLagsLOARequest(document.RootElement, options);
+            return DeserializeGenerateExpressRouteLagsLoaContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GenerateExpressRouteLagsLOARequest DeserializeGenerateExpressRouteLagsLOARequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static GenerateExpressRouteLagsLoaContent DeserializeGenerateExpressRouteLagsLoaContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GenerateExpressRouteLagsLOARequest(customerName, members ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new GenerateExpressRouteLagsLoaContent(customerName, members ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }
