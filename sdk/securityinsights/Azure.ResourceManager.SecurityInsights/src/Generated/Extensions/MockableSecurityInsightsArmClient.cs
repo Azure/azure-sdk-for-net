@@ -47,27 +47,27 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
 
         private ClientDiagnostics SecurityInsightsClientClientDiagnostics => _securityInsightsClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SecurityInsightsClient SecurityInsightsClientRestClient => _securityInsightsClientRestClient ??= new SecurityInsightsClient(SecurityInsightsClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01-preview");
+        private SecurityInsightsClient SecurityInsightsClientRestClient => _securityInsightsClientRestClient ??= new SecurityInsightsClient(SecurityInsightsClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         private ClientDiagnostics ThreatIntelligenceIndicatorClientDiagnostics => _threatIntelligenceIndicatorClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ThreatIntelligenceIndicator ThreatIntelligenceIndicatorRestClient => _threatIntelligenceIndicatorRestClient ??= new ThreatIntelligenceIndicator(ThreatIntelligenceIndicatorClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01-preview");
+        private ThreatIntelligenceIndicator ThreatIntelligenceIndicatorRestClient => _threatIntelligenceIndicatorRestClient ??= new ThreatIntelligenceIndicator(ThreatIntelligenceIndicatorClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         private ClientDiagnostics DataConnectorsCheckRequirementsClientDiagnostics => _dataConnectorsCheckRequirementsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DataConnectorsCheckRequirements DataConnectorsCheckRequirementsRestClient => _dataConnectorsCheckRequirementsRestClient ??= new DataConnectorsCheckRequirements(DataConnectorsCheckRequirementsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01-preview");
+        private DataConnectorsCheckRequirements DataConnectorsCheckRequirementsRestClient => _dataConnectorsCheckRequirementsRestClient ??= new DataConnectorsCheckRequirements(DataConnectorsCheckRequirementsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         private ClientDiagnostics SourceControlClientDiagnostics => _sourceControlClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SourceControl SourceControlRestClient => _sourceControlRestClient ??= new SourceControl(SourceControlClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01-preview");
+        private SourceControl SourceControlRestClient => _sourceControlRestClient ??= new SourceControl(SourceControlClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         private ClientDiagnostics ThreatIntelligenceIndicatorMetricsClientDiagnostics => _threatIntelligenceIndicatorMetricsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ThreatIntelligenceIndicatorMetrics ThreatIntelligenceIndicatorMetricsRestClient => _threatIntelligenceIndicatorMetricsRestClient ??= new ThreatIntelligenceIndicatorMetrics(ThreatIntelligenceIndicatorMetricsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01-preview");
+        private ThreatIntelligenceIndicatorMetrics ThreatIntelligenceIndicatorMetricsRestClient => _threatIntelligenceIndicatorMetricsRestClient ??= new ThreatIntelligenceIndicatorMetrics(ThreatIntelligenceIndicatorMetricsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         private ClientDiagnostics ThreatIntelligenceClientDiagnostics => _threatIntelligenceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ThreatIntelligence ThreatIntelligenceRestClient => _threatIntelligenceRestClient ??= new ThreatIntelligence(ThreatIntelligenceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01-preview");
+        private ThreatIntelligence ThreatIntelligenceRestClient => _threatIntelligenceRestClient ??= new ThreatIntelligence(ThreatIntelligenceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         /// <summary> Gets an object representing a <see cref="SecurityInsightsAlertRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -1935,7 +1935,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1986,7 +1986,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2037,7 +2037,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2088,7 +2088,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2139,7 +2139,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2189,7 +2189,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2239,7 +2239,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2280,7 +2280,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2321,7 +2321,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2371,7 +2371,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2421,7 +2421,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2462,7 +2462,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2503,7 +2503,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2551,7 +2551,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2599,7 +2599,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2649,7 +2649,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2699,7 +2699,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2741,7 +2741,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
