@@ -60,17 +60,28 @@ namespace Azure.Security.KeyVault.Secrets
             // (which extends ClientOptions) so AddPolicy entries, custom RetryPolicy /
             // RetryOptions, Transport, Diagnostics allow-lists and ApplicationId all flow
             // through automatically. The challenge-based auth policy is the same one the
-            // legacy SecretClient used. The explicit transport options enable
-            // Proof-of-Possession (PoP) token binding in the authentication policy.
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(
-                options,
-                perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
-                perRetryPolicies: [new ChallengeBasedAuthenticationPolicy(
-                    credential,
-                    options.DisableChallengeResourceVerification,
-                    options.EnableProofOfPossession && ChallengeBasedAuthenticationPolicy.SupportsProofOfPossession(options.Transport))],
-                transportOptions: new HttpPipelineTransportOptions(),
-                responseClassifier: null);
+            // legacy SecretClient used. Transport options are only passed when
+            // Proof-of-Possession (PoP) token binding is enabled: that overload builds a
+            // dedicated, updatable (and therefore disposable) transport instead of the
+            // shared default, so customers who don't opt in keep the default transport
+            // and connection-pooling behavior unchanged.
+            bool enableProofOfPossession = options.EnableProofOfPossession && ChallengeBasedAuthenticationPolicy.SupportsProofOfPossession(options.Transport);
+            ChallengeBasedAuthenticationPolicy authenticationPolicy = new ChallengeBasedAuthenticationPolicy(
+                credential,
+                options.DisableChallengeResourceVerification,
+                enableProofOfPossession);
+            HttpPipeline pipeline = enableProofOfPossession
+                ? HttpPipelineBuilder.Build(
+                    options,
+                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                    perRetryPolicies: [authenticationPolicy],
+                    transportOptions: new HttpPipelineTransportOptions(),
+                    responseClassifier: null)
+                : HttpPipelineBuilder.Build(
+                    options,
+                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                    perRetryPolicies: [authenticationPolicy],
+                    responseClassifier: null);
             _pipeline = pipeline;
 
             _generated = new KeyVaultSecretsClient(
@@ -81,11 +92,9 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
-        /// Releases the resources used by this <see cref="SecretClient"/>. The transport options passed to
-        /// <see cref="HttpPipelineBuilder"/> to support Proof-of-Possession (PoP) token binding cause a
-        /// dedicated, non-shared transport (and its underlying <see cref="System.Net.Http.HttpClient"/>) to be
-        /// created for this client instance; disposing releases that transport instead of leaving it for the
-        /// garbage collector to finalize.
+        /// Releases the resources used by this <see cref="SecretClient"/>, including the dedicated transport
+        /// created internally when <see cref="SecretClientOptions.EnableProofOfPossession"/> is enabled. A no-op
+        /// otherwise.
         /// </summary>
         public void Dispose()
         {

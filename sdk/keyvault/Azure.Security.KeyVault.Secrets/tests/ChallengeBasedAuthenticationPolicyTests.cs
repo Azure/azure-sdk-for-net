@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -188,6 +189,27 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             Assert.AreEqual("secret-value", secret.Value);
             Assert.IsNotNull(credential.LastRequestContext);
             Assert.IsFalse(credential.LastRequestContext.IsProofOfPossessionEnabled);
+        }
+
+        [Test]
+        public void DoesNotCreateDedicatedTransportByDefault()
+        {
+            // The dedicated, updatable (and therefore disposable) transport used for PoP token binding must only
+            // be created when EnableProofOfPossession is set to true - otherwise every client construction would
+            // lose the shared, pooled default transport regardless of whether PoP is ever used. Verified here by
+            // checking the concrete pipeline type: HttpPipelineBuilder.Build only returns a DisposableHttpPipeline
+            // from the overload that accepts HttpPipelineTransportOptions.
+            SecretClient defaultClient = new SecretClient(VaultUri, new MockCredential(new MockTransportBuilder().Build()));
+            Assert.IsNotInstanceOf<IDisposable>(GetPipeline(defaultClient), "No dedicated transport should be created when EnableProofOfPossession is not set.");
+
+            SecretClient optedInClient = new SecretClient(
+                VaultUri,
+                new MockCredential(new MockTransportBuilder().Build()),
+                new SecretClientOptions { EnableProofOfPossession = true });
+            Assert.IsInstanceOf<IDisposable>(GetPipeline(optedInClient), "A dedicated, disposable transport should be created when EnableProofOfPossession is true.");
+
+            static object GetPipeline(SecretClient client) =>
+                typeof(SecretClient).GetField("_pipeline", BindingFlags.NonPublic | BindingFlags.Instance)!.GetValue(client)!;
         }
 
 #if !NET462

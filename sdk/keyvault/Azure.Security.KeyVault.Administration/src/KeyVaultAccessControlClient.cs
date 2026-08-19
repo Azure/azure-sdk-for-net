@@ -61,15 +61,23 @@ namespace Azure.Security.KeyVault.Administration
             options ??= new KeyVaultAdministrationClientOptions();
             string apiVersion = options.GetVersionString();
 
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(
-                options,
-                perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
-                perRetryPolicies: [new ChallengeBasedAuthenticationPolicy(
-                    credential,
-                    options.DisableChallengeResourceVerification,
-                    options.EnableProofOfPossession && ChallengeBasedAuthenticationPolicy.SupportsProofOfPossession(options.Transport))],
-                transportOptions: new HttpPipelineTransportOptions(),
-                responseClassifier: null);
+            bool enableProofOfPossession = options.EnableProofOfPossession && ChallengeBasedAuthenticationPolicy.SupportsProofOfPossession(options.Transport);
+            ChallengeBasedAuthenticationPolicy authenticationPolicy = new ChallengeBasedAuthenticationPolicy(
+                credential,
+                options.DisableChallengeResourceVerification,
+                enableProofOfPossession);
+            HttpPipeline pipeline = enableProofOfPossession
+                ? HttpPipelineBuilder.Build(
+                    options,
+                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                    perRetryPolicies: [authenticationPolicy],
+                    transportOptions: new HttpPipelineTransportOptions(),
+                    responseClassifier: null)
+                : HttpPipelineBuilder.Build(
+                    options,
+                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                    perRetryPolicies: [authenticationPolicy],
+                    responseClassifier: null);
 
             _diagnostics = new ClientDiagnostics(options, true);
             ClientDiagnostics = _diagnostics;
@@ -95,11 +103,10 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Releases the resources used by this <see cref="KeyVaultAccessControlClient"/>. The transport options
-        /// passed to <see cref="HttpPipelineBuilder"/> to support Proof-of-Possession (PoP) token binding cause a
-        /// dedicated, non-shared transport (and its underlying <see cref="System.Net.Http.HttpClient"/>) to be
-        /// created for this client instance; disposing releases that transport instead of leaving it for the
-        /// garbage collector to finalize.
+        /// Releases the resources used by this <see cref="KeyVaultAccessControlClient"/>, including the dedicated
+        /// transport created internally when
+        /// <see cref="KeyVaultAdministrationClientOptions.EnableProofOfPossession"/> is enabled. A no-op
+        /// otherwise.
         /// </summary>
         public void Dispose()
         {

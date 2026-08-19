@@ -56,25 +56,31 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             _apiVersion = options.GetVersionString();
 
-            _pipeline = HttpPipelineBuilder.Build(
-                options,
-                perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
-                perRetryPolicies: [new ChallengeBasedAuthenticationPolicy(
-                    credential,
-                    options.DisableChallengeResourceVerification,
-                    options.EnableProofOfPossession && ChallengeBasedAuthenticationPolicy.SupportsProofOfPossession(options.Transport))],
-                transportOptions: new HttpPipelineTransportOptions(),
-                responseClassifier: null);
+            bool enableProofOfPossession = options.EnableProofOfPossession && ChallengeBasedAuthenticationPolicy.SupportsProofOfPossession(options.Transport);
+            ChallengeBasedAuthenticationPolicy authenticationPolicy = new ChallengeBasedAuthenticationPolicy(
+                credential,
+                options.DisableChallengeResourceVerification,
+                enableProofOfPossession);
+            _pipeline = enableProofOfPossession
+                ? HttpPipelineBuilder.Build(
+                    options,
+                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                    perRetryPolicies: [authenticationPolicy],
+                    transportOptions: new HttpPipelineTransportOptions(),
+                    responseClassifier: null)
+                : HttpPipelineBuilder.Build(
+                    options,
+                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                    perRetryPolicies: [authenticationPolicy],
+                    responseClassifier: null);
 
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
-        /// Releases the resources used by this <see cref="KeyResolver"/>. The transport options passed to
-        /// <see cref="HttpPipelineBuilder"/> to support Proof-of-Possession (PoP) token binding cause a
-        /// dedicated, non-shared transport (and its underlying <see cref="System.Net.Http.HttpClient"/>) to be
-        /// created for this instance; disposing releases that transport instead of leaving it for the garbage
-        /// collector to finalize.
+        /// Releases the resources used by this <see cref="KeyResolver"/>, including the dedicated transport
+        /// created internally when <see cref="CryptographyClientOptions.EnableProofOfPossession"/> is enabled. A
+        /// no-op otherwise.
         /// </summary>
         public void Dispose()
         {

@@ -22,17 +22,11 @@ namespace Azure.Security.KeyVault
         private readonly bool _enableProofOfPossession;
 
         /// <summary>
-        /// Set when a Proof-of-Possession binding certificate could not be applied to the transport because
-        /// <see cref="HttpPipelineTransport.Update"/> threw (see
-        /// <see cref="OnTransportOptionsChanged(HttpPipelineTransportOptions)"/>). Read by
-        /// <see cref="AddTokenBoundAuthHeaderIfBound(HttpMessage)"/> so the <c>x-ms-tokenboundauth</c> header is
-        /// never sent when that happens. This does not cover every way a transport update can fail to take effect --
-        /// see the remarks on <see cref="OnTransportOptionsChanged(HttpPipelineTransportOptions)"/> for the silent
-        /// no-op case this cannot detect. This mirrors the base class's own best-effort, lock-free tracking of
-        /// <c>_lastBindingCertificate</c> for the same instance: a client is safe to share across threads, but a
-        /// race between two concurrent requests that both trigger a transport update could -- in the narrow window
-        /// between the two -- observe the outcome of the other request rather than its own. The field is volatile
-        /// only to ensure a write on one thread is promptly visible on another, not to eliminate that race.
+        /// Set when applying a Proof-of-Possession binding certificate to the transport fails; read by
+        /// <see cref="AddTokenBoundAuthHeaderIfBound(HttpMessage)"/> to suppress <c>x-ms-tokenboundauth</c> in that
+        /// case. See <see cref="OnTransportOptionsChanged(HttpPipelineTransportOptions)"/> for details and known
+        /// limitations. Volatile only for cross-thread visibility, matching the base class's own best-effort,
+        /// lock-free tracking of <c>_lastBindingCertificate</c> on the same instance.
         /// </summary>
         private volatile bool _transportUpdateFailed;
 
@@ -59,23 +53,15 @@ namespace Azure.Security.KeyVault
         /// Applies a Proof-of-Possession binding certificate to the transport when the credential returns one.
         /// </summary>
         /// <remarks>
-        /// <see cref="SupportsProofOfPossession(HttpPipelineTransport)"/> is a best-effort, type-based check made
-        /// before any token is requested; it cannot always predict whether <see cref="HttpPipelineTransport.Update"/>
-        /// will actually succeed on the specific transport instance in use. Two cases are known to pass that check
-        /// without actually applying the certificate: <see cref="HttpClientTransport.Shared"/> throws
-        /// <see cref="InvalidOperationException"/> because the shared instance can never be updated, and a
-        /// customer-supplied <see cref="HttpClientTransport"/> wrapping their own <see cref="System.Net.Http.HttpClient"/>
-        /// has no factory to rebuild from and silently no-ops (no exception, nothing to catch here). This override
-        /// prevents the first case from surfacing as an unhandled exception deep inside the pipeline -- turning a
-        /// request that would otherwise succeed with a plain bearer token into a hard failure -- by containing it
-        /// and letting the request proceed without the binding certificate applied.
-        /// <see cref="AddTokenBoundAuthHeaderIfBound(HttpMessage)"/> checks <see cref="_transportUpdateFailed"/> so
-        /// the <c>x-ms-tokenboundauth</c> header is not sent when that happens. The silent no-op case cannot be
-        /// detected the same way -- <see cref="HttpPipelineTransport.Update"/> has no way to report that it declined
-        /// to apply an update -- so the header may still be sent without the certificate actually being installed
-        /// in that specific case. Giving Azure.Core a first-class way to report whether a transport can actually
-        /// apply an update (tracked as a follow-up) would let both cases be detected before a token is even
-        /// requested.
+        /// <see cref="SupportsProofOfPossession(HttpPipelineTransport)"/> can't always predict whether
+        /// <see cref="HttpPipelineTransport.Update"/> will succeed on the actual transport instance: for example
+        /// <see cref="HttpClientTransport.Shared"/> throws <see cref="InvalidOperationException"/> because it can
+        /// never be updated, and a customer-supplied <see cref="HttpClientTransport"/> without a rebuild factory
+        /// silently no-ops. This override catches the former so a request never crashes because of it, and sets
+        /// <see cref="_transportUpdateFailed"/> so the token-bound header isn't sent. The no-op case can't be
+        /// detected the same way -- <c>Update</c> has no way to report that it declined -- so the header may still
+        /// be sent without the certificate actually applied there; that needs a first-class Azure.Core capability
+        /// check as a follow-up.
         /// </remarks>
         [Experimental("AZID0004")]
         protected override void OnTransportOptionsChanged(HttpPipelineTransportOptions options)

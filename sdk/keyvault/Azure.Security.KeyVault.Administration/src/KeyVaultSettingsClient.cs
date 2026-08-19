@@ -53,7 +53,9 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary>
         /// Releases the resources used by this <see cref="KeyVaultSettingsClient"/>, including the dedicated
-        /// transport created internally to support Proof-of-Possession (PoP) token binding.
+        /// transport created internally when
+        /// <see cref="KeyVaultAdministrationClientOptions.EnableProofOfPossession"/> is enabled. A no-op
+        /// otherwise.
         /// </summary>
         public void Dispose()
         {

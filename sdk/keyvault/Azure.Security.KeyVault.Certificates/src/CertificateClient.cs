@@ -107,18 +107,26 @@ namespace Azure.Security.KeyVault.Certificates
             // (per-call + per-retry), custom RetryPolicy / RetryOptions, Transport,
             // Diagnostics.LoggedHeaderNames + LoggedQueryParameters and ApplicationId
             // flow through automatically. No field-by-field copy is needed - future
-            // additions to ClientOptions are picked up for free. The explicit
-            // transport options enable Proof-of-Possession (PoP) token binding
-            // in the authentication policy.
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(
-                options,
-                perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
-                perRetryPolicies: [new ChallengeBasedAuthenticationPolicy(
-                    credential,
-                    options.DisableChallengeResourceVerification,
-                    options.EnableProofOfPossession && ChallengeBasedAuthenticationPolicy.SupportsProofOfPossession(options.Transport))],
-                transportOptions: new HttpPipelineTransportOptions(),
-                responseClassifier: null);
+            // additions to ClientOptions are picked up for free. Transport options are
+            // only passed when Proof-of-Possession (PoP) token binding is enabled, so
+            // customers who don't opt in keep the default transport unchanged.
+            bool enableProofOfPossession = options.EnableProofOfPossession && ChallengeBasedAuthenticationPolicy.SupportsProofOfPossession(options.Transport);
+            ChallengeBasedAuthenticationPolicy authenticationPolicy = new ChallengeBasedAuthenticationPolicy(
+                credential,
+                options.DisableChallengeResourceVerification,
+                enableProofOfPossession);
+            HttpPipeline pipeline = enableProofOfPossession
+                ? HttpPipelineBuilder.Build(
+                    options,
+                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                    perRetryPolicies: [authenticationPolicy],
+                    transportOptions: new HttpPipelineTransportOptions(),
+                    responseClassifier: null)
+                : HttpPipelineBuilder.Build(
+                    options,
+                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                    perRetryPolicies: [authenticationPolicy],
+                    responseClassifier: null);
 
             _generated = new KeyVaultCertificatesClient(vaultUri, MapApiVersion(options.Version), pipeline, _diagnostics);
 
@@ -130,11 +138,9 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Releases the resources used by this <see cref="CertificateClient"/>. The transport options passed to
-        /// <see cref="HttpPipelineBuilder"/> to support Proof-of-Possession (PoP) token binding cause a
-        /// dedicated, non-shared transport (and its underlying <see cref="System.Net.Http.HttpClient"/>) to be
-        /// created for this client instance; disposing releases that transport instead of leaving it for the
-        /// garbage collector to finalize.
+        /// Releases the resources used by this <see cref="CertificateClient"/>, including the dedicated transport
+        /// created internally when <see cref="CertificateClientOptions.EnableProofOfPossession"/> is enabled. A
+        /// no-op otherwise.
         /// </summary>
         public void Dispose()
         {
