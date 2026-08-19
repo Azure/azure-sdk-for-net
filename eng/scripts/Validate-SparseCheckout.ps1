@@ -199,6 +199,18 @@ function Invoke-Comparison([string] $Mode) {
     }
   }
 
+  $gitChanges = @(& git -C $clonePath status --porcelain)
+  if ($LASTEXITCODE -ne 0) {
+    throw "Unable to inspect generated changes in '$clonePath'."
+  }
+  $gitDiff = (& git -C $clonePath --no-pager diff --binary --no-ext-diff) -join "`n"
+  if ($LASTEXITCODE -ne 0) {
+    throw "Unable to read generated changes in '$clonePath'."
+  }
+  $gitDiffHash = [Convert]::ToHexString(
+    [System.Security.Cryptography.SHA256]::HashData(
+      [System.Text.Encoding]::UTF8.GetBytes($gitDiff))).ToLowerInvariant()
+
   return [ordered]@{
     Mode = $Mode
     CloneSeconds = [math]::Round($cloneWatch.Elapsed.TotalSeconds, 3)
@@ -208,6 +220,8 @@ function Invoke-Comparison([string] $Mode) {
     FinalTree = Get-TreeMetrics -Path $clonePath
     Packages = $packages
     Tests = $testSummary
+    GitChanges = $gitChanges
+    GitDiffSha256 = $gitDiffHash
   }
 }
 
@@ -249,4 +263,10 @@ if ($Target -eq 'Pack' -and (Compare-Object $results[0].Packages $results[1].Pac
 if ($Target -eq 'Test' -and
     ($results[0].Tests | ConvertTo-Json -Compress) -ne ($results[1].Tests | ConvertTo-Json -Compress)) {
   throw 'Full and sparse clones produced different test counts.'
+}
+if ($Target -eq 'GenerateCode' -and
+    (($results[0].GitChanges | ConvertTo-Json -Compress) -ne
+       ($results[1].GitChanges | ConvertTo-Json -Compress) -or
+     $results[0].GitDiffSha256 -ne $results[1].GitDiffSha256)) {
+  throw 'Full and sparse clones produced different generated changes.'
 }
