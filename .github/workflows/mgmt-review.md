@@ -289,6 +289,7 @@ For each changed management SDK package:
 2. Determine whether this is a migration PR. Use the migration skill when the PR title or files indicate Swagger/AutoRest to TypeSpec migration, such as adding `tsp-location.yaml`, deleting `src/autorest.md`, adding TypeSpec `metadata.json`, or broadly regenerating `src/Generated/`.
 3. Determine whether the package is TypeSpec-backed by checking for `tsp-location.yaml`. For every TypeSpec-backed package, inspect added or modified SDK customization files for rename-only `[CodeGenType]`, `[CodeGenMember]`, `[CodeGenSuppress]`, wrappers, or forwarding methods, even when the PR is not a migration.
 4. Determine the latest released stable API baseline from `ApiCompatVersion` in the package `.csproj` when present. Fetch the corresponding tagged API file by tag name `<PackageName>_<Version>`.
+5. Use the existing CI ApiCompat result as the authoritative automated signal for binary compatibility and parameter names/order. Do not infer shipped signatures from previous repository source.
 
 ## Step 2 - Run deterministic checks
 
@@ -301,12 +302,12 @@ pwsh .github/skills/azure-sdk-mgmt-pr-review/Check-MgmtNamingRules.ps1 -ApiFileP
 If a baseline API file is available, pass it too:
 
 ```powershell
-pwsh .github/skills/azure-sdk-mgmt-pr-review/Check-MgmtNamingRules.ps1 -ApiFilePath <current-api-file> -BaselineApiFilePath <baseline-api-file>
+pwsh .github/skills/azure-sdk-mgmt-pr-review/Check-MgmtNamingRules.ps1 -ApiFilePath <current-api-file> -BaselineApiFilePath <baseline-api-file> -BaselineVersion <ApiCompatVersion>
 ```
 
 Use only the scanner script fetched from the base branch and API surface files fetched from the PR head and baseline tag into temporary files. Do not run the scanner over a PR checkout.
 
-When a baseline is available, the scanner deterministically compares required/optional parameter metadata for every matching public method and constructor. Treat every `OPTPARAM001` or `OPTPARAM002` result as blocking. Do not rely on ApiCompat or on checking only overloads named in prior review comments: ApiCompat can pass while optional metadata changes break source compilation or create ambiguity between sibling overloads.
+When a baseline is available, the scanner reports `OPTPARAM001` only when a parameter changed from optional to required on the sole current overload. That change deterministically breaks the GA call that omits the argument and is blocking. The scanner suppresses optionality differences when sibling overloads exist and does not emit required-to-optional findings. Do not create review findings for those textual differences unless a future deterministic compiler-backed check proves a broken, ambiguous, or differently bound GA call.
 ## Step 3 - Apply the skill review
 
 Apply all relevant phases from the skill files, with these workflow-specific adjustments:
@@ -314,7 +315,7 @@ Apply all relevant phases from the skill files, with these workflow-specific adj
 1. Phase 1 versioning findings are blocking, but do **not** stop after Phase 1 — continue into Phase 2 and submit one combined review so versioning and API/naming findings reach the author in the same round (per the updated Phase 1 in the skill).
 2. Phase 2 API review findings should focus on new or changed public API surface only.
 3. **Contextual naming must be exhaustive.** Use the scanner's `-ListNewTypes` inventory mode to enumerate every new public type, then record a verdict for each one in a single pass (see Phase 2 step 4 in the skill). Surfacing only a subset of naming issues per round is the main cause of repeated review rounds and must be avoided.
-4. Phase 3 breaking-change detection must use the CI failure details fetched in Step 0, API diffs, and every source-compatibility result from Step 2. Do not run `dotnet build` in this workflow because that would execute untrusted PR code. If CI reports ApiCompat failures or build errors, surface them with links to the failed check run URL or Azure DevOps target URL. A passing ApiCompat result does not override `OPTPARAM001` or `OPTPARAM002`.
+4. Phase 3 breaking-change detection must use the CI failure details fetched in Step 0, API diffs, and deterministic source-compatibility results from Step 2. Do not run `dotnet build` in this workflow because that would execute untrusted PR code. If CI reports ApiCompat failures or build errors, surface them with links to the failed check run URL or Azure DevOps target URL. A passing ApiCompat result does not override a sole-overload `OPTPARAM001` break, but do not report other optionality differences without compiler-backed evidence.
 5. For every TypeSpec-backed package, apply the base skill's `TSPRENAME001` rule. A rename-only SDK customization for a directly targetable TypeSpec API is blocking and must be replaced with scoped `@@clientName(TypeSpecTarget, "CSharpName", "csharp")` in the spec repository's `client.tsp`, followed by regeneration.
 6. For migration PRs, apply Phases 4 and 5 from the migration skill. Treat manual edits to `src/Generated/` as blocking unless there is clear evidence they are generated output rather than hand edits.
 

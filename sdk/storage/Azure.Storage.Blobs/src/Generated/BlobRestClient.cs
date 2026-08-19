@@ -1402,13 +1402,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response StartCopyFromUrl(string copySource, int? timeout, IDictionary<string, string> metadata, string tier, string rehydratePriority, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string sourceIfTags, RequestConditions requestConditions, string ifTags, string leaseId, string blobTagsString, bool? sealBlob, DateTimeOffset? immutabilityPolicyExpiry, string immutabilityPolicyMode, bool? legalHold, RequestContext context)
+        public virtual Response StartCopyFromUri(string copySource, int? timeout, IDictionary<string, string> metadata, string tier, string rehydratePriority, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string sourceIfTags, RequestConditions requestConditions, string ifTags, string leaseId, string blobTagsString, bool? sealBlob, DateTimeOffset? immutabilityPolicyExpiry, string immutabilityPolicyMode, bool? legalHold, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlobRestClient.StartCopyFromUrl");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlobRestClient.StartCopyFromUri");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStartCopyFromUrlRequest(copySource, timeout, metadata, tier, rehydratePriority, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfTags, requestConditions, ifTags, leaseId, blobTagsString, sealBlob, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, context);
+                using HttpMessage message = CreateStartCopyFromUriRequest(copySource, timeout, metadata, tier, rehydratePriority, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfTags, requestConditions, ifTags, leaseId, blobTagsString, sealBlob, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1447,13 +1447,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> StartCopyFromUrlAsync(string copySource, int? timeout, IDictionary<string, string> metadata, string tier, string rehydratePriority, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string sourceIfTags, RequestConditions requestConditions, string ifTags, string leaseId, string blobTagsString, bool? sealBlob, DateTimeOffset? immutabilityPolicyExpiry, string immutabilityPolicyMode, bool? legalHold, RequestContext context)
+        public virtual async Task<Response> StartCopyFromUriAsync(string copySource, int? timeout, IDictionary<string, string> metadata, string tier, string rehydratePriority, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string sourceIfTags, RequestConditions requestConditions, string ifTags, string leaseId, string blobTagsString, bool? sealBlob, DateTimeOffset? immutabilityPolicyExpiry, string immutabilityPolicyMode, bool? legalHold, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlobRestClient.StartCopyFromUrl");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlobRestClient.StartCopyFromUri");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStartCopyFromUrlRequest(copySource, timeout, metadata, tier, rehydratePriority, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfTags, requestConditions, ifTags, leaseId, blobTagsString, sealBlob, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, context);
+                using HttpMessage message = CreateStartCopyFromUriRequest(copySource, timeout, metadata, tier, rehydratePriority, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfTags, requestConditions, ifTags, leaseId, blobTagsString, sealBlob, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1484,9 +1484,9 @@ namespace Azure.Storage.Blobs
         /// <param name="legalHold"> Indicates whether the blob has a legal hold. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response StartCopyFromUrl(string copySource, int? timeout = default, IDictionary<string, string> metadata = default, AccessTier? tier = default, RehydratePriority? rehydratePriority = default, DateTimeOffset? sourceIfModifiedSince = default, DateTimeOffset? sourceIfUnmodifiedSince = default, string sourceIfMatch = default, string sourceIfNoneMatch = default, string sourceIfTags = default, RequestConditions requestConditions = default, string ifTags = default, string leaseId = default, string blobTagsString = default, bool? sealBlob = default, DateTimeOffset? immutabilityPolicyExpiry = default, BlobImmutabilityPolicyMode? immutabilityPolicyMode = default, bool? legalHold = default, CancellationToken cancellationToken = default)
+        public virtual Response StartCopyFromUri(string copySource, int? timeout = default, IDictionary<string, string> metadata = default, AccessTier? tier = default, RehydratePriority? rehydratePriority = default, DateTimeOffset? sourceIfModifiedSince = default, DateTimeOffset? sourceIfUnmodifiedSince = default, string sourceIfMatch = default, string sourceIfNoneMatch = default, string sourceIfTags = default, RequestConditions requestConditions = default, string ifTags = default, string leaseId = default, string blobTagsString = default, bool? sealBlob = default, DateTimeOffset? immutabilityPolicyExpiry = default, BlobImmutabilityPolicyMode? immutabilityPolicyMode = default, bool? legalHold = default, CancellationToken cancellationToken = default)
         {
-            return StartCopyFromUrl(copySource, timeout, metadata, tier?.ToString(), rehydratePriority?.ToSerialString(), sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfTags, requestConditions, ifTags, leaseId, blobTagsString, sealBlob, immutabilityPolicyExpiry, immutabilityPolicyMode?.ToSerialString(), legalHold, cancellationToken.ToRequestContext());
+            return StartCopyFromUri(copySource, timeout, metadata, tier?.ToString(), rehydratePriority?.ToSerialString(), sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfTags, requestConditions, ifTags, leaseId, blobTagsString, sealBlob, immutabilityPolicyExpiry, immutabilityPolicyMode?.ToSerialString(), legalHold, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Starts an asynchronous copy from a source URL to a destination blob. </summary>
@@ -1510,9 +1510,9 @@ namespace Azure.Storage.Blobs
         /// <param name="legalHold"> Indicates whether the blob has a legal hold. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> StartCopyFromUrlAsync(string copySource, int? timeout = default, IDictionary<string, string> metadata = default, AccessTier? tier = default, RehydratePriority? rehydratePriority = default, DateTimeOffset? sourceIfModifiedSince = default, DateTimeOffset? sourceIfUnmodifiedSince = default, string sourceIfMatch = default, string sourceIfNoneMatch = default, string sourceIfTags = default, RequestConditions requestConditions = default, string ifTags = default, string leaseId = default, string blobTagsString = default, bool? sealBlob = default, DateTimeOffset? immutabilityPolicyExpiry = default, BlobImmutabilityPolicyMode? immutabilityPolicyMode = default, bool? legalHold = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> StartCopyFromUriAsync(string copySource, int? timeout = default, IDictionary<string, string> metadata = default, AccessTier? tier = default, RehydratePriority? rehydratePriority = default, DateTimeOffset? sourceIfModifiedSince = default, DateTimeOffset? sourceIfUnmodifiedSince = default, string sourceIfMatch = default, string sourceIfNoneMatch = default, string sourceIfTags = default, RequestConditions requestConditions = default, string ifTags = default, string leaseId = default, string blobTagsString = default, bool? sealBlob = default, DateTimeOffset? immutabilityPolicyExpiry = default, BlobImmutabilityPolicyMode? immutabilityPolicyMode = default, bool? legalHold = default, CancellationToken cancellationToken = default)
         {
-            return await StartCopyFromUrlAsync(copySource, timeout, metadata, tier?.ToString(), rehydratePriority?.ToSerialString(), sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfTags, requestConditions, ifTags, leaseId, blobTagsString, sealBlob, immutabilityPolicyExpiry, immutabilityPolicyMode?.ToSerialString(), legalHold, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await StartCopyFromUriAsync(copySource, timeout, metadata, tier?.ToString(), rehydratePriority?.ToSerialString(), sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfTags, requestConditions, ifTags, leaseId, blobTagsString, sealBlob, immutabilityPolicyExpiry, immutabilityPolicyMode?.ToSerialString(), legalHold, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1546,13 +1546,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response CopyFromUrl(string copySource, int? timeout, IDictionary<string, string> metadata, string tier, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, RequestConditions requestConditions, string ifTags, string leaseId, BinaryData sourceContentMd5, string blobTagsString, DateTimeOffset? immutabilityPolicyExpiry, string immutabilityPolicyMode, bool? legalHold, string copySourceAuthorization, string encryptionScope, string copySourceTags, string fileRequestIntent, RequestContext context)
+        public virtual Response CopyFromUri(string copySource, int? timeout, IDictionary<string, string> metadata, string tier, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, RequestConditions requestConditions, string ifTags, string leaseId, BinaryData sourceContentMd5, string blobTagsString, DateTimeOffset? immutabilityPolicyExpiry, string immutabilityPolicyMode, bool? legalHold, string copySourceAuthorization, string encryptionScope, string copySourceTags, string fileRequestIntent, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlobRestClient.CopyFromUrl");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlobRestClient.CopyFromUri");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCopyFromUrlRequest(copySource, timeout, metadata, tier, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, requestConditions, ifTags, leaseId, sourceContentMd5, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, copySourceAuthorization, encryptionScope, copySourceTags, fileRequestIntent, context);
+                using HttpMessage message = CreateCopyFromUriRequest(copySource, timeout, metadata, tier, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, requestConditions, ifTags, leaseId, sourceContentMd5, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, copySourceAuthorization, encryptionScope, copySourceTags, fileRequestIntent, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1593,13 +1593,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CopyFromUrlAsync(string copySource, int? timeout, IDictionary<string, string> metadata, string tier, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, RequestConditions requestConditions, string ifTags, string leaseId, BinaryData sourceContentMd5, string blobTagsString, DateTimeOffset? immutabilityPolicyExpiry, string immutabilityPolicyMode, bool? legalHold, string copySourceAuthorization, string encryptionScope, string copySourceTags, string fileRequestIntent, RequestContext context)
+        public virtual async Task<Response> CopyFromUriAsync(string copySource, int? timeout, IDictionary<string, string> metadata, string tier, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, RequestConditions requestConditions, string ifTags, string leaseId, BinaryData sourceContentMd5, string blobTagsString, DateTimeOffset? immutabilityPolicyExpiry, string immutabilityPolicyMode, bool? legalHold, string copySourceAuthorization, string encryptionScope, string copySourceTags, string fileRequestIntent, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlobRestClient.CopyFromUrl");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlobRestClient.CopyFromUri");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCopyFromUrlRequest(copySource, timeout, metadata, tier, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, requestConditions, ifTags, leaseId, sourceContentMd5, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, copySourceAuthorization, encryptionScope, copySourceTags, fileRequestIntent, context);
+                using HttpMessage message = CreateCopyFromUriRequest(copySource, timeout, metadata, tier, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, requestConditions, ifTags, leaseId, sourceContentMd5, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, copySourceAuthorization, encryptionScope, copySourceTags, fileRequestIntent, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1632,9 +1632,9 @@ namespace Azure.Storage.Blobs
         /// <param name="fileRequestIntent"> Specifies the file request token intent. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response CopyFromUrl(string copySource, int? timeout = default, IDictionary<string, string> metadata = default, AccessTier? tier = default, DateTimeOffset? sourceIfModifiedSince = default, DateTimeOffset? sourceIfUnmodifiedSince = default, string sourceIfMatch = default, string sourceIfNoneMatch = default, RequestConditions requestConditions = default, string ifTags = default, string leaseId = default, BinaryData sourceContentMd5 = default, string blobTagsString = default, DateTimeOffset? immutabilityPolicyExpiry = default, BlobImmutabilityPolicyMode? immutabilityPolicyMode = default, bool? legalHold = default, string copySourceAuthorization = default, string encryptionScope = default, BlobCopySourceTagsMode? copySourceTags = default, FileShareTokenIntent? fileRequestIntent = default, CancellationToken cancellationToken = default)
+        public virtual Response CopyFromUri(string copySource, int? timeout = default, IDictionary<string, string> metadata = default, AccessTier? tier = default, DateTimeOffset? sourceIfModifiedSince = default, DateTimeOffset? sourceIfUnmodifiedSince = default, string sourceIfMatch = default, string sourceIfNoneMatch = default, RequestConditions requestConditions = default, string ifTags = default, string leaseId = default, BinaryData sourceContentMd5 = default, string blobTagsString = default, DateTimeOffset? immutabilityPolicyExpiry = default, BlobImmutabilityPolicyMode? immutabilityPolicyMode = default, bool? legalHold = default, string copySourceAuthorization = default, string encryptionScope = default, BlobCopySourceTagsMode? copySourceTags = default, FileShareTokenIntent? fileRequestIntent = default, CancellationToken cancellationToken = default)
         {
-            return CopyFromUrl(copySource, timeout, metadata, tier?.ToString(), sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, requestConditions, ifTags, leaseId, sourceContentMd5, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode?.ToSerialString(), legalHold, copySourceAuthorization, encryptionScope, copySourceTags?.ToSerialString(), fileRequestIntent?.ToString(), cancellationToken.ToRequestContext());
+            return CopyFromUri(copySource, timeout, metadata, tier?.ToString(), sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, requestConditions, ifTags, leaseId, sourceContentMd5, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode?.ToSerialString(), legalHold, copySourceAuthorization, encryptionScope, copySourceTags?.ToSerialString(), fileRequestIntent?.ToString(), cancellationToken.ToRequestContext());
         }
 
         /// <summary> Synchronously copies a blob from a source URL to the destination blob. </summary>
@@ -1660,9 +1660,9 @@ namespace Azure.Storage.Blobs
         /// <param name="fileRequestIntent"> Specifies the file request token intent. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> CopyFromUrlAsync(string copySource, int? timeout = default, IDictionary<string, string> metadata = default, AccessTier? tier = default, DateTimeOffset? sourceIfModifiedSince = default, DateTimeOffset? sourceIfUnmodifiedSince = default, string sourceIfMatch = default, string sourceIfNoneMatch = default, RequestConditions requestConditions = default, string ifTags = default, string leaseId = default, BinaryData sourceContentMd5 = default, string blobTagsString = default, DateTimeOffset? immutabilityPolicyExpiry = default, BlobImmutabilityPolicyMode? immutabilityPolicyMode = default, bool? legalHold = default, string copySourceAuthorization = default, string encryptionScope = default, BlobCopySourceTagsMode? copySourceTags = default, FileShareTokenIntent? fileRequestIntent = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CopyFromUriAsync(string copySource, int? timeout = default, IDictionary<string, string> metadata = default, AccessTier? tier = default, DateTimeOffset? sourceIfModifiedSince = default, DateTimeOffset? sourceIfUnmodifiedSince = default, string sourceIfMatch = default, string sourceIfNoneMatch = default, RequestConditions requestConditions = default, string ifTags = default, string leaseId = default, BinaryData sourceContentMd5 = default, string blobTagsString = default, DateTimeOffset? immutabilityPolicyExpiry = default, BlobImmutabilityPolicyMode? immutabilityPolicyMode = default, bool? legalHold = default, string copySourceAuthorization = default, string encryptionScope = default, BlobCopySourceTagsMode? copySourceTags = default, FileShareTokenIntent? fileRequestIntent = default, CancellationToken cancellationToken = default)
         {
-            return await CopyFromUrlAsync(copySource, timeout, metadata, tier?.ToString(), sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, requestConditions, ifTags, leaseId, sourceContentMd5, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode?.ToSerialString(), legalHold, copySourceAuthorization, encryptionScope, copySourceTags?.ToSerialString(), fileRequestIntent?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await CopyFromUriAsync(copySource, timeout, metadata, tier?.ToString(), sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, requestConditions, ifTags, leaseId, sourceContentMd5, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode?.ToSerialString(), legalHold, copySourceAuthorization, encryptionScope, copySourceTags?.ToSerialString(), fileRequestIntent?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1679,13 +1679,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response AbortCopyFromUrl(string copyId, int? timeout, string leaseId, RequestContext context)
+        public virtual Response AbortCopyFromUri(string copyId, int? timeout, string leaseId, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlobRestClient.AbortCopyFromUrl");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlobRestClient.AbortCopyFromUri");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAbortCopyFromUrlRequest(copyId, timeout, leaseId, context);
+                using HttpMessage message = CreateAbortCopyFromUriRequest(copyId, timeout, leaseId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1709,13 +1709,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AbortCopyFromUrlAsync(string copyId, int? timeout, string leaseId, RequestContext context)
+        public virtual async Task<Response> AbortCopyFromUriAsync(string copyId, int? timeout, string leaseId, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlobRestClient.AbortCopyFromUrl");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlobRestClient.AbortCopyFromUri");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAbortCopyFromUrlRequest(copyId, timeout, leaseId, context);
+                using HttpMessage message = CreateAbortCopyFromUriRequest(copyId, timeout, leaseId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1731,9 +1731,9 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response AbortCopyFromUrl(string copyId, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
+        public virtual Response AbortCopyFromUri(string copyId, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            return AbortCopyFromUrl(copyId, timeout, leaseId, cancellationToken.ToRequestContext());
+            return AbortCopyFromUri(copyId, timeout, leaseId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Aborts a pending asynchronous copy operation and leaves a destination blob with zero length and full metadata. </summary>
@@ -1742,9 +1742,9 @@ namespace Azure.Storage.Blobs
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> AbortCopyFromUrlAsync(string copyId, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> AbortCopyFromUriAsync(string copyId, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            return await AbortCopyFromUrlAsync(copyId, timeout, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await AbortCopyFromUriAsync(copyId, timeout, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
