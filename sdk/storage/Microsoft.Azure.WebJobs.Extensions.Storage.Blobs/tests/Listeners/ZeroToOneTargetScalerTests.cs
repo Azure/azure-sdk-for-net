@@ -66,19 +66,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Listeners
             Assert.AreEqual(expectedTargetWorkerCount, result.TargetWorkerCount);
         }
 
-        // The scaler only ever sees $logs entries, so a blob must resolve to the same path the host's
-        // BlobTriggerExecutor would match. StorageAnalyticsLogEntry.ToBlobPath decodes the absolute-URL form
-        // of RequestedObjectKey but not the '/account/container/blob' form, so both must be handled.
+        // Storage Analytics records RequestedObjectKey as a raw, unencoded path, verified against a live account:
+        // a blob named 'my folder/x.txt' is logged as '/account/container/my folder/x.txt'. Patterns containing
+        // such characters must still match, since the scaler has no container-scan fallback to catch a miss.
         [Test]
         [TestCase("/teststorage/test-blobs/basic/test.txt", "test-blobs/{name}.txt", 1)]
-        [TestCase("/teststorage/test-blobs/my%20folder/test.txt", "test-blobs/{name}", 1)]
-        [TestCase("/teststorage/test-blobs/my%20folder/test.txt", "test-blobs/my folder/{name}", 1)]
-        [TestCase("/teststorage/test-blobs/caf%C3%A9/test.txt", "test-blobs/café/{name}", 1)]
-        [TestCase("/teststorage/test-blobs/report%2450.txt", "test-blobs/report$50.txt", 1)]
-        [TestCase("/teststorage/test-blobs/100%25.txt", "test-blobs/100%.txt", 1)]
+        [TestCase("/teststorage/test-blobs/my folder/test.txt", "test-blobs/my folder/{name}", 1)]
+        [TestCase("/teststorage/test-blobs/my folder/test.txt", "test-blobs/{name}", 1)]
+        [TestCase("/teststorage/test-blobs/café/test.txt", "test-blobs/café/{name}", 1)]
+        [TestCase("/teststorage/test-blobs/report$50.txt", "test-blobs/report$50.txt", 1)]
+        [TestCase("/teststorage/test-blobs/100%.txt", "test-blobs/100%.txt", 1)]
+        [TestCase("/teststorage/test-blobs/a+b/test.txt", "test-blobs/a+b/{name}", 1)]
         [TestCase("https://teststorage.blob.core.windows.net:443/test-blobs/my%20folder/test.txt", "test-blobs/my folder/{name}", 1)]
-        [TestCase("/teststorage/test-blobs/my%20folder/test.txt", "test-blobs/other folder/{name}", 0)]
-        [TestCase("/teststorage/test-blobs/caf%C3%A9/test.txt", "test-blobs/cafe/{name}", 0)]
+        [TestCase("/teststorage/test-blobs/my folder/test.txt", "test-blobs/other folder/{name}", 0)]
+        [TestCase("/teststorage/test-blobs/café/test.txt", "test-blobs/cafe/{name}", 0)]
         public async Task GetScaleResultAsync_MatchesBlobNamesWithSpecialCharacters(string requestedObjectKey, string blobPath, int expectedTargetWorkerCount)
         {
             var scaler = CreateScaler(BuildPutBlobLogContent(requestedObjectKey), blobPath, out _);
