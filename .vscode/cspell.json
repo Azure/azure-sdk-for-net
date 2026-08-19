@@ -350,6 +350,14 @@
       ]
     },
     {
+      "filename": "**/sdk/chaos/**/*.cs",
+      "words": [
+        "Csfi",
+        "Dsts",
+        "dsts"
+      ]
+    },
+    {
       "filename": "**/sdk/compute/**/*.cs",
       "words": [
         "dscp",
