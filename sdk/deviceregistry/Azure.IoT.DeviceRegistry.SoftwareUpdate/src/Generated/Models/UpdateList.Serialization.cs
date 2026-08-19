@@ -88,7 +88,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (Update item in Value)
+            foreach (SoftwareUpdate item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -140,17 +140,17 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
             {
                 return null;
             }
-            IList<Update> value = default;
+            IList<SoftwareUpdate> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<Update> array = new List<Update>();
+                    List<SoftwareUpdate> array = new List<SoftwareUpdate>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Update.DeserializeUpdate(item, options));
+                        array.Add(SoftwareUpdate.DeserializeSoftwareUpdate(item, options));
                     }
                     value = array;
                     continue;

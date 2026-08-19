@@ -12,19 +12,19 @@ using System.Text.Json;
 namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
 {
     /// <summary> Update install instruction step. </summary>
-    public partial class Step
+    public partial class SoftwareUpdateStep
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Step"/>. </summary>
-        internal Step()
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateStep"/>. </summary>
+        internal SoftwareUpdateStep()
         {
             HandlerProperties = new ChangeTrackingDictionary<string, BinaryData>();
             FileNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Step"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateStep"/>. </summary>
         /// <param name="type"> Step type. </param>
         /// <param name="description"> Step description. </param>
         /// <param name="handler">
@@ -38,7 +38,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// </param>
         /// <param name="updateId"> Referenced child update identity.  Required if step type is reference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Step(StepType? @type, string description, string handler, IDictionary<string, BinaryData> handlerProperties, IList<string> fileNames, UpdateId updateId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SoftwareUpdateStep(StepType? @type, string description, string handler, IDictionary<string, BinaryData> handlerProperties, IList<string> fileNames, UpdateId updateId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Description = description;

@@ -85,13 +85,13 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <param name="importedDateTime"> Date and time in UTC when the update was imported. </param>
         /// <param name="createdDateTime"> Date and time in UTC when the update was created. </param>
         /// <param name="etag"> Update ETag. </param>
-        /// <returns> A new <see cref="_SoftwareUpdate.Update"/> instance for mocking. </returns>
-        public static Update Update(UpdateId updateId = default, string description = default, string friendlyName = default, bool? isDeployable = default, string updateType = default, string installedCriteria = default, IEnumerable<SoftwareUpdateCompatibility> compatibility = default, Instructions instructions = default, IEnumerable<UpdateId> referencedBy = default, string scanResult = default, string manifestVersion = default, DateTimeOffset importedDateTime = default, DateTimeOffset createdDateTime = default, ETag? etag = default)
+        /// <returns> A new <see cref="_SoftwareUpdate.SoftwareUpdate"/> instance for mocking. </returns>
+        public static SoftwareUpdate SoftwareUpdate(UpdateId updateId = default, string description = default, string friendlyName = default, bool? isDeployable = default, string updateType = default, string installedCriteria = default, IEnumerable<SoftwareUpdateCompatibility> compatibility = default, SoftwareUpdateInstructions instructions = default, IEnumerable<UpdateId> referencedBy = default, string scanResult = default, string manifestVersion = default, DateTimeOffset importedDateTime = default, DateTimeOffset createdDateTime = default, ETag? etag = default)
         {
             compatibility ??= new ChangeTrackingList<SoftwareUpdateCompatibility>();
             referencedBy ??= new ChangeTrackingList<UpdateId>();
 
-            return new Update(
+            return new SoftwareUpdate(
                 updateId,
                 description,
                 friendlyName,
@@ -121,12 +121,12 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
 
         /// <summary> Update install instructions container. </summary>
         /// <param name="steps"> Collection of installation steps. </param>
-        /// <returns> A new <see cref="_SoftwareUpdate.Instructions"/> instance for mocking. </returns>
-        public static Instructions Instructions(IEnumerable<Step> steps = default)
+        /// <returns> A new <see cref="_SoftwareUpdate.SoftwareUpdateInstructions"/> instance for mocking. </returns>
+        public static SoftwareUpdateInstructions SoftwareUpdateInstructions(IEnumerable<SoftwareUpdateStep> steps = default)
         {
-            steps ??= new ChangeTrackingList<Step>();
+            steps ??= new ChangeTrackingList<SoftwareUpdateStep>();
 
-            return new Instructions(steps.ToList(), additionalBinaryDataProperties: null);
+            return new SoftwareUpdateInstructions(steps.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Update install instruction step. </summary>
@@ -142,13 +142,13 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// step type is inline.
         /// </param>
         /// <param name="updateId"> Referenced child update identity.  Required if step type is reference. </param>
-        /// <returns> A new <see cref="_SoftwareUpdate.Step"/> instance for mocking. </returns>
-        public static Step Step(StepType? @type = default, string description = default, string handler = default, IDictionary<string, BinaryData> handlerProperties = default, IEnumerable<string> fileNames = default, UpdateId updateId = default)
+        /// <returns> A new <see cref="_SoftwareUpdate.SoftwareUpdateStep"/> instance for mocking. </returns>
+        public static SoftwareUpdateStep SoftwareUpdateStep(StepType? @type = default, string description = default, string handler = default, IDictionary<string, BinaryData> handlerProperties = default, IEnumerable<string> fileNames = default, UpdateId updateId = default)
         {
             handlerProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
             fileNames ??= new ChangeTrackingList<string>();
 
-            return new Step(
+            return new SoftwareUpdateStep(
                 @type,
                 description,
                 handler,

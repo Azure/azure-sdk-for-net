@@ -13,56 +13,56 @@ using System.Text.Json;
 namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
 {
     /// <summary> Update install instructions container. </summary>
-    public partial class Instructions : IJsonModel<Instructions>
+    public partial class SoftwareUpdateInstructions : IJsonModel<SoftwareUpdateInstructions>
     {
-        /// <summary> Initializes a new instance of <see cref="Instructions"/> for deserialization. </summary>
-        internal Instructions()
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateInstructions"/> for deserialization. </summary>
+        internal SoftwareUpdateInstructions()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Instructions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SoftwareUpdateInstructions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Instructions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateInstructions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInstructions(document.RootElement, options);
+                        return DeserializeSoftwareUpdateInstructions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Instructions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SoftwareUpdateInstructions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Instructions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateInstructions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureIoTDeviceRegistry_SoftwareUpdateContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Instructions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SoftwareUpdateInstructions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Instructions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SoftwareUpdateInstructions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Instructions IPersistableModel<Instructions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SoftwareUpdateInstructions IPersistableModel<SoftwareUpdateInstructions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Instructions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SoftwareUpdateInstructions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Instructions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SoftwareUpdateInstructions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -73,14 +73,14 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Instructions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateInstructions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Instructions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SoftwareUpdateInstructions)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("steps"u8);
             writer.WriteStartArray();
-            foreach (Step item in Steps)
+            foreach (SoftwareUpdateStep item in Steps)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -104,39 +104,39 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Instructions IJsonModel<Instructions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SoftwareUpdateInstructions IJsonModel<SoftwareUpdateInstructions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Instructions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SoftwareUpdateInstructions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Instructions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateInstructions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Instructions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SoftwareUpdateInstructions)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInstructions(document.RootElement, options);
+            return DeserializeSoftwareUpdateInstructions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Instructions DeserializeInstructions(JsonElement element, ModelReaderWriterOptions options)
+        internal static SoftwareUpdateInstructions DeserializeSoftwareUpdateInstructions(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<Step> steps = default;
+            IList<SoftwareUpdateStep> steps = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("steps"u8))
                 {
-                    List<Step> array = new List<Step>();
+                    List<SoftwareUpdateStep> array = new List<SoftwareUpdateStep>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Step.DeserializeStep(item, options));
+                        array.Add(SoftwareUpdateStep.DeserializeSoftwareUpdateStep(item, options));
                     }
                     steps = array;
                     continue;
@@ -146,7 +146,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new Instructions(steps, additionalBinaryDataProperties);
+            return new SoftwareUpdateInstructions(steps, additionalBinaryDataProperties);
         }
     }
 }

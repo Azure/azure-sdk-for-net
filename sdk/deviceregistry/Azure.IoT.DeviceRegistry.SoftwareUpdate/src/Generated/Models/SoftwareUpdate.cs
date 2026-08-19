@@ -13,18 +13,18 @@ using Azure;
 namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
 {
     /// <summary> Update metadata. </summary>
-    public partial class Update
+    public partial class SoftwareUpdate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Update"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdate"/>. </summary>
         /// <param name="updateId"> Update identity. </param>
         /// <param name="compatibility"> List of update compatibility information. </param>
         /// <param name="manifestVersion"> Schema version of manifest used to import the update. </param>
         /// <param name="importedDateTime"> Date and time in UTC when the update was imported. </param>
         /// <param name="createdDateTime"> Date and time in UTC when the update was created. </param>
-        internal Update(UpdateId updateId, IEnumerable<SoftwareUpdateCompatibility> compatibility, string manifestVersion, DateTimeOffset importedDateTime, DateTimeOffset createdDateTime)
+        internal SoftwareUpdate(UpdateId updateId, IEnumerable<SoftwareUpdateCompatibility> compatibility, string manifestVersion, DateTimeOffset importedDateTime, DateTimeOffset createdDateTime)
         {
             UpdateId = updateId;
             Compatibility = compatibility.ToList();
@@ -34,7 +34,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
             CreatedDateTime = createdDateTime;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Update"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdate"/>. </summary>
         /// <param name="updateId"> Update identity. </param>
         /// <param name="description"> Update description specified by creator. </param>
         /// <param name="friendlyName"> Friendly update name specified by importer. </param>
@@ -53,7 +53,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <param name="createdDateTime"> Date and time in UTC when the update was created. </param>
         /// <param name="etag"> Update ETag. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Update(UpdateId updateId, string description, string friendlyName, bool? isDeployable, string updateType, string installedCriteria, IList<SoftwareUpdateCompatibility> compatibility, Instructions instructions, IList<UpdateId> referencedBy, string scanResult, string manifestVersion, DateTimeOffset importedDateTime, DateTimeOffset createdDateTime, ETag? etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SoftwareUpdate(UpdateId updateId, string description, string friendlyName, bool? isDeployable, string updateType, string installedCriteria, IList<SoftwareUpdateCompatibility> compatibility, SoftwareUpdateInstructions instructions, IList<UpdateId> referencedBy, string scanResult, string manifestVersion, DateTimeOffset importedDateTime, DateTimeOffset createdDateTime, ETag? etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UpdateId = updateId;
             Description = description;
@@ -97,7 +97,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         public IList<SoftwareUpdateCompatibility> Compatibility { get; }
 
         /// <summary> Update install instructions. </summary>
-        public Instructions Instructions { get; }
+        public SoftwareUpdateInstructions Instructions { get; }
 
         /// <summary> List of update identities that reference this update. </summary>
         public IList<UpdateId> ReferencedBy { get; }

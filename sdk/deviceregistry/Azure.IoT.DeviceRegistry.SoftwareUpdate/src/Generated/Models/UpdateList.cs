@@ -19,7 +19,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
 
         /// <summary> Initializes a new instance of <see cref="UpdateList"/>. </summary>
         /// <param name="value"> The Update items on this page. </param>
-        internal UpdateList(IEnumerable<Update> value)
+        internal UpdateList(IEnumerable<SoftwareUpdate> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +28,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <param name="value"> The Update items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateList(IList<Update> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpdateList(IList<SoftwareUpdate> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         }
 
         /// <summary> The Update items on this page. </summary>
-        public IList<Update> Value { get; }
+        public IList<SoftwareUpdate> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

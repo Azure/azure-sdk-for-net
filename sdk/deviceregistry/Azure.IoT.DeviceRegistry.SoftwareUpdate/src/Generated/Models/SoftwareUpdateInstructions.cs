@@ -12,28 +12,28 @@ using System.Linq;
 namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
 {
     /// <summary> Update install instructions container. </summary>
-    public partial class Instructions
+    public partial class SoftwareUpdateInstructions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Instructions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateInstructions"/>. </summary>
         /// <param name="steps"> Collection of installation steps. </param>
-        internal Instructions(IEnumerable<Step> steps)
+        internal SoftwareUpdateInstructions(IEnumerable<SoftwareUpdateStep> steps)
         {
             Steps = steps.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Instructions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateInstructions"/>. </summary>
         /// <param name="steps"> Collection of installation steps. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Instructions(IList<Step> steps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SoftwareUpdateInstructions(IList<SoftwareUpdateStep> steps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Steps = steps;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Collection of installation steps. </summary>
-        public IList<Step> Steps { get; }
+        public IList<SoftwareUpdateStep> Steps { get; }
     }
 }

@@ -90,7 +90,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <param name="filter"> Optional to filter updates by isDeployable property. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<Update> GetUpdates(string search = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SoftwareUpdate> GetUpdates(string search = default, string filter = default, CancellationToken cancellationToken = default)
         {
             return new SoftwareUpdateGetUpdatesCollectionResultOfT(this, search, filter, cancellationToken.ToRequestContext(), "SoftwareUpdate.GetUpdates");
         }
@@ -103,7 +103,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <param name="filter"> Optional to filter updates by isDeployable property. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<Update> GetUpdatesAsync(string search = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SoftwareUpdate> GetUpdatesAsync(string search = default, string filter = default, CancellationToken cancellationToken = default)
         {
             return new SoftwareUpdateGetUpdatesAsyncCollectionResultOfT(this, search, filter, cancellationToken.ToRequestContext(), "SoftwareUpdate.GetUpdates");
         }
@@ -292,14 +292,14 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Update> GetUpdate(string provider, string name, string version, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
+        public virtual Response<SoftwareUpdate> GetUpdate(string provider, string name, string version, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             Response result = GetUpdate(provider, name, version, ifNoneMatch, cancellationToken.ToRequestContext());
-            return Response.FromValue((Update)result, result);
+            return Response.FromValue((SoftwareUpdate)result, result);
         }
 
         /// <summary> Get a specific update version. </summary>
@@ -314,14 +314,14 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Update>> GetUpdateAsync(string provider, string name, string version, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SoftwareUpdate>> GetUpdateAsync(string provider, string name, string version, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             Response result = await GetUpdateAsync(provider, name, version, ifNoneMatch, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Update)result, result);
+            return Response.FromValue((SoftwareUpdate)result, result);
         }
 
         /// <summary>
