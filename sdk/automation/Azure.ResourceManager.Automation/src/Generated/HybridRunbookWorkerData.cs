@@ -35,6 +35,12 @@ namespace Azure.ResourceManager.Automation
         /// <summary> Gets or sets the hybrid worker group properties. </summary>
         internal HybridRunbookWorkerProperties Properties { get; set; }
 
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+
+        /// <summary> The geo-location where the resource lives. </summary>
+        public AzureLocation Location { get; set; }
+
         /// <summary> Gets or sets the assigned machine IP address. </summary>
         public string IP
         {

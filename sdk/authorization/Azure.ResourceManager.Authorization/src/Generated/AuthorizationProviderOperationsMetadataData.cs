@@ -54,5 +54,9 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> The provider operations. </summary>
         [WirePath("operations")]
         public IReadOnlyList<AuthorizationProviderOperationInfo> Operations { get; }
+
+        /// <summary> The provider type. </summary>
+        [WirePath("type")]
+        public string Type { get; }
     }
 }
