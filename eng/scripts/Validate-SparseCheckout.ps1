@@ -168,8 +168,32 @@ function Invoke-Comparison([string] $Mode) {
   $artifactPath = Join-Path $clonePath 'artifacts'
   $packages = if (Test-Path -LiteralPath $artifactPath) {
     @(Get-ChildItem -LiteralPath $artifactPath -Filter '*.nupkg' -File -Recurse -ErrorAction SilentlyContinue |
-      ForEach-Object { [System.IO.Path]::GetRelativePath($clonePath, $_.FullName).Replace('\', '/') } |
-      Sort-Object)
+      ForEach-Object {
+        $relativePath = [System.IO.Path]::GetRelativePath($clonePath, $_.FullName).Replace('\', '/')
+        $archive = [System.IO.Compression.ZipFile]::OpenRead($_.FullName)
+        try {
+          $entries = @($archive.Entries | Sort-Object FullName | ForEach-Object {
+            $stream = $_.Open()
+            try {
+              $hash = [System.Security.Cryptography.SHA256]::HashData($stream)
+            }
+            finally {
+              $stream.Dispose()
+            }
+            "$($_.FullName)|$($_.Length)|$([Convert]::ToHexString($hash).ToLowerInvariant())"
+          })
+        }
+        finally {
+          $archive.Dispose()
+        }
+        [ordered]@{
+          Path = $relativePath
+          ContentSha256 = [Convert]::ToHexString(
+            [System.Security.Cryptography.SHA256]::HashData(
+              [System.Text.Encoding]::UTF8.GetBytes($entries -join "`n"))).ToLowerInvariant()
+        }
+      } |
+      Sort-Object Path)
   }
   else {
     @()
@@ -197,6 +221,9 @@ function Invoke-Comparison([string] $Mode) {
         }
       }
     }
+    if ($testResultFiles.Count -eq 0) {
+      throw "Test command in $Mode clone did not produce a TRX result file. Pass '--logger trx' through CommandArguments."
+    }
   }
 
   $gitChanges = @(& git -C $clonePath status --porcelain)
@@ -207,9 +234,18 @@ function Invoke-Comparison([string] $Mode) {
   if ($LASTEXITCODE -ne 0) {
     throw "Unable to read generated changes in '$clonePath'."
   }
+  $untrackedHashes = @($gitChanges | Where-Object { $_ -like '?? *' } | ForEach-Object {
+    $relativePath = $_.Substring(3)
+    $fullPath = Join-Path $clonePath $relativePath
+    if (Test-Path -LiteralPath $fullPath -PathType Leaf) {
+      "$relativePath|$([Convert]::ToHexString([System.Security.Cryptography.SHA256]::HashData(
+        [System.IO.File]::ReadAllBytes($fullPath))).ToLowerInvariant())"
+    }
+  } | Sort-Object)
+  $comparisonDiff = $gitDiff + "`n" + ($untrackedHashes -join "`n")
   $gitDiffHash = [Convert]::ToHexString(
     [System.Security.Cryptography.SHA256]::HashData(
-      [System.Text.Encoding]::UTF8.GetBytes($gitDiff))).ToLowerInvariant()
+      [System.Text.Encoding]::UTF8.GetBytes($comparisonDiff))).ToLowerInvariant()
 
   return [ordered]@{
     Mode = $Mode
@@ -257,7 +293,9 @@ if ($results.Count -ne 2 -or ($results | Where-Object ExitCode -ne 0)) {
   throw 'One or more comparison commands failed. See the report for details.'
 }
 
-if ($Target -eq 'Pack' -and (Compare-Object $results[0].Packages $results[1].Packages)) {
+if ($Target -eq 'Pack' -and
+    ($results[0].Packages | ConvertTo-Json -Compress) -ne
+      ($results[1].Packages | ConvertTo-Json -Compress)) {
   throw 'Full and sparse clones produced different package sets.'
 }
 if ($Target -eq 'Test' -and
