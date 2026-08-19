@@ -385,15 +385,15 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="autoUpdateLastTriggeredOn"> Auto update last triggered date time of mcc install. </param>
         /// <param name="creationMethod"> Resource creation method of mcc cache node resource, cli or portal. </param>
         /// <param name="tlsStatus"> Cache node tls certificate status. </param>
-        /// <param name="hostOsEdition"> Operating system edition of the cache node host machine. </param>
-        /// <param name="hostOsVersion"> Operating system version of the cache node host machine. </param>
-        /// <param name="hostOsBuild"> Operating system build of the cache node host machine. </param>
-        /// <param name="distroOsEditionWsl"> Operating system edition of the WSL Linux distribution used to run the cache node on Windows host machines. </param>
-        /// <param name="distroOsVersionWsl"> Operating system version of the WSL Linux distribution used to run the cache node on Windows host machines. </param>
-        /// <param name="distroOsBuildWsl"> Operating system build of the WSL Linux distribution used to run the cache node on Windows host machines. </param>
-        /// <param name="containerOsEdition"> Operating system edition of container used to run the cache node. </param>
-        /// <param name="containerOsVersion"> Operating system version of the container used to run the cache node. </param>
-        /// <param name="containerOsBuild"> Operating system build of the container used to run the cache node. </param>
+        /// <param name="hostOSEdition"> Operating system edition of the cache node host machine. </param>
+        /// <param name="hostOSVersion"> Operating system version of the cache node host machine. </param>
+        /// <param name="hostOSBuild"> Operating system build of the cache node host machine. </param>
+        /// <param name="distroOSEditionWsl"> Operating system edition of the WSL Linux distribution used to run the cache node on Windows host machines. </param>
+        /// <param name="distroOSVersionWsl"> Operating system version of the WSL Linux distribution used to run the cache node on Windows host machines. </param>
+        /// <param name="distroOSBuildWsl"> Operating system build of the WSL Linux distribution used to run the cache node on Windows host machines. </param>
+        /// <param name="containerOSEdition"> Operating system edition of container used to run the cache node. </param>
+        /// <param name="containerOSVersion"> Operating system version of the container used to run the cache node. </param>
+        /// <param name="containerOSBuild"> Operating system build of the container used to run the cache node. </param>
         /// <param name="installVersionMsix"> Version of the Windows deployment application used to deploy the cache node. </param>
         /// <param name="installVersionScript"> Version of the installation scripts used to deploy the cache node. </param>
         /// <param name="appVersionWsl"> Version of the Windows Subsystem for Linux application version used to run the cache node on the Windows host machine. </param>
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="optionalProperty4"> Optional property #4 of Mcc response object. </param>
         /// <param name="optionalProperty5"> Optional property #5 of Mcc response object. </param>
         /// <returns> A new <see cref="Models.MccCacheNodeAdditionalProperties"/> instance for mocking. </returns>
-        public static MccCacheNodeAdditionalProperties MccCacheNodeAdditionalProperties(IEnumerable<string> cacheNodePropertiesDetailsIssuesList = default, IEnumerable<string> issuesList = default, int? issuesCount = default, MccCacheNodeTlsCertificate currentTlsCertificate = default, MccCacheNodeAutoUpdateInfo lastAutoUpdateInfo = default, string aggregatedStatusDetails = default, string aggregatedStatusText = default, int? aggregatedStatusCode = default, string productVersion = default, bool? isProvisioned = default, string cacheNodeStateDetailedText = default, string cacheNodeStateShortText = default, int? cacheNodeState = default, IEnumerable<CacheNodeDriveConfiguration> driveConfiguration = default, string bgpAsnToIPAddressMapping = default, Uri proxyUri = default, MccCacheNodeProxyRequired? isProxyRequired = default, MccCacheNodeOSType? osType = default, string autoUpdateVersion = default, string updateInfoDetails = default, DateTimeOffset? updateRequestedOn = default, string autoUpdateNextAvailableVersion = default, DateTimeOffset? autoUpdateNextAvailableOn = default, string autoUpdateAppliedVersion = default, string autoUpdateLastAppliedDetails = default, string autoUpdateLastAppliedState = default, DateTimeOffset? autoUpdateLastAppliedOn = default, DateTimeOffset? autoUpdateLastTriggeredOn = default, int? creationMethod = default, string tlsStatus = default, string hostOsEdition = default, string hostOsVersion = default, string hostOsBuild = default, string distroOsEditionWsl = default, string distroOsVersionWsl = default, string distroOsBuildWsl = default, string containerOsEdition = default, string containerOsVersion = default, string containerOsBuild = default, string installVersionMsix = default, string installVersionScript = default, string appVersionWsl = default, string optionalProperty1 = default, string optionalProperty2 = default, string optionalProperty3 = default, string optionalProperty4 = default, string optionalProperty5 = default)
+        public static MccCacheNodeAdditionalProperties MccCacheNodeAdditionalProperties(IEnumerable<string> cacheNodePropertiesDetailsIssuesList = default, IEnumerable<string> issuesList = default, int? issuesCount = default, MccCacheNodeTlsCertificate currentTlsCertificate = default, MccCacheNodeAutoUpdateInfo lastAutoUpdateInfo = default, string aggregatedStatusDetails = default, string aggregatedStatusText = default, int? aggregatedStatusCode = default, string productVersion = default, bool? isProvisioned = default, string cacheNodeStateDetailedText = default, string cacheNodeStateShortText = default, int? cacheNodeState = default, IEnumerable<CacheNodeDriveConfiguration> driveConfiguration = default, string bgpAsnToIPAddressMapping = default, Uri proxyUri = default, MccCacheNodeProxyRequired? isProxyRequired = default, MccCacheNodeOSType? osType = default, string autoUpdateVersion = default, string updateInfoDetails = default, DateTimeOffset? updateRequestedOn = default, string autoUpdateNextAvailableVersion = default, DateTimeOffset? autoUpdateNextAvailableOn = default, string autoUpdateAppliedVersion = default, string autoUpdateLastAppliedDetails = default, string autoUpdateLastAppliedState = default, DateTimeOffset? autoUpdateLastAppliedOn = default, DateTimeOffset? autoUpdateLastTriggeredOn = default, int? creationMethod = default, string tlsStatus = default, string hostOSEdition = default, string hostOSVersion = default, string hostOSBuild = default, string distroOSEditionWsl = default, string distroOSVersionWsl = default, string distroOSBuildWsl = default, string containerOSEdition = default, string containerOSVersion = default, string containerOSBuild = default, string installVersionMsix = default, string installVersionScript = default, string appVersionWsl = default, string optionalProperty1 = default, string optionalProperty2 = default, string optionalProperty3 = default, string optionalProperty4 = default, string optionalProperty5 = default)
         {
             cacheNodePropertiesDetailsIssuesList ??= new ChangeTrackingList<string>();
             issuesList ??= new ChangeTrackingList<string>();
@@ -440,15 +440,15 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 autoUpdateLastTriggeredOn,
                 creationMethod,
                 tlsStatus,
-                hostOsEdition,
-                hostOsVersion,
-                hostOsBuild,
-                distroOsEditionWsl,
-                distroOsVersionWsl,
-                distroOsBuildWsl,
-                containerOsEdition,
-                containerOsVersion,
-                containerOsBuild,
+                hostOSEdition,
+                hostOSVersion,
+                hostOSBuild,
+                distroOSEditionWsl,
+                distroOSVersionWsl,
+                distroOSBuildWsl,
+                containerOSEdition,
+                containerOSVersion,
+                containerOSBuild,
                 installVersionMsix,
                 installVersionScript,
                 appVersionWsl,

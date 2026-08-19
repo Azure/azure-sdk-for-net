@@ -56,15 +56,15 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="autoUpdateLastTriggeredOn"> Auto update last triggered date time of mcc install. </param>
         /// <param name="creationMethod"> Resource creation method of mcc cache node resource, cli or portal. </param>
         /// <param name="tlsStatus"> Cache node tls certificate status. </param>
-        /// <param name="hostOsEdition"> Operating system edition of the cache node host machine. </param>
-        /// <param name="hostOsVersion"> Operating system version of the cache node host machine. </param>
-        /// <param name="hostOsBuild"> Operating system build of the cache node host machine. </param>
-        /// <param name="distroOsEditionWsl"> Operating system edition of the WSL Linux distribution used to run the cache node on Windows host machines. </param>
-        /// <param name="distroOsVersionWsl"> Operating system version of the WSL Linux distribution used to run the cache node on Windows host machines. </param>
-        /// <param name="distroOsBuildWsl"> Operating system build of the WSL Linux distribution used to run the cache node on Windows host machines. </param>
-        /// <param name="containerOsEdition"> Operating system edition of container used to run the cache node. </param>
-        /// <param name="containerOsVersion"> Operating system version of the container used to run the cache node. </param>
-        /// <param name="containerOsBuild"> Operating system build of the container used to run the cache node. </param>
+        /// <param name="hostOSEdition"> Operating system edition of the cache node host machine. </param>
+        /// <param name="hostOSVersion"> Operating system version of the cache node host machine. </param>
+        /// <param name="hostOSBuild"> Operating system build of the cache node host machine. </param>
+        /// <param name="distroOSEditionWsl"> Operating system edition of the WSL Linux distribution used to run the cache node on Windows host machines. </param>
+        /// <param name="distroOSVersionWsl"> Operating system version of the WSL Linux distribution used to run the cache node on Windows host machines. </param>
+        /// <param name="distroOSBuildWsl"> Operating system build of the WSL Linux distribution used to run the cache node on Windows host machines. </param>
+        /// <param name="containerOSEdition"> Operating system edition of container used to run the cache node. </param>
+        /// <param name="containerOSVersion"> Operating system version of the container used to run the cache node. </param>
+        /// <param name="containerOSBuild"> Operating system build of the container used to run the cache node. </param>
         /// <param name="installVersionMsix"> Version of the Windows deployment application used to deploy the cache node. </param>
         /// <param name="installVersionScript"> Version of the installation scripts used to deploy the cache node. </param>
         /// <param name="appVersionWsl"> Version of the Windows Subsystem for Linux application version used to run the cache node on the Windows host machine. </param>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="optionalProperty4"> Optional property #4 of Mcc response object. </param>
         /// <param name="optionalProperty5"> Optional property #5 of Mcc response object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MccCacheNodeAdditionalProperties(IList<string> cacheNodePropertiesDetailsIssuesList, IReadOnlyList<string> issuesList, int? issuesCount, MccCacheNodeTlsCertificate currentTlsCertificate, MccCacheNodeAutoUpdateInfo lastAutoUpdateInfo, string aggregatedStatusDetails, string aggregatedStatusText, int? aggregatedStatusCode, string productVersion, bool? isProvisioned, string cacheNodeStateDetailedText, string cacheNodeStateShortText, int? cacheNodeState, IList<CacheNodeDriveConfiguration> driveConfiguration, MccCacheNodeBgpConfiguration bgpConfiguration, MccCacheNodeProxyUriConfiguration proxyUrlConfiguration, MccCacheNodeProxyRequired? isProxyRequired, MccCacheNodeOSType? osType, string autoUpdateVersion, string updateInfoDetails, DateTimeOffset? updateRequestedOn, string autoUpdateNextAvailableVersion, DateTimeOffset? autoUpdateNextAvailableOn, string autoUpdateAppliedVersion, string autoUpdateLastAppliedDetails, string autoUpdateLastAppliedState, DateTimeOffset? autoUpdateLastAppliedOn, DateTimeOffset? autoUpdateLastTriggeredOn, int? creationMethod, string tlsStatus, string hostOsEdition, string hostOsVersion, string hostOsBuild, string distroOsEditionWsl, string distroOsVersionWsl, string distroOsBuildWsl, string containerOsEdition, string containerOsVersion, string containerOsBuild, string installVersionMsix, string installVersionScript, string appVersionWsl, string optionalProperty1, string optionalProperty2, string optionalProperty3, string optionalProperty4, string optionalProperty5, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MccCacheNodeAdditionalProperties(IList<string> cacheNodePropertiesDetailsIssuesList, IReadOnlyList<string> issuesList, int? issuesCount, MccCacheNodeTlsCertificate currentTlsCertificate, MccCacheNodeAutoUpdateInfo lastAutoUpdateInfo, string aggregatedStatusDetails, string aggregatedStatusText, int? aggregatedStatusCode, string productVersion, bool? isProvisioned, string cacheNodeStateDetailedText, string cacheNodeStateShortText, int? cacheNodeState, IList<CacheNodeDriveConfiguration> driveConfiguration, MccCacheNodeBgpConfiguration bgpConfiguration, MccCacheNodeProxyUriConfiguration proxyUrlConfiguration, MccCacheNodeProxyRequired? isProxyRequired, MccCacheNodeOSType? osType, string autoUpdateVersion, string updateInfoDetails, DateTimeOffset? updateRequestedOn, string autoUpdateNextAvailableVersion, DateTimeOffset? autoUpdateNextAvailableOn, string autoUpdateAppliedVersion, string autoUpdateLastAppliedDetails, string autoUpdateLastAppliedState, DateTimeOffset? autoUpdateLastAppliedOn, DateTimeOffset? autoUpdateLastTriggeredOn, int? creationMethod, string tlsStatus, string hostOSEdition, string hostOSVersion, string hostOSBuild, string distroOSEditionWsl, string distroOSVersionWsl, string distroOSBuildWsl, string containerOSEdition, string containerOSVersion, string containerOSBuild, string installVersionMsix, string installVersionScript, string appVersionWsl, string optionalProperty1, string optionalProperty2, string optionalProperty3, string optionalProperty4, string optionalProperty5, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CacheNodePropertiesDetailsIssuesList = cacheNodePropertiesDetailsIssuesList;
             IssuesList = issuesList;
@@ -106,15 +106,15 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             AutoUpdateLastTriggeredOn = autoUpdateLastTriggeredOn;
             CreationMethod = creationMethod;
             TlsStatus = tlsStatus;
-            HostOsEdition = hostOsEdition;
-            HostOsVersion = hostOsVersion;
-            HostOsBuild = hostOsBuild;
-            DistroOsEditionWsl = distroOsEditionWsl;
-            DistroOsVersionWsl = distroOsVersionWsl;
-            DistroOsBuildWsl = distroOsBuildWsl;
-            ContainerOsEdition = containerOsEdition;
-            ContainerOsVersion = containerOsVersion;
-            ContainerOsBuild = containerOsBuild;
+            HostOSEdition = hostOSEdition;
+            HostOSVersion = hostOSVersion;
+            HostOSBuild = hostOSBuild;
+            DistroOSEditionWsl = distroOSEditionWsl;
+            DistroOSVersionWsl = distroOSVersionWsl;
+            DistroOSBuildWsl = distroOSBuildWsl;
+            ContainerOSEdition = containerOSEdition;
+            ContainerOSVersion = containerOSVersion;
+            ContainerOSBuild = containerOSBuild;
             InstallVersionMsix = installVersionMsix;
             InstallVersionScript = installVersionScript;
             AppVersionWsl = appVersionWsl;
@@ -217,31 +217,31 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         public string TlsStatus { get; }
 
         /// <summary> Operating system edition of the cache node host machine. </summary>
-        public string HostOsEdition { get; }
+        public string HostOSEdition { get; }
 
         /// <summary> Operating system version of the cache node host machine. </summary>
-        public string HostOsVersion { get; }
+        public string HostOSVersion { get; }
 
         /// <summary> Operating system build of the cache node host machine. </summary>
-        public string HostOsBuild { get; }
+        public string HostOSBuild { get; }
 
         /// <summary> Operating system edition of the WSL Linux distribution used to run the cache node on Windows host machines. </summary>
-        public string DistroOsEditionWsl { get; }
+        public string DistroOSEditionWsl { get; }
 
         /// <summary> Operating system version of the WSL Linux distribution used to run the cache node on Windows host machines. </summary>
-        public string DistroOsVersionWsl { get; }
+        public string DistroOSVersionWsl { get; }
 
         /// <summary> Operating system build of the WSL Linux distribution used to run the cache node on Windows host machines. </summary>
-        public string DistroOsBuildWsl { get; }
+        public string DistroOSBuildWsl { get; }
 
         /// <summary> Operating system edition of container used to run the cache node. </summary>
-        public string ContainerOsEdition { get; }
+        public string ContainerOSEdition { get; }
 
         /// <summary> Operating system version of the container used to run the cache node. </summary>
-        public string ContainerOsVersion { get; }
+        public string ContainerOSVersion { get; }
 
         /// <summary> Operating system build of the container used to run the cache node. </summary>
-        public string ContainerOsBuild { get; }
+        public string ContainerOSBuild { get; }
 
         /// <summary> Version of the Windows deployment application used to deploy the cache node. </summary>
         public string InstallVersionMsix { get; }
