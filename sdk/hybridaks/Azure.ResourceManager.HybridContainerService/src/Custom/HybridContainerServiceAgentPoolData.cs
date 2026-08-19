@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.ResourceManager.HybridContainerService.Models;
 
 namespace Azure.ResourceManager.HybridContainerService
@@ -12,6 +13,7 @@ namespace Azure.ResourceManager.HybridContainerService
         // schema has no tags property. Retain the source-compatible collection without putting it
         // on the wire.
         /// <summary> Resource tags. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public IDictionary<string, string> Tags { get; } = new ChangeTrackingDictionary<string, string>();
     }
 }
