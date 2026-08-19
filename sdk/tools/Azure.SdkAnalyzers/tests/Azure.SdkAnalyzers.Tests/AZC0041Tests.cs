@@ -20,7 +20,6 @@ namespace Azure.SdkAnalyzers.Tests
         [TestCase("CA1822")]
         [TestCase("CS0618")]
         [TestCase("SYSLIB0011")]
-        [TestCase("IL2026")]
         [TestCase("FUTURE0001")]
         public async Task ReportsAnyWarningPragma(string diagnosticId)
         {
@@ -30,6 +29,25 @@ namespace Azure.Test {{ public class TestClient {{ }} }}
 ";
 
             await VerifyAnalyzerAsync(code);
+        }
+
+        [Test]
+        public async Task ReportsTrimOrAotPragmaWithActionableMessage()
+        {
+            string code = @"
+#pragma warning disable IL2026
+namespace Azure.Test { public class TestClient { } }
+";
+
+            await VerifyUnsuppressedAnalyzerAsync(
+                code,
+                UnsuppressedResult(
+                    2,
+                    25,
+                    2,
+                    31,
+                    "IL2026",
+                    CodeAnalysisSuppressionAnalyzer.TrimOrAotSuppressionMessage));
         }
 
         [Test]
@@ -113,7 +131,6 @@ namespace Azure.Test { public class TestClient { } }
 
         [TestCase("SuppressMessage", "AZC0015")]
         [TestCase("SuppressMessageAttribute", "AZC0015")]
-        [TestCase("SuppressMessage", "IL2026")]
         public async Task ReportsSuppressionAttribute(string attributeName, string diagnosticId)
         {
             string code = $@"
@@ -126,6 +143,29 @@ namespace Azure.Test
 ";
 
             await VerifyAnalyzerAsync(code);
+        }
+
+        [Test]
+        public async Task ReportsTrimOrAotSuppressionAttributeWithActionableMessage()
+        {
+            string code = @"
+using System.Diagnostics.CodeAnalysis;
+namespace Azure.Test
+{
+    [SuppressMessage(""Trimming"", ""IL2026"")]
+    public class TestClient { }
+}
+";
+
+            await VerifyUnsuppressedAnalyzerAsync(
+                code,
+                UnsuppressedResult(
+                    5,
+                    34,
+                    5,
+                    42,
+                    "IL2026",
+                    CodeAnalysisSuppressionAnalyzer.TrimOrAotSuppressionMessage));
         }
 
         [TestCase("SuppressMessage")]
@@ -234,13 +274,7 @@ namespace Azure.Test
 }}
 ";
 
-            var test = Verifier.CreateAnalyzer(code);
-            EnableSuppressionValidation(test);
-            test.CompilerDiagnostics = CompilerDiagnostics.All;
-            SuppressCompilerWarning(test, "CS0436");
-            SuppressDocumentationWarnings(test);
-            test.TestBehaviors |= TestBehaviors.SkipSuppressionCheck;
-            await test.RunAsync();
+            await VerifyAnalyzerAsync(code, "CS0436");
         }
 
         [Test]
@@ -378,7 +412,7 @@ namespace Azure.Test { public class TestClient { } }
             return CodeAnalysisSuppressionAnalyzer.ShouldSkipProject(options, CancellationToken.None);
         }
 
-        private static Task VerifyAnalyzerAsync(string code)
+        private static Task VerifyAnalyzerAsync(string code, params string[] suppressedCompilerWarnings)
         {
             var test = Verifier.CreateAnalyzer(code);
             EnableSuppressionValidation(test);
@@ -386,6 +420,10 @@ namespace Azure.Test { public class TestClient { } }
             // Include compiler-tagged diagnostics in analyzer-test verification.
             test.CompilerDiagnostics = CompilerDiagnostics.All;
             SuppressDocumentationWarnings(test);
+            foreach (string diagnosticId in suppressedCompilerWarnings)
+            {
+                SuppressCompilerWarning(test, diagnosticId);
+            }
 
             // AZC0041 intentionally reports the pragma inserted by the test framework's generic
             // suppression check, because NotConfigurable diagnostics cannot be pragma-disabled.
@@ -424,10 +462,12 @@ namespace Azure.Test { public class TestClient { } }
             int startColumn,
             int endLine,
             int endColumn,
-            string diagnosticId) =>
+            string diagnosticId,
+            string? message = null) =>
             new DiagnosticResult(nameof(Descriptors.AZC0041), DiagnosticSeverity.Warning)
                 .WithSpan(startLine, startColumn, endLine, endColumn)
-                .WithMessage($"Suppression for diagnostic '{diagnosticId}' must be declared in eng/analyzerallowlist")
+                .WithMessage(message ??
+                    $"Suppression for diagnostic '{diagnosticId}' must be declared in eng/analyzerallowlist")
                 .WithIsSuppressed(false);
 
         private static void SuppressDocumentationWarnings(

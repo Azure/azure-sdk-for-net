@@ -154,7 +154,8 @@ target is not appropriate.
 `AZC0041` rejects warning-disable pragmas and suppression attributes in handwritten source, except
 `UnconditionalSuppressMessage` attributes for IL2xxx trimming and IL3xxx AOT diagnostics. These
 attributes must remain in source because downstream trim/AOT tools read them from the shipped
-assembly when customers publish their applications.
+assembly when customers publish their applications. Do not replace them with `nowarn:` entries,
+which apply only while compiling the SDK.
 
 ### Removing a project from the code-analysis suppression skip list
 
@@ -172,6 +173,9 @@ When picking a project from the backlog:
    particular care: remove the directive and build to discover every warning it hid.
 3. For each reported suppression, choose one of:
    - **Fix:** resolve the underlying warning and remove the local suppression.
+   - **Preserve trim/AOT metadata:** for an IL2xxx or IL3xxx diagnostic, replace a pragma or
+     `SuppressMessage` with `UnconditionalSuppressMessage`. Do not add a `nowarn:` entry; customer
+     publish tools read the suppression from the shipped assembly.
    - **Approve narrowly:** add a justified symbol-scoped `nowarn:CODE Target` entry to the
      project's allow-list file and remove the local suppression. If the diagnostic is not yet in
      `ScopedSuppressionSupportedDiagnosticIds`, add it in the same PR.

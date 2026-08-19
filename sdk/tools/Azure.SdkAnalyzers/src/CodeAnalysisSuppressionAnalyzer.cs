@@ -28,6 +28,8 @@ namespace Azure.SdkAnalyzers
             "System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessageAttribute";
         internal const string BarePragmaMessage =
             "A bare #pragma warning disable is not allowed. Remove it, rebuild to identify the hidden warnings, and fix or centrally approve each specific diagnostic.";
+        internal const string TrimOrAotSuppressionMessage =
+            "Trim and AOT suppressions must use [UnconditionalSuppressMessage] so they are preserved in the shipped assembly for customer publish.";
 
         private static readonly ImmutableHashSet<string> s_suppressionAttributeNames =
             ImmutableHashSet.Create(
@@ -199,10 +201,14 @@ namespace Azure.SdkAnalyzers
 
         private static void ReportSuppression(SyntaxNodeAnalysisContext context, Location location, string diagnosticId)
         {
+            string message = IsTrimOrAotDiagnosticId(diagnosticId)
+                ? TrimOrAotSuppressionMessage
+                : $"Suppression for diagnostic '{diagnosticId}' must be declared in eng/analyzerallowlist";
+
             context.ReportDiagnostic(Diagnostic.Create(
                 Descriptors.AZC0041,
                 location,
-                $"Suppression for diagnostic '{diagnosticId}' must be declared in eng/analyzerallowlist"));
+                message));
         }
 
         private static AttributeArgumentSyntax GetCheckIdArgument(AttributeSyntax attribute, IMethodSymbol constructor)
