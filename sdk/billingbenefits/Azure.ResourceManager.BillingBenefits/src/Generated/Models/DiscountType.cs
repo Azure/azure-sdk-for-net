@@ -12,7 +12,7 @@ using Azure.ResourceManager.BillingBenefits;
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     /// <summary> Defines the type of discount. Supported values are ProductFamily, Product, Sku, CustomPrice, and CustomPriceMultiCurrency. </summary>
-    internal readonly partial struct DiscountType : IEquatable<DiscountType>
+    public readonly partial struct DiscountType : IEquatable<DiscountType>
     {
         private readonly string _value;
         private const string ProductFamilyValue = "ProductFamily";

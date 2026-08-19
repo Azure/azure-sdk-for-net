@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Resource properties. </summary>
         internal BotServicePrivateLinkResourceProperties Properties { get; set; }
 
+        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
+        public string Type { get; }
+
         /// <summary> The private link resource group id. </summary>
         public string GroupId
         {
