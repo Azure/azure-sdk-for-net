@@ -16,20 +16,20 @@
 
 ## Summary
 
-- Total libraries: 447
-- Management Plane (MPG): 260
+- Total libraries: 444
+- Management Plane (MPG): 261
   - Autorest/Swagger: 43
-  - New Emitter (TypeSpec): 217
+  - New Emitter (TypeSpec): 218
   - Old TypeSpec: 0
-- Data Plane (DPG): 130
+- Data Plane (DPG): 124
   - Autorest/Swagger: 30
   - New Emitter (TypeSpec): 53
   - Old TypeSpec: 0
-- Provisioning: 57
-  - Reflection-based generator: 25
-  - TypeSpec-based generator: 30
+- Provisioning: 59
+  - Reflection-based generator: 24
+  - TypeSpec-based generator: 33
   - No generator: 2
-- No generator: 47
+- No generator: 41
 
 
 ## Data Plane Libraries (DPG) - Migrated to New Emitter
@@ -137,7 +137,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 30
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 217 / 217 (100%)
+**Migration Status**: 218 / 218 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -179,6 +179,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | cloudhealth | Azure.ResourceManager.CloudHealth | ✅ |
 | cognitiveservices | Azure.ResourceManager.CognitiveServices | ✅ |
 | communication | Azure.ResourceManager.Communication | ✅ |
+| commvaultcontentstore | Azure.ResourceManager.CommvaultContentStore | ✅ |
 | compute | Azure.ResourceManager.Compute | ✅ |
 | compute | Azure.ResourceManager.Compute.BulkActions | ✅ |
 | computebulkactions | Azure.ResourceManager.ComputeBulkActions | ✅ |
@@ -415,7 +416,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 43
 
 Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
 
-**Migration Status**: 30 / 57 migrated to TypeSpec-based generator
+**Migration Status**: 33 / 59 migrated to TypeSpec-based generator
 
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
@@ -431,12 +432,13 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | compute | Azure.Provisioning.Compute | Azure.ResourceManager.Compute ✅ | TypeSpec ✅ |
 | containerapps | Azure.Provisioning.AppContainers | Azure.ResourceManager.AppContainers ✅ | Reflection |
 | containerinstance | Azure.Provisioning.ContainerInstance | Azure.ResourceManager.ContainerInstance ✅ | TypeSpec ✅ |
-| containerregistry | Azure.Provisioning.ContainerRegistry | Azure.ResourceManager.ContainerRegistry ✅ | Reflection |
+| containerregistry | Azure.Provisioning.ContainerRegistry | Azure.ResourceManager.ContainerRegistry ✅ | TypeSpec ✅ |
 | containerregistry | Azure.Provisioning.ContainerRegistry.Tasks | Azure.ResourceManager.ContainerRegistry.Tasks ✅ | TypeSpec ✅ |
 | containerservice | Azure.Provisioning.ContainerService | Azure.ResourceManager.ContainerService ✅ | TypeSpec ✅ |
 | cosmosdb | Azure.Provisioning.CosmosDB | Azure.ResourceManager.CosmosDB ✅ | Reflection |
 | costmanagement | Azure.Provisioning.CostManagement | Azure.ResourceManager.CostManagement ✅ | TypeSpec ✅ |
 | datafactory | Azure.Provisioning.DataFactory | Azure.ResourceManager.DataFactory ✅ | Reflection |
+| desktopvirtualization | Azure.Provisioning.DesktopVirtualization | Azure.ResourceManager.DesktopVirtualization ✅ | TypeSpec ✅ |
 | dns | Azure.Provisioning.Dns | Azure.ResourceManager.Dns ✅ | None |
 | domainregistration | Azure.Provisioning.DomainRegistration | Azure.ResourceManager.DomainRegistration ✅ | TypeSpec ✅ |
 | durabletask | Azure.Provisioning.DurableTask | Azure.ResourceManager.DurableTask ✅ | TypeSpec ✅ |
@@ -448,6 +450,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | keyvault | Azure.Provisioning.KeyVault | Azure.ResourceManager.KeyVault ✅ | TypeSpec ✅ |
 | kubernetesconfiguration | Azure.Provisioning.KubernetesConfiguration | Azure.ResourceManager.KubernetesConfiguration | Reflection |
 | kusto | Azure.Provisioning.Kusto | Azure.ResourceManager.Kusto ✅ | Reflection |
+| loadtestservice | Azure.Provisioning.LoadTesting | Azure.ResourceManager.LoadTesting ✅ | TypeSpec ✅ |
 | logic | Azure.Provisioning.Logic | Azure.ResourceManager.Logic | Reflection |
 | machinelearningservices | Azure.Provisioning.MachineLearning | Azure.ResourceManager.MachineLearning ✅ | TypeSpec ✅ |
 | monitor | Azure.Provisioning.Monitor | Azure.ResourceManager.Monitor ✅ | Reflection |
@@ -480,19 +483,13 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 
 ## Libraries with No Generator
 
-Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 47
+Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 41
 
 | Service | Library |
 | ------- | ------- |
 | agentserver | Azure.AI.AgentServer.Core |
 | agentserver | Azure.AI.AgentServer.Invocations |
 | ai | Azure.AI.Inference |
-| cloudmachine | Azure.Projects |
-| cloudmachine | Azure.Projects.AI |
-| cloudmachine | Azure.Projects.AI.Foundry |
-| cloudmachine | Azure.Projects.Provisioning |
-| cloudmachine | Azure.Projects.Tsp |
-| cloudmachine | Azure.Projects.Web |
 | communication | Azure.Communication.Common |
 | core | Azure.Core |
 | core | Azure.Core.Amqp |

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace TestProjects.Spector.Tests
@@ -9,14 +10,26 @@ namespace TestProjects.Spector.Tests
     public abstract class TestServerSessionBase<T> : IAsyncDisposable where T : TestServerBase
     {
         private static readonly object _serverCacheLock = new object();
+        private static readonly SemaphoreSlim _serverLease = new(1, 1);
         private static T? s_serverCache;
+        private bool _hasServerLease;
 
         public T? Server { get; private set; }
         public Uri Host => Server?.Host ?? throw new InvalidOperationException("Server is not instantiated");
 
         protected TestServerSessionBase()
         {
-            Server = GetServer();
+            _serverLease.Wait();
+            try
+            {
+                Server = GetServer();
+                _hasServerLease = true;
+            }
+            catch
+            {
+                _serverLease.Release();
+                throw;
+            }
         }
 
         private ref T? GetServerCache()
@@ -57,21 +70,35 @@ namespace TestProjects.Spector.Tests
 
         protected void Return()
         {
-            bool disposeServer = true;
-            lock (_serverCacheLock)
+            if (!_hasServerLease)
             {
-                ref var cache = ref GetServerCache();
-                if (cache == null)
-                {
-                    cache = Server;
-                    Server = null;
-                    disposeServer = false;
-                }
+                return;
             }
 
-            if (disposeServer)
+            bool disposeServer = true;
+            try
             {
-                Server?.Dispose();
+                lock (_serverCacheLock)
+                {
+                    ref var cache = ref GetServerCache();
+                    if (cache == null)
+                    {
+                        cache = Server;
+                        Server = null;
+                        disposeServer = false;
+                    }
+                }
+
+                if (disposeServer)
+                {
+                    Server?.Dispose();
+                    Server = null;
+                }
+            }
+            finally
+            {
+                _hasServerLease = false;
+                _serverLease.Release();
             }
         }
     }

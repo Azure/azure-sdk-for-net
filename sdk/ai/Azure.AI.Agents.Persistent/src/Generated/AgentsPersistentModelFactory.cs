@@ -699,7 +699,7 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> A new <see cref="Persistent.MessageInputImageUriBlock"/> instance for mocking. </returns>
         public static MessageInputImageUriBlock MessageInputImageUriBlock(MessageImageUriParam imageUrl = default)
         {
-            return new MessageInputImageUriBlock(MessageBlockType.ImageUrl, additionalBinaryDataProperties: null, imageUrl);
+            return new MessageInputImageUriBlock(MessageBlockType.ImageUri, additionalBinaryDataProperties: null, imageUrl);
         }
 
         /// <summary> Defines how an external image URL is referenced when creating an image-URL block. </summary>

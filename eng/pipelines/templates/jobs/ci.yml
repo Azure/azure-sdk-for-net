@@ -201,6 +201,17 @@ jobs:
 
         - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
+        # This job does not otherwise use the .NET SDK, so it does not inherit the install from
+        # /eng/pipelines/templates/steps/install-dotnet.yml. The agent image does not yet carry the
+        # SDK version specified by global.json, so install it here for the NoWarn validation. This
+        # step can be removed once the agent version satisfies global.json.
+        - task: UseDotNet@2
+          displayName: 'Use .NET SDK'
+          retryCountOnTaskFailure: 3
+          inputs:
+            useGlobalJson: true
+            performMultiLevelLookup: true
+
         - pwsh: ./eng/scripts/Test-NoWarnValidation.ps1
           displayName: Validate NoWarn enforcement targets
 

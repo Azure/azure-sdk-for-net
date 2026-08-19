@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             SystemData systemData = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            IpPrefixProperties properties = default;
+            IPPrefixProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    properties = IpPrefixProperties.DeserializeIpPrefixProperties(prop.Value, options);
+                    properties = IPPrefixProperties.DeserializeIPPrefixProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

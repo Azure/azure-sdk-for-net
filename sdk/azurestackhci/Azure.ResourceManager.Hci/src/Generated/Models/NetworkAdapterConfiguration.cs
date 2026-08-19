@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="interfaceState"> Administrative state of the interface (up or down). </param>
         /// <param name="wifiConfiguration"> WiFi configuration desired properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkAdapterConfiguration(string adapterName, string ip4Address, string subnetMask, string defaultGateway, IList<string> dnsServers, IpInterfaceType? ipInterfaceType, int? vlanId, InterfaceState? interfaceState, WifiConfigurationDesiredProperties wifiConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkAdapterConfiguration(string adapterName, string ip4Address, string subnetMask, string defaultGateway, IList<string> dnsServers, IPInterfaceType? ipInterfaceType, int? vlanId, InterfaceState? interfaceState, WifiConfigurationDesiredProperties wifiConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdapterName = adapterName;
             Ip4Address = ip4Address;
             SubnetMask = subnetMask;
             DefaultGateway = defaultGateway;
             DnsServers = dnsServers;
-            IpInterfaceType = ipInterfaceType;
+            IPInterfaceType = ipInterfaceType;
             VlanId = vlanId;
             InterfaceState = interfaceState;
             WifiConfiguration = wifiConfiguration;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> IP configuration type (Dhcp or Static). </summary>
         [WirePath("ipInterfaceType")]
-        public IpInterfaceType? IpInterfaceType { get; set; }
+        public IPInterfaceType? IPInterfaceType { get; set; }
 
         /// <summary> VLAN identifier for network segmentation. </summary>
         [WirePath("vlanId")]

@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="state"> The state this IP address is located in. </param>
         /// <param name="stateConfidenceFactor"> A numeric rating of confidence that the value in the 'state' field is correct on a scale of 0-100. </param>
         /// <param name="stateCode"> The abbreviated name for the state this IP address is located in. </param>
-        /// <returns> A new <see cref="Models.EnrichmentIpGeodata"/> instance for mocking. </returns>
-        public static EnrichmentIpGeodata EnrichmentIpGeodata(string asn = default, string carrier = default, string city = default, int? cityConfidenceFactor = default, string continent = default, string country = default, int? countryConfidenceFactor = default, string ipAddr = default, string ipRoutingType = default, string latitude = default, string longitude = default, string organization = default, string organizationType = default, string region = default, string state = default, int? stateConfidenceFactor = default, string stateCode = default)
+        /// <returns> A new <see cref="Models.EnrichmentIPGeodata"/> instance for mocking. </returns>
+        public static EnrichmentIPGeodata EnrichmentIPGeodata(string asn = default, string carrier = default, string city = default, int? cityConfidenceFactor = default, string continent = default, string country = default, int? countryConfidenceFactor = default, string ipAddr = default, string ipRoutingType = default, string latitude = default, string longitude = default, string organization = default, string organizationType = default, string region = default, string state = default, int? stateConfidenceFactor = default, string stateCode = default)
         {
-            return new EnrichmentIpGeodata(
+            return new EnrichmentIPGeodata(
                 asn,
                 carrier,
                 city,
@@ -768,6 +768,46 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     (tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>()).ToList(),
                     (techniques ?? new ChangeTrackingList<string>()).ToList(),
                     severity.GetValueOrDefault()));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="alertRulesCreatedByTemplateCount"> The number of alert rules that were created by this template. </param>
+        /// <param name="createdOn"> The time that this alert rule template has been added. </param>
+        /// <param name="lastUpdatedOn"> The last time that this alert rule template has been updated. </param>
+        /// <param name="description"> The description of the alert rule template. </param>
+        /// <param name="displayName"> The display name for alert rule template. </param>
+        /// <param name="requiredDataConnectors"> The required data sources for this template. </param>
+        /// <param name="status"> The alert rule template status. </param>
+        /// <param name="displayNamesFilter"> the alerts' displayNames on which the cases will be generated. </param>
+        /// <param name="displayNamesExcludeFilter"> the alerts' displayNames on which the cases will not be generated. </param>
+        /// <param name="productFilter"> The alerts' productName on which the cases will be generated. </param>
+        /// <param name="severitiesFilter"> the alerts' severities on which the cases will be generated. </param>
+        /// <returns> A new <see cref="Models.MicrosoftSecurityIncidentCreationAlertRuleTemplate"/> instance for mocking. </returns>
+        public static MicrosoftSecurityIncidentCreationAlertRuleTemplate MicrosoftSecurityIncidentCreationAlertRuleTemplate(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? alertRulesCreatedByTemplateCount = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastUpdatedOn = default, string description = default, string displayName = default, IEnumerable<AlertRuleTemplateDataSource> requiredDataConnectors = default, SecurityInsightsAlertRuleTemplateStatus? status = default, IEnumerable<string> displayNamesFilter = default, IEnumerable<string> displayNamesExcludeFilter = default, MicrosoftSecurityProductName? productFilter = default, IEnumerable<SecurityInsightsAlertSeverity> severitiesFilter = default)
+        {
+            return new MicrosoftSecurityIncidentCreationAlertRuleTemplate(
+                id,
+                name,
+                resourceType,
+                systemData,
+                default,
+                default,
+                alertRulesCreatedByTemplateCount is null && lastUpdatedOn is null && createdOn is null && description is null && displayName is null && requiredDataConnectors is null && status is null && displayNamesFilter is null && displayNamesExcludeFilter is null && productFilter is null && severitiesFilter is null ? default : new MicrosoftSecurityIncidentCreationAlertRuleTemplateProperties(
+                    alertRulesCreatedByTemplateCount,
+                    lastUpdatedOn,
+                    createdOn,
+                    description,
+                    displayName,
+                    (requiredDataConnectors ?? new ChangeTrackingList<AlertRuleTemplateDataSource>()).ToList(),
+                    status,
+                    default,
+                    (displayNamesFilter ?? new ChangeTrackingList<string>()).ToList(),
+                    (displayNamesExcludeFilter ?? new ChangeTrackingList<string>()).ToList(),
+                    productFilter,
+                    (severitiesFilter ?? new ChangeTrackingList<SecurityInsightsAlertSeverity>()).ToList()));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1735,7 +1775,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 systemData,
                 default,
                 default,
-                additionalData is null && friendlyName is null && address is null && location is null && threatIntelligence is null ? default : new IpEntityProperties(
+                additionalData is null && friendlyName is null && address is null && location is null && threatIntelligence is null ? default : new IPEntityProperties(
                     additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
                     friendlyName,
                     default,
