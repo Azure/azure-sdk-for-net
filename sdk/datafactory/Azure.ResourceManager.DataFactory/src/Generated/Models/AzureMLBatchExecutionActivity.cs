@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Azure ML Batch Execution activity properties. </summary>
         internal AzureMLBatchExecutionActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Execution";
+
         /// <summary> Key,Value pairs to be passed to the Azure ML Batch Execution Service endpoint. Keys must match the names of web service parameters defined in the published Azure ML web service. Values will be passed in the GlobalParameters property of the Azure ML batch execution request. </summary>
         public IDictionary<string, BinaryData> GlobalParameters
         {

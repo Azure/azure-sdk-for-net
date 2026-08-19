@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> GetMetadata activity properties. </summary>
         internal GetMetadataActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Execution";
+
         /// <summary> GetMetadata activity dataset reference. </summary>
         public DatasetReference Dataset
         {

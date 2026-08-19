@@ -21,8 +21,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        internal UnknownControlActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties) : base(name, activityType ?? "unknown", description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
+        /// <param name="type"></param>
+        internal UnknownControlActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, string @type) : base(name, activityType ?? "unknown", description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
+            Type = @type;
         }
+
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Container";
     }
 }

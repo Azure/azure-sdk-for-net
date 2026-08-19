@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Fail activity properties. </summary>
         internal FailActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Container";
+
         /// <summary> The error message that surfaced in the Fail activity. It can be dynamic content that's evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Message
         {

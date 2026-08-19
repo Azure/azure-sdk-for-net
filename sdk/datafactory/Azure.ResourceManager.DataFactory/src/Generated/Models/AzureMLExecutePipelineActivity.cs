@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Azure ML Execute Pipeline activity properties. </summary>
         internal AzureMLExecutePipelineActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Execution";
+
         /// <summary> ID of the published Azure ML pipeline. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> MLPipelineId
         {

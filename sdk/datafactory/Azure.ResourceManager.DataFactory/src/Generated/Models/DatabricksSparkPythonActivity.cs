@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Databricks SparkPython activity properties. </summary>
         internal DatabricksSparkPythonActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Execution";
+
         /// <summary> The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> PythonFile
         {

@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Execute Synapse notebook activity properties. </summary>
         internal SynapseNotebookActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Execution";
+
         /// <summary> Synapse notebook reference. </summary>
         public SynapseNotebookReference Notebook
         {

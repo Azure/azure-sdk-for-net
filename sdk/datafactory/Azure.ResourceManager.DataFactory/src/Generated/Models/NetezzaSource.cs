@@ -46,5 +46,8 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The settings that will be leveraged for Netezza source partitioning. </summary>
         public NetezzaPartitionSettings PartitionSettings { get; set; }
+
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "TabularSource";
     }
 }

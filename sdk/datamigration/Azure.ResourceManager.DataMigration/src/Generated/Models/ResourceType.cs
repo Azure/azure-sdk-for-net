@@ -12,7 +12,7 @@ using Azure.ResourceManager.DataMigration;
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary></summary>
-    internal readonly partial struct ResourceType : IEquatable<ResourceType>
+    public readonly partial struct ResourceType : IEquatable<ResourceType>
     {
         private readonly string _value;
         /// <summary> SqlMi. </summary>

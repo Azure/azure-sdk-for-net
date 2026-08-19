@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Delete activity properties. </summary>
         internal DeleteActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Execution";
+
         /// <summary> If true, files or sub-folders under current folder path will be deleted recursively. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> Recursive
         {

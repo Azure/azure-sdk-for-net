@@ -41,5 +41,8 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The read behavior for the operation. Default is Query. Allowed values: Query/QueryAll. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ReadBehavior { get; set; }
+
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "TabularSource";
     }
 }

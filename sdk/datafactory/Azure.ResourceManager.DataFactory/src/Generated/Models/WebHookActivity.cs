@@ -51,6 +51,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Activity policy. </summary>
         public SecureInputOutputPolicy Policy { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Container";
+
         /// <summary> Rest API method for target endpoint. </summary>
         public WebHookActivityMethod Method
         {

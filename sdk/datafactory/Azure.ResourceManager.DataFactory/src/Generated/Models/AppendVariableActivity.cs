@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Append Variable activity properties. </summary>
         internal AppendVariableActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Container";
+
         /// <summary> Name of the variable whose value needs to be appended to. </summary>
         public string VariableName
         {

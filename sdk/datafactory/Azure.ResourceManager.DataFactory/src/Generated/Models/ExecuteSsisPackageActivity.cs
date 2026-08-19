@@ -49,6 +49,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Execute SSIS package activity properties. </summary>
         internal ExecuteSsisPackageActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Execution";
+
         /// <summary> SSIS package location. </summary>
         public SsisPackageLocation PackageLocation
         {

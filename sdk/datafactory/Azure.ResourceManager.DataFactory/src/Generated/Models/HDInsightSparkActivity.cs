@@ -49,6 +49,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> HDInsight spark activity properties. </summary>
         internal HDInsightSparkActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Execution";
+
         /// <summary> The root path in 'sparkJobLinkedService' for all the job’s files. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> RootPath
         {

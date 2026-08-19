@@ -82,6 +82,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(TriggerDependencyReference)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -115,6 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string dependencyReferenceType = "unknown";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DataFactoryTriggerReference referenceTrigger = default;
+            string @type = "unknown";
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -127,12 +130,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                     referenceTrigger = DataFactoryTriggerReference.DeserializeDataFactoryTriggerReference(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownTriggerDependencyReference(dependencyReferenceType, additionalBinaryDataProperties, referenceTrigger);
+            return new UnknownTriggerDependencyReference(dependencyReferenceType, additionalBinaryDataProperties, referenceTrigger, @type);
         }
     }
 }

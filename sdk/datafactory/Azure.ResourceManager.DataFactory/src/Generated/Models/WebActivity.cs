@@ -48,6 +48,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Web activity properties. </summary>
         internal WebActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Execution";
+
         /// <summary> Rest API method for target endpoint. </summary>
         public WebActivityMethod Method
         {

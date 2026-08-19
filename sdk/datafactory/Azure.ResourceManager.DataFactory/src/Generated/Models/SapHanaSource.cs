@@ -52,6 +52,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The settings that will be leveraged for SAP HANA source partitioning. </summary>
         internal SapHanaPartitionSettings PartitionSettings { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "TabularSource";
+
         /// <summary> The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> PartitionColumnName
         {

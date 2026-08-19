@@ -41,5 +41,8 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Azure Table source ignore table not found. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> AzureTableSourceIgnoreTableNotFound { get; set; }
+
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "TabularSource";
     }
 }

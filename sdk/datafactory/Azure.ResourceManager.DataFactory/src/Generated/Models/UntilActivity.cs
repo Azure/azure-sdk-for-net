@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Until activity properties. </summary>
         internal UntilActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Container";
+
         /// <summary> An expression that would evaluate to Boolean. The loop will continue until this expression evaluates to true. </summary>
         public DataFactoryExpression Expression
         {

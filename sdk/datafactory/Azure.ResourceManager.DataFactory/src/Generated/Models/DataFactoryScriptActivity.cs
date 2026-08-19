@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Script activity properties. </summary>
         internal ScriptActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Execution";
+
         /// <summary> ScriptBlock execution timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
         public DataFactoryElement<string> ScriptBlockExecutionTimeout
         {

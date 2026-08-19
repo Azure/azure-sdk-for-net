@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Databricks Job activity properties. </summary>
         internal DatabricksJobActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Execution";
+
         /// <summary> The Id of the Databricks Job to be executed. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> JobId
         {

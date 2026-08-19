@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Switch activity properties. </summary>
         internal SwitchActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Container";
+
         /// <summary> An expression that would evaluate to a string or integer. This is used to determine the block of activities in cases that will be executed. </summary>
         public DataFactoryExpression On
         {

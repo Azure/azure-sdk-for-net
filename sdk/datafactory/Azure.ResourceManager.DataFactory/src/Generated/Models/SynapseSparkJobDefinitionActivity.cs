@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Execute spark job activity properties. </summary>
         internal SynapseSparkJobActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Execution";
+
         /// <summary> Synapse spark job reference. </summary>
         public SynapseSparkJobReference SparkJob
         {

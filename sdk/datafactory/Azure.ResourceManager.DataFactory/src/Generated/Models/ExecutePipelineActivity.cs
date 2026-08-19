@@ -49,6 +49,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Execute pipeline activity properties. </summary>
         internal ExecutePipelineActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Container";
+
         /// <summary> Pipeline reference. </summary>
         public DataFactoryPipelineReference Pipeline
         {

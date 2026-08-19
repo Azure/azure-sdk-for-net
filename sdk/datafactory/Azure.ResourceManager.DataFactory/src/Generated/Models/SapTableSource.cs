@@ -102,5 +102,8 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The settings that will be leveraged for SAP table source partitioning. </summary>
         public SapTablePartitionSettings PartitionSettings { get; set; }
+
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "TabularSource";
     }
 }

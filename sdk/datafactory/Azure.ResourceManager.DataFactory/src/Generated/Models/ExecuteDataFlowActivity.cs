@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Execute data flow activity properties. </summary>
         internal ExecuteDataFlowActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Execution";
+
         /// <summary> Data flow reference. </summary>
         public DataFlowReference DataFlow
         {

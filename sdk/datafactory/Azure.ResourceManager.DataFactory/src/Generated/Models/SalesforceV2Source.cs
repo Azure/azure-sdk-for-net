@@ -56,5 +56,8 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Partition option for the SalesforceV2 connector in copy activity, AutoDetect or None. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> PartitionOption { get; set; }
+
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "TabularSource";
     }
 }

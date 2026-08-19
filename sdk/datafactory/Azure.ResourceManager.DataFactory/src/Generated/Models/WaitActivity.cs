@@ -45,6 +45,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Wait activity properties. </summary>
         internal WaitActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Container";
+
         /// <summary> Duration in seconds. Type: integer (or Expression with resultType integer). </summary>
         public DataFactoryElement<int> WaitTimeInSeconds
         {

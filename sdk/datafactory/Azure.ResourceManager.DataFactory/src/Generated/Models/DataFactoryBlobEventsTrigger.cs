@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Blob Events Trigger properties. </summary>
         internal BlobEventsTriggerTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "MultiplePipelineTrigger";
+
         /// <summary> The blob path must begin with the pattern provided for trigger to fire. For example, '/records/blobs/december/' will only fire the trigger for blobs in the december folder under the records container. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith. </summary>
         public string BlobPathBeginsWith
         {

@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> SQL stored procedure activity properties. </summary>
         internal SqlServerStoredProcedureActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Execution";
+
         /// <summary> Stored procedure name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> StoredProcedureName
         {

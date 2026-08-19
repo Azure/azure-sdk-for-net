@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Custom activity properties. </summary>
         internal CustomActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Execution";
+
         /// <summary> Command for custom activity Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Command
         {

@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Custom Events Trigger properties. </summary>
         internal CustomEventsTriggerTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "MultiplePipelineTrigger";
+
         /// <summary> The event subject must begin with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith. </summary>
         public string SubjectBeginsWith
         {

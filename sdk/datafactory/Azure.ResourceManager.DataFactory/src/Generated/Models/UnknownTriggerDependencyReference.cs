@@ -16,8 +16,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependencyReferenceType"> The type of dependency reference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="referenceTrigger"> Referenced trigger. </param>
-        internal UnknownTriggerDependencyReference(string dependencyReferenceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactoryTriggerReference referenceTrigger) : base(dependencyReferenceType ?? "unknown", additionalBinaryDataProperties, referenceTrigger)
+        /// <param name="type"></param>
+        internal UnknownTriggerDependencyReference(string dependencyReferenceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactoryTriggerReference referenceTrigger, string @type) : base(dependencyReferenceType ?? "unknown", additionalBinaryDataProperties, referenceTrigger)
         {
+            Type = @type;
         }
+
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "TriggerDependencyReference";
     }
 }

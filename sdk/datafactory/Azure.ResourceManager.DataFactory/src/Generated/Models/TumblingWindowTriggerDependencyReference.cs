@@ -40,5 +40,8 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The size of the window when evaluating the dependency. If undefined the frequency of the tumbling window will be used. </summary>
         public string Size { get; set; }
+
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "TriggerDependencyReference";
     }
 }

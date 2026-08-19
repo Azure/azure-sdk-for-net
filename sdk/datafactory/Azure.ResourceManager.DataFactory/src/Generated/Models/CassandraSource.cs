@@ -41,5 +41,8 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The consistency level specifies how many Cassandra servers must respond to a read request before returning data to the client application. Cassandra checks the specified number of Cassandra servers for data to satisfy the read request. Must be one of cassandraSourceReadConsistencyLevels. The default value is 'ONE'. It is case-insensitive. </summary>
         public CassandraSourceReadConsistencyLevel? ConsistencyLevel { get; set; }
+
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "TabularSource";
     }
 }

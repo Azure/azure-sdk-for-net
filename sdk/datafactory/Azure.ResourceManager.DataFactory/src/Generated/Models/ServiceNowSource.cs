@@ -36,5 +36,8 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> A query to retrieve data from source. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Query { get; set; }
+
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "TabularSource";
     }
 }

@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Activity policy. </summary>
         public SecureInputOutputPolicy Policy { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Container";
+
         /// <summary> Name of the variable whose value needs to be set. </summary>
         public string VariableName
         {

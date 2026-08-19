@@ -46,6 +46,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> ForEach activity properties. </summary>
         internal ForEachActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Container";
+
         /// <summary> Should the loop be executed in sequence or in parallel (max 50). </summary>
         public bool? IsSequential
         {

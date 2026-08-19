@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> HDInsight Hive activity properties. </summary>
         internal HDInsightHiveActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Execution";
+
         /// <summary> User specified arguments to HDInsightActivity. </summary>
         public IList<BinaryData> Arguments
         {

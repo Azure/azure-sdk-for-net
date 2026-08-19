@@ -61,6 +61,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> List of outputs for the activity. </summary>
         public IList<DatasetReference> Outputs { get; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Execution";
+
         /// <summary> Copy activity source. </summary>
         public CopyActivitySource Source
         {

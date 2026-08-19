@@ -34,6 +34,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Azure ML Update Resource management activity properties. </summary>
         internal AzureMLUpdateResourceActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Execution";
+
         /// <summary> Name of the Trained Model module in the Web Service experiment to be updated. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> TrainedModelName
         {

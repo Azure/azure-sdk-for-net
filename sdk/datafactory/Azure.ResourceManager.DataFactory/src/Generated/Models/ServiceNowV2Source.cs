@@ -41,5 +41,8 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Page size of the result. Type: integer (or Expression with resultType integer). </summary>
         public DataFactoryElement<int> PageSize { get; set; }
+
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "TabularSource";
     }
 }

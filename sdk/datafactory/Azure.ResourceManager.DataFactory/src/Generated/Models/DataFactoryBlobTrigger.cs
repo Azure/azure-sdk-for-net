@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Blob Trigger properties. </summary>
         internal BlobTriggerTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "MultiplePipelineTrigger";
+
         /// <summary> The path of the container/folder that will trigger the pipeline. </summary>
         public string FolderPath
         {

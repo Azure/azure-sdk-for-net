@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> HDInsight Pig activity properties. </summary>
         internal HDInsightPigActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Execution";
+
         /// <summary> User specified arguments to HDInsightActivity. Type: array (or Expression with resultType array). </summary>
         public DataFactoryElement<IList<string>> Arguments
         {

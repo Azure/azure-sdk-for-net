@@ -34,6 +34,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Data Lake Analytics U-SQL activity properties. </summary>
         internal DataLakeAnalyticsUSQLActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Execution";
+
         /// <summary> Case-sensitive path to folder that contains the U-SQL script. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ScriptPath
         {

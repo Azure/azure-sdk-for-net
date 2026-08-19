@@ -51,5 +51,8 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The single character that will be used as delimiter passed to SAP RFC as well as splitting the output data retrieved. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> SapDataColumnDelimiter { get; set; }
+
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "TabularSource";
     }
 }

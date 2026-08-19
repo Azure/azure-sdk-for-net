@@ -49,6 +49,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Lookup activity properties. </summary>
         internal LookupActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Execution";
+
         /// <summary> Dataset-specific source properties, same as copy activity source. </summary>
         public CopyActivitySource Source
         {

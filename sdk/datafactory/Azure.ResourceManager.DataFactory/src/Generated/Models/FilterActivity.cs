@@ -46,6 +46,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Filter activity properties. </summary>
         internal FilterActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Container";
+
         /// <summary> Input array on which filter should be applied. </summary>
         public DataFactoryExpression Items
         {

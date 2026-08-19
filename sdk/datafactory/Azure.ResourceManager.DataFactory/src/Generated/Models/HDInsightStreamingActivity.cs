@@ -55,6 +55,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> HDInsight streaming activity properties. </summary>
         internal HDInsightStreamingActivityTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "Execution";
+
         /// <summary> User specified arguments to HDInsightActivity. </summary>
         public IList<BinaryData> Arguments
         {

@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Schedule Trigger properties. </summary>
         internal ScheduleTriggerTypeProperties TypeProperties { get; set; }
 
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; } = "MultiplePipelineTrigger";
+
         /// <summary> Recurrence schedule configuration. </summary>
         public ScheduleTriggerRecurrence Recurrence
         {
