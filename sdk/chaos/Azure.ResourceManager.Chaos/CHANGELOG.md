@@ -4,11 +4,56 @@
 
 ### Features Added
 
+- Updated the default api-version to `2026-08-01-preview`.
+- Added new resource `ConnectionResource` and collection `ConnectionCollection` (with `GetConnection`, `GetConnections`, and `GetConnectionResource` accessors).
+- Added new models `ResourceTargeting`, `ResourceTargetingCriteria`, `WorkspaceDiscovery`, `WorkspaceDiscoveryProperties`, `WorkspaceDiscoveryStatus`, `ConnectionKind`, `ConnectionStatus`, `ConnectionProperties`, `TemplateEvaluationResultItem`, and `ValidationProperties`.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Renamed several public types to drop the `Chaos` prefix and align with the updated api-version:
+  - `ChaosPrivateEndpointConnectionResource` -> `PrivateEndpointConnectionResource`
+  - `ChaosPrivateEndpointConnectionCollection` -> `PrivateEndpointConnectionCollection`
+  - `ChaosPrivateEndpointConnectionProperties` -> `PrivateEndpointConnectionProperties`
+  - `ChaosActionLifecycle` -> `ActionLifecycle`
+  - `ChaosActionParametersSchema` -> `ActionPropertiesParametersSchema`
+  - `ChaosCustomerDataStorageProperties` -> `CustomerDataStorageProperties`
+  - `ChaosDiscoveredResourceProperties` -> `DiscoveredResourceProperties`
+  - `ChaosEntraIdentity` -> `EntraIdentity`
+  - `ChaosPermissionError` -> `PermissionError`
+  - `ChaosPermissionsFixProperties` -> `PermissionsFixProperties`
+  - `ChaosPermissionsFixState` -> `PermissionsFixState`
+  - `ChaosPermissionsFixSummary` -> `PermissionsFixSummary`
+  - `ChaosPhysicalToLogicalZoneMapping` -> `PhysicalToLogicalZoneMapping`
+  - `ChaosPrivateAccessPublicNetworkAccessOption` -> `PublicNetworkAccessOption`
+  - `ChaosRecommendationStatus` -> `RecommendationStatus`
+  - `ChaosResourceStateError` -> `ResourceStateError`
+  - `ChaosRoleAssignmentError` -> `RoleAssignmentError`
+  - `ChaosRoleAssignmentResult` -> `RoleAssignmentResult`
+  - `ChaosRoleAssignmentStatus` -> `RoleAssignmentStatus`
+  - `ChaosRunAfter` -> `RunAfter`
+  - `ChaosRunAfterBehavior` -> `RunAfterBehavior`
+  - `ChaosScenarioAction` -> `ScenarioAction`
+  - `ChaosScenarioActionDependency` -> `ActionDependency`
+  - `ChaosScenarioActionDependencyType` -> `ActionDependencyType`
+  - `ChaosScenarioConfigurationProperties` -> `ScenarioConfigurationProperties`
+  - `ChaosScenarioErrors` -> `ScenarioErrors`
+  - `ChaosScenarioProperties` -> `ScenarioProperties`
+  - `ChaosScenarioRunProperties` -> `ScenarioRunProperties`
+  - `ChaosScenarioRunResourceInfo` -> `ScenarioRunResource`
+  - `ChaosScenarioRunState` -> `ScenarioRunState`
+  - `ChaosScenarioRunSummaryAction` -> `ScenarioRunSummaryAction`
+  - `ChaosScenarioSummaryState` -> `ScenarioSummaryState`
+  - `ChaosScenarioValidationProperties` -> `ValidationProperties`
+  - `ChaosScenarioValidationState` -> `ScenarioValidationState`
+  - `ChaosScenarioEvaluationResultItem` -> `TemplateEvaluationResultItem`
+  - `ChaosWorkspaceEvaluationProperties` -> `WorkspaceEvaluationProperties`
+  - `ChaosWorkspaceEvaluationStatus` -> `WorkspaceEvaluationStatus`
+  - `ChaosWorkspaceProperties` -> `WorkspaceProperties`
+  - `ChaosZoneResolutionInfo` -> `ZoneResolutionInfo`
+  - `ChaosZoneResolutionMapping` -> `ZoneResolutionMapping`
+  - `ChaosZoneResolutionMode` -> `ZoneResolutionMode`
+- Renamed the `GetChaosPrivateEndpointConnectionResource` extension method to `GetPrivateEndpointConnectionResource`, and renamed the `ChaosPrivateAccessResource.GetChaosPrivateEndpointConnection(s)` accessors to `GetPrivateEndpointConnection(s)`.
+- Removed models `ChaosScenarioConfigurationExclusions` and `ChaosScenarioConfigurationFilters` (replaced by `ResourceTargetingCriteria` / `ResourceTargeting`).
 
 ## 1.2.0-beta.2 (2026-06-09)
 
