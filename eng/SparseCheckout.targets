@@ -15,7 +15,7 @@
     <MSBuild
       Projects="@(ProjectReference)"
       Targets="_CollectSparseCheckoutProjectGraph"
-      BuildInParallel="false"
+      BuildInParallel="true"
       SkipNonexistentProjects="false"
       SkipNonexistentTargets="false"
       Condition="'@(ProjectReference)' != ''">
@@ -34,6 +34,72 @@
     </ItemGroup>
   </Target>
 
+  <Target Name="_CollectSparseCheckoutGraphRecords" Returns="@(_SparseCheckoutGraphRecord)">
+    <ItemGroup>
+      <_SparseCheckoutLocalInput
+        Include="$(MSBuildAllProjects);@(Compile->'%(FullPath)');@(None->'%(FullPath)');@(Content->'%(FullPath)');@(EmbeddedResource->'%(FullPath)');@(AdditionalFiles->'%(FullPath)')" />
+      <_SparseCheckoutGraphRecord Include="Project|$(MSBuildProjectFullPath)" />
+      <_SparseCheckoutGraphRecord Include="@(ProjectReference->'Reference|$(MSBuildProjectFullPath)|%(FullPath)')" />
+      <_SparseCheckoutGraphRecord Include="@(_SparseCheckoutLocalInput->'Input|$(MSBuildProjectFullPath)|%(FullPath)')" />
+    </ItemGroup>
+
+    <MSBuild
+      Projects="@(ProjectReference)"
+      Targets="_CollectSparseCheckoutGraphRecords"
+      BuildInParallel="true"
+      SkipNonexistentProjects="false"
+      SkipNonexistentTargets="false"
+      Condition="'@(ProjectReference)' != ''">
+      <Output TaskParameter="TargetOutputs" ItemName="_SparseCheckoutReferencedGraphRecord" />
+    </MSBuild>
+
+    <ItemGroup>
+      <_SparseCheckoutGraphRecord Include="@(_SparseCheckoutReferencedGraphRecord)" />
+    </ItemGroup>
+    <RemoveDuplicates Inputs="@(_SparseCheckoutGraphRecord)">
+      <Output TaskParameter="Filtered" ItemName="_SparseCheckoutGraphRecordDeduplicated" />
+    </RemoveDuplicates>
+    <ItemGroup>
+      <_SparseCheckoutGraphRecord Remove="@(_SparseCheckoutGraphRecord)" />
+      <_SparseCheckoutGraphRecord Include="@(_SparseCheckoutGraphRecordDeduplicated)" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="GenerateSparseCheckoutGraph">
+    <Error
+      Condition="'$(SparseCheckoutGraphPath)' == ''"
+      Text="SparseCheckoutGraphPath must be set to generate a sparse-checkout graph." />
+    <Error
+      Condition="'@(ProjectReference)' == ''"
+      Text="No entry projects were selected; refusing to generate an empty sparse-checkout graph." />
+
+    <MSBuild
+      Projects="@(ProjectReference)"
+      Targets="_CollectSparseCheckoutGraphRecords"
+      BuildInParallel="true"
+      SkipNonexistentProjects="false"
+      SkipNonexistentTargets="false">
+      <Output TaskParameter="TargetOutputs" ItemName="_SparseCheckoutGraphRecordFromEntries" />
+    </MSBuild>
+
+    <RemoveDuplicates Inputs="@(_SparseCheckoutGraphRecordFromEntries)">
+      <Output TaskParameter="Filtered" ItemName="_SparseCheckoutGraphRecordAll" />
+    </RemoveDuplicates>
+    <WriteLinesToFile
+      File="$(SparseCheckoutGraphPath)"
+      Lines="@(_SparseCheckoutGraphRecordAll)"
+      Overwrite="true"
+      WriteOnlyWhenDifferent="true" />
+
+    <ItemGroup>
+      <_SparseCheckoutGraphProject
+        Include="@(_SparseCheckoutGraphRecordAll)"
+        Condition="$([System.String]::Copy('%(Identity)').StartsWith('Project|'))" />
+    </ItemGroup>
+    <Message Text="Sparse-checkout graph: @(_SparseCheckoutGraphProject->Count()) projects, @(_SparseCheckoutGraphRecordAll->Count()) records" Importance="high" />
+    <Message Text="Sparse-checkout graph file: $(SparseCheckoutGraphPath)" Importance="high" />
+  </Target>
+
   <Target Name="GenerateSparseCheckoutManifest">
     <PropertyGroup>
       <SparseCheckoutProjectGraphPath Condition="'$(SparseCheckoutProjectGraphPath)' == ''">$(SparseCheckoutManifestPath).projects</SparseCheckoutProjectGraphPath>
@@ -48,7 +114,7 @@
     <MSBuild
       Projects="@(ProjectReference)"
       Targets="_CollectSparseCheckoutProjectGraph"
-      BuildInParallel="false"
+      BuildInParallel="true"
       SkipNonexistentProjects="false"
       SkipNonexistentTargets="false">
       <Output TaskParameter="TargetOutputs" ItemName="_SparseCheckoutGraphInputFromEntries" />

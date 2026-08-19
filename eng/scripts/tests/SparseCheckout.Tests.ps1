@@ -12,6 +12,7 @@ Install-ModuleIfNotInstalled 'Pester' '5.3.3' | Import-Module
 
 BeforeAll {
     $script:TargetsPath = (Resolve-Path (Join-Path $PSScriptRoot '..' '..' 'SparseCheckout.targets')).Path
+    $script:CreateMapPath = (Resolve-Path (Join-Path $PSScriptRoot '..' 'Create-SparseCheckoutMap.ps1')).Path
 
     function New-GraphProject {
         param(
@@ -48,6 +49,35 @@ BeforeAll {
             ExitCode = $LASTEXITCODE
             Output = ($output -join [Environment]::NewLine)
         }
+    }
+
+    function Invoke-Graph {
+        param(
+            [string] $Project,
+            [string] $RepoRoot,
+            [string] $Graph
+        )
+
+        $output = & dotnet msbuild $Project /t:GenerateSparseCheckoutGraph /m `
+            "/p:RepoRoot=$RepoRoot" "/p:SparseCheckoutGraphPath=$Graph" 2>&1
+        return [pscustomobject]@{
+            ExitCode = $LASTEXITCODE
+            Output = ($output -join [Environment]::NewLine)
+        }
+    }
+
+    function New-PackageInfo {
+        param(
+            [string] $Directory,
+            [string] $ArtifactName,
+            [string] $DirectoryPath
+        )
+
+        $null = New-Item -ItemType Directory -Path $Directory -Force
+        [ordered]@{
+            ArtifactName = $ArtifactName
+            DirectoryPath = $DirectoryPath
+        } | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $Directory "$ArtifactName.json")
     }
 }
 
@@ -134,5 +164,66 @@ Describe 'GenerateSparseCheckoutManifest' -Tag 'UnitTest' {
         $result.ExitCode | Should -Not -Be 0
         $result.Output | Should -Match 'No entry projects were selected'
         $manifest | Should -Not -Exist
+    }
+}
+
+Describe 'GenerateSparseCheckoutGraph' -Tag 'UnitTest' {
+    It 'emits nodes, edges, and inputs once for a shared transitive graph' {
+        $repo = Join-Path $TestDrive 'graph-repo'
+        $root = Join-Path $repo 'root.proj'
+        $alpha = Join-Path $repo 'sdk/alpha/Alpha/src/Alpha.csproj'
+        $beta = Join-Path $repo 'sdk/beta/Beta/src/Beta.csproj'
+        $gamma = Join-Path $repo 'sdk/gamma/Gamma/src/Gamma.csproj'
+        $shared = Join-Path $repo 'sdk/shared/Shared/Shared.cs'
+        $graph = Join-Path $TestDrive 'graph.txt'
+
+        $null = New-Item -ItemType Directory -Path (Split-Path -Parent $shared) -Force
+        Set-Content -LiteralPath $shared -Value '// shared'
+        New-GraphProject -Path $beta
+        New-GraphProject -Path $alpha -References @($beta) -CompileItems @('../../../shared/Shared/Shared.cs')
+        New-GraphProject -Path $gamma -References @($beta)
+        New-GraphProject -Path $root -References @($alpha, $gamma)
+
+        $result = Invoke-Graph -Project $root -RepoRoot $repo -Graph $graph
+
+        $result.ExitCode | Should -Be 0 -Because $result.Output
+        $records = @(Get-Content -LiteralPath $graph)
+        @($records | Where-Object { $_ -eq "Project|$beta" }).Count | Should -Be 1
+        $records | Should -Contain "Reference|$alpha|$beta"
+        $records | Should -Contain "Reference|$gamma|$beta"
+        $records | Should -Contain "Input|$alpha|$shared"
+        $result.Output | Should -Match '3 projects'
+    }
+}
+
+Describe 'Create-SparseCheckoutMap' -Tag 'UnitTest' {
+    It 'evaluates one graph and calculates distinct artifact closures' {
+        $repo = Join-Path $TestDrive 'map-repo'
+        $packageInfo = Join-Path $TestDrive 'PackageInfo'
+        $repoTargets = Join-Path $repo 'eng/SparseCheckout.targets'
+        $alpha = Join-Path $repo 'sdk/alpha/Alpha/src/Alpha.csproj'
+        $beta = Join-Path $repo 'sdk/beta/Beta/src/Beta.csproj'
+        $shared = Join-Path $repo 'sdk/gamma/Gamma/src/Shared.cs'
+        $mapPath = Join-Path $TestDrive 'checkout-map.json'
+
+        $null = New-Item -ItemType Directory -Path (Split-Path -Parent $repoTargets) -Force
+        Copy-Item -LiteralPath $script:TargetsPath -Destination $repoTargets
+        $null = New-Item -ItemType Directory -Path (Split-Path -Parent $shared) -Force
+        Set-Content -LiteralPath $shared -Value '// shared'
+        New-GraphProject -Path $beta
+        New-GraphProject -Path $alpha -References @($beta) -CompileItems @('../../../gamma/Gamma/src/Shared.cs')
+        New-PackageInfo -Directory $packageInfo -ArtifactName 'Alpha' -DirectoryPath 'sdk/alpha/Alpha'
+        New-PackageInfo -Directory $packageInfo -ArtifactName 'Beta' -DirectoryPath 'sdk/beta/Beta'
+
+        $output = & $script:CreateMapPath `
+            -PackageInfoDirectory $packageInfo `
+            -RepoRoot $repo `
+            -OutputPath $mapPath 2>&1
+
+        $LASTEXITCODE | Should -Be 0 -Because ($output -join [Environment]::NewLine)
+        $map = Get-Content -LiteralPath $mapPath -Raw | ConvertFrom-Json
+        @($map.Alpha) | Should -Be @('/sdk/alpha/*', '/sdk/beta/*', '/sdk/gamma/*')
+        @($map.Beta) | Should -Be @('/sdk/beta/*')
+        ($output -join [Environment]::NewLine) | Should -Match 'Sparse-checkout graph: 2 projects'
     }
 }
