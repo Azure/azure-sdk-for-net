@@ -82,9 +82,6 @@
         $(MSBuildProjectName) == 'Azure.Monitor.OpenTelemetry.Exporter.Tests' or
         $(MSBuildProjectName) == 'Azure.Monitor.Query.Logs.Tests' or
         $(MSBuildProjectName) == 'Azure.Monitor.Query.Metrics.Tests' or
-        $(MSBuildProjectName) == 'Azure.Projects.AI.Tests' or
-        $(MSBuildProjectName) == 'Azure.Projects.Provisioning.Tests' or
-        $(MSBuildProjectName) == 'Azure.Projects.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Advisor.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.AgFoodPlatform.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.AgriculturePlatform.Tests' or

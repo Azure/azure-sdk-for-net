@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WritePropertyName("target"u8);
             writer.WriteStringValue(Target.ToString());
             writer.WritePropertyName("osProfile"u8);
-            writer.WriteObjectValue(OsProfile, options);
+            writer.WriteObjectValue(OSProfile, options);
             if (Optional.IsCollectionDefined(UserDetails))
             {
                 writer.WritePropertyName("userDetails"u8);
@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            ProvisioningOsType target = default;
-            OsProvisionProfile osProfile = default;
+            ProvisioningOSType target = default;
+            OSProvisionProfile osProfile = default;
             IList<HciUserDetails> userDetails = default;
             OnboardingConfiguration onboardingConfiguration = default;
             TargetDeviceConfiguration deviceConfiguration = default;
@@ -161,12 +161,12 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 if (prop.NameEquals("target"u8))
                 {
-                    target = new ProvisioningOsType(prop.Value.GetString());
+                    target = new ProvisioningOSType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("osProfile"u8))
                 {
-                    osProfile = OsProvisionProfile.DeserializeOsProvisionProfile(prop.Value, options);
+                    osProfile = OSProvisionProfile.DeserializeOSProvisionProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("userDetails"u8))

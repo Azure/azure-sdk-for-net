@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string itemsSearchKey = default;
             string contentType = default;
             string uploadStatus = default;
-            TriggeredAnalyticsRuleRunProvisioningState? provisioningState = default;
+            WatchlistProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    provisioningState = new TriggeredAnalyticsRuleRunProvisioningState(prop.Value.GetString());
+                    provisioningState = new WatchlistProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

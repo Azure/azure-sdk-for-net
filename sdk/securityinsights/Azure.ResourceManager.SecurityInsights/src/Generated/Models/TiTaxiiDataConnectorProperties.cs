@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="collectionId"> The collection id of the TAXII server. </param>
         /// <param name="userName"> The userName for the TAXII server. </param>
         /// <param name="password"> The password for the TAXII server. </param>
-        /// <param name="taxiiLookbackPeriod"> The lookback period for the TAXII server. </param>
+        /// <param name="taxiiLookbackOn"> The lookback period for the TAXII server. </param>
         /// <param name="pollingFrequency"> The polling frequency for the TAXII server. </param>
         /// <param name="dataTypes"> The available data types for Threat Intelligence TAXII data connector. </param>
-        internal TiTaxiiDataConnectorProperties(Guid tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string workspaceId, string friendlyName, string taxiiServer, string collectionId, string userName, string password, DateTimeOffset? taxiiLookbackPeriod, PollingFrequency? pollingFrequency, TiTaxiiDataConnectorDataTypes dataTypes) : base(tenantId, additionalBinaryDataProperties)
+        internal TiTaxiiDataConnectorProperties(Guid tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string workspaceId, string friendlyName, string taxiiServer, string collectionId, string userName, string password, DateTimeOffset? taxiiLookbackOn, PollingFrequency? pollingFrequency, TiTaxiiDataConnectorDataTypes dataTypes) : base(tenantId, additionalBinaryDataProperties)
         {
             WorkspaceId = workspaceId;
             FriendlyName = friendlyName;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             CollectionId = collectionId;
             UserName = userName;
             Password = password;
-            TaxiiLookbackPeriod = taxiiLookbackPeriod;
+            TaxiiLookbackOn = taxiiLookbackOn;
             PollingFrequency = pollingFrequency;
             DataTypes = dataTypes;
         }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The lookback period for the TAXII server. </summary>
         [WirePath("taxiiLookbackPeriod")]
-        public DateTimeOffset? TaxiiLookbackPeriod { get; set; }
+        public DateTimeOffset? TaxiiLookbackOn { get; set; }
 
         /// <summary> The polling frequency for the TAXII server. </summary>
         [WirePath("pollingFrequency")]

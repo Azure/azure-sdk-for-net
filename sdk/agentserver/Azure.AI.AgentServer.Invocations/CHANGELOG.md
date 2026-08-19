@@ -1,9 +1,23 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0-beta.7 (Unreleased)
 
 ### Features Added
 
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.6 (2026-08-12)
+
+### Features Added
+
+- Added the typed Voice Live Bridge Protocol 1.0 relay. `VoiceHandler` dispatches
+  immutable inbound events, `VoiceSession.SendAsync` serializes explicit outbound
+  messages, and `AddVoice<THandler>()` / `VoiceServer.Run<THandler>()` reuse the
+  existing `/invocations_ws` transport without owning application lifecycle state.
 - AsyncAPI discovery endpoints — `InvocationHandler` now exposes two new
   virtual methods, `GetAsyncApiJsonAsync` and `GetAsyncApiYamlAsync`, served
   at `GET /invocations/docs/asyncapi.json` and `GET /invocations/docs/asyncapi.yaml`
@@ -12,10 +26,6 @@
   streaming/bidirectional surfaces (e.g. the `invocations_ws` WebSocket protocol)
   that OpenAPI cannot express. The path extension is authoritative for the
   returned content type — no `Accept` negotiation and no format conversion.
-
-### Breaking Changes
-
-### Bugs Fixed
 
 ### Other Changes
 

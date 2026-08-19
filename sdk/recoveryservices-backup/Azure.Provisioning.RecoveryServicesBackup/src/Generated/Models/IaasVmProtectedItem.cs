@@ -11,10 +11,7 @@ using Azure.Provisioning;
 
 namespace Azure.Provisioning.RecoveryServicesBackup
 {
-    /// <summary>
-    /// IaaS VM workload-specific backup item.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="IaasClassicComputeVmProtectedItem"/> and <see cref="IaasComputeVmProtectedItem"/>.
-    /// </summary>
+    /// <summary> IaaS VM workload-specific backup item. </summary>
     public partial class IaasVmProtectedItem : BackupGenericProtectedItem
     {
         private BicepValue<string> _friendlyName;
