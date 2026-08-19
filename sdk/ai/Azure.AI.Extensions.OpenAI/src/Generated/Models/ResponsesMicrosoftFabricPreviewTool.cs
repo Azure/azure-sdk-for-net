@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -12,26 +13,30 @@ namespace Azure.AI.Extensions.OpenAI
     [Experimental("AAIP001")]
     public partial class ResponsesMicrosoftFabricPreviewTool : ResponsesTool
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesMicrosoftFabricPreviewTool"/>. </summary>
-        /// <param name="fabricDataagentPreview"> The fabric data agent tool parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fabricDataagentPreview"/> is null. </exception>
-        public ResponsesMicrosoftFabricPreviewTool(ResponsesFabricDataAgentToolOptions fabricDataagentPreview) : base(ToolType.FabricDataagentPreview)
-        {
-            Argument.AssertNotNull(fabricDataagentPreview, nameof(fabricDataagentPreview));
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-            FabricDataagentPreview = fabricDataagentPreview;
+        /// <summary> Initializes a new instance of <see cref="ResponsesMicrosoftFabricPreviewTool"/>. </summary>
+        /// <param name="toolOptions"> The fabric data agent tool parameters. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="toolOptions"/> is null. </exception>
+        public ResponsesMicrosoftFabricPreviewTool(ResponsesFabricDataAgentToolOptions toolOptions) : base("fabric_dataagent_preview")
+        {
+            Argument.AssertNotNull(toolOptions, nameof(toolOptions));
+
+            ToolOptions = toolOptions;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponsesMicrosoftFabricPreviewTool"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="toolOptions"> The fabric data agent tool parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="fabricDataagentPreview"> The fabric data agent tool parameters. </param>
-        internal ResponsesMicrosoftFabricPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesFabricDataAgentToolOptions fabricDataagentPreview) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesMicrosoftFabricPreviewTool(ResponseToolKind @type, ResponsesFabricDataAgentToolOptions toolOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
-            FabricDataagentPreview = fabricDataagentPreview;
+            ToolOptions = toolOptions;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The fabric data agent tool parameters. </summary>
-        public ResponsesFabricDataAgentToolOptions FabricDataagentPreview { get; set; }
+        public ResponsesFabricDataAgentToolOptions ToolOptions { get; set; }
     }
 }

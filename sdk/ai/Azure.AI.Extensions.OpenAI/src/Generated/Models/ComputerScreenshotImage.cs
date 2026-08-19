@@ -5,31 +5,31 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> A computer screenshot image used with the computer use tool. </summary>
-    public partial class ComputerScreenshotImage
+    internal partial class ComputerScreenshotImage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputerScreenshotImage"/>. </summary>
-        public ComputerScreenshotImage()
+        internal ComputerScreenshotImage()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputerScreenshotImage"/>. </summary>
-        /// <param name="imageKind">
+        /// <param name="type">
         /// Specifies the event type. For a computer screenshot, this property is
         ///   always set to `computer_screenshot`.
         /// </param>
-        /// <param name="imageUri"> The URL of the screenshot image. </param>
+        /// <param name="imageUrl"> The URL of the screenshot image. </param>
         /// <param name="fileId"> The identifier of an uploaded file that contains the screenshot. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputerScreenshotImage(string imageKind, Uri imageUri, string fileId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputerScreenshotImage(string @type, Uri imageUrl, string fileId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ImageKind = imageKind;
-            ImageUri = imageUri;
+            Type = @type;
+            ImageUrl = imageUrl;
             FileId = fileId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -38,12 +38,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// Specifies the event type. For a computer screenshot, this property is
         ///   always set to `computer_screenshot`.
         /// </summary>
-        public string ImageKind { get; } = "computer_screenshot";
+        public string Type { get; } = "computer_screenshot";
 
         /// <summary> The URL of the screenshot image. </summary>
-        public Uri ImageUri { get; set; }
+        public Uri ImageUrl { get; }
 
         /// <summary> The identifier of an uploaded file that contains the screenshot. </summary>
-        public string FileId { get; set; }
+        public string FileId { get; }
     }
 }

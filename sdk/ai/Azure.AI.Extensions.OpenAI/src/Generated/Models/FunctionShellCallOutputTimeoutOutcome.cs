@@ -5,13 +5,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Shell call timeout outcome. </summary>
     internal partial class FunctionShellCallOutputTimeoutOutcome : FunctionShellCallOutputOutcome
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallOutputTimeoutOutcome"/>. </summary>
-        public FunctionShellCallOutputTimeoutOutcome() : base(FunctionShellCallOutputOutcomeType.Timeout)
+        internal FunctionShellCallOutputTimeoutOutcome() : base(FunctionShellCallOutputOutcomeType.Timeout)
         {
         }
 

@@ -10,6 +10,9 @@
 
 ### Breaking Changes
 
+- Renamed Agent Optimization models to the `AgentOptimization*` family and renamed `OptimizationAgentIdentifier` to `OptimizedAgentIdentifier`.
+- Agent Optimization list operations now return complete `AgentOptimizationJob` models instead of `OptimizationJobListItem` models.
+
 ### Bugs Fixed
 
 - Fixed listing of Agent Optimization Jobs.
@@ -17,12 +20,15 @@
 
 ### Other Changes
 
+- Regenerated the SDK from the unified Foundry v1 Agents and voice data-plane contract.
+
 ### Sample Updates
 
 - Added sample demonstrating disabling and enabling Hosted Agent.
 - Added samples for Agent optimization jobs.
 - Added sample for creating Agent version drafts.
 - Added a sample demonstrating voice-agent creation, real-time interaction, and persisted conversation retrieval.
+- Updated Agent Optimization samples to use the unified `AgentOptimization*` models.
 
 ## 2.1.0-beta.4 (2026-06-30)
 
@@ -65,7 +71,7 @@
 ### Features Added
 - Added `AgentToolboxes` client, which can be retrieved using `GetAgentToolboxes` method of `AgentAdministrationClient`.
 - In `AgentAdministrationClient` added CRUD operations for sessions on the hosted Agent.
-- Added `AgentSessionFiles` client to work with the files in the session samdbox.
+- Added `AgentSessionFiles` client to work with the files in the session sandbox.
 - Added `ProjectAgentSkills` to manage agent skills.
 - Added `GetSessionLogStreamAsync` and `GetSessionLogStream` to get the logs from the hosted Agent docker container.
 

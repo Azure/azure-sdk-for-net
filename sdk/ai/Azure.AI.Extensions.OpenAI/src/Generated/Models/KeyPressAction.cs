@@ -7,18 +7,15 @@ using System.Collections.Generic;
 using System.Linq;
 using OpenAI;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> KeyPress. </summary>
     internal partial class KeyPressAction : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="KeyPressAction"/>. </summary>
         /// <param name="keys"> The combination of keys the model is requesting to be pressed. This is an array of strings, each representing a key. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keys"/> is null. </exception>
-        public KeyPressAction(IEnumerable<string> keys) : base(ComputerActionType.Keypress)
+        internal KeyPressAction(IEnumerable<string> keys) : base(ComputerActionType.Keypress)
         {
-            Argument.AssertNotNull(keys, nameof(keys));
-
             Keys = keys.ToList();
         }
 

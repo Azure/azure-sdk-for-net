@@ -5,10 +5,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Text Content. </summary>
-    internal partial class TextContent : InternalMessageContent
+    internal partial class TextContent : MessageContent
     {
         /// <summary> Initializes a new instance of <see cref="TextContent"/>. </summary>
         /// <param name="text"></param>

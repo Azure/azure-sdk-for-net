@@ -4,21 +4,19 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Extensions.OpenAI.Internal;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary>
-    /// The input format for the custom tool. Default is unconstrained text.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponsesCustomTextFormatParam"/> and <see cref="CustomGrammarFormatParam"/>.
-    /// </summary>
-    public abstract partial class ResponsesCustomToolParamFormat
+    /// <summary> The input format for the custom tool. Default is unconstrained text. </summary>
+    public partial class ResponsesCustomToolParamFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResponsesCustomToolParamFormat"/>. </summary>
         /// <param name="type"></param>
-        private protected ResponsesCustomToolParamFormat(CustomToolParamFormatType @type)
+        internal ResponsesCustomToolParamFormat(CustomToolParamFormatType @type)
         {
             Type = @type;
         }

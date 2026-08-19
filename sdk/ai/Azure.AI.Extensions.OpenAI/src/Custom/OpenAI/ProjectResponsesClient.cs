@@ -49,11 +49,6 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="options"> The options used to configure the client. </param>
     public ProjectResponsesClient(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, AgentReference defaultAgent, string defaultConversationId = null, ProjectResponsesClientOptions options = null)
         : this(
-              pipeline: ProjectOpenAIClient.CreatePipeline(
-                  ProjectOpenAIClient.CreateAuthenticationPolicy(
-                      tokenProvider,
-                      ProjectOpenAIClient.GetMergedOptions(projectEndpoint, tokenProvider, options)),
-                  ProjectOpenAIClient.GetMergedOptions(projectEndpoint, tokenProvider, options)),
               options: ProjectOpenAIClient.GetMergedOptions(projectEndpoint, tokenProvider, options),
               defaultAgent: defaultAgent,
               defaultConversationId: defaultConversationId)
@@ -81,8 +76,8 @@ public partial class ProjectResponsesClient : ResponsesClient
         : this(projectEndpoint: null, tokenProvider, defaultAgent, defaultConversationId, options)
     { }
 
-    internal ProjectResponsesClient(ClientPipeline pipeline, OpenAIClientOptions options, AgentReference defaultAgent, string defaultConversationId)
-        : base(pipeline, options)
+    internal ProjectResponsesClient(ProjectOpenAIClientOptions options, AgentReference defaultAgent, string defaultConversationId)
+        : base(ProjectOpenAIClient.CreateAuthenticationPolicy(options.TokenProvider, options), CreateResponsesClientOptions(options))
     {
         if (defaultAgent?.Name?.ToLowerInvariant()?.StartsWith("model:") == true)
         {
@@ -94,6 +89,25 @@ public partial class ProjectResponsesClient : ResponsesClient
             _defaultAgentVersion = defaultAgent.Version;
         }
         _defaultConversationId = defaultConversationId;
+    }
+
+    private static ResponsesClientOptions CreateResponsesClientOptions(ProjectOpenAIClientOptions options)
+    {
+        ResponsesClientOptions responsesOptions = new()
+        {
+            Endpoint = options.Endpoint,
+            OrganizationId = options.OrganizationId,
+            ProjectId = options.ProjectId,
+            UserAgentApplicationId = options.UserAgentApplicationId,
+            RetryPolicy = options.RetryPolicy,
+            MessageLoggingPolicy = options.MessageLoggingPolicy,
+            Transport = options.Transport,
+            NetworkTimeout = options.NetworkTimeout,
+            ClientLoggingOptions = options.ClientLoggingOptions,
+            EnableDistributedTracing = options.EnableDistributedTracing
+        };
+        ProjectOpenAIClient.ConfigurePipelineOptions(responsesOptions, options);
+        return responsesOptions;
     }
 
     /// <summary> Initializes a new instance of <see cref="ProjectResponsesClient"/> for mocking. </summary>

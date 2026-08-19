@@ -11,8 +11,10 @@ using System.IO;
 using System.Net.WebSockets;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using OpenAI;
 
 namespace Azure.AI.Projects.Agents;
 
@@ -27,8 +29,18 @@ public partial class VoiceAgentWebSocket
 
     private readonly AuthenticationTokenProvider _tokenProvider;
 
-    internal VoiceAgentWebSocket(ClientPipeline pipeline, Uri endpoint, string apiVersion, AuthenticationTokenProvider tokenProvider)
-        : this(pipeline, endpoint, apiVersion)
+    /// <summary> Raised immediately before a JSON command is sent on any session started from this client. </summary>
+    public event EventHandler<BinaryData> OnSendingCommand;
+
+    /// <summary> Raised immediately after a JSON event is received on any session started from this client. </summary>
+    public event EventHandler<BinaryData> OnReceivingCommand;
+
+    internal void RaiseOnSendingCommand(VoiceAgentSession session, BinaryData data) => OnSendingCommand?.Invoke(session, data);
+
+    internal void RaiseOnReceivingCommand(VoiceAgentSession session, BinaryData data) => OnReceivingCommand?.Invoke(session, data);
+
+    internal VoiceAgentWebSocket(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion, AuthenticationTokenProvider tokenProvider)
+        : this(clientDiagnostics, pipeline, endpoint, apiVersion)
     {
         _tokenProvider = tokenProvider;
     }
@@ -71,8 +83,17 @@ public partial class VoiceAgentWebSocket
             AuthenticationToken token = await _tokenProvider.GetTokenAsync(tokenOptions, cancellationToken).ConfigureAwait(false);
             webSocket.Options.SetRequestHeader("Authorization", $"Bearer {token.TokenValue}");
 
+            try
+            {
+                webSocket.Options.SetRequestHeader("User-Agent", "Azure-VoiceAgents-SDK/.NET");
+            }
+            catch (ArgumentException)
+            {
+                // Some platforms (e.g. .NET Framework) do not allow setting the User-Agent header on a WebSocket.
+            }
+
             await webSocket.ConnectAsync(CreateWebSocketUri(agentName, options), cancellationToken).ConfigureAwait(false);
-            return new VoiceAgentSession(webSocket);
+            return new VoiceAgentSession(webSocket, this);
         }
         catch
         {
@@ -142,13 +163,17 @@ public class VoiceAgentConnectionOptions
 public class VoiceAgentSession : IDisposable, IAsyncDisposable
 {
     private readonly WebSocket _webSocket;
+    private readonly VoiceAgentWebSocket _parentClient;
     private readonly SemaphoreSlim _sendSemaphore = new SemaphoreSlim(1, 1);
+    private readonly SemaphoreSlim _audioSendSemaphore = new SemaphoreSlim(1, 1);
+    private bool _isSendingAudioStream;
     private int _receiveStarted;
     private bool _disposed;
 
-    internal VoiceAgentSession(WebSocket webSocket)
+    internal VoiceAgentSession(WebSocket webSocket, VoiceAgentWebSocket parentClient = null)
     {
         _webSocket = webSocket ?? throw new ArgumentNullException(nameof(webSocket));
+        _parentClient = parentClient;
     }
 
     /// <summary> Gets the current WebSocket connection state. </summary>
@@ -161,14 +186,186 @@ public class VoiceAgentSession : IDisposable, IAsyncDisposable
     public virtual Task SendCommandAsync(BinaryData command, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(command, nameof(command));
+        _parentClient?.RaiseOnSendingCommand(this, command);
         return SendAsync(command, WebSocketMessageType.Text, cancellationToken);
     }
 
-    /// <summary> Sends a binary frame to the voice agent. </summary>
+    /// <summary> Sends a binary frame to the voice agent. Use only for non-JSON, transport-level extensions; the realtime protocol itself carries audio as base64 JSON (see <see cref="SendInputAudioAsync(BinaryData, CancellationToken)"/>). </summary>
     public virtual Task SendBinaryAsync(BinaryData data, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(data, nameof(data));
         return SendAsync(data, WebSocketMessageType.Binary, cancellationToken);
+    }
+
+    /// <summary> Transmits a chunk of input audio as a base64-encoded <c>input_audio_buffer.append</c> event. </summary>
+    public virtual async Task SendInputAudioAsync(BinaryData audio, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNull(audio, nameof(audio));
+        await _audioSendSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
+        {
+            if (_isSendingAudioStream)
+            {
+                throw new InvalidOperationException("Cannot send a standalone audio chunk while a stream is already in progress.");
+            }
+            await SendInputAudioChunkAsync(audio, cancellationToken).ConfigureAwait(false);
+        }
+        finally
+        {
+            _audioSendSemaphore.Release();
+        }
+    }
+
+    /// <summary> Transmits audio data from a stream, sent as a sequence of base64-encoded <c>input_audio_buffer.append</c> events until the stream is exhausted. </summary>
+    public virtual async Task SendInputAudioAsync(Stream audio, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNull(audio, nameof(audio));
+        await _audioSendSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
+        {
+            if (_isSendingAudioStream)
+            {
+                throw new InvalidOperationException("Only one stream of audio may be sent at once.");
+            }
+            _isSendingAudioStream = true;
+        }
+        finally
+        {
+            _audioSendSemaphore.Release();
+        }
+
+        byte[] buffer = ArrayPool<byte>.Shared.Rent(16 * 1024);
+        try
+        {
+            while (true)
+            {
+                int bytesRead = await audio.ReadAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false);
+                if (bytesRead == 0)
+                {
+                    break;
+                }
+                await SendInputAudioChunkAsync(BinaryData.FromBytes(buffer.AsMemory(0, bytesRead)), cancellationToken).ConfigureAwait(false);
+            }
+        }
+        finally
+        {
+            ArrayPool<byte>.Shared.Return(buffer);
+            await _audioSendSemaphore.WaitAsync(CancellationToken.None).ConfigureAwait(false);
+            try
+            {
+                _isSendingAudioStream = false;
+            }
+            finally
+            {
+                _audioSendSemaphore.Release();
+            }
+        }
+    }
+
+    private Task SendInputAudioChunkAsync(BinaryData audio, CancellationToken cancellationToken)
+    {
+        BinaryData command = BuildEvent(RealtimeClientEventType.InputAudioBufferAppend,
+            writer => writer.WriteString("audio", Convert.ToBase64String(audio.ToArray())));
+        return SendCommandAsync(command, cancellationToken);
+    }
+
+    /// <summary> Clears any input audio that has been appended but not yet committed. </summary>
+    public virtual Task ClearInputAudioAsync(CancellationToken cancellationToken = default)
+        => SendCommandAsync(BuildEvent(RealtimeClientEventType.InputAudioBufferClear), cancellationToken);
+
+    /// <summary> Commits the pending input audio buffer as a user turn. </summary>
+    public virtual Task CommitPendingAudioAsync(CancellationToken cancellationToken = default)
+        => SendCommandAsync(BuildEvent(RealtimeClientEventType.InputAudioBufferCommit), cancellationToken);
+
+    /// <summary> Clears any buffered output audio that has not yet been played by the caller. </summary>
+    public virtual Task ClearOutputAudioAsync(CancellationToken cancellationToken = default)
+        => SendCommandAsync(BuildEvent(RealtimeClientEventType.OutputAudioBufferClear), cancellationToken);
+
+    /// <summary> Sends a <c>session.update</c> event with the raw session configuration payload. </summary>
+    public virtual Task ConfigureSessionAsync(BinaryData session, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNull(session, nameof(session));
+        BinaryData command = BuildEvent(RealtimeClientEventType.SessionUpdate, writer => WriteRawProperty(writer, "session", session));
+        return SendCommandAsync(command, cancellationToken);
+    }
+
+    /// <summary> Adds a conversation item, optionally positioned after a specific existing item. </summary>
+    public virtual Task AddItemAsync(BinaryData item, string previousItemId = null, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNull(item, nameof(item));
+        BinaryData command = BuildEvent(RealtimeClientEventType.ConversationItemCreate, writer =>
+        {
+            if (previousItemId is not null)
+            {
+                writer.WriteString("previous_item_id", previousItemId);
+            }
+            WriteRawProperty(writer, "item", item);
+        });
+        return SendCommandAsync(command, cancellationToken);
+    }
+
+    /// <summary> Requests retrieval of a server-side conversation item by id. </summary>
+    public virtual Task RequestItemRetrievalAsync(string itemId, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+        return SendCommandAsync(BuildEvent(RealtimeClientEventType.ConversationItemRetrieve, writer => writer.WriteString("item_id", itemId)), cancellationToken);
+    }
+
+    /// <summary> Deletes a conversation item by id. </summary>
+    public virtual Task DeleteItemAsync(string itemId, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+        return SendCommandAsync(BuildEvent(RealtimeClientEventType.ConversationItemDelete, writer => writer.WriteString("item_id", itemId)), cancellationToken);
+    }
+
+    /// <summary> Truncates a prior assistant audio item at the given content index and playback position. </summary>
+    public virtual Task TruncateItemAsync(string itemId, int contentIndex, TimeSpan audioEndTime, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+        BinaryData command = BuildEvent(RealtimeClientEventType.ConversationItemTruncate, writer =>
+        {
+            writer.WriteString("item_id", itemId);
+            writer.WriteNumber("content_index", contentIndex);
+            writer.WriteNumber("audio_end_ms", (long)audioEndTime.TotalMilliseconds);
+        });
+        return SendCommandAsync(command, cancellationToken);
+    }
+
+    /// <summary> Requests generation of a new response, optionally with additional raw response options. </summary>
+    public virtual Task StartResponseAsync(BinaryData responseOptions = null, CancellationToken cancellationToken = default)
+    {
+        BinaryData command = BuildEvent(RealtimeClientEventType.ResponseCreate, writer =>
+        {
+            if (responseOptions is not null)
+            {
+                WriteRawProperty(writer, "response", responseOptions);
+            }
+        });
+        return SendCommandAsync(command, cancellationToken);
+    }
+
+    /// <summary> Cancels the response currently being generated, if any. </summary>
+    public virtual Task CancelResponseAsync(CancellationToken cancellationToken = default)
+        => SendCommandAsync(BuildEvent(RealtimeClientEventType.ResponseCancel), cancellationToken);
+
+    private static BinaryData BuildEvent(RealtimeClientEventType type, Action<Utf8JsonWriter> writeAdditionalProperties = null)
+    {
+        using MemoryStream stream = new MemoryStream();
+        using (Utf8JsonWriter writer = new Utf8JsonWriter(stream))
+        {
+            writer.WriteStartObject();
+            writer.WriteString("type", type.ToString());
+            writeAdditionalProperties?.Invoke(writer);
+            writer.WriteEndObject();
+        }
+        return BinaryData.FromBytes(stream.ToArray());
+    }
+
+    private static void WriteRawProperty(Utf8JsonWriter writer, string propertyName, BinaryData rawJson)
+    {
+        writer.WritePropertyName(propertyName);
+        using JsonDocument document = JsonDocument.Parse(rawJson);
+        document.RootElement.WriteTo(writer);
     }
 
     private async Task SendAsync(BinaryData data, WebSocketMessageType messageType, CancellationToken cancellationToken)
@@ -219,7 +416,9 @@ public class VoiceAgentSession : IDisposable, IAsyncDisposable
                 while (!result.EndOfMessage);
 
                 message.Position = 0;
-                yield return new VoiceAgentSessionMessage(result.MessageType, BinaryData.FromStream(message));
+                BinaryData data = BinaryData.FromStream(message);
+                _parentClient?.RaiseOnReceivingCommand(this, data);
+                yield return new VoiceAgentSessionMessage(result.MessageType, data);
             }
         }
         finally
@@ -280,6 +479,9 @@ public class VoiceAgentSession : IDisposable, IAsyncDisposable
 [Experimental("AAIP001")]
 public class VoiceAgentSessionMessage
 {
+    private bool _eventTypeParsed;
+    private RealtimeServerEventType? _eventType;
+
     internal VoiceAgentSessionMessage(WebSocketMessageType messageType, BinaryData data)
     {
         MessageType = messageType;
@@ -291,4 +493,35 @@ public class VoiceAgentSessionMessage
 
     /// <summary> Gets the complete message payload. </summary>
     public BinaryData Data { get; }
+
+    /// <summary> Gets the parsed <c>type</c> discriminator for JSON event messages, or <c>null</c> for non-JSON/binary messages. </summary>
+    public RealtimeServerEventType? EventType
+    {
+        get
+        {
+            if (!_eventTypeParsed)
+            {
+                _eventType = TryParseEventType();
+                _eventTypeParsed = true;
+            }
+            return _eventType;
+        }
+    }
+
+    private RealtimeServerEventType? TryParseEventType()
+    {
+        if (MessageType != WebSocketMessageType.Text)
+        {
+            return null;
+        }
+        try
+        {
+            using JsonDocument document = JsonDocument.Parse(Data);
+            return document.RootElement.TryGetProperty("type", out JsonElement typeElement) ? (RealtimeServerEventType)typeElement.GetString() : null;
+        }
+        catch (JsonException)
+        {
+            return null;
+        }
+    }
 }

@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -99,6 +100,21 @@ namespace Azure.AI.Extensions.OpenAI
             }
             writer.WritePropertyName("outputs"u8);
             writer.WriteObjectValue(OutputDefinition, options);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -126,17 +142,17 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            ToolType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ResponseToolKind @type = "capture_structured_outputs";
             string name = default;
             string description = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
             ResponsesStructuredOutputDefinition outputDefinition = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ToolType(prop.Value.GetString());
+                    @type = new ResponseToolKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -175,11 +191,11 @@ namespace Azure.AI.Extensions.OpenAI
             }
             return new ResponsesCaptureStructuredOutputsTool(
                 @type,
-                additionalBinaryDataProperties,
                 name,
                 description,
                 toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
-                outputDefinition);
+                outputDefinition,
+                additionalBinaryDataProperties);
         }
     }
 }

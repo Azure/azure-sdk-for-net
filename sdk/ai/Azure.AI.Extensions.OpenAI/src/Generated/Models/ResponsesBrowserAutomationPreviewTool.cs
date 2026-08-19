@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -12,10 +13,13 @@ namespace Azure.AI.Extensions.OpenAI
     [Experimental("AAIP001")]
     public partial class ResponsesBrowserAutomationPreviewTool : ResponsesTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponsesBrowserAutomationPreviewTool"/>. </summary>
         /// <param name="browserAutomationPreview"> The Browser Automation Tool parameters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="browserAutomationPreview"/> is null. </exception>
-        public ResponsesBrowserAutomationPreviewTool(ResponsesBrowserAutomationToolParameters browserAutomationPreview) : base(ToolType.BrowserAutomationPreview)
+        public ResponsesBrowserAutomationPreviewTool(BrowserAutomationToolOptions browserAutomationPreview) : base("browser_automation_preview")
         {
             Argument.AssertNotNull(browserAutomationPreview, nameof(browserAutomationPreview));
 
@@ -24,14 +28,15 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ResponsesBrowserAutomationPreviewTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="browserAutomationPreview"> The Browser Automation Tool parameters. </param>
-        internal ResponsesBrowserAutomationPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesBrowserAutomationToolParameters browserAutomationPreview) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponsesBrowserAutomationPreviewTool(ResponseToolKind @type, BrowserAutomationToolOptions browserAutomationPreview, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             BrowserAutomationPreview = browserAutomationPreview;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Browser Automation Tool parameters. </summary>
-        public ResponsesBrowserAutomationToolParameters BrowserAutomationPreview { get; set; }
+        public BrowserAutomationToolOptions BrowserAutomationPreview { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary></summary>
     internal enum MCPToolCallStatus

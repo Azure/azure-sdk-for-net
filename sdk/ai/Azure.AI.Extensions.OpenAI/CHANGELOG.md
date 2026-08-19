@@ -13,6 +13,8 @@
 
 ### Other Changes
 
+- Regenerated the SDK from the unified Foundry v1 data-plane contract and aligned response, tool, and conversation integrations with OpenAI 2.12.0.
+
 ### Sample Updates
 - Added sample for running responses in specific sessions.
 - Added sample for `ReminderPreviewToolboxTool`.

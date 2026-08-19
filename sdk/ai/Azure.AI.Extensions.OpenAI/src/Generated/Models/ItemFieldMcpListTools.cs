@@ -5,9 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenAI;
+using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> MCP list tools. </summary>
     internal partial class ItemFieldMcpListTools : ItemField
@@ -16,7 +16,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="id"> The unique ID of the list. </param>
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <param name="tools"> The tools available on the server. </param>
-        internal ItemFieldMcpListTools(string id, string serverLabel, IEnumerable<InternalMCPListToolsTool> tools) : base(ItemFieldType.McpListTools)
+        internal ItemFieldMcpListTools(string id, string serverLabel, IEnumerable<McpToolDefinition> tools) : base(ItemFieldType.McpListTools)
         {
             Id = id;
             ServerLabel = serverLabel;
@@ -30,7 +30,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <param name="tools"> The tools available on the server. </param>
         /// <param name="error"></param>
-        internal ItemFieldMcpListTools(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, IList<InternalMCPListToolsTool> tools, RealtimeMCPError error) : base(@type, additionalBinaryDataProperties)
+        internal ItemFieldMcpListTools(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, IList<McpToolDefinition> tools, RealtimeMCPError error) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             ServerLabel = serverLabel;
@@ -45,7 +45,7 @@ namespace Azure.AI.Extensions.OpenAI
         public string ServerLabel { get; }
 
         /// <summary> The tools available on the server. </summary>
-        public IList<InternalMCPListToolsTool> Tools { get; }
+        public IList<McpToolDefinition> Tools { get; }
 
         /// <summary> Gets the Error. </summary>
         public RealtimeMCPError Error { get; }

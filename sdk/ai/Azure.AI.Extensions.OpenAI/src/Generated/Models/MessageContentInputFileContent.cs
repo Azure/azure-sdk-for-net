@@ -5,10 +5,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Input file. </summary>
-    internal partial class MessageContentInputFileContent : InternalMessageContent
+    internal partial class MessageContentInputFileContent : MessageContent
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentInputFileContent"/>. </summary>
         internal MessageContentInputFileContent() : base(MessageContentType.InputFile)

@@ -5,8 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Reasoning. </summary>
     internal partial class ItemFieldReasoningItem : ItemField
@@ -14,7 +15,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="ItemFieldReasoningItem"/>. </summary>
         /// <param name="id"> The unique identifier of the reasoning content. </param>
         /// <param name="summary"> Reasoning summary content. </param>
-        internal ItemFieldReasoningItem(string id, IEnumerable<InternalSummaryTextObject> summary) : base(ItemFieldType.Reasoning)
+        internal ItemFieldReasoningItem(string id, IEnumerable<SummaryTextContent> summary) : base(ItemFieldType.Reasoning)
         {
             Id = id;
             Summary = summary.ToList();
@@ -32,7 +33,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal ItemFieldReasoningItem(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string encryptedContent, IList<InternalSummaryTextObject> summary, IList<ReasoningTextContent> content, InputItemReasoningItemStatus? status) : base(@type, additionalBinaryDataProperties)
+        internal ItemFieldReasoningItem(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string encryptedContent, IList<SummaryTextContent> summary, IList<ReasoningTextContent> content, InputItemReasoningItemStatus? status) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             EncryptedContent = encryptedContent;
@@ -48,7 +49,7 @@ namespace Azure.AI.Extensions.OpenAI
         public string EncryptedContent { get; }
 
         /// <summary> Reasoning summary content. </summary>
-        public IList<InternalSummaryTextObject> Summary { get; }
+        public IList<SummaryTextContent> Summary { get; }
 
         /// <summary> Reasoning text content. </summary>
         public IList<ReasoningTextContent> Content { get; }

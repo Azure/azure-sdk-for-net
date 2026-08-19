@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Message. </summary>
     internal partial class ItemFieldMessage : ItemField, IJsonModel<ItemFieldMessage>
@@ -84,7 +85,7 @@ namespace Azure.AI.Extensions.OpenAI
             writer.WriteStringValue(Role.ToSerialString());
             writer.WritePropertyName("content"u8);
             writer.WriteStartArray();
-            foreach (InternalMessageContent item in Content)
+            foreach (MessageContent item in Content)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -126,7 +127,7 @@ namespace Azure.AI.Extensions.OpenAI
             string id = default;
             MessageStatus status = default;
             MessageRole role = default;
-            IList<InternalMessageContent> content = default;
+            IList<MessageContent> content = default;
             MessagePhase? phase = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -152,10 +153,10 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("content"u8))
                 {
-                    List<InternalMessageContent> array = new List<InternalMessageContent>();
+                    List<MessageContent> array = new List<MessageContent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InternalMessageContent.DeserializeInternalMessageContent(item, options));
+                        array.Add(MessageContent.DeserializeMessageContent(item, options));
                     }
                     content = array;
                     continue;

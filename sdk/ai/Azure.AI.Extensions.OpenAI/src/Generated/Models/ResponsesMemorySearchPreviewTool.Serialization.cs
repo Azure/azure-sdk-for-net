@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -90,6 +91,21 @@ namespace Azure.AI.Extensions.OpenAI
                 writer.WritePropertyName("update_delay"u8);
                 writer.WriteNumberValue(UpdateDelayInSeconds.Value);
             }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -117,17 +133,17 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            ToolType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ResponseToolKind @type = "memory_search_preview";
             string memoryStoreName = default;
             string scope = default;
             ResponsesMemorySearchOptions searchOptions = default;
             int? updateDelayInSeconds = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ToolType(prop.Value.GetString());
+                    @type = new ResponseToolKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("memory_store_name"u8))
@@ -165,11 +181,11 @@ namespace Azure.AI.Extensions.OpenAI
             }
             return new ResponsesMemorySearchPreviewTool(
                 @type,
-                additionalBinaryDataProperties,
                 memoryStoreName,
                 scope,
                 searchOptions,
-                updateDelayInSeconds);
+                updateDelayInSeconds,
+                additionalBinaryDataProperties);
         }
     }
 }

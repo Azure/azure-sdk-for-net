@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Extensions.OpenAI.Internal;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -12,11 +13,8 @@ namespace Azure.AI.Extensions.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam"/>. </summary>
         /// <param name="containerId"> The ID of the referenced container. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerId"/> is null. </exception>
-        public ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam(string containerId) : base(FunctionShellToolParamEnvironmentType.ContainerReference)
+        internal ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam(string containerId) : base("container_reference")
         {
-            Argument.AssertNotNull(containerId, nameof(containerId));
-
             ContainerId = containerId;
         }
 
@@ -30,6 +28,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The ID of the referenced container. </summary>
-        public string ContainerId { get; set; }
+        public string ContainerId { get; }
     }
 }

@@ -4,38 +4,43 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
     public partial class ResponsesOpenApiTool : ResponsesTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiTool"/>. </summary>
-        /// <param name="openApi"> The openapi function definition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="openApi"/> is null. </exception>
-        public ResponsesOpenApiTool(ResponsesOpenApiFunctionDefinition openApi) : base(ToolType.Openapi)
+        /// <param name="functionDefinition"> The openapi function definition. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionDefinition"/> is null. </exception>
+        public ResponsesOpenApiTool(ResponsesOpenApiFunctionDefinition functionDefinition) : base("openapi")
         {
-            Argument.AssertNotNull(openApi, nameof(openApi));
+            Argument.AssertNotNull(functionDefinition, nameof(functionDefinition));
 
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
-            OpenApi = openApi;
+            FunctionDefinition = functionDefinition;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="openApi"> The openapi function definition. </param>
-        internal ResponsesOpenApiTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, ToolConfig> toolConfigs, ResponsesOpenApiFunctionDefinition openApi) : base(@type, additionalBinaryDataProperties)
+        /// <param name="functionDefinition"> The openapi function definition. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponsesOpenApiTool(ResponseToolKind @type, IDictionary<string, ToolConfig> toolConfigs, ResponsesOpenApiFunctionDefinition functionDefinition, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             ToolConfigs = toolConfigs;
-            OpenApi = openApi;
+            FunctionDefinition = functionDefinition;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
         public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> The openapi function definition. </summary>
-        public ResponsesOpenApiFunctionDefinition OpenApi { get; set; }
+        public ResponsesOpenApiFunctionDefinition FunctionDefinition { get; set; }
     }
 }

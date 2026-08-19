@@ -5,9 +5,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.Extensions.OpenAI;
 using OpenAI;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Drag. </summary>
     internal partial class DragParam : InternalComputerAction
@@ -22,11 +23,8 @@ namespace Azure.AI.Extensions.OpenAI
         ///   ]
         ///   ```
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
-        public DragParam(IEnumerable<CoordParam> path) : base(ComputerActionType.Drag)
+        internal DragParam(IEnumerable<CoordParam> path) : base(ComputerActionType.Drag)
         {
-            Argument.AssertNotNull(path, nameof(path));
-
             Path = path.ToList();
             Keys = new ChangeTrackingList<string>();
         }
@@ -61,7 +59,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// </summary>
         public IList<CoordParam> Path { get; }
 
-        /// <summary> Gets or sets the Keys. </summary>
-        public IList<string> Keys { get; set; }
+        /// <summary> Gets the Keys. </summary>
+        public IList<string> Keys { get; }
     }
 }

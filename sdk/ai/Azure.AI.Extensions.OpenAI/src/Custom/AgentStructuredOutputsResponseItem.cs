@@ -14,6 +14,6 @@ public partial class AgentStructuredOutputsResponseItem
     /// <summary> Initializes a new instance of <see cref="AgentStructuredOutputsResponseItem"/>. </summary>
     /// <param name="output"> The structured output data. </param>
     public AgentStructuredOutputsResponseItem(BinaryData output)
-        : this(AgentResponseItemKind.StructuredOutputs, id: null, agentReference: null, responseId: null, additionalBinaryDataProperties: null, output: output)
+        : this("structured_outputs", id: null, agentReference: null, responseId: null, output: output, additionalBinaryDataProperties: null)
     { }
 }

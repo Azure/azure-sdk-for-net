@@ -6,11 +6,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Reasoning text. </summary>
-    internal partial class MessageContentReasoningTextContent : InternalMessageContent, IJsonModel<MessageContentReasoningTextContent>
+    internal partial class MessageContentReasoningTextContent : MessageContent, IJsonModel<MessageContentReasoningTextContent>
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentReasoningTextContent"/> for deserialization. </summary>
         internal MessageContentReasoningTextContent()
@@ -19,7 +20,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalMessageContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override MessageContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MessageContentReasoningTextContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -86,7 +87,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalMessageContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override MessageContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MessageContentReasoningTextContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

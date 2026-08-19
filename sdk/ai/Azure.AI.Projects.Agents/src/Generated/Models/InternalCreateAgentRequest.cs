@@ -18,7 +18,7 @@ namespace Azure.AI.Projects.Agents
         /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
         /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
         /// </param>
-        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
+        /// <param name="definition"> The agent definition. This can be a prompt, workflow, hosted, external, or voice agent definition. </param>
         internal InternalCreateAgentRequest(string name, ProjectsAgentDefinition definition)
         {
             Name = name;
@@ -40,7 +40,7 @@ namespace Azure.AI.Projects.Agents
         /// with a maximum length of 512 characters.
         /// </param>
         /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
+        /// <param name="definition"> The agent definition. This can be a prompt, workflow, hosted, external, or voice agent definition. </param>
         /// <param name="blueprintReference"> The blueprint reference for the agent. </param>
         /// <param name="draft"> (Preview) Whether this agent version is a draft (candidate) rather than a release. The service defaults to `false` if a value is not specified by the caller. Draft versions are recorded but excluded from default 'latest' resolution and are not auto-promoted. </param>
         /// <param name="agentEndpoint"> An optional endpoint configuration. If not specified, a default endpoint configuration will be set for the agent. </param>

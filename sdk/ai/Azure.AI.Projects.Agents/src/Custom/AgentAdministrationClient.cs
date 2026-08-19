@@ -1140,13 +1140,13 @@ public partial class AgentAdministrationClient
     [Experimental("AAIP001")]
     public virtual VoiceAgentWebSocket GetVoiceAgentWebSocket()
     {
-        return Volatile.Read(ref _cachedVoiceAgentWebSocket) ?? Interlocked.CompareExchange(ref _cachedVoiceAgentWebSocket, new VoiceAgentWebSocket(Pipeline, _endpoint, _apiVersion, _tokenProvider), null) ?? _cachedVoiceAgentWebSocket;
+        return Volatile.Read(ref _cachedVoiceAgentWebSocket) ?? Interlocked.CompareExchange(ref _cachedVoiceAgentWebSocket, new VoiceAgentWebSocket(ClientDiagnostics, Pipeline, _endpoint, _apiVersion, _tokenProvider), null) ?? _cachedVoiceAgentWebSocket;
     }
 
     /// <summary> Gets the client for retrieving persisted voice-agent conversations. </summary>
     [Experimental("AAIP001")]
     public virtual AgentEndpointConversations GetAgentEndpointConversations()
     {
-        return Volatile.Read(ref _cachedAgentEndpointConversations) ?? Interlocked.CompareExchange(ref _cachedAgentEndpointConversations, new AgentEndpointConversations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentEndpointConversations;
+        return Volatile.Read(ref _cachedAgentEndpointConversations) ?? Interlocked.CompareExchange(ref _cachedAgentEndpointConversations, new AgentEndpointConversations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentEndpointConversations;
     }
 }

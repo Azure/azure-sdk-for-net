@@ -4,8 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Grammar format. </summary>
     public partial class CustomGrammarFormatParam : ResponsesCustomToolParamFormat
@@ -13,11 +14,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="CustomGrammarFormatParam"/>. </summary>
         /// <param name="syntax"> The syntax of the grammar definition. One of `lark` or `regex`. </param>
         /// <param name="definition"> The grammar definition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="definition"/> is null. </exception>
-        public CustomGrammarFormatParam(ResponsesGrammarSyntax syntax, string definition) : base(CustomToolParamFormatType.Grammar)
+        internal CustomGrammarFormatParam(ResponsesGrammarSyntax syntax, string definition) : base("grammar")
         {
-            Argument.AssertNotNull(definition, nameof(definition));
-
             Syntax = syntax;
             Definition = definition;
         }
@@ -34,9 +32,9 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The syntax of the grammar definition. One of `lark` or `regex`. </summary>
-        public ResponsesGrammarSyntax Syntax { get; set; }
+        public ResponsesGrammarSyntax Syntax { get; }
 
         /// <summary> The grammar definition. </summary>
-        public string Definition { get; set; }
+        public string Definition { get; }
     }
 }

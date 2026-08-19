@@ -6,11 +6,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Input image. </summary>
-    internal partial class FunctionAndCustomToolCallOutputInputImageContent : InternalFunctionAndCustomToolCallOutput, IJsonModel<FunctionAndCustomToolCallOutputInputImageContent>
+    internal partial class FunctionAndCustomToolCallOutputInputImageContent : FunctionAndCustomToolCallOutput, IJsonModel<FunctionAndCustomToolCallOutputInputImageContent>
     {
         /// <summary> Initializes a new instance of <see cref="FunctionAndCustomToolCallOutputInputImageContent"/> for deserialization. </summary>
         internal FunctionAndCustomToolCallOutputInputImageContent()
@@ -19,7 +20,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalFunctionAndCustomToolCallOutput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override FunctionAndCustomToolCallOutput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<FunctionAndCustomToolCallOutputInputImageContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -96,7 +97,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalFunctionAndCustomToolCallOutput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override FunctionAndCustomToolCallOutput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<FunctionAndCustomToolCallOutputInputImageContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

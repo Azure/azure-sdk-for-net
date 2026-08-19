@@ -32,11 +32,13 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of AgentEndpointConversations. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AgentEndpointConversations(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AgentEndpointConversations(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
@@ -44,6 +46,9 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Returns the conversations persisted for the specified voice agent endpoint.
@@ -80,16 +85,26 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetAgentConversations(string agentName, int? limit, string order, string after, string before, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversations");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-            return new AgentEndpointConversationsGetAgentConversationsCollectionResult(
-                this,
-                agentName,
-                limit,
-                order,
-                after,
-                before,
-                options);
+                return new AgentEndpointConversationsGetAgentConversationsCollectionResult(
+                    this,
+                    agentName,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -127,16 +142,26 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetAgentConversationsAsync(string agentName, int? limit, string order, string after, string before, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversations");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-            return new AgentEndpointConversationsGetAgentConversationsAsyncCollectionResult(
-                this,
-                agentName,
-                limit,
-                order,
-                after,
-                before,
-                options);
+                return new AgentEndpointConversationsGetAgentConversationsAsyncCollectionResult(
+                    this,
+                    agentName,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -239,11 +264,21 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetAgentConversation(string agentName, string conversationId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversation");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            using PipelineMessage message = CreateGetAgentConversationRequest(agentName, conversationId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetAgentConversationRequest(agentName, conversationId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -264,11 +299,21 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAgentConversationAsync(string agentName, string conversationId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversation");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            using PipelineMessage message = CreateGetAgentConversationRequest(agentName, conversationId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetAgentConversationRequest(agentName, conversationId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -327,11 +372,21 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult DeleteAgentConversation(string agentName, string conversationId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.DeleteAgentConversation");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            using PipelineMessage message = CreateDeleteAgentConversationRequest(agentName, conversationId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateDeleteAgentConversationRequest(agentName, conversationId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -352,11 +407,21 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> DeleteAgentConversationAsync(string agentName, string conversationId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.DeleteAgentConversation");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            using PipelineMessage message = CreateDeleteAgentConversationRequest(agentName, conversationId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateDeleteAgentConversationRequest(agentName, conversationId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -432,18 +497,28 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetAgentConversationResponses(string agentName, string conversationId, int? limit, string order, string after, string before, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationResponses");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            return new AgentEndpointConversationsGetAgentConversationResponsesCollectionResult(
-                this,
-                agentName,
-                conversationId,
-                limit,
-                order,
-                after,
-                before,
-                options);
+                return new AgentEndpointConversationsGetAgentConversationResponsesCollectionResult(
+                    this,
+                    agentName,
+                    conversationId,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -483,18 +558,28 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetAgentConversationResponsesAsync(string agentName, string conversationId, int? limit, string order, string after, string before, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationResponses");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            return new AgentEndpointConversationsGetAgentConversationResponsesAsyncCollectionResult(
-                this,
-                agentName,
-                conversationId,
-                limit,
-                order,
-                after,
-                before,
-                options);
+                return new AgentEndpointConversationsGetAgentConversationResponsesAsyncCollectionResult(
+                    this,
+                    agentName,
+                    conversationId,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -606,12 +691,22 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetAgentConversationResponse(string agentName, string conversationId, string responseId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-            Argument.AssertNotNullOrEmpty(responseId, nameof(responseId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationResponse");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+                Argument.AssertNotNullOrEmpty(responseId, nameof(responseId));
 
-            using PipelineMessage message = CreateGetAgentConversationResponseRequest(agentName, conversationId, responseId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetAgentConversationResponseRequest(agentName, conversationId, responseId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -633,12 +728,22 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAgentConversationResponseAsync(string agentName, string conversationId, string responseId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-            Argument.AssertNotNullOrEmpty(responseId, nameof(responseId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationResponse");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+                Argument.AssertNotNullOrEmpty(responseId, nameof(responseId));
 
-            using PipelineMessage message = CreateGetAgentConversationResponseRequest(agentName, conversationId, responseId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetAgentConversationResponseRequest(agentName, conversationId, responseId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -722,20 +827,30 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetAgentConversationResponseItems(string agentName, string conversationId, string responseId, int? limit, string order, string after, string before, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-            Argument.AssertNotNullOrEmpty(responseId, nameof(responseId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationResponseItems");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+                Argument.AssertNotNullOrEmpty(responseId, nameof(responseId));
 
-            return new AgentEndpointConversationsGetAgentConversationResponseItemsCollectionResult(
-                this,
-                agentName,
-                conversationId,
-                responseId,
-                limit,
-                order,
-                after,
-                before,
-                options);
+                return new AgentEndpointConversationsGetAgentConversationResponseItemsCollectionResult(
+                    this,
+                    agentName,
+                    conversationId,
+                    responseId,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -777,20 +892,30 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetAgentConversationResponseItemsAsync(string agentName, string conversationId, string responseId, int? limit, string order, string after, string before, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-            Argument.AssertNotNullOrEmpty(responseId, nameof(responseId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationResponseItems");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+                Argument.AssertNotNullOrEmpty(responseId, nameof(responseId));
 
-            return new AgentEndpointConversationsGetAgentConversationResponseItemsAsyncCollectionResult(
-                this,
-                agentName,
-                conversationId,
-                responseId,
-                limit,
-                order,
-                after,
-                before,
-                options);
+                return new AgentEndpointConversationsGetAgentConversationResponseItemsAsyncCollectionResult(
+                    this,
+                    agentName,
+                    conversationId,
+                    responseId,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -928,18 +1053,28 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetAgentConversationItems(string agentName, string conversationId, int? limit, string order, string after, string before, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationItems");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            return new AgentEndpointConversationsGetAgentConversationItemsCollectionResult(
-                this,
-                agentName,
-                conversationId,
-                limit,
-                order,
-                after,
-                before,
-                options);
+                return new AgentEndpointConversationsGetAgentConversationItemsCollectionResult(
+                    this,
+                    agentName,
+                    conversationId,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -979,18 +1114,28 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetAgentConversationItemsAsync(string agentName, string conversationId, int? limit, string order, string after, string before, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationItems");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            return new AgentEndpointConversationsGetAgentConversationItemsAsyncCollectionResult(
-                this,
-                agentName,
-                conversationId,
-                limit,
-                order,
-                after,
-                before,
-                options);
+                return new AgentEndpointConversationsGetAgentConversationItemsAsyncCollectionResult(
+                    this,
+                    agentName,
+                    conversationId,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1105,12 +1250,22 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetAgentConversationItem(string agentName, string conversationId, string itemId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationItem");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            using PipelineMessage message = CreateGetAgentConversationItemRequest(agentName, conversationId, itemId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetAgentConversationItemRequest(agentName, conversationId, itemId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1135,12 +1290,22 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAgentConversationItemAsync(string agentName, string conversationId, string itemId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationItem");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            using PipelineMessage message = CreateGetAgentConversationItemRequest(agentName, conversationId, itemId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetAgentConversationItemRequest(agentName, conversationId, itemId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1214,12 +1379,22 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetAgentConversationItemAudio(string agentName, string conversationId, string itemId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationItemAudio");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            using PipelineMessage message = CreateGetAgentConversationItemAudioRequest(agentName, conversationId, itemId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetAgentConversationItemAudioRequest(agentName, conversationId, itemId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1245,12 +1420,22 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAgentConversationItemAudioAsync(string agentName, string conversationId, string itemId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationItemAudio");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            using PipelineMessage message = CreateGetAgentConversationItemAudioRequest(agentName, conversationId, itemId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetAgentConversationItemAudioRequest(agentName, conversationId, itemId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1325,12 +1510,22 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetAgentConversationItemAudioContent(string agentName, string conversationId, string itemId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationItemAudioContent");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            using PipelineMessage message = CreateGetAgentConversationItemAudioContentRequest(agentName, conversationId, itemId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetAgentConversationItemAudioContentRequest(agentName, conversationId, itemId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1355,12 +1550,22 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAgentConversationItemAudioContentAsync(string agentName, string conversationId, string itemId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationItemAudioContent");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            using PipelineMessage message = CreateGetAgentConversationItemAudioContentRequest(agentName, conversationId, itemId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetAgentConversationItemAudioContentRequest(agentName, conversationId, itemId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1437,11 +1642,21 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetAgentConversationAudio(string agentName, string conversationId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationAudio");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            using PipelineMessage message = CreateGetAgentConversationAudioRequest(agentName, conversationId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetAgentConversationAudioRequest(agentName, conversationId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1470,11 +1685,21 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAgentConversationAudioAsync(string agentName, string conversationId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationAudio");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            using PipelineMessage message = CreateGetAgentConversationAudioRequest(agentName, conversationId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetAgentConversationAudioRequest(agentName, conversationId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1556,11 +1781,21 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetAgentConversationAudioContent(string agentName, string conversationId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationAudioContent");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            using PipelineMessage message = CreateGetAgentConversationAudioContentRequest(agentName, conversationId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetAgentConversationAudioContentRequest(agentName, conversationId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1588,11 +1823,21 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAgentConversationAudioContentAsync(string agentName, string conversationId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationAudioContent");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            using PipelineMessage message = CreateGetAgentConversationAudioContentRequest(agentName, conversationId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetAgentConversationAudioContentRequest(agentName, conversationId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

@@ -50,16 +50,24 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
         => GetConfiguredOptions(new AIProjectClientOptions(), instrument);
 
     protected T CreateTestOpenAIClientOptions<T>(Uri endpoint = null, bool instrument = true)
-        where T : OpenAIClientOptions
+        where T : ClientPipelineOptions
     {
         T options = typeof(T).Name switch
         {
-            nameof(OpenAIClientOptions) => (T)new OpenAIClientOptions(),
+            nameof(OpenAIClientOptions) => (T)(object)new OpenAIClientOptions(),
             nameof(ProjectOpenAIClientOptions) => (T)(object)new ProjectOpenAIClientOptions(),
             nameof(ProjectResponsesClientOptions) => (T)(object)new ProjectResponsesClientOptions(),
+            nameof(ResponsesClientOptions) => (T)(object)new ResponsesClientOptions(),
             _ => throw new NotImplementedException()
         };
-        options.Endpoint = endpoint;
+        if (options is OpenAIClientOptions openAIOptions)
+        {
+            openAIOptions.Endpoint = endpoint;
+        }
+        else if (options is ResponsesClientOptions responsesOptions)
+        {
+            responsesOptions.Endpoint = endpoint;
+        }
         options.RetryPolicy = new ClientRetryPolicy(maxRetries: 0);
         options.NetworkTimeout = TimeSpan.FromMinutes(2);
         return GetConfiguredOptions(options, instrument);
@@ -135,7 +143,7 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
 
     protected ResponsesClient GetTestBaseResponsesClient(Uri overrideEndpoint = null)
     {
-        OpenAIClientOptions options = CreateTestOpenAIClientOptions<OpenAIClientOptions>(overrideEndpoint);
+        ResponsesClientOptions options = CreateTestOpenAIClientOptions<ResponsesClientOptions>(overrideEndpoint);
 
         return CreateProxyFromClient(
             new ResponsesClient(

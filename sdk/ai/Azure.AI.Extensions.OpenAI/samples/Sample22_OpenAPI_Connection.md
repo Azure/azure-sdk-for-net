@@ -24,15 +24,15 @@ Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_OpenAPIProjectConnection_Sync
 string filePath = GetFile();
 AIProjectConnection tripadvisorConnection = projectClient.Connections.GetConnection("tripadvisor");
-OpenApiFunctionDefinition toolDefinition = new(
+AgentsOpenApiFunctionDefinition toolDefinition = new(
     name: "tripadvisor",
     specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
-    authentication: new OpenApiProjectConnectionAuthenticationDetails(new OpenApiProjectConnectionSecurityScheme(
+    authentication: new AgentsOpenApiProjectConnectionAuthenticationDetails(new AgentsOpenApiProjectConnectionSecurityScheme(
         projectConnectionId: tripadvisorConnection.Id
     ))
 );
 toolDefinition.Description = "Trip Advisor API to get travel information.";
-OpenAPITool openapiTool = new(toolDefinition);
+AgentsOpenAPITool openapiTool = new(toolDefinition);
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
@@ -48,15 +48,15 @@ Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_OpenAPIProjectConnection_Async
 string filePath = GetFile();
 AIProjectConnection tripadvisorConnection = await projectClient.Connections.GetConnectionAsync("tripadvisor");
-OpenApiFunctionDefinition toolDefinition = new(
+AgentsOpenApiFunctionDefinition toolDefinition = new(
     name: "tripadvisor",
     specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
-    authentication: new OpenApiProjectConnectionAuthenticationDetails(new OpenApiProjectConnectionSecurityScheme(
+    authentication: new AgentsOpenApiProjectConnectionAuthenticationDetails(new AgentsOpenApiProjectConnectionSecurityScheme(
         projectConnectionId: tripadvisorConnection.Id
     ))
 );
 toolDefinition.Description = "Trip Advisor API to get travel information.";
-OpenAPITool openapiTool = new(toolDefinition);
+AgentsOpenAPITool openapiTool = new(toolDefinition);
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {

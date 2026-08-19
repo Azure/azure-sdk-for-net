@@ -5,18 +5,15 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Input text. </summary>
-    internal partial class FunctionAndCustomToolCallOutputInputTextContent : InternalFunctionAndCustomToolCallOutput
+    internal partial class FunctionAndCustomToolCallOutputInputTextContent : FunctionAndCustomToolCallOutput
     {
         /// <summary> Initializes a new instance of <see cref="FunctionAndCustomToolCallOutputInputTextContent"/>. </summary>
         /// <param name="text"> The text input to the model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public FunctionAndCustomToolCallOutputInputTextContent(string text) : base(FunctionAndCustomToolCallOutputType.InputText)
+        internal FunctionAndCustomToolCallOutputInputTextContent(string text) : base(FunctionAndCustomToolCallOutputType.InputText)
         {
-            Argument.AssertNotNull(text, nameof(text));
-
             Text = text;
         }
 
@@ -30,6 +27,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The text input to the model. </summary>
-        public string Text { get; set; }
+        public string Text { get; }
     }
 }

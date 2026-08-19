@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Local shell call output. </summary>
     internal partial class ItemFieldLocalShellToolCallOutput : ItemField, IJsonModel<ItemFieldLocalShellToolCallOutput>
@@ -83,7 +84,7 @@ namespace Azure.AI.Extensions.OpenAI
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
         }
 
@@ -116,7 +117,7 @@ namespace Azure.AI.Extensions.OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string output = default;
-            ItemLocalShellToolCallOutputStatus? status = default;
+            InputItemLocalShellToolCallOutputStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -141,7 +142,7 @@ namespace Azure.AI.Extensions.OpenAI
                         status = null;
                         continue;
                     }
-                    status = new ItemLocalShellToolCallOutputStatus(prop.Value.GetString());
+                    status = prop.Value.GetString().ToInputItemLocalShellToolCallOutputStatus();
                     continue;
                 }
                 if (options.Format != "W")

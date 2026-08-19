@@ -89,6 +89,11 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("connector_id"u8);
                 writer.WriteStringValue(ConnectorId.Value.ToSerialString());
             }
+            if (Optional.IsDefined(TunnelId))
+            {
+                writer.WritePropertyName("tunnel_id"u8);
+                writer.WriteStringValue(TunnelId);
+            }
             if (Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
@@ -184,6 +189,7 @@ namespace Azure.AI.Projects.Agents
             string serverLabel = default;
             Uri serverUri = default;
             MCPToolboxToolConnectorId? connectorId = default;
+            string tunnelId = default;
             string authorization = default;
             string serverDescription = default;
             IDictionary<string, string> headers = default;
@@ -243,6 +249,11 @@ namespace Azure.AI.Projects.Agents
                         continue;
                     }
                     connectorId = prop.Value.GetString().ToMCPToolboxToolConnectorId();
+                    continue;
+                }
+                if (prop.NameEquals("tunnel_id"u8))
+                {
+                    tunnelId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("authorization"u8))
@@ -324,6 +335,7 @@ namespace Azure.AI.Projects.Agents
                 serverLabel,
                 serverUri,
                 connectorId,
+                tunnelId,
                 authorization,
                 serverDescription,
                 headers ?? new ChangeTrackingDictionary<string, string>(),

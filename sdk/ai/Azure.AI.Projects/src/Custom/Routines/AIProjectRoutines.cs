@@ -11,14 +11,14 @@ using Azure.AI.Projects.Memory;
 namespace Azure.AI.Projects;
 
 [Experimental("AAIP001")]
-[CodeGenSuppress("GetRoutineRuns", typeof(string), typeof(FoundryFeaturesOptInKeys?), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-[CodeGenSuppress("GetRoutineRunsAsync", typeof(string), typeof(FoundryFeaturesOptInKeys?), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-[CodeGenSuppress("GetRoutineRuns", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
-[CodeGenSuppress("GetRoutineRunsAsync", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
-[CodeGenSuppress("GetRoutines", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
-[CodeGenSuppress("GetRoutinesAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
-[CodeGenSuppress("GetRoutines", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-[CodeGenSuppress("GetRoutinesAsync", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("GetRoutineRuns", typeof(string), typeof(FoundryFeaturesOptInKeys?), typeof(string), typeof(int?), typeof(string), typeof(MemoryStoreListOrder?), typeof(CancellationToken))]
+[CodeGenSuppress("GetRoutineRunsAsync", typeof(string), typeof(FoundryFeaturesOptInKeys?), typeof(string), typeof(int?), typeof(string), typeof(MemoryStoreListOrder?), typeof(CancellationToken))]
+[CodeGenSuppress("GetRoutineRuns", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("GetRoutineRunsAsync", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("GetRoutines", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("GetRoutinesAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("GetRoutines", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(string), typeof(MemoryStoreListOrder?), typeof(CancellationToken))]
+[CodeGenSuppress("GetRoutinesAsync", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(string), typeof(MemoryStoreListOrder?), typeof(CancellationToken))]
 public partial class AIProjectRoutines
 {
     /// <summary> List prior runs for a routine. </summary>
@@ -59,7 +59,6 @@ public partial class AIProjectRoutines
                     limit: localCollectionOptions.Limit,
                     order: localCollectionOptions.Order,
                     after: localCollectionOptions.AfterId,
-                    before: localCollectionOptions.BeforeId,
                     options: localRequestOptions),
             dataItemDeserializer: RoutineRun.DeserializeRoutineRun,
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [name, filter]),
@@ -104,7 +103,6 @@ public partial class AIProjectRoutines
                     limit: localCollectionOptions.Limit,
                     order: localCollectionOptions.Order,
                     after: localCollectionOptions.AfterId,
-                    before: localCollectionOptions.BeforeId,
                     options: localRequestOptions),
             dataItemDeserializer: RoutineRun.DeserializeRoutineRun,
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [name, filter]),
@@ -142,7 +140,6 @@ public partial class AIProjectRoutines
                     limit: localCollectionOptions.Limit,
                     order: localCollectionOptions.Order,
                     after: localCollectionOptions.AfterId,
-                    before: localCollectionOptions.BeforeId,
                     options: localRequestOptions),
             dataItemDeserializer: ProjectsRoutine.DeserializeProjectsRoutine,
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before),
@@ -180,7 +177,6 @@ public partial class AIProjectRoutines
                     limit: localCollectionOptions.Limit,
                     order: localCollectionOptions.Order,
                     after: localCollectionOptions.AfterId,
-                    before: localCollectionOptions.BeforeId,
                     options: localRequestOptions),
             dataItemDeserializer: ProjectsRoutine.DeserializeProjectsRoutine,
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before),

@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Extensions.OpenAI.Internal;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -11,7 +12,7 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesCustomTextFormatParam : ResponsesCustomToolParamFormat
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesCustomTextFormatParam"/>. </summary>
-        public ResponsesCustomTextFormatParam() : base(CustomToolParamFormatType.Text)
+        internal ResponsesCustomTextFormatParam() : base("text")
         {
         }
 

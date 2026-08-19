@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -12,14 +13,16 @@ namespace Azure.AI.Extensions.OpenAI
     [Experimental("AAIP001")]
     public partial class ResponsesA2APreviewTool : ResponsesTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponsesA2APreviewTool"/>. </summary>
-        public ResponsesA2APreviewTool() : base(ToolType.A2aPreview)
+        public ResponsesA2APreviewTool() : base("a2a_preview")
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponsesA2APreviewTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="baseUri"> Base URL of the agent. </param>
         /// <param name="agentCardPath">
         /// The path to the agent card relative to the `base_url`.
@@ -34,12 +37,14 @@ namespace Azure.AI.Extensions.OpenAI
         /// agent's Agent Card. The service defaults to `false` if a value is not
         /// specified by the caller (anonymous fetch).
         /// </param>
-        internal ResponsesA2APreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri baseUri, string agentCardPath, string projectConnectionId, bool? sendCredentialsForAgentCard) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponsesA2APreviewTool(ResponseToolKind @type, Uri baseUri, string agentCardPath, string projectConnectionId, bool? sendCredentialsForAgentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             BaseUri = baseUri;
             AgentCardPath = agentCardPath;
             ProjectConnectionId = projectConnectionId;
             SendCredentialsForAgentCard = sendCredentialsForAgentCard;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Base URL of the agent. </summary>

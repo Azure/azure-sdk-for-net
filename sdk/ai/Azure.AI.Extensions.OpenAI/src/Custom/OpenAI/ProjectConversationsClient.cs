@@ -7,6 +7,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Extensions.OpenAI.Telemetry;
@@ -44,8 +45,8 @@ public partial class ProjectConversationsClient : ConversationClient
         using var scope = OpenTelemetryResponseScope.StartCreateConversation(_endpoint, agentName: null);
         try
         {
-            ClientResult protocolResult = base.CreateConversation(BinaryContent.Create(ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default)), cancellationToken.ToRequestOptions());
-            var result = protocolResult.ToAgentClientResult<ProjectConversation>();
+            ClientResult response = base.CreateConversation(options, cancellationToken.ToRequestOptions());
+            ClientResult<ProjectConversation> result = ToProjectConversationResult(response);
             scope?.RecordConversationId(result.Value?.Id);
             return result;
         }
@@ -66,8 +67,8 @@ public partial class ProjectConversationsClient : ConversationClient
         using var scope = OpenTelemetryResponseScope.StartCreateConversation(_endpoint, agentName: null);
         try
         {
-            ClientResult protocolResult = await base.CreateConversationAsync(BinaryContent.Create(ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default)), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            var result = protocolResult.ToAgentClientResult<ProjectConversation>();
+            ClientResult response = await base.CreateConversationAsync(options, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult<ProjectConversation> result = ToProjectConversationResult(response);
             scope?.RecordConversationId(result.Value?.Id);
             return result;
         }
@@ -177,8 +178,7 @@ public partial class ProjectConversationsClient : ConversationClient
     public virtual ClientResult<ProjectConversation> GetProjectConversation(string conversationId, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-        ClientResult protocolResult = base.GetConversation(conversationId, cancellationToken.ToRequestOptions());
-        return protocolResult.ToAgentClientResult<ProjectConversation>();
+        return ToProjectConversationResult(base.GetConversation(conversationId, cancellationToken.ToRequestOptions()));
     }
 
     /// <summary> Asynchronously gets a project conversation by ID. </summary>
@@ -188,8 +188,8 @@ public partial class ProjectConversationsClient : ConversationClient
     public virtual async Task<ClientResult<ProjectConversation>> GetProjectConversationAsync(string conversationId, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-        ClientResult protocolResult = await base.GetConversationAsync(conversationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-        return protocolResult.ToAgentClientResult<ProjectConversation>();
+        ClientResult response = await base.GetConversationAsync(conversationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        return ToProjectConversationResult(response);
     }
 
     /// <summary> Gets the items in a project conversation. </summary>
@@ -275,7 +275,7 @@ public partial class ProjectConversationsClient : ConversationClient
     public virtual ClientResult<AgentResponseItem> GetProjectConversationItem(string conversationId, string itemId, IEnumerable<IncludedConversationItemProperty> include = null, CancellationToken cancellationToken = default)
     {
         ClientResult protocolResult = GetConversationItem(conversationId, itemId, include, cancellationToken.ToRequestOptions());
-        return protocolResult.ToAgentClientResult<AgentResponseItem>();
+        return ToAgentResponseItemResult(protocolResult);
     }
 
     /// <summary> Asynchronously gets a single item from a project conversation. </summary>
@@ -287,7 +287,7 @@ public partial class ProjectConversationsClient : ConversationClient
     public virtual async Task<ClientResult<AgentResponseItem>> GetProjectConversationItemAsync(string conversationId, string itemId, IEnumerable<IncludedConversationItemProperty> include = null, CancellationToken cancellationToken = default)
     {
         ClientResult protocolResult = await GetConversationItemAsync(conversationId, itemId, include, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-        return protocolResult.ToAgentClientResult<AgentResponseItem>();
+        return ToAgentResponseItemResult(protocolResult);
     }
 
     /// <summary> Creates items in a conversation with the given ID. </summary>
@@ -349,8 +349,7 @@ public partial class ProjectConversationsClient : ConversationClient
     /// <returns> The updated project conversation. </returns>
     public virtual ClientResult<ProjectConversation> UpdateProjectConversation(string conversationId, ProjectConversationUpdateOptions options, CancellationToken cancellationToken = default)
     {
-        ClientResult protocolResult = base.UpdateConversation(conversationId, BinaryContent.Create(ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default)), cancellationToken.ToRequestOptions());
-        return protocolResult.ToAgentClientResult<ProjectConversation>();
+        return ToProjectConversationResult(base.UpdateConversation(conversationId, options, cancellationToken.ToRequestOptions()));
     }
 
     /// <summary> Asynchronously updates a project conversation. </summary>
@@ -360,8 +359,24 @@ public partial class ProjectConversationsClient : ConversationClient
     /// <returns> The updated project conversation. </returns>
     public virtual async Task<ClientResult<ProjectConversation>> UpdateProjectConversationAsync(string conversationId, ProjectConversationUpdateOptions options, CancellationToken cancellationToken = default)
     {
-        ClientResult protocolResult = await base.UpdateConversationAsync(conversationId, BinaryContent.Create(ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default)), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-        return protocolResult.ToAgentClientResult<ProjectConversation>();
+        ClientResult response = await base.UpdateConversationAsync(conversationId, options, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        return ToProjectConversationResult(response);
+    }
+
+    private static ClientResult<ProjectConversation> ToProjectConversationResult(ClientResult response)
+    {
+        PipelineResponse rawResponse = response.GetRawResponse();
+        using JsonDocument document = JsonDocument.Parse(rawResponse.Content);
+        ProjectConversation conversation = ProjectConversation.DeserializeProjectConversation(document.RootElement, ModelSerializationExtensions.WireOptions);
+        return ClientResult.FromValue(conversation, rawResponse);
+    }
+
+    private static ClientResult<AgentResponseItem> ToAgentResponseItemResult(ClientResult response)
+    {
+        PipelineResponse rawResponse = response.GetRawResponse();
+        using JsonDocument document = JsonDocument.Parse(rawResponse.Content);
+        AgentResponseItem item = AgentResponseItem.DeserializeAgentResponseItem(document.RootElement, ModelSerializationExtensions.WireOptions);
+        return ClientResult.FromValue(item, rawResponse);
     }
 
     /// <summary> Initializes a new instance of <see cref="ProjectConversationsClient"/> for mocking. </summary>

@@ -6,8 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Code interpreter tool call. </summary>
     internal partial class ItemFieldCodeInterpreterToolCall : ItemField
@@ -65,10 +66,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="InternalCodeInterpreterOutputLogs"/>. </description>
+        /// <description> <see cref="CodeInterpreterCallLogsOutput"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="InternalCodeInterpreterOutputImage"/>. </description>
+        /// <description> <see cref="CodeInterpreterCallImageOutput"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>

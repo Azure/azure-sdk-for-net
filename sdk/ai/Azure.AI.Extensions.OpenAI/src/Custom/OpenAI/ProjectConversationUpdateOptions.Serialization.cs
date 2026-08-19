@@ -1,8 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#pragma warning disable CS1591
+#nullable disable
+
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -11,39 +13,23 @@ namespace Azure.AI.Extensions.OpenAI;
 
 public partial class ProjectConversationUpdateOptions : IJsonModel<ProjectConversationUpdateOptions>
 {
-    /// <param name="writer"> The JSON writer. </param>
-    /// <param name="options"> The client options for reading and writing models. </param>
-    protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+    protected virtual ProjectConversationUpdateOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
     {
-        string format = options.Format == "W" ? ((IPersistableModel<ProjectConversationUpdateOptions>)this).GetFormatFromOptions(options) : options.Format;
-        if (format != "J")
-        {
-            throw new FormatException($"The model {nameof(ProjectConversationUpdateOptions)} does not support writing '{format}' format.");
-        }
-        if (Optional.IsDefined(InternalMetadata) && Optional.IsCollectionDefined(InternalMetadata.AdditionalProperties))
-        {
-            writer.WritePropertyName("metadata"u8);
-            writer.WriteObjectValue(InternalMetadata, options);
-        }
-        if (options.Format != "W" && _additionalBinaryDataProperties != null)
-        {
-            foreach (var item in _additionalBinaryDataProperties)
-            {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-            }
-        }
+        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+        return DeserializeProjectConversationUpdateOptions(document.RootElement, options);
     }
 
-    /// <param name="writer"> The JSON writer. </param>
-    /// <param name="options"> The client options for reading and writing models. </param>
+    protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        => ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
+
+    BinaryData IPersistableModel<ProjectConversationUpdateOptions>.Write(ModelReaderWriterOptions options)
+        => PersistableModelWriteCore(options);
+
+    ProjectConversationUpdateOptions IPersistableModel<ProjectConversationUpdateOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        => PersistableModelCreateCore(data, options);
+
+    string IPersistableModel<ProjectConversationUpdateOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
     void IJsonModel<ProjectConversationUpdateOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
     {
         writer.WriteStartObject();
@@ -51,100 +37,67 @@ public partial class ProjectConversationUpdateOptions : IJsonModel<ProjectConver
         writer.WriteEndObject();
     }
 
-    /// <param name="reader"> The JSON reader. </param>
-    /// <param name="options"> The client options for reading and writing models. </param>
-    ProjectConversationUpdateOptions IJsonModel<ProjectConversationUpdateOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+    ProjectConversationUpdateOptions IJsonModel<ProjectConversationUpdateOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        => JsonModelCreateCore(ref reader, options);
 
-    /// <param name="data"> The data to parse. </param>
-    /// <param name="options"> The client options for reading and writing models. </param>
-    protected virtual ProjectConversationUpdateOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-    {
-        string format = options.Format == "W" ? ((IPersistableModel<ProjectConversationUpdateOptions>)this).GetFormatFromOptions(options) : options.Format;
-        switch (format)
-        {
-            case "J":
-                using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    return DeserializeProjectConversationUpdateOptions(document.RootElement, options);
-                }
-            default:
-                throw new FormatException($"The model {nameof(ProjectConversationUpdateOptions)} does not support reading '{options.Format}' format.");
-        }
-    }
-
-    /// <param name="options"> The client options for reading and writing models. </param>
-    protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-    {
-        string format = options.Format == "W" ? ((IPersistableModel<ProjectConversationUpdateOptions>)this).GetFormatFromOptions(options) : options.Format;
-        switch (format)
-        {
-            case "J":
-                return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
-            default:
-                throw new FormatException($"The model {nameof(ProjectConversationUpdateOptions)} does not support writing '{options.Format}' format.");
-        }
-    }
-
-    /// <param name="reader"> The JSON reader. </param>
-    /// <param name="options"> The client options for reading and writing models. </param>
     protected virtual ProjectConversationUpdateOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
     {
-        string format = options.Format == "W" ? ((IPersistableModel<ProjectConversationUpdateOptions>)this).GetFormatFromOptions(options) : options.Format;
-        if (format != "J")
-        {
-            throw new FormatException($"The model {nameof(ProjectConversationUpdateOptions)} does not support reading '{format}' format.");
-        }
         using JsonDocument document = JsonDocument.ParseValue(ref reader);
         return DeserializeProjectConversationUpdateOptions(document.RootElement, options);
     }
 
-    /// <param name="element"> The JSON element to deserialize. </param>
-    /// <param name="options"> The client options for reading and writing models. </param>
+    protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+    {
+        if (Optional.IsCollectionDefined(Metadata))
+        {
+            writer.WritePropertyName("metadata"u8);
+            writer.WriteStartObject();
+            foreach (KeyValuePair<string, string> item in Metadata)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteStringValue(item.Value);
+            }
+            writer.WriteEndObject();
+        }
+        if (options.Format != "W" && _additionalBinaryDataProperties != null)
+        {
+            foreach (KeyValuePair<string, BinaryData> item in _additionalBinaryDataProperties)
+            {
+                writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(item.Value);
+#else
+                using JsonDocument document = JsonDocument.Parse(item.Value);
+                JsonSerializer.Serialize(writer, document.RootElement);
+#endif
+            }
+        }
+    }
+
     internal static ProjectConversationUpdateOptions DeserializeProjectConversationUpdateOptions(JsonElement element, ModelReaderWriterOptions options)
     {
         if (element.ValueKind == JsonValueKind.Null)
         {
             return null;
         }
-        InternalMetadataContainer internalMetadata = default;
-        IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-        foreach (var prop in element.EnumerateObject())
+
+        IDictionary<string, string> metadata = new ChangeTrackingDictionary<string, string>();
+        IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+        foreach (JsonProperty property in element.EnumerateObject())
         {
-            if (prop.NameEquals("metadata"u8))
+            if (property.NameEquals("metadata"u8))
             {
-                if (prop.Value.ValueKind == JsonValueKind.Null)
+                foreach (JsonProperty metadataProperty in property.Value.EnumerateObject())
                 {
-                    internalMetadata = null;
-                    continue;
+                    metadata.Add(metadataProperty.Name, metadataProperty.Value.ValueKind == JsonValueKind.Null ? null : metadataProperty.Value.GetString());
                 }
-                internalMetadata = InternalMetadataContainer.DeserializeInternalMetadataContainer(prop.Value, options);
                 continue;
             }
             if (options.Format != "W")
             {
-                additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
         }
-        return new ProjectConversationUpdateOptions(internalMetadata?.AdditionalProperties, additionalBinaryDataProperties);
-    }
-
-    /// <param name="options"> The client options for reading and writing models. </param>
-    BinaryData IPersistableModel<ProjectConversationUpdateOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-    /// <param name="data"> The data to parse. </param>
-    /// <param name="options"> The client options for reading and writing models. </param>
-    ProjectConversationUpdateOptions IPersistableModel<ProjectConversationUpdateOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-    /// <param name="options"> The client options for reading and writing models. </param>
-    string IPersistableModel<ProjectConversationUpdateOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-    /// <param name="ProjectConversationUpdateOptions"> The <see cref="ProjectConversationUpdateOptions"/> to serialize into <see cref="BinaryContent"/>. </param>
-    public static implicit operator BinaryContent(ProjectConversationUpdateOptions ProjectConversationUpdateOptions)
-    {
-        if (ProjectConversationUpdateOptions == null)
-        {
-            return null;
-        }
-        return BinaryContent.Create(ProjectConversationUpdateOptions, ModelSerializationExtensions.WireOptions);
+        return new ProjectConversationUpdateOptions(metadata, additionalProperties);
     }
 }

@@ -9,6 +9,9 @@ using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
+using AgentsBingGroundingSearchConfiguration = Azure.AI.Projects.Agents.BingGroundingSearchConfiguration;
+using AgentsBingGroundingSearchToolOptions = Azure.AI.Projects.Agents.BingGroundingSearchToolOptions;
+using AgentsBingGroundingTool = Azure.AI.Projects.Agents.BingGroundingTool;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
@@ -33,8 +36,8 @@ public class Sample_BingGroundingStreaming : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_CreateAgent_BingGroundingStreaming_Async
         AIProjectConnection bingConnectionName = projectClient.Connections.GetConnection(connectionName: connectionName);
-        BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOptions(
-            searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
+        AgentsBingGroundingTool bingGroundingAgentTool = new(new AgentsBingGroundingSearchToolOptions(
+            searchConfigurations: [new AgentsBingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
             )
         );
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -103,8 +106,8 @@ public class Sample_BingGroundingStreaming : ProjectsOpenAITestBase
 
         #region Snippet:Sample_CreateAgent_BingGroundingStreaming_Sync
         AIProjectConnection bingConnectionName = projectClient.Connections.GetConnection(connectionName: connectionName);
-        BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOptions(
-            searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
+        AgentsBingGroundingTool bingGroundingAgentTool = new(new AgentsBingGroundingSearchToolOptions(
+            searchConfigurations: [new AgentsBingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
             )
         );
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)

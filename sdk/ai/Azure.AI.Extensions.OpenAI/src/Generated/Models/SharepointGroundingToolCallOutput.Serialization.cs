@@ -6,14 +6,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The output of a SharePoint grounding tool call. </summary>
-    public partial class SharepointGroundingToolCallOutput : AgentResponseItem, IJsonModel<SharepointGroundingToolCallOutput>
+    public partial class SharePointGroundingToolCallOutput : AgentResponseItem, IJsonModel<SharePointGroundingToolCallOutput>
     {
-        /// <summary> Initializes a new instance of <see cref="SharepointGroundingToolCallOutput"/> for deserialization. </summary>
-        internal SharepointGroundingToolCallOutput()
+        /// <summary> Initializes a new instance of <see cref="SharePointGroundingToolCallOutput"/> for deserialization. </summary>
+        internal SharePointGroundingToolCallOutput()
         {
         }
 
@@ -21,45 +22,45 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SharepointGroundingToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SharePointGroundingToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSharepointGroundingToolCallOutput(document.RootElement, options);
+                        return DeserializeSharePointGroundingToolCallOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SharepointGroundingToolCallOutput)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharePointGroundingToolCallOutput)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SharepointGroundingToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SharePointGroundingToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SharepointGroundingToolCallOutput)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharePointGroundingToolCallOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SharepointGroundingToolCallOutput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SharePointGroundingToolCallOutput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SharepointGroundingToolCallOutput IPersistableModel<SharepointGroundingToolCallOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => (SharepointGroundingToolCallOutput)PersistableModelCreateCore(data, options);
+        SharePointGroundingToolCallOutput IPersistableModel<SharePointGroundingToolCallOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => (SharePointGroundingToolCallOutput)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SharepointGroundingToolCallOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SharePointGroundingToolCallOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SharepointGroundingToolCallOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SharePointGroundingToolCallOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +71,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SharepointGroundingToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SharePointGroundingToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharepointGroundingToolCallOutput)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SharePointGroundingToolCallOutput)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("call_id"u8);
@@ -92,46 +93,61 @@ namespace Azure.AI.Extensions.OpenAI
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToSerialString());
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SharepointGroundingToolCallOutput IJsonModel<SharepointGroundingToolCallOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SharepointGroundingToolCallOutput)JsonModelCreateCore(ref reader, options);
+        SharePointGroundingToolCallOutput IJsonModel<SharePointGroundingToolCallOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SharePointGroundingToolCallOutput)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SharepointGroundingToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SharePointGroundingToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharepointGroundingToolCallOutput)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SharePointGroundingToolCallOutput)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSharepointGroundingToolCallOutput(document.RootElement, options);
+            return DeserializeSharePointGroundingToolCallOutput(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SharepointGroundingToolCallOutput DeserializeSharepointGroundingToolCallOutput(JsonElement element, ModelReaderWriterOptions options)
+        internal static SharePointGroundingToolCallOutput DeserializeSharePointGroundingToolCallOutput(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            AgentResponseItemKind @type = default;
+            ResponseItemKind @type = "sharepoint_grounding_preview_call_output";
             string id = default;
             AgentReference agentReference = default;
             string responseId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string callId = default;
             BinaryData output = default;
             ToolCallStatus status = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new AgentResponseItemKind(prop.Value.GetString());
+                    @type = new ResponseItemKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("id"u8))
@@ -177,15 +193,15 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SharepointGroundingToolCallOutput(
+            return new SharePointGroundingToolCallOutput(
                 @type,
                 id,
                 agentReference,
                 responseId,
-                additionalBinaryDataProperties,
                 callId,
                 output,
-                status);
+                status,
+                additionalBinaryDataProperties);
         }
     }
 }

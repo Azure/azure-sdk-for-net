@@ -88,6 +88,11 @@ namespace OpenAI
                 writer.WritePropertyName("connector_id"u8);
                 writer.WriteStringValue(ConnectorId.Value.ToSerialString());
             }
+            if (Optional.IsDefined(TunnelId))
+            {
+                writer.WritePropertyName("tunnel_id"u8);
+                writer.WriteStringValue(TunnelId);
+            }
             if (Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
@@ -191,6 +196,7 @@ namespace OpenAI
             string serverLabel = default;
             Uri serverUrl = default;
             MCPToolboxToolConnectorId? connectorId = default;
+            string tunnelId = default;
             string authorization = default;
             string serverDescription = default;
             IDictionary<string, string> headers = default;
@@ -227,6 +233,11 @@ namespace OpenAI
                         continue;
                     }
                     connectorId = prop.Value.GetString().ToMCPToolboxToolConnectorId();
+                    continue;
+                }
+                if (prop.NameEquals("tunnel_id"u8))
+                {
+                    tunnelId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("authorization"u8))
@@ -319,6 +330,7 @@ namespace OpenAI
                 serverLabel,
                 serverUrl,
                 connectorId,
+                tunnelId,
                 authorization,
                 serverDescription,
                 headers ?? new ChangeTrackingDictionary<string, string>(),

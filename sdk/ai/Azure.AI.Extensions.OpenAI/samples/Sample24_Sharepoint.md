@@ -18,14 +18,14 @@ AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenPro
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_Sharepoint_Sync
 AIProjectConnection sharepointConnection = projectClient.Connections.GetConnection(sharepointConnectionName);
-SharePointGroundingToolOptions sharepointToolOption = new()
+AgentsSharePointGroundingToolOptions sharepointToolOption = new()
 {
-    ProjectConnections = { new ToolProjectConnection(projectConnectionId: sharepointConnection.Id) }
+    ProjectConnections = { new AgentsToolProjectConnection(projectConnectionId: sharepointConnection.Id) }
 };
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
-    Tools = { new SharepointPreviewTool(sharepointToolOption), }
+    Tools = { new AgentsSharepointPreviewTool(sharepointToolOption), }
 };
 ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
     agentName: "myAgent",
@@ -35,14 +35,14 @@ ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.Crea
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_Sharepoint_Async
 AIProjectConnection sharepointConnection = await projectClient.Connections.GetConnectionAsync(sharepointConnectionName);
-SharePointGroundingToolOptions sharepointToolOption = new()
+AgentsSharePointGroundingToolOptions sharepointToolOption = new()
 {
-    ProjectConnections = { new ToolProjectConnection(projectConnectionId: sharepointConnection.Id) }
+    ProjectConnections = { new AgentsToolProjectConnection(projectConnectionId: sharepointConnection.Id) }
 };
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
-    Tools = { new SharepointPreviewTool(sharepointToolOption), }
+    Tools = { new AgentsSharepointPreviewTool(sharepointToolOption), }
 };
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",

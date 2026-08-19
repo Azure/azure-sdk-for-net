@@ -6,8 +6,11 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Extensions.OpenAI.Internal;
+using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace OpenAI
 {
     internal partial class InternalComputerUsePreviewTool : ResponsesTool, IJsonModel<InternalComputerUsePreviewTool>
     {
@@ -81,6 +84,21 @@ namespace Azure.AI.Extensions.OpenAI
             writer.WriteNumberValue(DisplayWidth);
             writer.WritePropertyName("display_height"u8);
             writer.WriteNumberValue(DisplayHeight);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -108,16 +126,16 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            ToolType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ResponseToolKind @type = "computer_use_preview";
             ComputerEnvironment environment = default;
             long displayWidth = default;
             long displayHeight = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ToolType(prop.Value.GetString());
+                    @type = new ResponseToolKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("environment"u8))
@@ -140,7 +158,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalComputerUsePreviewTool(@type, additionalBinaryDataProperties, environment, displayWidth, displayHeight);
+            return new InternalComputerUsePreviewTool(@type, environment, displayWidth, displayHeight, additionalBinaryDataProperties);
         }
     }
 }

@@ -11,6 +11,10 @@ using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
+using AgentsOpenApiFunctionDefinition = Azure.AI.Projects.Agents.OpenApiFunctionDefinition;
+using AgentsOpenApiProjectConnectionAuthenticationDetails = Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails;
+using AgentsOpenApiProjectConnectionSecurityScheme = Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme;
+using AgentsOpenAPITool = Azure.AI.Projects.Agents.OpenAPITool;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
@@ -43,15 +47,15 @@ public class Sample_OpenAPIProjectConnection : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateAgent_OpenAPIProjectConnection_Async
         string filePath = GetFile();
         AIProjectConnection tripadvisorConnection = await projectClient.Connections.GetConnectionAsync("tripadvisor");
-        OpenApiFunctionDefinition toolDefinition = new(
+        AgentsOpenApiFunctionDefinition toolDefinition = new(
             name: "tripadvisor",
             specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
-            authentication: new OpenApiProjectConnectionAuthenticationDetails(new OpenApiProjectConnectionSecurityScheme(
+            authentication: new AgentsOpenApiProjectConnectionAuthenticationDetails(new AgentsOpenApiProjectConnectionSecurityScheme(
                 projectConnectionId: tripadvisorConnection.Id
             ))
         );
         toolDefinition.Description = "Trip Advisor API to get travel information.";
-        OpenAPITool openapiTool = new(toolDefinition);
+        AgentsOpenAPITool openapiTool = new(toolDefinition);
 
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
@@ -98,15 +102,15 @@ public class Sample_OpenAPIProjectConnection : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateAgent_OpenAPIProjectConnection_Sync
         string filePath = GetFile();
         AIProjectConnection tripadvisorConnection = projectClient.Connections.GetConnection("tripadvisor");
-        OpenApiFunctionDefinition toolDefinition = new(
+        AgentsOpenApiFunctionDefinition toolDefinition = new(
             name: "tripadvisor",
             specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
-            authentication: new OpenApiProjectConnectionAuthenticationDetails(new OpenApiProjectConnectionSecurityScheme(
+            authentication: new AgentsOpenApiProjectConnectionAuthenticationDetails(new AgentsOpenApiProjectConnectionSecurityScheme(
                 projectConnectionId: tripadvisorConnection.Id
             ))
         );
         toolDefinition.Description = "Trip Advisor API to get travel information.";
-        OpenAPITool openapiTool = new(toolDefinition);
+        AgentsOpenAPITool openapiTool = new(toolDefinition);
 
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {

@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.Extensions.OpenAI.Internal;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -13,11 +14,8 @@ namespace Azure.AI.Extensions.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesContainerNetworkPolicyAllowlistParam"/>. </summary>
         /// <param name="allowedDomains"> A list of allowed domains when type is `allowlist`. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="allowedDomains"/> is null. </exception>
-        public ResponsesContainerNetworkPolicyAllowlistParam(IEnumerable<string> allowedDomains) : base(ContainerNetworkPolicyParamType.Allowlist)
+        internal ResponsesContainerNetworkPolicyAllowlistParam(IEnumerable<string> allowedDomains) : base("allowlist")
         {
-            Argument.AssertNotNull(allowedDomains, nameof(allowedDomains));
-
             AllowedDomains = allowedDomains.ToList();
             DomainSecrets = new ChangeTrackingList<ResponsesContainerNetworkPolicyDomainSecretParam>();
         }

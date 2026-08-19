@@ -24,13 +24,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="conversationId"> The id of the conversation this response belongs to. </param>
         internal VoiceResponse(string id, string conversationId)
         {
-            _id = id;
+            Id = id;
             Output = new ChangeTrackingList<VoiceConversationItem>();
-            _conversationId = conversationId;
+            ConversationId = conversationId;
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceResponse"/>. </summary>
+        /// <param name="id"> The unique ID of the response, will look like `resp_1234`. </param>
         /// <param name="object"> The object type, must be `realtime.response`. </param>
         /// <param name="status">
         /// The final status of the response (`completed`, `cancelled`, `failed`, or
@@ -43,6 +44,14 @@ namespace Azure.AI.Projects.Agents
         ///   Items to the Conversation, thus output from previous turns (text and
         ///   audio tokens) will become the input for later turns.
         /// </param>
+        /// <param name="conversationId">
+        /// Which conversation the response is added to, determined by the `conversation`
+        ///   field in the `response.create` event. If `auto`, the response will be added to
+        ///   the default conversation and the value of `conversation_id` will be an id like
+        ///   `conv_1234`. If `none`, the response will not be added to any conversation and
+        ///   the value of `conversation_id` will be `null`. If responses are being triggered
+        ///   automatically by VAD the response will be added to the default conversation
+        /// </param>
         /// <param name="outputModalities">
         /// The set of modalities the model used to respond, currently the only possible values are
         ///   `[\"audio\"]`, `[\"text\"]`. Audio output always include a text transcript. Setting the
@@ -53,17 +62,19 @@ namespace Azure.AI.Projects.Agents
         ///   inclusive of tool calls, that was used in this response.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="id"> The unique id of the response. </param>
+        /// <param name="id0"> The unique id of the response. </param>
         /// <param name="output"> The output items produced by the response. May be omitted in list results; retrieve the full response (GET .../responses/{response_id}) or use the paged response-items route (GET .../responses/{response_id}/items) for its output items. Each item's `response_id` also links it back to this response in the conversation-level items list. </param>
-        /// <param name="conversationId"> The id of the conversation this response belongs to. </param>
+        /// <param name="conversationId0"> The id of the conversation this response belongs to. </param>
         /// <param name="audio"> The audio configuration used for the response, including the voice and audio format used for output. </param>
         /// <param name="metadata"> A set of key-value pairs attached to the response. </param>
         /// <param name="temperature"> The sampling temperature used for the response. </param>
         /// <param name="createdAt"> The Unix timestamp (in seconds) for when the response was created. </param>
         /// <param name="completedAt"> The Unix timestamp (in seconds) for when the response completed. </param>
-        internal VoiceResponse(VoiceResponseObject? @object, VoiceResponseStatus? status, RealtimeResponseStatusDetails statusDetails, RealtimeResponseUsage usage, IList<VoiceResponseOutputModality> outputModalities, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, IList<VoiceConversationItem> output, string conversationId, VoiceResponseAudio audio, IDictionary<string, string> metadata, float? temperature, DateTimeOffset? createdAt, DateTimeOffset? completedAt) : base(id, @object, status, statusDetails, usage, conversationId, outputModalities, maxOutputTokens, additionalBinaryDataProperties)
+        internal VoiceResponse(string id, VoiceResponseObject? @object, VoiceResponseStatus? status, RealtimeResponseStatusDetails statusDetails, RealtimeResponseUsage usage, string conversationId, IList<VoiceResponseOutputModality> outputModalities, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id0, IList<VoiceConversationItem> output, string conversationId0, VoiceResponseAudio audio, IDictionary<string, string> metadata, float? temperature, DateTimeOffset? createdAt, DateTimeOffset? completedAt) : base(id, @object, status, statusDetails, usage, conversationId, outputModalities, maxOutputTokens, additionalBinaryDataProperties)
         {
+            Id = id0;
             Output = output;
+            ConversationId = conversationId0;
             Audio = audio;
             Metadata = metadata;
             Temperature = temperature;
@@ -71,14 +82,8 @@ namespace Azure.AI.Projects.Agents
             CompletedAt = completedAt;
         }
 
-        /// <summary> The unique id of the response. </summary>
-        public new string Id => _id ?? default;
-
         /// <summary> The output items produced by the response. May be omitted in list results; retrieve the full response (GET .../responses/{response_id}) or use the paged response-items route (GET .../responses/{response_id}/items) for its output items. Each item's `response_id` also links it back to this response in the conversation-level items list. </summary>
         public IList<VoiceConversationItem> Output { get; }
-
-        /// <summary> The id of the conversation this response belongs to. </summary>
-        public new string ConversationId => _conversationId ?? default;
 
         /// <summary> The audio configuration used for the response, including the voice and audio format used for output. </summary>
         public VoiceResponseAudio Audio { get; }

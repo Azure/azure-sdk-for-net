@@ -5,13 +5,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Input file. </summary>
-    internal partial class FunctionAndCustomToolCallOutputInputFileContent : InternalFunctionAndCustomToolCallOutput
+    internal partial class FunctionAndCustomToolCallOutputInputFileContent : FunctionAndCustomToolCallOutput
     {
         /// <summary> Initializes a new instance of <see cref="FunctionAndCustomToolCallOutputInputFileContent"/>. </summary>
-        public FunctionAndCustomToolCallOutputInputFileContent() : base(FunctionAndCustomToolCallOutputType.InputFile)
+        internal FunctionAndCustomToolCallOutputInputFileContent() : base(FunctionAndCustomToolCallOutputType.InputFile)
         {
         }
 
@@ -30,16 +30,16 @@ namespace Azure.AI.Extensions.OpenAI
             FileUrl = fileUrl;
         }
 
-        /// <summary> Gets or sets the FileId. </summary>
-        public string FileId { get; set; }
+        /// <summary> Gets the FileId. </summary>
+        public string FileId { get; }
 
         /// <summary> The name of the file to be sent to the model. </summary>
-        public string Filename { get; set; }
+        public string Filename { get; }
 
         /// <summary> The content of the file to be sent to the model. </summary>
-        public string FileData { get; set; }
+        public string FileData { get; }
 
         /// <summary> The URL of the file to be sent to the model. </summary>
-        public Uri FileUrl { get; set; }
+        public Uri FileUrl { get; }
     }
 }

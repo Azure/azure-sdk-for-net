@@ -4,21 +4,19 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Extensions.OpenAI.Internal;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary>
-    /// The ResponsesFunctionShellToolParamEnvironment.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam"/>, <see cref="ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam"/>, and <see cref="ResponsesContainerAutoParam"/>.
-    /// </summary>
-    public abstract partial class ResponsesFunctionShellToolParamEnvironment
+    /// <summary> The ResponsesFunctionShellToolParamEnvironment. </summary>
+    public partial class ResponsesFunctionShellToolParamEnvironment
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResponsesFunctionShellToolParamEnvironment"/>. </summary>
         /// <param name="type"></param>
-        private protected ResponsesFunctionShellToolParamEnvironment(FunctionShellToolParamEnvironmentType @type)
+        internal ResponsesFunctionShellToolParamEnvironment(FunctionShellToolParamEnvironmentType @type)
         {
             Type = @type;
         }

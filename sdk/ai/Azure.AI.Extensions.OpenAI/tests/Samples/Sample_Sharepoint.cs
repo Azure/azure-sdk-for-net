@@ -9,6 +9,9 @@ using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
+using AgentsSharePointGroundingToolOptions = Azure.AI.Projects.Agents.SharePointGroundingToolOptions;
+using AgentsSharepointPreviewTool = Azure.AI.Projects.Agents.SharepointPreviewTool;
+using AgentsToolProjectConnection = Azure.AI.Projects.Agents.ToolProjectConnection;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 #pragma warning disable AAIP001
@@ -35,14 +38,14 @@ public class Sample_Sharepoint : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_CreateAgent_Sharepoint_Async
         AIProjectConnection sharepointConnection = await projectClient.Connections.GetConnectionAsync(sharepointConnectionName);
-        SharePointGroundingToolOptions sharepointToolOption = new()
+        AgentsSharePointGroundingToolOptions sharepointToolOption = new()
         {
-            ProjectConnections = { new ToolProjectConnection(projectConnectionId: sharepointConnection.Id) }
+            ProjectConnections = { new AgentsToolProjectConnection(projectConnectionId: sharepointConnection.Id) }
         };
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant.",
-            Tools = { new SharepointPreviewTool(sharepointToolOption), }
+            Tools = { new AgentsSharepointPreviewTool(sharepointToolOption), }
         };
         ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent",
@@ -86,14 +89,14 @@ public class Sample_Sharepoint : ProjectsOpenAITestBase
 
         #region Snippet:Sample_CreateAgent_Sharepoint_Sync
         AIProjectConnection sharepointConnection = projectClient.Connections.GetConnection(sharepointConnectionName);
-        SharePointGroundingToolOptions sharepointToolOption = new()
+        AgentsSharePointGroundingToolOptions sharepointToolOption = new()
         {
-            ProjectConnections = { new ToolProjectConnection(projectConnectionId: sharepointConnection.Id) }
+            ProjectConnections = { new AgentsToolProjectConnection(projectConnectionId: sharepointConnection.Id) }
         };
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant.",
-            Tools = { new SharepointPreviewTool(sharepointToolOption), }
+            Tools = { new AgentsSharepointPreviewTool(sharepointToolOption), }
         };
         ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "myAgent",

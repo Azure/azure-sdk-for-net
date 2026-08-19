@@ -13,7 +13,7 @@ namespace OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InternalImageGenToolInputImageMask"/>. </summary>
-        public InternalImageGenToolInputImageMask()
+        internal InternalImageGenToolInputImageMask()
         {
         }
 
@@ -28,10 +28,10 @@ namespace OpenAI
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the ImageUrl. </summary>
-        public Uri ImageUrl { get; set; }
+        /// <summary> Gets the ImageUrl. </summary>
+        public Uri ImageUrl { get; }
 
-        /// <summary> Gets or sets the FileId. </summary>
-        public string FileId { get; set; }
+        /// <summary> Gets the FileId. </summary>
+        public string FileId { get; }
     }
 }

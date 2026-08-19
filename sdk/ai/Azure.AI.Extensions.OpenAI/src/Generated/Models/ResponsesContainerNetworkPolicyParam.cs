@@ -4,21 +4,19 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Extensions.OpenAI.Internal;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary>
-    /// Network access policy for the container.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponsesContainerNetworkPolicyDisabledParam"/> and <see cref="ResponsesContainerNetworkPolicyAllowlistParam"/>.
-    /// </summary>
-    public abstract partial class ResponsesContainerNetworkPolicyParam
+    /// <summary> Network access policy for the container. </summary>
+    public partial class ResponsesContainerNetworkPolicyParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResponsesContainerNetworkPolicyParam"/>. </summary>
         /// <param name="type"></param>
-        private protected ResponsesContainerNetworkPolicyParam(ContainerNetworkPolicyParamType @type)
+        internal ResponsesContainerNetworkPolicyParam(ContainerNetworkPolicyParamType @type)
         {
             Type = @type;
         }

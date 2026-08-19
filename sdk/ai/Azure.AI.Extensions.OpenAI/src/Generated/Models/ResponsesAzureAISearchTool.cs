@@ -4,16 +4,20 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The input definition information for an Azure AI search tool as used to configure an agent. </summary>
     public partial class ResponsesAzureAISearchTool : ResponsesTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponsesAzureAISearchTool"/>. </summary>
         /// <param name="azureAISearch"> The azure ai search index resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureAISearch"/> is null. </exception>
-        public ResponsesAzureAISearchTool(ResponsesAzureAISearchToolResource azureAISearch) : base(ToolType.AzureAiSearch)
+        public ResponsesAzureAISearchTool(AzureAISearchToolOptions azureAISearch) : base("azure_ai_search")
         {
             Argument.AssertNotNull(azureAISearch, nameof(azureAISearch));
 
@@ -23,17 +27,18 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ResponsesAzureAISearchTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="azureAISearch"> The azure ai search index resource. </param>
-        internal ResponsesAzureAISearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesAzureAISearchToolResource azureAISearch) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponsesAzureAISearchTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, AzureAISearchToolOptions azureAISearch, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Name = name;
             Description = description;
             ToolConfigs = toolConfigs;
             AzureAISearch = azureAISearch;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
@@ -46,6 +51,6 @@ namespace Azure.AI.Extensions.OpenAI
         public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> The azure ai search index resource. </summary>
-        public ResponsesAzureAISearchToolResource AzureAISearch { get; set; }
+        public AzureAISearchToolOptions AzureAISearch { get; set; }
     }
 }

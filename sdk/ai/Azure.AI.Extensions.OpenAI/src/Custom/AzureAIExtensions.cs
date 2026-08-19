@@ -10,6 +10,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
+using OpenAI;
 using OpenAI.Files;
 using OpenAI.Responses;
 
@@ -28,8 +29,9 @@ public static partial class AzureAIExtensions
     /// <returns> The agent response item representation. </returns>
     public static AgentResponseItem AsAgentResponseItem(this ResponseItem responseItem)
     {
-        BinaryData serializedResponseItem = ModelReaderWriter.Write(responseItem, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
-        return ModelReaderWriter.Read<AgentResponseItem>(serializedResponseItem, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
+        BinaryData serializedResponseItem = ModelReaderWriter.Write(responseItem, ModelSerializationExtensions.WireOptions, OpenAIContext.Default);
+        using JsonDocument document = JsonDocument.Parse(serializedResponseItem);
+        return AgentResponseItem.DeserializeAgentResponseItem(document.RootElement, ModelSerializationExtensions.WireOptions);
     }
 
     // ResponseResult

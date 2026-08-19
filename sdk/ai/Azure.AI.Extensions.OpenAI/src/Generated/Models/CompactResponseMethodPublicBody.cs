@@ -5,8 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> The CompactResponseMethodPublicBody. </summary>
     internal partial class CompactResponseMethodPublicBody
@@ -53,7 +54,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="InputItem"/>. </description>
+        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="ResponseItem"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>

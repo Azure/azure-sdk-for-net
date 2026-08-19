@@ -4,9 +4,8 @@
 
 using System;
 using System.Collections.Generic;
-using OpenAI;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> The FileSearchToolCallResults. </summary>
     internal partial class FileSearchToolCallResults
@@ -15,7 +14,7 @@ namespace Azure.AI.Extensions.OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FileSearchToolCallResults"/>. </summary>
-        public FileSearchToolCallResults()
+        internal FileSearchToolCallResults()
         {
         }
 
@@ -26,7 +25,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="attributes"></param>
         /// <param name="score"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileSearchToolCallResults(string fileId, string text, string filename, InternalVectorStoreFileAttributes attributes, float? score, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileSearchToolCallResults(string fileId, string text, string filename, object attributes, float? score, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FileId = fileId;
             Text = text;
@@ -36,19 +35,19 @@ namespace Azure.AI.Extensions.OpenAI
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the FileId. </summary>
-        public string FileId { get; set; }
+        /// <summary> Gets the FileId. </summary>
+        public string FileId { get; }
 
-        /// <summary> Gets or sets the Text. </summary>
-        public string Text { get; set; }
+        /// <summary> Gets the Text. </summary>
+        public string Text { get; }
 
-        /// <summary> Gets or sets the Filename. </summary>
-        public string Filename { get; set; }
+        /// <summary> Gets the Filename. </summary>
+        public string Filename { get; }
 
-        /// <summary> Gets or sets the Attributes. </summary>
-        public InternalVectorStoreFileAttributes Attributes { get; set; }
+        /// <summary> Gets the Attributes. </summary>
+        public object Attributes { get; }
 
-        /// <summary> Gets or sets the Score. </summary>
-        public float? Score { get; set; }
+        /// <summary> Gets the Score. </summary>
+        public float? Score { get; }
     }
 }

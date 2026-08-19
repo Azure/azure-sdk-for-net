@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -12,10 +13,13 @@ namespace Azure.AI.Extensions.OpenAI
     [Experimental("AAIP001")]
     public partial class ResponsesBingCustomSearchPreviewTool : ResponsesTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponsesBingCustomSearchPreviewTool"/>. </summary>
         /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="bingCustomSearchPreview"/> is null. </exception>
-        public ResponsesBingCustomSearchPreviewTool(ResponsesBingCustomSearchToolParameters bingCustomSearchPreview) : base(ToolType.BingCustomSearchPreview)
+        public ResponsesBingCustomSearchPreviewTool(BingCustomSearchToolOptions bingCustomSearchPreview) : base("bing_custom_search_preview")
         {
             Argument.AssertNotNull(bingCustomSearchPreview, nameof(bingCustomSearchPreview));
 
@@ -24,14 +28,15 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ResponsesBingCustomSearchPreviewTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>
-        internal ResponsesBingCustomSearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesBingCustomSearchToolParameters bingCustomSearchPreview) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponsesBingCustomSearchPreviewTool(ResponseToolKind @type, BingCustomSearchToolOptions bingCustomSearchPreview, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             BingCustomSearchPreview = bingCustomSearchPreview;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The bing custom search tool parameters. </summary>
-        public ResponsesBingCustomSearchToolParameters BingCustomSearchPreview { get; set; }
+        public BingCustomSearchToolOptions BingCustomSearchPreview { get; set; }
     }
 }

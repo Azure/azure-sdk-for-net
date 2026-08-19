@@ -4,16 +4,20 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A tool for capturing structured outputs. </summary>
     public partial class ResponsesCaptureStructuredOutputsTool : ResponsesTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponsesCaptureStructuredOutputsTool"/>. </summary>
         /// <param name="outputDefinition"> The structured outputs to capture from the model. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="outputDefinition"/> is null. </exception>
-        public ResponsesCaptureStructuredOutputsTool(ResponsesStructuredOutputDefinition outputDefinition) : base(ToolType.CaptureStructuredOutputs)
+        public ResponsesCaptureStructuredOutputsTool(ResponsesStructuredOutputDefinition outputDefinition) : base("capture_structured_outputs")
         {
             Argument.AssertNotNull(outputDefinition, nameof(outputDefinition));
 
@@ -23,17 +27,18 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ResponsesCaptureStructuredOutputsTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="outputDefinition"> The structured outputs to capture from the model. </param>
-        internal ResponsesCaptureStructuredOutputsTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesStructuredOutputDefinition outputDefinition) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponsesCaptureStructuredOutputsTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesStructuredOutputDefinition outputDefinition, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Name = name;
             Description = description;
             ToolConfigs = toolConfigs;
             OutputDefinition = outputDefinition;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>

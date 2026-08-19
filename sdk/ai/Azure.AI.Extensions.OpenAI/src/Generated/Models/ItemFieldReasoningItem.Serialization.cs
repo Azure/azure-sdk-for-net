@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Reasoning. </summary>
     internal partial class ItemFieldReasoningItem : ItemField, IJsonModel<ItemFieldReasoningItem>
@@ -85,7 +86,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             writer.WritePropertyName("summary"u8);
             writer.WriteStartArray();
-            foreach (InternalSummaryTextObject item in Summary)
+            foreach (SummaryTextContent item in Summary)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -136,7 +137,7 @@ namespace Azure.AI.Extensions.OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string encryptedContent = default;
-            IList<InternalSummaryTextObject> summary = default;
+            IList<SummaryTextContent> summary = default;
             IList<ReasoningTextContent> content = default;
             InputItemReasoningItemStatus? status = default;
             foreach (var prop in element.EnumerateObject())
@@ -163,10 +164,10 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("summary"u8))
                 {
-                    List<InternalSummaryTextObject> array = new List<InternalSummaryTextObject>();
+                    List<SummaryTextContent> array = new List<SummaryTextContent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InternalSummaryTextObject.DeserializeInternalSummaryTextObject(item, options));
+                        array.Add(SummaryTextContent.DeserializeSummaryTextContent(item, options));
                     }
                     summary = array;
                     continue;

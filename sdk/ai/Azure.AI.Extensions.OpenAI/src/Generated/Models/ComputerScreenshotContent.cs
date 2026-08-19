@@ -5,10 +5,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Computer screenshot. </summary>
-    internal partial class ComputerScreenshotContent : InternalMessageContent
+    internal partial class ComputerScreenshotContent : MessageContent
     {
         /// <summary> Initializes a new instance of <see cref="ComputerScreenshotContent"/>. </summary>
         /// <param name="imageUrl"></param>

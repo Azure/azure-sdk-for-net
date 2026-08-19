@@ -6,9 +6,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
+using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace OpenAI
 {
     internal partial class InternalFileSearchTool : ResponsesTool, IJsonModel<InternalFileSearchTool>
     {
@@ -96,7 +97,7 @@ namespace Azure.AI.Extensions.OpenAI
             if (Optional.IsDefined(RankingOptions))
             {
                 writer.WritePropertyName("ranking_options"u8);
-                writer.WriteObjectValue(RankingOptions, options);
+                writer.WriteObjectValue<object>(RankingOptions, options);
             }
             if (Optional.IsDefined(Filters))
             {
@@ -131,6 +132,21 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -158,20 +174,20 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            ToolType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ResponseToolKind @type = "file_search";
             IList<string> vectorStoreIds = default;
             long? maxNumResults = default;
-            InternalRankingOptions rankingOptions = default;
+            object rankingOptions = default;
             BinaryData filters = default;
             string name = default;
             string description = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ToolType(prop.Value.GetString());
+                    @type = new ResponseToolKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("vector_store_ids"u8))
@@ -206,7 +222,7 @@ namespace Azure.AI.Extensions.OpenAI
                     {
                         continue;
                     }
-                    rankingOptions = InternalRankingOptions.DeserializeInternalRankingOptions(prop.Value, options);
+                    rankingOptions = prop.Value.GetObject();
                     continue;
                 }
                 if (prop.NameEquals("filters"u8))
@@ -250,14 +266,14 @@ namespace Azure.AI.Extensions.OpenAI
             }
             return new InternalFileSearchTool(
                 @type,
-                additionalBinaryDataProperties,
                 vectorStoreIds,
                 maxNumResults,
                 rankingOptions,
                 filters,
                 name,
                 description,
-                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>());
+                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
+                additionalBinaryDataProperties);
         }
     }
 }

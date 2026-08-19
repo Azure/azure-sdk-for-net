@@ -6,12 +6,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
+using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Output text. </summary>
-    internal partial class MessageContentOutputTextContent : InternalMessageContent, IJsonModel<MessageContentOutputTextContent>
+    internal partial class MessageContentOutputTextContent : MessageContent, IJsonModel<MessageContentOutputTextContent>
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentOutputTextContent"/> for deserialization. </summary>
         internal MessageContentOutputTextContent()
@@ -20,7 +21,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalMessageContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override MessageContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MessageContentOutputTextContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -81,15 +82,25 @@ namespace Azure.AI.Extensions.OpenAI
             writer.WriteStringValue(Text);
             writer.WritePropertyName("annotations"u8);
             writer.WriteStartArray();
-            foreach (InternalAnnotation item in Annotations)
+            foreach (ResponseMessageAnnotation item in Annotations)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("logprobs"u8);
             writer.WriteStartArray();
-            foreach (InternalLogProb item in Logprobs)
+            foreach (ResponseTokenLogProbabilityDetails item in Logprobs)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
@@ -101,7 +112,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalMessageContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override MessageContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MessageContentOutputTextContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -123,8 +134,8 @@ namespace Azure.AI.Extensions.OpenAI
             MessageContentType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string text = default;
-            IList<InternalAnnotation> annotations = default;
-            IList<InternalLogProb> logprobs = default;
+            IList<ResponseMessageAnnotation> annotations = default;
+            IList<ResponseTokenLogProbabilityDetails> logprobs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -139,20 +150,34 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("annotations"u8))
                 {
-                    List<InternalAnnotation> array = new List<InternalAnnotation>();
+                    List<ResponseMessageAnnotation> array = new List<ResponseMessageAnnotation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InternalAnnotation.DeserializeInternalAnnotation(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<ResponseMessageAnnotation>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default));
+                        }
                     }
                     annotations = array;
                     continue;
                 }
                 if (prop.NameEquals("logprobs"u8))
                 {
-                    List<InternalLogProb> array = new List<InternalLogProb>();
+                    List<ResponseTokenLogProbabilityDetails> array = new List<ResponseTokenLogProbabilityDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InternalLogProb.DeserializeInternalLogProb(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<ResponseTokenLogProbabilityDetails>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default));
+                        }
                     }
                     logprobs = array;
                     continue;

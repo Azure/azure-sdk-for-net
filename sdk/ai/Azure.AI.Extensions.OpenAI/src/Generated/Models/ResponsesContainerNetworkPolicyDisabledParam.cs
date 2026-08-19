@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Extensions.OpenAI.Internal;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -11,7 +12,7 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesContainerNetworkPolicyDisabledParam : ResponsesContainerNetworkPolicyParam
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesContainerNetworkPolicyDisabledParam"/>. </summary>
-        public ResponsesContainerNetworkPolicyDisabledParam() : base(ContainerNetworkPolicyParamType.Disabled)
+        internal ResponsesContainerNetworkPolicyDisabledParam() : base("disabled")
         {
         }
 

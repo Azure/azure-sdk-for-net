@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#pragma warning disable CS1591
+
 namespace Azure.AI.Extensions.OpenAI;
 
 [CodeGenType("A2APreviewTool")] public partial class ResponsesA2APreviewTool { }
@@ -33,14 +35,14 @@ namespace Azure.AI.Extensions.OpenAI;
 [CodeGenType("ContainerNetworkPolicyParam")] public partial class ResponsesContainerNetworkPolicyParam { }
 [CodeGenType("CustomTextFormatParam")] public partial class ResponsesCustomTextFormatParam { }
 [CodeGenType("CustomToolParam")] public partial class ResponsesCustomToolParam { }
-[CodeGenType("CustomToolParamFormat")] public abstract partial class ResponsesCustomToolParamFormat { }
+[CodeGenType("CustomToolParamFormat")] public partial class ResponsesCustomToolParamFormat { }
 [CodeGenType("EmptyModelParam")] public partial class ResponsesEmptyModelParam { }
 [CodeGenType("FabricDataAgentToolOptions")] public partial class ResponsesFabricDataAgentToolOptions { }
 [CodeGenType("FabricIQPreviewTool")] public partial class ResponsesFabricIQPreviewTool { }
 [CodeGenType("FunctionCallOutputStatusEnum")] public readonly partial struct ResponsesFunctionCallOutputStatus { }
 [CodeGenType("FunctionCallStatus")] public readonly partial struct ResponsesFunctionCallStatus { }
 [CodeGenType("FunctionShellToolParam")] public partial class ResponsesFunctionShellToolParam { }
-[CodeGenType("FunctionShellToolParamEnvironment")] public abstract partial class ResponsesFunctionShellToolParamEnvironment { }
+[CodeGenType("FunctionShellToolParamEnvironment")] public partial class ResponsesFunctionShellToolParamEnvironment { }
 [CodeGenType("FunctionShellToolParamEnvironmentContainerReferenceParam")] public partial class ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam { }
 [CodeGenType("FunctionShellToolParamEnvironmentLocalEnvironmentParam")] public partial class ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam { }
 [CodeGenType("FunctionToolParam")] public partial class ResponsesFunctionToolParam { }
@@ -63,7 +65,10 @@ namespace Azure.AI.Extensions.OpenAI;
 [CodeGenType("OpenApiProjectConnectionAuthDetails")] public partial class ResponsesOpenApiProjectConnectionAuthDetails { }
 [CodeGenType("OpenApiProjectConnectionSecurityScheme")] public partial class ResponsesOpenApiProjectConnectionSecurityScheme { }
 [CodeGenType("OpenApiTool")] public partial class ResponsesOpenApiTool { }
-[CodeGenType("Tool")] public abstract partial class ResponsesTool { }
+[CodeGenType("ResponseTool")]
+public abstract partial class ResponsesTool
+{
+}
 [CodeGenType("SharepointGroundingToolParameters")] public partial class ResponsesSharepointGroundingToolParameters { }
 [CodeGenType("SharepointPreviewTool")] public partial class ResponsesSharepointPreviewTool { }
 [CodeGenType("SkillReferenceParam")] public partial class ResponsesSkillReferenceParam { }

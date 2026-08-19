@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents
@@ -88,7 +87,7 @@ namespace Azure.AI.Projects.Agents
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <c>global::OpenAI.InternalToolChoiceParam</c>. </description>
+        /// <description> <see cref="VoiceAgentToolChoice"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>

@@ -134,7 +134,14 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(InterimResponse))
             {
                 writer.WritePropertyName("interim_response"u8);
-                writer.WriteObjectValue(InterimResponse, options);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(InterimResponse);
+#else
+                using (JsonDocument document = JsonDocument.Parse(InterimResponse))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Avatar))
             {
@@ -222,7 +229,7 @@ namespace Azure.AI.Projects.Agents
             IList<VoiceOutputModality> outputModalities = default;
             BinaryData maxOutputTokens = default;
             IList<VoiceAgentSessionIncludeOption> include = default;
-            VoiceAgentInterimResponseConfig interimResponse = default;
+            BinaryData interimResponse = default;
             VoiceAvatarConfig avatar = default;
             IList<VoiceAgentTool> tools = default;
             BinaryData toolChoice = default;
@@ -321,7 +328,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    interimResponse = VoiceAgentInterimResponseConfig.DeserializeVoiceAgentInterimResponseConfig(prop.Value, options);
+                    interimResponse = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("avatar"u8))

@@ -5,18 +5,15 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Container Reference. </summary>
     internal partial class ContainerReferenceResource : FunctionShellCallEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="ContainerReferenceResource"/>. </summary>
         /// <param name="containerId"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerId"/> is null. </exception>
-        public ContainerReferenceResource(string containerId) : base(FunctionShellCallEnvironmentType.ContainerReference)
+        internal ContainerReferenceResource(string containerId) : base(FunctionShellCallEnvironmentType.ContainerReference)
         {
-            Argument.AssertNotNull(containerId, nameof(containerId));
-
             ContainerId = containerId;
         }
 
@@ -29,7 +26,7 @@ namespace Azure.AI.Extensions.OpenAI
             ContainerId = containerId;
         }
 
-        /// <summary> Gets or sets the ContainerId. </summary>
-        public string ContainerId { get; set; }
+        /// <summary> Gets the ContainerId. </summary>
+        public string ContainerId { get; }
     }
 }

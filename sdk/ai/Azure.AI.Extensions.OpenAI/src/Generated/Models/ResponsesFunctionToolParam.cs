@@ -15,11 +15,8 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ResponsesFunctionToolParam"/>. </summary>
         /// <param name="name"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ResponsesFunctionToolParam(string name)
+        internal ResponsesFunctionToolParam(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-
             Name = name;
         }
 
@@ -27,37 +24,37 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="name"></param>
         /// <param name="description"></param>
         /// <param name="parameters"></param>
-        /// <param name="isStrict"></param>
+        /// <param name="strict"></param>
         /// <param name="type"></param>
-        /// <param name="shouldDeferLoading"> Whether this function should be deferred and discovered via tool search. </param>
+        /// <param name="deferLoading"> Whether this function should be deferred and discovered via tool search. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesFunctionToolParam(string name, string description, ResponsesEmptyModelParam parameters, bool? isStrict, string @type, bool? shouldDeferLoading, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesFunctionToolParam(string name, string description, ResponsesEmptyModelParam parameters, bool? strict, string @type, bool? deferLoading, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
             Parameters = parameters;
-            IsStrict = isStrict;
+            Strict = strict;
             Type = @type;
-            ShouldDeferLoading = shouldDeferLoading;
+            DeferLoading = deferLoading;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the Name. </summary>
-        public string Name { get; set; }
+        /// <summary> Gets the Name. </summary>
+        public string Name { get; }
 
-        /// <summary> Gets or sets the Description. </summary>
-        public string Description { get; set; }
+        /// <summary> Gets the Description. </summary>
+        public string Description { get; }
 
-        /// <summary> Gets or sets the Parameters. </summary>
-        public ResponsesEmptyModelParam Parameters { get; set; }
+        /// <summary> Gets the Parameters. </summary>
+        public ResponsesEmptyModelParam Parameters { get; }
 
-        /// <summary> Gets or sets the IsStrict. </summary>
-        public bool? IsStrict { get; set; }
+        /// <summary> Gets the Strict. </summary>
+        public bool? Strict { get; }
 
         /// <summary> Gets the Type. </summary>
-        public string Type { get; } = "function";
+        internal string Type { get; } = "function";
 
         /// <summary> Whether this function should be deferred and discovered via tool search. </summary>
-        public bool? ShouldDeferLoading { get; set; }
+        public bool? DeferLoading { get; }
     }
 }

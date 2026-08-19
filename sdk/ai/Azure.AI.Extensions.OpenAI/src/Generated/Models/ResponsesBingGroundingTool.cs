@@ -4,16 +4,20 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
     public partial class ResponsesBingGroundingTool : ResponsesTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponsesBingGroundingTool"/>. </summary>
         /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="bingGrounding"/> is null. </exception>
-        public ResponsesBingGroundingTool(ResponsesBingGroundingSearchToolParameters bingGrounding) : base(ToolType.BingGrounding)
+        public ResponsesBingGroundingTool(BingGroundingSearchToolOptions bingGrounding) : base("bing_grounding")
         {
             Argument.AssertNotNull(bingGrounding, nameof(bingGrounding));
 
@@ -23,17 +27,18 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ResponsesBingGroundingTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
-        internal ResponsesBingGroundingTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesBingGroundingSearchToolParameters bingGrounding) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponsesBingGroundingTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, BingGroundingSearchToolOptions bingGrounding, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Name = name;
             Description = description;
             ToolConfigs = toolConfigs;
             BingGrounding = bingGrounding;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
@@ -46,6 +51,6 @@ namespace Azure.AI.Extensions.OpenAI
         public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> The bing grounding search tool parameters. </summary>
-        public ResponsesBingGroundingSearchToolParameters BingGrounding { get; set; }
+        public BingGroundingSearchToolOptions BingGrounding { get; set; }
     }
 }

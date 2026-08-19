@@ -121,7 +121,7 @@ public partial class ProjectOpenAIClient : OpenAIClient
     public virtual ProjectResponsesClient GetProjectResponsesClient()
     {
         return Volatile.Read(ref _cachedResponseClient)
-            ?? Interlocked.CompareExchange(ref _cachedResponseClient, new ProjectResponsesClient(Pipeline, _options, defaultAgent: null, defaultConversationId: null), null)
+            ?? Interlocked.CompareExchange(ref _cachedResponseClient, new ProjectResponsesClient(_options, defaultAgent: null, defaultConversationId: null), null)
             ?? _cachedResponseClient;
     }
 
@@ -133,7 +133,6 @@ public partial class ProjectOpenAIClient : OpenAIClient
     {
         Argument.AssertNotNull(defaultAgent, nameof(defaultAgent));
         return new ProjectResponsesClient(
-            Pipeline,
             _options,
             defaultAgent,
             defaultConversationId);
@@ -155,9 +154,7 @@ public partial class ProjectOpenAIClient : OpenAIClient
         string project = string.IsNullOrEmpty(match.Value) ? "_default" : match.Value;
         Uri projectEndpoint = new($"{_options.Endpoint.Scheme}://{_options.Endpoint.Host}/api/projects/{project}");
         options = GetMergedOptions(projectEndpoint, _options.TokenProvider, options);
-        ClientPipeline endpointPipeline = CreatePipeline(CreateAuthenticationPolicy(options.TokenProvider, options), options);
         return new ProjectResponsesClient(
-            pipeline: endpointPipeline,
             options: options,
             defaultAgent: null,
             defaultConversationId: defaultConversationId
@@ -172,7 +169,6 @@ public partial class ProjectOpenAIClient : OpenAIClient
     {
         Argument.AssertNotNullOrEmpty(defaultModel, nameof(defaultModel));
         return new ProjectResponsesClient(
-            Pipeline,
             _options,
             new AgentReference($"model:{defaultModel}"),
             defaultConversationId);
@@ -182,24 +178,31 @@ public partial class ProjectOpenAIClient : OpenAIClient
     {
         options ??= new ProjectOpenAIClientOptions();
 
-        TelemetryDetails telemetryDetails = new(typeof(OpenAIClient).Assembly, default);
-        string prefix = "AIProjectClient";
-        if (!string.IsNullOrEmpty(options.UserAgentApplicationId))
-        {
-            prefix = $"{options.UserAgentApplicationId}-AIProjectClient";
-        }
-        if (!string.IsNullOrEmpty(options.AgentName))
-        {
-            PipelinePolicyHelpers.AddQueryParameterPolicy(options, "api-version", options.ApiVersion);
-        }
-        PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "User-Agent", $"{prefix} {telemetryDetails.UserAgent}");
-        PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "x-ms-client-request-id", () => Guid.NewGuid().ToString().ToLowerInvariant());
-        PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "Foundry-Features", "MemoryStores=V1Preview,ContainerAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,AgentsOptimization=V2Preview,Routines=V1Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview");
-        PipelinePolicyHelpers.OpenAI.AddResponseItemInputTransformPolicy(options);
-        PipelinePolicyHelpers.OpenAI.AddErrorTransformPolicy(options);
-        PipelinePolicyHelpers.OpenAI.AddAzureFinetuningParityPolicy(options);
+        ConfigurePipelineOptions(options, options);
 
         return ClientPipeline.Create(options: options, perCallPolicies: [], perTryPolicies: [authenticationPolicy], beforeTransportPolicies: []);
+    }
+
+    internal static void ConfigurePipelineOptions(ClientPipelineOptions pipelineOptions, ProjectOpenAIClientOptions projectOptions)
+    {
+        projectOptions ??= new ProjectOpenAIClientOptions();
+
+        TelemetryDetails telemetryDetails = new(typeof(OpenAIClient).Assembly, default);
+        string prefix = "AIProjectClient";
+        if (!string.IsNullOrEmpty(projectOptions.UserAgentApplicationId))
+        {
+            prefix = $"{projectOptions.UserAgentApplicationId}-AIProjectClient";
+        }
+        if (!string.IsNullOrEmpty(projectOptions.AgentName))
+        {
+            PipelinePolicyHelpers.AddQueryParameterPolicy(pipelineOptions, "api-version", projectOptions.ApiVersion);
+        }
+        PipelinePolicyHelpers.AddRequestHeaderPolicy(pipelineOptions, "User-Agent", $"{prefix} {telemetryDetails.UserAgent}");
+        PipelinePolicyHelpers.AddRequestHeaderPolicy(pipelineOptions, "x-ms-client-request-id", () => Guid.NewGuid().ToString().ToLowerInvariant());
+        PipelinePolicyHelpers.AddRequestHeaderPolicy(pipelineOptions, "Foundry-Features", "MemoryStores=V1Preview,ContainerAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,AgentsOptimization=V2Preview,Routines=V1Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview");
+        PipelinePolicyHelpers.OpenAI.AddResponseItemInputTransformPolicy(pipelineOptions);
+        PipelinePolicyHelpers.OpenAI.AddErrorTransformPolicy(pipelineOptions);
+        PipelinePolicyHelpers.OpenAI.AddAzureFinetuningParityPolicy(pipelineOptions);
     }
 
     internal static AuthenticationPolicy CreateAuthenticationPolicy(AuthenticationTokenProvider tokenProvider, ProjectOpenAIClientOptions options = null)
@@ -211,6 +214,8 @@ public partial class ProjectOpenAIClient : OpenAIClient
 
     internal static ProjectOpenAIClientOptions GetMergedOptions(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, ProjectOpenAIClientOptions options = null)
     {
+        options ??= new();
+        options.TokenProvider = tokenProvider;
         if (projectEndpoint is null)
         {
             return options;
@@ -222,9 +227,7 @@ public partial class ProjectOpenAIClient : OpenAIClient
             throw new InvalidOperationException(
                 $"Cannot supply both a constructor '{nameof(projectEndpoint)}' and {nameof(options)}.{nameof(options.Endpoint)}.");
         }
-        options ??= new();
         options?.Endpoint ??= new Uri(rawTargetOpenAIEndpoint);
-        options?.TokenProvider = tokenProvider;
         return options;
     }
 }

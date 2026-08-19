@@ -6,15 +6,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using OpenAI;
+using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace OpenAI
 {
     internal partial class InternalFileSearchTool : ResponsesTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="InternalFileSearchTool"/>. </summary>
         /// <param name="vectorStoreIds"> The IDs of the vector stores to search. </param>
-        public InternalFileSearchTool(IEnumerable<string> vectorStoreIds) : base(ToolType.FileSearch)
+        internal InternalFileSearchTool(IEnumerable<string> vectorStoreIds) : base("file_search")
         {
             VectorStoreIds = vectorStoreIds.ToList();
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
@@ -22,7 +26,6 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="InternalFileSearchTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vectorStoreIds"> The IDs of the vector stores to search. </param>
         /// <param name="maxNumResults"> The maximum number of results to return. This number should be between 1 and 50 inclusive. </param>
         /// <param name="rankingOptions"> Ranking options for search. </param>
@@ -30,7 +33,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        internal InternalFileSearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> vectorStoreIds, long? maxNumResults, InternalRankingOptions rankingOptions, BinaryData filters, string name, string description, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InternalFileSearchTool(ResponseToolKind @type, IList<string> vectorStoreIds, long? maxNumResults, object rankingOptions, BinaryData filters, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             VectorStoreIds = vectorStoreIds;
             MaxNumResults = maxNumResults;
@@ -39,19 +43,20 @@ namespace Azure.AI.Extensions.OpenAI
             Name = name;
             Description = description;
             ToolConfigs = toolConfigs;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The IDs of the vector stores to search. </summary>
         public IList<string> VectorStoreIds { get; }
 
         /// <summary> The maximum number of results to return. This number should be between 1 and 50 inclusive. </summary>
-        public long? MaxNumResults { get; set; }
+        public long? MaxNumResults { get; }
 
         /// <summary> Ranking options for search. </summary>
-        public InternalRankingOptions RankingOptions { get; set; }
+        public object RankingOptions { get; }
 
         /// <summary>
-        /// Gets or sets the Filters.
+        /// Gets the Filters.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -59,10 +64,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="InternalComparisonFilter"/>. </description>
+        /// <description> <see cref="object"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="InternalCompoundFilter"/>. </description>
+        /// <description> <see cref="object"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -89,13 +94,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Filters { get; set; }
+        public BinaryData Filters { get; }
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
         public IDictionary<string, ToolConfig> ToolConfigs { get; }

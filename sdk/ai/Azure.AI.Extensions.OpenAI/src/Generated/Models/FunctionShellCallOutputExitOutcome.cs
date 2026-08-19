@@ -5,14 +5,14 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Shell call exit outcome. </summary>
     internal partial class FunctionShellCallOutputExitOutcome : FunctionShellCallOutputOutcome
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallOutputExitOutcome"/>. </summary>
         /// <param name="exitCode"> Exit code from the shell process. </param>
-        public FunctionShellCallOutputExitOutcome(long exitCode) : base(FunctionShellCallOutputOutcomeType.Exit)
+        internal FunctionShellCallOutputExitOutcome(long exitCode) : base(FunctionShellCallOutputOutcomeType.Exit)
         {
             ExitCode = exitCode;
         }
@@ -27,6 +27,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Exit code from the shell process. </summary>
-        public long ExitCode { get; set; }
+        public long ExitCode { get; }
     }
 }

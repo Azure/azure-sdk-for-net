@@ -5,10 +5,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Input text. </summary>
-    internal partial class MessageContentInputTextContent : InternalMessageContent
+    internal partial class MessageContentInputTextContent : MessageContent
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentInputTextContent"/>. </summary>
         /// <param name="text"> The text input to the model. </param>

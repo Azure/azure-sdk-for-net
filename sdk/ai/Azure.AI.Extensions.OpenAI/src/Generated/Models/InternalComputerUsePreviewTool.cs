@@ -4,16 +4,22 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Extensions.OpenAI.Internal;
+using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace OpenAI
 {
     internal partial class InternalComputerUsePreviewTool : ResponsesTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="InternalComputerUsePreviewTool"/>. </summary>
         /// <param name="environment"> The type of computer environment to control. </param>
         /// <param name="displayWidth"> The width of the computer display. </param>
         /// <param name="displayHeight"> The height of the computer display. </param>
-        public InternalComputerUsePreviewTool(ComputerEnvironment environment, long displayWidth, long displayHeight) : base(ToolType.ComputerUsePreview)
+        internal InternalComputerUsePreviewTool(ComputerEnvironment environment, long displayWidth, long displayHeight) : base("computer_use_preview")
         {
             Environment = environment;
             DisplayWidth = displayWidth;
@@ -22,24 +28,25 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="InternalComputerUsePreviewTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="environment"> The type of computer environment to control. </param>
         /// <param name="displayWidth"> The width of the computer display. </param>
         /// <param name="displayHeight"> The height of the computer display. </param>
-        internal InternalComputerUsePreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputerEnvironment environment, long displayWidth, long displayHeight) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InternalComputerUsePreviewTool(ResponseToolKind @type, ComputerEnvironment environment, long displayWidth, long displayHeight, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Environment = environment;
             DisplayWidth = displayWidth;
             DisplayHeight = displayHeight;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of computer environment to control. </summary>
-        public ComputerEnvironment Environment { get; set; }
+        public ComputerEnvironment Environment { get; }
 
         /// <summary> The width of the computer display. </summary>
-        public long DisplayWidth { get; set; }
+        public long DisplayWidth { get; }
 
         /// <summary> The height of the computer display. </summary>
-        public long DisplayHeight { get; set; }
+        public long DisplayHeight { get; }
     }
 }

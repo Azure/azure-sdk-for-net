@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Custom tool call output. </summary>
     internal partial class ItemFieldCustomToolCallOutput : ItemField
@@ -58,7 +58,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="InternalFunctionAndCustomToolCallOutput"/>. </description>
+        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="FunctionAndCustomToolCallOutput"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>

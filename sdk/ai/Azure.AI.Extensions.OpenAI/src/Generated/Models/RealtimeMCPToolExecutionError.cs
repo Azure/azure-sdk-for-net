@@ -5,18 +5,15 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Realtime MCP tool execution error. </summary>
     internal partial class RealtimeMCPToolExecutionError : RealtimeMCPError
     {
         /// <summary> Initializes a new instance of <see cref="RealtimeMCPToolExecutionError"/>. </summary>
         /// <param name="message"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        public RealtimeMCPToolExecutionError(string message) : base(RealtimeMcpErrorType.ToolExecutionError)
+        internal RealtimeMCPToolExecutionError(string message) : base(RealtimeMcpErrorType.ToolExecutionError)
         {
-            Argument.AssertNotNull(message, nameof(message));
-
             Message = message;
         }
 
@@ -29,7 +26,7 @@ namespace Azure.AI.Extensions.OpenAI
             Message = message;
         }
 
-        /// <summary> Gets or sets the Message. </summary>
-        public string Message { get; set; }
+        /// <summary> Gets the Message. </summary>
+        public string Message { get; }
     }
 }
