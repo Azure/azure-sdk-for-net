@@ -98,7 +98,10 @@ foreach ($projectPath in (Get-Content -LiteralPath $ProjectListPath | Where-Obje
   }
 
   if ([string]::IsNullOrWhiteSpace($directory) -or $directory -eq '.') {
-    throw "Sparse-checkout graph project '$fullPath' produced an empty or repository-wide directory root."
+    if ($kind -eq 'Project') {
+      throw "Sparse-checkout graph project '$fullPath' produced an empty or repository-wide directory root."
+    }
+    continue
   }
 
   $null = $roots.Add($directory.Trim('/'))

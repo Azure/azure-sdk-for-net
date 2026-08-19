@@ -104,6 +104,24 @@ Describe 'GenerateSparseCheckoutManifest' -Tag 'UnitTest' {
         @(Get-Content -LiteralPath $manifest) | Should -Be @('sdk/alpha', 'sdk/beta')
     }
 
+    It 'ignores repository-root evaluated inputs that are already covered by the base checkout' {
+        $repo = Join-Path $TestDrive 'repo-with-root-input'
+        $root = Join-Path $repo 'root.proj'
+        $alpha = Join-Path $repo 'sdk/alpha/Alpha/src/Alpha.csproj'
+        $rootInput = Join-Path $repo 'global.json'
+        $manifest = Join-Path $TestDrive 'root-input-manifest.txt'
+
+        $null = New-Item -ItemType Directory -Path $repo -Force
+        Set-Content -LiteralPath $rootInput -Value '{}'
+        New-GraphProject -Path $alpha -CompileItems @('../../../../global.json')
+        New-GraphProject -Path $root -References @($alpha)
+
+        $result = Invoke-Manifest -Project $root -RepoRoot $repo -Manifest $manifest
+
+        $result.ExitCode | Should -Be 0 -Because $result.Output
+        @(Get-Content -LiteralPath $manifest) | Should -Be @('sdk/alpha')
+    }
+
     It 'rejects an empty entry project selection' {
         $repo = Join-Path $TestDrive 'empty-repo'
         $root = Join-Path $repo 'root.proj'
