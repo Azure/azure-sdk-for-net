@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Commerce.Models
             {
                 if (prop.NameEquals("Name"u8))
                 {
-                    name = prop.Value.GetString().ToOfferTermInfoName();
+                    name = new OfferTermInfoName(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("EffectiveDate"u8))

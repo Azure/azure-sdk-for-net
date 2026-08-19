@@ -70,14 +70,6 @@ namespace Azure.ResourceManager.Commerce.Models
                 default);
         }
 
-        /// <param name="name"> Name of the offer term. </param>
-        /// <param name="effectiveOn"> Indicates the date from which the offer term is effective. </param>
-        /// <returns> A new <see cref="Models.OfferTermInfo"/> instance for mocking. </returns>
-        public static OfferTermInfo OfferTermInfo(string name = default, DateTimeOffset? effectiveOn = default)
-        {
-            return new UnknownOfferTermInfo(default, effectiveOn, default);
-        }
-
         /// <param name="effectiveOn"> Indicates the date from which the offer term is effective. </param>
         /// <param name="credit"> The amount of credit provided under the terms of the given offer level. </param>
         /// <param name="excludedMeterIds"> An array of meter ids that are excluded from the given offer terms. </param>

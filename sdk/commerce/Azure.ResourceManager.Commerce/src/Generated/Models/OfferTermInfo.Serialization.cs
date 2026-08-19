@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Commerce.Models
                 throw new FormatException($"The model {nameof(OfferTermInfo)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("Name"u8);
-            writer.WriteStringValue(Name.ToSerialString());
+            writer.WriteStringValue(Name.ToString());
             if (Optional.IsDefined(EffectiveOn))
             {
                 writer.WritePropertyName("EffectiveDate"u8);

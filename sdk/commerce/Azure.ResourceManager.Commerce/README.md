@@ -4,11 +4,11 @@ This library supports managing Microsoft Azure resources.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
-    - Supports MSAL.NET via Azure.Identity out of the box.
-    - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.
-    - HTTP pipeline with custom policies.
-    - Better error-handling.
-    - Support uniform telemetry across all languages.
+- Supports MSAL.NET via Azure.Identity out of the box.
+- Supports [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.
+- HTTP pipeline with custom policies.
+- Better error-handling.
+- Supports uniform telemetry across all languages.
 
 ## Getting started
 

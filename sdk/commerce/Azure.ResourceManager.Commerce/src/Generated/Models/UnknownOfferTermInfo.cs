@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Commerce.Models
         /// <param name="name"> Name of the offer term. </param>
         /// <param name="effectiveOn"> Indicates the date from which the offer term is effective. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownOfferTermInfo(OfferTermInfoName name, DateTimeOffset? effectiveOn, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, effectiveOn, additionalBinaryDataProperties)
+        internal UnknownOfferTermInfo(OfferTermInfoName name, DateTimeOffset? effectiveOn, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name != default ? name : "unknown", effectiveOn, additionalBinaryDataProperties)
         {
         }
     }
