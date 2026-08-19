@@ -78,16 +78,6 @@ steps:
     displayName: Verify MCP config (.mcp.json vs .vscode/mcp.json) are in sync
 
   - pwsh: |
-      ./doc/GeneratorMigration/Library_Inventory.ps1
-      git diff --exit-code -- doc/GeneratorMigration/Library_Inventory.md
-      if ($LASTEXITCODE -ne 0) {
-        Write-Error "Library_Inventory.md is out of date. Run 'pwsh doc/GeneratorMigration/Library_Inventory.ps1' and commit the result."
-        exit 1
-      }
-    displayName: Verify library inventory
-    condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
-
-  - pwsh: |
       $failed = $false
       if ('$(ProjectNames)' -and '$(ProjectNames)' -notlike '$(*') {
         $serviceDirectories = "$(ChangedServices)" -split ","

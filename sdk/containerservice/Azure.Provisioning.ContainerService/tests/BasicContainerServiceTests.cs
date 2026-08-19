@@ -84,12 +84,12 @@ public class BasicContainerServiceTests
                 dnsPrefix: dnsPrefix
                 agentPoolProfiles: [
                   {
-                    name: 'agentpool'
                     count: 3
                     vmSize: 'standard_d2s_v3'
                     osDiskSizeGB: 0
                     osType: 'Linux'
                     mode: 'System'
+                    name: 'agentpool'
                   }
                 ]
                 linuxProfile: {

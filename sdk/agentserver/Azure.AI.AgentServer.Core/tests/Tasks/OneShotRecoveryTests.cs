@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Core.Tasks.Engine;
 using Azure.AI.AgentServer.Core.Tasks.Serialization;
@@ -14,6 +17,91 @@ namespace Azure.AI.AgentServer.Core.Tests.Tasks;
 [TestFixture]
 public sealed class OneShotRecoveryTests
 {
+    [Test]
+    public async Task HandlerRestoresCallIdFromInputAndResetsOuterContext()
+    {
+        using TaskTestHost host = TaskTestHost.Create();
+        var observed = new List<(string? CallId, string? UserId, string? SessionId)>();
+        host.Builder.AddTask<CallIdInput, string>("request-context", (ctx, ct) =>
+        {
+            FoundryAgentRequestContext current = FoundryAgentRequestContext.Current;
+            observed.Add((current.CallId, current.UserId, current.SessionId));
+            return Task.FromResult(ctx.Input.Prompt);
+        });
+
+        FoundryAgentRequestContext? previous = FoundryAgentRequestContext.Exchange(
+            new FoundryAgentRequestContext
+            {
+                CallId = "outer-call",
+                UserId = "outer-user",
+                SessionId = "outer-session",
+            });
+        try
+        {
+            await host.Invoker.RunAsync<CallIdInput, string>(
+                "request-context",
+                new CallIdInput("persisted-call", "first"));
+            await host.Invoker.RunAsync<CallIdInput, string>(
+                "request-context",
+                new CallIdInput(null, "second"));
+
+            Assert.That(observed, Is.EqualTo(new (string? CallId, string? UserId, string? SessionId)[]
+            {
+                ("persisted-call", null, null),
+                ("outer-call", null, null),
+            }));
+            Assert.That(FoundryAgentRequestContext.Current.CallId, Is.EqualTo("outer-call"));
+            Assert.That(FoundryAgentRequestContext.Current.UserId, Is.EqualTo("outer-user"));
+            Assert.That(FoundryAgentRequestContext.Current.SessionId, Is.EqualTo("outer-session"));
+        }
+        finally
+        {
+            FoundryAgentRequestContext.Exchange(previous);
+        }
+    }
+
+    [Test]
+    public async Task RecoveredHandlerRestoresPersistedCallId()
+    {
+        var registry1 = new TaskRegistry();
+        using var host1 = TaskTestHost.Create(sharedRegistry: registry1);
+        host1.Builder.AddTask<CallIdInput, string>("call-id-recovery", async (ctx, ct) =>
+        {
+            if (ctx.EntryMode == EntryMode.Fresh)
+            {
+                await ctx.ExitForRecoveryAsync(ct);
+            }
+
+            return ctx.Input.Prompt;
+        });
+
+        host1.SignalShutdown();
+        TaskRun<string> handle = await host1.Invoker.StartAsync<CallIdInput, string>(
+            "call-id-recovery",
+            new CallIdInput("persisted-call", "payload"),
+            new RunOptions { TaskId = "call-id-recovery-1" });
+        await host1.WaitUntilInactiveAsync(handle.TaskId, TimeSpan.FromSeconds(5));
+
+        var observed = new TaskCompletionSource<(string? CallId, string? UserId, string? SessionId)>(
+            TaskCreationOptions.RunContinuationsAsynchronously);
+        var registry2 = new TaskRegistry();
+        using var host2 = host1.Restart(registry2);
+        host2.Builder.AddTask<CallIdInput, string>("call-id-recovery", (ctx, ct) =>
+        {
+            FoundryAgentRequestContext current = FoundryAgentRequestContext.Current;
+            observed.TrySetResult((current.CallId, current.UserId, current.SessionId));
+            return Task.FromResult(ctx.Input.Prompt);
+        });
+
+        int dispatched = await host2.Engine.ScanAndRecoverAsync();
+        Assert.That(dispatched, Is.EqualTo(1));
+        var expectedContext = (CallId: (string?)"persisted-call", UserId: (string?)null, SessionId: (string?)null);
+        Assert.That(
+            await observed.Task.WaitAsync(TimeSpan.FromSeconds(5)),
+            Is.EqualTo(expectedContext));
+        await host2.WaitUntilDeletedAsync(handle.TaskId, TimeSpan.FromSeconds(5));
+    }
+
     [Test]
     public async Task LeaseAbandonedMidRunIsReInvokedAsRecovered()
     {
@@ -279,4 +367,8 @@ public sealed class OneShotRecoveryTests
 
         Assert.That(recovered, Is.EqualTo(25));
     }
+
+    private sealed record CallIdInput(
+        [property: JsonPropertyName("call_id")] string? CallId,
+        string Prompt);
 }

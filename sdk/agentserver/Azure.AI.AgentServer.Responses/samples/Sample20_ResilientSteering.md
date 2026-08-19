@@ -36,6 +36,8 @@ When the cancellation token is signaled, inspect the context to find the cause:
 // observes IsSteeredTurn on the re-entry and drains the enqueued input.
 public class ResilientSteeringHandler : ResponseHandler
 {
+    private static readonly DefaultAzureCredential s_credential = new();
+
     public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         CreateResponse request,
         ResponseContext context,
@@ -47,16 +49,40 @@ public class ResilientSteeringHandler : ResponseHandler
         bool steered = context.IsSteeredTurn;
         int pending = context.PendingInputCount;
 
-        int turnCount = 1;
-        if (context.ConversationChainMetadata.TryGet("state", "turn_count", out var raw)
-            && int.TryParse(raw, out var prior))
-        {
-            turnCount = prior + 1;
-        }
+        FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync(
+            $"responses/resilient-steering/{context.ConversationChainId}",
+            s_credential,
+            description: "State for the resilient steering response sample",
+            cancellationToken: CancellationToken.None);
+        StateStoreItem? item = await store.GetItemAsync(
+            "state",
+            cancellationToken: CancellationToken.None);
+        IDictionary<string, BinaryData> state = item?.Value
+            ?? new Dictionary<string, BinaryData>(StringComparer.Ordinal);
 
-        context.ConversationChainMetadata.Set("state", "turn_count", turnCount.ToString());
-        context.ConversationChainMetadata.Set("state", "steered", (steered && pending >= 0).ToString());
-        await context.ConversationChainMetadata.FlushAsync(cancellationToken);
+        int turnCount;
+        if (state.TryGetValue("last_response_id", out BinaryData? responseIdData)
+            && responseIdData.ToObjectFromJson<string>() == context.ResponseId)
+        {
+            turnCount = state.TryGetValue("turn_count", out BinaryData? turnData)
+                ? turnData.ToObjectFromJson<int>()
+                : 1;
+        }
+        else
+        {
+            turnCount = state.TryGetValue("turn_count", out BinaryData? turnData)
+                ? turnData.ToObjectFromJson<int>() + 1
+                : 1;
+            await store.SetItemAsync(
+                "state",
+                new Dictionary<string, BinaryData>
+                {
+                    ["turn_count"] = BinaryData.FromObjectAsJson(turnCount),
+                    ["last_response_id"] = BinaryData.FromObjectAsJson(context.ResponseId),
+                    ["steered"] = BinaryData.FromObjectAsJson(steered && pending >= 0),
+                },
+                cancellationToken: CancellationToken.None);
+        }
 
         var stream = new ResponseEventStream(context, request);
 
@@ -146,8 +172,9 @@ curl -X POST http://localhost:8088/responses \
 - On a mid-stream shutdown, the handler defers via `ExitForRecoveryAsync()` and
   the turn re-runs from scratch on the next lifetime, emitting an empty
   resumption reset that signals the client to redraw.
-- The cross-turn `turn_count` watermark survives crashes via
-  `ConversationChainMetadata.FlushAsync()`.
+- The cross-turn `turn_count` watermark survives crashes in an explicit
+  `FoundryStateStore`, with `ResponseId` preventing duplicate increments on
+  recovery.
 
 > **Verified.** The published flow of this sample — a concurrent turn on an
 > active steerable chain enqueues (`queued`) then drains as a steered re-entry

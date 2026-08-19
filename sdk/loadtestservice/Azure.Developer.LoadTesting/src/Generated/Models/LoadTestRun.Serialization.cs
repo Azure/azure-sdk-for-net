@@ -250,10 +250,10 @@ namespace Azure.Developer.LoadTesting
                 writer.WritePropertyName("debugLogsEnabled"u8);
                 writer.WriteBooleanValue(DebugLogsEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicIpDisabled))
+            if (options.Format != "W" && Optional.IsDefined(PublicIPDisabled))
             {
                 writer.WritePropertyName("publicIPDisabled"u8);
-                writer.WriteBooleanValue(PublicIpDisabled.Value);
+                writer.WriteBooleanValue(PublicIPDisabled.Value);
             }
             if (Optional.IsDefined(CreatedByType))
             {
@@ -369,7 +369,7 @@ namespace Azure.Developer.LoadTesting
             LoadTestKind? kind = default;
             RequestDataLevel? requestDataLevel = default;
             bool? debugLogsEnabled = default;
-            bool? publicIpDisabled = default;
+            bool? publicIPDisabled = default;
             CreatedByType? createdByType = default;
             Uri createdByUri = default;
             double? estimatedVirtualUserHours = default;
@@ -643,7 +643,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    publicIpDisabled = prop.Value.GetBoolean();
+                    publicIPDisabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("createdByType"u8))
@@ -752,7 +752,7 @@ namespace Azure.Developer.LoadTesting
                 kind,
                 requestDataLevel,
                 debugLogsEnabled,
-                publicIpDisabled,
+                publicIPDisabled,
                 createdByType,
                 createdByUri,
                 estimatedVirtualUserHours,

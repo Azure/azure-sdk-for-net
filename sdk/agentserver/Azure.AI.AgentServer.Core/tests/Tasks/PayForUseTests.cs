@@ -34,7 +34,6 @@ public sealed class PayForUseTests
             typeof(TaskContextState<string>),
             typeof(TaskRunState<string>),
             typeof(RunOptions),
-            typeof(TaskMetadata),
             typeof(DefaultResilientTaskBuilder),
         };
 

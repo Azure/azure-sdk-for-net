@@ -82,54 +82,6 @@ namespace Azure.Provisioning.FrontDoor
             }
         }
 
-        /// <summary> Gets the ResourceState. </summary>
-        public BicepValue<FrontDoorResourceState> ResourceState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new FrontendEndpointProperties();
-                }
-                return Properties.ResourceState;
-            }
-        }
-
-        /// <summary> Gets the CustomHttpsProvisioningState. </summary>
-        public BicepValue<FrontendEndpointCustomHttpsProvisioningState> CustomHttpsProvisioningState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new FrontendEndpointProperties();
-                }
-                return Properties.CustomHttpsProvisioningState;
-            }
-        }
-
-        /// <summary> Gets the CustomHttpsProvisioningSubstate. </summary>
-        public BicepValue<FrontendEndpointCustomHttpsProvisioningSubstate> CustomHttpsProvisioningSubstate
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new FrontendEndpointProperties();
-                }
-                return Properties.CustomHttpsProvisioningSubstate;
-            }
-        }
-
-        /// <summary> Gets the CustomHttpsConfiguration. </summary>
-        public CustomHttpsConfiguration CustomHttpsConfiguration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.CustomHttpsConfiguration;
-            }
-        }
-
         /// <summary> Gets or sets the HostName. </summary>
         public BicepValue<string> HostName
         {
@@ -195,6 +147,54 @@ namespace Azure.Provisioning.FrontDoor
                     Properties = new FrontendEndpointProperties();
                 }
                 Properties.WebApplicationFirewallPolicyLinkId = value;
+            }
+        }
+
+        /// <summary> Gets the ResourceState. </summary>
+        public BicepValue<FrontDoorResourceState> ResourceState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendEndpointProperties();
+                }
+                return Properties.ResourceState;
+            }
+        }
+
+        /// <summary> Gets the CustomHttpsProvisioningState. </summary>
+        public BicepValue<FrontendEndpointCustomHttpsProvisioningState> CustomHttpsProvisioningState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendEndpointProperties();
+                }
+                return Properties.CustomHttpsProvisioningState;
+            }
+        }
+
+        /// <summary> Gets the CustomHttpsProvisioningSubstate. </summary>
+        public BicepValue<FrontendEndpointCustomHttpsProvisioningSubstate> CustomHttpsProvisioningSubstate
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendEndpointProperties();
+                }
+                return Properties.CustomHttpsProvisioningSubstate;
+            }
+        }
+
+        /// <summary> Gets the CustomHttpsConfiguration. </summary>
+        public CustomHttpsConfiguration CustomHttpsConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomHttpsConfiguration;
             }
         }
 

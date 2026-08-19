@@ -308,7 +308,7 @@ namespace BasicTypeSpec
             writer.WritePropertyName("modelWithRequiredNullable"u8);
             writer.WriteObjectValue(ModelWithRequiredNullable, options);
             writer.WritePropertyName("requiredBytes"u8);
-            writer.WriteBase64StringValue(RequiredBytes.ToArray(), "D");
+            writer.WriteBase64StringValue(RequiredBytes, "D");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
