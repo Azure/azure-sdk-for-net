@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.FrontDoor
         [WirePath("sku")]
         internal FrontDoorSku Sku { get; set; }
 
+        /// <summary> Resource type. </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
         /// <summary> Describes settings for the policy. </summary>
         [WirePath("properties.policySettings")]
         public FrontDoorWebApplicationFirewallPolicySettings PolicySettings

@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.FrontDoor
         [WirePath("properties")]
         internal FrontDoorProperties Properties { get; set; }
 
+        /// <summary> Resource type. </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
         /// <summary> A friendly name for the frontDoor. </summary>
         [WirePath("properties.friendlyName")]
         public string FriendlyName

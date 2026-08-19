@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.FrontDoor
         [WirePath("properties")]
         internal RulesEngineProperties Properties { get; set; }
 
+        /// <summary> Resource type. </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
         /// <summary> A list of rules that define a particular Rules Engine Configuration. </summary>
         [WirePath("properties.rules")]
         public IList<RulesEngineRule> Rules

@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         [WirePath("properties")]
         internal ManagedRuleSetDefinitionProperties Properties { get; set; }
 
+        /// <summary> Resource type. </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
         /// <summary> Provisioning state of the managed rule set. </summary>
         [WirePath("properties.provisioningState")]
         public string ProvisioningState

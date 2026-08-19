@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         [WirePath("properties")]
         internal TimeseriesProperties Properties { get; set; }
 
+        /// <summary> Resource type. </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
         /// <summary> The endpoint associated with the Timeseries data point. </summary>
         [WirePath("properties.endpoint")]
         public Uri Endpoint

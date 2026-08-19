@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         [WirePath("properties")]
         internal PreconfiguredEndpointProperties Properties { get; set; }
 
+        /// <summary> Resource type. </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
         /// <summary> The description of the endpoint. </summary>
         [WirePath("properties.description")]
         public string Description

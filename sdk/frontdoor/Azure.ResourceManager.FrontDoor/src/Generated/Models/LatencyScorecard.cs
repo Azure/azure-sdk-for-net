@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         [WirePath("properties")]
         internal LatencyScorecardProperties Properties { get; set; }
 
+        /// <summary> Resource type. </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
         /// <summary> The unique identifier of the Latency Scorecard. </summary>
         [WirePath("properties.id")]
         public string LatencyScorecardId

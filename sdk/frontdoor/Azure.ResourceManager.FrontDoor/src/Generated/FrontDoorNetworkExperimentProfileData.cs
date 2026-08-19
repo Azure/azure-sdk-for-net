@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.FrontDoor
         [WirePath("etag")]
         public ETag? ETag { get; set; }
 
+        /// <summary> Resource type. </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
         /// <summary> Resource status. </summary>
         [WirePath("properties.resourceState")]
         public NetworkExperimentResourceState? ResourceState

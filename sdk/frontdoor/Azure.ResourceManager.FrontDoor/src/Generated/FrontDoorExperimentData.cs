@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.FrontDoor
         [WirePath("properties")]
         internal ExperimentProperties Properties { get; set; }
 
+        /// <summary> Resource type. </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
         /// <summary> The description of the details or intents of the Experiment. </summary>
         [WirePath("properties.description")]
         public string Description
