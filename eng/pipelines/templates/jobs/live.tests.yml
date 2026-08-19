@@ -97,12 +97,9 @@ jobs:
       container: $[ variables['Container'] ]
 
     steps:
-      - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
-        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-          parameters:
-              Paths:
-                - "/*"
-                - "!SessionRecords"
+      - checkout: self
+        fetchDepth: 1
+        fetchTags: false
 
       - ${{ parameters.PreSteps }}
 
