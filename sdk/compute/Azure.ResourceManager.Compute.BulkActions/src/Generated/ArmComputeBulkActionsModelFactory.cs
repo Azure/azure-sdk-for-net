@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="zoneAllocationPolicy"> The zone allocation policy for distributing VMs across availability zones. </param>
         /// <param name="minCapacity"> The minimum number of VMs that must be successfully created for the request to proceed. If fewer than this number can be allocated, the entire request is automatically rejected. </param>
         /// <returns> A new <see cref="Models.FlexProperties"/> instance for mocking. </returns>
-        public static FlexProperties FlexProperties(IEnumerable<VmSizeProfile> vmSizeProfiles = default, OsType osType = default, PriorityProfile priorityProfile = default, ZoneAllocationPolicy zoneAllocationPolicy = default, int? minCapacity = default)
+        public static FlexProperties FlexProperties(IEnumerable<VmSizeProfile> vmSizeProfiles = default, OSType osType = default, PriorityProfile priorityProfile = default, ZoneAllocationPolicy zoneAllocationPolicy = default, int? minCapacity = default)
         {
             vmSizeProfiles ??= new ChangeTrackingList<VmSizeProfile>();
 
@@ -400,17 +400,17 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="exactVersion"> Specifies in decimal number, the version the OS disk should be reimaged to. If exact version is not provided, the OS disk is reimaged to the existing version of OS Disk. </param>
         /// <param name="osProfile"> Specifies information required for reimaging the non-ephemeral OS disk. </param>
         /// <returns> A new <see cref="Models.BulkActionsVirtualMachineReimageParametersContent"/> instance for mocking. </returns>
-        public static BulkActionsVirtualMachineReimageParametersContent BulkActionsVirtualMachineReimageParametersContent(bool? isTempDisk = default, string exactVersion = default, BulkActionsOsProfileProvisioningContent osProfile = default)
+        public static BulkActionsVirtualMachineReimageParametersContent BulkActionsVirtualMachineReimageParametersContent(bool? isTempDisk = default, string exactVersion = default, BulkActionsOSProfileProvisioningContent osProfile = default)
         {
             return new BulkActionsVirtualMachineReimageParametersContent(isTempDisk, exactVersion, osProfile, default);
         }
 
         /// <param name="adminPassword"> Specifies the password of the administrator account. &lt;br&gt;&lt;br&gt; <b>Minimum-length (Windows):</b> 8 characters &lt;br&gt;&lt;br&gt; <b>Minimum-length (Linux):</b> 6 characters &lt;br&gt;&lt;br&gt; <b>Max-length (Windows):</b> 123 characters &lt;br&gt;&lt;br&gt; <b>Max-length (Linux):</b> 72 characters &lt;br&gt;&lt;br&gt; <b>Complexity requirements:</b> 3 out of 4 conditions below need to be fulfilled &lt;br&gt; Has lower characters &lt;br&gt;Has upper characters &lt;br&gt; Has a digit &lt;br&gt; Has a special character (Regex match [\W_]) &lt;br&gt;&lt;br&gt; <b>Disallowed values:</b> "abc@123", "P@$$w0rd", "P@ssw0rd", "P@ssword123", "Pa$$word", "pass@word1", "Password!", "Password1", "Password22", "iloveyou!" &lt;br&gt;&lt;br&gt; For resetting the password, see [How to reset the Remote Desktop service or its login password in a Windows VM](https://docs.microsoft.com/troubleshoot/azure/virtual-machines/reset-rdp) &lt;br&gt;&lt;br&gt; For resetting root password, see [Manage users, SSH, and check or repair disks on Azure Linux VMs using the VMAccess Extension](https://docs.microsoft.com/troubleshoot/azure/virtual-machines/troubleshoot-ssh-connection). </param>
         /// <param name="customData"> Specifies a base-64 encoded string of custom data. The base-64 encoded string is decoded to a binary array that is saved as a file on the Virtual Machine. The maximum length of the binary array is 65535 bytes. <b>Note: Do not pass any secrets or passwords in customData property.</b> This property cannot be updated after the VM is created. The property customData is passed to the VM to be saved as a file, for more information see [Custom Data on Azure VMs](https://azure.microsoft.com/blog/custom-data-and-cloud-init-on-windows-azure/). If using cloud-init for your Linux VM, see [Using cloud-init to customize a Linux VM during creation](https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init). </param>
-        /// <returns> A new <see cref="Models.BulkActionsOsProfileProvisioningContent"/> instance for mocking. </returns>
-        public static BulkActionsOsProfileProvisioningContent BulkActionsOsProfileProvisioningContent(string adminPassword = default, string customData = default)
+        /// <returns> A new <see cref="Models.BulkActionsOSProfileProvisioningContent"/> instance for mocking. </returns>
+        public static BulkActionsOSProfileProvisioningContent BulkActionsOSProfileProvisioningContent(string adminPassword = default, string customData = default)
         {
-            return new BulkActionsOsProfileProvisioningContent(adminPassword, customData, default);
+            return new BulkActionsOSProfileProvisioningContent(adminPassword, customData, default);
         }
 
         /// <param name="resourceId"> The Azure resource ID of the virtual machine for this override. </param>
@@ -1107,15 +1107,15 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'. </param>
         /// <param name="publicIPAllocationMethod"> Specify the public IP allocation type. </param>
         /// <returns> A new <see cref="Models.VirtualMachinePublicIPAddressConfigurationProperties"/> instance for mocking. </returns>
-        public static VirtualMachinePublicIPAddressConfigurationProperties VirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes = default, DeleteConfig? deleteOption = default, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default, IEnumerable<VirtualMachineIpTag> ipTags = default, string publicIPPrefixId = default, IPVersions? publicIPAddressVersion = default, PublicIPAllocationMethod? publicIPAllocationMethod = default)
+        public static VirtualMachinePublicIPAddressConfigurationProperties VirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes = default, DeleteConfig? deleteOption = default, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default, IEnumerable<VirtualMachineIPTag> ipTags = default, string publicIPPrefixId = default, IPVersions? publicIPAddressVersion = default, PublicIPAllocationMethod? publicIPAllocationMethod = default)
         {
-            ipTags ??= new ChangeTrackingList<VirtualMachineIpTag>();
+            ipTags ??= new ChangeTrackingList<VirtualMachineIPTag>();
 
             return new VirtualMachinePublicIPAddressConfigurationProperties(
                 idleTimeoutInMinutes,
                 deleteOption,
                 dnsSettings,
-                (ipTags ?? new ChangeTrackingList<VirtualMachineIpTag>()).ToList(),
+                (ipTags ?? new ChangeTrackingList<VirtualMachineIPTag>()).ToList(),
                 publicIPPrefixId is null ? default : new ComputeBulkActionsSubResourceInfo(publicIPPrefixId, default),
                 publicIPAddressVersion,
                 publicIPAllocationMethod,
@@ -1132,10 +1132,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="ipTagType"> IP tag type. Example: FirstPartyUsage. </param>
         /// <param name="tag"> IP tag associated with the public IP. Example: SQL, Storage etc. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineIpTag"/> instance for mocking. </returns>
-        public static VirtualMachineIpTag VirtualMachineIpTag(string ipTagType = default, string tag = default)
+        /// <returns> A new <see cref="Models.VirtualMachineIPTag"/> instance for mocking. </returns>
+        public static VirtualMachineIPTag VirtualMachineIPTag(string ipTagType = default, string tag = default)
         {
-            return new VirtualMachineIpTag(ipTagType, tag, default);
+            return new VirtualMachineIPTag(ipTagType, tag, default);
         }
 
         /// <param name="name"> Specify public IP sku name. </param>

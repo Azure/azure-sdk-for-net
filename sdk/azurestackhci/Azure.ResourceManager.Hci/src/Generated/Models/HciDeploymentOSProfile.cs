@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Hci.Models
         {
             BootType = bootType;
             AssemblyVersion = assemblyVersion;
-            OsType = osType;
-            OsSku = osSku;
-            OsVersion = osVersion;
+            OSType = osType;
+            OSSku = osSku;
+            OSVersion = osVersion;
             BuildNumber = buildNumber;
             BaseImageVersion = baseImageVersion;
             ImageVersion = imageVersion;
@@ -55,15 +55,15 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> OS type (“windows", “linux”). </summary>
         [WirePath("osType")]
-        public string OsType { get; }
+        public string OSType { get; }
 
         /// <summary> OS SKU (e.g., “ Microsoft Azure Linux ROE“, “Azure Stack HCI", "Microsoft Azure Linux 3.0"). </summary>
         [WirePath("osSku")]
-        public string OsSku { get; }
+        public string OSSku { get; }
 
         /// <summary> OS Version. </summary>
         [WirePath("osVersion")]
-        public string OsVersion { get; }
+        public string OSVersion { get; }
 
         /// <summary> OS Build Number. </summary>
         [WirePath("buildNumber")]

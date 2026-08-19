@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            ProvisioningOsType? solutionType = default;
+            ProvisioningOSType? solutionType = default;
             IList<EdgeMachineUpdateInfo> values = default;
             HciProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    solutionType = new ProvisioningOsType(prop.Value.GetString());
+                    solutionType = new ProvisioningOSType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("values"u8))
