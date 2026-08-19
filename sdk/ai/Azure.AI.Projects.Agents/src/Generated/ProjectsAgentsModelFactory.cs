@@ -2085,7 +2085,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="image"> The image ID for the agent, applicable to image-based hosted agents. </param>
         /// <returns> A new <see cref="Agents.HostedAgentDefinition"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration, IEnumerable<ProjectsAgentTool> tools, IEnumerable<ProtocolVersionRecord> versions, string cpu, string memory, IDictionary<string, string> environmentVariables, string image)
+        public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration, IEnumerable<ProjectsAgentTool> tools, IEnumerable<ProtocolVersionRecord> versions = default, string cpu = default, string memory = default, IDictionary<string, string> environmentVariables = default, string image = default)
         {
             tools ??= new ChangeTrackingList<ProjectsAgentTool>();
             versions ??= new ChangeTrackingList<ProtocolVersionRecord>();

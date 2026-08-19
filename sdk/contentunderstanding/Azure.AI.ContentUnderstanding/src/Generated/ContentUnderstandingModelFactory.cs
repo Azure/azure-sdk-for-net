@@ -991,7 +991,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="contents"> The extracted content. </param>
         /// <returns> A new <see cref="ContentUnderstanding.AnalysisResult"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AnalysisResult AnalysisResult(string analyzerId, string apiVersion, DateTimeOffset? createdAt, IEnumerable<ResponseError> warnings, string stringEncoding, IEnumerable<AnalysisContent> contents)
+        public static AnalysisResult AnalysisResult(string analyzerId, string apiVersion, DateTimeOffset? createdAt, IEnumerable<ResponseError> warnings, string stringEncoding, IEnumerable<AnalysisContent> contents = default)
         {
             return AnalysisResult(analyzerId: analyzerId, apiVersion: apiVersion, createdAt: createdAt, warnings: warnings, infos: default, stringEncoding: stringEncoding, contents: contents);
         }
@@ -1019,7 +1019,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="segments"> List of detected content segments.  Only if enableSegment is true. </param>
         /// <returns> A new <see cref="ContentUnderstanding.DocumentContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DocumentContent DocumentContent(string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, int startPageNumber, int endPageNumber, LengthUnit? unit, IEnumerable<DocumentPage> pages, IEnumerable<DocumentParagraph> paragraphs, IEnumerable<DocumentSection> sections, IEnumerable<DocumentTable> tables, IEnumerable<DocumentFigure> figures, IEnumerable<DocumentAnnotation> annotations, IEnumerable<DocumentHyperlink> hyperlinks, IEnumerable<DocumentContentSegment> segments)
+        public static DocumentContent DocumentContent(string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, int startPageNumber, int endPageNumber = 0, LengthUnit? unit = default, IEnumerable<DocumentPage> pages = default, IEnumerable<DocumentParagraph> paragraphs = default, IEnumerable<DocumentSection> sections = default, IEnumerable<DocumentTable> tables = default, IEnumerable<DocumentFigure> figures = default, IEnumerable<DocumentAnnotation> annotations = default, IEnumerable<DocumentHyperlink> hyperlinks = default, IEnumerable<DocumentContentSegment> segments = default)
         {
             return DocumentContent(mimeType: mimeType, analyzerId: analyzerId, category: category, path: path, markdown: markdown, fields: fields, metadata: default, startPageNumber: startPageNumber, endPageNumber: endPageNumber, unit: unit, pages: pages, paragraphs: paragraphs, sections: sections, tables: tables, figures: figures, annotations: annotations, signatures: default, hyperlinks: hyperlinks, segments: segments, chunks: default);
         }
@@ -1054,7 +1054,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="segments"> List of detected content segments.  Only if enableSegment is true. </param>
         /// <returns> A new <see cref="ContentUnderstanding.AudioVisualContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AudioVisualContent AudioVisualContent(string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, long startTimeMsValue, long endTimeMsValue, int? width, int? height, IEnumerable<long> cameraShotTimesMsValues, IEnumerable<long> keyFrameTimesMsValues, IEnumerable<TranscriptPhrase> transcriptPhrases, IEnumerable<AudioVisualContentSegment> segments)
+        public static AudioVisualContent AudioVisualContent(string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, long startTimeMsValue, long endTimeMsValue = 0L, int? width = default, int? height = default, IEnumerable<long> cameraShotTimesMsValues = default, IEnumerable<long> keyFrameTimesMsValues = default, IEnumerable<TranscriptPhrase> transcriptPhrases = default, IEnumerable<AudioVisualContentSegment> segments = default)
         {
             return AudioVisualContent(mimeType: mimeType, analyzerId: analyzerId, category: category, path: path, markdown: markdown, fields: fields, metadata: default, startTimeMsValue: startTimeMsValue, endTimeMsValue: endTimeMsValue, width: width, height: height, cameraShotTimesMsValues: cameraShotTimesMsValues, keyFrameTimesMsValues: keyFrameTimesMsValues, transcriptPhrases: transcriptPhrases, segments: segments);
         }
