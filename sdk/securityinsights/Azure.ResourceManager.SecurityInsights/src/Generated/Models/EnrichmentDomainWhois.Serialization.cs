@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("server"u8);
                 writer.WriteStringValue(Server);
             }
-            if (Optional.IsDefined(Created))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
-                writer.WriteStringValue(Created.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(UpdatedOn))
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             string domain = default;
             string server = default;
-            DateTimeOffset? created = default;
+            DateTimeOffset? createdOn = default;
             DateTimeOffset? updatedOn = default;
             DateTimeOffset? expireOn = default;
             EnrichmentDomainWhoisDetails parsedWhois = default;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    created = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("updated"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new EnrichmentDomainWhois(
                 domain,
                 server,
-                created,
+                createdOn,
                 updatedOn,
                 expireOn,
                 parsedWhois,

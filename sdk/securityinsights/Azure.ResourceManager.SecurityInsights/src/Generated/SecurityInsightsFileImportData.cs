@@ -195,21 +195,21 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary> The time the files associated with this import are deleted from the storage account. </summary>
         [WirePath("properties.filesValidUntilTimeUTC")]
-        public DateTimeOffset? FilesValidUntil
+        public DateTimeOffset? FilesExpireOn
         {
             get
             {
-                return Properties is null ? default : Properties.FilesValidUntil;
+                return Properties is null ? default : Properties.FilesExpireOn;
             }
         }
 
         /// <summary> The time the file import record is soft deleted from the database and history. </summary>
         [WirePath("properties.importValidUntilTimeUTC")]
-        public DateTimeOffset? ImportValidUntil
+        public DateTimeOffset? ImportExpiresOn
         {
             get
             {
-                return Properties is null ? default : Properties.ImportValidUntil;
+                return Properties is null ? default : Properties.ImportExpiresOn;
             }
         }
     }

@@ -127,15 +127,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("validRecordCount"u8);
                 writer.WriteNumberValue(ValidRecordCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FilesValidUntil))
+            if (options.Format != "W" && Optional.IsDefined(FilesExpireOn))
             {
                 writer.WritePropertyName("filesValidUntilTimeUTC"u8);
-                writer.WriteStringValue(FilesValidUntil.Value, "O");
+                writer.WriteStringValue(FilesExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ImportValidUntil))
+            if (options.Format != "W" && Optional.IsDefined(ImportExpiresOn))
             {
                 writer.WritePropertyName("importValidUntilTimeUTC"u8);
-                writer.WriteStringValue(ImportValidUntil.Value, "O");
+                writer.WriteStringValue(ImportExpiresOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -190,8 +190,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             SecurityInsightsFileImportState? state = default;
             int? totalRecordCount = default;
             int? validRecordCount = default;
-            DateTimeOffset? filesValidUntil = default;
-            DateTimeOffset? importValidUntil = default;
+            DateTimeOffset? filesExpireOn = default;
+            DateTimeOffset? importExpiresOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    filesValidUntil = prop.Value.GetDateTimeOffset("O");
+                    filesExpireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("importValidUntilTimeUTC"u8))
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    importValidUntil = prop.Value.GetDateTimeOffset("O");
+                    importExpiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -318,8 +318,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 state,
                 totalRecordCount,
                 validRecordCount,
-                filesValidUntil,
-                importValidUntil,
+                filesExpireOn,
+                importExpiresOn,
                 additionalBinaryDataProperties);
         }
     }
