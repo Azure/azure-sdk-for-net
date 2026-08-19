@@ -18,7 +18,6 @@ parameters:
 steps:
   - checkout: self
     fetchDepth: 1
-    fetchTags: false
 
   - template: /eng/pipelines/templates/steps/install-dotnet.yml
 

@@ -85,7 +85,6 @@ jobs:
       
       - checkout: self
         fetchDepth: 1
-        fetchTags: false
 
       - ${{ if ne(parameters.ProjectListOverrideFilePropertyName, '') }}:
         - task: DownloadPipelineArtifact@2
