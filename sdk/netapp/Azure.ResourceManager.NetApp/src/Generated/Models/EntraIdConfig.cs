@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -16,22 +15,6 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="EntraIdConfig"/>. </summary>
-        /// <param name="applicationId"> ApplicationId of the app created by customer to provide authentication and required API permissions for Microsoft Graph endpoint. </param>
-        /// <param name="domain"> Domain of the Active directory synced to Entra ID for hybrid identities. </param>
-        /// <param name="serverNamePrefix"> Using ServerNamePrefix, FQDN (Fully Qualified Domain Name) will be generated for SMB share, using this FQDN, SMB Share will be mounted on Entra Joined VM. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/>, <paramref name="domain"/> or <paramref name="serverNamePrefix"/> is null. </exception>
-        public EntraIdConfig(string applicationId, string domain, string serverNamePrefix)
-        {
-            Argument.AssertNotNull(applicationId, nameof(applicationId));
-            Argument.AssertNotNull(domain, nameof(domain));
-            Argument.AssertNotNull(serverNamePrefix, nameof(serverNamePrefix));
-
-            ApplicationId = applicationId;
-            Domain = domain;
-            ServerNamePrefix = serverNamePrefix;
-        }
 
         /// <summary> Initializes a new instance of <see cref="EntraIdConfig"/>. </summary>
         /// <param name="applicationId"> ApplicationId of the app created by customer to provide authentication and required API permissions for Microsoft Graph endpoint. </param>
@@ -47,17 +30,5 @@ namespace Azure.ResourceManager.NetApp.Models
             EntraIdAkvConfig = entraIdAkvConfig;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> ApplicationId of the app created by customer to provide authentication and required API permissions for Microsoft Graph endpoint. </summary>
-        public string ApplicationId { get; set; }
-
-        /// <summary> Domain of the Active directory synced to Entra ID for hybrid identities. </summary>
-        public string Domain { get; set; }
-
-        /// <summary> Using ServerNamePrefix, FQDN (Fully Qualified Domain Name) will be generated for SMB share, using this FQDN, SMB Share will be mounted on Entra Joined VM. </summary>
-        public string ServerNamePrefix { get; set; }
-
-        /// <summary> Using AKV config, certificate will be fetched, which will contain private key &amp; public certificate, that correspond to the public certificate which is uploaded on the application created by customer. This will be used further for authentication. </summary>
-        public EntraIdAkvConfig EntraIdAkvConfig { get; set; }
     }
 }

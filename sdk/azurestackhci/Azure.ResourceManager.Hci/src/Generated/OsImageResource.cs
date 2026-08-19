@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Hci
     {
         private readonly ClientDiagnostics _osImagesClientDiagnostics;
         private readonly OsImages _osImagesRestClient;
-        private readonly OsImageData _data;
+        private readonly OSImageData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/locations/osImages";
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Initializes a new instance of <see cref="OsImageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal OsImageResource(ArmClient client, OsImageData data) : this(client, data.Id)
+        internal OsImageResource(ArmClient client, OSImageData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(ResourceType, out string osImageApiVersion);
             _osImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _osImagesRestClient = new OsImages(_osImagesClientDiagnostics, Pipeline, Endpoint, osImageApiVersion ?? "2026-04-01-preview");
+            _osImagesRestClient = new OsImages(_osImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, osImageApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Hci
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual OsImageData Data
+        public virtual OSImageData Data
         {
             get
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Hci
                 };
                 HttpMessage message = _osImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<OsImageData> response = Response.FromValue(OsImageData.FromResponse(result), result);
+                Response<OSImageData> response = Response.FromValue(OSImageData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Hci
                 };
                 HttpMessage message = _osImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<OsImageData> response = Response.FromValue(OsImageData.FromResponse(result), result);
+                Response<OSImageData> response = Response.FromValue(OSImageData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

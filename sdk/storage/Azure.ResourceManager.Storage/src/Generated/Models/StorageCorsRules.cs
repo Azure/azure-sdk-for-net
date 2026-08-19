@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The List of CORS rules. You can include up to five CorsRule elements in the request. </summary>
         [WirePath("corsRules")]
-        public IList<StorageCorsRule> CorsRules { get; }
+        public IList<StorageCorsRule> CorsRules { get; } = new ChangeTrackingList<StorageCorsRule>();
     }
 }

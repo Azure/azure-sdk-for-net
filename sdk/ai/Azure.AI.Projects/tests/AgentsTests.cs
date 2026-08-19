@@ -671,7 +671,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(item.Content, Is.EqualTo(newContent));
         Assert.That(item.Scope, Is.EqualTo(MEMORY_STORE_SCOPE));
         // Delete
-        DeleteMemoryResponse delResult = await projectClient.MemoryStores.DeleteMemoryAsync(name: store.Name, memoryId: customerData.MemoryId);
+        MemoryDeletionResult delResult = await projectClient.MemoryStores.DeleteMemoryAsync(name: store.Name, memoryId: customerData.MemoryId);
         Assert.That(delResult.Deleted, Is.True);
         Assert.That(
             (await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, scope: MEMORY_STORE_SCOPE).ToEnumerableAsync())
@@ -1057,7 +1057,8 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.MCP)]
     [TestCase(ToolType.MCPConnection)]
     [TestCase(ToolType.MCPToolbox)]
-    public async Task TestInterativeTools(ToolType toolType)
+    [TestCase(ToolType.MCPToolboxWithPreview)]
+    public async Task TestInteractiveTools(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
         ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
@@ -1100,9 +1101,9 @@ public class AgentsTests : AgentsTestBase
                     funcionCalled = true;
                     functionWasCalled = true;
                 }
-                else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection || toolType == ToolType.MCPToolbox) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
+                else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection || toolType == ToolType.MCPToolbox || toolType == ToolType.MCPToolboxWithPreview) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
                 {
-                    Assert.That(mcpToolCall.ServerLabel, Is.EqualTo(toolType == ToolType.MCPToolbox? "search-tool" : "api-specs"));
+                    Assert.That(mcpToolCall.ServerLabel, Is.EqualTo(toolType == ToolType.MCPToolbox || toolType == ToolType.MCPToolboxWithPreview ? "search-tool" : "api-specs"));
                     responseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
                     funcionCalled = true;
                     functionWasCalled = true;
@@ -1121,7 +1122,9 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.FunctionCall)]
     [TestCase(ToolType.MCP)]
     [TestCase(ToolType.MCPConnection)]
-    public async Task TestInterativeToolsStreaming(ToolType toolType)
+    [TestCase(ToolType.MCPToolbox)]
+    [TestCase(ToolType.MCPToolboxWithPreview)]
+    public async Task TestInteractiveToolsStreaming(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
         ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
@@ -1190,9 +1193,9 @@ public class AgentsTests : AgentsTestBase
                             functionCalled = true;
                             functionWasCalled = true;
                         }
-                        else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
+                        else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection || toolType == ToolType.MCPToolbox || toolType == ToolType.MCPToolboxWithPreview) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
                         {
-                            Assert.That(mcpToolCall.ServerLabel, Is.EqualTo("api-specs"));
+                            Assert.That(mcpToolCall.ServerLabel, Is.EqualTo(toolType == ToolType.MCPToolbox || toolType == ToolType.MCPToolboxWithPreview ? "search-tool" : "api-specs"));
                             nextResponseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
                             functionCalled = true;
                             functionWasCalled = true;
@@ -1559,12 +1562,12 @@ public class AgentsTests : AgentsTestBase
                 { "AGENT_PROJECT_RESOURCE_ID", TestEnvironment.FOUNDRY_PROJECT_ENDPOINT },
             }
         };
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+        ProjectsAgentVersion projectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: AGENT_NAME2,
             options: new(ProjectsAgentDefinition));
-        Assert.That(ProjectsAgentVersion.Definition.GetType().ToString(), Does.Contain("Azure.AI.Projects.Agents.HostedAgentDefinition"));
-        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: ProjectsAgentVersion.Name, agentVersion: ProjectsAgentVersion.Version);
-        Assert.ThrowsAsync<ClientResultException>(async () => await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: ProjectsAgentVersion.Name, agentVersion: ProjectsAgentVersion.Version));
+        Assert.That(projectsAgentVersion.Definition.GetType().ToString(), Does.Contain("Azure.AI.Projects.Agents.HostedAgentDefinition"));
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: projectsAgentVersion.Name, agentVersion: projectsAgentVersion.Version);
+        Assert.ThrowsAsync<ClientResultException>(async () => await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: projectsAgentVersion.Name, agentVersion: projectsAgentVersion.Version));
     }
 
     [RecordedTest]
@@ -1588,7 +1591,7 @@ public class AgentsTests : AgentsTestBase
         ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: HOSTED_AGENT,
             options: creationOptions);
-        while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Active)
+        while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
         {
             await Delay();
             agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
@@ -1597,13 +1600,16 @@ public class AgentsTests : AgentsTestBase
         AgentEndpointConfiguration config = new()
         {
             VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
-            Protocols = { AgentEndpointProtocol.Responses }
+            ProtocolConfiguration = new()
+            {
+                Responses = new()
+            }
         };
         PatchAgentOptions patchOptions = new()
         {
             AgentEndpoint = config,
         };
-        ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClient.PatchAgentObjectAsync(
+        ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClient.PatchAgentAsync(
             agentName: agentVersion.Name,
             patchAgentOptions: patchOptions);
         ProjectOpenAIClientOptions responsesOptions = CreateTestProjectOpenAIClientOptions(
@@ -1635,6 +1641,98 @@ public class AgentsTests : AgentsTestBase
         }
         ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
         Assert.That(response.GetOutputText(), Is.Not.Empty);
+    }
+
+    [RecordedTest]
+    public async Task TestDisableHostedAgent()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        HostedAgentDefinition agentDefinition = new(
+            versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
+            cpu: "0.5",
+            memory: "1Gi"
+        )
+        {
+            ContainerConfiguration = new(TestEnvironment.AGENT_DOCKER_IMAGE),
+        };
+        ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
+        creationOptions.Metadata["enableVnextExperience"] = "true";
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+            agentName: HOSTED_AGENT,
+            options: creationOptions);
+        while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
+        {
+            await Delay();
+            agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        }
+        Assert.That(agentVersion.Status, Is.EqualTo(AgentVersionStatus.Active));
+        AgentEndpointConfiguration config = new()
+        {
+            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+            ProtocolConfiguration = new()
+            {
+                Responses = new()
+            }
+        };
+        PatchAgentOptions patchOptions = new()
+        {
+            AgentEndpoint = config,
+        };
+        ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClient.PatchAgentAsync(
+            agentName: agentVersion.Name,
+            patchAgentOptions: patchOptions);
+        // Create a session.
+        ProjectAgentSession session = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+        while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
+        {
+            await Delay();
+            session = await projectClient.AgentAdministrationClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+        }
+        ProjectOpenAIClientOptions responsesOptions = new()
+        {
+            Endpoint = new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT),
+            ApiVersion = "v1",
+            AgentName = agentVersion.Name
+        };
+        responsesOptions = GetConfiguredOptions(
+            responsesOptions,
+            true);
+        ProjectResponsesClient responseClient = CreateProxyFromClient(projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(patchedRecord.Name, options: responsesOptions));
+        CreateResponseOptions responseOptions = new()
+        {
+            InputItems = { ResponseItem.CreateUserMessageItem("Hello, tell me a joke.") },
+            SessionId = session.AgentSessionId,
+        };
+        ClientResult<ResponseResult> response = await responseClient.CreateResponseAsync(responseOptions);
+        Assert.That(response.GetRawResponse().Headers, Does.Contain(new KeyValuePair<string, string>("x-agent-session-id", session.AgentSessionId)));
+        Assert.That(response.Value.GetOutputText(), Is.Not.Empty);
+        // Disable the Agent
+        await projectClient.AgentAdministrationClient.DisableAgentAsync(agentVersion.Name);
+        try
+        {
+            await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+            Assert.Fail("Stopped Agent was unexpectedly able to create session.");
+        }
+        catch (ClientResultException ex)
+        {
+            Assert.That(ex.Status, Is.EqualTo(403));
+        }
+        // Enable Agent Again
+        await projectClient.AgentAdministrationClient.EnableAgentAsync(agentVersion.Name);
+        session = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+        while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
+        {
+            await Delay();
+            session = await projectClient.AgentAdministrationClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+        }
+        responseOptions = new()
+        {
+            InputItems = { ResponseItem.CreateUserMessageItem("Hello, tell me a joke.") },
+            SessionId = session.AgentSessionId,
+        };
+        response = await responseClient.CreateResponseAsync(responseOptions);
+        Assert.That(response.GetRawResponse().Headers, Does.Contain(new KeyValuePair<string, string>("x-agent-session-id", session.AgentSessionId)));
+        Assert.That(response.Value.GetOutputText(), Is.Not.Empty);
     }
 
     [RecordedTest]

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct NetworkFabricMicroBfdState : IEquatable<NetworkFabricMicroBfdState>
     {
         private readonly string _value;
+        /// <summary> MicroBfdState-Enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> MicroBfdState-Disabled. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricMicroBfdState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkFabricMicroBfdState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> MicroBfdState-Enabled. </summary>
         public static NetworkFabricMicroBfdState Enabled { get; } = new NetworkFabricMicroBfdState(EnabledValue);
+
         /// <summary> MicroBfdState-Disabled. </summary>
         public static NetworkFabricMicroBfdState Disabled { get; } = new NetworkFabricMicroBfdState(DisabledValue);
+
         /// <summary> Determines if two <see cref="NetworkFabricMicroBfdState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkFabricMicroBfdState left, NetworkFabricMicroBfdState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkFabricMicroBfdState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkFabricMicroBfdState left, NetworkFabricMicroBfdState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFabricMicroBfdState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkFabricMicroBfdState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkFabricMicroBfdState(string value) => new NetworkFabricMicroBfdState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkFabricMicroBfdState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkFabricMicroBfdState?(string value) => value == null ? null : new NetworkFabricMicroBfdState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkFabricMicroBfdState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkFabricMicroBfdState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

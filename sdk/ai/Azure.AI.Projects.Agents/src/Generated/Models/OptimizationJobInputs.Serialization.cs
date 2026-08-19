@@ -3,7 +3,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -58,16 +57,6 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<OptimizationJobInputs>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="optimizationJobInputs"> The <see cref="OptimizationJobInputs"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(OptimizationJobInputs optimizationJobInputs)
-        {
-            if (optimizationJobInputs == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(optimizationJobInputs, ModelSerializationExtensions.WireOptions);
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OptimizationJobInputs>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -88,28 +77,20 @@ namespace Azure.AI.Projects.Agents
             }
             writer.WritePropertyName("agent"u8);
             writer.WriteObjectValue(Agent, options);
-            writer.WritePropertyName("train_dataset_reference"u8);
-            writer.WriteObjectValue(TrainDatasetReference, options);
-            if (Optional.IsDefined(ValidationDatasetReference))
+            writer.WritePropertyName("train_dataset"u8);
+            writer.WriteObjectValue(TrainDataset, options);
+            if (Optional.IsDefined(ValidationDataset))
             {
-                writer.WritePropertyName("validation_dataset_reference"u8);
-                writer.WriteObjectValue(ValidationDatasetReference, options);
+                writer.WritePropertyName("validation_dataset"u8);
+                writer.WriteObjectValue(ValidationDataset, options);
             }
-            if (Optional.IsCollectionDefined(Evaluators))
+            writer.WritePropertyName("evaluators"u8);
+            writer.WriteStartArray();
+            foreach (OptimizationEvaluatorRef item in Evaluators)
             {
-                writer.WritePropertyName("evaluators"u8);
-                writer.WriteStartArray();
-                foreach (string item in Evaluators)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
+            writer.WriteEndArray();
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
@@ -157,50 +138,39 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            AgentIdentifier agent = default;
-            DatasetRef trainDatasetReference = default;
-            DatasetRef validationDatasetReference = default;
-            IList<string> evaluators = default;
+            OptimizationAgentIdentifier agent = default;
+            OptimizationDatasetInput trainDataset = default;
+            OptimizationDatasetInput validationDataset = default;
+            IList<OptimizationEvaluatorRef> evaluators = default;
             OptimizationOptions options0 = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("agent"u8))
                 {
-                    agent = AgentIdentifier.DeserializeAgentIdentifier(prop.Value, options);
+                    agent = OptimizationAgentIdentifier.DeserializeOptimizationAgentIdentifier(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("train_dataset_reference"u8))
+                if (prop.NameEquals("train_dataset"u8))
                 {
-                    trainDatasetReference = DatasetRef.DeserializeDatasetRef(prop.Value, options);
+                    trainDataset = OptimizationDatasetInput.DeserializeOptimizationDatasetInput(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("validation_dataset_reference"u8))
+                if (prop.NameEquals("validation_dataset"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    validationDatasetReference = DatasetRef.DeserializeDatasetRef(prop.Value, options);
+                    validationDataset = OptimizationDatasetInput.DeserializeOptimizationDatasetInput(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("evaluators"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
+                    List<OptimizationEvaluatorRef> array = new List<OptimizationEvaluatorRef>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(OptimizationEvaluatorRef.DeserializeOptimizationEvaluatorRef(item, options));
                     }
                     evaluators = array;
                     continue;
@@ -221,9 +191,9 @@ namespace Azure.AI.Projects.Agents
             }
             return new OptimizationJobInputs(
                 agent,
-                trainDatasetReference,
-                validationDatasetReference,
-                evaluators ?? new ChangeTrackingList<string>(),
+                trainDataset,
+                validationDataset,
+                evaluators,
                 options0,
                 additionalBinaryDataProperties);
         }

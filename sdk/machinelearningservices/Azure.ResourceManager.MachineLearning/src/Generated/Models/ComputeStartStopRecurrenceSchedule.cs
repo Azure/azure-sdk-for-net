@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The workflow trigger recurrence for ComputeStartStop schedule type. </summary>
     public partial class ComputeStartStopRecurrenceSchedule
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeStartStopRecurrenceSchedule"/>. </summary>
         public ComputeStartStopRecurrenceSchedule()
@@ -59,32 +31,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// TimeZone should follow Windows time zone format. Refer: https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-time-zones?view=windows-11
         /// </param>
         /// <param name="schedule"> [Required] The recurrence schedule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeStartStopRecurrenceSchedule(MachineLearningComputeRecurrenceFrequency? frequency, int? interval, string startTime, string timeZone, MachineLearningComputeRecurrenceSchedule schedule, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeStartStopRecurrenceSchedule(MachineLearningComputeRecurrenceFrequency? frequency, int? interval, string startTime, string timeZone, MachineLearningComputeRecurrenceSchedule schedule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Frequency = frequency;
             Interval = interval;
             StartTime = startTime;
             TimeZone = timeZone;
             Schedule = schedule;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> [Required] The frequency to trigger schedule. </summary>
         [WirePath("frequency")]
         public MachineLearningComputeRecurrenceFrequency? Frequency { get; set; }
+
         /// <summary> [Required] Specifies schedule interval in conjunction with frequency. </summary>
         [WirePath("interval")]
         public int? Interval { get; set; }
+
         /// <summary> The start time in yyyy-MM-ddTHH:mm:ss format. </summary>
         [WirePath("startTime")]
         public string StartTime { get; set; }
+
         /// <summary>
         /// Specifies time zone in which the schedule runs.
         /// TimeZone should follow Windows time zone format. Refer: https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-time-zones?view=windows-11
         /// </summary>
         [WirePath("timeZone")]
         public string TimeZone { get; set; }
+
         /// <summary> [Required] The recurrence schedule. </summary>
         [WirePath("schedule")]
         public MachineLearningComputeRecurrenceSchedule Schedule { get; set; }

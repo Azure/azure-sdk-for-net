@@ -10,6 +10,7 @@ using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PostgreSql
 {
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.PostgreSql
     [ModelReaderWriterBuildable(typeof(DatabaseList))]
     [ModelReaderWriterBuildable(typeof(DatabaseProperties))]
     [ModelReaderWriterBuildable(typeof(DbLevelValidationStatus))]
-    [ModelReaderWriterBuildable(typeof(DbMigrateNetworkStatus))]
+    [ModelReaderWriterBuildable(typeof(DBMigrateNetworkStatus))]
     [ModelReaderWriterBuildable(typeof(DbMigrationStatus))]
     [ModelReaderWriterBuildable(typeof(ErrorAdditionalInfo))]
     [ModelReaderWriterBuildable(typeof(ErrorResponse))]
@@ -46,7 +47,20 @@ namespace Azure.ResourceManager.PostgreSql
     [ModelReaderWriterBuildable(typeof(HighAvailabilityForPatch))]
     [ModelReaderWriterBuildable(typeof(LogSpecification))]
     [ModelReaderWriterBuildable(typeof(LtrBackupOperationResponseProperties))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceEventActionResult))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceEventData))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceEventProperties))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceEventRescheduleContent))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceEventResource))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceEventResourceListResult))]
     [ModelReaderWriterBuildable(typeof(MaintenanceWindowForPatch))]
+    [ModelReaderWriterBuildable(typeof(MajorVersionUpgradePrecheckData))]
+    [ModelReaderWriterBuildable(typeof(MajorVersionUpgradePrecheckErrorInfo))]
+    [ModelReaderWriterBuildable(typeof(MajorVersionUpgradePrecheckPolicyDetail))]
+    [ModelReaderWriterBuildable(typeof(MajorVersionUpgradePrecheckProperties))]
+    [ModelReaderWriterBuildable(typeof(MajorVersionUpgradePrecheckResource))]
+    [ModelReaderWriterBuildable(typeof(MajorVersionUpgradePrecheckResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(MajorVersionUpgradePrecheckResult))]
     [ModelReaderWriterBuildable(typeof(MetricSpecification))]
     [ModelReaderWriterBuildable(typeof(MigrationList))]
     [ModelReaderWriterBuildable(typeof(MigrationProperties))]
@@ -129,6 +143,7 @@ namespace Azure.ResourceManager.PostgreSql
     [ModelReaderWriterBuildable(typeof(PostgreSqlLtrServerBackupOperationData))]
     [ModelReaderWriterBuildable(typeof(PostgreSqlLtrServerBackupOperationList))]
     [ModelReaderWriterBuildable(typeof(PostgreSqlLtrServerBackupOperationResource))]
+    [ModelReaderWriterBuildable(typeof(PostgreSqlMajorVersionUpgradeSequence))]
     [ModelReaderWriterBuildable(typeof(PostgreSqlMigrationAdminCredentials))]
     [ModelReaderWriterBuildable(typeof(PostgreSqlMigrationData))]
     [ModelReaderWriterBuildable(typeof(PostgreSqlMigrationPatch))]
@@ -152,6 +167,9 @@ namespace Azure.ResourceManager.PostgreSql
     [ModelReaderWriterBuildable(typeof(ServerThreatProtectionSettingsModelResource))]
     [ModelReaderWriterBuildable(typeof(ServiceSpecification))]
     [ModelReaderWriterBuildable(typeof(SkuForPatch))]
+    [ModelReaderWriterBuildable(typeof(StartMajorVersionUpgradePrecheckContent))]
+    [ModelReaderWriterBuildable(typeof(StartMajorVersionUpgradePrecheckResult))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TuningOptionsList))]
     [ModelReaderWriterBuildable(typeof(TuningOptionsProperties))]

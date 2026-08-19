@@ -140,7 +140,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="flattenedProperty"> Gets the FlattenedProperty. </param>
         /// <param name="vmGalleryApplications"> Specifies the gallery applications that should be made available. </param>
         /// <param name="computeFleetVmCapacityReservationGroupId"> Gets or sets the Id. </param>
-        /// <param name="extendedLocation"></param>
+        /// <param name="extendedLocation"> The extended location of the resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
@@ -462,7 +462,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         ///       types flattened from an optional ``properties?:`` parent surface as nullable
         ///       on the public property under the unified wrapper-optionality rule.
         /// </param>
-        /// <param name="extendedLocation"></param>
+        /// <param name="extendedLocation"> The extended location of the resource. </param>
         /// <returns> A new <see cref="Tests.ZooData"/> instance for mocking. </returns>
         public static ZooData ZooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string something = default, int? requiredInt = default, ZooFixedMode? requiredFixedEnum = default, ZooProvisioningState? requiredExtensibleEnum = default, string requiredString = default, ExtendedLocation extendedLocation = default)
         {
@@ -611,17 +611,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new IssueTestResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), displayName is null && innerValue is null && innerFlag is null && status is null && updateOnlyValue is null ? default : new IssueTestUpdateProperties(displayName, new IssueTestNestedConfig(innerValue, innerFlag, default), status, default, updateOnlyValue), default);
-        }
-
-        /// <param name="displayName"> Simple property. </param>
-        /// <param name="innerValue"> Inner value that gets flattened. </param>
-        /// <param name="innerFlag"> Inner flag that gets flattened. </param>
-        /// <param name="status"> Read-only property. </param>
-        /// <param name="updateOnlyValue"> Property specific to updates. </param>
-        /// <returns> A new <see cref="Models.IssueTestUpdateProperties"/> instance for mocking. </returns>
-        public static IssueTestUpdateProperties IssueTestUpdateProperties(string displayName = default, string innerValue = default, bool? innerFlag = default, string status = default, string updateOnlyValue = default)
-        {
-            return new IssueTestUpdateProperties(displayName, innerValue is null && innerFlag is null ? default : new IssueTestNestedConfig(innerValue, innerFlag, default), status, default, updateOnlyValue);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -951,7 +940,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"></param>
+        /// <param name="extendedLocation"> The extended location of the resource. </param>
         /// <returns> A new <see cref="Tests.BestPracticeData"/> instance for mocking. </returns>
         public static BestPracticeData BestPracticeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BestPracticeProperties properties = default, ExtendedLocationOptionalModel extendedLocation = default)
         {
@@ -1528,8 +1517,31 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="deleteFinalResultTestMarker"> Gets or sets the Marker. </param>
+        /// <returns> A new <see cref="Tests.DeleteFinalResultTestData"/> instance for mocking. </returns>
+        public static DeleteFinalResultTestData DeleteFinalResultTestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string deleteFinalResultTestMarker = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DeleteFinalResultTestData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                deleteFinalResultTestMarker is null ? default : new DeleteFinalResultTestProperties(deleteFinalResultTestMarker, default),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="customBaseTypeResourceDescription"> Gets or sets the Description. </param>
-        /// <returns> A new <see cref="Tests.CustomBaseTypeResourceData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.CustomBaseTypeResourceData"/> instance for mocking. </returns>
         public static CustomBaseTypeResourceData CustomBaseTypeResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string customBaseTypeResourceDescription = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1952,6 +1964,67 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         public static EventGridPrivateEndpointConnectionProperties EventGridPrivateEndpointConnectionProperties(string status = default, string description = default)
         {
             return new EventGridPrivateEndpointConnectionProperties(status, description, default);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="managedBy"> ID of the resource that manages this resource. </param>
+        /// <param name="solutionsApplicationDefinitionDisplayName"> The managed application definition display name. </param>
+        /// <returns> A new <see cref="Tests.SolutionsApplicationDefinitionData"/> instance for mocking. </returns>
+        public static SolutionsApplicationDefinitionData SolutionsApplicationDefinitionData(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, string managedBy = default, string solutionsApplicationDefinitionDisplayName = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SolutionsApplicationDefinitionData(
+                id,
+                name,
+                @type,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                managedBy,
+                solutionsApplicationDefinitionDisplayName is null ? default : new SolutionsApplicationDefinitionProperties(solutionsApplicationDefinitionDisplayName, default));
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="managedBy"> ID of the resource that manages this resource. </param>
+        /// <returns> A new <see cref="Models.SolutionsGenericResource"/> instance for mocking. </returns>
+        public static SolutionsGenericResource SolutionsGenericResource(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, string managedBy = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SolutionsGenericResource(
+                id,
+                name,
+                @type,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                managedBy);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.SolutionsResource"/> instance for mocking. </returns>
+        public static SolutionsResource SolutionsResource(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SolutionsResource(id, name, @type, tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <param name="tags"> Application definition tags. </param>
+        /// <returns> A new <see cref="Models.SolutionsApplicationDefinitionPatch"/> instance for mocking. </returns>
+        public static SolutionsApplicationDefinitionPatch SolutionsApplicationDefinitionPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SolutionsApplicationDefinitionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
     }
 }

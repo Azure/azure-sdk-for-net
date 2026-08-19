@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -18,12 +17,6 @@ namespace Azure.ResourceManager.NetApp.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetAppElasticBackupVaultPatch"/>. </summary>
-        public NetAppElasticBackupVaultPatch()
-        {
-            Tags = new ChangeTrackingDictionary<string, string>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetAppElasticBackupVaultPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal NetAppElasticBackupVaultPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -31,8 +24,5 @@ namespace Azure.ResourceManager.NetApp.Models
             Tags = tags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
     }
 }

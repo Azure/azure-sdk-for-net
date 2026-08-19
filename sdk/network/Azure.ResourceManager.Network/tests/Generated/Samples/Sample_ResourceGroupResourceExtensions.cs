@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 PrivateLinkServiceAlias = "mypls.00000000-0000-0000-0000-000000000000.azure.privatelinkservice",
             };
-            ArmOperation<PrivateLinkServiceVisibility> lro = await resourceGroupResource.CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(WaitUntil.Completed, location, checkPrivateLinkServiceVisibilityRequest);
+            ArmOperation<PrivateLinkServiceVisibility> lro = await resourceGroupResource.CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(WaitUntil.Completed, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken: System.Threading.CancellationToken.None);
             PrivateLinkServiceVisibility result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("regionName");
-            await foreach (AutoApprovedPrivateLinkService item in resourceGroupResource.GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesAsync(location))
+            await foreach (AutoApprovedPrivateLinkService item in resourceGroupResource.GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesAsync(location, System.Threading.CancellationToken.None))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

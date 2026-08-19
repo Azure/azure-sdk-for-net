@@ -1,14 +1,27 @@
 # Release History
 
-## 2.1.0-beta.4 (Unreleased)
+## 3.0.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added distributed tracing support.
+- Added `SessionId` property to `CreateResponseOptions` allowing to get response in specific session.
 
 ### Breaking Changes
 
 ### Bugs Fixed
+- Removed session ID header from samples as it does not affects the session being used.
 
 ### Other Changes
+
+### Sample Updates
+- Added sample for running responses in specific sessions.
+- Added sample for `ReminderPreviewToolboxTool`.
+
+## 2.1.0-beta.4 (2026-06-30)
+
+### Bugs Fixed
+
+- Fixed issue with stateless encrypted reasoning [issue](https://github.com/Azure/azure-sdk-for-net/issues/59967).
 
 ## 2.1.0-beta.3 (2026-05-29)
 

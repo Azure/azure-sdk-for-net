@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Net;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.AppContainers;
 using Azure.ResourceManager.Models;
@@ -1123,19 +1122,19 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerRegistryWithCustomImage(server, image, default);
         }
 
-        /// <param name="baseOs"> Base OS used to build and run the app. </param>
+        /// <param name="baseOS"> Base OS used to build and run the app. </param>
         /// <param name="platform"> Platform to be used to build and run the app. </param>
         /// <param name="platformVersion"> Platform version to be used to build and run the app. </param>
         /// <param name="environmentVariables"> List of environment variables to be passed to the build, secrets should not be used in environment variable. </param>
         /// <param name="preBuildSteps"> List of steps to perform before the build. </param>
         /// <returns> A new <see cref="Models.ContainerAppsBuildConfiguration"/> instance for mocking. </returns>
-        public static ContainerAppsBuildConfiguration ContainerAppsBuildConfiguration(string baseOs = default, string platform = default, string platformVersion = default, IEnumerable<EnvironmentVariable> environmentVariables = default, IEnumerable<PreBuildStep> preBuildSteps = default)
+        public static ContainerAppsBuildConfiguration ContainerAppsBuildConfiguration(string baseOS = default, string platform = default, string platformVersion = default, IEnumerable<EnvironmentVariable> environmentVariables = default, IEnumerable<PreBuildStep> preBuildSteps = default)
         {
             environmentVariables ??= new ChangeTrackingList<EnvironmentVariable>();
             preBuildSteps ??= new ChangeTrackingList<PreBuildStep>();
 
             return new ContainerAppsBuildConfiguration(
-                baseOs,
+                baseOS,
                 platform,
                 platformVersion,
                 (environmentVariables ?? new ChangeTrackingList<EnvironmentVariable>()).ToList(),
@@ -2214,19 +2213,19 @@ namespace Azure.ResourceManager.AppContainers.Models
                 default);
         }
 
-        /// <param name="baseOs"> Base OS used to build and run the app. </param>
+        /// <param name="baseOS"> Base OS used to build and run the app. </param>
         /// <param name="platform"> Platform to be used to build and run the app. </param>
         /// <param name="platformVersion"> Platform version to be used to build and run the app. </param>
         /// <param name="environmentVariables"> List of environment variables to be passed to the build, secrets should not be used in environment variable. </param>
         /// <param name="preBuildSteps"> List of steps to perform before the build. </param>
         /// <returns> A new <see cref="Models.BuildConfiguration"/> instance for mocking. </returns>
-        public static BuildConfiguration BuildConfiguration(string baseOs = default, string platform = default, string platformVersion = default, IEnumerable<EnvironmentVariable> environmentVariables = default, IEnumerable<PreBuildStep> preBuildSteps = default)
+        public static BuildConfiguration BuildConfiguration(string baseOS = default, string platform = default, string platformVersion = default, IEnumerable<EnvironmentVariable> environmentVariables = default, IEnumerable<PreBuildStep> preBuildSteps = default)
         {
             environmentVariables ??= new ChangeTrackingList<EnvironmentVariable>();
             preBuildSteps ??= new ChangeTrackingList<PreBuildStep>();
 
             return new BuildConfiguration(
-                baseOs,
+                baseOS,
                 platform,
                 platformVersion,
                 (environmentVariables ?? new ChangeTrackingList<EnvironmentVariable>()).ToList(),

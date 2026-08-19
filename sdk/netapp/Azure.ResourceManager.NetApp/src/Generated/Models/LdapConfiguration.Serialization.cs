@@ -17,133 +17,6 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> LDAP configuration. </summary>
     public partial class LdapConfiguration : IJsonModel<LdapConfiguration>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LdapConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LdapConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLdapConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LdapConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LdapConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(LdapConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LdapConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LdapConfiguration IPersistableModel<LdapConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LdapConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LdapConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LdapConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(LdapConfiguration)} does not support writing '{format}' format.");
-            }
-            if (Optional.IsDefined(Domain))
-            {
-                writer.WritePropertyName("domain"u8);
-                writer.WriteStringValue(Domain);
-            }
-            if (Optional.IsCollectionDefined(LdapServers))
-            {
-                writer.WritePropertyName("ldapServers"u8);
-                writer.WriteStartArray();
-                foreach (IPAddress item in LdapServers)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(IsLdapOverTlsEnabled))
-            {
-                writer.WritePropertyName("ldapOverTLS"u8);
-                writer.WriteBooleanValue(IsLdapOverTlsEnabled.Value);
-            }
-            if (Optional.IsDefined(ServerCACertificate))
-            {
-                writer.WritePropertyName("serverCACertificate"u8);
-                writer.WriteStringValue(ServerCACertificate);
-            }
-            if (Optional.IsDefined(CertificateCNHost))
-            {
-                writer.WritePropertyName("certificateCNHost"u8);
-                writer.WriteStringValue(CertificateCNHost);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-        }
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LdapConfiguration IJsonModel<LdapConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LdapConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LdapConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(LdapConfiguration)} does not support reading '{format}' format.");
-            }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLdapConfiguration(document.RootElement, options);
-        }
-
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static LdapConfiguration DeserializeLdapConfiguration(JsonElement element, ModelReaderWriterOptions options)
@@ -157,6 +30,14 @@ namespace Azure.ResourceManager.NetApp.Models
             bool? isLdapOverTlsEnabled = default;
             string serverCACertificate = default;
             string certificateCNHost = default;
+            IList<IPAddress> dnsServers = default;
+            int? ldapPort = default;
+            string userDN = default;
+            string groupDN = default;
+            string netGroupDN = default;
+            BindAuthenticationLevel? bindAuthenticationLevel = default;
+            string bindDN = default;
+            BindPasswordKeyVaultConfig bindPasswordAkvConfig = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -210,6 +91,74 @@ namespace Azure.ResourceManager.NetApp.Models
                     certificateCNHost = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("dnsServers"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<IPAddress> array = new List<IPAddress>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IPAddress.Parse(item.GetString()));
+                        }
+                    }
+                    dnsServers = array;
+                    continue;
+                }
+                if (prop.NameEquals("ldapPort"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ldapPort = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("userDN"u8))
+                {
+                    userDN = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("groupDN"u8))
+                {
+                    groupDN = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("netGroupDN"u8))
+                {
+                    netGroupDN = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("bindAuthenticationLevel"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bindAuthenticationLevel = new BindAuthenticationLevel(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("bindDN"u8))
+                {
+                    bindDN = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("bindPasswordAkvConfig"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bindPasswordAkvConfig = BindPasswordKeyVaultConfig.DeserializeBindPasswordKeyVaultConfig(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -221,6 +170,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 isLdapOverTlsEnabled,
                 serverCACertificate,
                 certificateCNHost,
+                dnsServers ?? new ChangeTrackingList<IPAddress>(),
+                ldapPort,
+                userDN,
+                groupDN,
+                netGroupDN,
+                bindAuthenticationLevel,
+                bindDN,
+                bindPasswordAkvConfig,
                 additionalBinaryDataProperties);
         }
     }

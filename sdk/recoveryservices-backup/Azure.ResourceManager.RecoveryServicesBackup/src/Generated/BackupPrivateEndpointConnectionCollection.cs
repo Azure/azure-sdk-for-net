@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             TryGetApiVersion(BackupPrivateEndpointConnectionResource.ResourceType, out string backupPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionResourcesRestClient = new PrivateEndpointConnectionResources(_privateEndpointConnectionResourcesClientDiagnostics, Pipeline, Endpoint, backupPrivateEndpointConnectionApiVersion ?? "2026-01-31-preview");
+            _privateEndpointConnectionResourcesRestClient = new PrivateEndpointConnectionResources(_privateEndpointConnectionResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backupPrivateEndpointConnectionApiVersion ?? "2026-01-31-preview");
             ValidateResourceId(id);
         }
 

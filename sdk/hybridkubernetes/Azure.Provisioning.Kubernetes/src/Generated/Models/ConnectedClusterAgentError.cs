@@ -71,7 +71,11 @@ namespace Azure.Provisioning.Kubernetes
             _message = DefineProperty<string>(nameof(Message), new string[] { "message" }, isOutput: true);
             _severity = DefineProperty<string>(nameof(Severity), new string[] { "severity" }, isOutput: true);
             _component = DefineProperty<string>(nameof(Component), new string[] { "component" }, isOutput: true);
-            _occurredOn = DefineProperty<DateTimeOffset>(nameof(OccurredOn), new string[] { "time" }, isOutput: true);
+            _occurredOn = DefineProperty<DateTimeOffset>(nameof(OccurredOn), new string[] { "time" }, isOutput: true, format: "O");
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ConnectedClusterAgentError that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

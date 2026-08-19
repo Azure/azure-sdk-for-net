@@ -134,6 +134,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WritePropertyName("monitoringSettings"u8);
                 writer.WriteObjectValue(MonitoringSettings, options);
             }
+            if (Optional.IsDefined(CostManagementSettings))
+            {
+                writer.WritePropertyName("costManagementSettings"u8);
+                writer.WriteObjectValue(CostManagementSettings, options);
+            }
             if (Optional.IsDefined(RestoreSettings))
             {
                 writer.WritePropertyName("restoreSettings"u8);
@@ -227,6 +232,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             BackupStorageVersion? backupStorageVersion = default;
             VaultPublicNetworkAccess? publicNetworkAccess = default;
             VaultMonitoringSettings monitoringSettings = default;
+            CostManagementSettings costManagementSettings = default;
             RestoreSettings restoreSettings = default;
             VaultPropertiesRedundancySettings redundancySettings = default;
             RecoveryServicesSecuritySettings securitySettings = default;
@@ -336,6 +342,15 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     monitoringSettings = VaultMonitoringSettings.DeserializeVaultMonitoringSettings(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("costManagementSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    costManagementSettings = CostManagementSettings.DeserializeCostManagementSettings(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("restoreSettings"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -419,6 +434,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 backupStorageVersion,
                 publicNetworkAccess,
                 monitoringSettings,
+                costManagementSettings,
                 restoreSettings,
                 redundancySettings,
                 securitySettings,

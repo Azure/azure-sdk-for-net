@@ -304,7 +304,7 @@ namespace Azure.Search.Documents.Models
                 threshold,
                 filterOverride,
                 perDocumentVectorLimit,
-                VectorQueryKind.ImageUrl,
+                VectorQueryKind.ImageUri,
                 additionalBinaryDataProperties: null,
                 url);
         }
@@ -702,7 +702,10 @@ namespace Azure.Search.Documents.Models
             return new TextWeights(weights, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Base type for functions that can modify document scores during ranking. </summary>
+        /// <summary>
+        /// Base type for functions that can modify document scores during ranking.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Indexes.Models.DistanceScoringFunction"/>, <see cref="Indexes.Models.FreshnessScoringFunction"/>, <see cref="Indexes.Models.MagnitudeScoringFunction"/>, and <see cref="Indexes.Models.TagScoringFunction"/>.
+        /// </summary>
         /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
         /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
         /// <param name="interpolation"> A value indicating how boosting will be interpolated across document scores; defaults to "Linear". </param>
@@ -1372,7 +1375,10 @@ namespace Azure.Search.Documents.Models
             return new PatternReplaceCharFilter("#Microsoft.Azure.Search.PatternReplaceCharFilter", name, additionalBinaryDataProperties: null, pattern, replacement);
         }
 
-        /// <summary> Base type for normalizers. </summary>
+        /// <summary>
+        /// Base type for normalizers.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Indexes.Models.CustomNormalizer"/>.
+        /// </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the char filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <returns> A new <see cref="Indexes.Models.LexicalNormalizer"/> instance for mocking. </returns>
@@ -3107,7 +3113,10 @@ namespace Azure.Search.Documents.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Base type for skills. </summary>
+        /// <summary>
+        /// Base type for skills.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Indexes.Models.ConditionalSkill"/>, <see cref="Indexes.Models.KeyPhraseExtractionSkill"/>, <see cref="Indexes.Models.OcrSkill"/>, <see cref="Indexes.Models.ImageAnalysisSkill"/>, <see cref="Indexes.Models.LanguageDetectionSkill"/>, <see cref="Indexes.Models.ShaperSkill"/>, <see cref="Indexes.Models.MergeSkill"/>, <see cref="Indexes.Models.SentimentSkill"/>, <see cref="Indexes.Models.EntityLinkingSkill"/>, <see cref="Indexes.Models.EntityRecognitionSkill"/>, <see cref="Indexes.Models.PiiDetectionSkill"/>, <see cref="Indexes.Models.SplitSkill"/>, <see cref="Indexes.Models.CustomEntityLookupSkill"/>, <see cref="Indexes.Models.TextTranslationSkill"/>, <see cref="Indexes.Models.DocumentExtractionSkill"/>, <see cref="Indexes.Models.DocumentIntelligenceLayoutSkill"/>, <see cref="Indexes.Models.WebApiSkill"/>, <see cref="Indexes.Models.AzureMachineLearningSkill"/>, <see cref="Indexes.Models.AzureOpenAIEmbeddingSkill"/>, <see cref="Indexes.Models.VisionVectorizeSkill"/>, <see cref="Indexes.Models.ContentUnderstandingSkill"/>, and <see cref="Indexes.Models.ChatCompletionSkill"/>.
+        /// </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
         /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
@@ -5586,6 +5595,23 @@ namespace Azure.Search.Documents.Models
         public static SearchOptions SearchOptions(bool? includeTotalCount, IEnumerable<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IEnumerable<string> scoringParameters, string scoringProfile, QueryDebugMode? debug, string searchText, string searchFieldsRaw, SearchMode? searchMode, string selectRaw, int? skip, int? size, string semanticConfigurationName, SemanticErrorMode? semanticErrorMode, int? semanticMaxWaitInMilliseconds, string semanticQuery, string queryAnswerRaw, string queryCaptionRaw, IEnumerable<VectorQuery> vectorQueries, VectorFilterMode? filterMode)
         {
             return SearchOptions(includeTotalCount: includeTotalCount, facets: facets, filter: filter, highlightFieldsRaw: highlightFieldsRaw, highlightPostTag: highlightPostTag, highlightPreTag: highlightPreTag, minimumCoverage: minimumCoverage, orderByRaw: orderByRaw, queryType: queryType, scoringStatistics: scoringStatistics, sessionId: sessionId, scoringParameters: scoringParameters, scoringProfile: scoringProfile, debug: debug, searchText: searchText, searchFieldsRaw: searchFieldsRaw, searchMode: searchMode, queryLanguage: default, querySpeller: default, selectRaw: selectRaw, skip: skip, size: size, semanticConfigurationName: semanticConfigurationName, semanticErrorMode: semanticErrorMode, semanticMaxWaitInMilliseconds: semanticMaxWaitInMilliseconds, semanticQuery: semanticQuery, queryAnswerRaw: queryAnswerRaw, queryCaptionRaw: queryCaptionRaw, queryRewritesRaw: default, semanticFields: default, vectorQueries: vectorQueries, filterMode: filterMode, hybridSearch: default);
+        }
+
+        /// <summary>
+        /// The query parameters for vector and hybrid search queries.
+        ///             Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.VectorizedQuery"/>, <see cref="Models.VectorizableTextQuery"/>, <see cref="Models.VectorizableImageUrlQuery"/>, and <see cref="Models.VectorizableImageBinaryQuery"/>.
+        /// </summary>
+        /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
+        /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
+        /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </param>
+        /// <param name="oversampling"> Oversampling factor. Minimum value is 1. It overrides the 'defaultOversampling' parameter configured in the index definition. It can be set only when 'rerankWithOriginalVectors' is true. This parameter is only permitted when a compression method is used on the underlying vector field. </param>
+        /// <param name="weight"> Relative weight of the vector query when compared to other vector query and/or the text query within the same search request. This value is used when combining the results of multiple ranking lists produced by the different vector queries and/or the results retrieved through the text query. The higher the weight, the higher the documents that matched that query will be in the final ranking. Default is 1.0 and the value needs to be a positive number larger than zero. </param>
+        /// <param name="kind"> Type of query. </param>
+        /// <returns> A new <see cref="Models.VectorQuery"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VectorQuery VectorQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, string kind)
+        {
+            return VectorQuery(kNearestNeighborsCount: kNearestNeighborsCount, fieldsRaw: fieldsRaw, exhaustive: exhaustive, oversampling: oversampling, weight: weight, threshold: default, filterOverride: default, perDocumentVectorLimit: default, kind: kind);
         }
 
         /// <summary> The query parameters to use for vector search when a raw vector value is provided. </summary>

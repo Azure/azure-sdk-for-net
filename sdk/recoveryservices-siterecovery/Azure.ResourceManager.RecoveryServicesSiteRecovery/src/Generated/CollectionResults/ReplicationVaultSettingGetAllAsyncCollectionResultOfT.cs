@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                     yield break;
                 }
                 SiteRecoveryVaultSettingListResult result = SiteRecoveryVaultSettingListResult.FromResponse(response);
-                yield return Page<SiteRecoveryVaultSettingData>.FromValues((IReadOnlyList<SiteRecoveryVaultSettingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SiteRecoveryVaultSettingData>.FromValues((IReadOnlyList<SiteRecoveryVaultSettingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

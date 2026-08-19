@@ -53,6 +53,10 @@ model BarSettingsResource is ProxyResource<BarSettingsProperties> {
   property: BarQuotaProperties;
   anotherProperty: BarQuotaProperties;
   flattenedNestedProperty: BarNestedQuotaProperties;
+  /**
+   * Optional single-property model used to verify generated flattened collection
+   * getters initialize the nested collection wrapper instead of returning null.
+   */
   optionalFlattenProperty?: optionalFlattenPropertyType;
   discriminatorProperty: LimitJsonObject;
 }
@@ -73,6 +77,9 @@ model BarMiddleNestedQuotaProperties extends BarDeeplyNestedQuotaProperties {
 }
 
 model optionalFlattenPropertyType {
+  /**
+   * Required collection used by the optional flattened model scenario.
+   */
   randomCollectionProp: string[];
 }
 

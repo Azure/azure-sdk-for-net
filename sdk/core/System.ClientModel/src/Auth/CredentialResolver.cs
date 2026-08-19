@@ -44,7 +44,10 @@ public abstract class CredentialResolver
     /// (including caching, normalization, and ordering). Returns the resolved
     /// <see cref="AuthenticationTokenProvider"/>, or <see langword="null"/> if
     /// no resolver in the chain claims the child section. Always non-null;
-    /// resolvers that do not need the chain can ignore the callback.</param>
+    /// resolvers that do not need the chain can ignore the callback.
+    /// Must only be invoked synchronously during this call; capturing the
+    /// callback and invoking it after <c>TryResolve</c> returns will throw
+    /// <see cref="InvalidOperationException"/>.</param>
     /// <param name="provider">When this method returns <see langword="true"/>,
     /// contains the constructed provider; otherwise <see langword="null"/>.</param>
     /// <returns><see langword="true"/> if this resolver recognized and handled
@@ -56,17 +59,58 @@ public abstract class CredentialResolver
     /// entries) can recurse back into the active engine for each child entry
     /// without re-implementing the engine's caching, normalization, or
     /// ordering logic — and without requiring the resolver to know about
-    /// credential sources owned by other packages. The default implementation
-    /// ignores <paramref name="resolveChild"/> and forwards to
-    /// <see cref="TryResolve(IConfigurationSection, out AuthenticationTokenProvider?)"/>,
-    /// so existing resolvers continue to work unchanged.
+    /// credential sources owned by other packages. Subclasses override
+    /// <see cref="TryResolveCore"/> to participate; this method wraps
+    /// <paramref name="resolveChild"/> with a guard that enforces the
+    /// synchronous-use contract and then forwards to <c>TryResolveCore</c>.
     /// </remarks>
-    public virtual bool TryResolve(
+    public bool TryResolve(
         IConfigurationSection credentialSection,
         Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild,
         [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
     {
         Argument.AssertNotNull(resolveChild, nameof(resolveChild));
+
+        bool returned = false;
+        Func<IConfigurationSection, AuthenticationTokenProvider?> guarded = section =>
+        {
+            if (Threading.Volatile.Read(ref returned))
+            {
+                throw new InvalidOperationException(
+                    "resolveChild was invoked after TryResolve returned. The callback must only be " +
+                    "called synchronously during TryResolve.");
+            }
+            return resolveChild(section);
+        };
+
+        try
+        {
+            return TryResolveCore(credentialSection, guarded, out provider);
+        }
+        finally
+        {
+            Threading.Volatile.Write(ref returned, true);
+        }
+    }
+
+    /// <summary>
+    /// Override to implement chain-aware resolution. The default implementation
+    /// ignores <paramref name="resolveChild"/> and forwards to
+    /// <see cref="TryResolve(IConfigurationSection, out AuthenticationTokenProvider?)"/>.
+    /// </summary>
+    /// <param name="credentialSection">The credential configuration section.</param>
+    /// <param name="resolveChild">The chain callback (already guarded by the
+    /// public <see cref="TryResolve(IConfigurationSection, Func{IConfigurationSection, AuthenticationTokenProvider?}, out AuthenticationTokenProvider?)"/>
+    /// wrapper). Invoke synchronously to recurse into the chain; do not
+    /// capture for later use.</param>
+    /// <param name="provider">When this method returns <see langword="true"/>,
+    /// contains the constructed provider; otherwise <see langword="null"/>.</param>
+    /// <returns><see langword="true"/> if this resolver handled the section.</returns>
+    protected virtual bool TryResolveCore(
+        IConfigurationSection credentialSection,
+        Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild,
+        [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+    {
         return TryResolve(credentialSection, out provider);
     }
 }

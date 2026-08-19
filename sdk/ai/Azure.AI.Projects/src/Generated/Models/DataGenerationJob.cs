@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Data Generation Job resource. </summary>
+    [Experimental("AAIP001")]
     public partial class DataGenerationJob
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -27,7 +29,7 @@ namespace Azure.AI.Projects
         /// <param name="createdAt"> The timestamp when the job was created, represented in Unix time (seconds since January 1, 1970). </param>
         /// <param name="finishedAt"> The timestamp when the job was finished, represented in Unix time (seconds since January 1, 1970). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataGenerationJob(string id, DataGenerationJobInputs inputs, DataGenerationJobResult result, JobStatus status, FoundryOpenAIError error, DateTimeOffset createdAt, DateTimeOffset? finishedAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataGenerationJob(string id, DataGenerationJobInputs inputs, DataGenerationJobResult result, ProjectsJobStatus status, FoundryOpenAIError error, DateTimeOffset createdAt, DateTimeOffset? finishedAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Inputs = inputs;
@@ -49,7 +51,7 @@ namespace Azure.AI.Projects
         public DataGenerationJobResult Result { get; }
 
         /// <summary> Current lifecycle status. </summary>
-        public JobStatus Status { get; }
+        public ProjectsJobStatus Status { get; }
 
         /// <summary> The timestamp when the job was created, represented in Unix time (seconds since January 1, 1970). </summary>
         public DateTimeOffset CreatedAt { get; }

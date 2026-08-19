@@ -45,19 +45,19 @@ namespace Azure.ResourceManager.Chaos.Mocking
 
         private ClientDiagnostics ExperimentsClientDiagnostics => _experimentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Chaos.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Experiments ExperimentsRestClient => _experimentsRestClient ??= new Experiments(ExperimentsClientDiagnostics, Pipeline, Endpoint, "2026-05-01-preview");
+        private Experiments ExperimentsRestClient => _experimentsRestClient ??= new Experiments(ExperimentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics PrivateAccessesClientDiagnostics => _privateAccessesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Chaos.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PrivateAccesses PrivateAccessesRestClient => _privateAccessesRestClient ??= new PrivateAccesses(PrivateAccessesClientDiagnostics, Pipeline, Endpoint, "2026-05-01-preview");
+        private PrivateAccesses PrivateAccessesRestClient => _privateAccessesRestClient ??= new PrivateAccesses(PrivateAccessesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics WorkspacesClientDiagnostics => _workspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Chaos.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(WorkspacesClientDiagnostics, Pipeline, Endpoint, "2026-05-01-preview");
+        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(WorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics OperationStatusesClientDiagnostics => _operationStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Chaos.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OperationStatuses OperationStatusesRestClient => _operationStatusesRestClient ??= new OperationStatuses(OperationStatusesClientDiagnostics, Pipeline, Endpoint, "2026-05-01-preview");
+        private OperationStatuses OperationStatusesRestClient => _operationStatusesRestClient ??= new OperationStatuses(OperationStatusesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
 
         /// <summary> Gets a collection of ChaosActions in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
                 };
                 HttpMessage message = OperationStatusesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content), result);
+                Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerChaosContext.Default), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
                 };
                 HttpMessage message = OperationStatusesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content), result);
+                Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerChaosContext.Default), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

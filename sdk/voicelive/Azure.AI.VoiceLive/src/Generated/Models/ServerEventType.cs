@@ -80,6 +80,8 @@ namespace Azure.AI.VoiceLive
         private const string OutputAudioBufferClearedValue = "output_audio_buffer.cleared";
         /// <summary> Audio transcript annotation added. </summary>
         private const string ResponseAudioTranscriptAnnotationAddedValue = "response.audio_transcript.annotation.added";
+        /// <summary> Invocation passthrough delta from hosted agent. </summary>
+        private const string ResponseInvocationDeltaValue = "response.invocation.delta";
 
         /// <summary> Initializes a new instance of <see cref="ServerEventType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -255,6 +257,9 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Audio transcript annotation added. </summary>
         public static ServerEventType ResponseAudioTranscriptAnnotationAdded { get; } = new ServerEventType(ResponseAudioTranscriptAnnotationAddedValue);
+
+        /// <summary> Invocation passthrough delta from hosted agent. </summary>
+        public static ServerEventType ResponseInvocationDelta { get; } = new ServerEventType(ResponseInvocationDeltaValue);
 
         /// <summary> Determines if two <see cref="ServerEventType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

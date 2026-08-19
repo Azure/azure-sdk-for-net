@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
             RouteMapResource routeMap = client.GetRouteMapResource(routeMapResourceId);
 
             // invoke the operation
-            await routeMap.DeleteAsync(WaitUntil.Completed);
+            await routeMap.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -102,7 +102,6 @@ namespace Azure.ResourceManager.Network.Samples
                 AssociatedOutboundConnections = { },
                 Rules = {new RouteMapRule
 {
-Name = "rule1",
 MatchCriteria = {new RouteCriterion
 {
 RoutePrefix = {"10.0.0.0/8"},
@@ -123,7 +122,7 @@ AsPath = {"22334"},
 NextStepIfMatched = RouteMapNextStepBehavior.Continue,
 }},
             };
-            ArmOperation<RouteMapResource> lro = await routeMap.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<RouteMapResource> lro = await routeMap.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             RouteMapResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

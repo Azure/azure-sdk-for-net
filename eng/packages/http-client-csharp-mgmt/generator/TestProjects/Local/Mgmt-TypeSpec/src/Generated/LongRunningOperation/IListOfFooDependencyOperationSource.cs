@@ -5,10 +5,7 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,7 +29,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         IList<FooDependency> IOperationSource<IList<FooDependency>>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return ModelReaderWriter.Read<IList<FooDependency>>(new BinaryData(Encoding.UTF8.GetBytes(document.RootElement.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+            IList<FooDependency> value = default;
+            if (document.RootElement.ValueKind != JsonValueKind.Null)
+            {
+                List<FooDependency> valueResult = new List<FooDependency>();
+                foreach (JsonElement valueResultElement in document.RootElement.EnumerateArray())
+                {
+                    valueResult.Add(FooDependency.DeserializeFooDependency(valueResultElement, ModelSerializationExtensions.WireOptions));
+                }
+                value = valueResult;
+            }
+            return value;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -41,7 +48,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         async ValueTask<IList<FooDependency>> IOperationSource<IList<FooDependency>>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ModelReaderWriter.Read<IList<FooDependency>>(new BinaryData(Encoding.UTF8.GetBytes(document.RootElement.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+            IList<FooDependency> value = default;
+            if (document.RootElement.ValueKind != JsonValueKind.Null)
+            {
+                List<FooDependency> valueResult = new List<FooDependency>();
+                foreach (JsonElement valueResultElement in document.RootElement.EnumerateArray())
+                {
+                    valueResult.Add(FooDependency.DeserializeFooDependency(valueResultElement, ModelSerializationExtensions.WireOptions));
+                }
+                value = valueResult;
+            }
+            return value;
         }
     }
 }

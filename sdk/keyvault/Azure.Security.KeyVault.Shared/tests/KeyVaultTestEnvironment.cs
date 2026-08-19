@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.TestFramework;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 
@@ -73,6 +73,13 @@ namespace Azure.Security.KeyVault.Tests
         /// Test preparation was previously successfully creating premium SKUs (not available in every cloud), so assume premium.
         /// </remarks>
         public string Sku => GetOptionalVariable("SKU") ?? "premium";
+
+        /// <summary>
+        /// Gets the identifier of an existing key in the external HSM connected to the Managed HSM under
+        /// <see cref="ManagedHsmUrl"/>. Required for External Key Management (EKM) live tests; tests should
+        /// skip themselves when this is null.
+        /// </summary>
+        public string EkmExternalId => GetRecordedOptionalVariable("EKM_EXTERNAL_ID");
 
         /// <summary>
         /// A value indicating whether EKM is enabled.

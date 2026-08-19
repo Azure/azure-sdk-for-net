@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> The PolicyStateType. </summary>
+    /// <summary></summary>
     public readonly partial struct PolicyStateType : IEquatable<PolicyStateType>
     {
         private readonly string _value;
+        /// <summary> default. </summary>
+        private const string DefaultValue = "default";
+        /// <summary> latest. </summary>
+        private const string LatestValue = "latest";
 
         /// <summary> Initializes a new instance of <see cref="PolicyStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PolicyStateType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "default";
-        private const string LatestValue = "latest";
+            _value = value;
+        }
 
         /// <summary> default. </summary>
         public static PolicyStateType Default { get; } = new PolicyStateType(DefaultValue);
+
         /// <summary> latest. </summary>
         public static PolicyStateType Latest { get; } = new PolicyStateType(LatestValue);
+
         /// <summary> Determines if two <see cref="PolicyStateType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PolicyStateType left, PolicyStateType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PolicyStateType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PolicyStateType left, PolicyStateType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PolicyStateType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PolicyStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PolicyStateType(string value) => new PolicyStateType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PolicyStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PolicyStateType?(string value) => value == null ? null : new PolicyStateType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PolicyStateType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PolicyStateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

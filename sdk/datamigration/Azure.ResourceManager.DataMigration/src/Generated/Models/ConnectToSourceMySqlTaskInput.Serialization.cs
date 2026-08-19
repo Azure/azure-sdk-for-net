@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToSourceMySqlTaskInput : IUtf8JsonSerializable, IJsonModel<ConnectToSourceMySqlTaskInput>
+    /// <summary> Input for the task that validates MySQL database connection. </summary>
+    public partial class ConnectToSourceMySqlTaskInput : IJsonModel<ConnectToSourceMySqlTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToSourceMySqlTaskInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceMySqlTaskInput"/> for deserialization. </summary>
+        internal ConnectToSourceMySqlTaskInput()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ConnectToSourceMySqlTaskInput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceMySqlTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeConnectToSourceMySqlTaskInput(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConnectToSourceMySqlTaskInput)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceMySqlTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectToSourceMySqlTaskInput)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ConnectToSourceMySqlTaskInput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConnectToSourceMySqlTaskInput IPersistableModel<ConnectToSourceMySqlTaskInput>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ConnectToSourceMySqlTaskInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConnectToSourceMySqlTaskInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +74,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceMySqlTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceMySqlTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConnectToSourceMySqlTaskInput)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("sourceConnectionInfo"u8);
             writer.WriteObjectValue(SourceConnectionInfo, options);
             if (Optional.IsDefined(TargetPlatform))
@@ -51,15 +96,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("isOfflineMigration"u8);
                 writer.WriteBooleanValue(IsOfflineMigration.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -68,22 +113,27 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
         }
 
-        ConnectToSourceMySqlTaskInput IJsonModel<ConnectToSourceMySqlTaskInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConnectToSourceMySqlTaskInput IJsonModel<ConnectToSourceMySqlTaskInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ConnectToSourceMySqlTaskInput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceMySqlTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceMySqlTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConnectToSourceMySqlTaskInput)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConnectToSourceMySqlTaskInput(document.RootElement, options);
         }
 
-        internal static ConnectToSourceMySqlTaskInput DeserializeConnectToSourceMySqlTaskInput(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ConnectToSourceMySqlTaskInput DeserializeConnectToSourceMySqlTaskInput(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -92,80 +142,47 @@ namespace Azure.ResourceManager.DataMigration.Models
             DataMigrationMySqlTargetPlatformType? targetPlatform = default;
             ServerLevelPermissionsGroup? checkPermissionsGroup = default;
             bool? isOfflineMigration = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceConnectionInfo"u8))
+                if (prop.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = DataMigrationMySqlConnectionInfo.DeserializeDataMigrationMySqlConnectionInfo(property.Value, options);
+                    sourceConnectionInfo = DataMigrationMySqlConnectionInfo.DeserializeDataMigrationMySqlConnectionInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("targetPlatform"u8))
+                if (prop.NameEquals("targetPlatform"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    targetPlatform = new DataMigrationMySqlTargetPlatformType(property.Value.GetString());
+                    targetPlatform = new DataMigrationMySqlTargetPlatformType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("checkPermissionsGroup"u8))
+                if (prop.NameEquals("checkPermissionsGroup"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    checkPermissionsGroup = property.Value.GetString().ToServerLevelPermissionsGroup();
+                    checkPermissionsGroup = prop.Value.GetString().ToServerLevelPermissionsGroup();
                     continue;
                 }
-                if (property.NameEquals("isOfflineMigration"u8))
+                if (prop.NameEquals("isOfflineMigration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isOfflineMigration = property.Value.GetBoolean();
+                    isOfflineMigration = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ConnectToSourceMySqlTaskInput(sourceConnectionInfo, targetPlatform, checkPermissionsGroup, isOfflineMigration, serializedAdditionalRawData);
+            return new ConnectToSourceMySqlTaskInput(sourceConnectionInfo, targetPlatform, checkPermissionsGroup, isOfflineMigration, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ConnectToSourceMySqlTaskInput>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceMySqlTaskInput>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ConnectToSourceMySqlTaskInput)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ConnectToSourceMySqlTaskInput IPersistableModel<ConnectToSourceMySqlTaskInput>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceMySqlTaskInput>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeConnectToSourceMySqlTaskInput(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ConnectToSourceMySqlTaskInput)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ConnectToSourceMySqlTaskInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

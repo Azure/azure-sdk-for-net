@@ -84,20 +84,20 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("assemblyVersion"u8);
                 writer.WriteStringValue(AssemblyVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(OsType))
+            if (options.Format != "W" && Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OsType);
+                writer.WriteStringValue(OSType);
             }
-            if (options.Format != "W" && Optional.IsDefined(OsSku))
+            if (options.Format != "W" && Optional.IsDefined(OSSku))
             {
                 writer.WritePropertyName("osSku"u8);
-                writer.WriteStringValue(OsSku);
+                writer.WriteStringValue(OSSku);
             }
-            if (options.Format != "W" && Optional.IsDefined(OsVersion))
+            if (options.Format != "W" && Optional.IsDefined(OSVersion))
             {
                 writer.WritePropertyName("osVersion"u8);
-                writer.WriteStringValue(OsVersion);
+                writer.WriteStringValue(OSVersion);
             }
             if (options.Format != "W" && Optional.IsDefined(BuildNumber))
             {

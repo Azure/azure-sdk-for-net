@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             //   2. Replace Assert.CatchAsync with proper assertion on revokeOp.HasCompleted / revokeOp.Value.Result
             //   3. Re-record session recordings
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 7e: Testing Device.Revoke (ARM-created device, no policy attached)...");
-            var revokeRequest = new DeviceCredentialsRevokeRequest() { Disable = false };
+            var revokeRequest = new DeviceCredentialsRevokeContent() { Disable = false };
 
             // In Record mode: SDK throws RequestFailedException (status 200, ErrorCode 400231).
             // In Playback mode: DiagnosticScopeValidatingInterceptor wraps the RequestFailedException
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 "data+that+is+intentionally+invalid+for+testing+purposes+only+AAAAAAAAAA==\n" +
                 "-----END CERTIFICATE-----";
 
-            var activateRequest = new ActivateBringYourOwnRootRequest(fakeCertificateChain);
+            var activateRequest = new ActivateBringYourOwnRootContent(fakeCertificateChain);
 
             var activateException = Assert.CatchAsync<Exception>(async () =>
             {

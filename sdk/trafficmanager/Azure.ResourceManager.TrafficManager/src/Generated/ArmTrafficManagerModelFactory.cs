@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.TrafficManager.Models
             return new TrafficManagerResourceData(id, name, resourceType, default);
         }
 
-        /// <param name="operationResult"> The result of the operation or request. </param>
+        /// <param name="isSuccessful"> The result of the operation or request. </param>
         /// <returns> A new <see cref="Models.TrafficManagerDeleteOperationResult"/> instance for mocking. </returns>
-        public static TrafficManagerDeleteOperationResult TrafficManagerDeleteOperationResult(bool? operationResult = default)
+        public static TrafficManagerDeleteOperationResult TrafficManagerDeleteOperationResult(bool? isSuccessful = default)
         {
-            return new TrafficManagerDeleteOperationResult(operationResult, default);
+            return new TrafficManagerDeleteOperationResult(isSuccessful, default);
         }
 
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </param>
@@ -110,8 +110,9 @@ namespace Azure.ResourceManager.TrafficManager.Models
         /// <param name="trafficViewEnrollmentStatus"> Indicates whether Traffic View is 'Enabled' or 'Disabled' for the Traffic Manager profile. Null, indicates 'Disabled'. Enabling this feature will increase the cost of the Traffic Manage profile. </param>
         /// <param name="allowedEndpointRecordTypes"> The list of allowed endpoint record types. </param>
         /// <param name="maxReturn"> Maximum number of endpoints to be returned for MultiValue routing type. </param>
+        /// <param name="recordType"> When record type is set, a traffic manager profile will allow only endpoints that match this type. </param>
         /// <returns> A new <see cref="TrafficManager.TrafficManagerProfileData"/> instance for mocking. </returns>
-        public static TrafficManagerProfileData TrafficManagerProfileData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, IDictionary<string, string> tags = default, AzureLocation? location = default, TrafficManagerProfileStatus? profileStatus = default, TrafficRoutingMethod? trafficRoutingMethod = default, TrafficManagerDnsConfig dnsConfig = default, TrafficManagerMonitorConfig monitorConfig = default, IEnumerable<TrafficManagerEndpointData> endpoints = default, TrafficViewEnrollmentStatus? trafficViewEnrollmentStatus = default, IEnumerable<AllowedEndpointRecordType> allowedEndpointRecordTypes = default, long? maxReturn = default)
+        public static TrafficManagerProfileData TrafficManagerProfileData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, IDictionary<string, string> tags = default, AzureLocation? location = default, TrafficManagerProfileStatus? profileStatus = default, TrafficRoutingMethod? trafficRoutingMethod = default, TrafficManagerDnsConfig dnsConfig = default, TrafficManagerMonitorConfig monitorConfig = default, IEnumerable<TrafficManagerEndpointData> endpoints = default, TrafficViewEnrollmentStatus? trafficViewEnrollmentStatus = default, IEnumerable<AllowedEndpointRecordType> allowedEndpointRecordTypes = default, long? maxReturn = default, TrafficManagerRecordType? recordType = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 default,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                profileStatus is null && trafficRoutingMethod is null && dnsConfig is null && monitorConfig is null && endpoints is null && trafficViewEnrollmentStatus is null && allowedEndpointRecordTypes is null && maxReturn is null ? default : new ProfileProperties(
+                profileStatus is null && trafficRoutingMethod is null && dnsConfig is null && monitorConfig is null && endpoints is null && trafficViewEnrollmentStatus is null && allowedEndpointRecordTypes is null && maxReturn is null && recordType is null ? default : new ProfileProperties(
                     profileStatus,
                     trafficRoutingMethod,
                     dnsConfig,
@@ -131,6 +132,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     trafficViewEnrollmentStatus,
                     (allowedEndpointRecordTypes ?? new ChangeTrackingList<AllowedEndpointRecordType>()).ToList(),
                     maxReturn,
+                    recordType,
                     default));
         }
 

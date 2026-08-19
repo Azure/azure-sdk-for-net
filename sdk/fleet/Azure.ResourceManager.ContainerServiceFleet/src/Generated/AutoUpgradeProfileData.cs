@@ -141,11 +141,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         ///   By default, this is set to False.
         ///   For more information on AKS LTS, please see https://learn.microsoft.com/en-us/azure/aks/long-term-support
         /// </summary>
-        public bool? LongTermSupport
+        public bool? IsLongTermSupport
         {
             get
             {
-                return Properties is null ? default : Properties.LongTermSupport;
+                return Properties is null ? default : Properties.IsLongTermSupport;
             }
             set
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     Properties = new AutoUpgradeProfileProperties();
                 }
-                Properties.LongTermSupport = value;
+                Properties.IsLongTermSupport = value;
             }
         }
 

@@ -31,6 +31,7 @@
   <!-- Include shared code from Azure.Core. CopyToOutputDirectory is required to make roslyn reduce work -->
   <ItemGroup>
     <Compile Include="
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\AzurePipelineResponse.cs;
       $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\AzureKeyCredentialPolicy.cs;
       $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\RawRequestUriBuilder.cs;
       $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\TypeFormatters.cs;
@@ -50,6 +51,7 @@
       $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\OperationInternalOfT.cs;
       $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\AsyncLockWithValue.cs;
       $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\NextLinkOperationImplementation.cs;
+      $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\NoValueResponseOfT.cs;
       $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\IOperationSource.cs;
       $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\TaskExtensions.cs;
       $(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\OperationPoller.cs;

@@ -126,15 +126,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(BmcIpv4Address))
+            if (options.Format != "W" && Optional.IsDefined(BmcIPv4Address))
             {
                 writer.WritePropertyName("bmcIpv4Address"u8);
-                writer.WriteStringValue(BmcIpv4Address);
+                writer.WriteStringValue(BmcIPv4Address);
             }
-            if (options.Format != "W" && Optional.IsDefined(BmcIpv6Address))
+            if (options.Format != "W" && Optional.IsDefined(BmcIPv6Address))
             {
                 writer.WritePropertyName("bmcIpv6Address"u8);
-                writer.WriteStringValue(BmcIpv6Address);
+                writer.WriteStringValue(BmcIPv6Address);
             }
             if (options.Format != "W" && Optional.IsDefined(CACertificate))
             {
@@ -215,6 +215,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(MonitoringConfigurationStatus))
+            {
+                writer.WritePropertyName("monitoringConfigurationStatus"u8);
+                writer.WriteObjectValue(MonitoringConfigurationStatus, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OamIPv4Address))
             {
@@ -335,8 +340,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             string serialNumber = default;
             IReadOnlyList<NetworkCloudActionState> actionStates = default;
             IReadOnlyList<ResourceIdentifier> associatedResourceIds = default;
-            string bmcIpv4Address = default;
-            string bmcIpv6Address = default;
+            string bmcIPv4Address = default;
+            string bmcIPv6Address = default;
             NetworkCloudCertificateInfo caCertificate = default;
             ResourceIdentifier clusterId = default;
             BareMetalMachineCordonStatus? cordonStatus = default;
@@ -349,6 +354,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             string kubernetesVersion = default;
             string machineClusterVersion = default;
             IReadOnlyList<string> machineRoles = default;
+            BareMetalMachineMonitoringConfigurationStatus monitoringConfigurationStatus = default;
             IPAddress oamIPv4Address = default;
             string oamIPv6Address = default;
             string osImage = default;
@@ -449,12 +455,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (prop.NameEquals("bmcIpv4Address"u8))
                 {
-                    bmcIpv4Address = prop.Value.GetString();
+                    bmcIPv4Address = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("bmcIpv6Address"u8))
                 {
-                    bmcIpv6Address = prop.Value.GetString();
+                    bmcIPv6Address = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("caCertificate"u8))
@@ -573,6 +579,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     machineRoles = array;
                     continue;
                 }
+                if (prop.NameEquals("monitoringConfigurationStatus"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    monitoringConfigurationStatus = BareMetalMachineMonitoringConfigurationStatus.DeserializeBareMetalMachineMonitoringConfigurationStatus(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("oamIpv4Address"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -686,8 +701,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 serialNumber,
                 actionStates ?? new ChangeTrackingList<NetworkCloudActionState>(),
                 associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                bmcIpv4Address,
-                bmcIpv6Address,
+                bmcIPv4Address,
+                bmcIPv6Address,
                 caCertificate,
                 clusterId,
                 cordonStatus,
@@ -700,6 +715,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 kubernetesVersion,
                 machineClusterVersion,
                 machineRoles ?? new ChangeTrackingList<string>(),
+                monitoringConfigurationStatus,
                 oamIPv4Address,
                 oamIPv6Address,
                 osImage,

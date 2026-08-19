@@ -44,7 +44,6 @@ public class PersistenceFailureTests : IDisposable
             {
                 services.AddSingleton<ResponsesProvider>(_provider);
                 services.AddSingleton<ResponsesCancellationSignalProvider>(_provider.AsCancellationProvider());
-                services.AddSingleton<ResponsesStreamProvider>(_provider.AsStreamProvider());
             });
         _client = _factory.CreateClient();
     }
@@ -425,7 +424,7 @@ public class PersistenceFailureTests : IDisposable
         public IReadOnlyCollection<string> Calls => _calls;
 
         public override async Task CreateResponseAsync(
-            CreateResponseRequest request, IsolationContext isolation, CancellationToken cancellationToken = default)
+            CreateResponseRequest request, PlatformContext isolation, CancellationToken cancellationToken = default)
         {
             _calls.Add("CreateResponseAsync");
             var count = Interlocked.Increment(ref _createCallCount);
@@ -434,14 +433,14 @@ public class PersistenceFailureTests : IDisposable
         }
 
         public override async Task<Models.ResponseObject> GetResponseAsync(
-            string responseId, IsolationContext isolation, CancellationToken cancellationToken = default)
+            string responseId, PlatformContext isolation, CancellationToken cancellationToken = default)
         {
             _calls.Add("GetResponseAsync");
             return await _inner.GetResponseAsync(responseId, isolation, cancellationToken);
         }
 
         public override async Task UpdateResponseAsync(
-            Models.ResponseObject response, IsolationContext isolation, CancellationToken cancellationToken = default)
+            Models.ResponseObject response, PlatformContext isolation, CancellationToken cancellationToken = default)
         {
             _calls.Add("UpdateResponseAsync");
             var count = Interlocked.Increment(ref _updateCallCount);
@@ -450,28 +449,27 @@ public class PersistenceFailureTests : IDisposable
         }
 
         public override async Task DeleteResponseAsync(
-            string responseId, IsolationContext isolation, CancellationToken cancellationToken = default)
+            string responseId, PlatformContext isolation, CancellationToken cancellationToken = default)
         {
             _calls.Add("DeleteResponseAsync");
             await _inner.DeleteResponseAsync(responseId, isolation, cancellationToken);
         }
 
         public override async Task<AgentsPagedResultOutputItem> GetInputItemsAsync(
-            string responseId, IsolationContext isolation, int limit = 20, bool ascending = false,
+            string responseId, PlatformContext isolation, int limit = 20, bool ascending = false,
             string? after = null, string? before = null, CancellationToken cancellationToken = default)
             => await _inner.GetInputItemsAsync(responseId, isolation, limit, ascending, after, before, cancellationToken);
 
         public override async Task<IEnumerable<OutputItem?>> GetItemsAsync(
-            IEnumerable<string> itemIds, IsolationContext isolation, CancellationToken cancellationToken = default)
+            IEnumerable<string> itemIds, PlatformContext isolation, CancellationToken cancellationToken = default)
             => await _inner.GetItemsAsync(itemIds, isolation, cancellationToken);
 
         public override async Task<IEnumerable<string>> GetHistoryItemIdsAsync(
-            string? previousResponseId, string? conversationId, int limit, IsolationContext isolation,
+            string? previousResponseId, string? conversationId, int limit, PlatformContext isolation,
             CancellationToken cancellationToken = default)
             => await _inner.GetHistoryItemIdsAsync(previousResponseId, conversationId, limit, isolation, cancellationToken);
 
         internal ResponsesCancellationSignalProvider AsCancellationProvider() => new CancellationAdapter(_inner);
-        internal ResponsesStreamProvider AsStreamProvider() => new StreamAdapter(_inner);
 
         private sealed class CancellationAdapter(InMemoryResponsesProvider inner) : ResponsesCancellationSignalProvider
         {
@@ -479,14 +477,6 @@ public class PersistenceFailureTests : IDisposable
                 => inner.CancelResponseAsync(responseId, cancellationToken);
             public override Task<CancellationToken> GetResponseCancellationTokenAsync(string responseId, CancellationToken cancellationToken = default)
                 => inner.GetResponseCancellationTokenAsync(responseId, cancellationToken);
-        }
-
-        private sealed class StreamAdapter(InMemoryResponsesProvider inner) : ResponsesStreamProvider
-        {
-            public override Task<IAsyncObserver<ResponseStreamEvent>> CreateEventPublisherAsync(string responseId, CancellationToken cancellationToken = default)
-                => inner.CreateEventPublisherAsync(responseId, cancellationToken);
-            public override Task<IAsyncDisposable> SubscribeToEventsAsync(string responseId, IAsyncObserver<ResponseStreamEvent> observer, long? cursor = null, CancellationToken cancellationToken = default)
-                => inner.SubscribeToEventsAsync(responseId, observer, cursor, cancellationToken);
         }
 
         public void Dispose()

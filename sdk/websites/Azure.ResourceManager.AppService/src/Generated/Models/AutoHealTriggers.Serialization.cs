@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AutoHealTriggers : IUtf8JsonSerializable, IJsonModel<AutoHealTriggers>
+    /// <summary> Triggers for auto-heal. </summary>
+    public partial class AutoHealTriggers : IJsonModel<AutoHealTriggers>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoHealTriggers>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AutoHealTriggers PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutoHealTriggers>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAutoHealTriggers(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutoHealTriggers)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutoHealTriggers>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AutoHealTriggers)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AutoHealTriggers>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutoHealTriggers IPersistableModel<AutoHealTriggers>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AutoHealTriggers>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutoHealTriggers>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoHealTriggers>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutoHealTriggers>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutoHealTriggers)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Requests))
             {
                 writer.WritePropertyName("requests"u8);
@@ -50,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("statusCodes"u8);
                 writer.WriteStartArray();
-                foreach (var item in StatusCodes)
+                foreach (StatusCodesBasedTrigger item in StatusCodes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -65,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("slowRequestsWithPath"u8);
                 writer.WriteStartArray();
-                foreach (var item in SlowRequestsWithPath)
+                foreach (SlowRequestsBasedTrigger item in SlowRequestsWithPath)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -75,21 +113,21 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("statusCodesRange"u8);
                 writer.WriteStartArray();
-                foreach (var item in StatusCodesRange)
+                foreach (StatusCodesRangeBasedTrigger item in StatusCodesRange)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -98,22 +136,27 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
-        AutoHealTriggers IJsonModel<AutoHealTriggers>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutoHealTriggers IJsonModel<AutoHealTriggers>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AutoHealTriggers JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoHealTriggers>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutoHealTriggers>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutoHealTriggers)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAutoHealTriggers(document.RootElement, options);
         }
 
-        internal static AutoHealTriggers DeserializeAutoHealTriggers(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AutoHealTriggers DeserializeAutoHealTriggers(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -124,73 +167,72 @@ namespace Azure.ResourceManager.AppService.Models
             SlowRequestsBasedTrigger slowRequests = default;
             IList<SlowRequestsBasedTrigger> slowRequestsWithPath = default;
             IList<StatusCodesRangeBasedTrigger> statusCodesRange = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("requests"u8))
+                if (prop.NameEquals("requests"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    requests = RequestsBasedTrigger.DeserializeRequestsBasedTrigger(property.Value, options);
+                    requests = RequestsBasedTrigger.DeserializeRequestsBasedTrigger(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("privateBytesInKB"u8))
+                if (prop.NameEquals("privateBytesInKB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    privateBytesInKB = property.Value.GetInt32();
+                    privateBytesInKB = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("statusCodes"u8))
+                if (prop.NameEquals("statusCodes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<StatusCodesBasedTrigger> array = new List<StatusCodesBasedTrigger>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(StatusCodesBasedTrigger.DeserializeStatusCodesBasedTrigger(item, options));
                     }
                     statusCodes = array;
                     continue;
                 }
-                if (property.NameEquals("slowRequests"u8))
+                if (prop.NameEquals("slowRequests"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    slowRequests = SlowRequestsBasedTrigger.DeserializeSlowRequestsBasedTrigger(property.Value, options);
+                    slowRequests = SlowRequestsBasedTrigger.DeserializeSlowRequestsBasedTrigger(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("slowRequestsWithPath"u8))
+                if (prop.NameEquals("slowRequestsWithPath"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SlowRequestsBasedTrigger> array = new List<SlowRequestsBasedTrigger>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SlowRequestsBasedTrigger.DeserializeSlowRequestsBasedTrigger(item, options));
                     }
                     slowRequestsWithPath = array;
                     continue;
                 }
-                if (property.NameEquals("statusCodesRange"u8))
+                if (prop.NameEquals("statusCodesRange"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<StatusCodesRangeBasedTrigger> array = new List<StatusCodesRangeBasedTrigger>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(StatusCodesRangeBasedTrigger.DeserializeStatusCodesRangeBasedTrigger(item, options));
                     }
@@ -199,10 +241,9 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AutoHealTriggers(
                 requests,
                 privateBytesInKB,
@@ -210,169 +251,7 @@ namespace Azure.ResourceManager.AppService.Models
                 slowRequests,
                 slowRequestsWithPath ?? new ChangeTrackingList<SlowRequestsBasedTrigger>(),
                 statusCodesRange ?? new ChangeTrackingList<StatusCodesRangeBasedTrigger>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Requests), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  requests: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Requests))
-                {
-                    builder.Append("  requests: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Requests, options, 2, false, "  requests: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateBytesInKB), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  privateBytesInKB: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrivateBytesInKB))
-                {
-                    builder.Append("  privateBytesInKB: ");
-                    builder.AppendLine($"{PrivateBytesInKB.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StatusCodes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  statusCodes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(StatusCodes))
-                {
-                    if (StatusCodes.Any())
-                    {
-                        builder.Append("  statusCodes: ");
-                        builder.AppendLine("[");
-                        foreach (var item in StatusCodes)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  statusCodes: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SlowRequests), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  slowRequests: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SlowRequests))
-                {
-                    builder.Append("  slowRequests: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, SlowRequests, options, 2, false, "  slowRequests: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SlowRequestsWithPath), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  slowRequestsWithPath: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(SlowRequestsWithPath))
-                {
-                    if (SlowRequestsWithPath.Any())
-                    {
-                        builder.Append("  slowRequestsWithPath: ");
-                        builder.AppendLine("[");
-                        foreach (var item in SlowRequestsWithPath)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  slowRequestsWithPath: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StatusCodesRange), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  statusCodesRange: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(StatusCodesRange))
-                {
-                    if (StatusCodesRange.Any())
-                    {
-                        builder.Append("  statusCodesRange: ");
-                        builder.AppendLine("[");
-                        foreach (var item in StatusCodesRange)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  statusCodesRange: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<AutoHealTriggers>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoHealTriggers>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(AutoHealTriggers)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AutoHealTriggers IPersistableModel<AutoHealTriggers>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoHealTriggers>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAutoHealTriggers(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AutoHealTriggers)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AutoHealTriggers>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

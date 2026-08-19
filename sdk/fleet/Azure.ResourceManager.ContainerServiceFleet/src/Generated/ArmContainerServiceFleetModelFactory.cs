@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="portalFqdn"> The Azure Portal FQDN of the Fleet hub. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <returns> A new <see cref="ContainerServiceFleet.ContainerServiceFleetManagedNamespaceData"/> instance for mocking. </returns>
-        public static ContainerServiceFleetManagedNamespaceData ContainerServiceFleetManagedNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FleetManagedNamespaceProvisioningState? provisioningState = default, ManagedNamespaceProperties managedNamespaceProperties = default, ContainerServiceFleetAdoptionPolicy? adoptionPolicy = default, ContainerServiceFleetDeletePolicy? deletePolicy = default, ContainerServiceFleetPropagationPolicy propagationPolicy = default, FleetManagedNamespaceStatus status = default, string portalFqdn = default, ETag? eTag = default)
+        public static ContainerServiceFleetManagedNamespaceData ContainerServiceFleetManagedNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FleetManagedNamespaceProvisioningState? provisioningState = default, ContainerServiceFleetManagedNamespaceProperties managedNamespaceProperties = default, ContainerServiceFleetAdoptionPolicy? adoptionPolicy = default, ContainerServiceFleetDeletePolicy? deletePolicy = default, ContainerServiceFleetPropagationPolicy propagationPolicy = default, FleetManagedNamespaceStatus status = default, string portalFqdn = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -208,13 +208,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="annotations"> The annotations for the fleet managed namespace. </param>
         /// <param name="defaultResourceQuota"> The default resource quota for the fleet managed namespace. </param>
         /// <param name="defaultNetworkPolicy"> The default network policy for the fleet managed namespace. </param>
-        /// <returns> A new <see cref="Models.ManagedNamespaceProperties"/> instance for mocking. </returns>
-        public static ManagedNamespaceProperties ManagedNamespaceProperties(IDictionary<string, string> labels = default, IDictionary<string, string> annotations = default, ContainerServiceFleetResourceQuota defaultResourceQuota = default, ContainerServiceFleetNetworkPolicy defaultNetworkPolicy = default)
+        /// <returns> A new <see cref="Models.ContainerServiceFleetManagedNamespaceProperties"/> instance for mocking. </returns>
+        public static ContainerServiceFleetManagedNamespaceProperties ContainerServiceFleetManagedNamespaceProperties(IDictionary<string, string> labels = default, IDictionary<string, string> annotations = default, ContainerServiceFleetResourceQuota defaultResourceQuota = default, ContainerServiceFleetNetworkPolicy defaultNetworkPolicy = default)
         {
             labels ??= new ChangeTrackingDictionary<string, string>();
             annotations ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ManagedNamespaceProperties(labels ?? new ChangeTrackingDictionary<string, string>(), annotations ?? new ChangeTrackingDictionary<string, string>(), defaultResourceQuota, defaultNetworkPolicy, default);
+            return new ContainerServiceFleetManagedNamespaceProperties(labels ?? new ChangeTrackingDictionary<string, string>(), annotations ?? new ChangeTrackingDictionary<string, string>(), defaultResourceQuota, defaultNetworkPolicy, default);
         }
 
         /// <param name="cpuRequest"> The CPU request for the managed namespace. See more at https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu. </param>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="id"> The resource id that the Gate is controlling the rollout of. </param>
         /// <param name="updateRunProperties"> The properties of the Update Run that the Gate is targeting. </param>
         /// <returns> A new <see cref="Models.ContainerServiceFleetGateTarget"/> instance for mocking. </returns>
-        public static ContainerServiceFleetGateTarget ContainerServiceFleetGateTarget(ResourceIdentifier id = default, UpdateRunGateTargetProperties updateRunProperties = default)
+        public static ContainerServiceFleetGateTarget ContainerServiceFleetGateTarget(ResourceIdentifier id = default, ContainerServiceFleetUpdateRunGateTargetProperties updateRunProperties = default)
         {
             return new ContainerServiceFleetGateTarget(id, updateRunProperties, default);
         }
@@ -365,10 +365,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="stage"> The Update Stage of the Update Run. </param>
         /// <param name="group"> The Update Group of the Update Run. </param>
         /// <param name="timing"> Whether the Gate is placed before or after the update itself. </param>
-        /// <returns> A new <see cref="Models.UpdateRunGateTargetProperties"/> instance for mocking. </returns>
-        public static UpdateRunGateTargetProperties UpdateRunGateTargetProperties(string name = default, string stage = default, string @group = default, ContainerServiceFleetGateTiming timing = default)
+        /// <returns> A new <see cref="Models.ContainerServiceFleetUpdateRunGateTargetProperties"/> instance for mocking. </returns>
+        public static ContainerServiceFleetUpdateRunGateTargetProperties ContainerServiceFleetUpdateRunGateTargetProperties(string name = default, string stage = default, string @group = default, ContainerServiceFleetGateTiming timing = default)
         {
-            return new UpdateRunGateTargetProperties(name, stage, @group, timing, default);
+            return new ContainerServiceFleetUpdateRunGateTargetProperties(name, stage, @group, timing, default);
         }
 
         /// <param name="gatePatchState"> The state of the Gate. </param>
@@ -553,19 +553,19 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="afterGates"> The list of Gates that will run after this UpdateStage. </param>
         /// <param name="afterStageWaitStatus"> The status of the wait period configured on the UpdateStage. </param>
         /// <returns> A new <see cref="Models.ContainerServiceFleetUpdateStageStatus"/> instance for mocking. </returns>
-        public static ContainerServiceFleetUpdateStageStatus ContainerServiceFleetUpdateStageStatus(ContainerServiceFleetUpdateStatus status = default, string name = default, int? maxConcurrency = default, IEnumerable<ContainerServiceFleetUpdateGroupStatus> groups = default, IEnumerable<UpdateRunGateStatus> beforeGates = default, IEnumerable<UpdateRunGateStatus> afterGates = default, ContainerServiceFleetWaitStatus afterStageWaitStatus = default)
+        public static ContainerServiceFleetUpdateStageStatus ContainerServiceFleetUpdateStageStatus(ContainerServiceFleetUpdateStatus status = default, string name = default, int? maxConcurrency = default, IEnumerable<ContainerServiceFleetUpdateGroupStatus> groups = default, IEnumerable<ContainerServiceFleetUpdateRunGateStatus> beforeGates = default, IEnumerable<ContainerServiceFleetUpdateRunGateStatus> afterGates = default, ContainerServiceFleetWaitStatus afterStageWaitStatus = default)
         {
             groups ??= new ChangeTrackingList<ContainerServiceFleetUpdateGroupStatus>();
-            beforeGates ??= new ChangeTrackingList<UpdateRunGateStatus>();
-            afterGates ??= new ChangeTrackingList<UpdateRunGateStatus>();
+            beforeGates ??= new ChangeTrackingList<ContainerServiceFleetUpdateRunGateStatus>();
+            afterGates ??= new ChangeTrackingList<ContainerServiceFleetUpdateRunGateStatus>();
 
             return new ContainerServiceFleetUpdateStageStatus(
                 status,
                 name,
                 maxConcurrency,
                 (groups ?? new ChangeTrackingList<ContainerServiceFleetUpdateGroupStatus>()).ToList(),
-                (beforeGates ?? new ChangeTrackingList<UpdateRunGateStatus>()).ToList(),
-                (afterGates ?? new ChangeTrackingList<UpdateRunGateStatus>()).ToList(),
+                (beforeGates ?? new ChangeTrackingList<ContainerServiceFleetUpdateRunGateStatus>()).ToList(),
+                (afterGates ?? new ChangeTrackingList<ContainerServiceFleetUpdateRunGateStatus>()).ToList(),
                 afterStageWaitStatus,
                 default);
         }
@@ -577,19 +577,19 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="beforeGates"> The list of Gates that will run before this UpdateGroup. </param>
         /// <param name="afterGates"> The list of Gates that will run after this UpdateGroup. </param>
         /// <returns> A new <see cref="Models.ContainerServiceFleetUpdateGroupStatus"/> instance for mocking. </returns>
-        public static ContainerServiceFleetUpdateGroupStatus ContainerServiceFleetUpdateGroupStatus(ContainerServiceFleetUpdateStatus status = default, string name = default, int? maxConcurrency = default, IEnumerable<MemberUpdateStatus> members = default, IEnumerable<UpdateRunGateStatus> beforeGates = default, IEnumerable<UpdateRunGateStatus> afterGates = default)
+        public static ContainerServiceFleetUpdateGroupStatus ContainerServiceFleetUpdateGroupStatus(ContainerServiceFleetUpdateStatus status = default, string name = default, int? maxConcurrency = default, IEnumerable<MemberUpdateStatus> members = default, IEnumerable<ContainerServiceFleetUpdateRunGateStatus> beforeGates = default, IEnumerable<ContainerServiceFleetUpdateRunGateStatus> afterGates = default)
         {
             members ??= new ChangeTrackingList<MemberUpdateStatus>();
-            beforeGates ??= new ChangeTrackingList<UpdateRunGateStatus>();
-            afterGates ??= new ChangeTrackingList<UpdateRunGateStatus>();
+            beforeGates ??= new ChangeTrackingList<ContainerServiceFleetUpdateRunGateStatus>();
+            afterGates ??= new ChangeTrackingList<ContainerServiceFleetUpdateRunGateStatus>();
 
             return new ContainerServiceFleetUpdateGroupStatus(
                 status,
                 name,
                 maxConcurrency,
                 (members ?? new ChangeTrackingList<MemberUpdateStatus>()).ToList(),
-                (beforeGates ?? new ChangeTrackingList<UpdateRunGateStatus>()).ToList(),
-                (afterGates ?? new ChangeTrackingList<UpdateRunGateStatus>()).ToList(),
+                (beforeGates ?? new ChangeTrackingList<ContainerServiceFleetUpdateRunGateStatus>()).ToList(),
+                (afterGates ?? new ChangeTrackingList<ContainerServiceFleetUpdateRunGateStatus>()).ToList(),
                 default);
         }
 
@@ -613,10 +613,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="displayName"> The human-readable display name of the Gate. </param>
         /// <param name="gateId"> The resource id of the Gate. </param>
         /// <param name="status"> The status of the Gate. </param>
-        /// <returns> A new <see cref="Models.UpdateRunGateStatus"/> instance for mocking. </returns>
-        public static UpdateRunGateStatus UpdateRunGateStatus(string displayName = default, ResourceIdentifier gateId = default, ContainerServiceFleetUpdateStatus status = default)
+        /// <returns> A new <see cref="Models.ContainerServiceFleetUpdateRunGateStatus"/> instance for mocking. </returns>
+        public static ContainerServiceFleetUpdateRunGateStatus ContainerServiceFleetUpdateRunGateStatus(string displayName = default, ResourceIdentifier gateId = default, ContainerServiceFleetUpdateStatus status = default)
         {
-            return new UpdateRunGateStatus(displayName, gateId, status, default);
+            return new ContainerServiceFleetUpdateRunGateStatus(displayName, gateId, status, default);
         }
 
         /// <param name="status"> The status of the wait duration. </param>
@@ -755,22 +755,22 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="provisioningState"> The provisioning state of the UpdateRun resource. </param>
         /// <param name="updateStrategyId">
         /// The resource id of the FleetUpdateStrategy resource to reference.
-        ///             
-        ///              When creating a new run, there are three ways to define a strategy for the run:
-        ///              1. Define a new strategy in place: Set the "strategy" field.
-        ///              2. Use an existing strategy: Set the "updateStrategyId" field. (since 2023-08-15-preview)
-        ///              3. Use the default strategy to update all the members one by one: Leave both "updateStrategyId" and "strategy" unset. (since 2023-08-15-preview)
-        ///             
-        ///              Setting both "updateStrategyId" and "strategy" is invalid.
-        ///             
-        ///              UpdateRuns created by "updateStrategyId" snapshot the referenced UpdateStrategy at the time of creation and store it in the "strategy" field.
-        ///              Subsequent changes to the referenced FleetUpdateStrategy resource do not propagate.
-        ///              UpdateRunStrategy changes can be made directly on the "strategy" field before launching the UpdateRun.
+        ///                         
+        ///                          When creating a new run, there are three ways to define a strategy for the run:
+        ///                          1. Define a new strategy in place: Set the "strategy" field.
+        ///                          2. Use an existing strategy: Set the "updateStrategyId" field. (since 2023-08-15-preview)
+        ///                          3. Use the default strategy to update all the members one by one: Leave both "updateStrategyId" and "strategy" unset. (since 2023-08-15-preview)
+        ///                         
+        ///                          Setting both "updateStrategyId" and "strategy" is invalid.
+        ///                         
+        ///                          UpdateRuns created by "updateStrategyId" snapshot the referenced UpdateStrategy at the time of creation and store it in the "strategy" field.
+        ///                          Subsequent changes to the referenced FleetUpdateStrategy resource do not propagate.
+        ///                          UpdateRunStrategy changes can be made directly on the "strategy" field before launching the UpdateRun.
         /// </param>
         /// <param name="strategyStages">
         /// The strategy defines the order in which the clusters will be updated.
-        ///              If not set, all members will be updated sequentially. The UpdateRun status will show a single UpdateStage and a single UpdateGroup targeting all members.
-        ///              The strategy of the UpdateRun can be modified until the run is started.
+        ///                          If not set, all members will be updated sequentially. The UpdateRun status will show a single UpdateStage and a single UpdateGroup targeting all members.
+        ///                          The strategy of the UpdateRun can be modified until the run is started.
         /// </param>
         /// <param name="managedClusterUpdate"> The update to be applied to all clusters in the UpdateRun. The managedClusterUpdate can be modified until the run is started. </param>
         /// <param name="status"> The status of the UpdateRun. </param>
@@ -921,19 +921,19 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="provisioningState"> The provisioning state of the UpdateRun resource. </param>
         /// <param name="updateStrategyId">
         /// The resource id of the FleetUpdateStrategy resource to reference.
-        ///             When creating a new run, there are three ways to define a strategy for the run:
-        ///             1. Define a new strategy in place: Set the "strategy" field.
-        ///             2. Use an existing strategy: Set the "updateStrategyId" field. (since 2023-08-15-preview)
-        ///             3. Use the default strategy to update all the members one by one: Leave both "updateStrategyId" and "strategy" unset. (since 2023-08-15-preview)
-        ///             Setting both "updateStrategyId" and "strategy" is invalid.
-        ///             UpdateRuns created by "updateStrategyId" snapshot the referenced UpdateStrategy at the time of creation and store it in the "strategy" field.
-        ///             Subsequent changes to the referenced FleetUpdateStrategy resource do not propagate.
-        ///             UpdateRunStrategy changes can be made directly on the "strategy" field before launching the UpdateRun.
+        ///                         When creating a new run, there are three ways to define a strategy for the run:
+        ///                         1. Define a new strategy in place: Set the "strategy" field.
+        ///                         2. Use an existing strategy: Set the "updateStrategyId" field. (since 2023-08-15-preview)
+        ///                         3. Use the default strategy to update all the members one by one: Leave both "updateStrategyId" and "strategy" unset. (since 2023-08-15-preview)
+        ///                         Setting both "updateStrategyId" and "strategy" is invalid.
+        ///                         UpdateRuns created by "updateStrategyId" snapshot the referenced UpdateStrategy at the time of creation and store it in the "strategy" field.
+        ///                         Subsequent changes to the referenced FleetUpdateStrategy resource do not propagate.
+        ///                         UpdateRunStrategy changes can be made directly on the "strategy" field before launching the UpdateRun.
         /// </param>
         /// <param name="strategyStages">
         /// The strategy defines the order in which the clusters will be updated.
-        ///             If not set, all members will be updated sequentially. The UpdateRun status will show a single UpdateStage and a single UpdateGroup targeting all members.
-        ///             The strategy of the UpdateRun can be modified until the run is started.
+        ///                         If not set, all members will be updated sequentially. The UpdateRun status will show a single UpdateStage and a single UpdateGroup targeting all members.
+        ///                         The strategy of the UpdateRun can be modified until the run is started.
         /// </param>
         /// <param name="managedClusterUpdate"> The update to be applied to all clusters in the UpdateRun. The managedClusterUpdate can be modified until the run is started. </param>
         /// <param name="status"> The status of the UpdateRun. </param>

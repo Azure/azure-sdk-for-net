@@ -18,6 +18,81 @@
            Text="Api Compat cannot be disabled."/>
   </Target>
 
+  <!--
+    ApiCompat is entirely gated on a non-empty ApiCompatVersion (see the '$(ApiCompatVersion)' != '' conditions below),
+    so simply deleting the auto-managed <ApiCompatVersion> element from a project's .csproj would silently disable all
+    ApiCompat enforcement without touching the CODEOWNERS-protected eng/apicompatbaselines files. This target requires
+    the version to be present for shipping client libraries with a prior stable release so that removal fails the build,
+    including while preparing a new preview release.
+
+    A first stable release has no prior stable release to compare against, so ApiCompatVersion is legitimately absent there.
+    In the rare case the core team approves running without ApiCompat for an already-GA'd package, add the project name
+    to eng/apicompatbaselines/ApiCompatVersionOptOut.txt, which is CODEOWNERS-protected and therefore requires core team review.
+  -->
+  <Target Name="ValidateApiCompatVersionPresent" BeforeTargets="Build"
+          Condition="'$(ValidateRunApiCompat)' == 'true' and '$(ApiCompatVersion)' == '' and '$(IsShippingClientLibrary)' == 'true' and '$(IncludeBuildOutput)' != 'false'">
+    <ReadLinesFromFile File="$(MSBuildThisFileDirectory)apicompatbaselines\ApiCompatVersionOptOut.txt"
+                       Condition="Exists('$(MSBuildThisFileDirectory)apicompatbaselines\ApiCompatVersionOptOut.txt')">
+      <Output TaskParameter="Lines" ItemName="_ApiCompatVersionOptOutLine" />
+    </ReadLinesFromFile>
+    <ItemGroup>
+      <_ApiCompatVersionOptOutMatch Include="@(_ApiCompatVersionOptOutLine)"
+                                    Condition="'%(Identity)' == '$(MSBuildProjectName)'" />
+    </ItemGroup>
+    <PropertyGroup>
+      <_ApiCompatChangelogPath>$(PackageRootDirectory)/CHANGELOG.md</_ApiCompatChangelogPath>
+      <_ApiCompatChangelogPath Condition="!$(MSBuildProjectDirectory.EndsWith('\src')) and !$(MSBuildProjectDirectory.EndsWith('/src'))">$(MSBuildProjectDirectory)/CHANGELOG.md</_ApiCompatChangelogPath>
+    </PropertyGroup>
+    <Error Condition="'@(_ApiCompatVersionOptOutMatch)' == '' and !Exists('$(_ApiCompatChangelogPath)')"
+           Text="ApiCompat validation cannot determine release history for $(MSBuildProjectName): CHANGELOG.md was not found at $(_ApiCompatChangelogPath)." />
+    <CheckApiCompatStableRelease ChangelogPath="$(_ApiCompatChangelogPath)"
+                                 CurrentVersion="$(_VersionInProject)"
+                                 Condition="'@(_ApiCompatVersionOptOutMatch)' == '' and Exists('$(_ApiCompatChangelogPath)')">
+      <Output TaskParameter="HasStableRelease" PropertyName="_ApiCompatHasStableRelease" />
+      <Output TaskParameter="ReadError" PropertyName="_ApiCompatChangelogReadError" />
+    </CheckApiCompatStableRelease>
+    <Error Condition="'@(_ApiCompatVersionOptOutMatch)' == '' and '$(_ApiCompatChangelogReadError)' != ''"
+           Text="ApiCompat validation could not read $(_ApiCompatChangelogPath): $(_ApiCompatChangelogReadError)" />
+    <Error Condition="'@(_ApiCompatVersionOptOutMatch)' == '' and '$(_ApiCompatHasStableRelease)' == 'true'"
+           Text="ApiCompatVersion is missing from $(MSBuildProjectName). It is required for libraries with a prior stable release and is managed automatically by eng/scripts/Update-PkgVersion.ps1 - do not delete it. If the core team has approved shipping this package without ApiCompat, add '$(MSBuildProjectName)' to eng/apicompatbaselines/ApiCompatVersionOptOut.txt (CODEOWNERS-protected)." />
+  </Target>
+
+  <UsingTask
+    TaskName="CheckApiCompatStableRelease"
+    TaskFactory="RoslynCodeTaskFactory"
+    AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <ChangelogPath ParameterType="System.String" Required="true" />
+      <CurrentVersion ParameterType="System.String" Required="true" />
+      <HasStableRelease ParameterType="System.Boolean" Output="true" />
+      <ReadError ParameterType="System.String" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Code Type="Fragment" Language="cs"><![CDATA[
+        try
+        {
+          var releaseHeading = new System.Text.RegularExpressions.Regex(
+              @"^#+\s+(?<version>\d+\.\d+\.\d+)\s+\(\d{4}-\d{2}-\d{2}\)",
+              System.Text.RegularExpressions.RegexOptions.CultureInvariant);
+
+          foreach (string line in System.IO.File.ReadLines(ChangelogPath))
+          {
+            System.Text.RegularExpressions.Match match = releaseHeading.Match(line);
+            if (match.Success && match.Groups["version"].Value != CurrentVersion)
+            {
+              HasStableRelease = true;
+              break;
+            }
+          }
+        }
+        catch (System.Exception ex)
+        {
+          ReadError = ex.Message;
+        }
+      ]]></Code>
+    </Task>
+  </UsingTask>
+
   <PropertyGroup>
     <PackageRootDirectory>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../).TrimEnd("/").TrimEnd("\\"))</PackageRootDirectory>
 
@@ -132,6 +207,7 @@
     <PackageReference Condition="'$(GenerateAPIListing)' == 'true'" Include="Microsoft.DotNet.GenAPI" PrivateAssets="All" />
     <PackageReference Condition="'$(EnableClientSdkAnalyzers)' == 'true'" Include="Azure.ClientSdk.Analyzers" PrivateAssets="All" />
     <ProjectReference Condition="'$(EnableClientSdkAnalyzers)' == 'true' and '$(MSBuildProjectName)' != 'Azure.SdkAnalyzers'" Include="$(RepoRoot)\sdk\tools\Azure.SdkAnalyzers\src\Azure.SdkAnalyzers.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="All" />
+    <ProjectReference Condition="'$(EnableClientSdkAnalyzers)' == 'true' and '$(MSBuildProjectName)' != 'Azure.SdkAnalyzers' and '$(MSBuildProjectName)' != 'Azure.SdkAnalyzers.CodeFixes'" Include="$(RepoRoot)\sdk\tools\Azure.SdkAnalyzers.CodeFixes\src\Azure.SdkAnalyzers.CodeFixes.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="All" />
     <PackageReference Condition="'$(EnableMicrosoftCodeAnalysisNetAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.NetAnalyzers" PrivateAssets="All" />
     <PackageReference Condition="'$(EnableBannedApiAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="All" />
   </ItemGroup>
@@ -297,6 +373,14 @@
 
   <!--TODO: end-->
 
+  <!-- *********** Files needed for System.ClientModel shared client features ************* -->
+  <ItemGroup Condition="'$(IncludeSystemClientModelSharedSourceForTracing)' == 'true'">
+    <Compile Include="$(SystemClientModelSharedSource)ClientDiagnostics.cs" LinkBase="Shared/SystemClientModel" />
+    <Compile Include="$(SystemClientModelSharedSource)DiagnosticScope.cs" LinkBase="Shared/SystemClientModel" />
+    <Compile Include="$(SystemClientModelSharedSource)DiagnosticScopeFactory.cs" LinkBase="Shared/SystemClientModel" />
+    <Compile Include="$(SystemClientModelSharedSource)OperationResultHelpers.cs" LinkBase="Shared/SystemClientModel" />
+  </ItemGroup>
+
   <!-- *********** Files needed for LRO ************* -->
   <ItemGroup Condition="'$(IncludeOperationsSharedSource)' == 'true'">
     <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared/Core" />
@@ -415,40 +499,109 @@
   </ItemGroup>
 
 <!-- Additional PackageReferences should be placed above this PropertyGroup -->
-  <PropertyGroup>
-    <ApiCompatExcludeAttributeList>$(MSBuildThisFileDirectory)ApiListing.exclude-attributes.txt</ApiCompatExcludeAttributeList>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(ApiCompatVersion)' != ''">
-    <!--
-      Central baseline: override the local file convention used by Microsoft.DotNet.ApiCompat
-      to ensure all baseline suppressions live in eng/apicompatbaselines/ where changes are
-      visible and protected by CODEOWNERS.
-    -->
-    <ApiCompatBaseline>$(MSBuildThisFileDirectory)apicompatbaselines\$(MSBuildProjectName).txt</ApiCompatBaseline>
+    <!-- Use the ApiCompat task shipped in the .NET SDK, but keep validation on build instead of pack. -->
+    <RunApiCompat Condition="'$(RunApiCompat)' == '' and '$(DesignTimeBuild)' != 'true'">true</RunApiCompat>
+    <RunApiCompatForSrc Condition="'$(RunApiCompatForSrc)' == ''">$(RunApiCompat)</RunApiCompatForSrc>
+    <ApiCompatEnableRuleAttributesMustMatch Condition="'$(ApiCompatEnableRuleAttributesMustMatch)' == ''">true</ApiCompatEnableRuleAttributesMustMatch>
+    <ApiCompatEnableRuleCannotChangeParameterName Condition="'$(ApiCompatEnableRuleCannotChangeParameterName)' == ''">true</ApiCompatEnableRuleCannotChangeParameterName>
+    <ApiCompatPermitUnnecessarySuppressions Condition="'$(ApiCompatPermitUnnecessarySuppressions)' == ''">true</ApiCompatPermitUnnecessarySuppressions>
+    <ApiCompatSuppressionOutputFile>$(MSBuildThisFileDirectory)apicompatbaselines\$(MSBuildProjectName).xml</ApiCompatSuppressionOutputFile>
+    <_ApiCompatValidateAssembliesSemaphoreFile>$(IntermediateOutputPath)ValidateApiCompatForSrc.semaphore</_ApiCompatValidateAssembliesSemaphoreFile>
+    <_ApiCompatIncrementalStateFile>$(IntermediateOutputPath)ValidateApiCompatForSrc.state</_ApiCompatIncrementalStateFile>
   </PropertyGroup>
+
   <ItemGroup Condition="'$(ApiCompatVersion)' != ''">
     <PackageDownload Include="$(PackageId)" Version="[$(ApiCompatVersion)]" />
-    <PackageReference Include="Microsoft.DotNet.ApiCompat" PrivateAssets="all" />
+    <ApiCompatExcludeAttributesFile Include="$(MSBuildThisFileDirectory)ApiListing.exclude-attributes.txt" />
+    <ApiCompatSuppressionFile Include="$(ApiCompatSuppressionOutputFile)" Condition="Exists('$(ApiCompatSuppressionOutputFile)')" />
+    <ApiCompatLeftAssembliesTransformationPattern Include="^.%2A$">
+      <ReplacementString>lib/$(ApiCompatBaselineTargetFramework)/$(TargetFileName)</ReplacementString>
+    </ApiCompatLeftAssembliesTransformationPattern>
+    <ApiCompatRightAssembliesTransformationPattern Include="^.%2A$">
+      <ReplacementString>lib/$(ApiCompatBaselineTargetFramework)/$(TargetFileName)</ReplacementString>
+    </ApiCompatRightAssembliesTransformationPattern>
   </ItemGroup>
 
   <Target Name="_ResolveResolvedMatchingContract" BeforeTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
     <ItemGroup>
-      <_ReferencePathDirectories Include="@(ReferencePath -> '%(RootDir)%(Directory)')"  />
-      <ResolvedMatchingContract Include="$(NuGetPackageRoot)\$(PackageId.ToLower())\$(ApiCompatVersion)\lib\$([MSBuild]::ValueOrDefault('$(ApiCompatBaselineTargetFramework)', '$(TargetFramework)'))\$(TargetFileName)">
-        <DependencyPaths>@(_ReferencePathDirectories->Distinct(), ',')</DependencyPaths>
-      </ResolvedMatchingContract>
+      <ResolvedMatchingContract Include="$(NuGetPackageRoot)\$(PackageId.ToLower())\$(ApiCompatVersion)\lib\$([MSBuild]::ValueOrDefault('$(ApiCompatBaselineTargetFramework)', '$(TargetFramework)'))\$(TargetFileName)" />
     </ItemGroup>
   </Target>
 
   <Target Name="ValidateNoLocalApiCompatBaseline" BeforeTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
     <Error Condition="Exists('$(MSBuildProjectDirectory)\ApiCompatBaseline.txt')"
-           Text="Local ApiCompatBaseline.txt files are no longer supported. Move suppressions to eng\apicompatbaselines\$(MSBuildProjectName).txt instead. See https://github.com/Azure/azure-sdk-for-net/issues/55311" />
+           Text="Local ApiCompatBaseline.txt files are no longer supported. Move suppressions to eng\apicompatbaselines\$(MSBuildProjectName).xml instead. See https://github.com/Azure/azure-sdk-for-net/issues/55311" />
     <Error Condition="Exists('$(MSBuildProjectDirectory)\ApiCompatBaseline.$(TargetFramework).txt')"
-           Text="Local ApiCompatBaseline.$(TargetFramework).txt files are no longer supported. Move suppressions to eng\apicompatbaselines\$(MSBuildProjectName).txt instead. See https://github.com/Azure/azure-sdk-for-net/issues/55311" />
+           Text="Local ApiCompatBaseline.$(TargetFramework).txt files are no longer supported. Move suppressions to eng\apicompatbaselines\$(MSBuildProjectName).xml instead. See https://github.com/Azure/azure-sdk-for-net/issues/55311" />
+    <Error Condition="Exists('$(MSBuildProjectDirectory)\CompatibilitySuppressions.xml')"
+           Text="Local CompatibilitySuppressions.xml files are not supported. Move suppressions to eng\apicompatbaselines\$(MSBuildProjectName).xml instead." />
   </Target>
 
-  <Target Name="ApiCompatFinishedMessage" AfterTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
-     <Message Text="Ran ApiCompat against %(ResolvedMatchingContract.Identity) using assemblies from $(IntermediateOutputPath)" Importance="High" />
+  <Target Name="PrepareApiCompatIncrementalState"
+          BeforeTargets="ValidateApiCompatForSrc"
+          Condition="'$(ApiCompatVersion)' != ''">
+    <WriteLinesToFile File="$(_ApiCompatIncrementalStateFile)"
+                      Lines="GenerateSuppressionFile=$(ApiCompatGenerateSuppressionFile)|SuppressionFileExists=$([System.IO.File]::Exists('$(ApiCompatSuppressionOutputFile)'))"
+                      Overwrite="true"
+                      WriteOnlyWhenDifferent="true" />
+  </Target>
+
+  <Target Name="NormalizeApiCompatSuppressionFile"
+          AfterTargets="ValidateApiCompatForSrc"
+          Condition="'$(ApiCompatGenerateSuppressionFile)' == 'true' and Exists('$(ApiCompatSuppressionOutputFile)')">
+    <PropertyGroup>
+      <_ApiCompatSuppressionContents>$([System.IO.File]::ReadAllText('$(ApiCompatSuppressionOutputFile)'))</_ApiCompatSuppressionContents>
+      <_ApiCompatSuppressionContents><![CDATA[$([System.Text.RegularExpressions.Regex]::Replace('$(_ApiCompatSuppressionContents)', '[ \t]*<(?:Left|Right)>.*?</(?:Left|Right)>\r?\n', ''))]]></_ApiCompatSuppressionContents>
+    </PropertyGroup>
+    <WriteLinesToFile File="$(ApiCompatSuppressionOutputFile)"
+                      Lines="$(_ApiCompatSuppressionContents)"
+                      Overwrite="true"
+                      WriteOnlyWhenDifferent="true" />
+  </Target>
+
+  <!-- Run even when compilation is up to date so a prior ApiCompat failure cannot be skipped. -->
+  <Target Name="ValidateApiCompatForSrc"
+          AfterTargets="CoreCompile"
+          Condition="'$(ApiCompatVersion)' != '' and '$(RunApiCompatForSrc)' == 'true' and '$(RunApiCompat)' == 'true' and '$(DesignTimeBuild)' != 'true'"
+          DependsOnTargets="CollectApiCompatInputs;_ResolveResolvedMatchingContract;FindReferenceAssembliesForReferences"
+          Inputs="@(ResolvedMatchingContract);@(IntermediateAssembly);@(ApiCompatSuppressionFile);$(_ApiCompatIncrementalStateFile)"
+          Outputs="$(_ApiCompatValidateAssembliesSemaphoreFile)">
+    <Error Condition="'@(ResolvedMatchingContract)' == ''"
+           Text="ResolvedMatchingContract item must be specified to run API compat." />
+    <Error Condition="!Exists('%(ResolvedMatchingContract.FullPath)')"
+           Text="ResolvedMatchingContract '%(ResolvedMatchingContract.FullPath)' did not exist." />
+
+    <ItemGroup>
+      <_ApiCompatAssemblyReferences Include="@(ReferencePathWithRefAssemblies, ',')" />
+    </ItemGroup>
+
+    <Microsoft.DotNet.ApiCompat.Task.ValidateAssembliesTask
+      RoslynAssembliesPath="$(RoslynAssembliesPath)"
+      LeftAssemblies="@(ResolvedMatchingContract)"
+      RightAssemblies="@(IntermediateAssembly)"
+      GenerateSuppressionFile="$(ApiCompatGenerateSuppressionFile)"
+      PreserveUnnecessarySuppressions="$(ApiCompatPreserveUnnecessarySuppressions)"
+      PermitUnnecessarySuppressions="$(ApiCompatPermitUnnecessarySuppressions)"
+      SuppressionFiles="@(ApiCompatSuppressionFile)"
+      SuppressionOutputFile="$(ApiCompatSuppressionOutputFile)"
+      NoWarn="$(NoWarn)"
+      RespectInternals="$(ApiCompatRespectInternals)"
+      EnableRuleAttributesMustMatch="$(ApiCompatEnableRuleAttributesMustMatch)"
+      ExcludeAttributesFiles="@(ApiCompatExcludeAttributesFile)"
+      EnableRuleCannotChangeParameterName="$(ApiCompatEnableRuleCannotChangeParameterName)"
+      EnableStrictMode="$(ApiCompatStrictMode)"
+      LeftAssembliesReferences="@(_ApiCompatAssemblyReferences)"
+      RightAssembliesReferences="@(_ApiCompatAssemblyReferences)"
+      CreateWorkItemPerAssembly="true"
+      LeftAssembliesTransformationPattern="@(ApiCompatLeftAssembliesTransformationPattern)"
+      RightAssembliesTransformationPattern="@(ApiCompatRightAssembliesTransformationPattern)"
+      SemaphoreFile="$(_ApiCompatValidateAssembliesSemaphoreFile)" />
+    <Message Text="Ran ApiCompat against %(ResolvedMatchingContract.Identity) using assemblies from $(IntermediateOutputPath)" Importance="High" />
+    <WriteLinesToFile File="$(_ApiCompatIncrementalStateFile)"
+                      Lines="GenerateSuppressionFile=$(ApiCompatGenerateSuppressionFile)|SuppressionFileExists=$([System.IO.File]::Exists('$(ApiCompatSuppressionOutputFile)'))"
+                      Overwrite="true"
+                      WriteOnlyWhenDifferent="true" />
   </Target>
 
   <Target Name="RunApiCompat" DependsOnTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">

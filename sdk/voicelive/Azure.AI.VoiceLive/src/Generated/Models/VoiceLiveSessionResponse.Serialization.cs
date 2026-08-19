@@ -163,6 +163,11 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("tool_choice"u8);
                 writer.WriteObjectValue(ToolChoice, options);
             }
+            if (Optional.IsDefined(AllowParallelToolCalls))
+            {
+                writer.WritePropertyName("parallel_tool_calls"u8);
+                writer.WriteBooleanValue(AllowParallelToolCalls.Value);
+            }
             if (Optional.IsDefined(Temperature))
             {
                 writer.WritePropertyName("temperature"u8);
@@ -225,6 +230,11 @@ namespace Azure.AI.VoiceLive
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(ExpiresOn))
+            {
+                writer.WritePropertyName("expires_at"u8);
+                writer.WriteNumberValue(ExpiresOn.Value, "U");
             }
             if (Optional.IsDefined(_turnDetection))
             {
@@ -295,6 +305,7 @@ namespace Azure.AI.VoiceLive
             IList<AudioTimestampType> outputAudioTimestampTypes = default;
             IList<VoiceLiveToolDefinition> tools = default;
             ToolChoiceOption toolChoice = default;
+            bool? allowParallelToolCalls = default;
             float? temperature = default;
             MaxResponseOutputTokensOption maxResponseOutputTokens = default;
             ReasoningEffort? reasoningEffort = default;
@@ -303,6 +314,7 @@ namespace Azure.AI.VoiceLive
             IDictionary<string, string> metadata = default;
             RespondingAgentOptions agent = default;
             string id = default;
+            DateTimeOffset? expiresOn = default;
             BinaryData turnDetection = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -449,6 +461,15 @@ namespace Azure.AI.VoiceLive
                     toolChoice = ToolChoiceOption.DeserializeToolChoiceOption(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("parallel_tool_calls"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    allowParallelToolCalls = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("temperature"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -534,6 +555,15 @@ namespace Azure.AI.VoiceLive
                     id = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("expires_at"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expiresOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    continue;
+                }
                 if (prop.NameEquals("turn_detection"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -564,6 +594,7 @@ namespace Azure.AI.VoiceLive
                 outputAudioTimestampTypes ?? new ChangeTrackingList<AudioTimestampType>(),
                 tools ?? new ChangeTrackingList<VoiceLiveToolDefinition>(),
                 toolChoice,
+                allowParallelToolCalls,
                 temperature,
                 maxResponseOutputTokens,
                 reasoningEffort,
@@ -572,6 +603,7 @@ namespace Azure.AI.VoiceLive
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 agent,
                 id,
+                expiresOn,
                 turnDetection,
                 additionalBinaryDataProperties);
         }

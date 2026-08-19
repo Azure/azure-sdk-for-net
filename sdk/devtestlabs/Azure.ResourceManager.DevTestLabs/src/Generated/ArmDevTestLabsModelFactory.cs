@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DevTestLabs;
 using Azure.ResourceManager.Models;
@@ -262,7 +261,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 dnsName,
                 rdpAuthority,
                 sshAuthority,
-                sharedPublicIPAddressInboundNatRules is null ? default : new SharedPublicIpAddressConfiguration((sharedPublicIPAddressInboundNatRules ?? new ChangeTrackingList<DevTestLabInboundNatRule>()).ToList(), default),
+                sharedPublicIPAddressInboundNatRules is null ? default : new SharedPublicIPAddressConfiguration((sharedPublicIPAddressInboundNatRules ?? new ChangeTrackingList<DevTestLabInboundNatRule>()).ToList(), default),
                 default);
         }
 

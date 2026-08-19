@@ -14,15 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel : MigrateOracleAzureDBPostgreSqlSyncTaskOutput
     {
         /// <summary> Initializes a new instance of <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel"/>. </summary>
-        internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel()
+        internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel() : base("DatabaseLevelOutput")
         {
-            ResultType = "DatabaseLevelOutput";
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="databaseName"> Name of the database. </param>
         /// <param name="startedOn"> Migration start time. </param>
         /// <param name="endedOn"> Migration end time. </param>
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="fullLoadErroredTables"> Number of tables errored in full load. </param>
         /// <param name="isInitializationCompleted"> Indicates if initial load (full load) has been completed. </param>
         /// <param name="latency"> CDC apply latency. </param>
-        internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string databaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, SyncDatabaseMigrationReportingState? migrationState, long? incomingChanges, long? appliedChanges, long? cdcInsertCounter, long? cdcDeleteCounter, long? cdcUpdateCounter, long? fullLoadCompletedTables, long? fullLoadLoadingTables, long? fullLoadQueuedTables, long? fullLoadErroredTables, bool? isInitializationCompleted, long? latency) : base(id, resultType, serializedAdditionalRawData)
+        internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel(string id, string resultType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string databaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, SyncDatabaseMigrationReportingState? migrationState, long? incomingChanges, long? appliedChanges, long? cdcInsertCounter, long? cdcDeleteCounter, long? cdcUpdateCounter, long? fullLoadCompletedTables, long? fullLoadLoadingTables, long? fullLoadQueuedTables, long? fullLoadErroredTables, bool? isInitializationCompleted, long? latency) : base(id, resultType, additionalBinaryDataProperties)
         {
             DatabaseName = databaseName;
             StartedOn = startedOn;
@@ -55,37 +54,50 @@ namespace Azure.ResourceManager.DataMigration.Models
             FullLoadErroredTables = fullLoadErroredTables;
             IsInitializationCompleted = isInitializationCompleted;
             Latency = latency;
-            ResultType = resultType ?? "DatabaseLevelOutput";
         }
 
         /// <summary> Name of the database. </summary>
         public string DatabaseName { get; }
+
         /// <summary> Migration start time. </summary>
         public DateTimeOffset? StartedOn { get; }
+
         /// <summary> Migration end time. </summary>
         public DateTimeOffset? EndedOn { get; }
+
         /// <summary> Migration state that this database is in. </summary>
         public SyncDatabaseMigrationReportingState? MigrationState { get; }
+
         /// <summary> Number of incoming changes. </summary>
         public long? IncomingChanges { get; }
+
         /// <summary> Number of applied changes. </summary>
         public long? AppliedChanges { get; }
+
         /// <summary> Number of cdc inserts. </summary>
         public long? CdcInsertCounter { get; }
+
         /// <summary> Number of cdc deletes. </summary>
         public long? CdcDeleteCounter { get; }
+
         /// <summary> Number of cdc updates. </summary>
         public long? CdcUpdateCounter { get; }
+
         /// <summary> Number of tables completed in full load. </summary>
         public long? FullLoadCompletedTables { get; }
+
         /// <summary> Number of tables loading in full load. </summary>
         public long? FullLoadLoadingTables { get; }
+
         /// <summary> Number of tables queued in full load. </summary>
         public long? FullLoadQueuedTables { get; }
+
         /// <summary> Number of tables errored in full load. </summary>
         public long? FullLoadErroredTables { get; }
+
         /// <summary> Indicates if initial load (full load) has been completed. </summary>
         public bool? IsInitializationCompleted { get; }
+
         /// <summary> CDC apply latency. </summary>
         public long? Latency { get; }
     }

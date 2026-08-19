@@ -45,6 +45,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         MCP,
         MCPConnection,
         MCPToolbox,
+        MCPToolboxWithPreview,
         OpenAPI,
         OpenAPIConnection,
         A2A,
@@ -95,6 +96,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.MCP, "Please summarize the Azure REST API specifications Readme"},
         {ToolType.MCPConnection, "How many follower on github do I have?"},
         {ToolType.MCPToolbox, "What tools are available?"},
+        {ToolType.MCPToolboxWithPreview, "What tools are available?"},
         {ToolType.A2A, "What can the secondary agent do?"},
         {ToolType.A2ASpecialConnection, "What can the secondary agent do?"},
         {ToolType.AzureFunctionTool, "What is the most prevalent element in the universe? What would foo say?"},
@@ -131,6 +133,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.MCP, "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks."},
         {ToolType.MCPConnection, "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks."},
         {ToolType.MCPToolbox, "You are a helpful assistant." },
+        {ToolType.MCPToolboxWithPreview, "You are a helpful assistant." },
         {ToolType.A2A, "You are a helpful assistant."},
         {ToolType.A2ASpecialConnection, "You are a helpful assistant."},
         {ToolType.WorkIQTool, "You are a helpful assistant that can access Microsoft 365 data through WorkIQ. Use the WorkIQ tool to search and retrieve information from emails, calendar events, Teams messages, and other Microsoft 365 content to assist users with their questions." },
@@ -397,7 +400,7 @@ public class AgentsTestBase : ProjectsClientTestBase
     {
         FabricIQPreviewTool fabricIQTool = new(projectConnectionId: TestEnvironment.FABRIC_IQ_CONNECTION_ID)
         {
-            RequireApproval = BinaryData.FromObjectAsJson("never"),
+            RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
         };
         return fabricIQTool;
     }
@@ -461,32 +464,45 @@ public class AgentsTestBase : ProjectsClientTestBase
     {
         try
         {
-            await projectClient.AgentAdministrationClient.GetAgentToolboxes().DeleteToolboxAsync(name: TOOLBOX_NAME);
+            await projectClient.AgentAdministrationClient.GetAgentToolboxes().DeleteAsync(name: TOOLBOX_NAME);
         }
         catch
         {
             // Nothing here
         }
     }
-    private async Task<McpTool> GetToolBoxAsync(AIProjectClient projectClient)
+    private async Task<McpTool> GetToolBoxAsync(AIProjectClient projectClient, bool usePreview)
     {
         await RemoveToolBoxMayBe(projectClient);
-        ProjectsAgentTool mcp = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-            serverLabel: "api-specs",
-            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-        ));
-        ProjectsAgentTool codeInterpreter = ResponseTool.CreateCodeInterpreterTool(
-            new CodeInterpreterToolContainer(
+        MCPToolboxTool mcp = new(serverLabel: "api-specs")
+        {
+            ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        };
+        CodeInterpreterToolboxTool codeInterpreter = new()
+        {
+            Container = new CodeInterpreterToolContainer(
                 CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration([])
             )
-        ).AsAgentTool();
-        ToolboxSearchPreviewTool searchTool = new()
-        {
-            Name = "ToolBoxSearch",
-            Description = "Search for the toolboxes"
         };
-        ToolboxVersion toolBox = await projectClient.AgentAdministrationClient.GetAgentToolboxes().CreateToolboxVersionAsync(
+        ToolboxTool searchTool;
+        if (usePreview)
+        {
+            searchTool = new ToolboxSearchPreviewToolboxTool()
+            {
+                Name = "ToolBoxSearch",
+                Description = "Search for the toolboxes"
+            };
+        }
+        else
+        {
+            searchTool = new ToolSearchToolboxTool()
+            {
+                Name = "ToolBoxSearch",
+                Description = "Search for the toolboxes"
+            };
+        }
+        ToolboxVersion toolBox = await projectClient.AgentAdministrationClient.GetAgentToolboxes().CreateVersionAsync(
             name: TOOLBOX_NAME,
             tools: [mcp, codeInterpreter, searchTool],
             description: "Toolbox for the unit test."
@@ -498,7 +514,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         }
         else
         {
-            authToken = ((DefaultAzureCredential)TestEnvironment.Credential).GetToken(new(scopes: ["https://ai.azure.com/.default"]), cancellationToken: default).Token;
+            authToken = ((AzureCliCredential)GetTestTokenProvider()).GetToken(new(scopes: ["https://ai.azure.com/.default"]), cancellationToken: default).Token;
         }
         return ResponseTool.CreateMcpTool(
             serverLabel: "search-tool",
@@ -600,7 +616,8 @@ public class AgentsTestBase : ProjectsClientTestBase
             ToolType.A2A => GetA2ATool(false),
             ToolType.A2ASpecialConnection => GetA2ATool(true),
             ToolType.AzureFunction => GetFunctionTool(),
-            ToolType.MCPToolbox => await GetToolBoxAsync(projectClient),
+            ToolType.MCPToolbox => await GetToolBoxAsync(projectClient, false),
+            ToolType.MCPToolboxWithPreview => await GetToolBoxAsync(projectClient, true),
             ToolType.WorkIQTool => new WorkIQPreviewTool(TestEnvironment.WORKIQ_CONNECTION_ID),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
@@ -632,7 +649,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         if (Mode == RecordedTestMode.Playback)
             return;
         Uri connectionString = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
-        AIProjectClient projectClient = new(connectionString, TestEnvironment.Credential);
+        AIProjectClient projectClient = new(connectionString, GetTestTokenProvider());
 
         // Remove conversations.
         if (_conversations is not null)

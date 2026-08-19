@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
@@ -11,26 +9,7 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Agents.Tests.Samples;
-# pragma warning disable AAIP001
 
-#region Snippet:Sample_Agents_ExperimentalHeader
-internal class FeaturePolicy(string feature) : PipelinePolicy
-{
-    private const string _FEATURE_HEADER = "Foundry-Features";
-
-    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_FEATURE_HEADER, feature);
-        ProcessNext(message, pipeline, currentIndex);
-    }
-
-    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_FEATURE_HEADER, feature);
-        await ProcessNextAsync(message, pipeline, currentIndex);
-    }
-}
-#endregion
 public class Sample_HostedAgent : SamplesBase
 {
     #region Snippet:Sample_Agents_ImageBasedHostedAgentDefinition_HostedAgent
@@ -63,9 +42,7 @@ public class Sample_HostedAgent : SamplesBase
 #endif
         #region Snippet:Sample_Agents_Deployment_HostedAgent
         Uri uriEndpoint = new(projectEndpoint);
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         HostedAgentDefinition agentDefinition = GetAgentDefinition(
             dockerImage: dockerImage
         );
@@ -103,9 +80,7 @@ public class Sample_HostedAgent : SamplesBase
         var dockerImage = TestEnvironment.AGENT_DOCKER_IMAGE;
 #endif
         Uri uriEndpoint = new(projectEndpoint);
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
         HostedAgentDefinition agentDefinition = GetAgentDefinition(
             dockerImage: dockerImage

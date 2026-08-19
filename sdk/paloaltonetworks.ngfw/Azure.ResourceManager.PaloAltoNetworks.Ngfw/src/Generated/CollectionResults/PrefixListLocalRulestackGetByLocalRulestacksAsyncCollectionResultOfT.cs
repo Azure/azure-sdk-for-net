@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     yield break;
                 }
                 PrefixListResourceListResult result = PrefixListResourceListResult.FromResponse(response);
-                yield return Page<LocalRulestackPrefixData>.FromValues((IReadOnlyList<LocalRulestackPrefixData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<LocalRulestackPrefixData>.FromValues((IReadOnlyList<LocalRulestackPrefixData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

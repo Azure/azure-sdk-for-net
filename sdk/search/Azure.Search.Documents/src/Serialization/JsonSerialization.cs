@@ -150,7 +150,18 @@ namespace Azure.Search.Documents
                 }
                 else
                 {
-                    reader.Skip();
+                    // Use TrySkip rather than Skip so we don't throw
+                    // "Cannot skip tokens on partial JSON" when this converter
+                    // is invoked over a non-final block (e.g. on the async
+                    // deserialization path for large documents). The value is
+                    // always fully buffered by the time the converter runs, so
+                    // TrySkip succeeds; we only fall back to throwing a
+                    // JsonException in the unexpected case it cannot.
+                    if (!reader.TrySkip())
+                    {
+                        throw new JsonException(
+                            "Unable to skip OData property '" + propertyName + "' on partial JSON.");
+                    }
                 }
             }
             return doc;

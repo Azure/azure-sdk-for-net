@@ -284,20 +284,20 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> The IPv4 address of the BMC interface for the bare metal machine. </summary>
-        public string BmcIpv4Address
+        public string BmcIPv4Address
         {
             get
             {
-                return Properties is null ? default : Properties.BmcIpv4Address;
+                return Properties is null ? default : Properties.BmcIPv4Address;
             }
         }
 
         /// <summary> The IPv6 address of the BMC interface for the bare metal machine. </summary>
-        public string BmcIpv6Address
+        public string BmcIPv6Address
         {
             get
             {
-                return Properties is null ? default : Properties.BmcIpv6Address;
+                return Properties is null ? default : Properties.BmcIPv6Address;
             }
         }
 
@@ -422,6 +422,15 @@ namespace Azure.ResourceManager.NetworkCloud
                     Properties = new BareMetalMachineProperties();
                 }
                 return Properties.MachineRoles;
+            }
+        }
+
+        /// <summary> The monitoring configuration status of the bare metal machine. </summary>
+        public BareMetalMachineMonitoringConfigurationStatus MonitoringConfigurationStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MonitoringConfigurationStatus;
             }
         }
 

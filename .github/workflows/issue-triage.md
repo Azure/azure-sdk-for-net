@@ -18,7 +18,10 @@ on:
   roles: all
   reaction: eyes
 
-permissions: read-all
+permissions:
+  copilot-requests: write
+  contents: read
+  issues: read
 
 network:
   allowed:
@@ -46,6 +49,9 @@ safe-outputs:
     target: "*"
   noop:
     report-as-issue: false
+  dispatch-workflow:
+    workflows: [issue-investigation]
+    max: 1
   jobs:
     mention_owners:
       description: "Post a routing comment @mentioning team owners on the triggering issue; bypasses safe-outputs mention neutralization"
@@ -64,7 +70,7 @@ safe-outputs:
           type: string
       steps:
         - name: Post mention comment
-          uses: actions/github-script@v9
+          uses: actions/github-script@v9.0.0
           env:
             DISPATCH_ISSUE_NUMBER: "${{ github.event.inputs.issue_number || '' }}"
           with:
@@ -177,6 +183,9 @@ safe-outputs:
               }
 
 tools:
+  # With github.min-integrity none, strict mode requires bash to be explicit.
+  # This agent uses only web-fetch and the github issues toolset, no shell.
+  bash: false
   web-fetch:
   github:
     toolsets: [issues]
@@ -220,8 +229,10 @@ Note: The gh-aw runtime provides additional baseline defenses including the XPIA
 - If triggered by `workflow_dispatch`: the issue number is `${{ github.event.inputs.issue_number }}`
 
 Note the issue number — you must include it in every safe-output tool call:
-- For `add-labels`, `remove-labels`, and `add-comment`: pass it as `item_number`
-- For `assign-to-user` and `close-issue`: pass it as `issue_number`
+- For `add_labels`, `remove_labels`, and `add_comment`: pass it as `item_number`
+- For `assign_to_user` and `close_issue`: pass it as `issue_number`
+
+> Note: the `safe-outputs` frontmatter keys use kebab-case (e.g., `add-comment`), while the runtime tool names you call use snake_case (e.g., `add_comment`).
 
 Retrieve the issue using the `get_issue` tool
 
@@ -307,8 +318,8 @@ Labels classification is distinguished by color. Actively inspect label colors w
 ### Excluded Category and Service Labels
 
 The following labels require human judgment and are never assigned by automatic triage:
-- **"Central-EngSys"** (color #ffeb77): For non-service issues such as engineering systems, scripts, workflows, or pipelines in the /eng folder. 
-- **"Service"** (color #ffeb77): For issues with the REST API or Azure service behavior outside SDK control. 
+- **"Central-EngSys"** (color #ffeb77): For non-service issues such as engineering systems, scripts, workflows, or pipelines in the /eng folder.
+- **"Service"** (color #ffeb77): For issues with the REST API or Azure service behavior outside SDK control.
 
 If any of these labels are part of the most confident label prediction, treat the prediction as low confidence and fall back to applying "needs-triage" only.  Any labels applied in earlier steps should be removed, leaving ONLY `needs-triage`
 
@@ -381,7 +392,7 @@ Determine the NuGet package ID conservatively:
 
 If all versions are deprecated AND a date was extracted:
 
-1. Post a comment (via `add-comment`) with this exact text, substituting values:
+1. Post a comment (via `add_comment`) with this exact text, substituting values:
 
 ```
 This package reached end-of-life on <EXTRACTED DATE> and is no longer supported by Microsoft. Unfortunately, we cannot assist with this issue.
@@ -394,7 +405,7 @@ If `deprecation.alternatePackage.id` exists, append:
 The replacement is `<alternatePackage.id>`. Please consider re-filing your issue against the replacement package.
 ```
 
-2. Close the issue (via `close-issue`)
+2. Close the issue (via `close_issue`)
 3. Exit — skip all remaining steps
 
 ## Step 5: Owner Lookup and Routing
@@ -628,3 +639,29 @@ Rules for the standard sections:
   - 🔎 Debugging / Reproduction Notes: include diagnostic observations and numbered investigation steps; note similar open issues found via `search_issues` if any
   - 🏷️ Label Confidence: explain category and service label selection; state confidence as High, Medium, or Low with justification; note other labels considered and why they were rejected
   - 👥 Owner Routing: show which CODEOWNERS `# ServiceLabel:` entry matched (with line number) and why; list AzureSdkOwners and ServiceOwners found; state what routing action was taken; briefly note other entries encountered during the bottom-to-top scan and why they were skipped
+
+## Step 8: Dispatch Agentic Investigation
+
+Dispatch the `issue-investigation` workflow after the analysis comment only when the issue is in a clean, just-triaged state:
+
+- The target is an issue
+- Exactly one service label (color `#e99695`) was confidently applied
+- Exactly one category label (color `#ffeb77`) was confidently applied
+- The `customer-reported` label is assigned
+- The issue does not have `needs-triage`
+- The issue does not have `needs-team-triage`
+- The issue does not have `issue-addressed`
+- The issue does not have `needs-author-feedback`
+
+If all conditions are met, use `dispatch_workflow`:
+
+```json
+{
+  "workflow_name": "issue-investigation",
+  "inputs": {
+    "issue_number": "${{ github.event.issue.number || github.event.inputs.issue_number }}"
+  }
+}
+```
+
+If any condition is not met, do not dispatch and call `noop` with a short reason.

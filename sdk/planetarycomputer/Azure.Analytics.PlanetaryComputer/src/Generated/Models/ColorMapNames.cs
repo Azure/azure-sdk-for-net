@@ -446,6 +446,94 @@ namespace Azure.Analytics.PlanetaryComputer
         private const string YlorrdValue = "ylorrd";
         /// <summary> Reversed YlOrRd colormap. </summary>
         private const string YlorrdRValue = "ylorrd_r";
+        /// <summary> Algae colormap - sequential green colormap for ocean data. </summary>
+        private const string AlgaeValue = "algae";
+        /// <summary> Reversed algae colormap. </summary>
+        private const string AlgaeRValue = "algae_r";
+        /// <summary> Amp colormap - sequential magenta colormap for ocean data. </summary>
+        private const string AmpValue = "amp";
+        /// <summary> Reversed amp colormap. </summary>
+        private const string AmpRValue = "amp_r";
+        /// <summary> Balance colormap - diverging blue to red for ocean data. </summary>
+        private const string BalanceValue = "balance";
+        /// <summary> Reversed balance colormap. </summary>
+        private const string BalanceRValue = "balance_r";
+        /// <summary> Curl colormap - diverging teal to red for ocean data. </summary>
+        private const string CurlValue = "curl";
+        /// <summary> Reversed curl colormap. </summary>
+        private const string CurlRValue = "curl_r";
+        /// <summary> Deep colormap - sequential blue colormap for ocean data. </summary>
+        private const string DeepValue = "deep";
+        /// <summary> Reversed deep colormap. </summary>
+        private const string DeepRValue = "deep_r";
+        /// <summary> Delta colormap - diverging blue to green for ocean data. </summary>
+        private const string DeltaValue = "delta";
+        /// <summary> Reversed delta colormap. </summary>
+        private const string DeltaRValue = "delta_r";
+        /// <summary> Dense colormap - sequential purple colormap for ocean data. </summary>
+        private const string DenseValue = "dense";
+        /// <summary> Reversed dense colormap. </summary>
+        private const string DenseRValue = "dense_r";
+        /// <summary> Diff colormap - diverging colormap for difference data. </summary>
+        private const string DiffValue = "diff";
+        /// <summary> Reversed diff colormap. </summary>
+        private const string DiffRValue = "diff_r";
+        /// <summary> Haline colormap - sequential blue to yellow for salinity data. </summary>
+        private const string HalineValue = "haline";
+        /// <summary> Reversed haline colormap. </summary>
+        private const string HalineRValue = "haline_r";
+        /// <summary> Ice colormap - sequential blue colormap for ice data. </summary>
+        private const string IceValue = "ice";
+        /// <summary> Reversed ice colormap. </summary>
+        private const string IceRValue = "ice_r";
+        /// <summary> Matter colormap - sequential yellow to brown for ocean data. </summary>
+        private const string MatterValue = "matter";
+        /// <summary> Reversed matter colormap. </summary>
+        private const string MatterRValue = "matter_r";
+        /// <summary> Oxy colormap - diverging colormap for oxygen data. </summary>
+        private const string OxyValue = "oxy";
+        /// <summary> Reversed oxy colormap. </summary>
+        private const string OxyRValue = "oxy_r";
+        /// <summary> Phase colormap - circular colormap for phase data. </summary>
+        private const string PhaseValue = "phase";
+        /// <summary> Reversed phase colormap. </summary>
+        private const string PhaseRValue = "phase_r";
+        /// <summary> Rain colormap - sequential colormap for precipitation data. </summary>
+        private const string RainValue = "rain";
+        /// <summary> Reversed rain colormap. </summary>
+        private const string RainRValue = "rain_r";
+        /// <summary> Solar colormap - sequential colormap for solar radiation data. </summary>
+        private const string SolarValue = "solar";
+        /// <summary> Reversed solar colormap. </summary>
+        private const string SolarRValue = "solar_r";
+        /// <summary> Speed colormap - sequential colormap for velocity data. </summary>
+        private const string SpeedValue = "speed";
+        /// <summary> Reversed speed colormap. </summary>
+        private const string SpeedRValue = "speed_r";
+        /// <summary> Tarn colormap - sequential colormap for topographic data. </summary>
+        private const string TarnValue = "tarn";
+        /// <summary> Reversed tarn colormap. </summary>
+        private const string TarnRValue = "tarn_r";
+        /// <summary> Tempo colormap - sequential colormap for temporal data. </summary>
+        private const string TempoValue = "tempo";
+        /// <summary> Reversed tempo colormap. </summary>
+        private const string TempoRValue = "tempo_r";
+        /// <summary> Thermal colormap - sequential colormap for temperature data. </summary>
+        private const string ThermalValue = "thermal";
+        /// <summary> Reversed thermal colormap. </summary>
+        private const string ThermalRValue = "thermal_r";
+        /// <summary> Topo colormap - sequential colormap for topographic data. </summary>
+        private const string TopoValue = "topo";
+        /// <summary> Reversed topo colormap. </summary>
+        private const string TopoRValue = "topo_r";
+        /// <summary> Turbid colormap - sequential colormap for turbidity data. </summary>
+        private const string TurbidValue = "turbid";
+        /// <summary> Reversed turbid colormap. </summary>
+        private const string TurbidRValue = "turbid_r";
+        /// <summary> Turbo colormap - improved rainbow colormap. </summary>
+        private const string TurboValue = "turbo";
+        /// <summary> Reversed turbo colormap. </summary>
+        private const string TurboRValue = "turbo_r";
 
         /// <summary> Initializes a new instance of <see cref="ColorMapNames"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -1104,6 +1192,138 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Reversed YlOrRd colormap. </summary>
         public static ColorMapNames YlorrdR { get; } = new ColorMapNames(YlorrdRValue);
+
+        /// <summary> Algae colormap - sequential green colormap for ocean data. </summary>
+        public static ColorMapNames Algae { get; } = new ColorMapNames(AlgaeValue);
+
+        /// <summary> Reversed algae colormap. </summary>
+        public static ColorMapNames AlgaeR { get; } = new ColorMapNames(AlgaeRValue);
+
+        /// <summary> Amp colormap - sequential magenta colormap for ocean data. </summary>
+        public static ColorMapNames Amp { get; } = new ColorMapNames(AmpValue);
+
+        /// <summary> Reversed amp colormap. </summary>
+        public static ColorMapNames AmpR { get; } = new ColorMapNames(AmpRValue);
+
+        /// <summary> Balance colormap - diverging blue to red for ocean data. </summary>
+        public static ColorMapNames Balance { get; } = new ColorMapNames(BalanceValue);
+
+        /// <summary> Reversed balance colormap. </summary>
+        public static ColorMapNames BalanceR { get; } = new ColorMapNames(BalanceRValue);
+
+        /// <summary> Curl colormap - diverging teal to red for ocean data. </summary>
+        public static ColorMapNames Curl { get; } = new ColorMapNames(CurlValue);
+
+        /// <summary> Reversed curl colormap. </summary>
+        public static ColorMapNames CurlR { get; } = new ColorMapNames(CurlRValue);
+
+        /// <summary> Deep colormap - sequential blue colormap for ocean data. </summary>
+        public static ColorMapNames Deep { get; } = new ColorMapNames(DeepValue);
+
+        /// <summary> Reversed deep colormap. </summary>
+        public static ColorMapNames DeepR { get; } = new ColorMapNames(DeepRValue);
+
+        /// <summary> Delta colormap - diverging blue to green for ocean data. </summary>
+        public static ColorMapNames Delta { get; } = new ColorMapNames(DeltaValue);
+
+        /// <summary> Reversed delta colormap. </summary>
+        public static ColorMapNames DeltaR { get; } = new ColorMapNames(DeltaRValue);
+
+        /// <summary> Dense colormap - sequential purple colormap for ocean data. </summary>
+        public static ColorMapNames Dense { get; } = new ColorMapNames(DenseValue);
+
+        /// <summary> Reversed dense colormap. </summary>
+        public static ColorMapNames DenseR { get; } = new ColorMapNames(DenseRValue);
+
+        /// <summary> Diff colormap - diverging colormap for difference data. </summary>
+        public static ColorMapNames Diff { get; } = new ColorMapNames(DiffValue);
+
+        /// <summary> Reversed diff colormap. </summary>
+        public static ColorMapNames DiffR { get; } = new ColorMapNames(DiffRValue);
+
+        /// <summary> Haline colormap - sequential blue to yellow for salinity data. </summary>
+        public static ColorMapNames Haline { get; } = new ColorMapNames(HalineValue);
+
+        /// <summary> Reversed haline colormap. </summary>
+        public static ColorMapNames HalineR { get; } = new ColorMapNames(HalineRValue);
+
+        /// <summary> Ice colormap - sequential blue colormap for ice data. </summary>
+        public static ColorMapNames Ice { get; } = new ColorMapNames(IceValue);
+
+        /// <summary> Reversed ice colormap. </summary>
+        public static ColorMapNames IceR { get; } = new ColorMapNames(IceRValue);
+
+        /// <summary> Matter colormap - sequential yellow to brown for ocean data. </summary>
+        public static ColorMapNames Matter { get; } = new ColorMapNames(MatterValue);
+
+        /// <summary> Reversed matter colormap. </summary>
+        public static ColorMapNames MatterR { get; } = new ColorMapNames(MatterRValue);
+
+        /// <summary> Oxy colormap - diverging colormap for oxygen data. </summary>
+        public static ColorMapNames Oxy { get; } = new ColorMapNames(OxyValue);
+
+        /// <summary> Reversed oxy colormap. </summary>
+        public static ColorMapNames OxyR { get; } = new ColorMapNames(OxyRValue);
+
+        /// <summary> Phase colormap - circular colormap for phase data. </summary>
+        public static ColorMapNames Phase { get; } = new ColorMapNames(PhaseValue);
+
+        /// <summary> Reversed phase colormap. </summary>
+        public static ColorMapNames PhaseR { get; } = new ColorMapNames(PhaseRValue);
+
+        /// <summary> Rain colormap - sequential colormap for precipitation data. </summary>
+        public static ColorMapNames Rain { get; } = new ColorMapNames(RainValue);
+
+        /// <summary> Reversed rain colormap. </summary>
+        public static ColorMapNames RainR { get; } = new ColorMapNames(RainRValue);
+
+        /// <summary> Solar colormap - sequential colormap for solar radiation data. </summary>
+        public static ColorMapNames Solar { get; } = new ColorMapNames(SolarValue);
+
+        /// <summary> Reversed solar colormap. </summary>
+        public static ColorMapNames SolarR { get; } = new ColorMapNames(SolarRValue);
+
+        /// <summary> Speed colormap - sequential colormap for velocity data. </summary>
+        public static ColorMapNames Speed { get; } = new ColorMapNames(SpeedValue);
+
+        /// <summary> Reversed speed colormap. </summary>
+        public static ColorMapNames SpeedR { get; } = new ColorMapNames(SpeedRValue);
+
+        /// <summary> Tarn colormap - sequential colormap for topographic data. </summary>
+        public static ColorMapNames Tarn { get; } = new ColorMapNames(TarnValue);
+
+        /// <summary> Reversed tarn colormap. </summary>
+        public static ColorMapNames TarnR { get; } = new ColorMapNames(TarnRValue);
+
+        /// <summary> Tempo colormap - sequential colormap for temporal data. </summary>
+        public static ColorMapNames Tempo { get; } = new ColorMapNames(TempoValue);
+
+        /// <summary> Reversed tempo colormap. </summary>
+        public static ColorMapNames TempoR { get; } = new ColorMapNames(TempoRValue);
+
+        /// <summary> Thermal colormap - sequential colormap for temperature data. </summary>
+        public static ColorMapNames Thermal { get; } = new ColorMapNames(ThermalValue);
+
+        /// <summary> Reversed thermal colormap. </summary>
+        public static ColorMapNames ThermalR { get; } = new ColorMapNames(ThermalRValue);
+
+        /// <summary> Topo colormap - sequential colormap for topographic data. </summary>
+        public static ColorMapNames Topo { get; } = new ColorMapNames(TopoValue);
+
+        /// <summary> Reversed topo colormap. </summary>
+        public static ColorMapNames TopoR { get; } = new ColorMapNames(TopoRValue);
+
+        /// <summary> Turbid colormap - sequential colormap for turbidity data. </summary>
+        public static ColorMapNames Turbid { get; } = new ColorMapNames(TurbidValue);
+
+        /// <summary> Reversed turbid colormap. </summary>
+        public static ColorMapNames TurbidR { get; } = new ColorMapNames(TurbidRValue);
+
+        /// <summary> Turbo colormap - improved rainbow colormap. </summary>
+        public static ColorMapNames Turbo { get; } = new ColorMapNames(TurboValue);
+
+        /// <summary> Reversed turbo colormap. </summary>
+        public static ColorMapNames TurboR { get; } = new ColorMapNames(TurboRValue);
 
         /// <summary> Determines if two <see cref="ColorMapNames"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

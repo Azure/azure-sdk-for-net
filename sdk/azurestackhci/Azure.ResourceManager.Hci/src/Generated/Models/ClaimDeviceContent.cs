@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Initializes a new instance of <see cref="ClaimDeviceContent"/>. </summary>
         /// <param name="devices"> List of resource ids of the devices to be modified. </param>
-        /// <param name="claimedBy"> Resource Id of group device belongs to. </param>
+        /// <param name="claimedBy"> Identifier of the group the device belongs to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ClaimDeviceContent(IList<ResourceIdentifier> devices, string claimedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Hci.Models
         [WirePath("devices")]
         public IList<ResourceIdentifier> Devices { get; }
 
-        /// <summary> Resource Id of group device belongs to. </summary>
+        /// <summary> Identifier of the group the device belongs to. </summary>
         [WirePath("claimedBy")]
         public string ClaimedBy { get; set; }
     }

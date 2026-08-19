@@ -43,9 +43,18 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public HealthModelProperties Properties { get; set; }
+        internal HealthModelProperties Properties { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> The status of the last operation. </summary>
+        public HealthModelProvisioningState? HealthModelProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

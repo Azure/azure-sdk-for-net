@@ -18,11 +18,6 @@ namespace Azure.ResourceManager.NetApp.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticVolumeRevert"/>. </summary>
-        public ElasticVolumeRevert()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ElasticVolumeRevert"/>. </summary>
         /// <param name="snapshotResourceId"> Resource identifier used to identify the Elastic Snapshot. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ElasticVolumeRevert(ResourceIdentifier snapshotResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -30,8 +25,5 @@ namespace Azure.ResourceManager.NetApp.Models
             SnapshotResourceId = snapshotResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Resource identifier used to identify the Elastic Snapshot. </summary>
-        public ResourceIdentifier SnapshotResourceId { get; set; }
     }
 }

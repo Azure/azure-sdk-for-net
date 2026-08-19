@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ComputeFleet;
 using Azure.ResourceManager.Models;
@@ -61,6 +60,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="createdOn"> Specifies the time at which the Compute Fleet is created. </param>
         /// <param name="uniqueId"> Specifies the ID which uniquely identifies a Compute Fleet. </param>
         /// <param name="mode"> Mode of the Fleet. </param>
+        /// <param name="vmNamePrefix"> VirtualMachine prefix to be used for the virtual machines launched by Fleet. Can be used only with Launch mode. </param>
         /// <param name="capacityType">
         /// Specifies capacity type for Fleet Regular and Spot priority profiles.
         /// capacityType is an immutable property. Once set during Fleet creation, it cannot be updated.
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// </param>
         /// <param name="zoneAllocationPolicy"> Zone Allocation Policy for Fleet. </param>
         /// <returns> A new <see cref="Models.ComputeFleetProperties"/> instance for mocking. </returns>
-        public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState = default, SpotPriorityProfile spotPriorityProfile = default, RegularPriorityProfile regularPriorityProfile = default, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile = default, ComputeFleetVmAttributes vmAttributes = default, IEnumerable<LocationProfile> additionalLocationsLocationProfiles = default, ComputeFleetComputeProfile computeProfile = default, DateTimeOffset? createdOn = default, string uniqueId = default, ComputeFleetMode? mode = default, ComputeFleetCapacityType? capacityType = default, ComputeFleetZoneAllocationPolicy zoneAllocationPolicy = default)
+        public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState = default, SpotPriorityProfile spotPriorityProfile = default, RegularPriorityProfile regularPriorityProfile = default, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile = default, ComputeFleetVmAttributes vmAttributes = default, IEnumerable<LocationProfile> additionalLocationsLocationProfiles = default, ComputeFleetComputeProfile computeProfile = default, DateTimeOffset? createdOn = default, string uniqueId = default, ComputeFleetMode? mode = default, string vmNamePrefix = default, ComputeFleetCapacityType? capacityType = default, ComputeFleetZoneAllocationPolicy zoneAllocationPolicy = default)
         {
             vmSizesProfile ??= new ChangeTrackingList<ComputeFleetVmSizeProfile>();
 
@@ -83,6 +83,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 createdOn,
                 uniqueId,
                 mode,
+                vmNamePrefix,
                 capacityType,
                 zoneAllocationPolicy,
                 default);
@@ -1496,8 +1497,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="operationStatus"> This represents the operationStatus of the virtual machine in response to the last operation that was performed on it by Azure Fleet resource. </param>
         /// <param name="error"> Error information when `operationStatus` is `Failed`. </param>
+        /// <param name="vmSize"> The VM size of the virtual machine. </param>
+        /// <param name="zone"> The availability zone of the virtual machine. </param>
+        /// <param name="priority"> The priority of the virtual machine. </param>
         /// <returns> A new <see cref="Models.ComputeFleetVirtualMachine"/> instance for mocking. </returns>
-        public static ComputeFleetVirtualMachine ComputeFleetVirtualMachine(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ComputeFleetVmOperationStatus operationStatus = default, ComputeFleetApiError error = default)
+        public static ComputeFleetVirtualMachine ComputeFleetVirtualMachine(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ComputeFleetVmOperationStatus operationStatus = default, ComputeFleetApiError error = default, string vmSize = default, string zone = default, string priority = default)
         {
             return new ComputeFleetVirtualMachine(
                 id,
@@ -1506,6 +1510,9 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 systemData,
                 operationStatus,
                 error,
+                vmSize,
+                zone,
+                priority,
                 default);
         }
 
@@ -1533,6 +1540,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 computeProfile,
                 createdOn,
                 uniqueId,
+                default,
                 default,
                 default,
                 default,

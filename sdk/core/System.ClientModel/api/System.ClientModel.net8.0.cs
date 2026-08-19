@@ -13,6 +13,25 @@ namespace System.ClientModel
         public System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected abstract System.Collections.Generic.IAsyncEnumerable<T> GetValuesFromPageAsync(System.ClientModel.ClientResult page);
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0005")]
+    public static partial class AsyncStreamingClientResult
+    {
+        public static System.ClientModel.AsyncStreamingClientResult<System.BinaryData> CreateJsonLines(System.ClientModel.Primitives.PipelineResponse response, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.ClientModel.AsyncStreamingClientResult<T> CreateJsonLines<T>(System.ClientModel.Primitives.PipelineResponse response, System.Func<System.BinaryData, T> itemParser, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.ClientModel.AsyncStreamingClientResult<System.Net.ServerSentEvents.SseItem<System.BinaryData>> CreateSse(System.ClientModel.Primitives.PipelineResponse response, System.Func<System.Net.ServerSentEvents.SseItem<System.BinaryData>, bool>? isTerminal = null, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.ClientModel.AsyncStreamingClientResult<System.Net.ServerSentEvents.SseItem<T>> CreateSse<T>(System.ClientModel.Primitives.PipelineResponse response, System.Net.ServerSentEvents.SseItemParser<T> itemParser, System.Func<System.Net.ServerSentEvents.SseItem<System.BinaryData>, bool>? isTerminal = null, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.ClientModel.AsyncStreamingClientResult<T> Create<T>(System.ClientModel.Primitives.PipelineResponse response, System.Func<System.IO.Stream, System.Threading.CancellationToken, System.Collections.Generic.IAsyncEnumerable<T>> producer, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0005")]
+    public sealed partial class AsyncStreamingClientResult<T> : System.Collections.Generic.IAsyncEnumerable<T>, System.IAsyncDisposable
+    {
+        internal AsyncStreamingClientResult() { }
+        public System.ClientModel.Primitives.PipelineResponseHeaders Headers { get { throw null; } }
+        public string ReasonPhrase { get { throw null; } }
+        public int Status { get { throw null; } }
+        public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<T> System.Collections.Generic.IAsyncEnumerable<T>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
     public abstract partial class AuthenticationTokenProvider
     {
         protected AuthenticationTokenProvider() { }
@@ -300,7 +319,8 @@ namespace System.ClientModel.Primitives
     {
         protected CredentialResolver() { }
         public abstract bool TryResolve(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.ClientModel.AuthenticationTokenProvider? provider);
-        public virtual bool TryResolve(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, System.Func<Microsoft.Extensions.Configuration.IConfigurationSection, System.ClientModel.AuthenticationTokenProvider?> resolveChild, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.ClientModel.AuthenticationTokenProvider? provider) { throw null; }
+        public bool TryResolve(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, System.Func<Microsoft.Extensions.Configuration.IConfigurationSection, System.ClientModel.AuthenticationTokenProvider?> resolveChild, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.ClientModel.AuthenticationTokenProvider? provider) { throw null; }
+        protected virtual bool TryResolveCore(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, System.Func<Microsoft.Extensions.Configuration.IConfigurationSection, System.ClientModel.AuthenticationTokenProvider?> resolveChild, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.ClientModel.AuthenticationTokenProvider? provider) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public sealed partial class CredentialSettings

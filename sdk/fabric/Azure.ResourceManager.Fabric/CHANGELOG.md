@@ -1,14 +1,17 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.2 (2026-08-18)
 
 ### Features Added
 
-### Breaking Changes
+- Added support for capacity overage configuration.
 
-### Bugs Fixed
+## 1.1.0-beta.1 (2026-06-06)
 
 ### Other Changes
+
+- Upgraded dependent Azure.Core to 1.58.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.0.0 (2025-09-05)
 

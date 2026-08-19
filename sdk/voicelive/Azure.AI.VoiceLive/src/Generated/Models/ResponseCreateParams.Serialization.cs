@@ -205,6 +205,29 @@ namespace Azure.AI.VoiceLive
                 }
 #endif
             }
+            if (Optional.IsCollectionDefined(InvokeInput))
+            {
+                writer.WritePropertyName("invoke_input"u8);
+                writer.WriteStartObject();
+                foreach (var item in InvokeInput)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -263,6 +286,7 @@ namespace Azure.AI.VoiceLive
             ReasoningEffort? reasoningEffort = default;
             IDictionary<string, string> metadata = default;
             BinaryData interimResponse = default;
+            IDictionary<string, BinaryData> invokeInput = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -434,6 +458,27 @@ namespace Azure.AI.VoiceLive
                     interimResponse = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
+                if (prop.NameEquals("invoke_input"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                        }
+                    }
+                    invokeInput = dictionary;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -456,6 +501,7 @@ namespace Azure.AI.VoiceLive
                 reasoningEffort,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 interimResponse,
+                invokeInput ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 additionalBinaryDataProperties);
         }
     }

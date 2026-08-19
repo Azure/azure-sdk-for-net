@@ -15,7 +15,7 @@
 //      - One for primary resource, one for secondary resource
 //   4. Model deployments (Microsoft.CognitiveServices/accounts/deployments)
 //      - Deployed via test-resources-post.ps1 script after resource creation
-//      - Creates deployments for: gpt-4.1, gpt-4.1-mini, text-embedding-3-large
+//      - Creates deployments for: gpt-5.2, text-embedding-3-large
 //
 // Environment Variables Generated (outputs):
 //   Primary Resource:
@@ -31,9 +31,9 @@
 //     - AZURE_CONTENT_UNDERSTANDING_TARGET_REGION: Secondary resource region
 //
 //   Model Deployment Names:
-//     - GPT_4_1_DEPLOYMENT: Deployment name for gpt-4.1 model
-//     - GPT_4_1_MINI_DEPLOYMENT: Deployment name for gpt-4.1-mini model
-//     - TEXT_EMBEDDING_3_LARGE_DEPLOYMENT: Deployment name for text-embedding-3-large model
+//     - CU_COMPLETION_MODEL_DEPLOYMENT: Deployment name for the completion model
+//     - CU_COMPLETION_MINI_DEPLOYMENT: Deployment name for the mini completion model
+//     - CU_EMBEDDING_DEPLOYMENT: Deployment name for the embedding model
 //
 // Authentication:
 //   - Uses DefaultAzureCredential (no API keys needed)
@@ -133,7 +133,7 @@ output AZURE_CONTENT_UNDERSTANDING_TARGET_REGION string = location
 
 // Model deployment outputs - deployment names for tests
 // These match what ContentUnderstandingClientTestEnvironment expects
-output GPT_4_1_DEPLOYMENT string = 'gpt-4.1'
-output GPT_4_1_MINI_DEPLOYMENT string = 'gpt-4.1-mini'
-output TEXT_EMBEDDING_3_LARGE_DEPLOYMENT string = 'text-embedding-3-large'
+output CU_COMPLETION_MODEL_DEPLOYMENT string = 'gpt-5.2'
+output CU_COMPLETION_MINI_DEPLOYMENT string = 'gpt-5.2'
+output CU_EMBEDDING_DEPLOYMENT string = 'text-embedding-3-large'
 

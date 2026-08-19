@@ -6,98 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableStorageCacheArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableStorageCacheArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableStorageCacheArmClient for mocking. </summary>
         protected MockableStorageCacheArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableStorageCacheArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableStorageCacheArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableStorageCacheArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableStorageCacheArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="AmlFileSystemResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AmlFileSystemResource.CreateResourceIdentifier" /> to create an <see cref="AmlFileSystemResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AmlFileSystemResource"/> object. </returns>
-        public virtual AmlFileSystemResource GetAmlFileSystemResource(ResourceIdentifier id)
-        {
-            AmlFileSystemResource.ValidateResourceId(id);
-            return new AmlFileSystemResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="AutoExportJobResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutoExportJobResource.CreateResourceIdentifier" /> to create an <see cref="AutoExportJobResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutoExportJobResource"/> object. </returns>
-        public virtual AutoExportJobResource GetAutoExportJobResource(ResourceIdentifier id)
-        {
-            AutoExportJobResource.ValidateResourceId(id);
-            return new AutoExportJobResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StorageCacheImportJobResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageCacheImportJobResource.CreateResourceIdentifier" /> to create a <see cref="StorageCacheImportJobResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageCacheImportJobResource"/> object. </returns>
-        public virtual StorageCacheImportJobResource GetStorageCacheImportJobResource(ResourceIdentifier id)
-        {
-            StorageCacheImportJobResource.ValidateResourceId(id);
-            return new StorageCacheImportJobResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="AutoImportJobResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutoImportJobResource.CreateResourceIdentifier" /> to create an <see cref="AutoImportJobResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutoImportJobResource"/> object. </returns>
-        public virtual AutoImportJobResource GetAutoImportJobResource(ResourceIdentifier id)
-        {
-            AutoImportJobResource.ValidateResourceId(id);
-            return new AutoImportJobResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="ExpansionJobResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ExpansionJobResource.CreateResourceIdentifier" /> to create an <see cref="ExpansionJobResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExpansionJobResource"/> object. </returns>
-        public virtual ExpansionJobResource GetExpansionJobResource(ResourceIdentifier id)
-        {
-            ExpansionJobResource.ValidateResourceId(id);
-            return new ExpansionJobResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StorageCacheResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageCacheResource.CreateResourceIdentifier" /> to create a <see cref="StorageCacheResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="StorageCacheResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StorageCacheResource"/> object. </returns>
         public virtual StorageCacheResource GetStorageCacheResource(ResourceIdentifier id)
@@ -106,16 +35,58 @@ namespace Azure.ResourceManager.StorageCache.Mocking
             return new StorageCacheResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="StorageTargetResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageTargetResource.CreateResourceIdentifier" /> to create a <see cref="StorageTargetResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="StorageTargetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StorageTargetResource"/> object. </returns>
         public virtual StorageTargetResource GetStorageTargetResource(ResourceIdentifier id)
         {
             StorageTargetResource.ValidateResourceId(id);
             return new StorageTargetResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AmlFileSystemResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AmlFileSystemResource"/> object. </returns>
+        public virtual AmlFileSystemResource GetAmlFileSystemResource(ResourceIdentifier id)
+        {
+            AmlFileSystemResource.ValidateResourceId(id);
+            return new AmlFileSystemResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AutoExportJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AutoExportJobResource"/> object. </returns>
+        public virtual AutoExportJobResource GetAutoExportJobResource(ResourceIdentifier id)
+        {
+            AutoExportJobResource.ValidateResourceId(id);
+            return new AutoExportJobResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="StorageCacheImportJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="StorageCacheImportJobResource"/> object. </returns>
+        public virtual StorageCacheImportJobResource GetStorageCacheImportJobResource(ResourceIdentifier id)
+        {
+            StorageCacheImportJobResource.ValidateResourceId(id);
+            return new StorageCacheImportJobResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AutoImportJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AutoImportJobResource"/> object. </returns>
+        public virtual AutoImportJobResource GetAutoImportJobResource(ResourceIdentifier id)
+        {
+            AutoImportJobResource.ValidateResourceId(id);
+            return new AutoImportJobResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AmlFileSystemExpansionJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AmlFileSystemExpansionJobResource"/> object. </returns>
+        public virtual AmlFileSystemExpansionJobResource GetAmlFileSystemExpansionJobResource(ResourceIdentifier id)
+        {
+            AmlFileSystemExpansionJobResource.ValidateResourceId(id);
+            return new AmlFileSystemExpansionJobResource(Client, id);
         }
     }
 }

@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.Projects;
 
 // Internal types
@@ -12,7 +14,7 @@ namespace Azure.AI.Projects;
 [CodeGenType("InternalAzureFunctionDefinitionFunction")] internal partial class AzureFunctionDefinitionFunction { }
 [CodeGenType("CreateMemoryStoreRequest")] internal partial class InternalCreateMemoryStoreRequest { }
 [CodeGenType("DeclarativeAgentDefinition")] internal partial class InternalDeclarativeAgentDefinition { }
-[CodeGenType("SearchMemoriesRequest")] internal partial class InternalMemorySearchOptions { }
+[CodeGenType("SearchMemoriesRequest")][Experimental("AAIP001")] internal partial class InternalMemorySearchOptions { }
 [CodeGenType("Tool")] internal partial class InternalTool { }
 [CodeGenType("UpdateMemoriesRequest")] internal partial class InternalMemoryUpdateOptions { }
 [CodeGenType("EmptyModelParam")] internal partial class InternalEmptyModelParam { }

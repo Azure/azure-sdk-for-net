@@ -100,6 +100,11 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("arcMachineResourceId"u8);
                 writer.WriteStringValue(ArcMachineResourceId);
             }
+            if (options.Format != "W" && Optional.IsDefined(LifecycleDetails))
+            {
+                writer.WritePropertyName("lifecycleDetails"u8);
+                writer.WriteObjectValue(LifecycleDetails, options);
+            }
             if (Optional.IsDefined(ArcGatewayResourceId))
             {
                 writer.WritePropertyName("arcGatewayResourceId"u8);
@@ -207,6 +212,7 @@ namespace Azure.ResourceManager.Hci.Models
             string cloudId = default;
             ResourceIdentifier arcMachineResourceGroupId = default;
             ResourceIdentifier arcMachineResourceId = default;
+            LifecycleDetails lifecycleDetails = default;
             ResourceIdentifier arcGatewayResourceId = default;
             HciSiteDetails siteDetails = default;
             OwnershipVoucherDetails ownershipVoucherDetails = default;
@@ -260,6 +266,15 @@ namespace Azure.ResourceManager.Hci.Models
                         continue;
                     }
                     arcMachineResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("lifecycleDetails"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lifecycleDetails = LifecycleDetails.DeserializeLifecycleDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("arcGatewayResourceId"u8))
@@ -369,6 +384,7 @@ namespace Azure.ResourceManager.Hci.Models
                 cloudId,
                 arcMachineResourceGroupId,
                 arcMachineResourceId,
+                lifecycleDetails,
                 arcGatewayResourceId,
                 siteDetails,
                 ownershipVoucherDetails,

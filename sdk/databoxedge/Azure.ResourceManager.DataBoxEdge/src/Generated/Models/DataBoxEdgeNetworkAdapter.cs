@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="status"> Value indicating whether this adapter is valid. </param>
         /// <param name="rdmaStatus"> Value indicating whether this adapter is RDMA capable. </param>
         /// <param name="dhcpStatus"> Value indicating whether this adapter has DHCP enabled. </param>
-        /// <param name="iPv4Configuration"> The IPv4 configuration of the network adapter. </param>
-        /// <param name="iPv6Configuration"> The IPv6 configuration of the network adapter. </param>
-        /// <param name="iPv6LinkLocalAddress"> The IPv6 local address. </param>
+        /// <param name="ipv4Configuration"> The IPv4 configuration of the network adapter. </param>
+        /// <param name="ipv6Configuration"> The IPv6 configuration of the network adapter. </param>
+        /// <param name="ipv6LinkLocalAddress"> The IPv6 local address. </param>
         /// <param name="dnsServers"> The list of DNS Servers of the device. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxEdgeNetworkAdapter(string adapterId, DataBoxEdgeNetworkAdapterPosition adapterPosition, int? index, Guid? nodeId, string networkAdapterName, string label, string macAddress, long? linkSpeed, DataBoxEdgeNetworkAdapterStatus? status, DataBoxEdgeNetworkAdapterRdmaStatus? rdmaStatus, DataBoxEdgeNetworkAdapterDhcpStatus? dhcpStatus, DataBoxEdgeIPv4Config iPv4Configuration, DataBoxEdgeIPv6Config iPv6Configuration, string iPv6LinkLocalAddress, IReadOnlyList<string> dnsServers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataBoxEdgeNetworkAdapter(string adapterId, DataBoxEdgeNetworkAdapterPosition adapterPosition, int? index, Guid? nodeId, string networkAdapterName, string label, string macAddress, long? linkSpeed, DataBoxEdgeNetworkAdapterStatus? status, DataBoxEdgeNetworkAdapterRdmaStatus? rdmaStatus, DataBoxEdgeNetworkAdapterDhcpStatus? dhcpStatus, DataBoxEdgeIPv4Config ipv4Configuration, DataBoxEdgeIPv6Config ipv6Configuration, string ipv6LinkLocalAddress, IReadOnlyList<string> dnsServers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdapterId = adapterId;
             AdapterPosition = adapterPosition;
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Status = status;
             RdmaStatus = rdmaStatus;
             DhcpStatus = dhcpStatus;
-            IPv4Configuration = iPv4Configuration;
-            IPv6Configuration = iPv6Configuration;
-            IPv6LinkLocalAddress = iPv6LinkLocalAddress;
+            IPv4Configuration = ipv4Configuration;
+            IPv6Configuration = ipv6Configuration;
+            IPv6LinkLocalAddress = ipv6LinkLocalAddress;
             DnsServers = dnsServers;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }

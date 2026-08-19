@@ -422,6 +422,28 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
+        /// <summary> The date and time of the end of the last successful version update for the cluster. </summary>
+        public DateTimeOffset? LastSuccessfulVersionUpdateOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastSuccessfulVersionUpdateOn;
+            }
+        }
+
+        /// <summary> The list of credentials that are managed for the cluster and can be rotated on-demand. </summary>
+        public IReadOnlyList<string> ManagedCredentials
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                return Properties.ManagedCredentials;
+            }
+        }
+
         /// <summary> The count of Manual Action Taken (MAT) events that have not been validated. </summary>
         public long? ManualActionCount
         {

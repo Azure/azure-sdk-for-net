@@ -163,6 +163,11 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("tool_choice"u8);
                 writer.WriteObjectValue(ToolChoice, options);
             }
+            if (Optional.IsDefined(AllowParallelToolCalls))
+            {
+                writer.WritePropertyName("parallel_tool_calls"u8);
+                writer.WriteBooleanValue(AllowParallelToolCalls.Value);
+            }
             if (Optional.IsDefined(Temperature))
             {
                 writer.WritePropertyName("temperature"u8);
@@ -285,6 +290,7 @@ namespace Azure.AI.VoiceLive
             IList<AudioTimestampType> outputAudioTimestampTypes = default;
             IList<VoiceLiveToolDefinition> tools = default;
             ToolChoiceOption toolChoice = default;
+            bool? allowParallelToolCalls = default;
             float? temperature = default;
             MaxResponseOutputTokensOption maxResponseOutputTokens = default;
             ReasoningEffort? reasoningEffort = default;
@@ -437,6 +443,15 @@ namespace Azure.AI.VoiceLive
                     toolChoice = ToolChoiceOption.DeserializeToolChoiceOption(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("parallel_tool_calls"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    allowParallelToolCalls = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("temperature"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -538,6 +553,7 @@ namespace Azure.AI.VoiceLive
                 outputAudioTimestampTypes ?? new ChangeTrackingList<AudioTimestampType>(),
                 tools ?? new ChangeTrackingList<VoiceLiveToolDefinition>(),
                 toolChoice,
+                allowParallelToolCalls,
                 temperature,
                 maxResponseOutputTokens,
                 reasoningEffort,

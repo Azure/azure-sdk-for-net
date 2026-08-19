@@ -54,7 +54,6 @@ VpnConnectionProtocolType = VirtualNetworkGatewayConnectionProtocol.IkeV2,
 ConnectionBandwidth = 200,
 SharedKey = "key",
 UsePolicyBasedTrafficSelectors = false,
-Name = "Connection-Link1",
 }},
                 RoutingConfiguration = new RoutingConfiguration
                 {
@@ -77,7 +76,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
                     OutboundRouteMapId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/routeMaps/routeMap2"),
                 },
             };
-            ArmOperation<VpnConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, connectionName, data);
+            ArmOperation<VpnConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, connectionName, data, cancellationToken: System.Threading.CancellationToken.None);
             VpnConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

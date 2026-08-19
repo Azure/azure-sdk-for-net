@@ -9,15 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SapOdpLinkedService : IUtf8JsonSerializable, IJsonModel<SapOdpLinkedService>
+    /// <summary> SAP ODP Linked Service. </summary>
+    public partial class SapOdpLinkedService : DataFactoryLinkedServiceProperties, IJsonModel<SapOdpLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapOdpLinkedService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataFactoryLinkedServiceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SapOdpLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSapOdpLinkedService(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SapOdpLinkedService)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SapOdpLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SapOdpLinkedService)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SapOdpLinkedService>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SapOdpLinkedService IPersistableModel<SapOdpLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options) => (SapOdpLinkedService)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SapOdpLinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SapOdpLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,214 +70,103 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SapOdpLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapOdpLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SapOdpLinkedService)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Server))
-            {
-                writer.WritePropertyName("server"u8);
-                JsonSerializer.Serialize(writer, Server);
-            }
-            if (Optional.IsDefined(SystemNumber))
-            {
-                writer.WritePropertyName("systemNumber"u8);
-                JsonSerializer.Serialize(writer, SystemNumber);
-            }
-            if (Optional.IsDefined(ClientId))
-            {
-                writer.WritePropertyName("clientId"u8);
-                JsonSerializer.Serialize(writer, ClientId);
-            }
-            if (Optional.IsDefined(Language))
-            {
-                writer.WritePropertyName("language"u8);
-                JsonSerializer.Serialize(writer, Language);
-            }
-            if (Optional.IsDefined(SystemId))
-            {
-                writer.WritePropertyName("systemId"u8);
-                JsonSerializer.Serialize(writer, SystemId);
-            }
-            if (Optional.IsDefined(UserName))
-            {
-                writer.WritePropertyName("userName"u8);
-                JsonSerializer.Serialize(writer, UserName);
-            }
+            writer.WriteObjectValue(TypeProperties, options);
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                JsonSerializer.Serialize(writer, Password);
-            }
-            if (Optional.IsDefined(MessageServer))
-            {
-                writer.WritePropertyName("messageServer"u8);
-                JsonSerializer.Serialize(writer, MessageServer);
-            }
-            if (Optional.IsDefined(MessageServerService))
-            {
-                writer.WritePropertyName("messageServerService"u8);
-                JsonSerializer.Serialize(writer, MessageServerService);
-            }
-            if (Optional.IsDefined(SncFlag))
-            {
-                writer.WritePropertyName("sncMode"u8);
-                JsonSerializer.Serialize(writer, SncFlag);
-            }
-            if (Optional.IsDefined(SncMyName))
-            {
-                writer.WritePropertyName("sncMyName"u8);
-                JsonSerializer.Serialize(writer, SncMyName);
-            }
-            if (Optional.IsDefined(SncPartnerName))
-            {
-                writer.WritePropertyName("sncPartnerName"u8);
-                JsonSerializer.Serialize(writer, SncPartnerName);
-            }
-            if (Optional.IsDefined(SncLibraryPath))
-            {
-                writer.WritePropertyName("sncLibraryPath"u8);
-                JsonSerializer.Serialize(writer, SncLibraryPath);
-            }
-            if (Optional.IsDefined(SncQop))
-            {
-                writer.WritePropertyName("sncQop"u8);
-                JsonSerializer.Serialize(writer, SncQop);
-            }
-            if (Optional.IsDefined(X509CertificatePath))
-            {
-                writer.WritePropertyName("x509CertificatePath"u8);
-                JsonSerializer.Serialize(writer, X509CertificatePath);
-            }
-            if (Optional.IsDefined(LogonGroup))
-            {
-                writer.WritePropertyName("logonGroup"u8);
-                JsonSerializer.Serialize(writer, LogonGroup);
-            }
-            if (Optional.IsDefined(SubscriberName))
-            {
-                writer.WritePropertyName("subscriberName"u8);
-                JsonSerializer.Serialize(writer, SubscriberName);
-            }
-            if (Optional.IsDefined(EncryptedCredential))
-            {
-                writer.WritePropertyName("encryptedCredential"u8);
-                writer.WriteStringValue(EncryptedCredential);
-            }
-            writer.WriteEndObject();
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                writer.WriteObjectValue<DataFactorySecret>(Password, options);
             }
         }
 
-        SapOdpLinkedService IJsonModel<SapOdpLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SapOdpLinkedService IJsonModel<SapOdpLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SapOdpLinkedService)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataFactoryLinkedServiceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SapOdpLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapOdpLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SapOdpLinkedService)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSapOdpLinkedService(document.RootElement, options);
         }
 
-        internal static SapOdpLinkedService DeserializeSapOdpLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SapOdpLinkedService DeserializeSapOdpLinkedService(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string type = default;
-            string version = default;
+            string linkedServiceType = "SapOdp";
+            string linkedServiceVersion = default;
             IntegrationRuntimeReference connectVia = default;
             string description = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
-            DataFactoryElement<string> server = default;
-            DataFactoryElement<string> systemNumber = default;
-            DataFactoryElement<string> clientId = default;
-            DataFactoryElement<string> language = default;
-            DataFactoryElement<string> systemId = default;
-            DataFactoryElement<string> userName = default;
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            SapOdpLinkedServiceTypeProperties typeProperties = default;
             DataFactorySecret password = default;
-            DataFactoryElement<string> messageServer = default;
-            DataFactoryElement<string> messageServerService = default;
-            DataFactoryElement<bool> sncMode = default;
-            DataFactoryElement<string> sncMyName = default;
-            DataFactoryElement<string> sncPartnerName = default;
-            DataFactoryElement<string> sncLibraryPath = default;
-            DataFactoryElement<string> sncQop = default;
-            DataFactoryElement<string> x509CertificatePath = default;
-            DataFactoryElement<string> logonGroup = default;
-            DataFactoryElement<string> subscriberName = default;
-            string encryptedCredential = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    linkedServiceType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"u8))
+                if (prop.NameEquals("version"u8))
                 {
-                    version = property.Value.GetString();
+                    linkedServiceVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("connectVia"u8))
+                if (prop.NameEquals("connectVia"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
+                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parameters"u8))
+                if (prop.NameEquals("parameters"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value, options));
+                        dictionary.Add(prop0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(prop0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
                 }
-                if (property.NameEquals("annotations"u8))
+                if (prop.NameEquals("annotations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<BinaryData> array = new List<BinaryData>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -250,236 +180,28 @@ namespace Azure.ResourceManager.DataFactory.Models
                     annotations = array;
                     continue;
                 }
-                if (property.NameEquals("typeProperties"u8))
+                if (prop.NameEquals("typeProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("server"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            server = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("systemNumber"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            systemNumber = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("clientId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            clientId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("language"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            language = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("systemId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            systemId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("userName"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            userName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("password"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("messageServer"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            messageServer = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("messageServerService"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            messageServerService = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("sncMode"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sncMode = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("sncMyName"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sncMyName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("sncPartnerName"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sncPartnerName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("sncLibraryPath"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sncLibraryPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("sncQop"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sncQop = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("x509CertificatePath"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            x509CertificatePath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("logonGroup"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            logonGroup = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("subscriberName"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            subscriberName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("encryptedCredential"u8))
-                        {
-                            encryptedCredential = property0.Value.GetString();
-                            continue;
-                        }
-                    }
+                    typeProperties = SapOdpLinkedServiceTypeProperties.DeserializeSapOdpLinkedServiceTypeProperties(prop.Value, options);
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                if (prop.NameEquals("password"u8))
+                {
+                    ReadPassword(prop, ref password);
+                    continue;
+                }
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            additionalProperties = additionalPropertiesDictionary;
             return new SapOdpLinkedService(
-                type,
-                version,
+                linkedServiceType,
+                linkedServiceVersion,
                 connectVia,
                 description,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 additionalProperties,
-                server,
-                systemNumber,
-                clientId,
-                language,
-                systemId,
-                userName,
-                password,
-                messageServer,
-                messageServerService,
-                sncMode,
-                sncMyName,
-                sncPartnerName,
-                sncLibraryPath,
-                sncQop,
-                x509CertificatePath,
-                logonGroup,
-                subscriberName,
-                encryptedCredential);
+                typeProperties,
+                password);
         }
-
-        BinaryData IPersistableModel<SapOdpLinkedService>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SapOdpLinkedService>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SapOdpLinkedService)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SapOdpLinkedService IPersistableModel<SapOdpLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SapOdpLinkedService>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSapOdpLinkedService(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SapOdpLinkedService)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SapOdpLinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

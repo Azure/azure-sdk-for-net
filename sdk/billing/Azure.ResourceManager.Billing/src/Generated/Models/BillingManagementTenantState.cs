@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingManagementTenantState : IEquatable<BillingManagementTenantState>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> NotAllowed. </summary>
+        private const string NotAllowedValue = "NotAllowed";
+        /// <summary> Active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> Revoked. </summary>
+        private const string RevokedValue = "Revoked";
 
         /// <summary> Initializes a new instance of <see cref="BillingManagementTenantState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingManagementTenantState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string NotAllowedValue = "NotAllowed";
-        private const string ActiveValue = "Active";
-        private const string RevokedValue = "Revoked";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static BillingManagementTenantState Other { get; } = new BillingManagementTenantState(OtherValue);
+
         /// <summary> NotAllowed. </summary>
         public static BillingManagementTenantState NotAllowed { get; } = new BillingManagementTenantState(NotAllowedValue);
+
         /// <summary> Active. </summary>
         public static BillingManagementTenantState Active { get; } = new BillingManagementTenantState(ActiveValue);
+
         /// <summary> Revoked. </summary>
         public static BillingManagementTenantState Revoked { get; } = new BillingManagementTenantState(RevokedValue);
+
         /// <summary> Determines if two <see cref="BillingManagementTenantState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingManagementTenantState left, BillingManagementTenantState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingManagementTenantState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingManagementTenantState left, BillingManagementTenantState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingManagementTenantState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingManagementTenantState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingManagementTenantState(string value) => new BillingManagementTenantState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingManagementTenantState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingManagementTenantState?(string value) => value == null ? null : new BillingManagementTenantState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingManagementTenantState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingManagementTenantState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -172,21 +172,21 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="accountName"> The account name of the <i>other</i> account in the merge operation. </param>
         /// <param name="accountResourceGroupName"> The resource group name of the <i>other</i> account in the merge operation. </param>
         /// <param name="accountSubscriptionId"> The subscription id of the <i>other</i> account in the merge operation. </param>
-        /// <param name="deprovisioned">
+        /// <param name="isDeprovisioned">
         /// The deprovisioned status of the account.
         /// Only applicable for the secondary account.
         /// </param>
         /// <param name="mergeStatus"> The status of the merge operation. </param>
         /// <param name="typeOfAccount"> The account's type for the merge operation. </param>
         /// <returns> A new <see cref="Models.PurviewAccountMergeInfo"/> instance for mocking. </returns>
-        public static PurviewAccountMergeInfo PurviewAccountMergeInfo(string accountLocation = default, string accountName = default, string accountResourceGroupName = default, string accountSubscriptionId = default, bool? deprovisioned = default, PurviewMergeStatus? mergeStatus = default, PurviewMergeAccountType? typeOfAccount = default)
+        public static PurviewAccountMergeInfo PurviewAccountMergeInfo(string accountLocation = default, string accountName = default, string accountResourceGroupName = default, string accountSubscriptionId = default, bool? isDeprovisioned = default, PurviewMergeStatus? mergeStatus = default, PurviewMergeAccountType? typeOfAccount = default)
         {
             return new PurviewAccountMergeInfo(
                 accountLocation,
                 accountName,
                 accountResourceGroupName,
                 accountSubscriptionId,
-                deprovisioned,
+                isDeprovisioned,
                 mergeStatus,
                 typeOfAccount,
                 default);

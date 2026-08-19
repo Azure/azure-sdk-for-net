@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ContainerAppPrivateEndpointConnectionResource.ResourceType, out string containerAppPrivateEndpointConnectionApiVersion);
             _managedEnvironmentPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _managedEnvironmentPrivateEndpointConnectionsRestClient = new ManagedEnvironmentPrivateEndpointConnections(_managedEnvironmentPrivateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, containerAppPrivateEndpointConnectionApiVersion ?? "2025-10-02-preview");
+            _managedEnvironmentPrivateEndpointConnectionsRestClient = new ManagedEnvironmentPrivateEndpointConnections(_managedEnvironmentPrivateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppPrivateEndpointConnectionApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 

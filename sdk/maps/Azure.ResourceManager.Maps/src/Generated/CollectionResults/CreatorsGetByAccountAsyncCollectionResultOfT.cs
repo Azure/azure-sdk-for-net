@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Maps
                     yield break;
                 }
                 MapsCreatorListResult result = MapsCreatorListResult.FromResponse(response);
-                yield return Page<MapsCreatorData>.FromValues((IReadOnlyList<MapsCreatorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MapsCreatorData>.FromValues((IReadOnlyList<MapsCreatorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

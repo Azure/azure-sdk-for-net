@@ -60,13 +60,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string fooApiVersion);
             _foosClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _foosRestClient = new Foos(_foosClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
+            _foosRestClient = new Foos(_foosClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fooApiVersion ?? "2024-05-01");
             _entityResourceReproClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _entityResourceReproRestClient = new EntityResourceRepro(_entityResourceReproClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
+            _entityResourceReproRestClient = new EntityResourceRepro(_entityResourceReproClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fooApiVersion ?? "2024-05-01");
             _grandparentFlattenReproClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _grandparentFlattenReproRestClient = new GrandparentFlattenRepro(_grandparentFlattenReproClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
+            _grandparentFlattenReproRestClient = new GrandparentFlattenRepro(_grandparentFlattenReproClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fooApiVersion ?? "2024-05-01");
             _sharedParamReproClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _sharedParamReproRestClient = new SharedParamRepro(_sharedParamReproClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
+            _sharedParamReproRestClient = new SharedParamRepro(_sharedParamReproClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fooApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -409,7 +409,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// FooAction
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -469,7 +469,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// FooAction
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -520,6 +520,124 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get raw metadata (Record&lt;unknown&gt;) for a Foo resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/getMetadata. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Foos_GetMetadata. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="FooResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<IDictionary<string, BinaryData>>> GetMetadataAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooResource.GetMetadata");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _foosRestClient.CreateGetMetadataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using JsonDocument document = JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions);
+                IDictionary<string, BinaryData> value = default;
+                if (document.RootElement.ValueKind != JsonValueKind.Null)
+                {
+                    Dictionary<string, BinaryData> valueResult = new Dictionary<string, BinaryData>();
+                    foreach (JsonProperty valueResultProperty in document.RootElement.EnumerateObject())
+                    {
+                        valueResult.Add(valueResultProperty.Name, BinaryData.FromString(valueResultProperty.Value.GetRawText()));
+                    }
+                    value = valueResult;
+                }
+                Response<IDictionary<string, BinaryData>> response = Response.FromValue(value, result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get raw metadata (Record&lt;unknown&gt;) for a Foo resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/getMetadata. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Foos_GetMetadata. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="FooResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<IDictionary<string, BinaryData>> GetMetadata(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooResource.GetMetadata");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _foosRestClient.CreateGetMetadataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                using JsonDocument document = JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions);
+                IDictionary<string, BinaryData> value = default;
+                if (document.RootElement.ValueKind != JsonValueKind.Null)
+                {
+                    Dictionary<string, BinaryData> valueResult = new Dictionary<string, BinaryData>();
+                    foreach (JsonProperty valueResultProperty in document.RootElement.EnumerateObject())
+                    {
+                        valueResult.Add(valueResultProperty.Name, BinaryData.FromString(valueResultProperty.Value.GetRawText()));
+                    }
+                    value = valueResult;
+                }
+                Response<IDictionary<string, BinaryData>> response = Response.FromValue(value, result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
             }
             catch (Exception e)
             {
@@ -701,7 +819,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// SplitDependencies
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -757,7 +875,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// SplitDependencies
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -1503,6 +1621,39 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             Argument.AssertNotNullOrEmpty(multiFlattenTestName, nameof(multiFlattenTestName));
 
             return GetMultiFlattenTests().Get(multiFlattenTestName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DeleteFinalResultTests in the <see cref="FooResource"/>. </summary>
+        /// <returns> An object representing collection of DeleteFinalResultTests and their operations over a DeleteFinalResultTestResource. </returns>
+        public virtual DeleteFinalResultTestCollection GetDeleteFinalResultTests()
+        {
+            return GetCachedClient(client => new DeleteFinalResultTestCollection(client, Id));
+        }
+
+        /// <summary> Get a DeleteFinalResultTest. </summary>
+        /// <param name="deleteFinalResultTestName"> The name of the DeleteFinalResultTest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deleteFinalResultTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deleteFinalResultTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DeleteFinalResultTestResource>> GetDeleteFinalResultTestAsync(string deleteFinalResultTestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deleteFinalResultTestName, nameof(deleteFinalResultTestName));
+
+            return await GetDeleteFinalResultTests().GetAsync(deleteFinalResultTestName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a DeleteFinalResultTest. </summary>
+        /// <param name="deleteFinalResultTestName"> The name of the DeleteFinalResultTest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deleteFinalResultTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deleteFinalResultTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DeleteFinalResultTestResource> GetDeleteFinalResultTest(string deleteFinalResultTestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deleteFinalResultTestName, nameof(deleteFinalResultTestName));
+
+            return GetDeleteFinalResultTests().Get(deleteFinalResultTestName, cancellationToken);
         }
 
         /// <summary> Gets a collection of Bars in the <see cref="FooResource"/>. </summary>

@@ -179,6 +179,15 @@ namespace Azure.ResourceManager.Maintenance.Models
             return new MaintenanceScheduledEventApproveResult(value, default);
         }
 
+        /// <param name="value"> The list of ScheduledEvents Id. </param>
+        /// <returns> A new <see cref="Models.MaintenanceScheduledEventIdList"/> instance for mocking. </returns>
+        public static MaintenanceScheduledEventIdList MaintenanceScheduledEventIdList(IEnumerable<string> value = default)
+        {
+            value ??= new ChangeTrackingList<string>();
+
+            return new MaintenanceScheduledEventIdList((value ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
         /// <param name="maintenanceScope"> The impact area. </param>
         /// <param name="impactType"> The impact type. </param>
         /// <param name="status"> The status. </param>

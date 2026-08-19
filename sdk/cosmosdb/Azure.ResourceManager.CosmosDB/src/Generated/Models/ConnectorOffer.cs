@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct ConnectorOffer : IEquatable<ConnectorOffer>
     {
         private readonly string _value;
+        private const string SmallValue = "Small";
 
         /// <summary> Initializes a new instance of <see cref="ConnectorOffer"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectorOffer(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SmallValue = "Small";
-
-        /// <summary> Small. </summary>
+        /// <summary> Gets the Small. </summary>
         public static ConnectorOffer Small { get; } = new ConnectorOffer(SmallValue);
+
         /// <summary> Determines if two <see cref="ConnectorOffer"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectorOffer left, ConnectorOffer right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConnectorOffer"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectorOffer left, ConnectorOffer right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectorOffer"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConnectorOffer"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConnectorOffer(string value) => new ConnectorOffer(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConnectorOffer"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConnectorOffer?(string value) => value == null ? null : new ConnectorOffer(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectorOffer other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConnectorOffer other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

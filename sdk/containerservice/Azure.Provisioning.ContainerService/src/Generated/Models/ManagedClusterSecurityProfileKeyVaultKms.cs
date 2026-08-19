@@ -92,6 +92,10 @@ namespace Azure.Provisioning.ContainerService
             _keyId = DefineProperty<string>(nameof(KeyId), new string[] { "keyId" });
             _keyVaultNetworkAccess = DefineProperty<ManagedClusterKeyVaultNetworkAccessType>(nameof(KeyVaultNetworkAccess), new string[] { "keyVaultNetworkAccess" });
             _keyVaultResourceId = DefineProperty<ResourceIdentifier>(nameof(KeyVaultResourceId), new string[] { "keyVaultResourceId" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterSecurityProfileKeyVaultKms that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

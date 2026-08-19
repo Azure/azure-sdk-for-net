@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     internal static partial class CosmosDBSqlRoleDefinitionTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this CosmosDBSqlRoleDefinitionType value) => value switch
         {
             CosmosDBSqlRoleDefinitionType.BuiltInRole => "BuiltInRole",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CosmosDBSqlRoleDefinitionType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static CosmosDBSqlRoleDefinitionType ToCosmosDBSqlRoleDefinitionType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BuiltInRole")) return CosmosDBSqlRoleDefinitionType.BuiltInRole;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomRole")) return CosmosDBSqlRoleDefinitionType.CustomRole;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BuiltInRole"))
+            {
+                return CosmosDBSqlRoleDefinitionType.BuiltInRole;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomRole"))
+            {
+                return CosmosDBSqlRoleDefinitionType.CustomRole;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CosmosDBSqlRoleDefinitionType value.");
         }
     }

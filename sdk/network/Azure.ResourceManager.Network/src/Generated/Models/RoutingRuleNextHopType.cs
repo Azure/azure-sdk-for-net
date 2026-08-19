@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct RoutingRuleNextHopType : IEquatable<RoutingRuleNextHopType>
     {
         private readonly string _value;
+        /// <summary> Forward traffic to the Internet. </summary>
+        private const string InternetValue = "Internet";
+        /// <summary> No next hop will be used. </summary>
+        private const string NoNextHopValue = "NoNextHop";
+        /// <summary> Forward traffic to a specified virtual appliance IP address. </summary>
+        private const string VirtualApplianceValue = "VirtualAppliance";
+        /// <summary> Forward traffic to the virtual network gateway. </summary>
+        private const string VirtualNetworkGatewayValue = "VirtualNetworkGateway";
+        /// <summary> Keep traffic within the local virtual network. </summary>
+        private const string VnetLocalValue = "VnetLocal";
 
         /// <summary> Initializes a new instance of <see cref="RoutingRuleNextHopType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RoutingRuleNextHopType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InternetValue = "Internet";
-        private const string NoNextHopValue = "NoNextHop";
-        private const string VirtualApplianceValue = "VirtualAppliance";
-        private const string VirtualNetworkGatewayValue = "VirtualNetworkGateway";
-        private const string VnetLocalValue = "VnetLocal";
+            _value = value;
+        }
 
         /// <summary> Forward traffic to the Internet. </summary>
         public static RoutingRuleNextHopType Internet { get; } = new RoutingRuleNextHopType(InternetValue);
+
         /// <summary> No next hop will be used. </summary>
         public static RoutingRuleNextHopType NoNextHop { get; } = new RoutingRuleNextHopType(NoNextHopValue);
+
         /// <summary> Forward traffic to a specified virtual appliance IP address. </summary>
         public static RoutingRuleNextHopType VirtualAppliance { get; } = new RoutingRuleNextHopType(VirtualApplianceValue);
+
         /// <summary> Forward traffic to the virtual network gateway. </summary>
         public static RoutingRuleNextHopType VirtualNetworkGateway { get; } = new RoutingRuleNextHopType(VirtualNetworkGatewayValue);
+
         /// <summary> Keep traffic within the local virtual network. </summary>
         public static RoutingRuleNextHopType VnetLocal { get; } = new RoutingRuleNextHopType(VnetLocalValue);
+
         /// <summary> Determines if two <see cref="RoutingRuleNextHopType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RoutingRuleNextHopType left, RoutingRuleNextHopType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RoutingRuleNextHopType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RoutingRuleNextHopType left, RoutingRuleNextHopType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RoutingRuleNextHopType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RoutingRuleNextHopType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RoutingRuleNextHopType(string value) => new RoutingRuleNextHopType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RoutingRuleNextHopType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RoutingRuleNextHopType?(string value) => value == null ? null : new RoutingRuleNextHopType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RoutingRuleNextHopType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RoutingRuleNextHopType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

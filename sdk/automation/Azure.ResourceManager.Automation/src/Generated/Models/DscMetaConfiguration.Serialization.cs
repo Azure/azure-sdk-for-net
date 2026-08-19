@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class DscMetaConfiguration : IUtf8JsonSerializable, IJsonModel<DscMetaConfiguration>
+    /// <summary> Definition of the DSC Meta Configuration. </summary>
+    public partial class DscMetaConfiguration : IJsonModel<DscMetaConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DscMetaConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DscMetaConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DscMetaConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDscMetaConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DscMetaConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DscMetaConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DscMetaConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DscMetaConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DscMetaConfiguration IPersistableModel<DscMetaConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DscMetaConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DscMetaConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DscMetaConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DscMetaConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DscMetaConfiguration)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(ConfigurationModeFrequencyMins))
             {
                 writer.WritePropertyName("configurationModeFrequencyMins"u8);
@@ -69,15 +109,15 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("allowModuleOverwrite"u8);
                 writer.WriteBooleanValue(AllowModuleOverwrite.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,22 +126,27 @@ namespace Azure.ResourceManager.Automation.Models
             }
         }
 
-        DscMetaConfiguration IJsonModel<DscMetaConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DscMetaConfiguration IJsonModel<DscMetaConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DscMetaConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DscMetaConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DscMetaConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DscMetaConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDscMetaConfiguration(document.RootElement, options);
         }
 
-        internal static DscMetaConfiguration DeserializeDscMetaConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DscMetaConfiguration DeserializeDscMetaConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -113,67 +158,65 @@ namespace Azure.ResourceManager.Automation.Models
             string certificateId = default;
             int? refreshFrequencyMins = default;
             bool? allowModuleOverwrite = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("configurationModeFrequencyMins"u8))
+                if (prop.NameEquals("configurationModeFrequencyMins"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    configurationModeFrequencyMins = property.Value.GetInt32();
+                    configurationModeFrequencyMins = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("rebootNodeIfNeeded"u8))
+                if (prop.NameEquals("rebootNodeIfNeeded"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    rebootNodeIfNeeded = property.Value.GetBoolean();
+                    rebootNodeIfNeeded = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("configurationMode"u8))
+                if (prop.NameEquals("configurationMode"u8))
                 {
-                    configurationMode = property.Value.GetString();
+                    configurationMode = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("actionAfterReboot"u8))
+                if (prop.NameEquals("actionAfterReboot"u8))
                 {
-                    actionAfterReboot = property.Value.GetString();
+                    actionAfterReboot = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("certificateId"u8))
+                if (prop.NameEquals("certificateId"u8))
                 {
-                    certificateId = property.Value.GetString();
+                    certificateId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("refreshFrequencyMins"u8))
+                if (prop.NameEquals("refreshFrequencyMins"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    refreshFrequencyMins = property.Value.GetInt32();
+                    refreshFrequencyMins = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("allowModuleOverwrite"u8))
+                if (prop.NameEquals("allowModuleOverwrite"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    allowModuleOverwrite = property.Value.GetBoolean();
+                    allowModuleOverwrite = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DscMetaConfiguration(
                 configurationModeFrequencyMins,
                 rebootNodeIfNeeded,
@@ -182,38 +225,7 @@ namespace Azure.ResourceManager.Automation.Models
                 certificateId,
                 refreshFrequencyMins,
                 allowModuleOverwrite,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<DscMetaConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DscMetaConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DscMetaConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DscMetaConfiguration IPersistableModel<DscMetaConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DscMetaConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDscMetaConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DscMetaConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DscMetaConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -54,18 +54,13 @@ namespace Azure.Provisioning.Batch
             }
         }
 
-        /// <summary> Gets or sets the ConnectionState. </summary>
+        /// <summary> Gets the ConnectionState. </summary>
         public BatchPrivateLinkServiceConnectionState ConnectionState
         {
             get
             {
                 Initialize();
                 return _connectionState;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _connectionState, value);
             }
         }
 
@@ -86,6 +81,10 @@ namespace Azure.Provisioning.Batch
             _privateEndpoint = DefineModelProperty<PrivateEndpoint>(nameof(PrivateEndpoint), new string[] { "privateEndpoint" }, isOutput: true);
             _groupIds = DefineListProperty<string>(nameof(GroupIds), new string[] { "groupIds" }, isOutput: true);
             _connectionState = DefineModelProperty<BatchPrivateLinkServiceConnectionState>(nameof(ConnectionState), new string[] { "privateLinkServiceConnectionState" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for PrivateEndpointConnectionProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

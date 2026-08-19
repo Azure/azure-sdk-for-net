@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(CloudVmClusterVirtualNetworkAddressResource.ResourceType, out string cloudVmClusterVirtualNetworkAddressApiVersion);
             _virtualNetworkAddressesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", CloudVmClusterVirtualNetworkAddressResource.ResourceType.Namespace, Diagnostics);
-            _virtualNetworkAddressesRestClient = new VirtualNetworkAddresses(_virtualNetworkAddressesClientDiagnostics, Pipeline, Endpoint, cloudVmClusterVirtualNetworkAddressApiVersion ?? "2025-09-01");
+            _virtualNetworkAddressesRestClient = new VirtualNetworkAddresses(_virtualNetworkAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudVmClusterVirtualNetworkAddressApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

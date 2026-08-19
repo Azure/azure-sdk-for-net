@@ -58,6 +58,10 @@ namespace Azure.Provisioning.ContainerInstance
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
             _failContainerGroupCreateOnReuseFailure = DefineProperty<bool>(nameof(FailContainerGroupCreateOnReuseFailure), new string[] { "failContainerGroupCreateOnReuseFailure" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for StandbyPoolProfileDefinition that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

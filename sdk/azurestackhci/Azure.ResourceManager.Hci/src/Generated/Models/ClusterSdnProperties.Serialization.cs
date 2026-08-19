@@ -14,11 +14,11 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Represents the Software Defined Networking (SDN) configuration state of the Azure Stack HCI cluster. </summary>
-    public partial class ClusterSdnProperties : SdnProperties, IJsonModel<ClusterSdnProperties>
+    public partial class ClusterSdnProperties : IJsonModel<ClusterSdnProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SdnProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ClusterSdnProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ClusterSdnProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ClusterSdnProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterSdnProperties IPersistableModel<ClusterSdnProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (ClusterSdnProperties)PersistableModelCreateCore(data, options);
+        ClusterSdnProperties IPersistableModel<ClusterSdnProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ClusterSdnProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -67,28 +67,57 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ClusterSdnProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClusterSdnProperties)} does not support writing '{format}' format.");
             }
-            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(SdnStatus))
+            {
+                writer.WritePropertyName("sdnStatus"u8);
+                writer.WriteStringValue(SdnStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(SdnDomainName))
+            {
+                writer.WritePropertyName("sdnDomainName"u8);
+                writer.WriteStringValue(SdnDomainName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SdnApiAddress))
+            {
+                writer.WritePropertyName("sdnApiAddress"u8);
+                writer.WriteStringValue(SdnApiAddress);
+            }
             if (options.Format != "W" && Optional.IsDefined(SdnIntegrationIntent))
             {
                 writer.WritePropertyName("sdnIntegrationIntent"u8);
                 writer.WriteStringValue(SdnIntegrationIntent.Value.ToString());
             }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterSdnProperties IJsonModel<ClusterSdnProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ClusterSdnProperties)JsonModelCreateCore(ref reader, options);
+        ClusterSdnProperties IJsonModel<ClusterSdnProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SdnProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ClusterSdnProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ClusterSdnProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -110,8 +139,8 @@ namespace Azure.ResourceManager.Hci.Models
             SdnStatus? sdnStatus = default;
             string sdnDomainName = default;
             string sdnApiAddress = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             SdnIntegrationIntent? sdnIntegrationIntent = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("sdnStatus"u8))
@@ -147,7 +176,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ClusterSdnProperties(sdnStatus, sdnDomainName, sdnApiAddress, additionalBinaryDataProperties, sdnIntegrationIntent);
+            return new ClusterSdnProperties(sdnStatus, sdnDomainName, sdnApiAddress, sdnIntegrationIntent, additionalBinaryDataProperties);
         }
     }
 }
