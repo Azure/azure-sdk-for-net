@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The extraction effort applied to an individual file. 'minimal' (the default) uses built-in extraction; 'standard' uses Content Understanding. </summary>
     public readonly partial struct FileKnowledgeSourceExtractionMode : IEquatable<FileKnowledgeSourceExtractionMode>

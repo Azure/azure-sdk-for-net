@@ -617,8 +617,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<IReadOnlyList<SynonymMap>> GetSynonymMaps(
             CancellationToken cancellationToken = default)
         {
-            Response<ListSynonymMapsResult> result = GetSynonymMaps(select: null, cancellationToken: cancellationToken);
-            return Response.FromValue(result.Value.SynonymMaps, result.GetRawResponse());
+            return GetSynonymMaps(select: null, cancellationToken: cancellationToken).ToBufferedList();
         }
 
         /// <summary>
@@ -631,8 +630,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<IReadOnlyList<SynonymMap>>> GetSynonymMapsAsync(
             CancellationToken cancellationToken = default)
         {
-            Response<ListSynonymMapsResult> result = await GetSynonymMapsAsync(select: null, cancellationToken: cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(result.Value.SynonymMaps, result.GetRawResponse());
+            return await GetSynonymMapsAsync(select: null, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -645,9 +643,8 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<IReadOnlyList<string>> GetSynonymMapNames(
             CancellationToken cancellationToken = default)
         {
-            Response<ListSynonymMapsResult> result = GetSynonymMaps(new[] { Constants.NameKey }, cancellationToken: cancellationToken);
-            IReadOnlyList<string> names = result.Value.SynonymMaps.Select(value => value.Name).ToArray();
-            return Response.FromValue(names, result.GetRawResponse());
+            Response<IReadOnlyList<SynonymMap>> response = GetSynonymMaps(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedList();
+            return Response.FromValue<IReadOnlyList<string>>(response.Value.Select(value => value.Name).ToArray(), response.GetRawResponse());
         }
 
         /// <summary>
@@ -660,9 +657,8 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<IReadOnlyList<string>>> GetSynonymMapNamesAsync(
             CancellationToken cancellationToken = default)
         {
-            Response<ListSynonymMapsResult> result = await GetSynonymMapsAsync(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ConfigureAwait(false);
-            IReadOnlyList<string> names = result.Value.SynonymMaps.Select(value => value.Name).ToArray();
-            return Response.FromValue(names, result.GetRawResponse());
+            Response<IReadOnlyList<SynonymMap>> response = await GetSynonymMapsAsync(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
+            return Response.FromValue<IReadOnlyList<string>>(response.Value.Select(value => value.Name).ToArray(), response.GetRawResponse());
         }
 
         #endregion

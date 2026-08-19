@@ -142,6 +142,32 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
+        internal HttpMessage CreateNextGetSynonymMapsRequest(Uri nextPage, IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
+            return message;
+        }
+
         internal HttpMessage CreateCreateSynonymMapRequest(RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();

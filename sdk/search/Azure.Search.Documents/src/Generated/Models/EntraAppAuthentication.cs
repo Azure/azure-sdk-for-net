@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Configuration for a customer-owned Microsoft Entra app registration used for federated credential-based on-behalf-of authentication. </summary>
     public partial class EntraAppAuthentication

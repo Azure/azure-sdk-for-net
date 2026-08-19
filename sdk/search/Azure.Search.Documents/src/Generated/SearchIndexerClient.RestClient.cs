@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -136,6 +137,32 @@ namespace Azure.Search.Documents.Indexes
             if (searchType != null)
             {
                 uri.AppendQuery("searchType", searchType, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
+            return message;
+        }
+
+        internal HttpMessage CreateNextGetDataSourceConnectionsRequest(Uri nextPage, IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -390,6 +417,32 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
+        internal HttpMessage CreateNextGetIndexersRequest(Uri nextPage, IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
+            return message;
+        }
+
         internal HttpMessage CreateCreateIndexerRequest(RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
@@ -543,6 +596,32 @@ namespace Azure.Search.Documents.Indexes
             if (searchType != null)
             {
                 uri.AppendQuery("searchType", searchType, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
+            return message;
+        }
+
+        internal HttpMessage CreateNextGetSkillsetsRequest(Uri nextPage, IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;

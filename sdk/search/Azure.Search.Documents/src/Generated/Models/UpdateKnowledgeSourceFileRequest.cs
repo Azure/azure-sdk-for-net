@@ -10,7 +10,6 @@ using System.ClientModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Azure.Search.Documents;
-using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {

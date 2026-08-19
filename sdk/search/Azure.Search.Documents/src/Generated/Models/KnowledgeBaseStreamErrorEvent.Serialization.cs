@@ -17,6 +17,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Emitted in place of `response.completed` if retrieval fails after the stream starts. </summary>
     public partial class KnowledgeBaseStreamErrorEvent : KnowledgeBaseRetrievalStreamEvent, IJsonModel<KnowledgeBaseStreamErrorEvent>
     {
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseStreamErrorEvent"/> for deserialization. </summary>
+        internal KnowledgeBaseStreamErrorEvent()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual KnowledgeBaseStreamErrorEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -82,11 +87,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             {
                 throw new FormatException($"The model {nameof(KnowledgeBaseStreamErrorEvent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Error))
-            {
-                writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
-            }
+            writer.WritePropertyName("error"u8);
+            writer.WriteObjectValue(Error, options);
             if (Optional.IsCollectionDefined(Activity))
             {
                 writer.WritePropertyName("activity"u8);
@@ -146,10 +148,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             {
                 if (prop.NameEquals("error"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     error = KnowledgeBaseErrorDetail.DeserializeKnowledgeBaseErrorDetail(prop.Value, options);
                     continue;
                 }

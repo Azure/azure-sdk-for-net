@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Parameters for a WorkIQ knowledge source. </summary>
     public partial class WorkIQKnowledgeSourceParameters : IJsonModel<WorkIQKnowledgeSourceParameters>

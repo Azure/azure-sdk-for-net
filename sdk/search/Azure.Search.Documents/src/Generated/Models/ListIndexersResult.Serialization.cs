@@ -85,7 +85,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (SearchIndexer item in Indexers)
+                foreach (SearchIndexer item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -138,7 +138,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            IReadOnlyList<SearchIndexer> indexers = default;
+            IReadOnlyList<SearchIndexer> value = default;
             string odataNextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         array.Add(SearchIndexer.DeserializeSearchIndexer(item, options));
                     }
-                    indexers = array;
+                    value = array;
                     continue;
                 }
                 if (prop.NameEquals("@odata.nextLink"u8))
@@ -163,7 +163,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ListIndexersResult(indexers, odataNextLink, additionalBinaryDataProperties);
+            return new ListIndexersResult(value, odataNextLink, additionalBinaryDataProperties);
         }
     }
 }

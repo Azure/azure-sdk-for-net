@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies how the search parameter is interpreted when narrowing down a listing result set. Currently only 'prefix' is supported. </summary>
     public readonly partial struct ListingSearchType : IEquatable<ListingSearchType>

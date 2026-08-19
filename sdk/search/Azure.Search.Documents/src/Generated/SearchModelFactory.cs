@@ -1935,7 +1935,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="maxRuntimeInSeconds"> The default maximum runtime in seconds for a retrieve request. </param>
         /// <param name="maxOutputDocuments"> The default maximum number of documents in the retrieve output. </param>
         /// <param name="maxOutputSizeInTokens"> The default maximum size, in tokens, of the content in the retrieve output. </param>
-        /// <returns> A new <see cref="Models.KnowledgeBaseRetrieveDefaults"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Indexes.Models.KnowledgeBaseRetrieveDefaults"/> instance for mocking. </returns>
         public static KnowledgeBaseRetrieveDefaults KnowledgeBaseRetrieveDefaults(int? maxRuntimeInSeconds = default, int? maxOutputDocuments = default, int? maxOutputSizeInTokens = default)
         {
             return new KnowledgeBaseRetrieveDefaults(maxRuntimeInSeconds, maxOutputDocuments, maxOutputSizeInTokens, additionalBinaryDataProperties: null);
@@ -2520,7 +2520,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Parameters for a WorkIQ knowledge source. </summary>
         /// <param name="entraAppAuthentication"> The customer-owned Microsoft Entra app registration configuration used for on-behalf-of authentication to the Work IQ API. The customer registers a tenant-owned Entra app, grants it the WorkIQAgent.Ask delegated permission, and configures a federated credential so Azure AI Search can authenticate as that app without a stored client secret. </param>
-        /// <returns> A new <see cref="Models.WorkIQKnowledgeSourceParameters"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Indexes.Models.WorkIQKnowledgeSourceParameters"/> instance for mocking. </returns>
         public static WorkIQKnowledgeSourceParameters WorkIQKnowledgeSourceParameters(EntraAppAuthentication entraAppAuthentication = default)
         {
             return new WorkIQKnowledgeSourceParameters(entraAppAuthentication, additionalBinaryDataProperties: null);
@@ -2530,7 +2530,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="applicationId"> The application (client) ID of the customer-owned Entra app registration. </param>
         /// <param name="federatedCredentialId"> The federated credential ID configured on the app registration, enabling the search service to authenticate as the app without a stored client secret. </param>
         /// <param name="tenantId"> The tenant ID of the app registration. Required when the app registration is in a different tenant than the search service. If omitted, the search service's tenant is used. </param>
-        /// <returns> A new <see cref="Models.EntraAppAuthentication"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Indexes.Models.EntraAppAuthentication"/> instance for mocking. </returns>
         public static EntraAppAuthentication EntraAppAuthentication(Guid applicationId = default, Guid federatedCredentialId = default, Guid? tenantId = default)
         {
             return new EntraAppAuthentication(applicationId, federatedCredentialId, tenantId, additionalBinaryDataProperties: null);
@@ -2892,7 +2892,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> The JSON 'metadata' part of a multipart/form-data file upload: the full file name/path and custom key/value metadata. The parsing mode and extraction mode are both chosen by the service and are not supplied by the caller. </summary>
         /// <param name="fileName"> The full relative file name/path to store the file under (prefixes are derived from it). </param>
         /// <param name="metadata"> Custom key/value metadata to store with the file. </param>
-        /// <returns> A new <see cref="Models.FileUploadMetadata"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Indexes.Models.FileUploadMetadata"/> instance for mocking. </returns>
         public static FileUploadMetadata FileUploadMetadata(string fileName = default, IDictionary<string, string> metadata = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
@@ -5012,7 +5012,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="imagePath"> The relative path to the image within the asset store. </param>
         /// <param name="sizeBytes"> The size in bytes of this image as sent to the model. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.ServedImage"/> instance for mocking. </returns>
-        public static ServedImage ServedImage(string imageId = default, string imagePath = default, long? sizeBytes = default)
+        public static ServedImage ServedImage(string imageId = default, string imagePath = default, long sizeBytes = default)
         {
             return new ServedImage(imageId, imagePath, sizeBytes, additionalBinaryDataProperties: null);
         }
@@ -6029,23 +6029,6 @@ namespace Azure.Search.Documents.Models
         public static SearchOptions SearchOptions(bool? includeTotalCount, IEnumerable<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IEnumerable<string> scoringParameters, string scoringProfile, QueryDebugMode? debug, string searchText, string searchFieldsRaw, SearchMode? searchMode, string selectRaw, int? skip, int? size, string semanticConfigurationName, SemanticErrorMode? semanticErrorMode, int? semanticMaxWaitInMilliseconds, string semanticQuery, string queryAnswerRaw, string queryCaptionRaw, IEnumerable<VectorQuery> vectorQueries, VectorFilterMode? filterMode)
         {
             return SearchOptions(includeTotalCount: includeTotalCount, facets: facets, filter: filter, highlightFieldsRaw: highlightFieldsRaw, highlightPostTag: highlightPostTag, highlightPreTag: highlightPreTag, minimumCoverage: minimumCoverage, orderByRaw: orderByRaw, queryType: queryType, scoringStatistics: scoringStatistics, sessionId: sessionId, scoringParameters: scoringParameters, scoringProfile: scoringProfile, debug: debug, searchText: searchText, searchFieldsRaw: searchFieldsRaw, searchMode: searchMode, queryLanguage: default, querySpeller: default, selectRaw: selectRaw, skip: skip, size: size, semanticConfigurationName: semanticConfigurationName, semanticErrorMode: semanticErrorMode, semanticMaxWaitInMilliseconds: semanticMaxWaitInMilliseconds, semanticQuery: semanticQuery, queryAnswerRaw: queryAnswerRaw, queryCaptionRaw: queryCaptionRaw, queryRewritesRaw: default, semanticFields: default, vectorQueries: vectorQueries, filterMode: filterMode, hybridSearch: default);
-        }
-
-        /// <summary>
-        /// The query parameters for vector and hybrid search queries.
-        ///             Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.VectorizedQuery"/>, <see cref="Models.VectorizableTextQuery"/>, <see cref="Models.VectorizableImageUrlQuery"/>, and <see cref="Models.VectorizableImageBinaryQuery"/>.
-        /// </summary>
-        /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
-        /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
-        /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </param>
-        /// <param name="oversampling"> Oversampling factor. Minimum value is 1. It overrides the 'defaultOversampling' parameter configured in the index definition. It can be set only when 'rerankWithOriginalVectors' is true. This parameter is only permitted when a compression method is used on the underlying vector field. </param>
-        /// <param name="weight"> Relative weight of the vector query when compared to other vector query and/or the text query within the same search request. This value is used when combining the results of multiple ranking lists produced by the different vector queries and/or the results retrieved through the text query. The higher the weight, the higher the documents that matched that query will be in the final ranking. Default is 1.0 and the value needs to be a positive number larger than zero. </param>
-        /// <param name="kind"> Type of query. </param>
-        /// <returns> A new <see cref="Models.VectorQuery"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VectorQuery VectorQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, string kind)
-        {
-            return VectorQuery(kNearestNeighborsCount: kNearestNeighborsCount, fieldsRaw: fieldsRaw, exhaustive: exhaustive, oversampling: oversampling, weight: weight, threshold: default, filterOverride: default, perDocumentVectorLimit: default, kind: kind);
         }
 
         /// <summary> The query parameters to use for vector search when a raw vector value is provided. </summary>

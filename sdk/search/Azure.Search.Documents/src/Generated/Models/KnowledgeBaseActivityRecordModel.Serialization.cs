@@ -16,6 +16,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Represents the model used for a knowledge base LLM activity, including its model name and deployment identifier. </summary>
     public partial class KnowledgeBaseActivityRecordModel : IJsonModel<KnowledgeBaseActivityRecordModel>
     {
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseActivityRecordModel"/> for deserialization. </summary>
+        internal KnowledgeBaseActivityRecordModel()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual KnowledgeBaseActivityRecordModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -74,11 +79,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             {
                 throw new FormatException($"The model {nameof(KnowledgeBaseActivityRecordModel)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ModelName))
-            {
-                writer.WritePropertyName("modelName"u8);
-                writer.WriteStringValue(ModelName);
-            }
+            writer.WritePropertyName("modelName"u8);
+            writer.WriteStringValue(ModelName);
             if (Optional.IsDefined(DeploymentId))
             {
                 writer.WritePropertyName("deploymentId"u8);

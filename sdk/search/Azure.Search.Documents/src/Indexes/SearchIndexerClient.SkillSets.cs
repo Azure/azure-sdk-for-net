@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.Utilities;
 using Typespec = Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes
@@ -181,8 +182,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<IReadOnlyList<SearchIndexerSkillset>> GetSkillsets(
             CancellationToken cancellationToken = default)
         {
-            Response<ListSkillsetsResult> result = GetSkillsets(new[] { Constants.All }, cancellationToken: cancellationToken);
-            return Response.FromValue(result.Value.Skillsets, result.GetRawResponse());
+            return GetSkillsets(new[] { Constants.All }, cancellationToken: cancellationToken).ToBufferedList();
         }
 
         /// <summary>
@@ -195,8 +195,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<IReadOnlyList<SearchIndexerSkillset>>> GetSkillsetsAsync(
             CancellationToken cancellationToken = default)
         {
-            Response<ListSkillsetsResult> result = await GetSkillsetsAsync(new[] { Constants.All }, cancellationToken: cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(result.Value.Skillsets, result.GetRawResponse());
+            return await GetSkillsetsAsync(new[] { Constants.All }, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -209,9 +208,8 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<IReadOnlyList<string>> GetSkillsetNames(
             CancellationToken cancellationToken = default)
         {
-            Response<ListSkillsetsResult> result = GetSkillsets(new[] { Constants.NameKey }, cancellationToken: cancellationToken);
-            IReadOnlyList<string> names = result.Value.Skillsets.Select(value => value.Name).ToArray();
-            return Response.FromValue(names, result.GetRawResponse());
+            Response<IReadOnlyList<SearchIndexerSkillset>> response = GetSkillsets(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedList();
+            return Response.FromValue<IReadOnlyList<string>>(response.Value.Select(value => value.Name).ToArray(), response.GetRawResponse());
         }
 
         /// <summary>
@@ -224,9 +222,8 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<IReadOnlyList<string>>> GetSkillsetNamesAsync(
             CancellationToken cancellationToken = default)
         {
-            Response<ListSkillsetsResult> result = await GetSkillsetsAsync(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ConfigureAwait(false);
-            IReadOnlyList<string> names = result.Value.Skillsets.Select(value => value.Name).ToArray();
-            return Response.FromValue(names, result.GetRawResponse());
+            Response<IReadOnlyList<SearchIndexerSkillset>> response = await GetSkillsetsAsync(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
+            return Response.FromValue<IReadOnlyList<string>>(response.Value.Select(value => value.Name).ToArray(), response.GetRawResponse());
         }
 
         #endregion

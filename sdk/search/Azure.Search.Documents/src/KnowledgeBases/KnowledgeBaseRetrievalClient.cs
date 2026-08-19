@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.KnowledgeBases
     /// Azure Cognitive Search client that can be used to query an knowledge base.
     /// </summary>
     // Bug in C# emitter for SSE code gen using incorrect PipelineMessage instead of Httpessage. Remove once fixed. ETA after 2026-08-01-preview
-    [CodeGenSuppress(nameof(RetrieveStreamAsync), typeof(RequestContent), typeof(string), typeof(string), typeof(RequestContext))]
+    //[CodeGenSuppress(nameof(RetrieveStreamAsync), typeof(RequestContent), typeof(string), typeof(string), typeof(RequestContext))]
     public partial class KnowledgeBaseRetrievalClient
     {
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.Search.Documents.KnowledgeBases
         [ForwardsClientCalls]
         public virtual Task<Response> RetrieveAsync(RequestContent content, RequestContext context) =>
             RetrieveAsync(content, querySourceAuthorization: null, context: context);
-
+        /*
         /// <summary>
         /// KnowledgeBase retrieves relevant data from backing stores, streaming progress and results as
         /// server-sent events on the same connection as they become available, instead of waiting for the
@@ -241,5 +241,6 @@ namespace Azure.Search.Documents.KnowledgeBases
 
             return new KnowledgeBaseReferencesCompletedEvent(references);
         }
+        */
     }
 }

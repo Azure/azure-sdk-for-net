@@ -18,8 +18,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseStreamErrorEvent"/>. </summary>
-        internal KnowledgeBaseStreamErrorEvent()
+        /// <param name="error"> The error detail explaining why the retrieval stream failed. </param>
+        internal KnowledgeBaseStreamErrorEvent(KnowledgeBaseErrorDetail error)
         {
+            Error = error;
             Activity = new ChangeTrackingList<KnowledgeBaseActivityRecord>();
         }
 

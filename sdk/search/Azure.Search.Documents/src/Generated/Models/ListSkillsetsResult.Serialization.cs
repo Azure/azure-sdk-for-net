@@ -85,7 +85,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (SearchIndexerSkillset item in Skillsets)
+                foreach (SearchIndexerSkillset item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -138,7 +138,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            IReadOnlyList<SearchIndexerSkillset> skillsets = default;
+            IReadOnlyList<SearchIndexerSkillset> value = default;
             string odataNextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         array.Add(SearchIndexerSkillset.DeserializeSearchIndexerSkillset(item, options));
                     }
-                    skillsets = array;
+                    value = array;
                     continue;
                 }
                 if (prop.NameEquals("@odata.nextLink"u8))
@@ -163,7 +163,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ListSkillsetsResult(skillsets, odataNextLink, additionalBinaryDataProperties);
+            return new ListSkillsetsResult(value, odataNextLink, additionalBinaryDataProperties);
         }
     }
 }

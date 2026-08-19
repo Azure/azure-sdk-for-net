@@ -17,8 +17,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseActivityRecordModel"/>. </summary>
-        internal KnowledgeBaseActivityRecordModel()
+        /// <param name="modelName"> The name of the model used for the activity. </param>
+        internal KnowledgeBaseActivityRecordModel(string modelName)
         {
+            ModelName = modelName;
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseActivityRecordModel"/>. </summary>

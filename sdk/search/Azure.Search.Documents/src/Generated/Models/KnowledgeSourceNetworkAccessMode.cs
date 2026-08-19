@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Specifies the network access mode for knowledge source ingestion. Default is 'public'. </summary>
     public readonly partial struct KnowledgeSourceNetworkAccessMode : IEquatable<KnowledgeSourceNetworkAccessMode>

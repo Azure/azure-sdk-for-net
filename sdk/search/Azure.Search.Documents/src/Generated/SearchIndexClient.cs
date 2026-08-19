@@ -18,7 +18,6 @@ using Azure.Core.Pipeline;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.KnowledgeBases.Models;
-using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes
 {
@@ -328,20 +327,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetSynonymMaps(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        internal virtual Pageable<BinaryData> GetSynonymMaps(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.GetSynonymMaps");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetSynonymMapsRequest(@select, search, pageSize, searchType, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new SearchIndexClientGetSynonymMapsCollectionResult(
+                this,
+                @select,
+                search,
+                pageSize,
+                searchType,
+                context,
+                "SearchIndexClient.GetSynonymMaps");
         }
 
         /// <summary>
@@ -359,20 +354,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetSynonymMapsAsync(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        internal virtual AsyncPageable<BinaryData> GetSynonymMapsAsync(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.GetSynonymMaps");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetSynonymMapsRequest(@select, search, pageSize, searchType, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new SearchIndexClientGetSynonymMapsAsyncCollectionResult(
+                this,
+                @select,
+                search,
+                pageSize,
+                searchType,
+                context,
+                "SearchIndexClient.GetSynonymMaps");
         }
 
         /// <summary> Lists all synonym maps available for a search service. </summary>
@@ -382,10 +373,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<ListSynonymMapsResult> GetSynonymMaps(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
+        internal virtual Pageable<SynonymMap> GetSynonymMaps(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetSynonymMaps(@select, search, pageSize, searchType?.ToString(), cancellationToken.ToRequestContext());
-            return Response.FromValue((ListSynonymMapsResult)result, result);
+            return new SearchIndexClientGetSynonymMapsCollectionResultOfT(
+                this,
+                @select,
+                search,
+                pageSize,
+                searchType?.ToString(),
+                cancellationToken.ToRequestContext(),
+                "SearchIndexClient.GetSynonymMaps");
         }
 
         /// <summary> Lists all synonym maps available for a search service. </summary>
@@ -395,10 +392,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<ListSynonymMapsResult>> GetSynonymMapsAsync(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
+        internal virtual AsyncPageable<SynonymMap> GetSynonymMapsAsync(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetSynonymMapsAsync(@select, search, pageSize, searchType?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ListSynonymMapsResult)result, result);
+            return new SearchIndexClientGetSynonymMapsAsyncCollectionResultOfT(
+                this,
+                @select,
+                search,
+                pageSize,
+                searchType?.ToString(),
+                cancellationToken.ToRequestContext(),
+                "SearchIndexClient.GetSynonymMaps");
         }
 
         /// <summary>
@@ -2569,14 +2572,20 @@ namespace Azure.Search.Documents.Indexes
         /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="contentDisposition"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="contentDisposition"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response UploadKnowledgeSourceFile(string sourceName, string contentDisposition, RequestContent content, RequestContext context = null)
+        public virtual Response UploadKnowledgeSourceFile(string sourceName, string contentDisposition, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.UploadKnowledgeSourceFile");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                Argument.AssertNotNullOrEmpty(contentDisposition, nameof(contentDisposition));
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateUploadKnowledgeSourceFileRequest(sourceName, contentDisposition, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -2603,14 +2612,20 @@ namespace Azure.Search.Documents.Indexes
         /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="contentDisposition"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="contentDisposition"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> UploadKnowledgeSourceFileAsync(string sourceName, string contentDisposition, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> UploadKnowledgeSourceFileAsync(string sourceName, string contentDisposition, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.UploadKnowledgeSourceFile");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                Argument.AssertNotNullOrEmpty(contentDisposition, nameof(contentDisposition));
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateUploadKnowledgeSourceFileRequest(sourceName, contentDisposition, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -2622,7 +2637,7 @@ namespace Azure.Search.Documents.Indexes
         }
 
         /// <summary>
-        /// [Protocol Method] Uploads a file to a File knowledge source using multipart/form-data: a JSON 'metadata' part (file name, custom metadata, and optional parsing/extraction overrides) and a 'content' part with the raw file bytes.
+        /// [Protocol Method] Uploads a file to a File knowledge source using multipart/form-data: a JSON 'metadata' part (file name and custom metadata) and a 'content' part with the raw file bytes.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -2658,7 +2673,7 @@ namespace Azure.Search.Documents.Indexes
         }
 
         /// <summary>
-        /// [Protocol Method] Uploads a file to a File knowledge source using multipart/form-data: a JSON 'metadata' part (file name, custom metadata, and optional parsing/extraction overrides) and a 'content' part with the raw file bytes.
+        /// [Protocol Method] Uploads a file to a File knowledge source using multipart/form-data: a JSON 'metadata' part (file name and custom metadata) and a 'content' part with the raw file bytes.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -2693,7 +2708,7 @@ namespace Azure.Search.Documents.Indexes
             }
         }
 
-        /// <summary> Uploads a file to a File knowledge source using multipart/form-data: a JSON 'metadata' part (file name, custom metadata, and optional parsing/extraction overrides) and a 'content' part with the raw file bytes. </summary>
+        /// <summary> Uploads a file to a File knowledge source using multipart/form-data: a JSON 'metadata' part (file name and custom metadata) and a 'content' part with the raw file bytes. </summary>
         /// <param name="sourceName"> The name of the knowledge source. </param>
         /// <param name="body"> The multipart/form-data body containing the metadata and content parts. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -2712,7 +2727,7 @@ namespace Azure.Search.Documents.Indexes
             return Response.FromValue((KnowledgeSourceFile)result, result);
         }
 
-        /// <summary> Uploads a file to a File knowledge source using multipart/form-data: a JSON 'metadata' part (file name, custom metadata, and optional parsing/extraction overrides) and a 'content' part with the raw file bytes. </summary>
+        /// <summary> Uploads a file to a File knowledge source using multipart/form-data: a JSON 'metadata' part (file name and custom metadata) and a 'content' part with the raw file bytes. </summary>
         /// <param name="sourceName"> The name of the knowledge source. </param>
         /// <param name="body"> The multipart/form-data body containing the metadata and content parts. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -2946,7 +2961,7 @@ namespace Azure.Search.Documents.Indexes
         }
 
         /// <summary>
-        /// [Protocol Method] Updates an existing file in a File knowledge source in place, replacing its indexed content. Uses multipart/form-data: a JSON 'metadata' part (file name, custom metadata, and optional extraction override) and a 'content' part with the raw file bytes.
+        /// [Protocol Method] Updates an existing file in a File knowledge source in place, replacing its indexed content. Uses multipart/form-data: a JSON 'metadata' part (file name and custom metadata) and a 'content' part with the raw file bytes.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -2984,7 +2999,7 @@ namespace Azure.Search.Documents.Indexes
         }
 
         /// <summary>
-        /// [Protocol Method] Updates an existing file in a File knowledge source in place, replacing its indexed content. Uses multipart/form-data: a JSON 'metadata' part (file name, custom metadata, and optional extraction override) and a 'content' part with the raw file bytes.
+        /// [Protocol Method] Updates an existing file in a File knowledge source in place, replacing its indexed content. Uses multipart/form-data: a JSON 'metadata' part (file name and custom metadata) and a 'content' part with the raw file bytes.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -3021,7 +3036,7 @@ namespace Azure.Search.Documents.Indexes
             }
         }
 
-        /// <summary> Updates an existing file in a File knowledge source in place, replacing its indexed content. Uses multipart/form-data: a JSON 'metadata' part (file name, custom metadata, and optional extraction override) and a 'content' part with the raw file bytes. </summary>
+        /// <summary> Updates an existing file in a File knowledge source in place, replacing its indexed content. Uses multipart/form-data: a JSON 'metadata' part (file name and custom metadata) and a 'content' part with the raw file bytes. </summary>
         /// <param name="fileId"> The unique identifier of the file to update. </param>
         /// <param name="sourceName"> The name of the knowledge source. </param>
         /// <param name="body"> The multipart/form-data body containing the metadata and content parts. </param>
@@ -3042,7 +3057,7 @@ namespace Azure.Search.Documents.Indexes
             return Response.FromValue((KnowledgeSourceFile)result, result);
         }
 
-        /// <summary> Updates an existing file in a File knowledge source in place, replacing its indexed content. Uses multipart/form-data: a JSON 'metadata' part (file name, custom metadata, and optional extraction override) and a 'content' part with the raw file bytes. </summary>
+        /// <summary> Updates an existing file in a File knowledge source in place, replacing its indexed content. Uses multipart/form-data: a JSON 'metadata' part (file name and custom metadata) and a 'content' part with the raw file bytes. </summary>
         /// <param name="fileId"> The unique identifier of the file to update. </param>
         /// <param name="sourceName"> The name of the knowledge source. </param>
         /// <param name="body"> The multipart/form-data body containing the metadata and content parts. </param>

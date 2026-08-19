@@ -17,8 +17,12 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServedImage"/>. </summary>
-        internal ServedImage()
+        /// <param name="imagePath"> The relative path to the image within the asset store. </param>
+        /// <param name="sizeBytes"> The size in bytes of this image as sent to the model. </param>
+        internal ServedImage(string imagePath, long sizeBytes)
         {
+            ImagePath = imagePath;
+            SizeBytes = sizeBytes;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServedImage"/>. </summary>
@@ -26,7 +30,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="imagePath"> The relative path to the image within the asset store. </param>
         /// <param name="sizeBytes"> The size in bytes of this image as sent to the model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServedImage(string imageId, string imagePath, long? sizeBytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServedImage(string imageId, string imagePath, long sizeBytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImageId = imageId;
             ImagePath = imagePath;
@@ -41,6 +45,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         public string ImagePath { get; }
 
         /// <summary> The size in bytes of this image as sent to the model. </summary>
-        public long? SizeBytes { get; }
+        public long SizeBytes { get; }
     }
 }

@@ -16,6 +16,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> Describes a single image that the model selected to be served during a retrieval activity. </summary>
     public partial class ServedImage : IJsonModel<ServedImage>
     {
+        /// <summary> Initializes a new instance of <see cref="ServedImage"/> for deserialization. </summary>
+        internal ServedImage()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ServedImage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -79,16 +84,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("imageId"u8);
                 writer.WriteStringValue(ImageId);
             }
-            if (Optional.IsDefined(ImagePath))
-            {
-                writer.WritePropertyName("imagePath"u8);
-                writer.WriteStringValue(ImagePath);
-            }
-            if (Optional.IsDefined(SizeBytes))
-            {
-                writer.WritePropertyName("sizeBytes"u8);
-                writer.WriteNumberValue(SizeBytes.Value);
-            }
+            writer.WritePropertyName("imagePath"u8);
+            writer.WriteStringValue(ImagePath);
+            writer.WritePropertyName("sizeBytes"u8);
+            writer.WriteNumberValue(SizeBytes);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -133,7 +132,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             }
             string imageId = default;
             string imagePath = default;
-            long? sizeBytes = default;
+            long sizeBytes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,10 +148,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("sizeBytes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     sizeBytes = prop.Value.GetInt64();
                     continue;
                 }
