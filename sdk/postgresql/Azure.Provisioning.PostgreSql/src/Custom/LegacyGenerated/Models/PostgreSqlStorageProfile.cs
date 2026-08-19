@@ -12,7 +12,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// Storage Profile properties of a server.
 /// </summary>
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-[System.Obsolete("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+[System.Obsolete("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer.Storage and PostgreSqlFlexibleServer.Backup instead.")]
 public partial class PostgreSqlStorageProfile : ProvisionableConstruct
 {
     /// <summary>

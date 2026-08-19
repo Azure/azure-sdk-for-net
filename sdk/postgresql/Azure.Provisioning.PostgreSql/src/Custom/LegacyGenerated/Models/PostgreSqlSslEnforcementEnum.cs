@@ -7,7 +7,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// Enable ssl enforcement or not when connect to server.
 /// </summary>
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-[System.Obsolete("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+[System.Obsolete("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServerConfiguration for the require_secure_transport server parameter instead.")]
 public enum PostgreSqlSslEnforcementEnum
 {
     /// <summary>

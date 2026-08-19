@@ -54,12 +54,12 @@ namespace Azure.Provisioning.PostgreSql
         Migrate = 1,
         ValidateAndMigrate = 2,
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServerMicrosoftEntraAdministrator.PrincipalType with PostgreSqlFlexibleServerPrincipalType instead.")]
     public enum PostgreSqlAdministratorType
     {
         ActiveDirectory = 0,
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServerConfiguration instead.")]
     public partial class PostgreSqlConfiguration : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public PostgreSqlConfiguration(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -80,7 +80,7 @@ namespace Azure.Provisioning.PostgreSql
             public static readonly string V2017_12_01;
         }
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServerDatabase instead.")]
     public partial class PostgreSqlDatabase : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public PostgreSqlDatabase(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -105,7 +105,7 @@ namespace Azure.Provisioning.PostgreSql
         Failed = 2,
         Succeeded = 3,
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServerFirewallRule instead.")]
     public partial class PostgreSqlFirewallRule : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public PostgreSqlFirewallRule(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -168,7 +168,7 @@ namespace Azure.Provisioning.PostgreSql
             public static readonly string V2025_08_01;
         }
     }
-    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use PostgreSqlFlexibleServerMicrosoftEntraAdministrator instead.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServerMicrosoftEntraAdministrator instead.")]
     public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public PostgreSqlFlexibleServerActiveDirectoryAdministrator(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -714,13 +714,13 @@ namespace Azure.Provisioning.PostgreSql
         [System.Runtime.Serialization.DataMemberAttribute(Name="17")]
         Seventeen = 7,
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer.Backup with PostgreSqlFlexibleServerGeoRedundantBackupEnum instead.")]
     public enum PostgreSqlGeoRedundantBackup
     {
         Enabled = 0,
         Disabled = 1,
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use the PostgreSqlFlexibleServer.DataEncryption property for flexible-server encryption settings instead.")]
     public enum PostgreSqlInfrastructureEncryption
     {
         Enabled = 0,
@@ -905,7 +905,7 @@ namespace Azure.Provisioning.PostgreSql
         True = 0,
         False = 1,
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServerConfiguration for the ssl_min_protocol_version server parameter instead.")]
     public enum PostgreSqlMinimalTlsVersionEnum
     {
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS1_0")]
@@ -916,7 +916,7 @@ namespace Azure.Provisioning.PostgreSql
         Tls1_2 = 2,
         TLSEnforcementDisabled = 3,
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServersPrivateEndpointConnection instead.")]
     public partial class PostgreSqlPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public PostgreSqlPrivateEndpointConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -934,7 +934,7 @@ namespace Azure.Provisioning.PostgreSql
             public static readonly string V2018_06_01;
         }
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState instead.")]
     public enum PostgreSqlPrivateEndpointProvisioningState
     {
         Approving = 0,
@@ -943,7 +943,7 @@ namespace Azure.Provisioning.PostgreSql
         Failed = 3,
         Rejecting = 4,
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServersPrivateLinkServiceConnectionState instead.")]
     public partial class PostgreSqlPrivateLinkServiceConnectionStateProperty : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public PostgreSqlPrivateLinkServiceConnectionStateProperty() { }
@@ -952,12 +952,12 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<string> Status { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use the PostgreSqlFlexibleServersPrivateLinkServiceConnectionState.ActionsRequired property instead.")]
     public enum PostgreSqlPrivateLinkServiceConnectionStateRequiredAction
     {
         None = 0,
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServersPrivateEndpointServiceConnectionStatus instead.")]
     public enum PostgreSqlPrivateLinkServiceConnectionStateStatus
     {
         Approved = 0,
@@ -965,7 +965,7 @@ namespace Azure.Provisioning.PostgreSql
         Rejected = 2,
         Disconnected = 3,
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer.Network with PostgreSqlFlexibleServerPublicNetworkAccessState instead.")]
     public enum PostgreSqlPublicNetworkAccessEnum
     {
         Enabled = 0,
@@ -975,7 +975,7 @@ namespace Azure.Provisioning.PostgreSql
     {
         Default = 0,
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer instead.")]
     public partial class PostgreSqlServer : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public PostgreSqlServer(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -1010,7 +1010,7 @@ namespace Azure.Provisioning.PostgreSql
             public static readonly string V2017_12_01;
         }
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServerMicrosoftEntraAdministrator instead.")]
     public partial class PostgreSqlServerAdministrator : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public PostgreSqlServerAdministrator(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -1029,7 +1029,7 @@ namespace Azure.Provisioning.PostgreSql
             public static readonly string V2017_12_01;
         }
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use the PostgreSqlFlexibleServer.DataEncryption property instead.")]
     public partial class PostgreSqlServerKey : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public PostgreSqlServerKey(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -1048,7 +1048,7 @@ namespace Azure.Provisioning.PostgreSql
             public static readonly string V2020_01_01;
         }
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer.DataEncryption with PostgreSqlFlexibleServerKeyType instead.")]
     public enum PostgreSqlServerKeyType
     {
         AzureKeyVault = 0,
@@ -1063,7 +1063,7 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<string> Version { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use the PostgreSqlFlexibleServer.PrivateEndpointConnectionResources property instead.")]
     public partial class PostgreSqlServerPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public PostgreSqlServerPrivateEndpointConnection() { }
@@ -1071,7 +1071,7 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.PostgreSql.PostgreSqlServerPrivateEndpointConnectionProperties Properties { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use the PostgreSqlFlexibleServer.PrivateEndpointConnectionResources property instead.")]
     public partial class PostgreSqlServerPrivateEndpointConnectionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public PostgreSqlServerPrivateEndpointConnectionProperties() { }
@@ -1080,7 +1080,7 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlPrivateEndpointProvisioningState> ProvisioningState { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServersPrivateLinkServiceConnectionState instead.")]
     public partial class PostgreSqlServerPrivateLinkServiceConnectionStateProperty : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public PostgreSqlServerPrivateLinkServiceConnectionStateProperty() { }
@@ -1089,7 +1089,7 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlPrivateLinkServiceConnectionStateStatus> Status { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer and its creation properties instead.")]
     public partial class PostgreSqlServerPropertiesForCreate : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public PostgreSqlServerPropertiesForCreate() { }
@@ -1101,7 +1101,7 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlServerVersion> Version { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer with AdministratorLogin and AdministratorLoginPassword instead.")]
     public partial class PostgreSqlServerPropertiesForDefaultCreate : Azure.Provisioning.PostgreSql.PostgreSqlServerPropertiesForCreate
     {
         public PostgreSqlServerPropertiesForDefaultCreate() { }
@@ -1109,21 +1109,21 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<string> AdministratorLoginPassword { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer with CreateMode and SourceServerResourceId for geo-restore scenarios instead.")]
     public partial class PostgreSqlServerPropertiesForGeoRestore : Azure.Provisioning.PostgreSql.PostgreSqlServerPropertiesForCreate
     {
         public PostgreSqlServerPropertiesForGeoRestore() { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SourceServerId { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer with CreateMode and SourceServerResourceId for replica scenarios instead.")]
     public partial class PostgreSqlServerPropertiesForReplica : Azure.Provisioning.PostgreSql.PostgreSqlServerPropertiesForCreate
     {
         public PostgreSqlServerPropertiesForReplica() { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SourceServerId { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer with CreateMode, SourceServerResourceId, and PointInTimeUtc for restore scenarios instead.")]
     public partial class PostgreSqlServerPropertiesForRestore : Azure.Provisioning.PostgreSql.PostgreSqlServerPropertiesForCreate
     {
         public PostgreSqlServerPropertiesForRestore() { }
@@ -1131,7 +1131,7 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SourceServerId { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use ServerThreatProtectionSettingsModel instead.")]
     public partial class PostgreSqlServerSecurityAlertPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public PostgreSqlServerSecurityAlertPolicy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -1153,13 +1153,13 @@ namespace Azure.Provisioning.PostgreSql
             public static readonly string V2017_12_01;
         }
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use ServerThreatProtectionSettingsModel.State with ThreatProtectionState instead.")]
     public enum PostgreSqlServerSecurityAlertPolicyState
     {
         Enabled = 0,
         Disabled = 1,
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer.State with PostgreSqlFlexibleServerState instead.")]
     public enum PostgreSqlServerState
     {
         Ready = 0,
@@ -1167,7 +1167,7 @@ namespace Azure.Provisioning.PostgreSql
         Disabled = 2,
         Inaccessible = 3,
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer.Version with PostgreSqlFlexibleServerVersion instead.")]
     public enum PostgreSqlServerVersion
     {
         [System.Runtime.Serialization.DataMemberAttribute(Name="9.5")]
@@ -1183,7 +1183,7 @@ namespace Azure.Provisioning.PostgreSql
         [System.Runtime.Serialization.DataMemberAttribute(Name="11")]
         Ver11 = 5,
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer.Sku with PostgreSqlFlexibleServerSku instead.")]
     public partial class PostgreSqlSku : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public PostgreSqlSku() { }
@@ -1194,26 +1194,26 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlSkuTier> Tier { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServerSku.Tier with PostgreSqlFlexibleServerSkuTier instead.")]
     public enum PostgreSqlSkuTier
     {
         Basic = 0,
         GeneralPurpose = 1,
         MemoryOptimized = 2,
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServerConfiguration for the require_secure_transport server parameter instead.")]
     public enum PostgreSqlSslEnforcementEnum
     {
         Enabled = 0,
         Disabled = 1,
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer.Storage with StorageAutoGrow instead.")]
     public enum PostgreSqlStorageAutogrow
     {
         Enabled = 0,
         Disabled = 1,
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer.Storage and PostgreSqlFlexibleServer.Backup instead.")]
     public partial class PostgreSqlStorageProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public PostgreSqlStorageProfile() { }
@@ -1223,7 +1223,7 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<int> StorageInMB { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer.Network with DelegatedSubnetResourceId for flexible-server networking instead.")]
     public partial class PostgreSqlVirtualNetworkRule : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public PostgreSqlVirtualNetworkRule(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -1242,7 +1242,7 @@ namespace Azure.Provisioning.PostgreSql
             public static readonly string V2017_12_01;
         }
     }
-    [System.ObsoleteAttribute("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer.Network with DelegatedSubnetResourceId for flexible-server networking instead.")]
     public enum PostgreSqlVirtualNetworkRuleState
     {
         Initializing = 0,
@@ -1310,7 +1310,7 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<string> ValidationSummaryItemType { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use VirtualEndpointResource instead.")]
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use VirtualEndpointResource instead.")]
     public partial class VirtualEndpoint : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public VirtualEndpoint(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }

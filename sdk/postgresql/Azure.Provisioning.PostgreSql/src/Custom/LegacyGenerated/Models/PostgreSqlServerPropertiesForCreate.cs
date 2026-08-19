@@ -22,7 +22,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// Azure.ResourceManager.PostgreSql.Models.PostgreSqlServerPropertiesForReplica.
 /// </summary>
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-[System.Obsolete("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+[System.Obsolete("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer and its creation properties instead.")]
 public partial class PostgreSqlServerPropertiesForCreate : ProvisionableConstruct
 {
     /// <summary>

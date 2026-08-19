@@ -9,7 +9,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// Enforce a minimal Tls version for the server.
 /// </summary>
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-[System.Obsolete("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+[System.Obsolete("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServerConfiguration for the ssl_min_protocol_version server parameter instead.")]
 public enum PostgreSqlMinimalTlsVersionEnum
 {
     /// <summary>

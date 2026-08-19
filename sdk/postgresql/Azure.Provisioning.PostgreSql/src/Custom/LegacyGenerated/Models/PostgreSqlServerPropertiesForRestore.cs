@@ -13,7 +13,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// The properties used to create a new server by restoring from a backup.
 /// </summary>
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-[System.Obsolete("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+[System.Obsolete("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer with CreateMode, SourceServerResourceId, and PointInTimeUtc for restore scenarios instead.")]
 public partial class PostgreSqlServerPropertiesForRestore : PostgreSqlServerPropertiesForCreate
 {
     /// <summary>

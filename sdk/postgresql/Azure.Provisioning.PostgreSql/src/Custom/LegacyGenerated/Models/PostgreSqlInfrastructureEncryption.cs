@@ -9,7 +9,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// passed in, must be &apos;Disabled&apos; or &apos;Enabled&apos;.
 /// </summary>
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-[System.Obsolete("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+[System.Obsolete("This type is obsoleted and will be removed in a future version. Please use the PostgreSqlFlexibleServer.DataEncryption property for flexible-server encryption settings instead.")]
 public enum PostgreSqlInfrastructureEncryption
 {
     /// <summary>

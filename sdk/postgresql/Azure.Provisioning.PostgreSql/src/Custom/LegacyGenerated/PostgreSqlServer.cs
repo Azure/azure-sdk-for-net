@@ -16,7 +16,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// PostgreSqlServer.
 /// </summary>
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-[System.Obsolete("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+[System.Obsolete("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer instead.")]
 public partial class PostgreSqlServer : ProvisionableResource
 {
     /// <summary>

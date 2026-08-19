@@ -14,7 +14,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// PostgreSqlFlexibleServerActiveDirectoryAdministrator.
 /// </summary>
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-[System.Obsolete("This type is deprecated and will be removed in a future version. Use PostgreSqlFlexibleServerMicrosoftEntraAdministrator instead.")]
+[System.Obsolete("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServerMicrosoftEntraAdministrator instead.")]
 public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : ProvisionableResource
 {
     /// <summary>

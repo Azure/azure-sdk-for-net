@@ -15,7 +15,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// VirtualEndpoint.
 /// </summary>
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-[System.Obsolete("This type is deprecated and will be removed in a future version. Use VirtualEndpointResource instead.")]
+[System.Obsolete("This type is obsoleted and will be removed in a future version. Please use VirtualEndpointResource instead.")]
 public partial class VirtualEndpoint : ProvisionableResource
 {
     /// <summary>

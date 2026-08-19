@@ -7,7 +7,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// Virtual Network Rule State.
 /// </summary>
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-[System.Obsolete("This type is retained only for backward compatibility with the legacy PostgreSQL single-server API.")]
+[System.Obsolete("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer.Network with DelegatedSubnetResourceId for flexible-server networking instead.")]
 public enum PostgreSqlVirtualNetworkRuleState
 {
     /// <summary>
