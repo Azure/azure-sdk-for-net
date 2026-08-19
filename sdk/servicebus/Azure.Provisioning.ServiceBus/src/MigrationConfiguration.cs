@@ -23,3 +23,5 @@ public partial class MigrationConfiguration
         public static readonly string V2024_01_01 = "2024-01-01";
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

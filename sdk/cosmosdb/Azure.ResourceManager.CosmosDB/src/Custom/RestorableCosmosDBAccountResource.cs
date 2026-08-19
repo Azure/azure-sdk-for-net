@@ -77,3 +77,5 @@ namespace Azure.ResourceManager.CosmosDB
             => GetRestorableMongoDBCollections(restorableMongoDBDatabaseRid, null, null, cancellationToken);
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

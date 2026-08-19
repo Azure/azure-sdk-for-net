@@ -29,3 +29,5 @@ namespace Azure.ResourceManager.DesktopVirtualization
             => await DeleteAsync(waitUntil, null, cancellationToken).ConfigureAwait(false);
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

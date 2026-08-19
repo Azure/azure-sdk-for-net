@@ -191,3 +191,5 @@ namespace Azure.Developer.LoadTesting
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
