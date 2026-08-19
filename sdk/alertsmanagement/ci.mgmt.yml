@@ -7,6 +7,18 @@ extends:
     ServiceDirectory: alertsmanagement
     LimitForPullRequest: true
     Artifacts:
+    - name: Azure.Provisioning.AlertProcessingRules
+      safeName: AzureProvisioningAlertProcessingRules
+    - name: Azure.Provisioning.AlertRuleRecommendations
+      safeName: AzureProvisioningAlertRuleRecommendations
+    - name: Azure.Provisioning.AlertsManagement
+      safeName: AzureProvisioningAlertsManagement
+    - name: Azure.Provisioning.PreviewAlertRule
+      safeName: AzureProvisioningPreviewAlertRule
+    - name: Azure.Provisioning.PrometheusRuleGroups
+      safeName: AzureProvisioningPrometheusRuleGroups
+    - name: Azure.Provisioning.TenantActivityLogAlerts
+      safeName: AzureProvisioningTenantActivityLogAlerts
     - name: Azure.ResourceManager.AlertsManagement
       safeName: AzureResourceManagerAlertsManagement
     - name: Azure.ResourceManager.PrometheusRuleGroups
