@@ -16,8 +16,6 @@ namespace Azure.SdkAnalyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class ClientMethodSyncAnalyzer : SymbolAnalyzerBase
     {
-        private const string AsyncStreamingClientResultMetadataName = "System.ClientModel.AsyncStreamingClientResult`1";
-        private const string TaskMetadataName = "System.Threading.Tasks.Task`1";
         private const string AsyncSuffix = "Async";
         private const string ClientSuffix = "Client";
 
@@ -36,16 +34,12 @@ namespace Azure.SdkAnalyzers
                 return;
             }
 
-            INamedTypeSymbol taskType = context.Compilation.GetTypeByMetadataName(TaskMetadataName);
-            INamedTypeSymbol asyncStreamingClientResultType =
-                context.Compilation.GetTypeByMetadataName(AsyncStreamingClientResultMetadataName);
-
             foreach (IMethodSymbol method in type.GetMembers().OfType<IMethodSymbol>())
             {
                 if (method.DeclaredAccessibility != Accessibility.Public ||
                     method.AssociatedSymbol is IPropertySymbol ||
                     !method.Name.EndsWith(AsyncSuffix, StringComparison.Ordinal) ||
-                    IsAsyncStreamingMethod(method, taskType, asyncStreamingClientResultType))
+                    AsyncStreamingResultTypeHelper.IsAsyncStreamingMethod(method, context.Compilation))
                 {
                     continue;
                 }
@@ -73,33 +67,6 @@ namespace Azure.SdkAnalyzers
             }
 
             return true;
-        }
-
-        private static bool IsAsyncStreamingMethod(
-            IMethodSymbol method,
-            INamedTypeSymbol taskType,
-            INamedTypeSymbol asyncStreamingClientResultType)
-        {
-            if (taskType == null ||
-                asyncStreamingClientResultType == null ||
-                method.ReturnType is not INamedTypeSymbol returnType ||
-                !SymbolEqualityComparer.Default.Equals(returnType.OriginalDefinition, taskType) ||
-                returnType.TypeArguments[0] is not INamedTypeSymbol resultType)
-            {
-                return false;
-            }
-
-            for (INamedTypeSymbol current = resultType; current != null; current = current.BaseType)
-            {
-                if (SymbolEqualityComparer.Default.Equals(
-                    current.OriginalDefinition,
-                    asyncStreamingClientResultType))
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
 
         private static bool SignaturesMatch(IMethodSymbol candidate, IMethodSymbol asyncMethod)
