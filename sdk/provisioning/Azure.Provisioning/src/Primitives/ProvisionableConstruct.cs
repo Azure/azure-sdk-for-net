@@ -340,37 +340,70 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
     /// <param name="bicepPath">The Bicep path segments for this property.</param>
     /// <param name="isOutput">Whether the property is an output.</param>
     /// <param name="isRequired">Whether the property is required.</param>
-    /// <returns>The defined <see cref="BicepList{T}"/>.</returns>
-    protected BicepList<T> DefineListProperty<T>(
-        string propertyName,
-        string[]? bicepPath,
-        bool isOutput = false,
-        bool isRequired = false)
-        => DefineListProperty<T>(propertyName, bicepPath, isOutput, isRequired, format: null);
-
-    /// <summary>
-    /// Defines a list property on this construct.
-    /// </summary>
-    /// <typeparam name="T">The type of the list element values.</typeparam>
-    /// <param name="propertyName">The name of the property on this construct.</param>
-    /// <param name="bicepPath">The path to the property in the emitted Bicep resource body.</param>
-    /// <param name="isOutput">Whether the property is output-only.</param>
-    /// <param name="isRequired">Whether the property is required.</param>
     /// <param name="format">
     /// The optional serialization format token to pass to literal leaf values while compiling
     /// this list to Bicep. When set, this format takes precedence over formats stored on
     /// nested literal values.
     /// </param>
-    /// <returns>The defined list property.</returns>
+    /// <returns>The defined <see cref="BicepList{T}"/>.</returns>
+    protected BicepList<T> DefineListProperty<T>(
+        string propertyName,
+        string[]? bicepPath,
+        bool isOutput = false,
+        bool isRequired = false,
+        string? format = null)
+    {
+        BicepList<T> values =
+            new(new BicepValueReference(this, propertyName, bicepPath), values: null) // we call this ctor to initialize an "uninitialized" list
+            {
+                _isOutput = isOutput,
+                _isRequired = isRequired,
+                Format = format
+            };
+        ProvisionableProperties[propertyName] = values;
+        return values;
+    }
+
+    /// <summary>
+    /// Defines a list property on this construct.
+    /// </summary>
+    /// <typeparam name="T">The list element type.</typeparam>
+    /// <param name="propertyName">The property name.</param>
+    /// <param name="bicepPath">The Bicep path segments for this property.</param>
+    /// <param name="isOutput">Whether the property is an output.</param>
+    /// <param name="isRequired">Whether the property is required.</param>
+    /// <returns>The defined <see cref="BicepList{T}"/>.</returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     protected BicepList<T> DefineListProperty<T>(
         string propertyName,
         string[]? bicepPath,
         bool isOutput,
-        bool isRequired,
-        string? format)
+        bool isRequired)
+        => DefineListProperty<T>(propertyName, bicepPath, isOutput, isRequired, format: null);
+
+    /// <summary>
+    /// Defines a dictionary property on this construct.
+    /// </summary>
+    /// <typeparam name="T">The dictionary value type.</typeparam>
+    /// <param name="propertyName">The property name.</param>
+    /// <param name="bicepPath">The Bicep path segments for this property.</param>
+    /// <param name="isOutput">Whether the property is an output.</param>
+    /// <param name="isRequired">Whether the property is required.</param>
+    /// <param name="format">
+    /// The optional serialization format token to pass to literal leaf values while compiling
+    /// this dictionary to Bicep. When set, this format takes precedence over formats stored on
+    /// nested literal values.
+    /// </param>
+    /// <returns>The defined <see cref="BicepDictionary{T}"/>.</returns>
+    protected BicepDictionary<T> DefineDictionaryProperty<T>(
+        string propertyName,
+        string[]? bicepPath,
+        bool isOutput = false,
+        bool isRequired = false,
+        string? format = null)
     {
-        BicepList<T> values =
-            new(new BicepValueReference(this, propertyName, bicepPath), values: null) // we call this ctor to initialize an "uninitialized" list
+        BicepDictionary<T> values =
+            new(new BicepValueReference(this, propertyName, bicepPath), values: null) // we call this ctor to initialize an "uninitialized" dictionary
             {
                 _isOutput = isOutput,
                 _isRequired = isRequired,
@@ -389,44 +422,13 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
     /// <param name="isOutput">Whether the property is an output.</param>
     /// <param name="isRequired">Whether the property is required.</param>
     /// <returns>The defined <see cref="BicepDictionary{T}"/>.</returns>
-    protected BicepDictionary<T> DefineDictionaryProperty<T>(
-        string propertyName,
-        string[]? bicepPath,
-        bool isOutput = false,
-        bool isRequired = false)
-        => DefineDictionaryProperty<T>(propertyName, bicepPath, isOutput, isRequired, format: null);
-
-    /// <summary>
-    /// Defines a dictionary property on this construct.
-    /// </summary>
-    /// <typeparam name="T">The type of the dictionary values.</typeparam>
-    /// <param name="propertyName">The name of the property on this construct.</param>
-    /// <param name="bicepPath">The path to the property in the emitted Bicep resource body.</param>
-    /// <param name="isOutput">Whether the property is output-only.</param>
-    /// <param name="isRequired">Whether the property is required.</param>
-    /// <param name="format">
-    /// The optional serialization format token to pass to literal leaf values while compiling
-    /// this dictionary to Bicep. When set, this format takes precedence over formats stored on
-    /// nested literal values.
-    /// </param>
-    /// <returns>The defined dictionary property.</returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     protected BicepDictionary<T> DefineDictionaryProperty<T>(
         string propertyName,
         string[]? bicepPath,
         bool isOutput,
-        bool isRequired,
-        string? format)
-    {
-        BicepDictionary<T> values =
-            new(new BicepValueReference(this, propertyName, bicepPath), values: null) // we call this ctor to initialize an "uninitialized" dictionary
-            {
-                _isOutput = isOutput,
-                _isRequired = isRequired,
-                Format = format
-            };
-        ProvisionableProperties[propertyName] = values;
-        return values;
-    }
+        bool isRequired)
+        => DefineDictionaryProperty<T>(propertyName, bicepPath, isOutput, isRequired, format: null);
 
     /// <summary>
     /// Defines a model property on this construct using a provided instance.
