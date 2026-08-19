@@ -32,14 +32,14 @@ namespace Azure.AI.Discovery
         }
 
         /// <summary> Initializes a new instance of <see cref="TaskComment"/>. </summary>
-        /// <param name="timestamp"> When the comment was created. </param>
+        /// <param name="on"> When the comment was created. </param>
         /// <param name="createdBy"> ID of the user or application who created the comment. </param>
         /// <param name="createdByType"> Type of creator (User, Application, System, or custom type). </param>
         /// <param name="text"> The comment text content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TaskComment(DateTimeOffset? timestamp, string createdBy, DiscoveryActorType createdByType, string text, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TaskComment(DateTimeOffset? @on, string createdBy, DiscoveryActorType createdByType, string text, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Timestamp = timestamp;
+            On = @on;
             CreatedBy = createdBy;
             CreatedByType = createdByType;
             Text = text;
@@ -47,7 +47,7 @@ namespace Azure.AI.Discovery
         }
 
         /// <summary> When the comment was created. </summary>
-        public DateTimeOffset? Timestamp { get; set; }
+        public DateTimeOffset? On { get; set; }
 
         /// <summary> ID of the user or application who created the comment. </summary>
         public string CreatedBy { get; set; }

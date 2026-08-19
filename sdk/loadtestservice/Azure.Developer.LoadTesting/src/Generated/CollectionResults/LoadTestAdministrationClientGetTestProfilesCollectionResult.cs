@@ -18,8 +18,8 @@ namespace Azure.Developer.LoadTesting
     {
         private readonly LoadTestAdministrationClient _client;
         private readonly int? _maxpagesize;
-        private readonly DateTimeOffset? _lastModifiedStartTime;
-        private readonly DateTimeOffset? _lastModifiedEndTime;
+        private readonly DateTimeOffset? _lastModifiedStartOn;
+        private readonly DateTimeOffset? _lastModifiedEndOn;
         private readonly IEnumerable<string> _testProfileIds;
         private readonly IEnumerable<string> _testIds;
         private readonly RequestContext _context;
@@ -28,18 +28,18 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Initializes a new instance of LoadTestAdministrationClientGetTestProfilesCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The LoadTestAdministrationClient client used to send requests. </param>
         /// <param name="maxpagesize"> Maximum number of results to include in a single response. </param>
-        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter test profiles. </param>
-        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter test profiles. </param>
+        /// <param name="lastModifiedStartOn"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter test profiles. </param>
+        /// <param name="lastModifiedEndOn"> End DateTime(RFC 3339 literal format) of the last updated time range to filter test profiles. </param>
         /// <param name="testProfileIds"> Comma separated list of IDs of the test profiles to filter. </param>
         /// <param name="testIds"> Comma separated list IDs of the tests which should be associated with the test profiles to fetch. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public LoadTestAdministrationClientGetTestProfilesCollectionResult(LoadTestAdministrationClient client, int? maxpagesize, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, IEnumerable<string> testProfileIds, IEnumerable<string> testIds, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public LoadTestAdministrationClientGetTestProfilesCollectionResult(LoadTestAdministrationClient client, int? maxpagesize, DateTimeOffset? lastModifiedStartOn, DateTimeOffset? lastModifiedEndOn, IEnumerable<string> testProfileIds, IEnumerable<string> testIds, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _maxpagesize = maxpagesize;
-            _lastModifiedStartTime = lastModifiedStartTime;
-            _lastModifiedEndTime = lastModifiedEndTime;
+            _lastModifiedStartOn = lastModifiedStartOn;
+            _lastModifiedEndOn = lastModifiedEndOn;
             _testProfileIds = testProfileIds;
             _testIds = testIds;
             _context = context;
@@ -80,7 +80,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetTestProfilesRequest(nextLink, _maxpagesize, _lastModifiedStartTime, _lastModifiedEndTime, _testProfileIds, _testIds, _context) : _client.CreateGetTestProfilesRequest(_maxpagesize, _lastModifiedStartTime, _lastModifiedEndTime, _testProfileIds, _testIds, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetTestProfilesRequest(nextLink, _maxpagesize, _lastModifiedStartOn, _lastModifiedEndOn, _testProfileIds, _testIds, _context) : _client.CreateGetTestProfilesRequest(_maxpagesize, _lastModifiedStartOn, _lastModifiedEndOn, _testProfileIds, _testIds, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
