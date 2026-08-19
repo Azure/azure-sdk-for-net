@@ -110,6 +110,23 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// authentication behavior, transport/connection-pooling behavior, or resource usage. The underlying
         /// Proof-of-Possession support in Azure.Core and Azure.Identity is experimental (see <c>AZID0004</c>);
         /// enable this only if you understand and accept that.
+        /// <para>
+        /// Setting this to <see langword="true"/> is a request, not a guarantee. It can be silently ignored when
+        /// the effective transport cannot apply the binding certificate — for example when
+        /// <see cref="Azure.Core.ClientOptions.Transport"/> is set to a custom transport whose
+        /// <see cref="System.Net.Http.HttpClient"/> is fixed at construction time, or when the credential does
+        /// not honor <see cref="Azure.Core.TokenRequestContext.IsProofOfPossessionEnabled"/>. In those cases the
+        /// client falls back to a plain bearer token and does not send the <c>x-ms-tokenboundauth</c> header.
+        /// </para>
+        /// <para>
+        /// Throughput profile changes materially when enabled. Proof-of-Possession tokens are bound to a specific
+        /// request URI and HTTP method, so <see cref="Azure.Core.Pipeline.BearerTokenAuthenticationPolicy"/>'s
+        /// single-slot access-token cache is invalidated whenever the request URI or method changes. Because it
+        /// is one slot rather than a per-URI map, alternating requests to different vault resources will each
+        /// drive a fresh credential invocation. That is inherent to binding a token to a request line; MSAL has
+        /// its own inner cache, but callers enabling this should be aware they are trading throughput for
+        /// cryptographic binding.
+        /// </para>
         /// </remarks>
         public bool EnableProofOfPossession { get; set; }
 

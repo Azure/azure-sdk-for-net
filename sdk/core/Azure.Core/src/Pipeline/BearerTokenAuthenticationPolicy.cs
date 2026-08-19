@@ -554,17 +554,15 @@ namespace Azure.Core.Pipeline
                     // HTTP method (see RFC 9449 / MSAL WithProofOfPossession). Reusing a PoP-bound cached
                     // token across different request targets would send a token whose binding does not
                     // match the request line, so treat the cache entry as stale when the URI or method
-                    // changes. This only applies when the cached token is actually PoP-bound — if the
-                    // credential returned a plain bearer token (no binding certificate), URI/method
-                    // differences do not invalidate the cache and existing bearer-flow behavior (including
-                    // Continuous Access Evaluation challenge handling) is unchanged.
-                    (context.IsProofOfPossessionEnabled && IsCachedTokenProofOfPossessionBound() &&
+                    // changes. Gate solely on the *requested* PoP flag matching on both contexts — not on
+                    // the currently cached token being observably PoP-bound — because a concurrent request
+                    // arriving while the initial token acquisition is still in flight would otherwise reuse
+                    // the pending token (task is not yet RanToCompletion, so the cached-token check would
+                    // return false and the URI-based invalidation would be skipped). Bearer callers are
+                    // unaffected because the outer `IsProofOfPossessionEnabled` clause is false for them.
+                    (context.IsProofOfPossessionEnabled && CurrentContext.IsProofOfPossessionEnabled &&
                         (context.ResourceRequestUri != CurrentContext.ResourceRequestUri ||
                          !string.Equals(context.ResourceRequestMethod, CurrentContext.ResourceRequestMethod, StringComparison.OrdinalIgnoreCase)));
-
-                private bool IsCachedTokenProofOfPossessionBound() =>
-                    CurrentTokenTcs.Task.Status == TaskStatus.RanToCompletion &&
-                    CurrentTokenTcs.Task.Result.BindingCertificate != null;
 
                 public bool IsBackgroundTokenAvailable(DateTimeOffset now) =>
                     BackgroundTokenUpdateTcs != null &&
