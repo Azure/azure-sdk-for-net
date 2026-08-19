@@ -111,7 +111,7 @@ namespace Azure.Generator.Visitors
                                     $"Deserialize{_serializationProvider.Name}",
                                     [
                                         documentVariable.Property(nameof(JsonDocument.RootElement)),
-                                        documentVariable.Property(nameof(JsonDocument.RootElement)).Invoke("GetUtf8Bytes"),
+                                        documentVariable.Property(nameof(JsonDocument.RootElement)).As<JsonElement>().GetUtf8Bytes(),
                                         WireOptions
                                     ])
                                 : Static().Invoke(
