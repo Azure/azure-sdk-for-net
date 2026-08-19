@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsNetworkSecurityPerimeterConfigurationProperties"/>. </summary>
-        /// <param name="provisioningState"></param>
+        /// <param name="provisioningState"> Provisioning state of the network security perimeter configuration. </param>
         /// <param name="provisioningIssues"> List of provisioning issues, if any. </param>
-        /// <param name="networkSecurityPerimeter"></param>
-        /// <param name="resourceAssociation"></param>
-        /// <param name="profile"></param>
+        /// <param name="networkSecurityPerimeter"> Information about the network security perimeter (NSP). </param>
+        /// <param name="resourceAssociation"> Information about the resource association. </param>
+        /// <param name="profile"> Network security perimeter configuration profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal OperationalInsightsNetworkSecurityPerimeterConfigurationProperties(OperationalInsightsNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IReadOnlyList<OperationalInsightsNetworkSecurityPerimeterProvisioningIssue> provisioningIssues, OperationalInsightsNetworkSecurityPerimeter networkSecurityPerimeter, OperationalInsightsNetworkSecurityPerimeterResourceAssociation resourceAssociation, OperationalInsightsNetworkSecurityProfile profile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the ProvisioningState. </summary>
+        /// <summary> Provisioning state of the network security perimeter configuration. </summary>
         [WirePath("provisioningState")]
         public OperationalInsightsNetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get; }
 
@@ -48,15 +48,15 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         [WirePath("provisioningIssues")]
         public IReadOnlyList<OperationalInsightsNetworkSecurityPerimeterProvisioningIssue> ProvisioningIssues { get; }
 
-        /// <summary> Gets the NetworkSecurityPerimeter. </summary>
+        /// <summary> Information about the network security perimeter (NSP). </summary>
         [WirePath("networkSecurityPerimeter")]
         public OperationalInsightsNetworkSecurityPerimeter NetworkSecurityPerimeter { get; }
 
-        /// <summary> Gets the ResourceAssociation. </summary>
+        /// <summary> Information about the resource association. </summary>
         [WirePath("resourceAssociation")]
         public OperationalInsightsNetworkSecurityPerimeterResourceAssociation ResourceAssociation { get; }
 
-        /// <summary> Gets the Profile. </summary>
+        /// <summary> Network security perimeter configuration profile. </summary>
         [WirePath("profile")]
         public OperationalInsightsNetworkSecurityProfile Profile { get; }
     }

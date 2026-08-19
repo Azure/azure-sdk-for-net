@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="isWait"> Enable/disable health check for all Kubernetes objects created by this Kustomization. </param>
         /// <param name="postBuild"> Used for variable substitution for this Kustomization after kustomize build. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Kustomization(string name, string path, IList<string> dependsOn, long? timeoutInSeconds, long? syncIntervalInSeconds, long? retryIntervalInSeconds, bool? isPrune, bool? isForce, bool? isWait, PostBuild postBuild, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Kustomization(string name, string path, IList<string> dependsOn, long? timeoutInSeconds, long? syncIntervalInSeconds, long? retryIntervalInSeconds, bool? isPrune, bool? isForce, bool? isWait, FluxPostBuild postBuild, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Path = path;
@@ -78,6 +78,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         public bool? IsWait { get; set; }
 
         /// <summary> Used for variable substitution for this Kustomization after kustomize build. </summary>
-        public PostBuild PostBuild { get; set; }
+        public FluxPostBuild PostBuild { get; set; }
     }
 }

@@ -181,11 +181,6 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("ddosSettings"u8);
                 writer.WriteObjectValue(DdosSettings, options);
             }
-            if (Optional.IsDefined(EnableConnectionTracking))
-            {
-                writer.WritePropertyName("enableConnectionTracking"u8);
-                writer.WriteBooleanValue(EnableConnectionTracking.Value);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -240,8 +235,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkSubResource publicIPPrefix = default;
             NetworkSubResource gatewayLoadBalancer = default;
             NetworkProvisioningState? provisioningState = default;
-            DdosFrontendIpConfigurationSettings ddosSettings = default;
-            bool? enableConnectionTracking = default;
+            DdosFrontendIPConfigurationSettings ddosSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -403,16 +397,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    ddosSettings = DdosFrontendIpConfigurationSettings.DeserializeDdosFrontendIpConfigurationSettings(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("enableConnectionTracking"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enableConnectionTracking = prop.Value.GetBoolean();
+                    ddosSettings = DdosFrontendIPConfigurationSettings.DeserializeDdosFrontendIPConfigurationSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -434,7 +419,6 @@ namespace Azure.ResourceManager.Network.Models
                 gatewayLoadBalancer,
                 provisioningState,
                 ddosSettings,
-                enableConnectionTracking,
                 additionalBinaryDataProperties);
         }
     }
