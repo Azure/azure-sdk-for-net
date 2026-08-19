@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
+using System.Text.Json.Serialization;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.Attestation
@@ -12,6 +13,7 @@ namespace Azure.Security.Attestation
     /// Represents the body of a policy Add operation.
     /// </summary>
     [CodeGenType("AttestationCertificateManagementBody")]
+    [JsonConverter(typeof(PolicyCertificateModificationConverter))]
     internal partial class PolicyCertificateModification
     {
         /// <summary>
