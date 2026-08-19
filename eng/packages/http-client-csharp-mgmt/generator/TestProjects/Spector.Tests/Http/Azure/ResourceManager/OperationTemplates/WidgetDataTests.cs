@@ -5,7 +5,6 @@ using System.ClientModel.Primitives;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.OperationTemplates;
-using Azure.ResourceManager.OperationTemplates.Models;
 using NUnit.Framework;
 using TestProjects.Spector.Tests.Infrastructure;
 
