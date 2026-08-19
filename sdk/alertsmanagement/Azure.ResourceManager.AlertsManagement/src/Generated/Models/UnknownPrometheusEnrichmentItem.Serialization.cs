@@ -82,6 +82,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 throw new FormatException($"The model {nameof(PrometheusEnrichmentItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type.ToString());
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -122,6 +124,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             IList<string> datasources = default;
             string grafanaExplorePath = default;
             string query = default;
+            AlertsManagementType @type = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("title"u8))
@@ -181,6 +184,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     query = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = new AlertsManagementType(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -196,7 +204,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 linkToApi,
                 datasources,
                 grafanaExplorePath,
-                query);
+                query,
+                @type);
         }
     }
 }

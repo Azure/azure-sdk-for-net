@@ -60,5 +60,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary> Query resolution step width in ISO8601 format. </summary>
         public string Step { get; }
+
+        /// <summary> Gets or sets the Type. </summary>
+        internal AlertsManagementType Type { get; set; } = "PrometheusEnrichmentItem";
     }
 }

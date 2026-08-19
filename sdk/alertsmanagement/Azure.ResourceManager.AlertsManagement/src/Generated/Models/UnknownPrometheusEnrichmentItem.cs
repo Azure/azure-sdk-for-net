@@ -23,8 +23,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="datasources"> An array of the azure monitor workspace resource ids. </param>
         /// <param name="grafanaExplorePath"> Partial link to the Grafana explore API. </param>
         /// <param name="query"> The Prometheus expression query. </param>
-        internal UnknownPrometheusEnrichmentItem(string title, string description, AlertsManagementStatus status, string errorMessage, AlertsManagementType alertEnrichmentType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string linkToApi, IList<string> datasources, string grafanaExplorePath, string query) : base(title, description, status, errorMessage, alertEnrichmentType != default ? alertEnrichmentType : "unknown", additionalBinaryDataProperties, linkToApi, datasources, grafanaExplorePath, query)
+        /// <param name="type"></param>
+        internal UnknownPrometheusEnrichmentItem(string title, string description, AlertsManagementStatus status, string errorMessage, AlertsManagementType alertEnrichmentType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string linkToApi, IList<string> datasources, string grafanaExplorePath, string query, AlertsManagementType @type) : base(title, description, status, errorMessage, alertEnrichmentType != default ? alertEnrichmentType : "unknown", additionalBinaryDataProperties, linkToApi, datasources, grafanaExplorePath, query)
         {
+            Type = @type;
         }
+
+        /// <summary> Gets or sets the Type. </summary>
+        internal AlertsManagementType Type { get; set; } = "PrometheusEnrichmentItem";
     }
 }

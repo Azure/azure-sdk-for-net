@@ -12,7 +12,7 @@ using Azure.ResourceManager.AlertsManagement;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> The enrichment type. </summary>
-    internal readonly partial struct AlertsManagementType : IEquatable<AlertsManagementType>
+    public readonly partial struct AlertsManagementType : IEquatable<AlertsManagementType>
     {
         private readonly string _value;
         /// <summary> PrometheusInstantQuery. </summary>

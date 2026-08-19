@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         [WirePath("properties")]
         internal WebTestProperties Properties { get; set; }
 
+        /// <summary> Azure resource type. </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
         /// <summary> Unique ID of this WebTest. This is typically the same value as the Name field. </summary>
         [WirePath("properties.SyntheticMonitorId")]
         public string SyntheticMonitorId

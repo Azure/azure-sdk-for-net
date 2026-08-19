@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         [WirePath("properties")]
         internal ApplicationInsightsComponentProperties Properties { get; set; }
 
+        /// <summary> Azure resource type. </summary>
+        [WirePath("type")]
+        public string Type { get; }
+
         /// <summary> The unique ID of your application. This field mirrors the 'Name' field and cannot be changed. </summary>
         [WirePath("properties.ApplicationId")]
         public string ApplicationId

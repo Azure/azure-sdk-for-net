@@ -46,5 +46,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary> The date and the time of the evaluation. </summary>
         public string Time { get; }
+
+        /// <summary> Gets or sets the Type. </summary>
+        internal AlertsManagementType Type { get; set; } = "PrometheusEnrichmentItem";
     }
 }
