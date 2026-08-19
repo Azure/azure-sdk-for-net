@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Initializes a new instance of <see cref="LinkerFirewallRules"/>. </summary>
         public LinkerFirewallRules()
         {
-            IpRanges = new ChangeTrackingList<string>();
+            IPRanges = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LinkerFirewallRules"/>. </summary>
@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal LinkerFirewallRules(IList<string> ipRanges, LinkerAllowType? azureServices, LinkerAllowType? callerClientIP, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpRanges = ipRanges;
+            IPRanges = ipRanges;
             AzureServices = azureServices;
             CallerClientIP = callerClientIP;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> This value specifies the set of IP addresses or IP address ranges in CIDR form to be included as the allowed list of client IPs for a given database account. </summary>
-        public IList<string> IpRanges { get; }
+        public IList<string> IPRanges { get; }
 
         /// <summary> Allow Azure services to access the target service if true. </summary>
         public LinkerAllowType? AzureServices { get; set; }

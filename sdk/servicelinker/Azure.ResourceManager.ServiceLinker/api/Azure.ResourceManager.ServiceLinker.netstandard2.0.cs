@@ -915,7 +915,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public LinkerFirewallRules() { }
         public Azure.ResourceManager.ServiceLinker.Models.LinkerAllowType? AzureServices { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceLinker.Models.LinkerAllowType? CallerClientIP { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> IpRanges { get { throw null; } }
+        public System.Collections.Generic.IList<string> IPRanges { get { throw null; } }
         protected virtual Azure.ResourceManager.ServiceLinker.Models.LinkerFirewallRules JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ServiceLinker.Models.LinkerFirewallRules PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 throw new FormatException($"The model {nameof(LinkerFirewallRules)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(IpRanges))
+            if (Optional.IsCollectionDefined(IPRanges))
             {
                 writer.WritePropertyName("ipRanges"u8);
                 writer.WriteStartArray();
-                foreach (string item in IpRanges)
+                foreach (string item in IPRanges)
                 {
                     if (item == null)
                     {
