@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
     [ModelReaderWriterBuildable(typeof(ExternalAuthResource))]
     [ModelReaderWriterBuildable(typeof(GroupClaimProfile))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterAdminCredential))]
+    [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterAdminCredentialRequest))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterData))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterListResult))]
     [ModelReaderWriterBuildable(typeof(HcpOpenShiftClusterProperties))]
