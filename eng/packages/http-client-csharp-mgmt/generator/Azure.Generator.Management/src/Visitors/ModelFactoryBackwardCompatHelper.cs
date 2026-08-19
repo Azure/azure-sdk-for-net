@@ -529,7 +529,7 @@ namespace Azure.Generator.Management.Visitors
             }
 
             var constructorParameters = modelProvider.FullConstructor.Signature.Parameters;
-            var argumentsByName = new Dictionary<string, ValueExpression>(StringComparer.Ordinal);
+            var argumentsByName = new Dictionary<string, ValueExpression>(StringComparer.OrdinalIgnoreCase);
             foreach (var argument in newInstanceExpression.Parameters)
             {
                 if (!TryGetArgumentName(argument, out var argumentName))
