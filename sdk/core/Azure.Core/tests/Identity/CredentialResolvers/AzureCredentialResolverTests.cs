@@ -227,6 +227,40 @@ namespace Azure.Core.Tests.Identity.CredentialResolvers
         }
 
         [Test]
+        public void TryResolve_ChainedTokenCredential_AzurePipelinesEntry_MissingConfig_FailsFast()
+        {
+            // AzurePipelinesCredential is an explicitly-configured (non-ambient) source:
+            // when required settings are missing it fails fast at chain construction with
+            // an argument exception, rather than falling through at GetToken the way
+            // ambient credentials (Environment/WorkloadIdentity) do. This matches GA
+            // DefaultAzureCredentialFactory, which performs the same eager validation.
+            var section = BuildSection(new Dictionary<string, string>
+            {
+                ["MyClient:Credential:CredentialSource"] = "ChainedTokenCredential",
+                ["MyClient:Credential:Sources:0:CredentialSource"] = "AzurePipelinesCredential",
+            });
+
+            var resolver = new AzureCredentialResolver();
+            Assert.Catch<ArgumentException>(() => resolver.TryResolve(section, out _));
+        }
+
+        [Test]
+        public void TryResolve_ChainedTokenCredential_ManagedIdentityAsFederatedIdentityEntry_MissingConfig_FailsFast()
+        {
+            // ManagedIdentityAsFederatedIdentityCredential is likewise explicitly
+            // configured: a missing user-assigned identity fails fast at chain
+            // construction rather than falling through at GetToken.
+            var section = BuildSection(new Dictionary<string, string>
+            {
+                ["MyClient:Credential:CredentialSource"] = "ChainedTokenCredential",
+                ["MyClient:Credential:Sources:0:CredentialSource"] = "ManagedIdentityAsFederatedIdentityCredential",
+            });
+
+            var resolver = new AzureCredentialResolver();
+            Assert.Catch<ArgumentException>(() => resolver.TryResolve(section, out _));
+        }
+
+        [Test]
         public void TryResolve_ChainedTokenCredential_NestedChain_IsRejected()
         {
             // A ChainedTokenCredential entry nested inside another chain is rejected
