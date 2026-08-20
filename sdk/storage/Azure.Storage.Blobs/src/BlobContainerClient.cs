@@ -1562,12 +1562,6 @@ namespace Azure.Storage.Blobs
                 {
                     scope.Start();
 
-                    if (conditions?.IfMatch != default ||
-                        conditions?.IfNoneMatch != default)
-                    {
-                        throw BlobErrors.BlobConditionsMustBeDefault(nameof(RequestConditions.IfMatch), nameof(RequestConditions.IfNoneMatch));
-                    }
-
                     Response response;
 
                     if (async)
@@ -2428,12 +2422,6 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
-
-                    if (conditions?.IfMatch != default ||
-                        conditions?.IfNoneMatch != default)
-                    {
-                        throw BlobErrors.BlobConditionsMustBeDefault(nameof(RequestConditions.IfMatch), nameof(RequestConditions.IfNoneMatch));
-                    }
 
                     List<BlobSignedIdentifier> sanitizedPermissions = null;
                     if (permissions != null)
