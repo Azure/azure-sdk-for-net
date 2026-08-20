@@ -12,16 +12,16 @@ using Azure.ResourceManager.HorizonDB;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> The properties for adding a HorizonDB administrator. </summary>
-    public partial class HorizonDBAdministratorPropertiesForAdd
+    public partial class HorizonDBAdministratorContentProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDBAdministratorPropertiesForAdd"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBAdministratorContentProperties"/>. </summary>
         /// <param name="principalName"> The display name or UPN of the Entra ID principal. For users, typically the User Principal Name (e.g., admin@contoso.com). For groups, the group display name. For service principals, the application display name. </param>
         /// <param name="principalType"> The type of the Entra ID principal. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="principalName"/> is null. </exception>
-        public HorizonDBAdministratorPropertiesForAdd(string principalName, HorizonDBPrincipalType principalType)
+        public HorizonDBAdministratorContentProperties(string principalName, HorizonDBPrincipalType principalType)
         {
             Argument.AssertNotNull(principalName, nameof(principalName));
 
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.HorizonDB.Models
             PrincipalType = principalType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDBAdministratorPropertiesForAdd"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBAdministratorContentProperties"/>. </summary>
         /// <param name="principalName"> The display name or UPN of the Entra ID principal. For users, typically the User Principal Name (e.g., admin@contoso.com). For groups, the group display name. For service principals, the application display name. </param>
         /// <param name="principalType"> The type of the Entra ID principal. </param>
         /// <param name="tenantId"> The Entra ID tenant identifier (an RFC 4122 GUID). If omitted, defaults to the tenant of the subscription. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBAdministratorPropertiesForAdd(string principalName, HorizonDBPrincipalType principalType, string tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBAdministratorContentProperties(string principalName, HorizonDBPrincipalType principalType, string tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrincipalName = principalName;
             PrincipalType = principalType;

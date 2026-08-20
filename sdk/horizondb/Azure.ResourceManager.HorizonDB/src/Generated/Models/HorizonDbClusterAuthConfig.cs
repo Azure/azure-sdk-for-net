@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="tenantId"> The Microsoft Entra tenant ID. </param>
         /// <param name="passwordAuth"> Indicates whether password authentication is enabled or disabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDbClusterAuthConfig(AuthenticationState? entraIdAuth, string tenantId, AuthenticationState? passwordAuth, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDbClusterAuthConfig(HorizonDBAuthenticationState? entraIdAuth, string tenantId, HorizonDBAuthenticationState? passwordAuth, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EntraIdAuth = entraIdAuth;
             TenantId = tenantId;
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> Indicates whether Microsoft Entra ID authentication is enabled or disabled. </summary>
-        public AuthenticationState? EntraIdAuth { get; set; }
+        public HorizonDBAuthenticationState? EntraIdAuth { get; set; }
 
         /// <summary> The Microsoft Entra tenant ID. </summary>
         public string TenantId { get; set; }
 
         /// <summary> Indicates whether password authentication is enabled or disabled. </summary>
-        public AuthenticationState? PasswordAuth { get; set; }
+        public HorizonDBAuthenticationState? PasswordAuth { get; set; }
     }
 }

@@ -14,56 +14,56 @@ using Azure.ResourceManager.HorizonDB;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> The properties for adding a HorizonDB administrator. </summary>
-    public partial class HorizonDBAdministratorPropertiesForAdd : IJsonModel<HorizonDBAdministratorPropertiesForAdd>
+    public partial class HorizonDBAdministratorContentProperties : IJsonModel<HorizonDBAdministratorContentProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="HorizonDBAdministratorPropertiesForAdd"/> for deserialization. </summary>
-        internal HorizonDBAdministratorPropertiesForAdd()
+        /// <summary> Initializes a new instance of <see cref="HorizonDBAdministratorContentProperties"/> for deserialization. </summary>
+        internal HorizonDBAdministratorContentProperties()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HorizonDBAdministratorPropertiesForAdd PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HorizonDBAdministratorContentProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBAdministratorPropertiesForAdd>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBAdministratorContentProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHorizonDBAdministratorPropertiesForAdd(document.RootElement, options);
+                        return DeserializeHorizonDBAdministratorContentProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDBAdministratorPropertiesForAdd)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDBAdministratorContentProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBAdministratorPropertiesForAdd>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBAdministratorContentProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHorizonDBContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDBAdministratorPropertiesForAdd)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDBAdministratorContentProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HorizonDBAdministratorPropertiesForAdd>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HorizonDBAdministratorContentProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDBAdministratorPropertiesForAdd IPersistableModel<HorizonDBAdministratorPropertiesForAdd>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HorizonDBAdministratorContentProperties IPersistableModel<HorizonDBAdministratorContentProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HorizonDBAdministratorPropertiesForAdd>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HorizonDBAdministratorContentProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HorizonDBAdministratorPropertiesForAdd>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HorizonDBAdministratorContentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBAdministratorPropertiesForAdd>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBAdministratorContentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDBAdministratorPropertiesForAdd)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDBAdministratorContentProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("principalName"u8);
             writer.WriteStringValue(PrincipalName);
@@ -107,24 +107,24 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDBAdministratorPropertiesForAdd IJsonModel<HorizonDBAdministratorPropertiesForAdd>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HorizonDBAdministratorContentProperties IJsonModel<HorizonDBAdministratorContentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HorizonDBAdministratorPropertiesForAdd JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HorizonDBAdministratorContentProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBAdministratorPropertiesForAdd>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBAdministratorContentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDBAdministratorPropertiesForAdd)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDBAdministratorContentProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHorizonDBAdministratorPropertiesForAdd(document.RootElement, options);
+            return DeserializeHorizonDBAdministratorContentProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HorizonDBAdministratorPropertiesForAdd DeserializeHorizonDBAdministratorPropertiesForAdd(JsonElement element, ModelReaderWriterOptions options)
+        internal static HorizonDBAdministratorContentProperties DeserializeHorizonDBAdministratorContentProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HorizonDBAdministratorPropertiesForAdd(principalName, principalType, tenantId, additionalBinaryDataProperties);
+            return new HorizonDBAdministratorContentProperties(principalName, principalType, tenantId, additionalBinaryDataProperties);
         }
     }
 }
