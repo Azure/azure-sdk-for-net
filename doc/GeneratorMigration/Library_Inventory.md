@@ -386,7 +386,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 43
 | hybridaks | Azure.ResourceManager.HybridContainerService |
 | iot | Azure.ResourceManager.IotFirmwareDefense |
 | iotcentral | Azure.ResourceManager.IotCentral |
-| kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration |
 | labservices | Azure.ResourceManager.LabServices |
 | logic | Azure.ResourceManager.Logic |
 | machinelearningcompute | Azure.ResourceManager.MachineLearningCompute |
@@ -448,7 +447,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | hybridkubernetes | Azure.Provisioning.Kubernetes | Azure.ResourceManager.Kubernetes ✅ | TypeSpec ✅ |
 | iothub | Azure.Provisioning.IotHub | Azure.ResourceManager.IotHub ✅ | TypeSpec ✅ |
 | keyvault | Azure.Provisioning.KeyVault | Azure.ResourceManager.KeyVault ✅ | TypeSpec ✅ |
-| kubernetesconfiguration | Azure.Provisioning.KubernetesConfiguration | Azure.ResourceManager.KubernetesConfiguration | Reflection |
+| kubernetesconfiguration | Azure.Provisioning.KubernetesConfiguration | Azure.ResourceManager.KubernetesConfiguration.Extensions ✅<br>Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations ✅ | Reflection |
 | kusto | Azure.Provisioning.Kusto | Azure.ResourceManager.Kusto ✅ | Reflection |
 | loadtestservice | Azure.Provisioning.LoadTesting | Azure.ResourceManager.LoadTesting ✅ | TypeSpec ✅ |
 | logic | Azure.Provisioning.Logic | Azure.ResourceManager.Logic | Reflection |

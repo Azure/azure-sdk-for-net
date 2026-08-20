@@ -20,7 +20,7 @@ public partial class KubernetesClusterExtensionScope : ProvisionableConstruct
     /// scoped extension.  If this namespace does not exist, it will be
     /// created.
     /// </summary>
-    public BicepValue<string> ClusterReleaseNamespace 
+    public BicepValue<string> ClusterReleaseNamespace
     {
         get { Initialize(); return _clusterReleaseNamespace!; }
         set { Initialize(); _clusterReleaseNamespace!.Assign(value); }
@@ -31,7 +31,7 @@ public partial class KubernetesClusterExtensionScope : ProvisionableConstruct
     /// Namespace where the extension will be created for an Namespace scoped
     /// extension.  If this namespace does not exist, it will be created.
     /// </summary>
-    public BicepValue<string> TargetNamespace 
+    public BicepValue<string> TargetNamespace
     {
         get { Initialize(); return _targetNamespace!; }
         set { Initialize(); _targetNamespace!.Assign(value); }

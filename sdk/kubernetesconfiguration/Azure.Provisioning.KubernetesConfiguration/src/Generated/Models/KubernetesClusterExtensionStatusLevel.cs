@@ -11,17 +11,17 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 public enum KubernetesClusterExtensionStatusLevel
 {
     /// <summary>
-    /// Error.
+    /// Indicates an error status from the extension.
     /// </summary>
     Error,
 
     /// <summary>
-    /// Warning.
+    /// Indicates a warning status from the extension.
     /// </summary>
     Warning,
 
     /// <summary>
-    /// Information.
+    /// Indicates an informational status from the extension.
     /// </summary>
     Information,
 }

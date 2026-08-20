@@ -18,7 +18,7 @@ public partial class HelmReleaseProperties : ProvisionableConstruct
     /// <summary>
     /// The revision number of the last released object change.
     /// </summary>
-    public BicepValue<long> LastRevisionApplied 
+    public BicepValue<long> LastRevisionApplied
     {
         get { Initialize(); return _lastRevisionApplied!; }
     }
@@ -28,16 +28,16 @@ public partial class HelmReleaseProperties : ProvisionableConstruct
     /// The reference to the HelmChart object used as the source to this
     /// HelmRelease.
     /// </summary>
-    public KubernetesObjectReference HelmChartRef 
+    public FluxObjectReference HelmChartRef
     {
         get { Initialize(); return _helmChartRef!; }
     }
-    private KubernetesObjectReference? _helmChartRef;
+    private FluxObjectReference? _helmChartRef;
 
     /// <summary>
     /// Total number of times that the HelmRelease failed to install or upgrade.
     /// </summary>
-    public BicepValue<long> FailureCount 
+    public BicepValue<long> FailureCount
     {
         get { Initialize(); return _failureCount!; }
     }
@@ -46,7 +46,7 @@ public partial class HelmReleaseProperties : ProvisionableConstruct
     /// <summary>
     /// Number of times that the HelmRelease failed to install.
     /// </summary>
-    public BicepValue<long> InstallFailureCount 
+    public BicepValue<long> InstallFailureCount
     {
         get { Initialize(); return _installFailureCount!; }
     }
@@ -55,7 +55,7 @@ public partial class HelmReleaseProperties : ProvisionableConstruct
     /// <summary>
     /// Number of times that the HelmRelease failed to upgrade.
     /// </summary>
-    public BicepValue<long> UpgradeFailureCount 
+    public BicepValue<long> UpgradeFailureCount
     {
         get { Initialize(); return _upgradeFailureCount!; }
     }
@@ -75,7 +75,7 @@ public partial class HelmReleaseProperties : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _lastRevisionApplied = DefineProperty<long>("LastRevisionApplied", ["LastRevisionApplied"], isOutput: true);
-        _helmChartRef = DefineModelProperty<KubernetesObjectReference>("HelmChartRef", ["HelmChartRef"], isOutput: true);
+        _helmChartRef = DefineModelProperty<FluxObjectReference>("HelmChartRef", ["HelmChartRef"], isOutput: true);
         _failureCount = DefineProperty<long>("FailureCount", ["FailureCount"], isOutput: true);
         _installFailureCount = DefineProperty<long>("InstallFailureCount", ["InstallFailureCount"], isOutput: true);
         _upgradeFailureCount = DefineProperty<long>("UpgradeFailureCount", ["UpgradeFailureCount"], isOutput: true);

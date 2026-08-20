@@ -8,35 +8,35 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// <summary>
 /// The provisioning state of the resource.
 /// </summary>
-public enum KubernetesConfigurationProvisioningState
+public enum FluxConfigurationProvisioningState
 {
     /// <summary>
-    /// Resource has been created.
+    /// Succeeded.
     /// </summary>
     Succeeded,
 
     /// <summary>
-    /// Resource creation failed.
+    /// Failed.
     /// </summary>
     Failed,
 
     /// <summary>
-    /// Resource creation was canceled.
+    /// Canceled.
     /// </summary>
     Canceled,
 
     /// <summary>
-    /// Resource is being created.
+    /// Creating.
     /// </summary>
     Creating,
 
     /// <summary>
-    /// Resource is being updated.
+    /// Updating.
     /// </summary>
     Updating,
 
     /// <summary>
-    /// Resource is being deleted.
+    /// Deleting.
     /// </summary>
     Deleting,
 }

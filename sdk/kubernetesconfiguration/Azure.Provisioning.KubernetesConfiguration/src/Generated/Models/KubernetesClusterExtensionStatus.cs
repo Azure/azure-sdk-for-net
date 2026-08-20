@@ -18,7 +18,7 @@ public partial class KubernetesClusterExtensionStatus : ProvisionableConstruct
     /// <summary>
     /// Status code provided by the Extension.
     /// </summary>
-    public BicepValue<string> Code 
+    public BicepValue<string> Code
     {
         get { Initialize(); return _code!; }
         set { Initialize(); _code!.Assign(value); }
@@ -28,7 +28,7 @@ public partial class KubernetesClusterExtensionStatus : ProvisionableConstruct
     /// <summary>
     /// Short description of status of the extension.
     /// </summary>
-    public BicepValue<string> DisplayStatus 
+    public BicepValue<string> DisplayStatus
     {
         get { Initialize(); return _displayStatus!; }
         set { Initialize(); _displayStatus!.Assign(value); }
@@ -38,7 +38,7 @@ public partial class KubernetesClusterExtensionStatus : ProvisionableConstruct
     /// <summary>
     /// Level of the status.
     /// </summary>
-    public BicepValue<KubernetesClusterExtensionStatusLevel> Level 
+    public BicepValue<KubernetesClusterExtensionStatusLevel> Level
     {
         get { Initialize(); return _level!; }
         set { Initialize(); _level!.Assign(value); }
@@ -48,7 +48,7 @@ public partial class KubernetesClusterExtensionStatus : ProvisionableConstruct
     /// <summary>
     /// Detailed message of the status from the Extension.
     /// </summary>
-    public BicepValue<string> Message 
+    public BicepValue<string> Message
     {
         get { Initialize(); return _message!; }
         set { Initialize(); _message!.Assign(value); }
@@ -58,7 +58,7 @@ public partial class KubernetesClusterExtensionStatus : ProvisionableConstruct
     /// <summary>
     /// DateLiteral (per ISO8601) noting the time of installation status.
     /// </summary>
-    public BicepValue<string> Time 
+    public BicepValue<string> Time
     {
         get { Initialize(); return _time!; }
         set { Initialize(); _time!.Assign(value); }
