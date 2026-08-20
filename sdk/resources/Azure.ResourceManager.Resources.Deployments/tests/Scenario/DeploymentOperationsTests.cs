@@ -1,10 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources.Deployments.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Deployments.Tests
