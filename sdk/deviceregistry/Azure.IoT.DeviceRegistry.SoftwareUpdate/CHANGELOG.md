@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Initial preview release of the Azure Software Update for Device Registry client library, with support for managing software updates and device classes.
+
 ### Breaking Changes
 
 ### Bugs Fixed
