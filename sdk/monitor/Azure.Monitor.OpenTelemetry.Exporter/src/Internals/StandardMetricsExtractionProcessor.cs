@@ -24,6 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private readonly bool _enablePerformanceCounters;
 
         internal readonly Lazy<MeterProvider?> _meterProvider;
+        private readonly AzureMonitorMetricExporter _metricExporter;
         private readonly Meter? _standardMetricMeter;
         private readonly Meter? _perfCounterMeter;
 
@@ -74,6 +75,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             _enableStandardMetrics = options.EnableStandardMetrics;
             _enablePerformanceCounters = options.EnablePerformanceCounters;
+            _metricExporter = metricExporter;
 
             // Initialize Lazy<T> for thread-safe lazy initialization of MeterProvider
             _meterProvider = new Lazy<MeterProvider?>(() =>
@@ -103,8 +105,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
 
                 return meterProviderBuilder
-                    .AddReader(new PeriodicExportingMetricReader(metricExporter)
-                    { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
+                    .AddReader(new AzureMonitorPeriodicExportingMetricReader(metricExporter))
                     .Build();
             }, LazyThreadSafetyMode.ExecutionAndPublication);
 
@@ -472,6 +473,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         {
                             _meterProvider.Value?.Dispose();
                         }
+
+                        // The exporter is created up front but only handed to the meter provider if
+                        // that provider is ever built, so it has to be released here too. Disposal is
+                        // idempotent, so this is safe when the provider already owned it.
+                        _metricExporter.Dispose();
+
                         _standardMetricMeter?.Dispose();
                         _perfCounterMeter?.Dispose();
                         _process?.Dispose();
