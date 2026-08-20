@@ -951,7 +951,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Contains the status of the submitted job for analyzing a conversation, along with related statistics. </summary>
         /// <param name="displayName"> display name. </param>
         /// <param name="createdOn"> Date and time job created. </param>
-        /// <param name="expirationOn"> Date and time job expires. </param>
+        /// <param name="expireOn"> Date and time job expires. </param>
         /// <param name="jobId"> job ID. </param>
         /// <param name="lastUpdatedOn"> last updated date and time. </param>
         /// <param name="status"> status. </param>
@@ -960,14 +960,14 @@ namespace Azure.AI.Language.Conversations
         /// <param name="actions"> Contains the state for the tasks that are being executed as part of the submitted job for analyzing a conversation. </param>
         /// <param name="statistics"> Contains the statistics for the submitted job. </param>
         /// <returns> A new <see cref="Models.AnalyzeConversationOperationState"/> instance for mocking. </returns>
-        public static AnalyzeConversationOperationState AnalyzeConversationOperationState(string displayName = default, DateTimeOffset createdOn = default, DateTimeOffset? expirationOn = default, Guid jobId = default, DateTimeOffset lastUpdatedOn = default, ConversationActionState status = default, IEnumerable<ConversationError> errors = default, string nextLink = default, ConversationActions actions = default, ConversationRequestStatistics statistics = default)
+        public static AnalyzeConversationOperationState AnalyzeConversationOperationState(string displayName = default, DateTimeOffset createdOn = default, DateTimeOffset? expireOn = default, Guid jobId = default, DateTimeOffset lastUpdatedOn = default, ConversationActionState status = default, IEnumerable<ConversationError> errors = default, string nextLink = default, ConversationActions actions = default, ConversationRequestStatistics statistics = default)
         {
             errors ??= new ChangeTrackingList<ConversationError>();
 
             return new AnalyzeConversationOperationState(
                 displayName,
                 createdOn,
-                expirationOn,
+                expireOn,
                 jobId,
                 lastUpdatedOn,
                 status,

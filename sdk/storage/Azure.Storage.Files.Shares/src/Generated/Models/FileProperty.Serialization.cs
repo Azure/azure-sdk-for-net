@@ -107,10 +107,10 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteStartElement("Content-Length");
             writer.WriteValue(ContentLength);
             writer.WriteEndElement();
-            if (Optional.IsDefined(CreationOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WriteStartElement("CreationTime");
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
                 writer.WriteEndElement();
             }
             if (Optional.IsDefined(LastAccessOn))
@@ -155,7 +155,7 @@ namespace Azure.Storage.Files.Shares.Models
             }
 
             long contentLength = default;
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             DateTimeOffset? lastAccessOn = default;
             DateTimeOffset? lastWriteOn = default;
             DateTimeOffset? changeOn = default;
@@ -172,7 +172,7 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 if (localName == "CreationTime")
                 {
-                    creationOn = child.GetDateTimeOffset("O");
+                    createdOn = child.GetDateTimeOffset("O");
                     continue;
                 }
                 if (localName == "LastAccessTime")
@@ -203,7 +203,7 @@ namespace Azure.Storage.Files.Shares.Models
             }
             return new FileProperty(
                 contentLength,
-                creationOn,
+                createdOn,
                 lastAccessOn,
                 lastWriteOn,
                 changeOn,

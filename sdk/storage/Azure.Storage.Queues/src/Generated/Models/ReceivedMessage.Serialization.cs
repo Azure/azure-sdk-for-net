@@ -112,7 +112,7 @@ namespace Azure.Storage.Queues.Models
             writer.WriteStringValue(InsertionOn, "R");
             writer.WriteEndElement();
             writer.WriteStartElement("ExpirationTime");
-            writer.WriteStringValue(ExpirationOn, "R");
+            writer.WriteStringValue(ExpireOn, "R");
             writer.WriteEndElement();
             writer.WriteStartElement("PopReceipt");
             writer.WriteValue(PopReceipt);
@@ -139,7 +139,7 @@ namespace Azure.Storage.Queues.Models
 
             string messageId = default;
             DateTimeOffset insertionOn = default;
-            DateTimeOffset expirationOn = default;
+            DateTimeOffset expireOn = default;
             string popReceipt = default;
             DateTimeOffset timeNextVisible = default;
             long dequeueCount = default;
@@ -160,7 +160,7 @@ namespace Azure.Storage.Queues.Models
                 }
                 if (localName == "ExpirationTime")
                 {
-                    expirationOn = child.GetDateTimeOffset("R");
+                    expireOn = child.GetDateTimeOffset("R");
                     continue;
                 }
                 if (localName == "PopReceipt")
@@ -187,7 +187,7 @@ namespace Azure.Storage.Queues.Models
             return new ReceivedMessage(
                 messageId,
                 insertionOn,
-                expirationOn,
+                expireOn,
                 popReceipt,
                 timeNextVisible,
                 dequeueCount,

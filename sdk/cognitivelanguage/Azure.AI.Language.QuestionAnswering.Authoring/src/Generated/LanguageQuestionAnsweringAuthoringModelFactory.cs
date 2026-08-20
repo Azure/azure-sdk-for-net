@@ -58,19 +58,19 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Represents the state of a project deletion job. </summary>
         /// <param name="createdOn"> The creation date time of the job. </param>
-        /// <param name="expirationOn"> The expiration date time of the job. </param>
+        /// <param name="expireOn"> The expiration date time of the job. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
         /// <param name="status"> Job Status. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <returns> A new <see cref="Authoring.QuestionAnsweringAuthoringProjectDeletionJobState"/> instance for mocking. </returns>
-        public static QuestionAnsweringAuthoringProjectDeletionJobState QuestionAnsweringAuthoringProjectDeletionJobState(DateTimeOffset createdOn = default, DateTimeOffset? expirationOn = default, string jobId = default, DateTimeOffset lastUpdatedOn = default, JobStatus status = default, IEnumerable<ResponseError> errors = default)
+        public static QuestionAnsweringAuthoringProjectDeletionJobState QuestionAnsweringAuthoringProjectDeletionJobState(DateTimeOffset createdOn = default, DateTimeOffset? expireOn = default, string jobId = default, DateTimeOffset lastUpdatedOn = default, JobStatus status = default, IEnumerable<ResponseError> errors = default)
         {
             errors ??= new ChangeTrackingList<ResponseError>();
 
             return new QuestionAnsweringAuthoringProjectDeletionJobState(
                 createdOn,
-                expirationOn,
+                expireOn,
                 jobId,
                 lastUpdatedOn,
                 status,
@@ -80,20 +80,20 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Export job status, project metadata, and assets. </summary>
         /// <param name="createdOn"> The creation date time of the job. </param>
-        /// <param name="expirationOn"> The expiration date time of the job. </param>
+        /// <param name="expireOn"> The expiration date time of the job. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
         /// <param name="status"> Job Status. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="resultUrl"> URL to download the result of the Export Job. </param>
         /// <returns> A new <see cref="Authoring.QuestionAnsweringAuthoringExportJobState"/> instance for mocking. </returns>
-        public static QuestionAnsweringAuthoringExportJobState QuestionAnsweringAuthoringExportJobState(DateTimeOffset createdOn = default, DateTimeOffset? expirationOn = default, string jobId = default, DateTimeOffset lastUpdatedOn = default, JobStatus status = default, IEnumerable<ResponseError> errors = default, string resultUrl = default)
+        public static QuestionAnsweringAuthoringExportJobState QuestionAnsweringAuthoringExportJobState(DateTimeOffset createdOn = default, DateTimeOffset? expireOn = default, string jobId = default, DateTimeOffset lastUpdatedOn = default, JobStatus status = default, IEnumerable<ResponseError> errors = default, string resultUrl = default)
         {
             errors ??= new ChangeTrackingList<ResponseError>();
 
             return new QuestionAnsweringAuthoringExportJobState(
                 createdOn,
-                expirationOn,
+                expireOn,
                 jobId,
                 lastUpdatedOn,
                 status,
@@ -257,19 +257,19 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Import job status, project metadata, and assets. </summary>
         /// <param name="createdOn"> The creation date time of the job. </param>
-        /// <param name="expirationOn"> The expiration date time of the job. </param>
+        /// <param name="expireOn"> The expiration date time of the job. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
         /// <param name="status"> Job Status. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <returns> A new <see cref="Authoring.QuestionAnsweringAuthoringImportJobState"/> instance for mocking. </returns>
-        public static QuestionAnsweringAuthoringImportJobState QuestionAnsweringAuthoringImportJobState(DateTimeOffset createdOn = default, DateTimeOffset? expirationOn = default, string jobId = default, DateTimeOffset lastUpdatedOn = default, JobStatus status = default, IEnumerable<ResponseError> errors = default)
+        public static QuestionAnsweringAuthoringImportJobState QuestionAnsweringAuthoringImportJobState(DateTimeOffset createdOn = default, DateTimeOffset? expireOn = default, string jobId = default, DateTimeOffset lastUpdatedOn = default, JobStatus status = default, IEnumerable<ResponseError> errors = default)
         {
             errors ??= new ChangeTrackingList<ResponseError>();
 
             return new QuestionAnsweringAuthoringImportJobState(
                 createdOn,
-                expirationOn,
+                expireOn,
                 jobId,
                 lastUpdatedOn,
                 status,
@@ -290,19 +290,19 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Job state represents the job metadata and any errors. </summary>
         /// <param name="createdOn"> The creation date time of the job. </param>
-        /// <param name="expirationOn"> The expiration date time of the job. </param>
+        /// <param name="expireOn"> The expiration date time of the job. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
         /// <param name="status"> Job Status. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <returns> A new <see cref="Authoring.QuestionAnsweringAuthoringProjectDeploymentJobState"/> instance for mocking. </returns>
-        public static QuestionAnsweringAuthoringProjectDeploymentJobState QuestionAnsweringAuthoringProjectDeploymentJobState(DateTimeOffset createdOn = default, DateTimeOffset? expirationOn = default, string jobId = default, DateTimeOffset lastUpdatedOn = default, JobStatus status = default, IEnumerable<ResponseError> errors = default)
+        public static QuestionAnsweringAuthoringProjectDeploymentJobState QuestionAnsweringAuthoringProjectDeploymentJobState(DateTimeOffset createdOn = default, DateTimeOffset? expireOn = default, string jobId = default, DateTimeOffset lastUpdatedOn = default, JobStatus status = default, IEnumerable<ResponseError> errors = default)
         {
             errors ??= new ChangeTrackingList<ResponseError>();
 
             return new QuestionAnsweringAuthoringProjectDeploymentJobState(
                 createdOn,
-                expirationOn,
+                expireOn,
                 jobId,
                 lastUpdatedOn,
                 status,
@@ -355,19 +355,19 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Job state represents the job metadata and any errors. </summary>
         /// <param name="createdOn"> The creation date time of the job. </param>
-        /// <param name="expirationOn"> The expiration date time of the job. </param>
+        /// <param name="expireOn"> The expiration date time of the job. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
         /// <param name="status"> Job Status. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <returns> A new <see cref="Authoring.QuestionAnsweringAuthoringUpdateSourcesJobState"/> instance for mocking. </returns>
-        public static QuestionAnsweringAuthoringUpdateSourcesJobState QuestionAnsweringAuthoringUpdateSourcesJobState(DateTimeOffset createdOn = default, DateTimeOffset? expirationOn = default, string jobId = default, DateTimeOffset lastUpdatedOn = default, JobStatus status = default, IEnumerable<ResponseError> errors = default)
+        public static QuestionAnsweringAuthoringUpdateSourcesJobState QuestionAnsweringAuthoringUpdateSourcesJobState(DateTimeOffset createdOn = default, DateTimeOffset? expireOn = default, string jobId = default, DateTimeOffset lastUpdatedOn = default, JobStatus status = default, IEnumerable<ResponseError> errors = default)
         {
             errors ??= new ChangeTrackingList<ResponseError>();
 
             return new QuestionAnsweringAuthoringUpdateSourcesJobState(
                 createdOn,
-                expirationOn,
+                expireOn,
                 jobId,
                 lastUpdatedOn,
                 status,
@@ -411,19 +411,19 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Job state represents the job metadata and any errors. </summary>
         /// <param name="createdOn"> The creation date time of the job. </param>
-        /// <param name="expirationOn"> The expiration date time of the job. </param>
+        /// <param name="expireOn"> The expiration date time of the job. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
         /// <param name="status"> Job Status. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <returns> A new <see cref="Authoring.QuestionAnsweringAuthoringUpdateQnasJobState"/> instance for mocking. </returns>
-        public static QuestionAnsweringAuthoringUpdateQnasJobState QuestionAnsweringAuthoringUpdateQnasJobState(DateTimeOffset createdOn = default, DateTimeOffset? expirationOn = default, string jobId = default, DateTimeOffset lastUpdatedOn = default, JobStatus status = default, IEnumerable<ResponseError> errors = default)
+        public static QuestionAnsweringAuthoringUpdateQnasJobState QuestionAnsweringAuthoringUpdateQnasJobState(DateTimeOffset createdOn = default, DateTimeOffset? expireOn = default, string jobId = default, DateTimeOffset lastUpdatedOn = default, JobStatus status = default, IEnumerable<ResponseError> errors = default)
         {
             errors ??= new ChangeTrackingList<ResponseError>();
 
             return new QuestionAnsweringAuthoringUpdateQnasJobState(
                 createdOn,
-                expirationOn,
+                expireOn,
                 jobId,
                 lastUpdatedOn,
                 status,

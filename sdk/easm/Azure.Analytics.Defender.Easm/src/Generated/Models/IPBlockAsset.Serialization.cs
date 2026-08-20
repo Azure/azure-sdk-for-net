@@ -396,8 +396,8 @@ namespace Azure.Analytics.Defender.Easm
             IList<ObservedString> registrantPhones = default;
             IList<ObservedString> adminPhones = default;
             IList<ObservedString> technicalPhones = default;
-            bool? iPv4 = default;
-            bool? iPv6 = default;
+            bool? ipv4 = default;
+            bool? ipv6 = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("ipBlock"u8))
@@ -765,7 +765,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    iPv4 = prop.Value.GetBoolean();
+                    ipv4 = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("ipv6"u8))
@@ -774,7 +774,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    iPv6 = prop.Value.GetBoolean();
+                    ipv6 = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -813,8 +813,8 @@ namespace Azure.Analytics.Defender.Easm
                 registrantPhones ?? new ChangeTrackingList<ObservedString>(),
                 adminPhones ?? new ChangeTrackingList<ObservedString>(),
                 technicalPhones ?? new ChangeTrackingList<ObservedString>(),
-                iPv4,
-                iPv6);
+                ipv4,
+                ipv6);
         }
     }
 }

@@ -94,10 +94,10 @@ namespace Azure.AI.Language.Conversations.Models
             }
             writer.WritePropertyName("createdDateTime"u8);
             writer.WriteStringValue(CreatedOn, "O");
-            if (Optional.IsDefined(ExpirationOn))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDateTime"u8);
-                writer.WriteStringValue(ExpirationOn.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (options.Format != "W")
             {
@@ -174,7 +174,7 @@ namespace Azure.AI.Language.Conversations.Models
             }
             string displayName = default;
             DateTimeOffset createdOn = default;
-            DateTimeOffset? expirationOn = default;
+            DateTimeOffset? expireOn = default;
             Guid jobId = default;
             DateTimeOffset lastUpdatedOn = default;
             ConversationActionState status = default;
@@ -201,7 +201,7 @@ namespace Azure.AI.Language.Conversations.Models
                     {
                         continue;
                     }
-                    expirationOn = prop.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("jobId"u8))
@@ -260,7 +260,7 @@ namespace Azure.AI.Language.Conversations.Models
             return new AnalyzeConversationOperationState(
                 displayName,
                 createdOn,
-                expirationOn,
+                expireOn,
                 jobId,
                 lastUpdatedOn,
                 status,

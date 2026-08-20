@@ -62,9 +62,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="hosts"></param>
         /// <param name="nxdomain"></param>
         /// <param name="sslServerConfig"></param>
-        /// <param name="iPv4"></param>
-        /// <param name="iPv6"></param>
-        internal IPAddressAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, string ipAddress, IList<ObservedLong> asns, IList<ReputationDetails> reputations, IList<WebComponent> webComponents, IList<ObservedString> netRanges, IList<ObservedHeader> headers, IList<AttributeDetails> attributes, IList<CookieDetails> cookies, IList<SslCertAsset> sslCerts, IList<AssetService> services, IList<IPBlock> ipBlocks, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<BannerDetails> banners, IList<ScanMetadata> scanMetadata, IList<ObservedBoolean> nsRecord, IList<ObservedBoolean> mxRecord, IList<ObservedLocation> location, IList<ObservedString> hosts, IList<ObservedBoolean> nxdomain, IList<SslServerConfig> sslServerConfig, bool? iPv4, bool? iPv6) : base(additionalBinaryDataProperties)
+        /// <param name="ipv4"></param>
+        /// <param name="ipv6"></param>
+        internal IPAddressAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, string ipAddress, IList<ObservedLong> asns, IList<ReputationDetails> reputations, IList<WebComponent> webComponents, IList<ObservedString> netRanges, IList<ObservedHeader> headers, IList<AttributeDetails> attributes, IList<CookieDetails> cookies, IList<SslCertAsset> sslCerts, IList<AssetService> services, IList<IPBlock> ipBlocks, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<BannerDetails> banners, IList<ScanMetadata> scanMetadata, IList<ObservedBoolean> nsRecord, IList<ObservedBoolean> mxRecord, IList<ObservedLocation> location, IList<ObservedString> hosts, IList<ObservedBoolean> nxdomain, IList<SslServerConfig> sslServerConfig, bool? ipv4, bool? ipv6) : base(additionalBinaryDataProperties)
         {
             IPAddress = ipAddress;
             Asns = asns;
@@ -89,8 +89,8 @@ namespace Azure.Analytics.Defender.Easm
             Hosts = hosts;
             Nxdomain = nxdomain;
             SslServerConfig = sslServerConfig;
-            IPv4 = iPv4;
-            IPv6 = iPv6;
+            IPv4 = ipv4;
+            IPv6 = ipv6;
         }
 
         /// <summary> Gets the IPAddress. </summary>

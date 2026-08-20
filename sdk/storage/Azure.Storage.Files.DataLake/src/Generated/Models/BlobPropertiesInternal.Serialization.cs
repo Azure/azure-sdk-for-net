@@ -105,10 +105,10 @@ namespace Azure.Storage.Files.DataLake.Models
                 throw new FormatException($"The model {nameof(BlobPropertiesInternal)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(CreationOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WriteStartElement("Creation-Time");
-                writer.WriteStringValue(CreationOn.Value, "R");
+                writer.WriteStringValue(CreatedOn.Value, "R");
                 writer.WriteEndElement();
             }
             writer.WriteStartElement("Last-Modified");
@@ -290,7 +290,7 @@ namespace Azure.Storage.Files.DataLake.Models
                 return null;
             }
 
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             DateTimeOffset lastModified = default;
             string etag = default;
             long? contentLength = default;
@@ -326,7 +326,7 @@ namespace Azure.Storage.Files.DataLake.Models
                 string localName = child.Name.LocalName;
                 if (localName == "Creation-Time")
                 {
-                    creationOn = child.GetDateTimeOffset("R");
+                    createdOn = child.GetDateTimeOffset("R");
                     continue;
                 }
                 if (localName == "Last-Modified")
@@ -476,7 +476,7 @@ namespace Azure.Storage.Files.DataLake.Models
                 }
             }
             return new BlobPropertiesInternal(
-                creationOn,
+                createdOn,
                 lastModified,
                 etag,
                 contentLength,

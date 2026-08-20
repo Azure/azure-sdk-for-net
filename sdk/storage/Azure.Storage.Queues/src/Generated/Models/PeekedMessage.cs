@@ -31,6 +31,6 @@ namespace Azure.Storage.Queues.Models
         public DateTimeOffset InsertionOn { get; }
 
         /// <summary> The time that the message will expire and be automatically deleted. </summary>
-        public DateTimeOffset ExpirationOn { get; }
+        public DateTimeOffset ExpireOn { get; }
     }
 }

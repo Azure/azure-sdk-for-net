@@ -34,7 +34,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Initializes a new instance of <see cref="AnalyzeConversationOperationState"/>. </summary>
         /// <param name="displayName"> display name. </param>
         /// <param name="createdOn"> Date and time job created. </param>
-        /// <param name="expirationOn"> Date and time job expires. </param>
+        /// <param name="expireOn"> Date and time job expires. </param>
         /// <param name="jobId"> job ID. </param>
         /// <param name="lastUpdatedOn"> last updated date and time. </param>
         /// <param name="status"> status. </param>
@@ -43,11 +43,11 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="actions"> Contains the state for the tasks that are being executed as part of the submitted job for analyzing a conversation. </param>
         /// <param name="statistics"> Contains the statistics for the submitted job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeConversationOperationState(string displayName, DateTimeOffset createdOn, DateTimeOffset? expirationOn, Guid jobId, DateTimeOffset lastUpdatedOn, ConversationActionState status, IList<ConversationError> errors, string nextLink, ConversationActions actions, ConversationRequestStatistics statistics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeConversationOperationState(string displayName, DateTimeOffset createdOn, DateTimeOffset? expireOn, Guid jobId, DateTimeOffset lastUpdatedOn, ConversationActionState status, IList<ConversationError> errors, string nextLink, ConversationActions actions, ConversationRequestStatistics statistics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             CreatedOn = createdOn;
-            ExpirationOn = expirationOn;
+            ExpireOn = expireOn;
             JobId = jobId;
             LastUpdatedOn = lastUpdatedOn;
             Status = status;
@@ -65,7 +65,7 @@ namespace Azure.AI.Language.Conversations.Models
         public DateTimeOffset CreatedOn { get; }
 
         /// <summary> Date and time job expires. </summary>
-        public DateTimeOffset? ExpirationOn { get; }
+        public DateTimeOffset? ExpireOn { get; }
 
         /// <summary> job ID. </summary>
         public Guid JobId { get; }

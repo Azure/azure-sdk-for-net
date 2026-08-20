@@ -21,7 +21,7 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobPropertiesInternal"/>. </summary>
-        /// <param name="creationOn"> The date-time the blob was created. </param>
+        /// <param name="createdOn"> The date-time the blob was created. </param>
         /// <param name="lastModified"> The date-time the blob was last modified. </param>
         /// <param name="eTag"> The blob ETag. </param>
         /// <param name="contentLength"> The content length of the blob. </param>
@@ -62,9 +62,9 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="immutabilityPolicyExpiresOn"> The date-time the immutability policy of the blob expires. </param>
         /// <param name="immutabilityPolicyMode"> The immutability policy mode of the blob. </param>
         /// <param name="legalHold"> Whether the blob is under legal hold. </param>
-        internal BlobPropertiesInternal(DateTimeOffset? creationOn, DateTimeOffset lastModified, string eTag, long? contentLength, string contentType, string contentEncoding, string contentLanguage, BinaryData contentMd5, string contentDisposition, string cacheControl, long? blobSequenceNumber, BlobType? blobType, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, string copyId, CopyStatus? copyStatus, string copySource, string copyProgress, DateTimeOffset? copyCompletionOn, string copyStatusDescription, bool? serverEncrypted, bool? incrementalCopy, string destinationSnapshot, DateTimeOffset? deletedOn, int? remainingRetentionDays, AccessTier? accessTier, bool? accessTierInferred, ArchiveStatus? archiveStatus, AccessTier? smartAccessTier, string customerProvidedKeySha256, string encryptionScope, DateTimeOffset? accessTierChangeOn, int? tagCount, DateTimeOffset? expiresOn, bool? isSealed, RehydratePriority? rehydratePriority, DateTimeOffset? lastAccessedOn, DateTimeOffset? immutabilityPolicyExpiresOn, BlobImmutabilityPolicyMode? immutabilityPolicyMode, bool? legalHold)
+        internal BlobPropertiesInternal(DateTimeOffset? createdOn, DateTimeOffset lastModified, string eTag, long? contentLength, string contentType, string contentEncoding, string contentLanguage, BinaryData contentMd5, string contentDisposition, string cacheControl, long? blobSequenceNumber, BlobType? blobType, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, string copyId, CopyStatus? copyStatus, string copySource, string copyProgress, DateTimeOffset? copyCompletionOn, string copyStatusDescription, bool? serverEncrypted, bool? incrementalCopy, string destinationSnapshot, DateTimeOffset? deletedOn, int? remainingRetentionDays, AccessTier? accessTier, bool? accessTierInferred, ArchiveStatus? archiveStatus, AccessTier? smartAccessTier, string customerProvidedKeySha256, string encryptionScope, DateTimeOffset? accessTierChangeOn, int? tagCount, DateTimeOffset? expiresOn, bool? isSealed, RehydratePriority? rehydratePriority, DateTimeOffset? lastAccessedOn, DateTimeOffset? immutabilityPolicyExpiresOn, BlobImmutabilityPolicyMode? immutabilityPolicyMode, bool? legalHold)
         {
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             LastModified = lastModified;
             ETag = eTag;
             ContentLength = contentLength;
@@ -108,7 +108,7 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> The date-time the blob was created. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The date-time the blob was last modified. </summary>
         public DateTimeOffset LastModified { get; }

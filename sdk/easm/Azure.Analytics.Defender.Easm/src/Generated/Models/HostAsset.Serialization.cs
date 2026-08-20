@@ -428,8 +428,8 @@ namespace Azure.Analytics.Defender.Easm
             IList<SslServerConfig> sslServerConfig = default;
             IList<ObservedBoolean> isWildcard = default;
             IList<BannerDetails> banners = default;
-            IList<ObservedBoolean> iPv4 = default;
-            IList<ObservedBoolean> iPv6 = default;
+            IList<ObservedBoolean> ipv4 = default;
+            IList<ObservedBoolean> ipv6 = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("host"u8))
@@ -834,7 +834,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         array.Add(ObservedBoolean.DeserializeObservedBoolean(item, options));
                     }
-                    iPv4 = array;
+                    ipv4 = array;
                     continue;
                 }
                 if (prop.NameEquals("ipv6"u8))
@@ -848,7 +848,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         array.Add(ObservedBoolean.DeserializeObservedBoolean(item, options));
                     }
-                    iPv6 = array;
+                    ipv6 = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -889,8 +889,8 @@ namespace Azure.Analytics.Defender.Easm
                 sslServerConfig ?? new ChangeTrackingList<SslServerConfig>(),
                 isWildcard ?? new ChangeTrackingList<ObservedBoolean>(),
                 banners ?? new ChangeTrackingList<BannerDetails>(),
-                iPv4 ?? new ChangeTrackingList<ObservedBoolean>(),
-                iPv6 ?? new ChangeTrackingList<ObservedBoolean>());
+                ipv4 ?? new ChangeTrackingList<ObservedBoolean>(),
+                ipv6 ?? new ChangeTrackingList<ObservedBoolean>());
         }
     }
 }

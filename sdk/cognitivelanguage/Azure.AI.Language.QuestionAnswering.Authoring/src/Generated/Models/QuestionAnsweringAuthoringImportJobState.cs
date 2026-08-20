@@ -31,16 +31,16 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
         /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringImportJobState"/>. </summary>
         /// <param name="createdOn"> The creation date time of the job. </param>
-        /// <param name="expirationOn"> The expiration date time of the job. </param>
+        /// <param name="expireOn"> The expiration date time of the job. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
         /// <param name="status"> Job Status. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QuestionAnsweringAuthoringImportJobState(DateTimeOffset createdOn, DateTimeOffset? expirationOn, string jobId, DateTimeOffset lastUpdatedOn, JobStatus status, IList<ResponseError> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuestionAnsweringAuthoringImportJobState(DateTimeOffset createdOn, DateTimeOffset? expireOn, string jobId, DateTimeOffset lastUpdatedOn, JobStatus status, IList<ResponseError> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedOn = createdOn;
-            ExpirationOn = expirationOn;
+            ExpireOn = expireOn;
             JobId = jobId;
             LastUpdatedOn = lastUpdatedOn;
             Status = status;
@@ -52,7 +52,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public DateTimeOffset CreatedOn { get; }
 
         /// <summary> The expiration date time of the job. </summary>
-        public DateTimeOffset? ExpirationOn { get; }
+        public DateTimeOffset? ExpireOn { get; }
 
         /// <summary> The job ID. </summary>
         public string JobId { get; }

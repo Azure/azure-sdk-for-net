@@ -77,9 +77,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="sslServerConfig"></param>
         /// <param name="isWildcard"></param>
         /// <param name="banners"></param>
-        /// <param name="iPv4"></param>
-        /// <param name="iPv6"></param>
-        internal HostAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, string host, string domain, IList<ObservedString> ipAddresses, IList<WebComponent> webComponents, IList<ObservedHeader> headers, IList<AttributeDetails> attributes, IList<CookieDetails> cookies, IList<SslCertAsset> sslCerts, IList<ObservedString> parentHosts, IList<ObservedString> childHosts, HostCore hostCore, IList<AssetService> services, IList<ObservedString> cnames, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<ResourceUri> resourceUrls, IList<ScanMetadata> scanMetadata, IList<ObservedLong> asns, IList<IPBlock> ipBlocks, IList<ObservedString> responseBodies, DomainAsset domainAsset, IList<ObservedBoolean> nsRecord, IList<ObservedBoolean> mxRecord, IList<ObservedBoolean> webserver, IList<ObservedLocation> location, IList<ObservedBoolean> nxdomain, IList<SslServerConfig> sslServerConfig, IList<ObservedBoolean> isWildcard, IList<BannerDetails> banners, IList<ObservedBoolean> iPv4, IList<ObservedBoolean> iPv6) : base(additionalBinaryDataProperties)
+        /// <param name="ipv4"></param>
+        /// <param name="ipv6"></param>
+        internal HostAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, string host, string domain, IList<ObservedString> ipAddresses, IList<WebComponent> webComponents, IList<ObservedHeader> headers, IList<AttributeDetails> attributes, IList<CookieDetails> cookies, IList<SslCertAsset> sslCerts, IList<ObservedString> parentHosts, IList<ObservedString> childHosts, HostCore hostCore, IList<AssetService> services, IList<ObservedString> cnames, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<ResourceUri> resourceUrls, IList<ScanMetadata> scanMetadata, IList<ObservedLong> asns, IList<IPBlock> ipBlocks, IList<ObservedString> responseBodies, DomainAsset domainAsset, IList<ObservedBoolean> nsRecord, IList<ObservedBoolean> mxRecord, IList<ObservedBoolean> webserver, IList<ObservedLocation> location, IList<ObservedBoolean> nxdomain, IList<SslServerConfig> sslServerConfig, IList<ObservedBoolean> isWildcard, IList<BannerDetails> banners, IList<ObservedBoolean> ipv4, IList<ObservedBoolean> ipv6) : base(additionalBinaryDataProperties)
         {
             Host = host;
             Domain = domain;
@@ -112,8 +112,8 @@ namespace Azure.Analytics.Defender.Easm
             SslServerConfig = sslServerConfig;
             IsWildcard = isWildcard;
             Banners = banners;
-            IPv4 = iPv4;
-            IPv6 = iPv6;
+            IPv4 = ipv4;
+            IPv6 = ipv6;
         }
 
         /// <summary> Gets the Host. </summary>

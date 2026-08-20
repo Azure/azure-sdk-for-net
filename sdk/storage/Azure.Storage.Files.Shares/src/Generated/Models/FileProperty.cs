@@ -30,16 +30,16 @@ namespace Azure.Storage.Files.Shares.Models
         /// reflect that fact until the handle is closed or the op-lock is broken. To
         /// retrieve current property values, call Get File Properties.
         /// </param>
-        /// <param name="creationOn"> The creation time. </param>
+        /// <param name="createdOn"> The creation time. </param>
         /// <param name="lastAccessOn"> The last access time. </param>
         /// <param name="lastWriteOn"> The last write time. </param>
         /// <param name="changeOn"> The change time. </param>
         /// <param name="lastModified"> The last modified time. </param>
         /// <param name="eTag"> The ETag of the file. </param>
-        internal FileProperty(long contentLength, DateTimeOffset? creationOn, DateTimeOffset? lastAccessOn, DateTimeOffset? lastWriteOn, DateTimeOffset? changeOn, DateTimeOffset? lastModified, string eTag)
+        internal FileProperty(long contentLength, DateTimeOffset? createdOn, DateTimeOffset? lastAccessOn, DateTimeOffset? lastWriteOn, DateTimeOffset? changeOn, DateTimeOffset? lastModified, string eTag)
         {
             ContentLength = contentLength;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             LastAccessOn = lastAccessOn;
             LastWriteOn = lastWriteOn;
             ChangeOn = changeOn;
@@ -56,7 +56,7 @@ namespace Azure.Storage.Files.Shares.Models
         public long ContentLength { get; }
 
         /// <summary> The creation time. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The last access time. </summary>
         public DateTimeOffset? LastAccessOn { get; }

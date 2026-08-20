@@ -22,7 +22,7 @@ namespace Azure.Storage.Files.DataLake.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobPropertiesInternal"/>. </summary>
-        /// <param name="creationOn"> The creation time. </param>
+        /// <param name="createdOn"> The creation time. </param>
         /// <param name="lastModified"> The last modified time. </param>
         /// <param name="etag"> The entity tag. </param>
         /// <param name="contentLength"> Size in bytes. </param>
@@ -52,9 +52,9 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <param name="isSealed"> Whether the blob is sealed. </param>
         /// <param name="lastAccessedOn"> The last accessed time. </param>
         /// <param name="deleteOn"> The delete time. </param>
-        internal BlobPropertiesInternal(DateTimeOffset? creationOn, DateTimeOffset lastModified, string etag, long? contentLength, string contentType, string contentEncoding, string contentLanguage, BinaryData contentMd5, string contentDisposition, string cacheControl, long? blobSequenceNumber, string copyId, string copySource, string copyProgress, DateTimeOffset? copyCompletionOn, string copyStatusDescription, bool? serverEncrypted, bool? incrementalCopy, string destinationSnapshot, DateTimeOffset? deletedOn, int? remainingRetentionDays, bool? accessTierInferred, string customerProvidedKeySha256, string encryptionScope, DateTimeOffset? accessTierChangeOn, int? tagCount, DateTimeOffset? expiresOn, bool? isSealed, DateTimeOffset? lastAccessedOn, DateTimeOffset? deleteOn)
+        internal BlobPropertiesInternal(DateTimeOffset? createdOn, DateTimeOffset lastModified, string etag, long? contentLength, string contentType, string contentEncoding, string contentLanguage, BinaryData contentMd5, string contentDisposition, string cacheControl, long? blobSequenceNumber, string copyId, string copySource, string copyProgress, DateTimeOffset? copyCompletionOn, string copyStatusDescription, bool? serverEncrypted, bool? incrementalCopy, string destinationSnapshot, DateTimeOffset? deletedOn, int? remainingRetentionDays, bool? accessTierInferred, string customerProvidedKeySha256, string encryptionScope, DateTimeOffset? accessTierChangeOn, int? tagCount, DateTimeOffset? expiresOn, bool? isSealed, DateTimeOffset? lastAccessedOn, DateTimeOffset? deleteOn)
         {
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             LastModified = lastModified;
             Etag = etag;
             ContentLength = contentLength;
@@ -87,7 +87,7 @@ namespace Azure.Storage.Files.DataLake.Models
         }
 
         /// <summary> The creation time. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The last modified time. </summary>
         public DateTimeOffset LastModified { get; }

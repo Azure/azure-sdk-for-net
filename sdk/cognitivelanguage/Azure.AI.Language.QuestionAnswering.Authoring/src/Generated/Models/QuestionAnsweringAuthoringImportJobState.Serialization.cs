@@ -89,10 +89,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
             writer.WritePropertyName("createdDateTime"u8);
             writer.WriteStringValue(CreatedOn, "O");
-            if (Optional.IsDefined(ExpirationOn))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDateTime"u8);
-                writer.WriteStringValue(ExpirationOn.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (options.Format != "W")
             {
@@ -161,7 +161,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 return null;
             }
             DateTimeOffset createdOn = default;
-            DateTimeOffset? expirationOn = default;
+            DateTimeOffset? expireOn = default;
             string jobId = default;
             DateTimeOffset lastUpdatedOn = default;
             JobStatus status = default;
@@ -180,7 +180,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     {
                         continue;
                     }
-                    expirationOn = prop.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("jobId"u8))
@@ -226,7 +226,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
             return new QuestionAnsweringAuthoringImportJobState(
                 createdOn,
-                expirationOn,
+                expireOn,
                 jobId,
                 lastUpdatedOn,
                 status,
