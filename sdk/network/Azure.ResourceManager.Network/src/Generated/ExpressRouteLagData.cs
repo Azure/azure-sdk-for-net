@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="properties"> ExpressRouteLag properties. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="identity"> The identity of ExpressRouteLag, if configured. </param>
-        internal ExpressRouteLagData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExpressRouteLagPropertiesFormat properties, string eTag, NetworkManagedServiceIdentity identity) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal ExpressRouteLagData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExpressRouteLagPropertiesFormat properties, string eTag, ManagedServiceIdentity identity) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             ETag = eTag;
@@ -47,6 +48,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The identity of ExpressRouteLag, if configured. </summary>
         [WirePath("identity")]
-        public NetworkManagedServiceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

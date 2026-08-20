@@ -1152,26 +1152,6 @@ namespace Azure.ResourceManager.Network.Models
                 default);
         }
 
-        /// <param name="principalId"> The principal id of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant id of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="type"> The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual machine. </param>
-        /// <param name="userAssignedIdentities"> The list of user identities associated with resource. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
-        /// <returns> A new <see cref="Models.NetworkManagedServiceIdentity"/> instance for mocking. </returns>
-        public static NetworkManagedServiceIdentity NetworkManagedServiceIdentity(string principalId = default, string tenantId = default, ResourceIdentityType? @type = default, IDictionary<string, ManagedServiceIdentityUserAssignedIdentities> userAssignedIdentities = default)
-        {
-            userAssignedIdentities ??= new ChangeTrackingDictionary<string, ManagedServiceIdentityUserAssignedIdentities>();
-
-            return new NetworkManagedServiceIdentity(principalId, tenantId, @type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, ManagedServiceIdentityUserAssignedIdentities>(), default);
-        }
-
-        /// <param name="principalId"> The principal id of user assigned identity. </param>
-        /// <param name="clientId"> The client id of user assigned identity. </param>
-        /// <returns> A new <see cref="Models.ManagedServiceIdentityUserAssignedIdentities"/> instance for mocking. </returns>
-        public static ManagedServiceIdentityUserAssignedIdentities ManagedServiceIdentityUserAssignedIdentities(string principalId = default, string clientId = default)
-        {
-            return new ManagedServiceIdentityUserAssignedIdentities(principalId, clientId, default);
-        }
-
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
@@ -4003,7 +3983,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="identity"> The identity of ExpressRouteLag, if configured. </param>
         /// <returns> A new <see cref="Network.ExpressRouteLagData"/> instance for mocking. </returns>
-        public static ExpressRouteLagData ExpressRouteLagData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, ExpressRouteLagPropertiesFormat properties = default, string eTag = default, NetworkManagedServiceIdentity identity = default)
+        public static ExpressRouteLagData ExpressRouteLagData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, ExpressRouteLagPropertiesFormat properties = default, string eTag = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -4135,7 +4115,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="identity"> The identity of ExpressRouteLag, if configured. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ExpressRouteLagPatch"/> instance for mocking. </returns>
-        public static ExpressRouteLagPatch ExpressRouteLagPatch(NetworkManagedServiceIdentity identity = default, IDictionary<string, string> tags = default)
+        public static ExpressRouteLagPatch ExpressRouteLagPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="identity"> The identity of ExpressRouteLag, if configured. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteLagPatch(NetworkManagedServiceIdentity identity, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpressRouteLagPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             Tags = tags;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The identity of ExpressRouteLag, if configured. </summary>
         [WirePath("identity")]
-        public NetworkManagedServiceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Resource tags. </summary>
         [WirePath("tags")]
