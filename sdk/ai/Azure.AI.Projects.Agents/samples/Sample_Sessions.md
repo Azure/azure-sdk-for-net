@@ -122,7 +122,7 @@ Console.WriteLine($"Session {session.AgentSessionId} status is now {session.Stat
 
 Synchronous sample:
 ```C# Snippet:Sample_List_SessionsCRUD_Sync
-List<ProjectAgentSession> sessions = [..agentsClient.GetSessions(agentName: agentVersion.Name)];
+List<ProjectAgentSession> sessions = [.. agentsClient.GetSessions(agentName: agentVersion.Name)];
 Console.WriteLine($"Found {sessions.Count} sessions.");
 foreach (ProjectAgentSession item in sessions)
 {

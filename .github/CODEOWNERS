@@ -87,6 +87,8 @@
 
 /sdk/ai/Azure.AI.Projects.Agents/    @rhurey
 
+/sdk/tables/Azure.Data.Tables/    @jorgerangel-msft @jsquire
+
 # PRLabel: %AI Agents
 /sdk/agentserver/    @ankitbko @RaviPidaparthi @Shivakishore14 @vangarp
 
