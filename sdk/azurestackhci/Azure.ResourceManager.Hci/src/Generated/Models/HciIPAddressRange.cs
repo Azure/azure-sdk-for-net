@@ -18,35 +18,35 @@ namespace Azure.ResourceManager.Hci.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciIPAddressRange"/>. </summary>
-        /// <param name="startIp"> Start IP address. </param>
-        /// <param name="endIp"> End IP address. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="startIp"/> or <paramref name="endIp"/> is null. </exception>
-        public HciIPAddressRange(string startIp, string endIp)
+        /// <param name="startIP"> Start IP address. </param>
+        /// <param name="endIP"> End IP address. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="startIP"/> or <paramref name="endIP"/> is null. </exception>
+        public HciIPAddressRange(string startIP, string endIP)
         {
-            Argument.AssertNotNull(startIp, nameof(startIp));
-            Argument.AssertNotNull(endIp, nameof(endIp));
+            Argument.AssertNotNull(startIP, nameof(startIP));
+            Argument.AssertNotNull(endIP, nameof(endIP));
 
-            StartIp = startIp;
-            EndIp = endIp;
+            StartIP = startIP;
+            EndIP = endIP;
         }
 
         /// <summary> Initializes a new instance of <see cref="HciIPAddressRange"/>. </summary>
-        /// <param name="startIp"> Start IP address. </param>
-        /// <param name="endIp"> End IP address. </param>
+        /// <param name="startIP"> Start IP address. </param>
+        /// <param name="endIP"> End IP address. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciIPAddressRange(string startIp, string endIp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciIPAddressRange(string startIP, string endIP, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartIp = startIp;
-            EndIp = endIp;
+            StartIP = startIP;
+            EndIP = endIP;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Start IP address. </summary>
         [WirePath("startIp")]
-        public string StartIp { get; set; }
+        public string StartIP { get; set; }
 
         /// <summary> End IP address. </summary>
         [WirePath("endIp")]
-        public string EndIp { get; set; }
+        public string EndIP { get; set; }
     }
 }

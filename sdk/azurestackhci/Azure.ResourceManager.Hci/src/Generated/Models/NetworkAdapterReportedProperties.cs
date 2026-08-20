@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="networkAdapterStatus"> The observed state of network adapter. </param>
         /// <param name="wifiConfiguration"> WiFi configuration reported properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkAdapterReportedProperties(string adapterName, string ip4Address, string subnetMask, string defaultGateway, IList<string> dnsServers, string interfaceDescription, string componentId, string driverVersion, string defaultIsolationId, string macAddress, string slot, string switchName, NetworkInterfaceType? interfaceType, int? interfaceSpeed, InterfaceState? interfaceState, string nicType, string nicStatus, IpInterfaceType? ipInterfaceType, int? vlanId, bool? managementInterface, RdmaCapability? rdmaCapability, NetworkAdapterStatus networkAdapterStatus, WifiConfigurationReportedProperties wifiConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkAdapterReportedProperties(string adapterName, string ip4Address, string subnetMask, string defaultGateway, IList<string> dnsServers, string interfaceDescription, string componentId, string driverVersion, string defaultIsolationId, string macAddress, string slot, string switchName, NetworkInterfaceType? interfaceType, int? interfaceSpeed, InterfaceState? interfaceState, string nicType, string nicStatus, IPInterfaceType? ipInterfaceType, int? vlanId, bool? managementInterface, RdmaCapability? rdmaCapability, NetworkAdapterStatus networkAdapterStatus, WifiConfigurationReportedProperties wifiConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdapterName = adapterName;
             Ip4Address = ip4Address;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Hci.Models
             InterfaceState = interfaceState;
             NicType = nicType;
             NicStatus = nicStatus;
-            IpInterfaceType = ipInterfaceType;
+            IPInterfaceType = ipInterfaceType;
             VlanId = vlanId;
             ManagementInterface = managementInterface;
             RdmaCapability = rdmaCapability;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> IP configuration type. </summary>
         [WirePath("ipInterfaceType")]
-        public IpInterfaceType? IpInterfaceType { get; }
+        public IPInterfaceType? IPInterfaceType { get; }
 
         /// <summary> VLAN identifier (0-4096). </summary>
         [WirePath("vlanId")]

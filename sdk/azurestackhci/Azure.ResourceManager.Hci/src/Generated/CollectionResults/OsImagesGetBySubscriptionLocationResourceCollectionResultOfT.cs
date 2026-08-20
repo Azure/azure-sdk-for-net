@@ -14,7 +14,7 @@ using Azure.ResourceManager.Hci.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    internal partial class OsImagesGetBySubscriptionLocationResourceCollectionResultOfT : Pageable<OsImageData>
+    internal partial class OsImagesGetBySubscriptionLocationResourceCollectionResultOfT : Pageable<OSImageData>
     {
         private readonly OsImages _client;
         private readonly Guid _subscriptionId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of OsImagesGetBySubscriptionLocationResourceCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<OsImageData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<OSImageData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Hci
                 {
                     yield break;
                 }
-                OsImageListResult result = OsImageListResult.FromResponse(response);
+                OSImageListResult result = OSImageListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<OsImageData>.FromValues((IReadOnlyList<OsImageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<OSImageData>.FromValues((IReadOnlyList<OSImageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
