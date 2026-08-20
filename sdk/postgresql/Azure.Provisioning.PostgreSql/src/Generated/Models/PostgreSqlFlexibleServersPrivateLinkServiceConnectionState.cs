@@ -11,19 +11,19 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.PostgreSql
 {
     /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-    internal partial class PostgreSqlPrivateLinkServiceConnectionState : ProvisionableConstruct
+    public partial class PostgreSqlFlexibleServersPrivateLinkServiceConnectionState : ProvisionableConstruct
     {
-        private BicepValue<PostgreSqlPrivateEndpointServiceConnectionStatus> _status;
+        private BicepValue<PostgreSqlFlexibleServersPrivateEndpointServiceConnectionStatus> _status;
         private BicepValue<string> _description;
         private BicepValue<string> _actionsRequired;
 
-        /// <summary> Creates a new PostgreSqlPrivateLinkServiceConnectionState. </summary>
-        public PostgreSqlPrivateLinkServiceConnectionState()
+        /// <summary> Creates a new PostgreSqlFlexibleServersPrivateLinkServiceConnectionState. </summary>
+        public PostgreSqlFlexibleServersPrivateLinkServiceConnectionState()
         {
         }
 
         /// <summary> Gets or sets the Status. </summary>
-        public BicepValue<PostgreSqlPrivateEndpointServiceConnectionStatus> Status
+        public BicepValue<PostgreSqlFlexibleServersPrivateEndpointServiceConnectionStatus> Status
         {
             get
             {
@@ -67,17 +67,17 @@ namespace Azure.Provisioning.PostgreSql
             }
         }
 
-        /// <summary> Define all the provisionable properties for PostgreSqlPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Define all the provisionable properties for PostgreSqlFlexibleServersPrivateLinkServiceConnectionState. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _status = DefineProperty<PostgreSqlPrivateEndpointServiceConnectionStatus>(nameof(Status), new string[] { "status" });
+            _status = DefineProperty<PostgreSqlFlexibleServersPrivateEndpointServiceConnectionStatus>(nameof(Status), new string[] { "status" });
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             _actionsRequired = DefineProperty<string>(nameof(ActionsRequired), new string[] { "actionsRequired" });
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for PostgreSqlPrivateLinkServiceConnectionState that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for PostgreSqlFlexibleServersPrivateLinkServiceConnectionState that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

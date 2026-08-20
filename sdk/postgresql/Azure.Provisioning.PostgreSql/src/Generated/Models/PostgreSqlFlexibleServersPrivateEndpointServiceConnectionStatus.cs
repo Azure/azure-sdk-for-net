@@ -8,7 +8,7 @@
 namespace Azure.Provisioning.PostgreSql
 {
     /// <summary> The private endpoint connection status. </summary>
-    internal enum PostgreSqlPrivateEndpointServiceConnectionStatus
+    public enum PostgreSqlFlexibleServersPrivateEndpointServiceConnectionStatus
     {
         /// <summary> Connection waiting for approval or rejection. </summary>
         Pending = 0,

@@ -1,4 +1,4 @@
 directory: specification/postgresql/DBforPostgreSQL.Management
-commit: b5cb6212f45517a716d85e13bdcd33b94f5dc0ec
+commit: 1d77c2486bbffd259d5b318c131314b710df4365
 repo: ArcturusZhang/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json"

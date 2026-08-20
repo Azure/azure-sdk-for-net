@@ -8,7 +8,7 @@
 namespace Azure.Provisioning.PostgreSql
 {
     /// <summary> The current provisioning state. </summary>
-    internal enum PostgreSqlPrivateEndpointConnectionProvisioningState
+    public enum PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState
     {
         /// <summary> Connection has been provisioned. </summary>
         Succeeded = 0,

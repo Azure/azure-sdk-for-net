@@ -106,6 +106,36 @@ namespace Azure.Provisioning.PostgreSql
             }
         }
 
+        /// <summary> Gets or sets the ConnectionState. </summary>
+        public PostgreSqlFlexibleServersPrivateLinkServiceConnectionState ConnectionState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                Properties.ConnectionState = value;
+            }
+        }
+
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState> ProvisioningState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                return Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Gets the Id. </summary>
         public BicepValue<ResourceIdentifier> PrivateEndpointId
         {

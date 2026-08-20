@@ -18,6 +18,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// This type is obsoleted and will be removed in future versions. Please use
 /// <see cref="PostgreSqlFlexibleServersPrivateEndpointConnection"/> instead.
 /// </summary>
+// The provisioning emitter does not generate this compatibility data model, which preserves the 1.1.1 API.
 [EditorBrowsable(EditorBrowsableState.Never)]
 public partial class PostgreSqlFlexibleServersPrivateEndpointConnectionData : ProvisionableConstruct
 {

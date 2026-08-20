@@ -16,8 +16,8 @@ namespace Azure.Provisioning.PostgreSql
     {
         private BicepList<string> _groupIds;
         private PrivateEndpoint _privateEndpoint;
-        private PostgreSqlPrivateLinkServiceConnectionState _connectionState;
-        private BicepValue<PostgreSqlPrivateEndpointConnectionProvisioningState> _provisioningState;
+        private PostgreSqlFlexibleServersPrivateLinkServiceConnectionState _connectionState;
+        private BicepValue<PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState> _provisioningState;
 
         /// <summary> Creates a new PrivateEndpointConnectionProperties. </summary>
         public PrivateEndpointConnectionProperties()
@@ -50,7 +50,7 @@ namespace Azure.Provisioning.PostgreSql
         }
 
         /// <summary> Gets or sets the ConnectionState. </summary>
-        public PostgreSqlPrivateLinkServiceConnectionState ConnectionState
+        public PostgreSqlFlexibleServersPrivateLinkServiceConnectionState ConnectionState
         {
             get
             {
@@ -65,7 +65,7 @@ namespace Azure.Provisioning.PostgreSql
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<PostgreSqlPrivateEndpointConnectionProvisioningState> ProvisioningState
+        public BicepValue<PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState> ProvisioningState
         {
             get
             {
@@ -93,8 +93,8 @@ namespace Azure.Provisioning.PostgreSql
             base.DefineProvisionableProperties();
             _groupIds = DefineListProperty<string>(nameof(GroupIds), new string[] { "groupIds" }, isOutput: true);
             _privateEndpoint = DefineModelProperty<PrivateEndpoint>(nameof(PrivateEndpoint), new string[] { "privateEndpoint" });
-            _connectionState = DefineModelProperty<PostgreSqlPrivateLinkServiceConnectionState>(nameof(ConnectionState), new string[] { "privateLinkServiceConnectionState" }, isRequired: true);
-            _provisioningState = DefineProperty<PostgreSqlPrivateEndpointConnectionProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            _connectionState = DefineModelProperty<PostgreSqlFlexibleServersPrivateLinkServiceConnectionState>(nameof(ConnectionState), new string[] { "privateLinkServiceConnectionState" }, isRequired: true);
+            _provisioningState = DefineProperty<PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
         }
 
