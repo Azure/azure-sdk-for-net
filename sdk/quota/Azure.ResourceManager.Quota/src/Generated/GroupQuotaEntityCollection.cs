@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Quota
         {
             TryGetApiVersion(GroupQuotaEntityResource.ResourceType, out string groupQuotaEntityApiVersion);
             _groupQuotasEntitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", GroupQuotaEntityResource.ResourceType.Namespace, Diagnostics);
-            _groupQuotasEntitiesRestClient = new GroupQuotasEntities(_groupQuotasEntitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaEntityApiVersion ?? "2025-09-01");
+            _groupQuotasEntitiesRestClient = new GroupQuotasEntities(_groupQuotasEntitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaEntityApiVersion ?? "2026-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

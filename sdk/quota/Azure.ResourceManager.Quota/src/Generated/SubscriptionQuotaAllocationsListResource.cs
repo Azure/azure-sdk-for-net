@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Quota
         {
             TryGetApiVersion(ResourceType, out string subscriptionQuotaAllocationsListApiVersion);
             _subscriptionQuotaAllocationsListsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
-            _subscriptionQuotaAllocationsListsRestClient = new SubscriptionQuotaAllocationsLists(_subscriptionQuotaAllocationsListsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionQuotaAllocationsListApiVersion ?? "2025-09-01");
+            _subscriptionQuotaAllocationsListsRestClient = new SubscriptionQuotaAllocationsLists(_subscriptionQuotaAllocationsListsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionQuotaAllocationsListApiVersion ?? "2026-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
