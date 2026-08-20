@@ -152,7 +152,6 @@ const clientOptionRegex = "Azure\\.ClientGenerator\\.Core\\.@clientOption";
 const patternRegex = "TypeSpec\\.@pattern";
 const minLengthRegex = "TypeSpec\\.@minLength";
 const maxLengthRegex = "TypeSpec\\.@maxLength";
-const dynamicModelRegex = "TypeSpec\\.HttpClient\\.CSharp\\.@dynamicModel";
 
 export const azureSDKContextOptions: CreateSdkContextOptions = {
   versioning: {
@@ -180,8 +179,7 @@ export const azureSDKContextOptions: CreateSdkContextOptions = {
     clientOptionRegex,
     patternRegex,
     minLengthRegex,
-    maxLengthRegex,
-    dynamicModelRegex
+    maxLengthRegex
   ]
 };
 
