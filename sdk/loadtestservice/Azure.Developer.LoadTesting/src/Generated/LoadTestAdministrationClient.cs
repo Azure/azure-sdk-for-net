@@ -1557,20 +1557,20 @@ namespace Azure.Developer.LoadTesting
         /// </summary>
         /// <param name="testIds"> Search based on triggers associated with the provided test ids. </param>
         /// <param name="states"> Filter triggers based on a comma separated list of states. </param>
-        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
-        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
+        /// <param name="lastModifiedStartOn"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
+        /// <param name="lastModifiedEndOn"> End DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
         /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetTriggers(string testIds, string states, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
+        public virtual Pageable<BinaryData> GetTriggers(string testIds, string states, DateTimeOffset? lastModifiedStartOn, DateTimeOffset? lastModifiedEndOn, int? maxpagesize, RequestContext context)
         {
             return new LoadTestAdministrationClientGetTriggersCollectionResult(
                 this,
                 testIds,
                 states,
-                lastModifiedStartTime,
-                lastModifiedEndTime,
+                lastModifiedStartOn,
+                lastModifiedEndOn,
                 maxpagesize,
                 context,
                 "LoadTestAdministrationClient.GetTriggers");
@@ -1586,20 +1586,20 @@ namespace Azure.Developer.LoadTesting
         /// </summary>
         /// <param name="testIds"> Search based on triggers associated with the provided test ids. </param>
         /// <param name="states"> Filter triggers based on a comma separated list of states. </param>
-        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
-        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
+        /// <param name="lastModifiedStartOn"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
+        /// <param name="lastModifiedEndOn"> End DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
         /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetTriggersAsync(string testIds, string states, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetTriggersAsync(string testIds, string states, DateTimeOffset? lastModifiedStartOn, DateTimeOffset? lastModifiedEndOn, int? maxpagesize, RequestContext context)
         {
             return new LoadTestAdministrationClientGetTriggersAsyncCollectionResult(
                 this,
                 testIds,
                 states,
-                lastModifiedStartTime,
-                lastModifiedEndTime,
+                lastModifiedStartOn,
+                lastModifiedEndOn,
                 maxpagesize,
                 context,
                 "LoadTestAdministrationClient.GetTriggers");
@@ -1608,19 +1608,19 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Resource list operation template. </summary>
         /// <param name="testIds"> Search based on triggers associated with the provided test ids. </param>
         /// <param name="states"> Filter triggers based on a comma separated list of states. </param>
-        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
-        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
+        /// <param name="lastModifiedStartOn"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
+        /// <param name="lastModifiedEndOn"> End DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
         /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<LoadTestingTrigger> GetTriggers(string testIds = default, TriggerState? states = default, DateTimeOffset? lastModifiedStartTime = default, DateTimeOffset? lastModifiedEndTime = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<LoadTestingTrigger> GetTriggers(string testIds = default, TriggerState? states = default, DateTimeOffset? lastModifiedStartOn = default, DateTimeOffset? lastModifiedEndOn = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             return new LoadTestAdministrationClientGetTriggersCollectionResultOfT(
                 this,
                 testIds,
                 states?.ToString(),
-                lastModifiedStartTime,
-                lastModifiedEndTime,
+                lastModifiedStartOn,
+                lastModifiedEndOn,
                 maxpagesize,
                 cancellationToken.ToRequestContext(),
                 "LoadTestAdministrationClient.GetTriggers");
@@ -1629,19 +1629,19 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Resource list operation template. </summary>
         /// <param name="testIds"> Search based on triggers associated with the provided test ids. </param>
         /// <param name="states"> Filter triggers based on a comma separated list of states. </param>
-        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
-        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
+        /// <param name="lastModifiedStartOn"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
+        /// <param name="lastModifiedEndOn"> End DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
         /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<LoadTestingTrigger> GetTriggersAsync(string testIds = default, TriggerState? states = default, DateTimeOffset? lastModifiedStartTime = default, DateTimeOffset? lastModifiedEndTime = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LoadTestingTrigger> GetTriggersAsync(string testIds = default, TriggerState? states = default, DateTimeOffset? lastModifiedStartOn = default, DateTimeOffset? lastModifiedEndOn = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             return new LoadTestAdministrationClientGetTriggersAsyncCollectionResultOfT(
                 this,
                 testIds,
                 states?.ToString(),
-                lastModifiedStartTime,
-                lastModifiedEndTime,
+                lastModifiedStartOn,
+                lastModifiedEndOn,
                 maxpagesize,
                 cancellationToken.ToRequestContext(),
                 "LoadTestAdministrationClient.GetTriggers");
@@ -1907,20 +1907,20 @@ namespace Azure.Developer.LoadTesting
         /// </summary>
         /// <param name="testIds"> Search based on notification rules associated with the provided test ids. </param>
         /// <param name="scopes"> Search based on notification rules for the provided scopes. </param>
-        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
-        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
+        /// <param name="lastModifiedStartOn"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
+        /// <param name="lastModifiedEndOn"> End DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
         /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetNotificationRules(string testIds, string scopes, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
+        public virtual Pageable<BinaryData> GetNotificationRules(string testIds, string scopes, DateTimeOffset? lastModifiedStartOn, DateTimeOffset? lastModifiedEndOn, int? maxpagesize, RequestContext context)
         {
             return new LoadTestAdministrationClientGetNotificationRulesCollectionResult(
                 this,
                 testIds,
                 scopes,
-                lastModifiedStartTime,
-                lastModifiedEndTime,
+                lastModifiedStartOn,
+                lastModifiedEndOn,
                 maxpagesize,
                 context,
                 "LoadTestAdministrationClient.GetNotificationRules");
@@ -1936,20 +1936,20 @@ namespace Azure.Developer.LoadTesting
         /// </summary>
         /// <param name="testIds"> Search based on notification rules associated with the provided test ids. </param>
         /// <param name="scopes"> Search based on notification rules for the provided scopes. </param>
-        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
-        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
+        /// <param name="lastModifiedStartOn"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
+        /// <param name="lastModifiedEndOn"> End DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
         /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetNotificationRulesAsync(string testIds, string scopes, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetNotificationRulesAsync(string testIds, string scopes, DateTimeOffset? lastModifiedStartOn, DateTimeOffset? lastModifiedEndOn, int? maxpagesize, RequestContext context)
         {
             return new LoadTestAdministrationClientGetNotificationRulesAsyncCollectionResult(
                 this,
                 testIds,
                 scopes,
-                lastModifiedStartTime,
-                lastModifiedEndTime,
+                lastModifiedStartOn,
+                lastModifiedEndOn,
                 maxpagesize,
                 context,
                 "LoadTestAdministrationClient.GetNotificationRules");
@@ -1958,19 +1958,19 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Resource list operation template. </summary>
         /// <param name="testIds"> Search based on notification rules associated with the provided test ids. </param>
         /// <param name="scopes"> Search based on notification rules for the provided scopes. </param>
-        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
-        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
+        /// <param name="lastModifiedStartOn"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
+        /// <param name="lastModifiedEndOn"> End DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
         /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<NotificationRule> GetNotificationRules(string testIds = default, string scopes = default, DateTimeOffset? lastModifiedStartTime = default, DateTimeOffset? lastModifiedEndTime = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<NotificationRule> GetNotificationRules(string testIds = default, string scopes = default, DateTimeOffset? lastModifiedStartOn = default, DateTimeOffset? lastModifiedEndOn = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             return new LoadTestAdministrationClientGetNotificationRulesCollectionResultOfT(
                 this,
                 testIds,
                 scopes,
-                lastModifiedStartTime,
-                lastModifiedEndTime,
+                lastModifiedStartOn,
+                lastModifiedEndOn,
                 maxpagesize,
                 cancellationToken.ToRequestContext(),
                 "LoadTestAdministrationClient.GetNotificationRules");
@@ -1979,19 +1979,19 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Resource list operation template. </summary>
         /// <param name="testIds"> Search based on notification rules associated with the provided test ids. </param>
         /// <param name="scopes"> Search based on notification rules for the provided scopes. </param>
-        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
-        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
+        /// <param name="lastModifiedStartOn"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
+        /// <param name="lastModifiedEndOn"> End DateTime(RFC 3339 literal format) of the last updated time range to filter notification rules. </param>
         /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<NotificationRule> GetNotificationRulesAsync(string testIds = default, string scopes = default, DateTimeOffset? lastModifiedStartTime = default, DateTimeOffset? lastModifiedEndTime = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NotificationRule> GetNotificationRulesAsync(string testIds = default, string scopes = default, DateTimeOffset? lastModifiedStartOn = default, DateTimeOffset? lastModifiedEndOn = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             return new LoadTestAdministrationClientGetNotificationRulesAsyncCollectionResultOfT(
                 this,
                 testIds,
                 scopes,
-                lastModifiedStartTime,
-                lastModifiedEndTime,
+                lastModifiedStartOn,
+                lastModifiedEndOn,
                 maxpagesize,
                 cancellationToken.ToRequestContext(),
                 "LoadTestAdministrationClient.GetNotificationRules");

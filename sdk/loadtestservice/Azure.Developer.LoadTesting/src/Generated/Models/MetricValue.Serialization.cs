@@ -73,10 +73,10 @@ namespace Azure.Developer.LoadTesting
             {
                 throw new FormatException($"The model {nameof(MetricValue)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Timestamp))
+            if (Optional.IsDefined(On))
             {
                 writer.WritePropertyName("timestamp"u8);
-                writer.WriteStringValue(Timestamp.Value, "O");
+                writer.WriteStringValue(On.Value, "O");
             }
             if (Optional.IsDefined(Value))
             {
@@ -125,7 +125,7 @@ namespace Azure.Developer.LoadTesting
             {
                 return null;
             }
-            DateTimeOffset? timestamp = default;
+            DateTimeOffset? @on = default;
             double? value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    timestamp = prop.Value.GetDateTimeOffset("O");
+                    @on = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("value"u8))
@@ -153,7 +153,7 @@ namespace Azure.Developer.LoadTesting
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MetricValue(timestamp, value, additionalBinaryDataProperties);
+            return new MetricValue(@on, value, additionalBinaryDataProperties);
         }
     }
 }

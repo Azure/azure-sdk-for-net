@@ -18,14 +18,14 @@ namespace Azure.AI.Language.Conversations.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeConversationOperationState"/>. </summary>
-        /// <param name="createdDateTime"> Date and time job created. </param>
-        /// <param name="lastUpdatedDateTime"> last updated date and time. </param>
+        /// <param name="createdOn"> Date and time job created. </param>
+        /// <param name="lastUpdatedOn"> last updated date and time. </param>
         /// <param name="status"> status. </param>
         /// <param name="actions"> Contains the state for the tasks that are being executed as part of the submitted job for analyzing a conversation. </param>
-        internal AnalyzeConversationOperationState(DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, ConversationActionState status, ConversationActions actions)
+        internal AnalyzeConversationOperationState(DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ConversationActionState status, ConversationActions actions)
         {
-            CreatedDateTime = createdDateTime;
-            LastUpdatedDateTime = lastUpdatedDateTime;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
             Status = status;
             Errors = new ChangeTrackingList<ConversationError>();
             Actions = actions;
@@ -33,23 +33,23 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeConversationOperationState"/>. </summary>
         /// <param name="displayName"> display name. </param>
-        /// <param name="createdDateTime"> Date and time job created. </param>
-        /// <param name="expirationDateTime"> Date and time job expires. </param>
+        /// <param name="createdOn"> Date and time job created. </param>
+        /// <param name="expireOn"> Date and time job expires. </param>
         /// <param name="jobId"> job ID. </param>
-        /// <param name="lastUpdatedDateTime"> last updated date and time. </param>
+        /// <param name="lastUpdatedOn"> last updated date and time. </param>
         /// <param name="status"> status. </param>
         /// <param name="errors"> errors. </param>
         /// <param name="nextLink"> next link. </param>
         /// <param name="actions"> Contains the state for the tasks that are being executed as part of the submitted job for analyzing a conversation. </param>
         /// <param name="statistics"> Contains the statistics for the submitted job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeConversationOperationState(string displayName, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdatedDateTime, ConversationActionState status, IList<ConversationError> errors, string nextLink, ConversationActions actions, ConversationRequestStatistics statistics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeConversationOperationState(string displayName, DateTimeOffset createdOn, DateTimeOffset? expireOn, Guid jobId, DateTimeOffset lastUpdatedOn, ConversationActionState status, IList<ConversationError> errors, string nextLink, ConversationActions actions, ConversationRequestStatistics statistics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
-            CreatedDateTime = createdDateTime;
-            ExpirationDateTime = expirationDateTime;
+            CreatedOn = createdOn;
+            ExpireOn = expireOn;
             JobId = jobId;
-            LastUpdatedDateTime = lastUpdatedDateTime;
+            LastUpdatedOn = lastUpdatedOn;
             Status = status;
             Errors = errors;
             NextLink = nextLink;
@@ -62,16 +62,16 @@ namespace Azure.AI.Language.Conversations.Models
         public string DisplayName { get; }
 
         /// <summary> Date and time job created. </summary>
-        public DateTimeOffset CreatedDateTime { get; }
+        public DateTimeOffset CreatedOn { get; }
 
         /// <summary> Date and time job expires. </summary>
-        public DateTimeOffset? ExpirationDateTime { get; }
+        public DateTimeOffset? ExpireOn { get; }
 
         /// <summary> job ID. </summary>
         public Guid JobId { get; }
 
         /// <summary> last updated date and time. </summary>
-        public DateTimeOffset LastUpdatedDateTime { get; }
+        public DateTimeOffset LastUpdatedOn { get; }
 
         /// <summary> status. </summary>
         public ConversationActionState Status { get; }

@@ -86,15 +86,15 @@ namespace Azure.AI.Discovery
             }
             writer.WritePropertyName("runtimeDetails"u8);
             writer.WriteStringValue(RuntimeDetails);
-            if (options.Format != "W" && Optional.IsDefined(CreatedAt))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
-                writer.WriteStringValue(CreatedAt.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CompletedAt))
+            if (options.Format != "W" && Optional.IsDefined(CompletedOn))
             {
                 writer.WritePropertyName("completedAt"u8);
-                writer.WriteStringValue(CompletedAt.Value, "O");
+                writer.WriteStringValue(CompletedOn.Value, "O");
             }
             if (Optional.IsDefined(CreatedBy))
             {
@@ -159,8 +159,8 @@ namespace Azure.AI.Discovery
             }
             string status = default;
             string runtimeDetails = default;
-            DateTimeOffset? createdAt = default;
-            DateTimeOffset? completedAt = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? completedOn = default;
             string createdBy = default;
             RunResultToolReport toolReport = default;
             IList<OutputDataUri> outputData = default;
@@ -184,7 +184,7 @@ namespace Azure.AI.Discovery
                     {
                         continue;
                     }
-                    createdAt = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("completedAt"u8))
@@ -193,7 +193,7 @@ namespace Azure.AI.Discovery
                     {
                         continue;
                     }
-                    completedAt = prop.Value.GetDateTimeOffset("O");
+                    completedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("createdBy"u8))
@@ -233,8 +233,8 @@ namespace Azure.AI.Discovery
             return new RunResult(
                 status,
                 runtimeDetails,
-                createdAt,
-                completedAt,
+                createdOn,
+                completedOn,
                 createdBy,
                 toolReport,
                 outputData,
