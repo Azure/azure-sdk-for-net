@@ -171,7 +171,7 @@
     <PackageVersion Include="Azure.Storage.Queues" Version="12.24.0" />
 
     <!-- CDK -->
-    <PackageVersion Include="Azure.Provisioning" Version="1.5.0" />
+    <PackageVersion Include="Azure.Provisioning" Version="1.6.0" />
     <PackageVersion Include="Azure.Provisioning.AppService" Version="1.3.1" />
     <PackageVersion Include="Azure.Provisioning.CognitiveServices" Version="1.2.0" />
     <PackageVersion Include="Azure.Provisioning.CosmosDB" Version="1.0.0" />
@@ -233,7 +233,7 @@
   <!--                  package dependencies                          -->
   <!-- ============================================================== -->
   <ItemGroup>
-    <PackageVersion Include="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20260723.1" PrivateAssets="All" />
+    <PackageVersion Include="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20260819.1" PrivateAssets="All" />
     <PackageVersion Include="coverlet.collector" Version="6.0.4" PrivateAssets="All" />
     <PackageVersion Include="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20251023.1" PrivateAssets="All" />
 
