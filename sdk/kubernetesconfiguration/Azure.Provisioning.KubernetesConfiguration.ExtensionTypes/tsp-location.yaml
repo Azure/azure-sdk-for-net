@@ -1,5 +1,5 @@
 directory: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/extensionTypes
-commit: 22c3849b91613266fd8a1158cb5d11f5813ed06f
-repo: Azure/azure-rest-api-specs
+commit: ee725c9bbf334183a5f9d3343c73b0bc0e1b40da
+repo: ArcturusZhang/azure-rest-api-specs
 additionalDirectories:
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json

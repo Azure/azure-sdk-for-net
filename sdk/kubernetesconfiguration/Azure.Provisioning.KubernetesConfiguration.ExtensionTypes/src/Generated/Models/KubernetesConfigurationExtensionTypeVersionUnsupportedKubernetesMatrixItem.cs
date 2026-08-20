@@ -11,13 +11,13 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
 {
     /// <summary> The list of Kubernetes Distribution and Versions that are not supported by this version of this Extension Type. </summary>
-    public partial class ExtensionTypeVersionUnsupportedKubernetesMatrixItem : ProvisionableConstruct
+    public partial class KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem : ProvisionableConstruct
     {
         private BicepList<string> _distributions;
         private BicepList<string> _unsupportedVersions;
 
-        /// <summary> Creates a new ExtensionTypeVersionUnsupportedKubernetesMatrixItem. </summary>
-        public ExtensionTypeVersionUnsupportedKubernetesMatrixItem()
+        /// <summary> Creates a new KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem. </summary>
+        public KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem()
         {
         }
 
@@ -41,7 +41,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
             }
         }
 
-        /// <summary> Define all the provisionable properties for ExtensionTypeVersionUnsupportedKubernetesMatrixItem. </summary>
+        /// <summary> Define all the provisionable properties for KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -50,7 +50,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for ExtensionTypeVersionUnsupportedKubernetesMatrixItem that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

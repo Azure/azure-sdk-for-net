@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
 {
     /// <summary> Plan information only for the Marketplace Extension Type. </summary>
-    public partial class ExtensionTypePlanInfo
+    public partial class KubernetesConfigurationExtensionTypePlanInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExtensionTypePlanInfo"/>. </summary>
-        internal ExtensionTypePlanInfo()
+        /// <summary> Initializes a new instance of <see cref="KubernetesConfigurationExtensionTypePlanInfo"/>. </summary>
+        internal KubernetesConfigurationExtensionTypePlanInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExtensionTypePlanInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesConfigurationExtensionTypePlanInfo"/>. </summary>
         /// <param name="publisherId"> Publisher ID of the Marketplace Extension Type. </param>
         /// <param name="planId"> Plan ID of the Marketplace Extension Type. </param>
         /// <param name="offerId"> Offer or Product ID of the Marketplace Extension Type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExtensionTypePlanInfo(string publisherId, string planId, string offerId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KubernetesConfigurationExtensionTypePlanInfo(string publisherId, string planId, string offerId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublisherId = publisherId;
             PlanId = planId;

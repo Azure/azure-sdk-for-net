@@ -11,24 +11,24 @@ using Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
 {
-    /// <summary> The ExtensionTypeVersionForReleaseTrainProperties. </summary>
-    public partial class ExtensionTypeVersionForReleaseTrainProperties
+    /// <summary> The KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties. </summary>
+    public partial class KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExtensionTypeVersionForReleaseTrainProperties"/>. </summary>
-        internal ExtensionTypeVersionForReleaseTrainProperties()
+        /// <summary> Initializes a new instance of <see cref="KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties"/>. </summary>
+        internal KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties()
         {
             SupportedClusterTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExtensionTypeVersionForReleaseTrainProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties"/>. </summary>
         /// <param name="version"> The version number for the extension type. </param>
         /// <param name="unsupportedKubernetesVersions"> The list of supported Kubernetes cluster versions for this extension type. </param>
         /// <param name="supportedClusterTypes"> A list of supported cluster types for this version of the Extension Type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExtensionTypeVersionForReleaseTrainProperties(string version, ExtensionTypeUnsupportedKubernetesVersions unsupportedKubernetesVersions, IList<string> supportedClusterTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties(string version, KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions unsupportedKubernetesVersions, IList<string> supportedClusterTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             UnsupportedKubernetesVersions = unsupportedKubernetesVersions;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
         public string Version { get; }
 
         /// <summary> The list of supported Kubernetes cluster versions for this extension type. </summary>
-        public ExtensionTypeUnsupportedKubernetesVersions UnsupportedKubernetesVersions { get; }
+        public KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions UnsupportedKubernetesVersions { get; }
 
         /// <summary> A list of supported cluster types for this version of the Extension Type. </summary>
         public IList<string> SupportedClusterTypes { get; }

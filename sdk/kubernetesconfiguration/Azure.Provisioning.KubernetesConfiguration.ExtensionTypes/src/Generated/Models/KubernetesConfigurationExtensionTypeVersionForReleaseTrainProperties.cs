@@ -10,15 +10,15 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
 {
-    /// <summary> The ExtensionTypeVersionForReleaseTrainProperties. </summary>
-    public partial class ExtensionTypeVersionForReleaseTrainProperties : ProvisionableConstruct
+    /// <summary> The KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties. </summary>
+    public partial class KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties : ProvisionableConstruct
     {
         private BicepValue<string> _version;
-        private ExtensionTypeUnsupportedKubernetesVersions _unsupportedKubernetesVersions;
+        private KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions _unsupportedKubernetesVersions;
         private BicepList<string> _supportedClusterTypes;
 
-        /// <summary> Creates a new ExtensionTypeVersionForReleaseTrainProperties. </summary>
-        public ExtensionTypeVersionForReleaseTrainProperties()
+        /// <summary> Creates a new KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties. </summary>
+        public KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties()
         {
         }
 
@@ -33,7 +33,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the UnsupportedKubernetesVersions. </summary>
-        public ExtensionTypeUnsupportedKubernetesVersions UnsupportedKubernetesVersions
+        public KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions UnsupportedKubernetesVersions
         {
             get
             {
@@ -52,17 +52,17 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
             }
         }
 
-        /// <summary> Define all the provisionable properties for ExtensionTypeVersionForReleaseTrainProperties. </summary>
+        /// <summary> Define all the provisionable properties for KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _version = DefineProperty<string>(nameof(Version), new string[] { "version" });
-            _unsupportedKubernetesVersions = DefineModelProperty<ExtensionTypeUnsupportedKubernetesVersions>(nameof(UnsupportedKubernetesVersions), new string[] { "unsupportedKubernetesVersions" });
+            _unsupportedKubernetesVersions = DefineModelProperty<KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions>(nameof(UnsupportedKubernetesVersions), new string[] { "unsupportedKubernetesVersions" });
             _supportedClusterTypes = DefineListProperty<string>(nameof(SupportedClusterTypes), new string[] { "supportedClusterTypes" });
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for ExtensionTypeVersionForReleaseTrainProperties that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

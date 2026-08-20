@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
 {
     /// <summary> Extension scope settings. </summary>
-    internal partial class ExtensionTypeClusterScopeSettingsProperties
+    internal partial class KubernetesConfigurationExtensionTypeClusterScopeSettingsProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExtensionTypeClusterScopeSettingsProperties"/>. </summary>
-        internal ExtensionTypeClusterScopeSettingsProperties()
+        /// <summary> Initializes a new instance of <see cref="KubernetesConfigurationExtensionTypeClusterScopeSettingsProperties"/>. </summary>
+        internal KubernetesConfigurationExtensionTypeClusterScopeSettingsProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExtensionTypeClusterScopeSettingsProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesConfigurationExtensionTypeClusterScopeSettingsProperties"/>. </summary>
         /// <param name="isMultipleInstancesAllowed"> Describes if multiple instances of the extension are allowed. </param>
         /// <param name="defaultReleaseNamespace"> Default extension release namespace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExtensionTypeClusterScopeSettingsProperties(bool? isMultipleInstancesAllowed, string defaultReleaseNamespace, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KubernetesConfigurationExtensionTypeClusterScopeSettingsProperties(bool? isMultipleInstancesAllowed, string defaultReleaseNamespace, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsMultipleInstancesAllowed = isMultipleInstancesAllowed;
             DefaultReleaseNamespace = defaultReleaseNamespace;

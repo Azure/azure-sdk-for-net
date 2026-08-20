@@ -19,7 +19,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
-        private ExtensionTypeVersionForReleaseTrainProperties _properties;
+        private KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties _properties;
         private ResourceReference<ClusterExtensionType> _parent;
 
         /// <summary> Creates a new ClusterExtensionTypeVersion. </summary>
@@ -65,7 +65,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the Properties. </summary>
-        public ExtensionTypeVersionForReleaseTrainProperties Properties
+        public KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties Properties
         {
             get
             {
@@ -96,7 +96,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _properties = DefineModelProperty<ExtensionTypeVersionForReleaseTrainProperties>(nameof(Properties), new string[] { "properties" });
+            _properties = DefineModelProperty<KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties>(nameof(Properties), new string[] { "properties" });
             _parent = DefineResource<ClusterExtensionType>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

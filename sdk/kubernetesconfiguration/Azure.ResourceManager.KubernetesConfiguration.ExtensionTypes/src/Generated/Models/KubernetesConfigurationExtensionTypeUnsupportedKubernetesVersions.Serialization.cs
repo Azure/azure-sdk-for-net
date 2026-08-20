@@ -14,51 +14,51 @@ using Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes;
 namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
 {
     /// <summary> The list of supported Kubernetes cluster versions for this extension type. </summary>
-    public partial class ExtensionTypeUnsupportedKubernetesVersions : IJsonModel<ExtensionTypeUnsupportedKubernetesVersions>
+    public partial class KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions : IJsonModel<KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExtensionTypeUnsupportedKubernetesVersions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExtensionTypeUnsupportedKubernetesVersions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExtensionTypeUnsupportedKubernetesVersions(document.RootElement, options);
+                        return DeserializeKubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExtensionTypeUnsupportedKubernetesVersions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExtensionTypeUnsupportedKubernetesVersions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerKubernetesConfigurationExtensionTypesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExtensionTypeUnsupportedKubernetesVersions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExtensionTypeUnsupportedKubernetesVersions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExtensionTypeUnsupportedKubernetesVersions IPersistableModel<ExtensionTypeUnsupportedKubernetesVersions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions IPersistableModel<KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExtensionTypeUnsupportedKubernetesVersions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExtensionTypeUnsupportedKubernetesVersions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,16 +69,16 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExtensionTypeUnsupportedKubernetesVersions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtensionTypeUnsupportedKubernetesVersions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(ConnectedCluster))
             {
                 writer.WritePropertyName("connectedCluster"u8);
                 writer.WriteStartArray();
-                foreach (ExtensionTypeVersionUnsupportedKubernetesMatrixItem item in ConnectedCluster)
+                foreach (KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem item in ConnectedCluster)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
             {
                 writer.WritePropertyName("appliances"u8);
                 writer.WriteStartArray();
-                foreach (ExtensionTypeVersionUnsupportedKubernetesMatrixItem item in Appliances)
+                foreach (KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem item in Appliances)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
             {
                 writer.WritePropertyName("provisionedCluster"u8);
                 writer.WriteStartArray();
-                foreach (ExtensionTypeVersionUnsupportedKubernetesMatrixItem item in ProvisionedCluster)
+                foreach (KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem item in ProvisionedCluster)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
             {
                 writer.WritePropertyName("managedCluster"u8);
                 writer.WriteStartArray();
-                foreach (ExtensionTypeVersionUnsupportedKubernetesMatrixItem item in ManagedCluster)
+                foreach (KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem item in ManagedCluster)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -133,33 +133,33 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExtensionTypeUnsupportedKubernetesVersions IJsonModel<ExtensionTypeUnsupportedKubernetesVersions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions IJsonModel<KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExtensionTypeUnsupportedKubernetesVersions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExtensionTypeUnsupportedKubernetesVersions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtensionTypeUnsupportedKubernetesVersions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExtensionTypeUnsupportedKubernetesVersions(document.RootElement, options);
+            return DeserializeKubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ExtensionTypeUnsupportedKubernetesVersions DeserializeExtensionTypeUnsupportedKubernetesVersions(JsonElement element, ModelReaderWriterOptions options)
+        internal static KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions DeserializeKubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<ExtensionTypeVersionUnsupportedKubernetesMatrixItem> connectedCluster = default;
-            IList<ExtensionTypeVersionUnsupportedKubernetesMatrixItem> appliances = default;
-            IList<ExtensionTypeVersionUnsupportedKubernetesMatrixItem> provisionedCluster = default;
-            IList<ExtensionTypeVersionUnsupportedKubernetesMatrixItem> managedCluster = default;
+            IList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem> connectedCluster = default;
+            IList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem> appliances = default;
+            IList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem> provisionedCluster = default;
+            IList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem> managedCluster = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
                     {
                         continue;
                     }
-                    List<ExtensionTypeVersionUnsupportedKubernetesMatrixItem> array = new List<ExtensionTypeVersionUnsupportedKubernetesMatrixItem>();
+                    List<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem> array = new List<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ExtensionTypeVersionUnsupportedKubernetesMatrixItem.DeserializeExtensionTypeVersionUnsupportedKubernetesMatrixItem(item, options));
+                        array.Add(KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem.DeserializeKubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem(item, options));
                     }
                     connectedCluster = array;
                     continue;
@@ -183,10 +183,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
                     {
                         continue;
                     }
-                    List<ExtensionTypeVersionUnsupportedKubernetesMatrixItem> array = new List<ExtensionTypeVersionUnsupportedKubernetesMatrixItem>();
+                    List<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem> array = new List<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ExtensionTypeVersionUnsupportedKubernetesMatrixItem.DeserializeExtensionTypeVersionUnsupportedKubernetesMatrixItem(item, options));
+                        array.Add(KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem.DeserializeKubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem(item, options));
                     }
                     appliances = array;
                     continue;
@@ -197,10 +197,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
                     {
                         continue;
                     }
-                    List<ExtensionTypeVersionUnsupportedKubernetesMatrixItem> array = new List<ExtensionTypeVersionUnsupportedKubernetesMatrixItem>();
+                    List<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem> array = new List<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ExtensionTypeVersionUnsupportedKubernetesMatrixItem.DeserializeExtensionTypeVersionUnsupportedKubernetesMatrixItem(item, options));
+                        array.Add(KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem.DeserializeKubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem(item, options));
                     }
                     provisionedCluster = array;
                     continue;
@@ -211,10 +211,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
                     {
                         continue;
                     }
-                    List<ExtensionTypeVersionUnsupportedKubernetesMatrixItem> array = new List<ExtensionTypeVersionUnsupportedKubernetesMatrixItem>();
+                    List<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem> array = new List<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ExtensionTypeVersionUnsupportedKubernetesMatrixItem.DeserializeExtensionTypeVersionUnsupportedKubernetesMatrixItem(item, options));
+                        array.Add(KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem.DeserializeKubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem(item, options));
                     }
                     managedCluster = array;
                     continue;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExtensionTypeUnsupportedKubernetesVersions(connectedCluster ?? new ChangeTrackingList<ExtensionTypeVersionUnsupportedKubernetesMatrixItem>(), appliances ?? new ChangeTrackingList<ExtensionTypeVersionUnsupportedKubernetesMatrixItem>(), provisionedCluster ?? new ChangeTrackingList<ExtensionTypeVersionUnsupportedKubernetesMatrixItem>(), managedCluster ?? new ChangeTrackingList<ExtensionTypeVersionUnsupportedKubernetesMatrixItem>(), additionalBinaryDataProperties);
+            return new KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions(connectedCluster ?? new ChangeTrackingList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem>(), appliances ?? new ChangeTrackingList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem>(), provisionedCluster ?? new ChangeTrackingList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem>(), managedCluster ?? new ChangeTrackingList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem>(), additionalBinaryDataProperties);
         }
     }
 }

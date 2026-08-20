@@ -13,52 +13,52 @@ using Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
 {
-    /// <summary> Supported Kubernetes Scopes for this Extension Type. </summary>
-    public partial class ExtensionTypeSupportedScopes : IJsonModel<ExtensionTypeSupportedScopes>
+    /// <summary> Plan information only for the Marketplace Extension Type. </summary>
+    public partial class KubernetesConfigurationExtensionTypePlanInfo : IJsonModel<KubernetesConfigurationExtensionTypePlanInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExtensionTypeSupportedScopes PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual KubernetesConfigurationExtensionTypePlanInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExtensionTypeSupportedScopes>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesConfigurationExtensionTypePlanInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExtensionTypeSupportedScopes(document.RootElement, options);
+                        return DeserializeKubernetesConfigurationExtensionTypePlanInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExtensionTypeSupportedScopes)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesConfigurationExtensionTypePlanInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExtensionTypeSupportedScopes>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesConfigurationExtensionTypePlanInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerKubernetesConfigurationExtensionTypesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExtensionTypeSupportedScopes)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesConfigurationExtensionTypePlanInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExtensionTypeSupportedScopes>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<KubernetesConfigurationExtensionTypePlanInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExtensionTypeSupportedScopes IPersistableModel<ExtensionTypeSupportedScopes>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        KubernetesConfigurationExtensionTypePlanInfo IPersistableModel<KubernetesConfigurationExtensionTypePlanInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExtensionTypeSupportedScopes>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KubernetesConfigurationExtensionTypePlanInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExtensionTypeSupportedScopes>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KubernetesConfigurationExtensionTypePlanInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,25 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExtensionTypeSupportedScopes>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesConfigurationExtensionTypePlanInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtensionTypeSupportedScopes)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesConfigurationExtensionTypePlanInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DefaultScope))
+            if (Optional.IsDefined(PublisherId))
             {
-                writer.WritePropertyName("defaultScope"u8);
-                writer.WriteStringValue(DefaultScope);
+                writer.WritePropertyName("publisherId"u8);
+                writer.WriteStringValue(PublisherId);
             }
-            if (Optional.IsDefined(ClusterScopeSettings))
+            if (Optional.IsDefined(PlanId))
             {
-                writer.WritePropertyName("clusterScopeSettings"u8);
-                writer.WriteObjectValue(ClusterScopeSettings, options);
+                writer.WritePropertyName("planId"u8);
+                writer.WriteStringValue(PlanId);
+            }
+            if (Optional.IsDefined(OfferId))
+            {
+                writer.WritePropertyName("offerId"u8);
+                writer.WriteStringValue(OfferId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,46 +108,48 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExtensionTypeSupportedScopes IJsonModel<ExtensionTypeSupportedScopes>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        KubernetesConfigurationExtensionTypePlanInfo IJsonModel<KubernetesConfigurationExtensionTypePlanInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExtensionTypeSupportedScopes JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual KubernetesConfigurationExtensionTypePlanInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExtensionTypeSupportedScopes>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesConfigurationExtensionTypePlanInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtensionTypeSupportedScopes)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesConfigurationExtensionTypePlanInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExtensionTypeSupportedScopes(document.RootElement, options);
+            return DeserializeKubernetesConfigurationExtensionTypePlanInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ExtensionTypeSupportedScopes DeserializeExtensionTypeSupportedScopes(JsonElement element, ModelReaderWriterOptions options)
+        internal static KubernetesConfigurationExtensionTypePlanInfo DeserializeKubernetesConfigurationExtensionTypePlanInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string defaultScope = default;
-            ExtensionTypeClusterScopeSettings clusterScopeSettings = default;
+            string publisherId = default;
+            string planId = default;
+            string offerId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("defaultScope"u8))
+                if (prop.NameEquals("publisherId"u8))
                 {
-                    defaultScope = prop.Value.GetString();
+                    publisherId = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("clusterScopeSettings"u8))
+                if (prop.NameEquals("planId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    clusterScopeSettings = ExtensionTypeClusterScopeSettings.DeserializeExtensionTypeClusterScopeSettings(prop.Value, options);
+                    planId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("offerId"u8))
+                {
+                    offerId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +157,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExtensionTypeSupportedScopes(defaultScope, clusterScopeSettings, additionalBinaryDataProperties);
+            return new KubernetesConfigurationExtensionTypePlanInfo(publisherId, planId, offerId, additionalBinaryDataProperties);
         }
     }
 }

@@ -11,13 +11,13 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
 {
     /// <summary> Supported Kubernetes Scopes for this Extension Type. </summary>
-    public partial class ExtensionTypeSupportedScopes : ProvisionableConstruct
+    public partial class KubernetesConfigurationExtensionTypeSupportedScopes : ProvisionableConstruct
     {
         private BicepValue<string> _defaultScope;
-        private ExtensionTypeClusterScopeSettings _clusterScopeSettings;
+        private KubernetesConfigurationExtensionTypeClusterScopeSettings _clusterScopeSettings;
 
-        /// <summary> Creates a new ExtensionTypeSupportedScopes. </summary>
-        public ExtensionTypeSupportedScopes()
+        /// <summary> Creates a new KubernetesConfigurationExtensionTypeSupportedScopes. </summary>
+        public KubernetesConfigurationExtensionTypeSupportedScopes()
         {
         }
 
@@ -32,7 +32,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the ClusterScopeSettings. </summary>
-        public ExtensionTypeClusterScopeSettings ClusterScopeSettings
+        public KubernetesConfigurationExtensionTypeClusterScopeSettings ClusterScopeSettings
         {
             get
             {
@@ -41,16 +41,16 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
             }
         }
 
-        /// <summary> Define all the provisionable properties for ExtensionTypeSupportedScopes. </summary>
+        /// <summary> Define all the provisionable properties for KubernetesConfigurationExtensionTypeSupportedScopes. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _defaultScope = DefineProperty<string>(nameof(DefaultScope), new string[] { "defaultScope" });
-            _clusterScopeSettings = DefineModelProperty<ExtensionTypeClusterScopeSettings>(nameof(ClusterScopeSettings), new string[] { "clusterScopeSettings" });
+            _clusterScopeSettings = DefineModelProperty<KubernetesConfigurationExtensionTypeClusterScopeSettings>(nameof(ClusterScopeSettings), new string[] { "clusterScopeSettings" });
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for ExtensionTypeSupportedScopes that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for KubernetesConfigurationExtensionTypeSupportedScopes that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

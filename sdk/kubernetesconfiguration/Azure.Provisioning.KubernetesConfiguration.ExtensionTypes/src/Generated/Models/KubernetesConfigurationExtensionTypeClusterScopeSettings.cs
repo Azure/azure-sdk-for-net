@@ -13,21 +13,21 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
 {
     /// <summary> Extension scope settings. </summary>
-    public partial class ExtensionTypeClusterScopeSettings : ProvisionableConstruct
+    public partial class KubernetesConfigurationExtensionTypeClusterScopeSettings : ProvisionableConstruct
     {
-        private ExtensionTypeClusterScopeSettingsProperties _properties;
+        private KubernetesConfigurationExtensionTypeClusterScopeSettingsProperties _properties;
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private BicepValue<ResourceType> _type;
         private SystemData _systemData;
 
-        /// <summary> Creates a new ExtensionTypeClusterScopeSettings. </summary>
-        public ExtensionTypeClusterScopeSettings()
+        /// <summary> Creates a new KubernetesConfigurationExtensionTypeClusterScopeSettings. </summary>
+        public KubernetesConfigurationExtensionTypeClusterScopeSettings()
         {
         }
 
         /// <summary> Gets the Properties. </summary>
-        internal ExtensionTypeClusterScopeSettingsProperties Properties
+        internal KubernetesConfigurationExtensionTypeClusterScopeSettingsProperties Properties
         {
             get
             {
@@ -94,11 +94,11 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
             }
         }
 
-        /// <summary> Define all the provisionable properties for ExtensionTypeClusterScopeSettings. </summary>
+        /// <summary> Define all the provisionable properties for KubernetesConfigurationExtensionTypeClusterScopeSettings. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _properties = DefineModelProperty<ExtensionTypeClusterScopeSettingsProperties>(nameof(Properties), new string[] { "properties" });
+            _properties = DefineModelProperty<KubernetesConfigurationExtensionTypeClusterScopeSettingsProperties>(nameof(Properties), new string[] { "properties" });
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true);
             _type = DefineProperty<ResourceType>(nameof(Type), new string[] { "type" }, isOutput: true);
@@ -106,7 +106,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for ExtensionTypeClusterScopeSettings that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for KubernetesConfigurationExtensionTypeClusterScopeSettings that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

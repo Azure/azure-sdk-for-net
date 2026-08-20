@@ -11,13 +11,13 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
 {
     /// <summary> Extension scope settings. </summary>
-    internal partial class ExtensionTypeClusterScopeSettingsProperties : ProvisionableConstruct
+    internal partial class KubernetesConfigurationExtensionTypeClusterScopeSettingsProperties : ProvisionableConstruct
     {
         private BicepValue<bool> _isMultipleInstancesAllowed;
         private BicepValue<string> _defaultReleaseNamespace;
 
-        /// <summary> Creates a new ExtensionTypeClusterScopeSettingsProperties. </summary>
-        public ExtensionTypeClusterScopeSettingsProperties()
+        /// <summary> Creates a new KubernetesConfigurationExtensionTypeClusterScopeSettingsProperties. </summary>
+        public KubernetesConfigurationExtensionTypeClusterScopeSettingsProperties()
         {
         }
 
@@ -41,7 +41,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
             }
         }
 
-        /// <summary> Define all the provisionable properties for ExtensionTypeClusterScopeSettingsProperties. </summary>
+        /// <summary> Define all the provisionable properties for KubernetesConfigurationExtensionTypeClusterScopeSettingsProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -50,7 +50,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for ExtensionTypeClusterScopeSettingsProperties that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for KubernetesConfigurationExtensionTypeClusterScopeSettingsProperties that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

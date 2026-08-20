@@ -12,23 +12,23 @@ using Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes;
 namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
 {
     /// <summary> The list of Kubernetes Distribution and Versions that are not supported by this version of this Extension Type. </summary>
-    public partial class ExtensionTypeVersionUnsupportedKubernetesMatrixItem
+    public partial class KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExtensionTypeVersionUnsupportedKubernetesMatrixItem"/>. </summary>
-        internal ExtensionTypeVersionUnsupportedKubernetesMatrixItem()
+        /// <summary> Initializes a new instance of <see cref="KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem"/>. </summary>
+        internal KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem()
         {
             Distributions = new ChangeTrackingList<string>();
             UnsupportedVersions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExtensionTypeVersionUnsupportedKubernetesMatrixItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem"/>. </summary>
         /// <param name="distributions"> The list of Kubernetes Cluster Distribution Names not supported. </param>
         /// <param name="unsupportedVersions"> The list of Kubernetes Versions not supported by the list of Kubernetes Cluster Distribution names in this object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExtensionTypeVersionUnsupportedKubernetesMatrixItem(IList<string> distributions, IList<string> unsupportedVersions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem(IList<string> distributions, IList<string> unsupportedVersions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Distributions = distributions;
             UnsupportedVersions = unsupportedVersions;

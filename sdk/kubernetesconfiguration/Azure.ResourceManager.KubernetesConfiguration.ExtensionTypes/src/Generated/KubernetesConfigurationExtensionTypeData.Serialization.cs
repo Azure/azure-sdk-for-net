@@ -17,59 +17,59 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
 {
-    /// <summary> The Extension Type Version object. </summary>
-    public partial class ExtensionTypeVersionForReleaseTrainData : ResourceData, IJsonModel<ExtensionTypeVersionForReleaseTrainData>
+    /// <summary> The Extension Type object. </summary>
+    public partial class KubernetesConfigurationExtensionTypeData : ResourceData, IJsonModel<KubernetesConfigurationExtensionTypeData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExtensionTypeVersionForReleaseTrainData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesConfigurationExtensionTypeData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExtensionTypeVersionForReleaseTrainData(document.RootElement, options);
+                        return DeserializeKubernetesConfigurationExtensionTypeData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExtensionTypeVersionForReleaseTrainData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesConfigurationExtensionTypeData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExtensionTypeVersionForReleaseTrainData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesConfigurationExtensionTypeData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerKubernetesConfigurationExtensionTypesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExtensionTypeVersionForReleaseTrainData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesConfigurationExtensionTypeData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExtensionTypeVersionForReleaseTrainData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<KubernetesConfigurationExtensionTypeData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExtensionTypeVersionForReleaseTrainData IPersistableModel<ExtensionTypeVersionForReleaseTrainData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExtensionTypeVersionForReleaseTrainData)PersistableModelCreateCore(data, options);
+        KubernetesConfigurationExtensionTypeData IPersistableModel<KubernetesConfigurationExtensionTypeData>.Create(BinaryData data, ModelReaderWriterOptions options) => (KubernetesConfigurationExtensionTypeData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExtensionTypeVersionForReleaseTrainData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KubernetesConfigurationExtensionTypeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ExtensionTypeVersionForReleaseTrainData"/> from. </param>
-        internal static ExtensionTypeVersionForReleaseTrainData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KubernetesConfigurationExtensionTypeData"/> from. </param>
+        internal static KubernetesConfigurationExtensionTypeData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeExtensionTypeVersionForReleaseTrainData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeKubernetesConfigurationExtensionTypeData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExtensionTypeVersionForReleaseTrainData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KubernetesConfigurationExtensionTypeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExtensionTypeVersionForReleaseTrainData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesConfigurationExtensionTypeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtensionTypeVersionForReleaseTrainData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesConfigurationExtensionTypeData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -110,24 +110,24 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExtensionTypeVersionForReleaseTrainData IJsonModel<ExtensionTypeVersionForReleaseTrainData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ExtensionTypeVersionForReleaseTrainData)JsonModelCreateCore(ref reader, options);
+        KubernetesConfigurationExtensionTypeData IJsonModel<KubernetesConfigurationExtensionTypeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KubernetesConfigurationExtensionTypeData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExtensionTypeVersionForReleaseTrainData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesConfigurationExtensionTypeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtensionTypeVersionForReleaseTrainData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesConfigurationExtensionTypeData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExtensionTypeVersionForReleaseTrainData(document.RootElement, options);
+            return DeserializeKubernetesConfigurationExtensionTypeData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ExtensionTypeVersionForReleaseTrainData DeserializeExtensionTypeVersionForReleaseTrainData(JsonElement element, ModelReaderWriterOptions options)
+        internal static KubernetesConfigurationExtensionTypeData DeserializeKubernetesConfigurationExtensionTypeData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            ExtensionTypeVersionForReleaseTrainProperties properties = default;
+            KubernetesConfigurationExtensionTypeProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                     {
                         continue;
                     }
-                    properties = ExtensionTypeVersionForReleaseTrainProperties.DeserializeExtensionTypeVersionForReleaseTrainProperties(prop.Value, options);
+                    properties = KubernetesConfigurationExtensionTypeProperties.DeserializeKubernetesConfigurationExtensionTypeProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExtensionTypeVersionForReleaseTrainData(
+            return new KubernetesConfigurationExtensionTypeData(
                 id,
                 name,
                 resourceType,

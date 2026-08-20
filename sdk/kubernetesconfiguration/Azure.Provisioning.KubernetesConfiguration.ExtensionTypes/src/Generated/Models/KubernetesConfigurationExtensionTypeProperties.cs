@@ -10,19 +10,19 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
 {
-    /// <summary> The ExtensionTypeProperties. </summary>
-    public partial class ExtensionTypeProperties : ProvisionableConstruct
+    /// <summary> The KubernetesConfigurationExtensionTypeProperties. </summary>
+    public partial class KubernetesConfigurationExtensionTypeProperties : ProvisionableConstruct
     {
         private BicepValue<bool> _isSystemExtension;
         private BicepValue<bool> _isManagedIdentityRequired;
         private BicepValue<string> _description;
         private BicepValue<string> _publisher;
-        private ExtensionTypePlanInfo _planInfo;
+        private KubernetesConfigurationExtensionTypePlanInfo _planInfo;
         private BicepList<string> _supportedClusterTypes;
-        private ExtensionTypeSupportedScopes _supportedScopes;
+        private KubernetesConfigurationExtensionTypeSupportedScopes _supportedScopes;
 
-        /// <summary> Creates a new ExtensionTypeProperties. </summary>
-        public ExtensionTypeProperties()
+        /// <summary> Creates a new KubernetesConfigurationExtensionTypeProperties. </summary>
+        public KubernetesConfigurationExtensionTypeProperties()
         {
         }
 
@@ -67,7 +67,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the PlanInfo. </summary>
-        public ExtensionTypePlanInfo PlanInfo
+        public KubernetesConfigurationExtensionTypePlanInfo PlanInfo
         {
             get
             {
@@ -87,7 +87,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the SupportedScopes. </summary>
-        public ExtensionTypeSupportedScopes SupportedScopes
+        public KubernetesConfigurationExtensionTypeSupportedScopes SupportedScopes
         {
             get
             {
@@ -96,7 +96,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
             }
         }
 
-        /// <summary> Define all the provisionable properties for ExtensionTypeProperties. </summary>
+        /// <summary> Define all the provisionable properties for KubernetesConfigurationExtensionTypeProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -104,13 +104,13 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
             _isManagedIdentityRequired = DefineProperty<bool>(nameof(IsManagedIdentityRequired), new string[] { "isManagedIdentityRequired" });
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             _publisher = DefineProperty<string>(nameof(Publisher), new string[] { "publisher" });
-            _planInfo = DefineModelProperty<ExtensionTypePlanInfo>(nameof(PlanInfo), new string[] { "planInfo" });
+            _planInfo = DefineModelProperty<KubernetesConfigurationExtensionTypePlanInfo>(nameof(PlanInfo), new string[] { "planInfo" });
             _supportedClusterTypes = DefineListProperty<string>(nameof(SupportedClusterTypes), new string[] { "supportedClusterTypes" });
-            _supportedScopes = DefineModelProperty<ExtensionTypeSupportedScopes>(nameof(SupportedScopes), new string[] { "supportedScopes" });
+            _supportedScopes = DefineModelProperty<KubernetesConfigurationExtensionTypeSupportedScopes>(nameof(SupportedScopes), new string[] { "supportedScopes" });
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for ExtensionTypeProperties that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for KubernetesConfigurationExtensionTypeProperties that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

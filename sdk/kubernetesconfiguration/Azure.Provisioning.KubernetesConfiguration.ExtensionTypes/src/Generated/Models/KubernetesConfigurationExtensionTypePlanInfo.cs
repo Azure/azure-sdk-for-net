@@ -11,14 +11,14 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
 {
     /// <summary> Plan information only for the Marketplace Extension Type. </summary>
-    public partial class ExtensionTypePlanInfo : ProvisionableConstruct
+    public partial class KubernetesConfigurationExtensionTypePlanInfo : ProvisionableConstruct
     {
         private BicepValue<string> _publisherId;
         private BicepValue<string> _planId;
         private BicepValue<string> _offerId;
 
-        /// <summary> Creates a new ExtensionTypePlanInfo. </summary>
-        public ExtensionTypePlanInfo()
+        /// <summary> Creates a new KubernetesConfigurationExtensionTypePlanInfo. </summary>
+        public KubernetesConfigurationExtensionTypePlanInfo()
         {
         }
 
@@ -52,7 +52,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
             }
         }
 
-        /// <summary> Define all the provisionable properties for ExtensionTypePlanInfo. </summary>
+        /// <summary> Define all the provisionable properties for KubernetesConfigurationExtensionTypePlanInfo. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -62,7 +62,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for ExtensionTypePlanInfo that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for KubernetesConfigurationExtensionTypePlanInfo that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

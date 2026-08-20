@@ -11,19 +11,19 @@ using Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
 {
-    /// <summary> The ExtensionTypeProperties. </summary>
-    public partial class ExtensionTypeProperties
+    /// <summary> The KubernetesConfigurationExtensionTypeProperties. </summary>
+    public partial class KubernetesConfigurationExtensionTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExtensionTypeProperties"/>. </summary>
-        internal ExtensionTypeProperties()
+        /// <summary> Initializes a new instance of <see cref="KubernetesConfigurationExtensionTypeProperties"/>. </summary>
+        internal KubernetesConfigurationExtensionTypeProperties()
         {
             SupportedClusterTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExtensionTypeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesConfigurationExtensionTypeProperties"/>. </summary>
         /// <param name="isSystemExtension"> Is this Extension Type a system extension. </param>
         /// <param name="isManagedIdentityRequired"> Should an identity for this cluster resource be created. </param>
         /// <param name="description"> Description of the extension type. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
         /// <param name="supportedClusterTypes"> Cluster Types supported for this Extension Type. </param>
         /// <param name="supportedScopes"> Supported Kubernetes Scopes for this Extension Type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExtensionTypeProperties(bool? isSystemExtension, bool? isManagedIdentityRequired, string description, string publisher, ExtensionTypePlanInfo planInfo, IList<string> supportedClusterTypes, ExtensionTypeSupportedScopes supportedScopes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KubernetesConfigurationExtensionTypeProperties(bool? isSystemExtension, bool? isManagedIdentityRequired, string description, string publisher, KubernetesConfigurationExtensionTypePlanInfo planInfo, IList<string> supportedClusterTypes, KubernetesConfigurationExtensionTypeSupportedScopes supportedScopes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsSystemExtension = isSystemExtension;
             IsManagedIdentityRequired = isManagedIdentityRequired;
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
         public string Publisher { get; }
 
         /// <summary> Plan information only for the Marketplace Extension Type. </summary>
-        public ExtensionTypePlanInfo PlanInfo { get; }
+        public KubernetesConfigurationExtensionTypePlanInfo PlanInfo { get; }
 
         /// <summary> Cluster Types supported for this Extension Type. </summary>
         public IList<string> SupportedClusterTypes { get; }
 
         /// <summary> Supported Kubernetes Scopes for this Extension Type. </summary>
-        public ExtensionTypeSupportedScopes SupportedScopes { get; }
+        public KubernetesConfigurationExtensionTypeSupportedScopes SupportedScopes { get; }
     }
 }
