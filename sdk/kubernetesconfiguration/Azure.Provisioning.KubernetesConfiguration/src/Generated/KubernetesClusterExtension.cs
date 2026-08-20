@@ -25,7 +25,7 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     /// <summary>
     /// Name of the Extension.
     /// </summary>
-    public BicepValue<string> Name
+    public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
         set { Initialize(); _name!.Assign(value); }
@@ -33,19 +33,10 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// Additional details provided by the publisher of the extension.
+    /// Identity of the Extension resource in an AKS cluster. Current supported
+    /// identity types: SystemAssigned, UserAssigned.
     /// </summary>
-    public KubernetesClusterAdditionalDetails AdditionalDetails
-    {
-        get { Initialize(); return _additionalDetails!; }
-        set { Initialize(); AssignOrReplace(ref _additionalDetails, value); }
-    }
-    private KubernetesClusterAdditionalDetails? _additionalDetails;
-
-    /// <summary>
-    /// Identity of the Extension resource in an AKS cluster.
-    /// </summary>
-    public ManagedServiceIdentity AksAssignedIdentity
+    public ManagedServiceIdentity AksAssignedIdentity 
     {
         get { Initialize(); return _aksAssignedIdentity!; }
         set { Initialize(); AssignOrReplace(ref _aksAssignedIdentity, value); }
@@ -53,21 +44,21 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     private ManagedServiceIdentity? _aksAssignedIdentity;
 
     /// <summary>
-    /// The upgrade mode for auto upgrade.             The default is
-    /// &quot;compatible&quot;.
+    /// Flag to note if this extension participates in auto upgrade of minor
+    /// version, or not.
     /// </summary>
-    public BicepValue<KubernetesClusterAutoUpgradeMode> AutoUpgradeMode
+    public BicepValue<bool> AutoUpgradeMinorVersion 
     {
-        get { Initialize(); return _autoUpgradeMode!; }
-        set { Initialize(); _autoUpgradeMode!.Assign(value); }
+        get { Initialize(); return _autoUpgradeMinorVersion!; }
+        set { Initialize(); _autoUpgradeMinorVersion!.Assign(value); }
     }
-    private BicepValue<KubernetesClusterAutoUpgradeMode>? _autoUpgradeMode;
+    private BicepValue<bool>? _autoUpgradeMinorVersion;
 
     /// <summary>
     /// Configuration settings that are sensitive, as name-value pairs for
     /// configuring this extension.
     /// </summary>
-    public BicepDictionary<string> ConfigurationProtectedSettings
+    public BicepDictionary<string> ConfigurationProtectedSettings 
     {
         get { Initialize(); return _configurationProtectedSettings!; }
         set { Initialize(); _configurationProtectedSettings!.Assign(value); }
@@ -78,7 +69,7 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     /// Configuration settings, as name-value pairs for configuring this
     /// extension.
     /// </summary>
-    public BicepDictionary<string> ConfigurationSettings
+    public BicepDictionary<string> ConfigurationSettings 
     {
         get { Initialize(); return _configurationSettings!; }
         set { Initialize(); _configurationSettings!.Assign(value); }
@@ -90,7 +81,7 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     /// must be one of the Extension Types registered with
     /// Microsoft.KubernetesConfiguration by the Extension publisher.
     /// </summary>
-    public BicepValue<string> ExtensionType
+    public BicepValue<string> ExtensionType 
     {
         get { Initialize(); return _extensionType!; }
         set { Initialize(); _extensionType!.Assign(value); }
@@ -98,9 +89,10 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     private BicepValue<string>? _extensionType;
 
     /// <summary>
-    /// Identity of the Extension resource.
+    /// Identity of the Extension resource. Current supported identity types:
+    /// SystemAssigned.
     /// </summary>
-    public ManagedServiceIdentity Identity
+    public ManagedServiceIdentity Identity 
     {
         get { Initialize(); return _identity!; }
         set { Initialize(); AssignOrReplace(ref _identity, value); }
@@ -108,44 +100,9 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     private ManagedServiceIdentity? _identity;
 
     /// <summary>
-    /// Flag to note if this extension participates in auto upgrade of minor
-    /// version, or not.
+    /// The plan information.
     /// </summary>
-    public BicepValue<bool> IsAutoUpgradeMinorVersionEnabled
-    {
-        get { Initialize(); return _isAutoUpgradeMinorVersionEnabled!; }
-        set { Initialize(); _isAutoUpgradeMinorVersionEnabled!.Assign(value); }
-    }
-    private BicepValue<bool>? _isAutoUpgradeMinorVersionEnabled;
-
-    /// <summary>
-    /// The fully qualified resource ID of the resource that manages this
-    /// resource. Indicates if this resource is managed by another Azure
-    /// resource. If this is present, complete mode deployment will not delete
-    /// the resource if it is removed from the template since it is managed by
-    /// another resource.
-    /// </summary>
-    public BicepValue<ResourceIdentifier> ManagedBy
-    {
-        get { Initialize(); return _managedBy!; }
-        set { Initialize(); _managedBy!.Assign(value); }
-    }
-    private BicepValue<ResourceIdentifier>? _managedBy;
-
-    /// <summary>
-    /// Management details of the extension.
-    /// </summary>
-    public KubernetesClusterManagementDetails ManagementDetails
-    {
-        get { Initialize(); return _managementDetails!; }
-        set { Initialize(); AssignOrReplace(ref _managementDetails, value); }
-    }
-    private KubernetesClusterManagementDetails? _managementDetails;
-
-    /// <summary>
-    /// Details of the resource plan.
-    /// </summary>
-    public ArmPlan Plan
+    public ArmPlan Plan 
     {
         get { Initialize(); return _plan!; }
         set { Initialize(); AssignOrReplace(ref _plan, value); }
@@ -157,7 +114,7 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     /// Stable, Preview, etc.) - only if autoUpgradeMinorVersion is
     /// &apos;true&apos;.
     /// </summary>
-    public BicepValue<string> ReleaseTrain
+    public BicepValue<string> ReleaseTrain 
     {
         get { Initialize(); return _releaseTrain!; }
         set { Initialize(); _releaseTrain!.Assign(value); }
@@ -167,7 +124,7 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     /// <summary>
     /// Scope at which the extension is installed.
     /// </summary>
-    public KubernetesClusterExtensionScope Scope
+    public KubernetesClusterExtensionScope Scope 
     {
         get { Initialize(); return _scope!; }
         set { Initialize(); AssignOrReplace(ref _scope, value); }
@@ -177,7 +134,7 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     /// <summary>
     /// Status from this extension.
     /// </summary>
-    public BicepList<KubernetesClusterExtensionStatus> Statuses
+    public BicepList<KubernetesClusterExtensionStatus> Statuses 
     {
         get { Initialize(); return _statuses!; }
         set { Initialize(); _statuses!.Assign(value); }
@@ -189,7 +146,7 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     /// &apos;pin&apos;. To use &apos;version&apos;, autoUpgradeMinorVersion
     /// must be &apos;false&apos;.
     /// </summary>
-    public BicepValue<string> Version
+    public BicepValue<string> Version 
     {
         get { Initialize(); return _version!; }
         set { Initialize(); _version!.Assign(value); }
@@ -199,7 +156,7 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     /// <summary>
     /// Currently installed version of the extension.
     /// </summary>
-    public BicepValue<string> CurrentVersion
+    public BicepValue<string> CurrentVersion 
     {
         get { Initialize(); return _currentVersion!; }
     }
@@ -208,7 +165,7 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     /// <summary>
     /// Custom Location settings properties.
     /// </summary>
-    public BicepDictionary<string> CustomLocationSettings
+    public BicepDictionary<string> CustomLocationSettings 
     {
         get { Initialize(); return _customLocationSettings!; }
     }
@@ -217,25 +174,16 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     /// <summary>
     /// Error information from the Agent - e.g. errors during installation.
     /// </summary>
-    public BicepValue<ResponseError> ErrorInfo
+    public BicepValue<ResponseError> ErrorInfo 
     {
         get { Initialize(); return _errorInfo!; }
     }
     private BicepValue<ResponseError>? _errorInfo;
 
     /// <summary>
-    /// State of the extension on the cluster.
-    /// </summary>
-    public BicepValue<string> ExtensionState
-    {
-        get { Initialize(); return _extensionState!; }
-    }
-    private BicepValue<string>? _extensionState;
-
-    /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id
+    public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
     }
@@ -244,7 +192,7 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     /// <summary>
     /// Flag to note if this extension is a system extension.
     /// </summary>
-    public BicepValue<bool> IsSystemExtension
+    public BicepValue<bool> IsSystemExtension 
     {
         get { Initialize(); return _isSystemExtension!; }
     }
@@ -253,7 +201,7 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     /// <summary>
     /// Uri of the Helm package.
     /// </summary>
-    public BicepValue<Uri> PackageUri
+    public BicepValue<Uri> PackageUri 
     {
         get { Initialize(); return _packageUri!; }
     }
@@ -262,7 +210,7 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     /// <summary>
     /// Status of installation of this extension.
     /// </summary>
-    public BicepValue<KubernetesConfigurationProvisioningState> ProvisioningState
+    public BicepValue<KubernetesConfigurationProvisioningState> ProvisioningState 
     {
         get { Initialize(); return _provisioningState!; }
     }
@@ -271,7 +219,7 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public SystemData SystemData
+    public SystemData SystemData 
     {
         get { Initialize(); return _systemData!; }
     }
@@ -288,7 +236,7 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the KubernetesClusterExtension.</param>
     public KubernetesClusterExtension(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.KubernetesConfiguration/extensions", resourceVersion ?? "2025-03-01")
+        : base(bicepIdentifier, "Microsoft.KubernetesConfiguration/extensions", resourceVersion ?? "2024-11-01")
     {
     }
 
@@ -299,16 +247,12 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _additionalDetails = DefineModelProperty<KubernetesClusterAdditionalDetails>("AdditionalDetails", ["AdditionalDetails"]);
         _aksAssignedIdentity = DefineModelProperty<ManagedServiceIdentity>("AksAssignedIdentity", ["AksAssignedIdentity"]);
-        _autoUpgradeMode = DefineProperty<KubernetesClusterAutoUpgradeMode>("AutoUpgradeMode", ["AutoUpgradeMode"]);
+        _autoUpgradeMinorVersion = DefineProperty<bool>("AutoUpgradeMinorVersion", ["AutoUpgradeMinorVersion"]);
         _configurationProtectedSettings = DefineDictionaryProperty<string>("ConfigurationProtectedSettings", ["ConfigurationProtectedSettings"]);
         _configurationSettings = DefineDictionaryProperty<string>("ConfigurationSettings", ["ConfigurationSettings"]);
         _extensionType = DefineProperty<string>("ExtensionType", ["ExtensionType"]);
         _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["Identity"]);
-        _isAutoUpgradeMinorVersionEnabled = DefineProperty<bool>("IsAutoUpgradeMinorVersionEnabled", ["IsAutoUpgradeMinorVersionEnabled"]);
-        _managedBy = DefineProperty<ResourceIdentifier>("ManagedBy", ["ManagedBy"]);
-        _managementDetails = DefineModelProperty<KubernetesClusterManagementDetails>("ManagementDetails", ["ManagementDetails"]);
         _plan = DefineModelProperty<ArmPlan>("Plan", ["Plan"]);
         _releaseTrain = DefineProperty<string>("ReleaseTrain", ["ReleaseTrain"]);
         _scope = DefineModelProperty<KubernetesClusterExtensionScope>("Scope", ["Scope"]);
@@ -317,7 +261,6 @@ public partial class KubernetesClusterExtension : ProvisionableResource
         _currentVersion = DefineProperty<string>("CurrentVersion", ["CurrentVersion"], isOutput: true);
         _customLocationSettings = DefineDictionaryProperty<string>("CustomLocationSettings", ["CustomLocationSettings"], isOutput: true);
         _errorInfo = DefineProperty<ResponseError>("ErrorInfo", ["ErrorInfo"], isOutput: true);
-        _extensionState = DefineProperty<string>("ExtensionState", ["ExtensionState"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _isSystemExtension = DefineProperty<bool>("IsSystemExtension", ["IsSystemExtension"], isOutput: true);
         _packageUri = DefineProperty<Uri>("PackageUri", ["PackageUri"], isOutput: true);
@@ -330,11 +273,6 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2025-03-01.
-        /// </summary>
-        public static readonly string V2025_03_01 = "2025-03-01";
-
         /// <summary>
         /// 2024-11-01.
         /// </summary>

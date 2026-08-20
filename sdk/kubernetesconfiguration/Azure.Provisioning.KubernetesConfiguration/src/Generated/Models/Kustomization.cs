@@ -21,7 +21,7 @@ public partial class Kustomization : ProvisionableConstruct
     /// Name of the Kustomization, matching the key in the Kustomizations
     /// object map.
     /// </summary>
-    public BicepValue<string> Name
+    public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
     }
@@ -30,7 +30,7 @@ public partial class Kustomization : ProvisionableConstruct
     /// <summary>
     /// The path in the source reference to reconcile on the cluster.
     /// </summary>
-    public BicepValue<string> Path
+    public BicepValue<string> Path 
     {
         get { Initialize(); return _path!; }
         set { Initialize(); _path!.Assign(value); }
@@ -42,7 +42,7 @@ public partial class Kustomization : ProvisionableConstruct
     /// Kustomization will not reconcile until all dependencies have completed
     /// their reconciliation.
     /// </summary>
-    public BicepList<string> DependsOn
+    public BicepList<string> DependsOn 
     {
         get { Initialize(); return _dependsOn!; }
         set { Initialize(); _dependsOn!.Assign(value); }
@@ -53,7 +53,7 @@ public partial class Kustomization : ProvisionableConstruct
     /// The maximum time to attempt to reconcile the Kustomization on the
     /// cluster.
     /// </summary>
-    public BicepValue<long> TimeoutInSeconds
+    public BicepValue<long> TimeoutInSeconds 
     {
         get { Initialize(); return _timeoutInSeconds!; }
         set { Initialize(); _timeoutInSeconds!.Assign(value); }
@@ -63,7 +63,7 @@ public partial class Kustomization : ProvisionableConstruct
     /// <summary>
     /// The interval at which to re-reconcile the Kustomization on the cluster.
     /// </summary>
-    public BicepValue<long> SyncIntervalInSeconds
+    public BicepValue<long> SyncIntervalInSeconds 
     {
         get { Initialize(); return _syncIntervalInSeconds!; }
         set { Initialize(); _syncIntervalInSeconds!.Assign(value); }
@@ -74,7 +74,7 @@ public partial class Kustomization : ProvisionableConstruct
     /// The interval at which to re-reconcile the Kustomization on the cluster
     /// in the event of failure on reconciliation.
     /// </summary>
-    public BicepValue<long> RetryIntervalInSeconds
+    public BicepValue<long> RetryIntervalInSeconds 
     {
         get { Initialize(); return _retryIntervalInSeconds!; }
         set { Initialize(); _retryIntervalInSeconds!.Assign(value); }
@@ -85,45 +85,23 @@ public partial class Kustomization : ProvisionableConstruct
     /// Enable/disable garbage collections of Kubernetes objects created by
     /// this Kustomization.
     /// </summary>
-    public BicepValue<bool> IsPrune
+    public BicepValue<bool> Prune 
     {
-        get { Initialize(); return _isPrune!; }
-        set { Initialize(); _isPrune!.Assign(value); }
+        get { Initialize(); return _prune!; }
+        set { Initialize(); _prune!.Assign(value); }
     }
-    private BicepValue<bool>? _isPrune;
+    private BicepValue<bool>? _prune;
 
     /// <summary>
     /// Enable/disable re-creating Kubernetes resources on the cluster when
     /// patching fails due to an immutable field change.
     /// </summary>
-    public BicepValue<bool> IsForce
+    public BicepValue<bool> Force 
     {
-        get { Initialize(); return _isForce!; }
-        set { Initialize(); _isForce!.Assign(value); }
+        get { Initialize(); return _force!; }
+        set { Initialize(); _force!.Assign(value); }
     }
-    private BicepValue<bool>? _isForce;
-
-    /// <summary>
-    /// Enable/disable health check for all Kubernetes objects created by this
-    /// Kustomization.
-    /// </summary>
-    public BicepValue<bool> IsWait
-    {
-        get { Initialize(); return _isWait!; }
-        set { Initialize(); _isWait!.Assign(value); }
-    }
-    private BicepValue<bool>? _isWait;
-
-    /// <summary>
-    /// Used for variable substitution for this Kustomization after kustomize
-    /// build.
-    /// </summary>
-    public FluxPostBuild PostBuild
-    {
-        get { Initialize(); return _postBuild!; }
-        set { Initialize(); AssignOrReplace(ref _postBuild, value); }
-    }
-    private FluxPostBuild? _postBuild;
+    private BicepValue<bool>? _force;
 
     /// <summary>
     /// Creates a new Kustomization.
@@ -144,9 +122,7 @@ public partial class Kustomization : ProvisionableConstruct
         _timeoutInSeconds = DefineProperty<long>("TimeoutInSeconds", ["TimeoutInSeconds"]);
         _syncIntervalInSeconds = DefineProperty<long>("SyncIntervalInSeconds", ["SyncIntervalInSeconds"]);
         _retryIntervalInSeconds = DefineProperty<long>("RetryIntervalInSeconds", ["RetryIntervalInSeconds"]);
-        _isPrune = DefineProperty<bool>("IsPrune", ["IsPrune"]);
-        _isForce = DefineProperty<bool>("IsForce", ["IsForce"]);
-        _isWait = DefineProperty<bool>("IsWait", ["IsWait"]);
-        _postBuild = DefineModelProperty<FluxPostBuild>("PostBuild", ["PostBuild"]);
+        _prune = DefineProperty<bool>("Prune", ["Prune"]);
+        _force = DefineProperty<bool>("Force", ["Force"]);
     }
 }

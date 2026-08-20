@@ -13,32 +13,32 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// <summary>
 /// Parameters to authenticate using Service Principal.
 /// </summary>
-public partial class FluxServicePrincipal : ProvisionableConstruct
+public partial class KubernetesServicePrincipal : ProvisionableConstruct
 {
     /// <summary>
     /// The client Id for authenticating a Service Principal.
     /// </summary>
-    public BicepValue<string> ClientId
+    public BicepValue<Guid> ClientId 
     {
         get { Initialize(); return _clientId!; }
         set { Initialize(); _clientId!.Assign(value); }
     }
-    private BicepValue<string>? _clientId;
+    private BicepValue<Guid>? _clientId;
 
     /// <summary>
     /// The tenant Id for authenticating a Service Principal.
     /// </summary>
-    public BicepValue<string> TenantId
+    public BicepValue<Guid> TenantId 
     {
         get { Initialize(); return _tenantId!; }
         set { Initialize(); _tenantId!.Assign(value); }
     }
-    private BicepValue<string>? _tenantId;
+    private BicepValue<Guid>? _tenantId;
 
     /// <summary>
     /// The client secret for authenticating a Service Principal.
     /// </summary>
-    public BicepValue<string> ClientSecret
+    public BicepValue<string> ClientSecret 
     {
         get { Initialize(); return _clientSecret!; }
         set { Initialize(); _clientSecret!.Assign(value); }
@@ -48,7 +48,7 @@ public partial class FluxServicePrincipal : ProvisionableConstruct
     /// <summary>
     /// Base64-encoded certificate used to authenticate a Service Principal.
     /// </summary>
-    public BicepValue<string> ClientCertificate
+    public BicepValue<string> ClientCertificate 
     {
         get { Initialize(); return _clientCertificate!; }
         set { Initialize(); _clientCertificate!.Assign(value); }
@@ -59,7 +59,7 @@ public partial class FluxServicePrincipal : ProvisionableConstruct
     /// The password for the certificate used to authenticate a Service
     /// Principal.
     /// </summary>
-    public BicepValue<string> ClientCertificatePassword
+    public BicepValue<string> ClientCertificatePassword 
     {
         get { Initialize(); return _clientCertificatePassword!; }
         set { Initialize(); _clientCertificatePassword!.Assign(value); }
@@ -71,31 +71,31 @@ public partial class FluxServicePrincipal : ProvisionableConstruct
     /// a token to enable subject name / issuer based authentication for the
     /// Client Certificate.
     /// </summary>
-    public BicepValue<bool> IsClientCertificateSendChain
+    public BicepValue<bool> ClientCertificateSendChain 
     {
-        get { Initialize(); return _isClientCertificateSendChain!; }
-        set { Initialize(); _isClientCertificateSendChain!.Assign(value); }
+        get { Initialize(); return _clientCertificateSendChain!; }
+        set { Initialize(); _clientCertificateSendChain!.Assign(value); }
     }
-    private BicepValue<bool>? _isClientCertificateSendChain;
+    private BicepValue<bool>? _clientCertificateSendChain;
 
     /// <summary>
-    /// Creates a new FluxServicePrincipal.
+    /// Creates a new KubernetesServicePrincipal.
     /// </summary>
-    public FluxServicePrincipal()
+    public KubernetesServicePrincipal()
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of FluxServicePrincipal.
+    /// Define all the provisionable properties of KubernetesServicePrincipal.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _clientId = DefineProperty<string>("ClientId", ["ClientId"]);
-        _tenantId = DefineProperty<string>("TenantId", ["TenantId"]);
+        _clientId = DefineProperty<Guid>("ClientId", ["ClientId"]);
+        _tenantId = DefineProperty<Guid>("TenantId", ["TenantId"]);
         _clientSecret = DefineProperty<string>("ClientSecret", ["ClientSecret"]);
         _clientCertificate = DefineProperty<string>("ClientCertificate", ["ClientCertificate"]);
         _clientCertificatePassword = DefineProperty<string>("ClientCertificatePassword", ["ClientCertificatePassword"]);
-        _isClientCertificateSendChain = DefineProperty<bool>("IsClientCertificateSendChain", ["IsClientCertificateSendChain"]);
+        _clientCertificateSendChain = DefineProperty<bool>("ClientCertificateSendChain", ["ClientCertificateSendChain"]);
     }
 }

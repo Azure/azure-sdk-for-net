@@ -8,20 +8,19 @@ using System.Runtime.Serialization;
 namespace Azure.Provisioning.KubernetesConfiguration;
 
 /// <summary>
-/// The operation to be performed on the selected layer. The default value is
-/// &apos;extract&apos;, but it can be set to &apos;copy&apos;.
+/// Scope at which the configuration will be installed.
 /// </summary>
-public enum FluxConfigurationOperationType
+public enum KubernetesConfigurationScope
 {
     /// <summary>
-    /// extract.
+    /// cluster.
     /// </summary>
-    [DataMember(Name = "extract")]
-    Extract,
+    [DataMember(Name = "cluster")]
+    Cluster,
 
     /// <summary>
-    /// copy.
+    /// namespace.
     /// </summary>
-    [DataMember(Name = "copy")]
-    Copy,
+    [DataMember(Name = "namespace")]
+    Namespace,
 }

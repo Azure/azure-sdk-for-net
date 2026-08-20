@@ -10,8 +10,6 @@
 
 ### Other Changes
 
-- Regenerated from the replacement `Azure.ResourceManager.KubernetesConfiguration.Extensions` and `Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations` packages.
-
 ## 1.0.0-beta.3 (2025-06-16)
 
 ### Features Added

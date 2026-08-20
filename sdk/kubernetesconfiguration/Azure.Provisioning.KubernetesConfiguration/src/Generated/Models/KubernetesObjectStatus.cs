@@ -15,12 +15,12 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// Statuses of objects deployed by the user-specified kustomizations from the
 /// git repository.
 /// </summary>
-public partial class FluxObjectStatus : ProvisionableConstruct
+public partial class KubernetesObjectStatus : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the applied object.
     /// </summary>
-    public BicepValue<string> Name
+    public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
     }
@@ -29,7 +29,7 @@ public partial class FluxObjectStatus : ProvisionableConstruct
     /// <summary>
     /// Namespace of the applied object.
     /// </summary>
-    public BicepValue<string> Namespace
+    public BicepValue<string> Namespace 
     {
         get { Initialize(); return _namespace!; }
     }
@@ -38,7 +38,7 @@ public partial class FluxObjectStatus : ProvisionableConstruct
     /// <summary>
     /// Kind of the applied object.
     /// </summary>
-    public BicepValue<string> Kind
+    public BicepValue<string> Kind 
     {
         get { Initialize(); return _kind!; }
     }
@@ -48,50 +48,49 @@ public partial class FluxObjectStatus : ProvisionableConstruct
     /// Compliance state of the applied object showing whether the applied
     /// object has come into a ready state on the cluster.
     /// </summary>
-    public BicepValue<FluxComplianceState> ComplianceState
+    public BicepValue<KubernetesFluxComplianceState> ComplianceState 
     {
         get { Initialize(); return _complianceState!; }
     }
-    private BicepValue<FluxComplianceState>? _complianceState;
+    private BicepValue<KubernetesFluxComplianceState>? _complianceState;
 
     /// <summary>
     /// Object reference to the Kustomization that applied this object.
     /// </summary>
-    public FluxObjectReference AppliedBy
+    public KubernetesObjectReference AppliedBy 
     {
         get { Initialize(); return _appliedBy!; }
     }
-    private FluxObjectReference? _appliedBy;
+    private KubernetesObjectReference? _appliedBy;
 
     /// <summary>
     /// List of Kubernetes object status conditions present on the cluster.
     /// </summary>
-    public BicepList<FluxObjectStatusCondition> StatusConditions
+    public BicepList<KubernetesObjectStatusCondition> StatusConditions 
     {
         get { Initialize(); return _statusConditions!; }
-        set { Initialize(); _statusConditions!.Assign(value); }
     }
-    private BicepList<FluxObjectStatusCondition>? _statusConditions;
+    private BicepList<KubernetesObjectStatusCondition>? _statusConditions;
 
     /// <summary>
     /// Additional properties that are provided from objects of the HelmRelease
     /// kind.
     /// </summary>
-    public HelmReleaseProperties HelmReleaseProperties
+    public HelmReleaseProperties HelmReleaseProperties 
     {
         get { Initialize(); return _helmReleaseProperties!; }
     }
     private HelmReleaseProperties? _helmReleaseProperties;
 
     /// <summary>
-    /// Creates a new FluxObjectStatus.
+    /// Creates a new KubernetesObjectStatus.
     /// </summary>
-    public FluxObjectStatus()
+    public KubernetesObjectStatus()
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of FluxObjectStatus.
+    /// Define all the provisionable properties of KubernetesObjectStatus.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
@@ -99,9 +98,9 @@ public partial class FluxObjectStatus : ProvisionableConstruct
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _namespace = DefineProperty<string>("Namespace", ["Namespace"], isOutput: true);
         _kind = DefineProperty<string>("Kind", ["Kind"], isOutput: true);
-        _complianceState = DefineProperty<FluxComplianceState>("ComplianceState", ["ComplianceState"], isOutput: true);
-        _appliedBy = DefineModelProperty<FluxObjectReference>("AppliedBy", ["AppliedBy"], isOutput: true);
-        _statusConditions = DefineListProperty<FluxObjectStatusCondition>("StatusConditions", ["StatusConditions"]);
+        _complianceState = DefineProperty<KubernetesFluxComplianceState>("ComplianceState", ["ComplianceState"], isOutput: true);
+        _appliedBy = DefineModelProperty<KubernetesObjectReference>("AppliedBy", ["AppliedBy"], isOutput: true);
+        _statusConditions = DefineListProperty<KubernetesObjectStatusCondition>("StatusConditions", ["StatusConditions"], isOutput: true);
         _helmReleaseProperties = DefineModelProperty<HelmReleaseProperties>("HelmReleaseProperties", ["HelmReleaseProperties"], isOutput: true);
     }
 }

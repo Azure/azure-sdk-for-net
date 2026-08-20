@@ -13,12 +13,12 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// <summary>
 /// The source reference for the GitRepository object.
 /// </summary>
-public partial class FluxRepositoryReference : ProvisionableConstruct
+public partial class KubernetesGitRepositoryRef : ProvisionableConstruct
 {
     /// <summary>
     /// The git repository branch name to checkout.
     /// </summary>
-    public BicepValue<string> Branch
+    public BicepValue<string> Branch 
     {
         get { Initialize(); return _branch!; }
         set { Initialize(); _branch!.Assign(value); }
@@ -29,7 +29,7 @@ public partial class FluxRepositoryReference : ProvisionableConstruct
     /// The git repository tag name to checkout. This takes precedence over
     /// branch.
     /// </summary>
-    public BicepValue<string> Tag
+    public BicepValue<string> Tag 
     {
         get { Initialize(); return _tag!; }
         set { Initialize(); _tag!.Assign(value); }
@@ -40,7 +40,7 @@ public partial class FluxRepositoryReference : ProvisionableConstruct
     /// The semver range used to match against git repository tags. This takes
     /// precedence over tag.
     /// </summary>
-    public BicepValue<string> Semver
+    public BicepValue<string> Semver 
     {
         get { Initialize(); return _semver!; }
         set { Initialize(); _semver!.Assign(value); }
@@ -51,7 +51,7 @@ public partial class FluxRepositoryReference : ProvisionableConstruct
     /// The commit SHA to checkout. This value must be combined with the branch
     /// name to be valid. This takes precedence over semver.
     /// </summary>
-    public BicepValue<string> Commit
+    public BicepValue<string> Commit 
     {
         get { Initialize(); return _commit!; }
         set { Initialize(); _commit!.Assign(value); }
@@ -59,14 +59,14 @@ public partial class FluxRepositoryReference : ProvisionableConstruct
     private BicepValue<string>? _commit;
 
     /// <summary>
-    /// Creates a new FluxRepositoryReference.
+    /// Creates a new KubernetesGitRepositoryRef.
     /// </summary>
-    public FluxRepositoryReference()
+    public KubernetesGitRepositoryRef()
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of FluxRepositoryReference.
+    /// Define all the provisionable properties of KubernetesGitRepositoryRef.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {

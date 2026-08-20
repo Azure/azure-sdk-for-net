@@ -13,12 +13,12 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// <summary>
 /// Object reference to a Kubernetes object on a cluster.
 /// </summary>
-public partial class FluxObjectReference : ProvisionableConstruct
+public partial class KubernetesObjectReference : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the object.
     /// </summary>
-    public BicepValue<string> Name
+    public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
     }
@@ -27,21 +27,21 @@ public partial class FluxObjectReference : ProvisionableConstruct
     /// <summary>
     /// Namespace of the object.
     /// </summary>
-    public BicepValue<string> Namespace
+    public BicepValue<string> Namespace 
     {
         get { Initialize(); return _namespace!; }
     }
     private BicepValue<string>? _namespace;
 
     /// <summary>
-    /// Creates a new FluxObjectReference.
+    /// Creates a new KubernetesObjectReference.
     /// </summary>
-    public FluxObjectReference()
+    public KubernetesObjectReference()
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of FluxObjectReference.
+    /// Define all the provisionable properties of KubernetesObjectReference.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {

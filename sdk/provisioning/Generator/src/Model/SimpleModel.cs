@@ -70,7 +70,7 @@ public class SimpleModel(Specification spec, Type armType, string name, string? 
                             string orSets = property.IsReadOnly ? "" : " or sets";
                             writer.WriteWrapped(property.Description ?? $"Gets{orSets} the {property.Name}.");
                             writer.WriteLine($"/// </summary>");
-                            writer.WriteLine($"public {property.BicepTypeReference} {property.Name}");
+                            writer.WriteLine($"public {property.BicepTypeReference} {property.Name} ");
                             using (writer.Scope("{", "}"))
                             {
                                 writer.WriteLine($"get {{ Initialize(); return {property.FieldName}!; }}");

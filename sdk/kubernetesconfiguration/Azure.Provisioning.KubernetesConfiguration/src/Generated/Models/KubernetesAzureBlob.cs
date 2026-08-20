@@ -13,23 +13,23 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// <summary>
 /// Parameters to reconcile to the AzureBlob source kind type.
 /// </summary>
-public partial class AzureBlob : ProvisionableConstruct
+public partial class KubernetesAzureBlob : ProvisionableConstruct
 {
     /// <summary>
     /// The URL to sync for the flux configuration Azure Blob storage account.
     /// </summary>
-    public BicepValue<string> Uri
+    public BicepValue<Uri> Uri 
     {
         get { Initialize(); return _uri!; }
         set { Initialize(); _uri!.Assign(value); }
     }
-    private BicepValue<string>? _uri;
+    private BicepValue<Uri>? _uri;
 
     /// <summary>
     /// The Azure Blob container name to sync from the url endpoint for the
     /// flux configuration.
     /// </summary>
-    public BicepValue<string> ContainerName
+    public BicepValue<string> ContainerName 
     {
         get { Initialize(); return _containerName!; }
         set { Initialize(); _containerName!.Assign(value); }
@@ -40,7 +40,7 @@ public partial class AzureBlob : ProvisionableConstruct
     /// The maximum time to attempt to reconcile the cluster Azure Blob source
     /// with the remote.
     /// </summary>
-    public BicepValue<long> TimeoutInSeconds
+    public BicepValue<long> TimeoutInSeconds 
     {
         get { Initialize(); return _timeoutInSeconds!; }
         set { Initialize(); _timeoutInSeconds!.Assign(value); }
@@ -51,7 +51,7 @@ public partial class AzureBlob : ProvisionableConstruct
     /// The interval at which to re-reconcile the cluster Azure Blob source
     /// with the remote.
     /// </summary>
-    public BicepValue<long> SyncIntervalInSeconds
+    public BicepValue<long> SyncIntervalInSeconds 
     {
         get { Initialize(); return _syncIntervalInSeconds!; }
         set { Initialize(); _syncIntervalInSeconds!.Assign(value); }
@@ -61,17 +61,17 @@ public partial class AzureBlob : ProvisionableConstruct
     /// <summary>
     /// Parameters to authenticate using Service Principal.
     /// </summary>
-    public FluxServicePrincipal ServicePrincipal
+    public KubernetesServicePrincipal ServicePrincipal 
     {
         get { Initialize(); return _servicePrincipal!; }
         set { Initialize(); AssignOrReplace(ref _servicePrincipal, value); }
     }
-    private FluxServicePrincipal? _servicePrincipal;
+    private KubernetesServicePrincipal? _servicePrincipal;
 
     /// <summary>
     /// The account key (shared key) to access the storage account.
     /// </summary>
-    public BicepValue<string> AccountKey
+    public BicepValue<string> AccountKey 
     {
         get { Initialize(); return _accountKey!; }
         set { Initialize(); _accountKey!.Assign(value); }
@@ -81,7 +81,7 @@ public partial class AzureBlob : ProvisionableConstruct
     /// <summary>
     /// The Shared Access token to access the storage container.
     /// </summary>
-    public BicepValue<string> SasToken
+    public BicepValue<string> SasToken 
     {
         get { Initialize(); return _sasToken!; }
         set { Initialize(); _sasToken!.Assign(value); }
@@ -89,11 +89,21 @@ public partial class AzureBlob : ProvisionableConstruct
     private BicepValue<string>? _sasToken;
 
     /// <summary>
+    /// The client Id for authenticating a Managed Identity.
+    /// </summary>
+    public BicepValue<Guid> ManagedIdentityClientId 
+    {
+        get { Initialize(); return _managedIdentityClientId!; }
+        set { Initialize(); _managedIdentityClientId!.Assign(value); }
+    }
+    private BicepValue<Guid>? _managedIdentityClientId;
+
+    /// <summary>
     /// Name of a local secret on the Kubernetes cluster to use as the
     /// authentication secret rather than the managed or user-provided
     /// configuration secrets.
     /// </summary>
-    public BicepValue<string> LocalAuthRef
+    public BicepValue<string> LocalAuthRef 
     {
         get { Initialize(); return _localAuthRef!; }
         set { Initialize(); _localAuthRef!.Assign(value); }
@@ -101,36 +111,26 @@ public partial class AzureBlob : ProvisionableConstruct
     private BicepValue<string>? _localAuthRef;
 
     /// <summary>
-    /// The client Id for authenticating a Managed Identity.
+    /// Creates a new KubernetesAzureBlob.
     /// </summary>
-    public BicepValue<string> ManagedIdentityClientId
-    {
-        get { Initialize(); return _managedIdentityClientId!; }
-        set { Initialize(); _managedIdentityClientId!.Assign(value); }
-    }
-    private BicepValue<string>? _managedIdentityClientId;
-
-    /// <summary>
-    /// Creates a new AzureBlob.
-    /// </summary>
-    public AzureBlob()
+    public KubernetesAzureBlob()
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of AzureBlob.
+    /// Define all the provisionable properties of KubernetesAzureBlob.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _uri = DefineProperty<string>("Uri", ["Uri"]);
+        _uri = DefineProperty<Uri>("Uri", ["Uri"]);
         _containerName = DefineProperty<string>("ContainerName", ["ContainerName"]);
         _timeoutInSeconds = DefineProperty<long>("TimeoutInSeconds", ["TimeoutInSeconds"]);
         _syncIntervalInSeconds = DefineProperty<long>("SyncIntervalInSeconds", ["SyncIntervalInSeconds"]);
-        _servicePrincipal = DefineModelProperty<FluxServicePrincipal>("ServicePrincipal", ["ServicePrincipal"]);
+        _servicePrincipal = DefineModelProperty<KubernetesServicePrincipal>("ServicePrincipal", ["ServicePrincipal"]);
         _accountKey = DefineProperty<string>("AccountKey", ["AccountKey"]);
         _sasToken = DefineProperty<string>("SasToken", ["SasToken"]);
+        _managedIdentityClientId = DefineProperty<Guid>("ManagedIdentityClientId", ["ManagedIdentityClientId"]);
         _localAuthRef = DefineProperty<string>("LocalAuthRef", ["LocalAuthRef"]);
-        _managedIdentityClientId = DefineProperty<string>("ManagedIdentityClientId", ["ManagedIdentityClientId"]);
     }
 }

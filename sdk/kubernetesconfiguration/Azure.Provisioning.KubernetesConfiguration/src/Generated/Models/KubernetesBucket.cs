@@ -13,23 +13,23 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// <summary>
 /// Parameters to reconcile to the Bucket source kind type.
 /// </summary>
-public partial class FluxBucket : ProvisionableConstruct
+public partial class KubernetesBucket : ProvisionableConstruct
 {
     /// <summary>
     /// The URL to sync for the flux configuration S3 bucket.
     /// </summary>
-    public BicepValue<string> Uri
+    public BicepValue<Uri> Uri 
     {
         get { Initialize(); return _uri!; }
         set { Initialize(); _uri!.Assign(value); }
     }
-    private BicepValue<string>? _uri;
+    private BicepValue<Uri>? _uri;
 
     /// <summary>
     /// The bucket name to sync from the url endpoint for the flux
     /// configuration.
     /// </summary>
-    public BicepValue<string> BucketName
+    public BicepValue<string> BucketName 
     {
         get { Initialize(); return _bucketName!; }
         set { Initialize(); _bucketName!.Assign(value); }
@@ -40,18 +40,18 @@ public partial class FluxBucket : ProvisionableConstruct
     /// Specify whether to use insecure communication when puling data from the
     /// S3 bucket.
     /// </summary>
-    public BicepValue<bool> IsInsecure
+    public BicepValue<bool> UseInsecureCommunication 
     {
-        get { Initialize(); return _isInsecure!; }
-        set { Initialize(); _isInsecure!.Assign(value); }
+        get { Initialize(); return _useInsecureCommunication!; }
+        set { Initialize(); _useInsecureCommunication!.Assign(value); }
     }
-    private BicepValue<bool>? _isInsecure;
+    private BicepValue<bool>? _useInsecureCommunication;
 
     /// <summary>
     /// The maximum time to attempt to reconcile the cluster bucket source with
     /// the remote.
     /// </summary>
-    public BicepValue<long> TimeoutInSeconds
+    public BicepValue<long> TimeoutInSeconds 
     {
         get { Initialize(); return _timeoutInSeconds!; }
         set { Initialize(); _timeoutInSeconds!.Assign(value); }
@@ -62,7 +62,7 @@ public partial class FluxBucket : ProvisionableConstruct
     /// The interval at which to re-reconcile the cluster bucket source with
     /// the remote.
     /// </summary>
-    public BicepValue<long> SyncIntervalInSeconds
+    public BicepValue<long> SyncIntervalInSeconds 
     {
         get { Initialize(); return _syncIntervalInSeconds!; }
         set { Initialize(); _syncIntervalInSeconds!.Assign(value); }
@@ -72,7 +72,7 @@ public partial class FluxBucket : ProvisionableConstruct
     /// <summary>
     /// Plaintext access key used to securely access the S3 bucket.
     /// </summary>
-    public BicepValue<string> AccessKey
+    public BicepValue<string> AccessKey 
     {
         get { Initialize(); return _accessKey!; }
         set { Initialize(); _accessKey!.Assign(value); }
@@ -84,7 +84,7 @@ public partial class FluxBucket : ProvisionableConstruct
     /// authentication secret rather than the managed or user-provided
     /// configuration secrets.
     /// </summary>
-    public BicepValue<string> LocalAuthRef
+    public BicepValue<string> LocalAuthRef 
     {
         get { Initialize(); return _localAuthRef!; }
         set { Initialize(); _localAuthRef!.Assign(value); }
@@ -92,21 +92,21 @@ public partial class FluxBucket : ProvisionableConstruct
     private BicepValue<string>? _localAuthRef;
 
     /// <summary>
-    /// Creates a new FluxBucket.
+    /// Creates a new KubernetesBucket.
     /// </summary>
-    public FluxBucket()
+    public KubernetesBucket()
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of FluxBucket.
+    /// Define all the provisionable properties of KubernetesBucket.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _uri = DefineProperty<string>("Uri", ["Uri"]);
+        _uri = DefineProperty<Uri>("Uri", ["Uri"]);
         _bucketName = DefineProperty<string>("BucketName", ["BucketName"]);
-        _isInsecure = DefineProperty<bool>("IsInsecure", ["IsInsecure"]);
+        _useInsecureCommunication = DefineProperty<bool>("UseInsecureCommunication", ["UseInsecureCommunication"]);
         _timeoutInSeconds = DefineProperty<long>("TimeoutInSeconds", ["TimeoutInSeconds"]);
         _syncIntervalInSeconds = DefineProperty<long>("SyncIntervalInSeconds", ["SyncIntervalInSeconds"]);
         _accessKey = DefineProperty<string>("AccessKey", ["AccessKey"]);

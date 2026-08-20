@@ -24,7 +24,7 @@ public partial class KubernetesFluxConfiguration : ProvisionableResource
     /// <summary>
     /// Name of the Flux Configuration.
     /// </summary>
-    public BicepValue<string> Name
+    public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
         set { Initialize(); _name!.Assign(value); }
@@ -34,28 +34,28 @@ public partial class KubernetesFluxConfiguration : ProvisionableResource
     /// <summary>
     /// Parameters to reconcile to the AzureBlob source kind type.
     /// </summary>
-    public AzureBlob AzureBlob
+    public KubernetesAzureBlob AzureBlob 
     {
         get { Initialize(); return _azureBlob!; }
         set { Initialize(); AssignOrReplace(ref _azureBlob, value); }
     }
-    private AzureBlob? _azureBlob;
+    private KubernetesAzureBlob? _azureBlob;
 
     /// <summary>
     /// Parameters to reconcile to the Bucket source kind type.
     /// </summary>
-    public FluxBucket Bucket
+    public KubernetesBucket Bucket 
     {
         get { Initialize(); return _bucket!; }
         set { Initialize(); AssignOrReplace(ref _bucket, value); }
     }
-    private FluxBucket? _bucket;
+    private KubernetesBucket? _bucket;
 
     /// <summary>
     /// Key-value pairs of protected configuration settings for the
     /// configuration.
     /// </summary>
-    public BicepDictionary<string> ConfigurationProtectedSettings
+    public BicepDictionary<string> ConfigurationProtectedSettings 
     {
         get { Initialize(); return _configurationProtectedSettings!; }
         set { Initialize(); _configurationProtectedSettings!.Assign(value); }
@@ -65,40 +65,29 @@ public partial class KubernetesFluxConfiguration : ProvisionableResource
     /// <summary>
     /// Parameters to reconcile to the GitRepository source kind type.
     /// </summary>
-    public FluxGitRepository GitRepository
+    public KubernetesGitRepository GitRepository 
     {
         get { Initialize(); return _gitRepository!; }
         set { Initialize(); AssignOrReplace(ref _gitRepository, value); }
     }
-    private FluxGitRepository? _gitRepository;
+    private KubernetesGitRepository? _gitRepository;
 
     /// <summary>
     /// Whether this configuration should suspend its reconciliation of its
     /// kustomizations and sources.
     /// </summary>
-    public BicepValue<bool> IsSuspended
+    public BicepValue<bool> IsReconciliationSuspended 
     {
-        get { Initialize(); return _isSuspended!; }
-        set { Initialize(); _isSuspended!.Assign(value); }
+        get { Initialize(); return _isReconciliationSuspended!; }
+        set { Initialize(); _isReconciliationSuspended!.Assign(value); }
     }
-    private BicepValue<bool>? _isSuspended;
-
-    /// <summary>
-    /// Whether flux configuration deployment should wait for cluster to
-    /// reconcile the kustomizations.
-    /// </summary>
-    public BicepValue<bool> IsWaitForReconciliation
-    {
-        get { Initialize(); return _isWaitForReconciliation!; }
-        set { Initialize(); _isWaitForReconciliation!.Assign(value); }
-    }
-    private BicepValue<bool>? _isWaitForReconciliation;
+    private BicepValue<bool>? _isReconciliationSuspended;
 
     /// <summary>
     /// Array of kustomizations used to reconcile the artifact pulled by the
     /// source type on the cluster.
     /// </summary>
-    public BicepDictionary<Kustomization> Kustomizations
+    public BicepDictionary<Kustomization> Kustomizations 
     {
         get { Initialize(); return _kustomizations!; }
         set { Initialize(); _kustomizations!.Assign(value); }
@@ -109,7 +98,7 @@ public partial class KubernetesFluxConfiguration : ProvisionableResource
     /// The namespace to which this configuration is installed to. Maximum of
     /// 253 lower case alphanumeric characters, hyphen and period only.
     /// </summary>
-    public BicepValue<string> Namespace
+    public BicepValue<string> Namespace 
     {
         get { Initialize(); return _namespace!; }
         set { Initialize(); _namespace!.Assign(value); }
@@ -117,60 +106,39 @@ public partial class KubernetesFluxConfiguration : ProvisionableResource
     private BicepValue<string>? _namespace;
 
     /// <summary>
-    /// Parameters to reconcile to the OCIRepository source kind type.
-    /// </summary>
-    public OciRepository OciRepository
-    {
-        get { Initialize(); return _ociRepository!; }
-        set { Initialize(); AssignOrReplace(ref _ociRepository, value); }
-    }
-    private OciRepository? _ociRepository;
-
-    /// <summary>
-    /// Maximum duration to wait for flux configuration reconciliation. E.g
-    /// PT1H, PT5M, P1D.
-    /// </summary>
-    public BicepValue<string> ReconciliationWaitDuration
-    {
-        get { Initialize(); return _reconciliationWaitDuration!; }
-        set { Initialize(); _reconciliationWaitDuration!.Assign(value); }
-    }
-    private BicepValue<string>? _reconciliationWaitDuration;
-
-    /// <summary>
     /// Scope at which the operator will be installed.
     /// </summary>
-    public BicepValue<FluxConfigurationScopeType> Scope
+    public BicepValue<KubernetesConfigurationScope> Scope 
     {
         get { Initialize(); return _scope!; }
         set { Initialize(); _scope!.Assign(value); }
     }
-    private BicepValue<FluxConfigurationScopeType>? _scope;
+    private BicepValue<KubernetesConfigurationScope>? _scope;
 
     /// <summary>
     /// Source Kind to pull the configuration data from.
     /// </summary>
-    public BicepValue<FluxConfigurationSourceKindType> SourceKind
+    public BicepValue<KubernetesConfigurationSourceKind> SourceKind 
     {
         get { Initialize(); return _sourceKind!; }
         set { Initialize(); _sourceKind!.Assign(value); }
     }
-    private BicepValue<FluxConfigurationSourceKindType>? _sourceKind;
+    private BicepValue<KubernetesConfigurationSourceKind>? _sourceKind;
 
     /// <summary>
     /// Combined status of the Flux Kubernetes resources created by the
     /// fluxConfiguration or created by the managed objects.
     /// </summary>
-    public BicepValue<FluxComplianceState> ComplianceState
+    public BicepValue<KubernetesFluxComplianceState> ComplianceState 
     {
         get { Initialize(); return _complianceState!; }
     }
-    private BicepValue<FluxComplianceState>? _complianceState;
+    private BicepValue<KubernetesFluxComplianceState>? _complianceState;
 
     /// <summary>
     /// Error message returned to the user in the case of provisioning failure.
     /// </summary>
-    public BicepValue<string> ErrorMessage
+    public BicepValue<string> ErrorMessage 
     {
         get { Initialize(); return _errorMessage!; }
     }
@@ -179,7 +147,7 @@ public partial class KubernetesFluxConfiguration : ProvisionableResource
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id
+    public BicepValue<ResourceIdentifier> Id 
     {
         get { Initialize(); return _id!; }
     }
@@ -188,17 +156,17 @@ public partial class KubernetesFluxConfiguration : ProvisionableResource
     /// <summary>
     /// Status of the creation of the fluxConfiguration.
     /// </summary>
-    public BicepValue<FluxConfigurationProvisioningState> ProvisioningState
+    public BicepValue<KubernetesConfigurationProvisioningState> ProvisioningState 
     {
         get { Initialize(); return _provisioningState!; }
     }
-    private BicepValue<FluxConfigurationProvisioningState>? _provisioningState;
+    private BicepValue<KubernetesConfigurationProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Public Key associated with this fluxConfiguration (either generated
     /// within the cluster or provided by the user).
     /// </summary>
-    public BicepValue<string> RepositoryPublicKey
+    public BicepValue<string> RepositoryPublicKey 
     {
         get { Initialize(); return _repositoryPublicKey!; }
     }
@@ -207,7 +175,7 @@ public partial class KubernetesFluxConfiguration : ProvisionableResource
     /// <summary>
     /// Branch and/or SHA of the source commit synced with the cluster.
     /// </summary>
-    public BicepValue<string> SourceSyncedCommitId
+    public BicepValue<string> SourceSyncedCommitId 
     {
         get { Initialize(); return _sourceSyncedCommitId!; }
     }
@@ -216,7 +184,7 @@ public partial class KubernetesFluxConfiguration : ProvisionableResource
     /// <summary>
     /// Datetime the fluxConfiguration synced its source on the cluster.
     /// </summary>
-    public BicepValue<DateTimeOffset> SourceUpdatedOn
+    public BicepValue<DateTimeOffset> SourceUpdatedOn 
     {
         get { Initialize(); return _sourceUpdatedOn!; }
     }
@@ -227,17 +195,17 @@ public partial class KubernetesFluxConfiguration : ProvisionableResource
     /// fluxConfiguration or created by the managed objects provisioned by the
     /// fluxConfiguration.
     /// </summary>
-    public BicepList<FluxObjectStatus> Statuses
+    public BicepList<KubernetesObjectStatus> Statuses 
     {
         get { Initialize(); return _statuses!; }
     }
-    private BicepList<FluxObjectStatus>? _statuses;
+    private BicepList<KubernetesObjectStatus>? _statuses;
 
     /// <summary>
     /// Datetime the fluxConfiguration synced its status on the cluster with
     /// Azure.
     /// </summary>
-    public BicepValue<DateTimeOffset> StatusUpdatedOn
+    public BicepValue<DateTimeOffset> StatusUpdatedOn 
     {
         get { Initialize(); return _statusUpdatedOn!; }
     }
@@ -246,7 +214,7 @@ public partial class KubernetesFluxConfiguration : ProvisionableResource
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public SystemData SystemData
+    public SystemData SystemData 
     {
         get { Initialize(); return _systemData!; }
     }
@@ -263,7 +231,7 @@ public partial class KubernetesFluxConfiguration : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the KubernetesFluxConfiguration.</param>
     public KubernetesFluxConfiguration(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.KubernetesConfiguration/fluxConfigurations", resourceVersion ?? "2025-04-01")
+        : base(bicepIdentifier, "Microsoft.KubernetesConfiguration/fluxConfigurations", resourceVersion ?? "2024-11-01")
     {
     }
 
@@ -274,26 +242,23 @@ public partial class KubernetesFluxConfiguration : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _azureBlob = DefineModelProperty<AzureBlob>("AzureBlob", ["AzureBlob"]);
-        _bucket = DefineModelProperty<FluxBucket>("Bucket", ["Bucket"]);
+        _azureBlob = DefineModelProperty<KubernetesAzureBlob>("AzureBlob", ["AzureBlob"]);
+        _bucket = DefineModelProperty<KubernetesBucket>("Bucket", ["Bucket"]);
         _configurationProtectedSettings = DefineDictionaryProperty<string>("ConfigurationProtectedSettings", ["ConfigurationProtectedSettings"]);
-        _gitRepository = DefineModelProperty<FluxGitRepository>("GitRepository", ["GitRepository"]);
-        _isSuspended = DefineProperty<bool>("IsSuspended", ["IsSuspended"]);
-        _isWaitForReconciliation = DefineProperty<bool>("IsWaitForReconciliation", ["IsWaitForReconciliation"]);
+        _gitRepository = DefineModelProperty<KubernetesGitRepository>("GitRepository", ["GitRepository"]);
+        _isReconciliationSuspended = DefineProperty<bool>("IsReconciliationSuspended", ["IsReconciliationSuspended"]);
         _kustomizations = DefineDictionaryProperty<Kustomization>("Kustomizations", ["Kustomizations"]);
         _namespace = DefineProperty<string>("Namespace", ["Namespace"]);
-        _ociRepository = DefineModelProperty<OciRepository>("OciRepository", ["OciRepository"]);
-        _reconciliationWaitDuration = DefineProperty<string>("ReconciliationWaitDuration", ["ReconciliationWaitDuration"]);
-        _scope = DefineProperty<FluxConfigurationScopeType>("Scope", ["Scope"]);
-        _sourceKind = DefineProperty<FluxConfigurationSourceKindType>("SourceKind", ["SourceKind"]);
-        _complianceState = DefineProperty<FluxComplianceState>("ComplianceState", ["ComplianceState"], isOutput: true);
+        _scope = DefineProperty<KubernetesConfigurationScope>("Scope", ["Scope"]);
+        _sourceKind = DefineProperty<KubernetesConfigurationSourceKind>("SourceKind", ["SourceKind"]);
+        _complianceState = DefineProperty<KubernetesFluxComplianceState>("ComplianceState", ["ComplianceState"], isOutput: true);
         _errorMessage = DefineProperty<string>("ErrorMessage", ["ErrorMessage"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
-        _provisioningState = DefineProperty<FluxConfigurationProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
+        _provisioningState = DefineProperty<KubernetesConfigurationProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
         _repositoryPublicKey = DefineProperty<string>("RepositoryPublicKey", ["RepositoryPublicKey"], isOutput: true);
         _sourceSyncedCommitId = DefineProperty<string>("SourceSyncedCommitId", ["SourceSyncedCommitId"], isOutput: true);
         _sourceUpdatedOn = DefineProperty<DateTimeOffset>("SourceUpdatedOn", ["SourceUpdatedOn"], isOutput: true);
-        _statuses = DefineListProperty<FluxObjectStatus>("Statuses", ["Statuses"], isOutput: true);
+        _statuses = DefineListProperty<KubernetesObjectStatus>("Statuses", ["Statuses"], isOutput: true);
         _statusUpdatedOn = DefineProperty<DateTimeOffset>("StatusUpdatedOn", ["StatusUpdatedOn"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
@@ -303,11 +268,6 @@ public partial class KubernetesFluxConfiguration : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2025-04-01.
-        /// </summary>
-        public static readonly string V2025_04_01 = "2025-04-01";
-
         /// <summary>
         /// 2024-11-01.
         /// </summary>

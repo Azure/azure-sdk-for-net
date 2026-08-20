@@ -2,13 +2,12 @@
 // Licensed under the MIT License.
 
 using Azure.Provisioning.Generator.Model;
-using Azure.ResourceManager.KubernetesConfiguration.Extensions;
-using Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations;
+using Azure.ResourceManager.KubernetesConfiguration;
 
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class KubernetesConfigurationSpecification() :
-    Specification("KubernetesConfiguration", typeof(KubernetesConfigurationExtensionsExtensions), serviceDirectory: "kubernetesconfiguration")
+    Specification("KubernetesConfiguration", typeof(KubernetesConfigurationExtensions), serviceDirectory: "kubernetesconfiguration")
 {
     protected override void Customize()
     {
@@ -20,23 +19,6 @@ public class KubernetesConfigurationSpecification() :
 
         // Assign Roles
         CustomizeResource<KubernetesClusterExtensionResource>(r => r.GenerateRoleAssignment = true);
-    }
-}
-
-public class KubernetesConfigurationFluxConfigurationsSpecification : Specification
-{
-    public KubernetesConfigurationFluxConfigurationsSpecification() :
-        base("KubernetesConfiguration", typeof(KubernetesConfigurationFluxConfigurationsExtensions), serviceDirectory: "kubernetesconfiguration")
-    {
-        SkipCleaning = true;
-    }
-
-    protected override void Customize()
-    {
-        CustomizeResource<FluxConfigurationResource>(r =>
-        {
-            r.Name = "KubernetesFluxConfiguration";
-            r.GenerateRoleAssignment = true;
-        });
+        CustomizeResource<KubernetesFluxConfigurationResource>(r => r.GenerateRoleAssignment = true);
     }
 }

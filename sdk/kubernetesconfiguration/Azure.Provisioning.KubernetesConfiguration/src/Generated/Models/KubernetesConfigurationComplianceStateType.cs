@@ -6,37 +6,32 @@
 namespace Azure.Provisioning.KubernetesConfiguration;
 
 /// <summary>
-/// The provisioning state of the resource.
+/// The compliance state of the configuration.
 /// </summary>
-public enum KubernetesConfigurationProvisioningState
+public enum KubernetesConfigurationComplianceStateType
 {
     /// <summary>
-    /// Succeeded.
+    /// Pending.
     /// </summary>
-    Succeeded,
+    Pending,
+
+    /// <summary>
+    /// Compliant.
+    /// </summary>
+    Compliant,
+
+    /// <summary>
+    /// Noncompliant.
+    /// </summary>
+    Noncompliant,
+
+    /// <summary>
+    /// Installed.
+    /// </summary>
+    Installed,
 
     /// <summary>
     /// Failed.
     /// </summary>
     Failed,
-
-    /// <summary>
-    /// Canceled.
-    /// </summary>
-    Canceled,
-
-    /// <summary>
-    /// Creating.
-    /// </summary>
-    Creating,
-
-    /// <summary>
-    /// Updating.
-    /// </summary>
-    Updating,
-
-    /// <summary>
-    /// Deleting.
-    /// </summary>
-    Deleting,
 }

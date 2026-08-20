@@ -13,23 +13,23 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// <summary>
 /// Parameters to reconcile to the GitRepository source kind type.
 /// </summary>
-public partial class FluxGitRepository : ProvisionableConstruct
+public partial class KubernetesGitRepository : ProvisionableConstruct
 {
     /// <summary>
     /// The URL to sync for the flux configuration git repository.
     /// </summary>
-    public BicepValue<string> Uri
+    public BicepValue<Uri> Uri 
     {
         get { Initialize(); return _uri!; }
         set { Initialize(); _uri!.Assign(value); }
     }
-    private BicepValue<string>? _uri;
+    private BicepValue<Uri>? _uri;
 
     /// <summary>
     /// The maximum time to attempt to reconcile the cluster git repository
     /// source with the remote.
     /// </summary>
-    public BicepValue<long> TimeoutInSeconds
+    public BicepValue<long> TimeoutInSeconds 
     {
         get { Initialize(); return _timeoutInSeconds!; }
         set { Initialize(); _timeoutInSeconds!.Assign(value); }
@@ -40,7 +40,7 @@ public partial class FluxGitRepository : ProvisionableConstruct
     /// The interval at which to re-reconcile the cluster git repository source
     /// with the remote.
     /// </summary>
-    public BicepValue<long> SyncIntervalInSeconds
+    public BicepValue<long> SyncIntervalInSeconds 
     {
         get { Initialize(); return _syncIntervalInSeconds!; }
         set { Initialize(); _syncIntervalInSeconds!.Assign(value); }
@@ -50,18 +50,18 @@ public partial class FluxGitRepository : ProvisionableConstruct
     /// <summary>
     /// The source reference for the GitRepository object.
     /// </summary>
-    public FluxRepositoryReference RepositoryRef
+    public KubernetesGitRepositoryRef RepositoryRef 
     {
         get { Initialize(); return _repositoryRef!; }
         set { Initialize(); AssignOrReplace(ref _repositoryRef, value); }
     }
-    private FluxRepositoryReference? _repositoryRef;
+    private KubernetesGitRepositoryRef? _repositoryRef;
 
     /// <summary>
     /// Base64-encoded known_hosts value containing public SSH keys required to
     /// access private git repositories over SSH.
     /// </summary>
-    public BicepValue<string> SshKnownHosts
+    public BicepValue<string> SshKnownHosts 
     {
         get { Initialize(); return _sshKnownHosts!; }
         set { Initialize(); _sshKnownHosts!.Assign(value); }
@@ -72,7 +72,7 @@ public partial class FluxGitRepository : ProvisionableConstruct
     /// Plaintext HTTPS username used to access private git repositories over
     /// HTTPS.
     /// </summary>
-    public BicepValue<string> HttpsUser
+    public BicepValue<string> HttpsUser 
     {
         get { Initialize(); return _httpsUser!; }
         set { Initialize(); _httpsUser!.Assign(value); }
@@ -83,7 +83,7 @@ public partial class FluxGitRepository : ProvisionableConstruct
     /// Base64-encoded HTTPS certificate authority contents used to access git
     /// private git repositories over HTTPS.
     /// </summary>
-    public BicepValue<string> HttpsCACert
+    public BicepValue<string> HttpsCACert 
     {
         get { Initialize(); return _httpsCACert!; }
         set { Initialize(); _httpsCACert!.Assign(value); }
@@ -95,7 +95,7 @@ public partial class FluxGitRepository : ProvisionableConstruct
     /// authentication secret rather than the managed or user-provided
     /// configuration secrets.
     /// </summary>
-    public BicepValue<string> LocalAuthRef
+    public BicepValue<string> LocalAuthRef 
     {
         get { Initialize(); return _localAuthRef!; }
         set { Initialize(); _localAuthRef!.Assign(value); }
@@ -103,36 +103,25 @@ public partial class FluxGitRepository : ProvisionableConstruct
     private BicepValue<string>? _localAuthRef;
 
     /// <summary>
-    /// Name of the provider used for authentication.
+    /// Creates a new KubernetesGitRepository.
     /// </summary>
-    public BicepValue<FluxConfigurationProviderType> Provider
-    {
-        get { Initialize(); return _provider!; }
-        set { Initialize(); _provider!.Assign(value); }
-    }
-    private BicepValue<FluxConfigurationProviderType>? _provider;
-
-    /// <summary>
-    /// Creates a new FluxGitRepository.
-    /// </summary>
-    public FluxGitRepository()
+    public KubernetesGitRepository()
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of FluxGitRepository.
+    /// Define all the provisionable properties of KubernetesGitRepository.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _uri = DefineProperty<string>("Uri", ["Uri"]);
+        _uri = DefineProperty<Uri>("Uri", ["Uri"]);
         _timeoutInSeconds = DefineProperty<long>("TimeoutInSeconds", ["TimeoutInSeconds"]);
         _syncIntervalInSeconds = DefineProperty<long>("SyncIntervalInSeconds", ["SyncIntervalInSeconds"]);
-        _repositoryRef = DefineModelProperty<FluxRepositoryReference>("RepositoryRef", ["RepositoryRef"]);
+        _repositoryRef = DefineModelProperty<KubernetesGitRepositoryRef>("RepositoryRef", ["RepositoryRef"]);
         _sshKnownHosts = DefineProperty<string>("SshKnownHosts", ["SshKnownHosts"]);
         _httpsUser = DefineProperty<string>("HttpsUser", ["HttpsUser"]);
         _httpsCACert = DefineProperty<string>("HttpsCACert", ["HttpsCACert"]);
         _localAuthRef = DefineProperty<string>("LocalAuthRef", ["LocalAuthRef"]);
-        _provider = DefineProperty<FluxConfigurationProviderType>("Provider", ["Provider"]);
     }
 }
