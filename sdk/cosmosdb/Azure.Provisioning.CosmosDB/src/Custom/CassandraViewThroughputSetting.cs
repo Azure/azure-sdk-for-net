@@ -3,6 +3,7 @@
 
 #nullable enable
 #pragma warning disable CS1591
+#pragma warning disable CS0618 // CassandraViewGetResult is retained for API compatibility.
 
 using System.ComponentModel;
 using Azure.Core;
