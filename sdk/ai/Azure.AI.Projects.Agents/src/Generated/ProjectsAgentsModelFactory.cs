@@ -37,7 +37,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="blueprintReference"> The blueprint for the agent. </param>
         /// <param name="agentGuidInternal"> The unique GUID identifier of the agent. </param>
         /// <returns> A new <see cref="Agents.ProjectsAgentVersion"/> instance for mocking. </returns>
-        public static ProjectsAgentVersion ProjectsAgentVersion(IDictionary<string, string> metadata, string id, string name, string version, string description, DateTimeOffset createdAt, ProjectsAgentDefinition definition, bool? draft, AgentVersionStatus? status, AgentIdentity instanceIdentity, AgentIdentity blueprint, AgentBlueprintReference blueprintReference, string agentGuidInternal)
+        public static ProjectsAgentVersion ProjectsAgentVersion(IDictionary<string, string> metadata, string id, string name, string version, string description, DateTimeOffset createdAt, ProjectsAgentDefinition definition, bool? draft, AgentVersionStatus? status = default, AgentIdentity instanceIdentity = default, AgentIdentity blueprint = default, AgentBlueprintReference blueprintReference = default, string agentGuidInternal = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1929,7 +1929,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="blueprintReference"> The blueprint reference for the agent. </param>
         /// <param name="draft"> (Preview) Whether this agent version is a draft (candidate) rather than a release. The service defaults to `false` if a value is not specified by the caller. Draft versions are recorded but excluded from default 'latest' resolution and are not auto-promoted. </param>
         /// <returns> A new <see cref="Agents.ProjectsAgentVersionCreationOptions"/> instance for mocking. </returns>
-        public static ProjectsAgentVersionCreationOptions ProjectsAgentVersionCreationOptions(IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition, AgentBlueprintReference blueprintReference, bool? draft)
+        public static ProjectsAgentVersionCreationOptions ProjectsAgentVersionCreationOptions(IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition, AgentBlueprintReference blueprintReference, bool? draft = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
