@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                 }
                 if (prop.NameEquals("statusCode"u8))
                 {
-                    statusCode = prop.Value.GetString();
+                    DeserializeStatusCode(prop, ref statusCode, options);
                     continue;
                 }
                 if (prop.NameEquals("statusMessage"u8))

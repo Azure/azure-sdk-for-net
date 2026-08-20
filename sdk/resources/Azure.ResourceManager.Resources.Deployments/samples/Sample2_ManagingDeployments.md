@@ -6,11 +6,12 @@ Namespaces for this example:
 ```C# Snippet:Manage_Deployments_Namespaces
 using System;
 using System.IO;
-using System.Security.Policy;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Resources.Deployments;
+using Azure.ResourceManager.Resources.Deployments.Models;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 using JsonObject = System.Collections.Generic.Dictionary<string, object>;
