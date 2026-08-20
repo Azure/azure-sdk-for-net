@@ -8,10 +8,10 @@ tags:
   area: azsdk-common-sdk-breaking-change-test
   type: ci-gate
 
-config:
+defaults:
   runs: 1
   timeout: "90s"
-  model: gpt-5.6-sol
+  model: claude-opus-4.6
   executor: copilot-sdk
 
 scoring:
