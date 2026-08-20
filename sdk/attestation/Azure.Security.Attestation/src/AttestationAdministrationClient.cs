@@ -162,9 +162,11 @@ namespace Azure.Security.Attestation
 
                 PolicyModificationResult policyResult = token.GetBody<PolicyModificationResult>();
 
-                var response = new AttestationResponse<StoredAttestationPolicy>(result.GetRawResponse(), policyResult.PolicyToken);
+                // An attestation type with no configured policy is returned as a policy token with an empty body,
+                // so there is no StoredAttestationPolicy to read and the resulting policy is null.
+                StoredAttestationPolicy storedPolicy = policyResult.PolicyToken?.GetBody<StoredAttestationPolicy>();
 
-                return new AttestationResponse<string>(result.GetRawResponse(), token, response.Value.AttestationPolicy);
+                return new AttestationResponse<string>(result.GetRawResponse(), token, storedPolicy?.AttestationPolicy);
             }
             catch (Exception ex)
             {

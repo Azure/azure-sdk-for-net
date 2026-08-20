@@ -27,7 +27,9 @@ namespace Azure.Security.Attestation
         /// <returns>An <see cref="Attestation.AttestationResponse"/> object.</returns>
         public static AttestationResponse<T> AttestationResponse<T>(Response response, AttestationToken token, T body = default(T))
             where T : class =>
-            new AttestationResponse<T>(response, token, body);
+            body is null
+                ? new AttestationResponse<T>(response, token)
+                : new AttestationResponse<T>(response, token, body);
 
         /// <summary> Initializes a new instance of AttestationResult for mocking purposes. </summary>
         /// <param name="jti"> Unique Identifier for the token. </param>

@@ -560,12 +560,22 @@ namespace Azure.Security.Attestation
         /// Retrieves the body of the AttestationToken as the specified type.
         /// </summary>
         /// <typeparam name="T">Underlying type for the token body.</typeparam>
-        /// <returns>Returns the body of the attestation token.</returns>
+        /// <returns>Returns the body of the attestation token, or null if the token has an empty body.</returns>
+        /// <remarks>
+        /// The attestation service uses a token with an empty body to represent the absence of a value, for
+        /// instance when an attestation type has no policy configured. Such a token has nothing to deserialize,
+        /// so null is returned rather than surfacing a deserialization failure to the caller.
+        /// </remarks>
         public virtual T GetBody<T>()
             where T : class
         {
             lock (_statelock)
             {
+                if (TokenBodyBytes.Length == 0)
+                {
+                    return null;
+                }
+
                 if (_deserializedBody == null || _deserializedBody.GetType() != typeof(T))
                 {
                     _deserializedBody = JsonSerializer.Deserialize<T>(TokenBodyBytes.ToArray(), _serializerOptions);

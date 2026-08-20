@@ -4,10 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
+using System.Text.Json.Serialization;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.Attestation
 {
+    [JsonConverter(typeof(PolicyCertificatesResultConverter))]
     [CodeGenType("PolicyCertificatesResult")]
     internal partial class PolicyCertificatesResult
     {
@@ -41,6 +43,20 @@ namespace Azure.Security.Attestation
                     _certificateList = certificates;
                 }
                 return _certificateList;
+            }
+        }
+
+        internal partial class PolicyCertificatesResultConverter : System.Text.Json.Serialization.JsonConverter<PolicyCertificatesResult>
+        {
+            public override PolicyCertificatesResult Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options)
+            {
+                using System.Text.Json.JsonDocument document = System.Text.Json.JsonDocument.ParseValue(ref reader);
+                return DeserializePolicyCertificatesResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override void Write(System.Text.Json.Utf8JsonWriter writer, PolicyCertificatesResult value, System.Text.Json.JsonSerializerOptions options)
+            {
+                ((System.ClientModel.Primitives.IJsonModel<PolicyCertificatesResult>)value).Write(writer, ModelSerializationExtensions.WireOptions);
             }
         }
     }
