@@ -9,56 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Hci;
+using Azure.ResourceManager.ServiceLinker;
 
-namespace Azure.ResourceManager.Hci.Models
+namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> OS configurations for HCI device. </summary>
-    public partial class HciDeploymentOSProfile : IJsonModel<HciDeploymentOSProfile>
+    /// <summary> The preview of the operations for creation. </summary>
+    public partial class DryrunOperationPreview : IJsonModel<DryrunOperationPreview>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciDeploymentOSProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DryrunOperationPreview PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciDeploymentOSProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DryrunOperationPreview>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHciDeploymentOSProfile(document.RootElement, options);
+                        return DeserializeDryrunOperationPreview(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HciDeploymentOSProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DryrunOperationPreview)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciDeploymentOSProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DryrunOperationPreview>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HciDeploymentOSProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DryrunOperationPreview)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HciDeploymentOSProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DryrunOperationPreview>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HciDeploymentOSProfile IPersistableModel<HciDeploymentOSProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DryrunOperationPreview IPersistableModel<DryrunOperationPreview>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HciDeploymentOSProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DryrunOperationPreview>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HciDeploymentOSProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DryrunOperationPreview>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,50 +69,35 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciDeploymentOSProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DryrunOperationPreview>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciDeploymentOSProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DryrunOperationPreview)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(BootType))
+            if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("bootType"u8);
-                writer.WriteStringValue(BootType);
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(AssemblyVersion))
+            if (Optional.IsDefined(OperationType))
             {
-                writer.WritePropertyName("assemblyVersion"u8);
-                writer.WriteStringValue(AssemblyVersion);
+                writer.WritePropertyName("operationType"u8);
+                writer.WriteStringValue(OperationType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(OSType))
+            if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OSType);
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSSku))
+            if (Optional.IsDefined(Action))
             {
-                writer.WritePropertyName("osSku"u8);
-                writer.WriteStringValue(OSSku);
+                writer.WritePropertyName("action"u8);
+                writer.WriteStringValue(Action);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSVersion))
+            if (Optional.IsDefined(Scope))
             {
-                writer.WritePropertyName("osVersion"u8);
-                writer.WriteStringValue(OSVersion);
-            }
-            if (options.Format != "W" && Optional.IsDefined(BuildNumber))
-            {
-                writer.WritePropertyName("buildNumber"u8);
-                writer.WriteStringValue(BuildNumber);
-            }
-            if (options.Format != "W" && Optional.IsDefined(BaseImageVersion))
-            {
-                writer.WritePropertyName("baseImageVersion"u8);
-                writer.WriteStringValue(BaseImageVersion);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ImageVersion))
-            {
-                writer.WritePropertyName("imageVersion"u8);
-                writer.WriteStringValue(ImageVersion);
+                writer.WritePropertyName("scope"u8);
+                writer.WriteStringValue(Scope);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,78 +118,64 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HciDeploymentOSProfile IJsonModel<HciDeploymentOSProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DryrunOperationPreview IJsonModel<DryrunOperationPreview>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciDeploymentOSProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DryrunOperationPreview JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciDeploymentOSProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DryrunOperationPreview>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciDeploymentOSProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DryrunOperationPreview)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHciDeploymentOSProfile(document.RootElement, options);
+            return DeserializeDryrunOperationPreview(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HciDeploymentOSProfile DeserializeHciDeploymentOSProfile(JsonElement element, ModelReaderWriterOptions options)
+        internal static DryrunOperationPreview DeserializeDryrunOperationPreview(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string bootType = default;
-            string assemblyVersion = default;
-            string osType = default;
-            string osSku = default;
-            string osVersion = default;
-            string buildNumber = default;
-            string baseImageVersion = default;
-            string imageVersion = default;
+            string name = default;
+            DryrunPreviewOperationType? operationType = default;
+            string description = default;
+            string action = default;
+            string scope = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("bootType"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    bootType = prop.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("assemblyVersion"u8))
+                if (prop.NameEquals("operationType"u8))
                 {
-                    assemblyVersion = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    operationType = new DryrunPreviewOperationType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("osType"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    osType = prop.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("osSku"u8))
+                if (prop.NameEquals("action"u8))
                 {
-                    osSku = prop.Value.GetString();
+                    action = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("osVersion"u8))
+                if (prop.NameEquals("scope"u8))
                 {
-                    osVersion = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("buildNumber"u8))
-                {
-                    buildNumber = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("baseImageVersion"u8))
-                {
-                    baseImageVersion = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("imageVersion"u8))
-                {
-                    imageVersion = prop.Value.GetString();
+                    scope = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -212,15 +183,12 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HciDeploymentOSProfile(
-                bootType,
-                assemblyVersion,
-                osType,
-                osSku,
-                osVersion,
-                buildNumber,
-                baseImageVersion,
-                imageVersion,
+            return new DryrunOperationPreview(
+                name,
+                operationType,
+                description,
+                action,
+                scope,
                 additionalBinaryDataProperties);
         }
     }

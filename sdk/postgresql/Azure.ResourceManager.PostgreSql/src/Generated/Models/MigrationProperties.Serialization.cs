@@ -110,35 +110,35 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("sslMode"u8);
                 writer.WriteStringValue(SslMode.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceDBServerMetadata))
+            if (options.Format != "W" && Optional.IsDefined(SourceDbServerMetadata))
             {
                 writer.WritePropertyName("sourceDbServerMetadata"u8);
-                writer.WriteObjectValue(SourceDBServerMetadata, options);
+                writer.WriteObjectValue(SourceDbServerMetadata, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetDBServerMetadata))
+            if (options.Format != "W" && Optional.IsDefined(TargetDbServerMetadata))
             {
                 writer.WritePropertyName("targetDbServerMetadata"u8);
-                writer.WriteObjectValue(TargetDBServerMetadata, options);
+                writer.WriteObjectValue(TargetDbServerMetadata, options);
             }
-            if (Optional.IsDefined(SourceDBServerResourceId))
+            if (Optional.IsDefined(SourceDbServerResourceId))
             {
                 writer.WritePropertyName("sourceDbServerResourceId"u8);
-                writer.WriteStringValue(SourceDBServerResourceId);
+                writer.WriteStringValue(SourceDbServerResourceId);
             }
-            if (Optional.IsDefined(SourceDBServerFullyQualifiedDomainName))
+            if (Optional.IsDefined(SourceDbServerFullyQualifiedDomainName))
             {
                 writer.WritePropertyName("sourceDbServerFullyQualifiedDomainName"u8);
-                writer.WriteStringValue(SourceDBServerFullyQualifiedDomainName);
+                writer.WriteStringValue(SourceDbServerFullyQualifiedDomainName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetDBServerResourceId))
+            if (options.Format != "W" && Optional.IsDefined(TargetDbServerResourceId))
             {
                 writer.WritePropertyName("targetDbServerResourceId"u8);
-                writer.WriteStringValue(TargetDBServerResourceId);
+                writer.WriteStringValue(TargetDbServerResourceId);
             }
-            if (Optional.IsDefined(TargetDBServerFullyQualifiedDomainName))
+            if (Optional.IsDefined(TargetDbServerFullyQualifiedDomainName))
             {
                 writer.WritePropertyName("targetDbServerFullyQualifiedDomainName"u8);
-                writer.WriteStringValue(TargetDBServerFullyQualifiedDomainName);
+                writer.WriteStringValue(TargetDbServerFullyQualifiedDomainName);
             }
             if (Optional.IsDefined(SecretParameters))
             {
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SetupLogicalReplicationOnSourceDBIfNeeded))
+            if (Optional.IsDefined(SetupLogicalReplicationOnSourceDbIfNeeded))
             {
                 writer.WritePropertyName("setupLogicalReplicationOnSourceDbIfNeeded"u8);
-                writer.WriteStringValue(SetupLogicalReplicationOnSourceDBIfNeeded.Value.ToString());
+                writer.WriteStringValue(SetupLogicalReplicationOnSourceDbIfNeeded.Value.ToString());
             }
             if (Optional.IsDefined(OverwriteDbsInTarget))
             {
@@ -279,15 +279,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             MigrationOption? migrationOption = default;
             PostgreSqlFlexibleServersSourceType? sourceType = default;
             PostgreSqlFlexibleServersSslMode? sslMode = default;
-            PostgreSqlServerMetadata sourceDBServerMetadata = default;
-            PostgreSqlServerMetadata targetDBServerMetadata = default;
-            ResourceIdentifier sourceDBServerResourceId = default;
-            string sourceDBServerFullyQualifiedDomainName = default;
-            ResourceIdentifier targetDBServerResourceId = default;
-            string targetDBServerFullyQualifiedDomainName = default;
+            PostgreSqlServerMetadata sourceDbServerMetadata = default;
+            PostgreSqlServerMetadata targetDbServerMetadata = default;
+            ResourceIdentifier sourceDbServerResourceId = default;
+            string sourceDbServerFullyQualifiedDomainName = default;
+            ResourceIdentifier targetDbServerResourceId = default;
+            string targetDbServerFullyQualifiedDomainName = default;
             PostgreSqlMigrationSecretParameters secretParameters = default;
             IList<string> dbsToMigrate = default;
-            PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDBIfNeeded = default;
+            PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = default;
             PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = default;
             DateTimeOffset? migrationWindowStartTimeInUtc = default;
             DateTimeOffset? migrationWindowEndTimeInUtc = default;
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    sourceDBServerMetadata = PostgreSqlServerMetadata.DeserializePostgreSqlServerMetadata(prop.Value, options);
+                    sourceDbServerMetadata = PostgreSqlServerMetadata.DeserializePostgreSqlServerMetadata(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("targetDbServerMetadata"u8))
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    targetDBServerMetadata = PostgreSqlServerMetadata.DeserializePostgreSqlServerMetadata(prop.Value, options);
+                    targetDbServerMetadata = PostgreSqlServerMetadata.DeserializePostgreSqlServerMetadata(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("sourceDbServerResourceId"u8))
@@ -383,12 +383,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    sourceDBServerResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    sourceDbServerResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sourceDbServerFullyQualifiedDomainName"u8))
                 {
-                    sourceDBServerFullyQualifiedDomainName = prop.Value.GetString();
+                    sourceDbServerFullyQualifiedDomainName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("targetDbServerResourceId"u8))
@@ -397,12 +397,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    targetDBServerResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    targetDbServerResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("targetDbServerFullyQualifiedDomainName"u8))
                 {
-                    targetDBServerFullyQualifiedDomainName = prop.Value.GetString();
+                    targetDbServerFullyQualifiedDomainName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("secretParameters"u8))
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    setupLogicalReplicationOnSourceDBIfNeeded = new PostgreSqlMigrationLogicalReplicationOnSourceDb(prop.Value.GetString());
+                    setupLogicalReplicationOnSourceDbIfNeeded = new PostgreSqlMigrationLogicalReplicationOnSourceDb(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("overwriteDbsInTarget"u8))
@@ -562,15 +562,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 migrationOption,
                 sourceType,
                 sslMode,
-                sourceDBServerMetadata,
-                targetDBServerMetadata,
-                sourceDBServerResourceId,
-                sourceDBServerFullyQualifiedDomainName,
-                targetDBServerResourceId,
-                targetDBServerFullyQualifiedDomainName,
+                sourceDbServerMetadata,
+                targetDbServerMetadata,
+                sourceDbServerResourceId,
+                sourceDbServerFullyQualifiedDomainName,
+                targetDbServerResourceId,
+                targetDbServerFullyQualifiedDomainName,
                 secretParameters,
                 dbsToMigrate ?? new ChangeTrackingList<string>(),
-                setupLogicalReplicationOnSourceDBIfNeeded,
+                setupLogicalReplicationOnSourceDbIfNeeded,
                 overwriteDbsInTarget,
                 migrationWindowStartTimeInUtc,
                 migrationWindowEndTimeInUtc,

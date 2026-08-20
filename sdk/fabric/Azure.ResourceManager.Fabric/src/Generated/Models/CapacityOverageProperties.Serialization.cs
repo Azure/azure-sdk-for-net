@@ -9,62 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
-using Azure.ResourceManager.Hci;
+using Azure.ResourceManager.Fabric;
 
-namespace Azure.ResourceManager.Hci.Models
+namespace Azure.ResourceManager.Fabric.Models
 {
-    /// <summary> Details of servers to be added to the cluster. </summary>
-    public partial class AddServerJobServerDetails : IJsonModel<AddServerJobServerDetails>
+    /// <summary> The capacity overage properties of the Fabric capacity resource. </summary>
+    public partial class CapacityOverageProperties : IJsonModel<CapacityOverageProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="AddServerJobServerDetails"/> for deserialization. </summary>
-        internal AddServerJobServerDetails()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AddServerJobServerDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CapacityOverageProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AddServerJobServerDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CapacityOverageProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAddServerJobServerDetails(document.RootElement, options);
+                        return DeserializeCapacityOverageProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AddServerJobServerDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacityOverageProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AddServerJobServerDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CapacityOverageProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFabricContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AddServerJobServerDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacityOverageProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AddServerJobServerDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CapacityOverageProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AddServerJobServerDetails IPersistableModel<AddServerJobServerDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CapacityOverageProperties IPersistableModel<CapacityOverageProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AddServerJobServerDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CapacityOverageProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AddServerJobServerDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CapacityOverageProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,22 +69,21 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AddServerJobServerDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CapacityOverageProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AddServerJobServerDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacityOverageProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("serverName"u8);
-            writer.WriteStringValue(ServerName);
-            writer.WritePropertyName("hostIpv4Address"u8);
-            writer.WriteStringValue(HostIPv4Address);
-            if (Optional.IsDefined(LocalAvailabilityZoneName))
+            if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("localAvailabilityZoneName"u8);
-                writer.WriteStringValue(LocalAvailabilityZoneName);
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
             }
-            writer.WritePropertyName("serverResourceId"u8);
-            writer.WriteStringValue(ServerResourceId);
+            if (Optional.IsDefined(ThresholdCapacityUnitHours))
+            {
+                writer.WritePropertyName("thresholdCapacityUnitHours"u8);
+                writer.WriteNumberValue(ThresholdCapacityUnitHours.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -110,54 +103,50 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AddServerJobServerDetails IJsonModel<AddServerJobServerDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CapacityOverageProperties IJsonModel<CapacityOverageProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AddServerJobServerDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CapacityOverageProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AddServerJobServerDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CapacityOverageProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AddServerJobServerDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacityOverageProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAddServerJobServerDetails(document.RootElement, options);
+            return DeserializeCapacityOverageProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AddServerJobServerDetails DeserializeAddServerJobServerDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static CapacityOverageProperties DeserializeCapacityOverageProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string serverName = default;
-            string hostIPv4Address = default;
-            string localAvailabilityZoneName = default;
-            ResourceIdentifier serverResourceId = default;
+            CapacityOverageState? state = default;
+            int? thresholdCapacityUnitHours = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("serverName"u8))
+                if (prop.NameEquals("state"u8))
                 {
-                    serverName = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new CapacityOverageState(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("hostIpv4Address"u8))
+                if (prop.NameEquals("thresholdCapacityUnitHours"u8))
                 {
-                    hostIPv4Address = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("localAvailabilityZoneName"u8))
-                {
-                    localAvailabilityZoneName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("serverResourceId"u8))
-                {
-                    serverResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    thresholdCapacityUnitHours = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -165,7 +154,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AddServerJobServerDetails(serverName, hostIPv4Address, localAvailabilityZoneName, serverResourceId, additionalBinaryDataProperties);
+            return new CapacityOverageProperties(state, thresholdCapacityUnitHours, additionalBinaryDataProperties);
         }
     }
 }

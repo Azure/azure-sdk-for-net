@@ -9,61 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Hci;
+using Azure.ResourceManager.ServiceLinker;
 
-namespace Azure.ResourceManager.Hci.Models
+namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> Represents a provisioning request. </summary>
-    public partial class ProvisioningContent : IJsonModel<ProvisioningContent>
+    /// <summary> Target service's firewall rules. to allow connections from source service. </summary>
+    public partial class LinkerFirewallRules : IJsonModel<LinkerFirewallRules>
     {
-        /// <summary> Initializes a new instance of <see cref="ProvisioningContent"/> for deserialization. </summary>
-        internal ProvisioningContent()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProvisioningContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual LinkerFirewallRules PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisioningContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkerFirewallRules>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeProvisioningContent(document.RootElement, options);
+                        return DeserializeLinkerFirewallRules(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProvisioningContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerFirewallRules)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisioningContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkerFirewallRules>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProvisioningContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerFirewallRules)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProvisioningContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<LinkerFirewallRules>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProvisioningContent IPersistableModel<ProvisioningContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        LinkerFirewallRules IPersistableModel<LinkerFirewallRules>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProvisioningContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LinkerFirewallRules>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProvisioningContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LinkerFirewallRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,39 +69,35 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisioningContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkerFirewallRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisioningContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerFirewallRules)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("target"u8);
-            writer.WriteStringValue(Target.ToString());
-            writer.WritePropertyName("osProfile"u8);
-            writer.WriteObjectValue(OSProfile, options);
-            if (Optional.IsCollectionDefined(UserDetails))
+            if (Optional.IsCollectionDefined(IPRanges))
             {
-                writer.WritePropertyName("userDetails"u8);
+                writer.WritePropertyName("ipRanges"u8);
                 writer.WriteStartArray();
-                foreach (HciUserDetails item in UserDetails)
+                foreach (string item in IPRanges)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OnboardingConfiguration))
+            if (Optional.IsDefined(AzureServices))
             {
-                writer.WritePropertyName("onboardingConfiguration"u8);
-                writer.WriteObjectValue(OnboardingConfiguration, options);
+                writer.WritePropertyName("azureServices"u8);
+                writer.WriteStringValue(AzureServices.Value.ToString());
             }
-            if (Optional.IsDefined(DeviceConfiguration))
+            if (Optional.IsDefined(CallerClientIP))
             {
-                writer.WritePropertyName("deviceConfiguration"u8);
-                writer.WriteObjectValue(DeviceConfiguration, options);
-            }
-            if (Optional.IsDefined(CustomConfiguration))
-            {
-                writer.WritePropertyName("customConfiguration"u8);
-                writer.WriteStringValue(CustomConfiguration);
+                writer.WritePropertyName("callerClientIP"u8);
+                writer.WriteStringValue(CallerClientIP.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,83 +118,72 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProvisioningContent IJsonModel<ProvisioningContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        LinkerFirewallRules IJsonModel<LinkerFirewallRules>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProvisioningContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual LinkerFirewallRules JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisioningContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkerFirewallRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisioningContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerFirewallRules)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProvisioningContent(document.RootElement, options);
+            return DeserializeLinkerFirewallRules(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProvisioningContent DeserializeProvisioningContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static LinkerFirewallRules DeserializeLinkerFirewallRules(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ProvisioningOSType target = default;
-            OSProvisionProfile osProfile = default;
-            IList<HciUserDetails> userDetails = default;
-            OnboardingConfiguration onboardingConfiguration = default;
-            TargetDeviceConfiguration deviceConfiguration = default;
-            string customConfiguration = default;
+            IList<string> ipRanges = default;
+            LinkerAllowType? azureServices = default;
+            LinkerAllowType? callerClientIP = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("target"u8))
-                {
-                    target = new ProvisioningOSType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("osProfile"u8))
-                {
-                    osProfile = OSProvisionProfile.DeserializeOSProvisionProfile(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("userDetails"u8))
+                if (prop.NameEquals("ipRanges"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<HciUserDetails> array = new List<HciUserDetails>();
+                    List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(HciUserDetails.DeserializeHciUserDetails(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
-                    userDetails = array;
+                    ipRanges = array;
                     continue;
                 }
-                if (prop.NameEquals("onboardingConfiguration"u8))
+                if (prop.NameEquals("azureServices"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    onboardingConfiguration = OnboardingConfiguration.DeserializeOnboardingConfiguration(prop.Value, options);
+                    azureServices = new LinkerAllowType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("deviceConfiguration"u8))
+                if (prop.NameEquals("callerClientIP"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deviceConfiguration = TargetDeviceConfiguration.DeserializeTargetDeviceConfiguration(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("customConfiguration"u8))
-                {
-                    customConfiguration = prop.Value.GetString();
+                    callerClientIP = new LinkerAllowType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -211,14 +191,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProvisioningContent(
-                target,
-                osProfile,
-                userDetails ?? new ChangeTrackingList<HciUserDetails>(),
-                onboardingConfiguration,
-                deviceConfiguration,
-                customConfiguration,
-                additionalBinaryDataProperties);
+            return new LinkerFirewallRules(ipRanges ?? new ChangeTrackingList<string>(), azureServices, callerClientIP, additionalBinaryDataProperties);
         }
     }
 }

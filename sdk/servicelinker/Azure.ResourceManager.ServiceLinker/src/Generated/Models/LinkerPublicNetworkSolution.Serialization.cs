@@ -9,56 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Hci;
+using Azure.ResourceManager.ServiceLinker;
 
-namespace Azure.ResourceManager.Hci.Models
+namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> Reported Properties for Provision Os job. </summary>
-    public partial class ProvisionOSReportedProperties : IJsonModel<ProvisionOSReportedProperties>
+    /// <summary> Indicates public network solution, include firewall rules. </summary>
+    public partial class LinkerPublicNetworkSolution : IJsonModel<LinkerPublicNetworkSolution>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProvisionOSReportedProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual LinkerPublicNetworkSolution PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisionOSReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkerPublicNetworkSolution>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeProvisionOSReportedProperties(document.RootElement, options);
+                        return DeserializeLinkerPublicNetworkSolution(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProvisionOSReportedProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerPublicNetworkSolution)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisionOSReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkerPublicNetworkSolution>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProvisionOSReportedProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerPublicNetworkSolution)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProvisionOSReportedProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<LinkerPublicNetworkSolution>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProvisionOSReportedProperties IPersistableModel<ProvisionOSReportedProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        LinkerPublicNetworkSolution IPersistableModel<LinkerPublicNetworkSolution>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProvisionOSReportedProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LinkerPublicNetworkSolution>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProvisionOSReportedProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LinkerPublicNetworkSolution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,25 +69,25 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisionOSReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkerPublicNetworkSolution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisionOSReportedProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerPublicNetworkSolution)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
+            if (Optional.IsDefined(DeleteOrUpdateBehavior))
             {
-                writer.WritePropertyName("percentComplete"u8);
-                writer.WriteNumberValue(PercentComplete.Value);
+                writer.WritePropertyName("deleteOrUpdateBehavior"u8);
+                writer.WriteStringValue(DeleteOrUpdateBehavior.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ValidationStatus))
+            if (Optional.IsDefined(Action))
             {
-                writer.WritePropertyName("validationStatus"u8);
-                writer.WriteObjectValue(ValidationStatus, options);
+                writer.WritePropertyName("action"u8);
+                writer.WriteStringValue(Action.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DeploymentStatus))
+            if (Optional.IsDefined(FirewallRules))
             {
-                writer.WritePropertyName("deploymentStatus"u8);
-                writer.WriteObjectValue(DeploymentStatus, options);
+                writer.WritePropertyName("firewallRules"u8);
+                writer.WriteObjectValue(FirewallRules, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -108,60 +108,60 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProvisionOSReportedProperties IJsonModel<ProvisionOSReportedProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        LinkerPublicNetworkSolution IJsonModel<LinkerPublicNetworkSolution>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProvisionOSReportedProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual LinkerPublicNetworkSolution JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisionOSReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkerPublicNetworkSolution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisionOSReportedProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerPublicNetworkSolution)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProvisionOSReportedProperties(document.RootElement, options);
+            return DeserializeLinkerPublicNetworkSolution(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProvisionOSReportedProperties DeserializeProvisionOSReportedProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static LinkerPublicNetworkSolution DeserializeLinkerPublicNetworkSolution(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int? percentComplete = default;
-            EceActionStatus validationStatus = default;
-            EceActionStatus deploymentStatus = default;
+            LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior = default;
+            LinkerActionType? action = default;
+            LinkerFirewallRules firewallRules = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("percentComplete"u8))
+                if (prop.NameEquals("deleteOrUpdateBehavior"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    percentComplete = prop.Value.GetInt32();
+                    deleteOrUpdateBehavior = new LinkerDeleteOrUpdateBehavior(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("validationStatus"u8))
+                if (prop.NameEquals("action"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    validationStatus = EceActionStatus.DeserializeEceActionStatus(prop.Value, options);
+                    action = new LinkerActionType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("deploymentStatus"u8))
+                if (prop.NameEquals("firewallRules"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deploymentStatus = EceActionStatus.DeserializeEceActionStatus(prop.Value, options);
+                    firewallRules = LinkerFirewallRules.DeserializeLinkerFirewallRules(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProvisionOSReportedProperties(percentComplete, validationStatus, deploymentStatus, additionalBinaryDataProperties);
+            return new LinkerPublicNetworkSolution(deleteOrUpdateBehavior, action, firewallRules, additionalBinaryDataProperties);
         }
     }
 }

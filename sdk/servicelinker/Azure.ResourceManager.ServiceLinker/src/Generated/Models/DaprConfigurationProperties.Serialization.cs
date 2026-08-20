@@ -9,61 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Hci;
+using Azure.ResourceManager.ServiceLinker;
 
-namespace Azure.ResourceManager.Hci.Models
+namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> Properties for EdgeMachineUpdate resource. </summary>
-    public partial class EdgeMachineUpdateProperties : IJsonModel<EdgeMachineUpdateProperties>
+    /// <summary> The DaprConfigurationProperties. </summary>
+    internal partial class DaprConfigurationProperties : IJsonModel<DaprConfigurationProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="EdgeMachineUpdateProperties"/> for deserialization. </summary>
-        internal EdgeMachineUpdateProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EdgeMachineUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DaprConfigurationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DaprConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEdgeMachineUpdateProperties(document.RootElement, options);
+                        return DeserializeDaprConfigurationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeMachineUpdateProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DaprConfigurationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DaprConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeMachineUpdateProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DaprConfigurationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EdgeMachineUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DaprConfigurationProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EdgeMachineUpdateProperties IPersistableModel<EdgeMachineUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DaprConfigurationProperties IPersistableModel<DaprConfigurationProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EdgeMachineUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DaprConfigurationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EdgeMachineUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DaprConfigurationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,27 +69,25 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DaprConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeMachineUpdateProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DaprConfigurationProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SolutionType))
+            if (Optional.IsDefined(TargetType))
             {
-                writer.WritePropertyName("solutionType"u8);
-                writer.WriteStringValue(SolutionType.Value.ToString());
+                writer.WritePropertyName("targetType"u8);
+                writer.WriteStringValue(TargetType);
             }
-            writer.WritePropertyName("values"u8);
-            writer.WriteStartArray();
-            foreach (EdgeMachineUpdateInfo item in Values)
+            if (Optional.IsDefined(AuthType))
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("authType"u8);
+                writer.WriteStringValue(AuthType.Value.ToString());
             }
-            writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(DaprProperties))
             {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WritePropertyName("daprProperties"u8);
+                writer.WriteObjectValue(DaprProperties, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -115,61 +108,56 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EdgeMachineUpdateProperties IJsonModel<EdgeMachineUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DaprConfigurationProperties IJsonModel<DaprConfigurationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EdgeMachineUpdateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DaprConfigurationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeMachineUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DaprConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeMachineUpdateProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DaprConfigurationProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEdgeMachineUpdateProperties(document.RootElement, options);
+            return DeserializeDaprConfigurationProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EdgeMachineUpdateProperties DeserializeEdgeMachineUpdateProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static DaprConfigurationProperties DeserializeDaprConfigurationProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ProvisioningOSType? solutionType = default;
-            IList<EdgeMachineUpdateInfo> values = default;
-            HciProvisioningState? provisioningState = default;
+            string targetType = default;
+            LinkerAuthType? authType = default;
+            DaprProperties daprProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("solutionType"u8))
+                if (prop.NameEquals("targetType"u8))
+                {
+                    targetType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("authType"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    solutionType = new ProvisioningOSType(prop.Value.GetString());
+                    authType = new LinkerAuthType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("values"u8))
-                {
-                    List<EdgeMachineUpdateInfo> array = new List<EdgeMachineUpdateInfo>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(EdgeMachineUpdateInfo.DeserializeEdgeMachineUpdateInfo(item, options));
-                    }
-                    values = array;
-                    continue;
-                }
-                if (prop.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("daprProperties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new HciProvisioningState(prop.Value.GetString());
+                    daprProperties = DaprProperties.DeserializeDaprProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -177,7 +165,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EdgeMachineUpdateProperties(solutionType, values, provisioningState, additionalBinaryDataProperties);
+            return new DaprConfigurationProperties(targetType, authType, daprProperties, additionalBinaryDataProperties);
         }
     }
 }

@@ -10,38 +10,41 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Hci.Models;
+using Azure.ResourceManager.ServiceLinker.Models;
 
-namespace Azure.ResourceManager.Hci
+namespace Azure.ResourceManager.ServiceLinker
 {
-    internal partial class OsImagesGetBySubscriptionLocationResourceCollectionResultOfT : Pageable<OSImageData>
+    internal partial class LinkerConnectorsGetAllCollectionResultOfT : Pageable<LinkerResourceData>
     {
-        private readonly OsImages _client;
-        private readonly Guid _subscriptionId;
-        private readonly AzureLocation _location;
+        private readonly LinkerConnectors _client;
+        private readonly string _subscriptionId;
+        private readonly string _resourceGroupName;
+        private readonly string _location;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of OsImagesGetBySubscriptionLocationResourceCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The OsImages client used to send requests. </param>
+        /// <summary> Initializes a new instance of LinkerConnectorsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The LinkerConnectors client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="location"> The location name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public OsImagesGetBySubscriptionLocationResourceCollectionResultOfT(OsImages client, Guid subscriptionId, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public LinkerConnectorsGetAllCollectionResultOfT(LinkerConnectors client, string subscriptionId, string resourceGroupName, string location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
+            _resourceGroupName = resourceGroupName;
             _location = location;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of OsImagesGetBySubscriptionLocationResourceCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of LinkerConnectorsGetAllCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of OsImagesGetBySubscriptionLocationResourceCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<OSImageData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of LinkerConnectorsGetAllCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<LinkerResourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -51,9 +54,9 @@ namespace Azure.ResourceManager.Hci
                 {
                     yield break;
                 }
-                OSImageListResult result = OSImageListResult.FromResponse(response);
+                ResourceList result = ResourceList.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<OSImageData>.FromValues((IReadOnlyList<OSImageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<LinkerResourceData>.FromValues((IReadOnlyList<LinkerResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -66,7 +69,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionLocationResourceRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetBySubscriptionLocationResourceRequest(_subscriptionId, _location, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _location, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _location, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

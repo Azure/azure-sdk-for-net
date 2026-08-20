@@ -9,56 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Hci;
+using Azure.ResourceManager.ServiceLinker;
 
-namespace Azure.ResourceManager.Hci.Models
+namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> Operating system profile. </summary>
-    public partial class OSProvisionProfile : IJsonModel<OSProvisionProfile>
+    /// <summary> The configuration names which will be set based on specific target resource, client type, auth type. </summary>
+    internal partial class ConfigurationNames : IJsonModel<ConfigurationNames>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OSProvisionProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ConfigurationNames PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OSProvisionProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationNames>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOSProvisionProfile(document.RootElement, options);
+                        return DeserializeConfigurationNames(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OSProvisionProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationNames)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OSProvisionProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationNames>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OSProvisionProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationNames)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OSProvisionProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ConfigurationNames>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OSProvisionProfile IPersistableModel<OSProvisionProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ConfigurationNames IPersistableModel<ConfigurationNames>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OSProvisionProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConfigurationNames>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OSProvisionProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConfigurationNames>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,50 +69,45 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OSProvisionProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationNames>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OSProvisionProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationNames)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(OSName))
+            if (Optional.IsDefined(TargetService))
             {
-                writer.WritePropertyName("osName"u8);
-                writer.WriteStringValue(OSName);
+                writer.WritePropertyName("targetService"u8);
+                writer.WriteStringValue(TargetService);
             }
-            if (Optional.IsDefined(OSType))
+            if (Optional.IsDefined(ClientType))
             {
-                writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OSType);
+                writer.WritePropertyName("clientType"u8);
+                writer.WriteStringValue(ClientType.Value.ToString());
             }
-            if (Optional.IsDefined(OSVersion))
+            if (Optional.IsDefined(AuthType))
             {
-                writer.WritePropertyName("osVersion"u8);
-                writer.WriteStringValue(OSVersion);
+                writer.WritePropertyName("authType"u8);
+                writer.WriteStringValue(AuthType.Value.ToString());
             }
-            if (Optional.IsDefined(OSImageLocation))
+            if (Optional.IsDefined(SecretType))
             {
-                writer.WritePropertyName("osImageLocation"u8);
-                writer.WriteStringValue(OSImageLocation);
+                writer.WritePropertyName("secretType"u8);
+                writer.WriteStringValue(SecretType.Value.ToString());
             }
-            if (Optional.IsDefined(VsrVersion))
+            if (Optional.IsDefined(DaprProperties))
             {
-                writer.WritePropertyName("vsrVersion"u8);
-                writer.WriteStringValue(VsrVersion);
+                writer.WritePropertyName("daprProperties"u8);
+                writer.WriteObjectValue(DaprProperties, options);
             }
-            if (Optional.IsDefined(ImageHash))
+            if (Optional.IsCollectionDefined(Names))
             {
-                writer.WritePropertyName("imageHash"u8);
-                writer.WriteStringValue(ImageHash);
-            }
-            if (Optional.IsDefined(GpgPubKey))
-            {
-                writer.WritePropertyName("gpgPubKey"u8);
-                writer.WriteStringValue(GpgPubKey);
-            }
-            if (Optional.IsDefined(OperationType))
-            {
-                writer.WritePropertyName("operationType"u8);
-                writer.WriteStringValue(OperationType.Value.ToString());
+                writer.WritePropertyName("names"u8);
+                writer.WriteStartArray();
+                foreach (LinkerConfigurationName item in Names)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,82 +128,91 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OSProvisionProfile IJsonModel<OSProvisionProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ConfigurationNames IJsonModel<ConfigurationNames>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OSProvisionProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ConfigurationNames JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OSProvisionProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationNames>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OSProvisionProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationNames)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOSProvisionProfile(document.RootElement, options);
+            return DeserializeConfigurationNames(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OSProvisionProfile DeserializeOSProvisionProfile(JsonElement element, ModelReaderWriterOptions options)
+        internal static ConfigurationNames DeserializeConfigurationNames(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string osName = default;
-            string osType = default;
-            string osVersion = default;
-            string osImageLocation = default;
-            string vsrVersion = default;
-            string imageHash = default;
-            string gpgPubKey = default;
-            OSOperationType? operationType = default;
+            string targetService = default;
+            LinkerClientType? clientType = default;
+            LinkerAuthType? authType = default;
+            LinkerSecretSourceType? secretType = default;
+            DaprProperties daprProperties = default;
+            IList<LinkerConfigurationName> names = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("osName"u8))
+                if (prop.NameEquals("targetService"u8))
                 {
-                    osName = prop.Value.GetString();
+                    targetService = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("osType"u8))
-                {
-                    osType = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("osVersion"u8))
-                {
-                    osVersion = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("osImageLocation"u8))
-                {
-                    osImageLocation = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("vsrVersion"u8))
-                {
-                    vsrVersion = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("imageHash"u8))
-                {
-                    imageHash = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("gpgPubKey"u8))
-                {
-                    gpgPubKey = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("operationType"u8))
+                if (prop.NameEquals("clientType"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    operationType = new OSOperationType(prop.Value.GetString());
+                    clientType = new LinkerClientType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("authType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    authType = new LinkerAuthType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("secretType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    secretType = new LinkerSecretSourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("daprProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    daprProperties = DaprProperties.DeserializeDaprProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("names"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<LinkerConfigurationName> array = new List<LinkerConfigurationName>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(LinkerConfigurationName.DeserializeLinkerConfigurationName(item, options));
+                    }
+                    names = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -216,15 +220,13 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OSProvisionProfile(
-                osName,
-                osType,
-                osVersion,
-                osImageLocation,
-                vsrVersion,
-                imageHash,
-                gpgPubKey,
-                operationType,
+            return new ConfigurationNames(
+                targetService,
+                clientType,
+                authType,
+                secretType,
+                daprProperties,
+                names ?? new ChangeTrackingList<LinkerConfigurationName>(),
                 additionalBinaryDataProperties);
         }
     }

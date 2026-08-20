@@ -139,10 +139,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StatusOn))
+            if (options.Format != "W" && Optional.IsDefined(StatusTimestamp))
             {
                 writer.WritePropertyName("statusTimestamp"u8);
-                writer.WriteStringValue(StatusOn.Value, "O");
+                writer.WriteStringValue(StatusTimestamp.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(OSVersion))
             {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             string assignedUser = default;
             string friendlyName = default;
             SessionHostStatus? status = default;
-            DateTimeOffset? statusOn = default;
+            DateTimeOffset? statusTimestamp = default;
             string osVersion = default;
             string sxsStackVersion = default;
             SessionHostUpdateState? updateState = default;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    statusOn = prop.Value.GetDateTimeOffset("O");
+                    statusTimestamp = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("osVersion"u8))
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 assignedUser,
                 friendlyName,
                 status,
-                statusOn,
+                statusTimestamp,
                 osVersion,
                 sxsStackVersion,
                 updateState,

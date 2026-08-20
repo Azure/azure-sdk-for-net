@@ -9,61 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Hci;
+using Azure.ResourceManager.ServiceLinker;
 
-namespace Azure.ResourceManager.Hci.Models
+namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> IP address range configuration. </summary>
-    public partial class HciIPAddressRange : IJsonModel<HciIPAddressRange>
+    /// <summary> Represent one resource of the dapr configuration list. </summary>
+    public partial class DaprConfiguration : IJsonModel<DaprConfiguration>
     {
-        /// <summary> Initializes a new instance of <see cref="HciIPAddressRange"/> for deserialization. </summary>
-        internal HciIPAddressRange()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciIPAddressRange PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DaprConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciIPAddressRange>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DaprConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHciIPAddressRange(document.RootElement, options);
+                        return DeserializeDaprConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HciIPAddressRange)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DaprConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciIPAddressRange>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DaprConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HciIPAddressRange)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DaprConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HciIPAddressRange>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DaprConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HciIPAddressRange IPersistableModel<HciIPAddressRange>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DaprConfiguration IPersistableModel<DaprConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HciIPAddressRange>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DaprConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HciIPAddressRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DaprConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,15 +69,16 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciIPAddressRange>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DaprConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciIPAddressRange)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DaprConfiguration)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("startIp"u8);
-            writer.WriteStringValue(StartIP);
-            writer.WritePropertyName("endIp"u8);
-            writer.WriteStringValue(EndIP);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -102,42 +98,40 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HciIPAddressRange IJsonModel<HciIPAddressRange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DaprConfiguration IJsonModel<DaprConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciIPAddressRange JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DaprConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciIPAddressRange>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DaprConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciIPAddressRange)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DaprConfiguration)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHciIPAddressRange(document.RootElement, options);
+            return DeserializeDaprConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HciIPAddressRange DeserializeHciIPAddressRange(JsonElement element, ModelReaderWriterOptions options)
+        internal static DaprConfiguration DeserializeDaprConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string startIP = default;
-            string endIP = default;
+            DaprConfigurationProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("startIp"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    startIP = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("endIp"u8))
-                {
-                    endIP = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = DaprConfigurationProperties.DeserializeDaprConfigurationProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +139,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HciIPAddressRange(startIP, endIP, additionalBinaryDataProperties);
+            return new DaprConfiguration(properties, additionalBinaryDataProperties);
         }
     }
 }

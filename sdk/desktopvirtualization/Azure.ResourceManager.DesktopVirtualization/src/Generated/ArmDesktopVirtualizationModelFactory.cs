@@ -2263,7 +2263,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 name,
                 resourceType,
                 systemData,
-                objectId is null && lastHeartBeatOn is null && sessions is null && agentVersion is null && allowNewSession is null && vmId is null && resourceId is null && assignedUser is null && friendlyName is null && status is null && osVersion is null && sxsStackVersion is null && updateState is null && lastUpdatedOn is null && updateErrorMessage is null && sessionHostHealthCheckResults is null ? default : new SessionHostProperties(
+                objectId is null && lastHeartBeatOn is null && sessions is null && agentVersion is null && allowNewSession is null && vmId is null && resourceId is null && assignedUser is null && friendlyName is null && status is null && statusTimestamp is null && osVersion is null && sxsStackVersion is null && updateState is null && lastUpdatedOn is null && updateErrorMessage is null && sessionHostHealthCheckResults is null ? default : new SessionHostProperties(
                     default,
                     default,
                     default,
@@ -2277,7 +2277,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     assignedUser,
                     friendlyName,
                     status,
-                    default,
+                    statusTimestamp,
                     osVersion,
                     sxsStackVersion,
                     updateState,

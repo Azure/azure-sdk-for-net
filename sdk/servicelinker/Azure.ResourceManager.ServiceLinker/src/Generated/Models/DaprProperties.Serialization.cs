@@ -9,56 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Hci;
+using Azure.ResourceManager.ServiceLinker;
 
-namespace Azure.ResourceManager.Hci.Models
+namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> Network adapter configuration. </summary>
-    public partial class NetworkAdapterConfiguration : IJsonModel<NetworkAdapterConfiguration>
+    /// <summary> Indicates some additional properties for dapr client type. </summary>
+    public partial class DaprProperties : IJsonModel<DaprProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NetworkAdapterConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DaprProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkAdapterConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DaprProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNetworkAdapterConfiguration(document.RootElement, options);
+                        return DeserializeDaprProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkAdapterConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DaprProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkAdapterConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DaprProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkAdapterConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DaprProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NetworkAdapterConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DaprProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkAdapterConfiguration IPersistableModel<NetworkAdapterConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DaprProperties IPersistableModel<DaprProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NetworkAdapterConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DaprProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NetworkAdapterConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DaprProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,36 +69,41 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkAdapterConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DaprProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkAdapterConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DaprProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AdapterName))
+            if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("adapterName"u8);
-                writer.WriteStringValue(AdapterName);
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(Ip4Address))
+            if (Optional.IsDefined(ComponentType))
             {
-                writer.WritePropertyName("ip4Address"u8);
-                writer.WriteStringValue(Ip4Address);
+                writer.WritePropertyName("componentType"u8);
+                writer.WriteStringValue(ComponentType);
             }
-            if (Optional.IsDefined(SubnetMask))
+            if (Optional.IsDefined(SecretStoreComponent))
             {
-                writer.WritePropertyName("subnetMask"u8);
-                writer.WriteStringValue(SubnetMask);
+                writer.WritePropertyName("secretStoreComponent"u8);
+                writer.WriteStringValue(SecretStoreComponent);
             }
-            if (Optional.IsDefined(DefaultGateway))
+            if (Optional.IsCollectionDefined(Metadata))
             {
-                writer.WritePropertyName("defaultGateway"u8);
-                writer.WriteStringValue(DefaultGateway);
-            }
-            if (Optional.IsCollectionDefined(DnsServers))
-            {
-                writer.WritePropertyName("dnsServers"u8);
+                writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
-                foreach (string item in DnsServers)
+                foreach (DaprMetadata item in Metadata)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Scopes))
+            {
+                writer.WritePropertyName("scopes"u8);
+                writer.WriteStartArray();
+                foreach (string item in Scopes)
                 {
                     if (item == null)
                     {
@@ -109,25 +114,15 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IPInterfaceType))
+            if (options.Format != "W" && Optional.IsDefined(RuntimeVersion))
             {
-                writer.WritePropertyName("ipInterfaceType"u8);
-                writer.WriteStringValue(IPInterfaceType.Value.ToString());
+                writer.WritePropertyName("runtimeVersion"u8);
+                writer.WriteStringValue(RuntimeVersion);
             }
-            if (Optional.IsDefined(VlanId))
+            if (options.Format != "W" && Optional.IsDefined(BindingComponentDirection))
             {
-                writer.WritePropertyName("vlanId"u8);
-                writer.WriteNumberValue(VlanId.Value);
-            }
-            if (Optional.IsDefined(InterfaceState))
-            {
-                writer.WritePropertyName("interfaceState"u8);
-                writer.WriteStringValue(InterfaceState.Value.ToString());
-            }
-            if (Optional.IsDefined(WifiConfiguration))
-            {
-                writer.WritePropertyName("wifiConfiguration"u8);
-                writer.WriteObjectValue(WifiConfiguration, options);
+                writer.WritePropertyName("bindingComponentDirection"u8);
+                writer.WriteStringValue(BindingComponentDirection.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -148,62 +143,84 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkAdapterConfiguration IJsonModel<NetworkAdapterConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DaprProperties IJsonModel<DaprProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NetworkAdapterConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DaprProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkAdapterConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DaprProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkAdapterConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DaprProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetworkAdapterConfiguration(document.RootElement, options);
+            return DeserializeDaprProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NetworkAdapterConfiguration DeserializeNetworkAdapterConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        internal static DaprProperties DeserializeDaprProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string adapterName = default;
-            string ip4Address = default;
-            string subnetMask = default;
-            string defaultGateway = default;
-            IList<string> dnsServers = default;
-            IPInterfaceType? ipInterfaceType = default;
-            int? vlanId = default;
-            InterfaceState? interfaceState = default;
-            WifiConfigurationDesiredProperties wifiConfiguration = default;
+            string version = default;
+            string componentType = default;
+            string secretStoreComponent = default;
+            IList<DaprMetadata> metadata = default;
+            IList<string> scopes = default;
+            string runtimeVersion = default;
+            DaprBindingComponentDirection? bindingComponentDirection = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("adapterName"u8))
+                if (prop.NameEquals("version"u8))
                 {
-                    adapterName = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        version = null;
+                        continue;
+                    }
+                    version = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("ip4Address"u8))
+                if (prop.NameEquals("componentType"u8))
                 {
-                    ip4Address = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        componentType = null;
+                        continue;
+                    }
+                    componentType = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("subnetMask"u8))
+                if (prop.NameEquals("secretStoreComponent"u8))
                 {
-                    subnetMask = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        secretStoreComponent = null;
+                        continue;
+                    }
+                    secretStoreComponent = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("defaultGateway"u8))
+                if (prop.NameEquals("metadata"u8))
                 {
-                    defaultGateway = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DaprMetadata> array = new List<DaprMetadata>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(DaprMetadata.DeserializeDaprMetadata(item, options));
+                    }
+                    metadata = array;
                     continue;
                 }
-                if (prop.NameEquals("dnsServers"u8))
+                if (prop.NameEquals("scopes"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -221,43 +238,27 @@ namespace Azure.ResourceManager.Hci.Models
                             array.Add(item.GetString());
                         }
                     }
-                    dnsServers = array;
+                    scopes = array;
                     continue;
                 }
-                if (prop.NameEquals("ipInterfaceType"u8))
+                if (prop.NameEquals("runtimeVersion"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        runtimeVersion = null;
                         continue;
                     }
-                    ipInterfaceType = new IPInterfaceType(prop.Value.GetString());
+                    runtimeVersion = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("vlanId"u8))
+                if (prop.NameEquals("bindingComponentDirection"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        bindingComponentDirection = null;
                         continue;
                     }
-                    vlanId = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("interfaceState"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    interfaceState = new InterfaceState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("wifiConfiguration"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    wifiConfiguration = WifiConfigurationDesiredProperties.DeserializeWifiConfigurationDesiredProperties(prop.Value, options);
+                    bindingComponentDirection = new DaprBindingComponentDirection(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -265,16 +266,14 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetworkAdapterConfiguration(
-                adapterName,
-                ip4Address,
-                subnetMask,
-                defaultGateway,
-                dnsServers ?? new ChangeTrackingList<string>(),
-                ipInterfaceType,
-                vlanId,
-                interfaceState,
-                wifiConfiguration,
+            return new DaprProperties(
+                version,
+                componentType,
+                secretStoreComponent,
+                metadata ?? new ChangeTrackingList<DaprMetadata>(),
+                scopes ?? new ChangeTrackingList<string>(),
+                runtimeVersion,
+                bindingComponentDirection,
                 additionalBinaryDataProperties);
         }
     }

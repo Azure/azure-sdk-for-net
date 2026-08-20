@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="assignedUser"> User assigned to SessionHost. </param>
         /// <param name="friendlyName"> Friendly name of SessionHost. </param>
         /// <param name="status"> Status for a SessionHost. </param>
-        /// <param name="statusOn"> The timestamp of the status. </param>
+        /// <param name="statusTimestamp"> The timestamp of the status. </param>
         /// <param name="osVersion"> The version of the OS on the session host. </param>
         /// <param name="sxsStackVersion"> The version of the side by side stack on the session host. </param>
         /// <param name="updateState"> Update state of a SessionHost. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="sessionHostConfiguration"> SessionHostConfiguration version reference at the time the update is initiated, in the format of date time. Example: 2024-04-26T04:56:45Z. </param>
         /// <param name="sessionHostHealthCheckResults"> List of SessionHostHealthCheckReports. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SessionHostProperties(int? activeSessions, int? disconnectedSessions, int? pendingSessions, string objectId, DateTimeOffset? lastHeartBeatOn, int? sessions, string agentVersion, bool? allowNewSession, string vmId, ResourceIdentifier resourceId, string assignedUser, string friendlyName, SessionHostStatus? status, DateTimeOffset? statusOn, string osVersion, string sxsStackVersion, SessionHostUpdateState? updateState, DateTimeOffset? lastUpdatedOn, string updateErrorMessage, DateTimeOffset? lastSessionHostUpdateOn, string sessionHostConfiguration, IReadOnlyList<SessionHostHealthCheckReport> sessionHostHealthCheckResults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SessionHostProperties(int? activeSessions, int? disconnectedSessions, int? pendingSessions, string objectId, DateTimeOffset? lastHeartBeatOn, int? sessions, string agentVersion, bool? allowNewSession, string vmId, ResourceIdentifier resourceId, string assignedUser, string friendlyName, SessionHostStatus? status, DateTimeOffset? statusTimestamp, string osVersion, string sxsStackVersion, SessionHostUpdateState? updateState, DateTimeOffset? lastUpdatedOn, string updateErrorMessage, DateTimeOffset? lastSessionHostUpdateOn, string sessionHostConfiguration, IReadOnlyList<SessionHostHealthCheckReport> sessionHostHealthCheckResults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActiveSessions = activeSessions;
             DisconnectedSessions = disconnectedSessions;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             AssignedUser = assignedUser;
             FriendlyName = friendlyName;
             Status = status;
-            StatusOn = statusOn;
+            StatusTimestamp = statusTimestamp;
             OSVersion = osVersion;
             SxsStackVersion = sxsStackVersion;
             UpdateState = updateState;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> The timestamp of the status. </summary>
         [WirePath("statusTimestamp")]
-        public DateTimeOffset? StatusOn { get; }
+        public DateTimeOffset? StatusTimestamp { get; }
 
         /// <summary> The timestamp of the last update. </summary>
         [WirePath("lastUpdateTime")]

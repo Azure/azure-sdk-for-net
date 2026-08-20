@@ -46,9 +46,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> NextPageToken. </summary>
         public static RestApiPollerRequestPagingKind NextPageToken { get; } = new RestApiPollerRequestPagingKind(NextPageTokenValue);
 
-        /// <summary> NextPageUrl. </summary>
-        public static RestApiPollerRequestPagingKind NextPageUri { get; } = new RestApiPollerRequestPagingKind(NextPageUriValue);
-
         /// <summary> PersistentToken. </summary>
         public static RestApiPollerRequestPagingKind PersistentToken { get; } = new RestApiPollerRequestPagingKind(PersistentTokenValue);
 
