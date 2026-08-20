@@ -11,14 +11,14 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.PostgreSql
 {
     /// <summary> Properties of a private link resource. </summary>
-    internal partial class PostgreSqlPrivateLinkResourceProperties : ProvisionableConstruct
+    internal partial class PostgreSqlFlexibleServersPrivateLinkResourceProperties : ProvisionableConstruct
     {
         private BicepValue<string> _groupId;
         private BicepList<string> _requiredMembers;
         private BicepList<string> _requiredZoneNames;
 
-        /// <summary> Creates a new PostgreSqlPrivateLinkResourceProperties. </summary>
-        public PostgreSqlPrivateLinkResourceProperties()
+        /// <summary> Creates a new PostgreSqlFlexibleServersPrivateLinkResourceProperties. </summary>
+        public PostgreSqlFlexibleServersPrivateLinkResourceProperties()
         {
         }
 
@@ -52,7 +52,7 @@ namespace Azure.Provisioning.PostgreSql
             }
         }
 
-        /// <summary> Define all the provisionable properties for PostgreSqlPrivateLinkResourceProperties. </summary>
+        /// <summary> Define all the provisionable properties for PostgreSqlFlexibleServersPrivateLinkResourceProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -62,7 +62,7 @@ namespace Azure.Provisioning.PostgreSql
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for PostgreSqlPrivateLinkResourceProperties that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for PostgreSqlFlexibleServersPrivateLinkResourceProperties that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

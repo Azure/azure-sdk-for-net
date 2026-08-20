@@ -19,7 +19,7 @@ namespace Azure.Provisioning.PostgreSql
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
-        private PostgreSqlPrivateLinkResourceProperties _properties;
+        private PostgreSqlFlexibleServersPrivateLinkResourceProperties _properties;
         private ResourceReference<PostgreSqlFlexibleServer> _parent;
 
         /// <summary> Creates a new PostgreSqlFlexibleServersPrivateLinkResource. </summary>
@@ -65,7 +65,7 @@ namespace Azure.Provisioning.PostgreSql
         }
 
         /// <summary> Gets the Properties. </summary>
-        internal PostgreSqlPrivateLinkResourceProperties Properties
+        internal PostgreSqlFlexibleServersPrivateLinkResourceProperties Properties
         {
             get
             {
@@ -123,7 +123,7 @@ namespace Azure.Provisioning.PostgreSql
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _properties = DefineModelProperty<PostgreSqlPrivateLinkResourceProperties>(nameof(Properties), new string[] { "properties" });
+            _properties = DefineModelProperty<PostgreSqlFlexibleServersPrivateLinkResourceProperties>(nameof(Properties), new string[] { "properties" });
             _parent = DefineResource<PostgreSqlFlexibleServer>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
