@@ -288,7 +288,7 @@ public class VoiceTurnTrace : IDisposable
             not VoiceTurnOutcome.Cancelled and
             not VoiceTurnOutcome.EndCall)
         {
-            activity.SetStatus(ActivityStatusCode.Error);
+            activity.SetStatus(ActivityStatusCode.Error, activity.StatusDescription);
             activity.SetTag("error.type", outcome);
         }
     }

@@ -163,6 +163,68 @@ public class VoiceTurnTracingRedTests
         });
     }
 
+    [TestCase(VoiceTurnOutcome.Error, "error")]
+    [TestCase(VoiceTurnOutcome.Timeout, "timeout")]
+    [TestCase(VoiceTurnOutcome.TransportError, "transport_error")]
+    [TestCase(VoiceTurnOutcome.Abandoned, "abandoned")]
+    public void ErrorCompletion_PreservesExistingStatusDescription(
+        VoiceTurnOutcome outcome,
+        string expectedOutcome)
+    {
+        var stopped = new ConcurrentQueue<Activity>();
+        using var listener = CreateListener(stoppedActivities: stopped);
+        var session = CreateSession(CreateConnectionContext(recorded: true));
+        using var turn = session.StartTurn(VoiceTurnOrigin.User, inputCount: 1);
+
+        using (turn.Activate())
+        {
+            Activity.Current!.SetStatus(
+                ActivityStatusCode.Error,
+                "downstream instrumentation failure");
+        }
+        turn.Complete(new VoiceTurnResult(outcome));
+        turn.Complete(new VoiceTurnResult(VoiceTurnOutcome.None, outputItemCount: 0));
+
+        var activity = stopped.Single(IsTargetTurn);
+        Assert.Multiple(() =>
+        {
+            Assert.That(stopped.Count(IsTargetTurn), Is.EqualTo(1));
+            Assert.That(activity.Status, Is.EqualTo(ActivityStatusCode.Error));
+            Assert.That(
+                activity.StatusDescription,
+                Is.EqualTo("downstream instrumentation failure"));
+            Assert.That(activity.GetTagItem("bridge.outcome"), Is.EqualTo(expectedOutcome));
+            Assert.That(activity.GetTagItem("error.type"), Is.EqualTo(expectedOutcome));
+        });
+    }
+
+    [TestCase(VoiceTurnOutcome.Error, "error")]
+    [TestCase(VoiceTurnOutcome.Timeout, "timeout")]
+    [TestCase(VoiceTurnOutcome.TransportError, "transport_error")]
+    [TestCase(VoiceTurnOutcome.Abandoned, "abandoned")]
+    public void ErrorCompletion_WithoutExistingStatusDescription_DoesNotCreateOne(
+        VoiceTurnOutcome outcome,
+        string expectedOutcome)
+    {
+        var stopped = new ConcurrentQueue<Activity>();
+        using var listener = CreateListener(stoppedActivities: stopped);
+        var session = CreateSession(CreateConnectionContext(recorded: true));
+        using var turn = session.StartTurn(VoiceTurnOrigin.User, inputCount: 1);
+
+        turn.Complete(new VoiceTurnResult(outcome));
+        turn.Complete(new VoiceTurnResult(VoiceTurnOutcome.None, outputItemCount: 0));
+
+        var activity = stopped.Single(IsTargetTurn);
+        Assert.Multiple(() =>
+        {
+            Assert.That(stopped.Count(IsTargetTurn), Is.EqualTo(1));
+            Assert.That(activity.Status, Is.EqualTo(ActivityStatusCode.Error));
+            Assert.That(activity.StatusDescription, Is.Null);
+            Assert.That(activity.GetTagItem("bridge.outcome"), Is.EqualTo(expectedOutcome));
+            Assert.That(activity.GetTagItem("error.type"), Is.EqualTo(expectedOutcome));
+        });
+    }
+
     [Test]
     public void DisposeWithoutCompletion_RecordsAbandonedOnce()
     {

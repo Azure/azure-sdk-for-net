@@ -97,7 +97,7 @@ public static class InvocationsBuilderExtensions
 
     private static void RejectVoiceRegistration(IServiceCollection services)
     {
-        if (services.Any(descriptor => descriptor.ServiceType == typeof(VoiceHandler)))
+        if (services.Any(descriptor => descriptor.ServiceType == typeof(VoiceRegistrationMarker)))
         {
             throw new InvalidOperationException(
                 "Invocations cannot be registered after Voice because Voice already owns the Invocations endpoints.");

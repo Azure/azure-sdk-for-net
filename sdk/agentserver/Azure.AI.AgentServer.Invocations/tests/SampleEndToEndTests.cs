@@ -747,6 +747,62 @@ public class SampleEndToEndTests
         }
     }
 
+    [TestCase("request-cancel", VoiceTurnOutcome.Cancelled)]
+    [TestCase("independent-cancel", VoiceTurnOutcome.TransportError)]
+    public async Task SampleVoice1_InitialSendCancellationUsesRequestTokenIdentityAndAllowsRetry(
+        string scenario,
+        VoiceTurnOutcome expectedOutcome)
+    {
+        var handler = new TestableVoiceSupportHandler();
+        using var requestCancellation = new CancellationTokenSource();
+        using var independentCancellation = new CancellationTokenSource();
+        var sendCancellation = scenario == "request-cancel"
+            ? requestCancellation
+            : independentCancellation;
+        var failedSession = new RecordingVoiceSession("pending-cancel", sendCancellation.Token);
+        var retrySession = new RecordingVoiceSession("success");
+        var message = CreateVoiceUserMessage();
+
+        var failedOperation = handler.InvokeUserMessageAsync(
+            failedSession,
+            message,
+            requestCancellation.Token);
+        await failedSession.SendStarted.Task.WaitAsync(TimeSpan.FromSeconds(2));
+        await sendCancellation.CancelAsync();
+
+        OperationCanceledException? exception = null;
+        try
+        {
+            await failedOperation;
+        }
+        catch (OperationCanceledException caught)
+        {
+            exception = caught;
+        }
+        await handler.InvokeUserMessageAsync(retrySession, message, CancellationToken.None);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(exception, Is.Not.Null);
+            Assert.That(failedSession.SendCount, Is.EqualTo(1));
+            Assert.That(failedSession.Turn?.CommittedResult?.Outcome, Is.EqualTo(expectedOutcome));
+            Assert.That(failedSession.Turn?.CommitCount, Is.EqualTo(1));
+            Assert.That(failedSession.Turn?.AttemptCount, Is.EqualTo(3));
+            Assert.That(retrySession.SendCount, Is.EqualTo(3));
+            Assert.That(retrySession.Turn?.CommittedResult?.Outcome, Is.EqualTo(VoiceTurnOutcome.Response));
+            Assert.That(retrySession.Turn?.CommitCount, Is.EqualTo(1));
+            Assert.That(retrySession.Turn?.AttemptCount, Is.EqualTo(3));
+            if (scenario == "request-cancel")
+            {
+                Assert.That(exception?.CancellationToken, Is.EqualTo(requestCancellation.Token));
+            }
+            else
+            {
+                Assert.That(exception?.CancellationToken, Is.Not.EqualTo(requestCancellation.Token));
+            }
+        });
+    }
+
     [Test]
     public async Task SampleVoice1_TypedRelay_ExplicitlyAcknowledgesAndReplies()
     {
@@ -1031,13 +1087,37 @@ public class SampleEndToEndTests
             base.OnUserMessageAsync(session, message, cancellationToken);
     }
 
+    private sealed class TestableVoiceSupportHandler : Snippets.SampleVoice1Snippets.VoiceSupportHandler
+    {
+        public TestableVoiceSupportHandler()
+            : base(NullLogger<Snippets.SampleVoice1Snippets.VoiceSupportHandler>.Instance)
+        {
+        }
+
+        public Task InvokeUserMessageAsync(
+            VoiceSession session,
+            VoiceUserMessageEvent message,
+            CancellationToken cancellationToken) =>
+            base.OnUserMessageAsync(session, message, cancellationToken);
+    }
+
     private sealed class RecordingVoiceSession : VoiceSession
     {
         private readonly string _scenario;
+        private readonly CancellationToken _pendingCancellation;
 
-        public RecordingVoiceSession(string scenario) => _scenario = scenario;
+        public RecordingVoiceSession(
+            string scenario,
+            CancellationToken pendingCancellation = default)
+        {
+            _scenario = scenario;
+            _pendingCancellation = pendingCancellation;
+        }
 
         public int SendCount { get; private set; }
+
+        public TaskCompletionSource SendStarted { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
 
         public RecordingVoiceTurnTrace? Turn { get; private set; }
 
@@ -1055,12 +1135,19 @@ public class SampleEndToEndTests
             return _scenario switch
             {
                 "success" => Task.CompletedTask,
+                "pending-cancel" => WaitForCancellationAsync(),
                 "request-cancel" => Task.FromException(
                     new OperationCanceledException(cancellationToken)),
                 "independent-cancel" => Task.FromException(
                     new OperationCanceledException(new CancellationToken(canceled: true))),
                 _ => Task.FromException(new InvalidOperationException("injected sample failure")),
             };
+        }
+
+        private async Task WaitForCancellationAsync()
+        {
+            SendStarted.TrySetResult();
+            await Task.Delay(Timeout.InfiniteTimeSpan, _pendingCancellation);
         }
     }
 

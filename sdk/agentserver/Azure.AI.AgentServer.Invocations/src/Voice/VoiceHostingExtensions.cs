@@ -28,6 +28,7 @@ public static class VoiceHostingExtensions
         services.AddScoped<VoiceHandler, THandler>();
         services.AddScoped<InvocationHandler>(provider =>
             provider.GetRequiredService<VoiceHandler>());
+        services.AddSingleton<VoiceRegistrationMarker>();
         return services;
     }
 
@@ -43,6 +44,8 @@ public static class VoiceHostingExtensions
         return builder;
     }
 }
+
+internal sealed class VoiceRegistrationMarker;
 
 /// <summary>One-line startup for a typed Voice relay.</summary>
 public static class VoiceServer

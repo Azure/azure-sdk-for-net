@@ -77,6 +77,15 @@ public class VoiceSupportHandler : VoiceHandler
                 cancellationToken);
             generation.MarkResponseOpened();
         }
+        catch (OperationCanceledException exception)
+            when (exception.CancellationToken == cancellationToken &&
+                cancellationToken.IsCancellationRequested)
+        {
+            generation.SelectResult(VoiceTurnOutcome.Cancelled);
+            generation.CompleteSelected();
+            RemoveGeneration(responseId);
+            throw;
+        }
         catch
         {
             generation.SelectResult(VoiceTurnOutcome.TransportError);

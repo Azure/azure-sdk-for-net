@@ -90,6 +90,34 @@ public class VoiceRegistrationTests
             Throws.Nothing);
     }
 
+    [TestCase(InvocationsRegistration.Generic)]
+    [TestCase(InvocationsRegistration.Instance)]
+    [TestCase(InvocationsRegistration.Factory)]
+    public void AddInvocationsDoesNotRejectDirectVoiceHandlerRegistration(
+        InvocationsRegistration registration)
+    {
+        var builder = AgentHost.CreateBuilder();
+        builder.Services.AddScoped<VoiceHandler, TestVoiceHandler>();
+
+        Assert.That(
+            () => RegisterInvocations(builder, registration),
+            Throws.Nothing);
+        using var provider = builder.Services.BuildServiceProvider();
+        using var scope = provider.CreateScope();
+        Assert.Multiple(() =>
+        {
+            Assert.That(
+                builder.Services.Count(descriptor => descriptor.ServiceType == typeof(VoiceHandler)),
+                Is.EqualTo(1));
+            Assert.That(
+                builder.Services.Count(descriptor => descriptor.ServiceType == typeof(InvocationHandler)),
+                Is.EqualTo(1));
+            Assert.That(
+                scope.ServiceProvider.GetRequiredService<InvocationHandler>(),
+                Is.TypeOf<RawHandler>());
+        });
+    }
+
     [Test]
     public async Task RejectedInvocationsCompositionLeavesVoiceEndpointRunnable()
     {
