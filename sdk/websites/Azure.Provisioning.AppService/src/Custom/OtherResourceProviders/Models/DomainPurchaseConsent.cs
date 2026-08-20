@@ -13,6 +13,7 @@ namespace Azure.Provisioning.AppService;
 /// Domain purchase consent object, representing acceptance of applicable legal
 /// agreements.
 /// </summary>
+// Preserve the API shipped by the reflection-based generator for resource providers absent from the Microsoft.Web TypeSpec.
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 [System.Obsolete("This type is deprecated and it will be removed in a future version.")]
 public partial class DomainPurchaseConsent : ProvisionableConstruct

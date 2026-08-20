@@ -5,21 +5,21 @@
 
 using System;
 using Azure.Core;
-using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.AppService;
 
 /// <summary>
-/// AppServiceCertificate.
+/// DomainOwnershipIdentifier.
 /// </summary>
+// Preserve the API shipped by the reflection-based generator for resource providers absent from the Microsoft.Web TypeSpec.
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 [System.Obsolete("This type is deprecated and it will be removed in a future version.")]
-public partial class AppServiceCertificate : ProvisionableResource
+public partial class DomainOwnershipIdentifier : ProvisionableResource
 {
     /// <summary>
-    /// Name of the certificate.
+    /// Name of identifier.
     /// </summary>
     public BicepValue<string> Name
     {
@@ -29,39 +29,7 @@ public partial class AppServiceCertificate : ProvisionableResource
     private BicepValue<string> _name;
 
     /// <summary>
-    /// Gets or sets the Location.
-    /// </summary>
-    public BicepValue<AzureLocation> Location
-    {
-        get { Initialize(); return _location; }
-        set { Initialize(); _location.Assign(value); }
-    }
-    private BicepValue<AzureLocation> _location;
-
-    /// <summary>
-    /// Key Vault resource Id.
-    /// </summary>
-    public BicepValue<ResourceIdentifier> KeyVaultId
-    {
-        get { Initialize(); return _keyVaultId; }
-        set { Initialize(); _keyVaultId.Assign(value); }
-    }
-    private BicepValue<ResourceIdentifier> _keyVaultId;
-
-    /// <summary>
-    /// Key Vault secret name.
-    /// </summary>
-    public BicepValue<string> KeyVaultSecretName
-    {
-        get { Initialize(); return _keyVaultSecretName; }
-        set { Initialize(); _keyVaultSecretName.Assign(value); }
-    }
-    private BicepValue<string> _keyVaultSecretName;
-
-    /// <summary>
-    /// Kind of resource. If the resource is an app, you can refer to
-    /// https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference
-    /// for details supported values for kind.
+    /// Kind of resource.
     /// </summary>
     public BicepValue<string> Kind
     {
@@ -71,14 +39,14 @@ public partial class AppServiceCertificate : ProvisionableResource
     private BicepValue<string> _kind;
 
     /// <summary>
-    /// Gets or sets the Tags.
+    /// Ownership Id.
     /// </summary>
-    public BicepDictionary<string> Tags
+    public BicepValue<string> OwnershipId
     {
-        get { Initialize(); return _tags; }
-        set { Initialize(); _tags.Assign(value); }
+        get { Initialize(); return _ownershipId; }
+        set { Initialize(); _ownershipId.Assign(value); }
     }
-    private BicepDictionary<string> _tags;
+    private BicepValue<string> _ownershipId;
 
     /// <summary>
     /// Gets the Id.
@@ -90,15 +58,6 @@ public partial class AppServiceCertificate : ProvisionableResource
     private BicepValue<ResourceIdentifier> _id;
 
     /// <summary>
-    /// Status of the Key Vault secret.
-    /// </summary>
-    public BicepValue<KeyVaultSecretStatus> ProvisioningState
-    {
-        get { Initialize(); return _provisioningState; }
-    }
-    private BicepValue<KeyVaultSecretStatus> _provisioningState;
-
-    /// <summary>
     /// Gets the SystemData.
     /// </summary>
     public SystemData SystemData
@@ -108,50 +67,46 @@ public partial class AppServiceCertificate : ProvisionableResource
     private SystemData _systemData;
 
     /// <summary>
-    /// Gets or sets a reference to the parent AppServiceCertificateOrder.
+    /// Gets or sets a reference to the parent AppServiceDomain.
     /// </summary>
-    public AppServiceCertificateOrder Parent
+    public AppServiceDomain Parent
     {
         get { Initialize(); return _parent.Value; }
         set { Initialize(); _parent.Value = value; }
     }
-    private ResourceReference<AppServiceCertificateOrder> _parent;
+    private ResourceReference<AppServiceDomain> _parent;
 
     /// <summary>
-    /// Creates a new AppServiceCertificate.
+    /// Creates a new DomainOwnershipIdentifier.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the AppServiceCertificate resource.
-    /// This can be used to refer to the resource in expressions, but is not
-    /// the Azure name of the resource.  This value can contain letters,
-    /// numbers, and underscores.
+    /// The the Bicep identifier name of the DomainOwnershipIdentifier
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the AppServiceCertificate.</param>
-    public AppServiceCertificate(string bicepIdentifier, string resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.CertificateRegistration/certificateOrders/certificates", resourceVersion ?? "2024-11-01")
+    /// <param name="resourceVersion">Version of the DomainOwnershipIdentifier.</param>
+    public DomainOwnershipIdentifier(string bicepIdentifier, string resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DomainRegistration/domains/domainOwnershipIdentifiers", resourceVersion ?? "2024-11-01")
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of AppServiceCertificate.
+    /// Define all the provisionable properties of DomainOwnershipIdentifier.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
-        _keyVaultId = DefineProperty<ResourceIdentifier>("KeyVaultId", ["properties", "keyVaultId"]);
-        _keyVaultSecretName = DefineProperty<string>("KeyVaultSecretName", ["properties", "keyVaultSecretName"]);
         _kind = DefineProperty<string>("Kind", ["kind"]);
-        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _ownershipId = DefineProperty<string>("OwnershipId", ["properties", "ownershipId"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
-        _provisioningState = DefineProperty<KeyVaultSecretStatus>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
-        _parent = DefineResource<AppServiceCertificateOrder>("Parent", ["parent"], isRequired: true);
+        _parent = DefineResource<AppServiceDomain>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
-    /// Supported AppServiceCertificate resource versions.
+    /// Supported DomainOwnershipIdentifier resource versions.
     /// </summary>
     public static class ResourceVersions
     {
@@ -236,22 +191,27 @@ public partial class AppServiceCertificate : ProvisionableResource
         public static readonly string V2018_02_01 = "2018-02-01";
 
         /// <summary>
-        /// 2015-08-01.
+        /// 2015-04-01.
         /// </summary>
-        public static readonly string V2015_08_01 = "2015-08-01";
+        public static readonly string V2015_04_01 = "2015-04-01";
+
+        /// <summary>
+        /// 2015-02-01.
+        /// </summary>
+        public static readonly string V2015_02_01 = "2015-02-01";
     }
 
     /// <summary>
-    /// Creates a reference to an existing AppServiceCertificate.
+    /// Creates a reference to an existing DomainOwnershipIdentifier.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the AppServiceCertificate resource.
-    /// This can be used to refer to the resource in expressions, but is not
-    /// the Azure name of the resource.  This value can contain letters,
-    /// numbers, and underscores.
+    /// The the Bicep identifier name of the DomainOwnershipIdentifier
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the AppServiceCertificate.</param>
-    /// <returns>The existing AppServiceCertificate resource.</returns>
-    public static AppServiceCertificate FromExisting(string bicepIdentifier, string resourceVersion = default) =>
+    /// <param name="resourceVersion">Version of the DomainOwnershipIdentifier.</param>
+    /// <returns>The existing DomainOwnershipIdentifier resource.</returns>
+    public static DomainOwnershipIdentifier FromExisting(string bicepIdentifier, string resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

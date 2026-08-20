@@ -12,6 +12,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Details of a hostname derived from a domain.
 /// </summary>
+// Preserve the API shipped by the reflection-based generator for resource providers absent from the Microsoft.Web TypeSpec.
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 [System.Obsolete("This type is deprecated and it will be removed in a future version.")]
 public partial class AppServiceHostName : ProvisionableConstruct

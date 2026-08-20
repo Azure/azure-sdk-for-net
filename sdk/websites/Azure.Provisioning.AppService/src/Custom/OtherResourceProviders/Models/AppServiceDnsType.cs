@@ -6,19 +6,20 @@
 namespace Azure.Provisioning.AppService;
 
 /// <summary>
-/// Certificate product type.
+/// Current DNS type.
 /// </summary>
+// Preserve the API shipped by the reflection-based generator for resource providers absent from the Microsoft.Web TypeSpec.
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 [System.Obsolete("This type is deprecated and it will be removed in a future version.")]
-public enum CertificateProductType
+public enum AppServiceDnsType
 {
     /// <summary>
-    /// StandardDomainValidatedSsl.
+    /// AzureDns.
     /// </summary>
-    StandardDomainValidatedSsl,
+    AzureDns,
 
     /// <summary>
-    /// StandardDomainValidatedWildCardSsl.
+    /// DefaultDomainRegistrarDns.
     /// </summary>
-    StandardDomainValidatedWildCardSsl,
+    DefaultDomainRegistrarDns,
 }

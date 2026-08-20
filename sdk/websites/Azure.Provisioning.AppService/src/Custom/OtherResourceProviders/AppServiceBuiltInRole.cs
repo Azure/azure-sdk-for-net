@@ -13,6 +13,7 @@ namespace Azure.Provisioning.AppService;
 /// principals, and managed identities.
 /// </summary>
 /// <param name="value">The ID value of the role.</param>
+// Preserve the API shipped by the reflection-based generator for resource providers absent from the Microsoft.Web TypeSpec.
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 [System.Obsolete("This type is deprecated and it will be removed in a future version.")]
 public readonly struct AppServiceBuiltInRole(string value) : IEquatable<AppServiceBuiltInRole>

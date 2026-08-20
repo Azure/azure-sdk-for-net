@@ -12,6 +12,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Key Vault container for a certificate that is purchased through Azure.
 /// </summary>
+// Preserve the API shipped by the reflection-based generator for resource providers absent from the Microsoft.Web TypeSpec.
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 [System.Obsolete("This type is deprecated and it will be removed in a future version.")]
 public partial class AppServiceCertificateProperties : ProvisionableConstruct

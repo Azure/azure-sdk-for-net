@@ -6,24 +6,20 @@
 namespace Azure.Provisioning.AppService;
 
 /// <summary>
-/// The AppServiceCertificateNotRenewableReason.
+/// Certificate product type.
 /// </summary>
+// Preserve the API shipped by the reflection-based generator for resource providers absent from the Microsoft.Web TypeSpec.
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 [System.Obsolete("This type is deprecated and it will be removed in a future version.")]
-public enum AppServiceCertificateNotRenewableReason
+public enum CertificateProductType
 {
     /// <summary>
-    /// RegistrationStatusNotSupportedForRenewal.
+    /// StandardDomainValidatedSsl.
     /// </summary>
-    RegistrationStatusNotSupportedForRenewal,
+    StandardDomainValidatedSsl,
 
     /// <summary>
-    /// ExpirationNotInRenewalTimeRange.
+    /// StandardDomainValidatedWildCardSsl.
     /// </summary>
-    ExpirationNotInRenewalTimeRange,
-
-    /// <summary>
-    /// SubscriptionNotActive.
-    /// </summary>
-    SubscriptionNotActive,
+    StandardDomainValidatedWildCardSsl,
 }

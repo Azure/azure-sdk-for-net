@@ -6,11 +6,12 @@
 namespace Azure.Provisioning.AppService;
 
 /// <summary>
-/// The DomainNotRenewableReason.
+/// The AppServiceCertificateNotRenewableReason.
 /// </summary>
+// Preserve the API shipped by the reflection-based generator for resource providers absent from the Microsoft.Web TypeSpec.
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 [System.Obsolete("This type is deprecated and it will be removed in a future version.")]
-public enum DomainNotRenewableReason
+public enum AppServiceCertificateNotRenewableReason
 {
     /// <summary>
     /// RegistrationStatusNotSupportedForRenewal.

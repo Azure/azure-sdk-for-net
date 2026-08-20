@@ -11,6 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Configuration settings for the Azure App Service Authentication / Authorization V2 feature.
 /// </summary>
+// Preserve the shipped type name after TypeSpec aligned the resource name with WebSiteAuthSettingsV2.
 [EditorBrowsable(EditorBrowsableState.Never)]
 [Obsolete("This class is deprecated and it will be removed in a future version. Please use WebSiteAuthSettingsV2 instead.")]
 public partial class SiteAuthSettingsV2 : WebSiteAuthSettingsV2
