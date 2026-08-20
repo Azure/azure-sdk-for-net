@@ -36,7 +36,6 @@ public class HandlerDrivenPersistenceTests : IDisposable
             {
                 services.AddSingleton<ResponsesProvider>(_spy);
                 services.AddSingleton<ResponsesCancellationSignalProvider>(_spy.AsCancellationProvider());
-                services.AddSingleton<ResponsesStreamProvider>(_spy.AsStreamProvider());
             });
         _client = _factory.CreateClient();
     }
@@ -267,9 +266,7 @@ public class HandlerDrivenPersistenceTests : IDisposable
     private sealed class RecordingProvider : ResponsesProvider, IDisposable
     {
         private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
-        private readonly ConcurrentDictionary<string, SeekableReplaySubject> _subjects = new();
         private readonly ConcurrentDictionary<string, CancellationTokenSource> _ctsSources = new();
-        private readonly TimeSpan _ttl = TimeSpan.FromMinutes(30);
 
         public ConcurrentBag<string> Calls { get; } = new();
 
@@ -317,7 +314,6 @@ public class HandlerDrivenPersistenceTests : IDisposable
         // --- Adapter factories for DI registration ---
 
         internal ResponsesCancellationSignalProvider AsCancellationProvider() => new CancellationAdapter(this);
-        internal ResponsesStreamProvider AsStreamProvider() => new StreamAdapter(this);
 
         private sealed class CancellationAdapter(RecordingProvider provider) : ResponsesCancellationSignalProvider
         {
@@ -325,35 +321,6 @@ public class HandlerDrivenPersistenceTests : IDisposable
                 => provider.CancelResponseAsync(responseId, cancellationToken);
             public override Task<CancellationToken> GetResponseCancellationTokenAsync(string responseId, CancellationToken cancellationToken = default)
                 => provider.GetResponseCancellationTokenAsync(responseId, cancellationToken);
-        }
-
-        private sealed class StreamAdapter(RecordingProvider provider) : ResponsesStreamProvider
-        {
-            public override Task<IAsyncObserver<ResponseStreamEvent>> CreateEventPublisherAsync(string responseId, CancellationToken cancellationToken = default)
-                => provider.CreateEventPublisherAsync(responseId, cancellationToken);
-            public override Task<IAsyncDisposable> SubscribeToEventsAsync(string responseId, IAsyncObserver<ResponseStreamEvent> observer, long? cursor = null, CancellationToken cancellationToken = default)
-                => provider.SubscribeToEventsAsync(responseId, observer, cursor, cancellationToken);
-        }
-
-        public Task<IAsyncObserver<ResponseStreamEvent>> CreateEventPublisherAsync(
-            string responseId, CancellationToken cancellationToken = default)
-        {
-            Calls.Add("CreateEventPublisherAsync");
-            var subject = _subjects.GetOrAdd(responseId, _ => new SeekableReplaySubject(_ttl));
-            return Task.FromResult(subject.GetPublisher());
-        }
-
-        public async Task<IAsyncDisposable> SubscribeToEventsAsync(
-            string responseId,
-            IAsyncObserver<ResponseStreamEvent> observer,
-            long? cursor = null,
-            CancellationToken cancellationToken = default)
-        {
-            Calls.Add("SubscribeToEventsAsync");
-            if (!_subjects.TryGetValue(responseId, out var subject))
-                throw new InvalidOperationException($"No event stream for '{responseId}'.");
-            var unwrapping = new UnwrappingObserver(observer);
-            return await subject.SubscribeAsync(unwrapping, cursor);
         }
 
         public Task CancelResponseAsync(string responseId, CancellationToken cancellationToken = default)
@@ -378,21 +345,8 @@ public class HandlerDrivenPersistenceTests : IDisposable
 
         public void Dispose()
         {
-            foreach (var subject in _subjects.Values)
-                subject.Dispose();
             foreach (var cts in _ctsSources.Values)
                 cts.Dispose();
-        }
-
-        private sealed class UnwrappingObserver(IAsyncObserver<ResponseStreamEvent> inner)
-            : IAsyncObserver<(long SequenceNumber, ResponseStreamEvent Event)>
-        {
-            public ValueTask OnNextAsync((long SequenceNumber, ResponseStreamEvent Event) value)
-                => inner.OnNextAsync(value.Event);
-            public ValueTask OnErrorAsync(Exception error)
-                => inner.OnErrorAsync(error);
-            public ValueTask OnCompletedAsync()
-                => inner.OnCompletedAsync();
         }
     }
 }

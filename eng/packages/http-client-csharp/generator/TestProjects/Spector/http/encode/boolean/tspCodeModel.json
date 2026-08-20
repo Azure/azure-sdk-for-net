@@ -165,6 +165,7 @@
             "$id": "19",
             "kind": "boolean",
             "name": "boolean",
+            "encode": "string",
             "crossLanguageDefinitionId": "TypeSpec.boolean",
             "decorators": []
           },
