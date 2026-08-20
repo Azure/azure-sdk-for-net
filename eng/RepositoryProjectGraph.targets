@@ -1,0 +1,75 @@
+<Project>
+  <PropertyGroup>
+    <RepositoryProjectGraphTargetsImported>true</RepositoryProjectGraphTargetsImported>
+  </PropertyGroup>
+
+  <Target Name="_SetCollectRepositoryProjectGraphInnerTarget">
+    <PropertyGroup>
+      <InnerTargets>CollectRepositoryProjectGraphInner</InnerTargets>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="_CollectRepositoryProjectGraphInnerBuilds"
+          DependsOnTargets="_SetCollectRepositoryProjectGraphInnerTarget;DispatchToInnerBuilds"
+          Condition="'$(IsCrossTargetingBuild)' == 'true'">
+    <ItemGroup>
+      <_RepositoryProjectGraphRecord Include="@(InnerOutput)" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="CollectRepositoryProjectGraph"
+          DependsOnTargets="_CollectRepositoryProjectGraphInnerBuilds;CollectRepositoryProjectGraphInner"
+          Returns="@(_RepositoryProjectGraphRecord)" />
+
+  <Target Name="CollectRepositoryProjectGraphInner"
+          Condition="'$(IsCrossTargetingBuild)' != 'true'"
+          Returns="@(_RepositoryProjectGraphRecord)">
+    <PropertyGroup>
+      <_RepositoryProjectGraphPackageId Condition="'$(PackageId)' != ''">$(PackageId)</_RepositoryProjectGraphPackageId>
+      <_RepositoryProjectGraphPackageId Condition="'$(_RepositoryProjectGraphPackageId)' == ''">$(AssemblyName)</_RepositoryProjectGraphPackageId>
+      <_RepositoryProjectGraphPackageRoot>$(PackageRootDirectory)</_RepositoryProjectGraphPackageRoot>
+      <_RepositoryProjectGraphPackageRoot Condition="'$(_RepositoryProjectGraphPackageRoot)' == ''">$([MSBuild]::NormalizeDirectory('$(MSBuildProjectDirectory)/../').TrimEnd('/').TrimEnd('\'))</_RepositoryProjectGraphPackageRoot>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <_RepositoryProjectGraphRecord Include="Node|$(MSBuildProjectFullPath)|$(TargetFramework)|$(_RepositoryProjectGraphPackageId)|$(AssemblyName)|$(_RepositoryProjectGraphPackageRoot)|$(IsClientLibrary)|$(IsGeneratorLibrary)|$(IsTestProject)|$(IsShippingLibrary)" />
+      <_RepositoryProjectGraphRecord Include="ProjectReference|$(MSBuildProjectFullPath)|$(TargetFramework)|%(ProjectReference.FullPath)|%(ProjectReference.ReferenceOutputAssembly)|%(ProjectReference.OutputItemType)" Condition="'@(ProjectReference)' != ''" />
+      <_RepositoryProjectGraphRecord Include="PackageReference|$(MSBuildProjectFullPath)|$(TargetFramework)|%(PackageReference.Identity)|$([System.String]::Copy('%(PackageReference.PrivateAssets)').Replace(';', ','))|$([System.String]::Copy('%(PackageReference.IncludeAssets)').Replace(';', ','))|$([System.String]::Copy('%(PackageReference.ExcludeAssets)').Replace(';', ','))" Condition="'@(PackageReference)' != ''" />
+
+      <_RepositoryProjectGraphInput Include="$(MSBuildAllProjects)" InputKind="Import" Condition="'$(IncludeRepositoryProjectGraphInputs)' == 'true'" />
+      <_RepositoryProjectGraphInput Include="@(Compile->'%(FullPath)')" InputKind="Compile" Condition="'$(IncludeRepositoryProjectGraphInputs)' == 'true'" />
+      <_RepositoryProjectGraphInput Include="@(None->'%(FullPath)')" InputKind="None" Condition="'$(IncludeRepositoryProjectGraphInputs)' == 'true'" />
+      <_RepositoryProjectGraphInput Include="@(Content->'%(FullPath)')" InputKind="Content" Condition="'$(IncludeRepositoryProjectGraphInputs)' == 'true'" />
+      <_RepositoryProjectGraphInput Include="@(EmbeddedResource->'%(FullPath)')" InputKind="EmbeddedResource" Condition="'$(IncludeRepositoryProjectGraphInputs)' == 'true'" />
+      <_RepositoryProjectGraphInput Include="@(AdditionalFiles->'%(FullPath)')" InputKind="AdditionalFiles" Condition="'$(IncludeRepositoryProjectGraphInputs)' == 'true'" />
+      <_RepositoryProjectGraphRecord Include="Input|$(MSBuildProjectFullPath)|$(TargetFramework)|%(_RepositoryProjectGraphInput.InputKind)|%(_RepositoryProjectGraphInput.FullPath)" Condition="'$(IncludeRepositoryProjectGraphInputs)' == 'true'" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="_SetCollectResolvedReferenceOracleInnerTarget">
+    <PropertyGroup>
+      <InnerTargets>CollectResolvedReferenceOracleInner</InnerTargets>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="_CollectResolvedReferenceOracleInnerBuilds"
+          DependsOnTargets="_SetCollectResolvedReferenceOracleInnerTarget;DispatchToInnerBuilds"
+          Condition="'$(IsCrossTargetingBuild)' == 'true'">
+    <ItemGroup>
+      <_ResolvedReferenceOracleRecord Include="@(InnerOutput)" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="CollectResolvedReferenceOracle"
+          DependsOnTargets="_CollectResolvedReferenceOracleInnerBuilds;CollectResolvedReferenceOracleInner"
+          Returns="@(_ResolvedReferenceOracleRecord)" />
+
+  <Target Name="CollectResolvedReferenceOracleInner"
+          DependsOnTargets="ResolveReferences"
+          Condition="'$(IsCrossTargetingBuild)' != 'true'"
+          Returns="@(_ResolvedReferenceOracleRecord)">
+    <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and '$(IsGeneratorLibrary)' != 'true'">
+      <_ResolvedReferenceOracleRecord Include="$(MSBuildProjectFullPath)|$(TargetFramework)|%(ReferencePath.Filename)" />
+    </ItemGroup>
+  </Target>
+</Project>

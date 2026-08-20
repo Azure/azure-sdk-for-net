@@ -7,4 +7,5 @@
   </ItemGroup>
 
   <Import Project="$(RepoEngPath)\Directory.Build.Common.targets" Condition="'$(ImportRepoCommonSettings)' == 'true'" />
+  <Import Project="$(RepoEngPath)\RepositoryProjectGraph.targets" Condition="'$(RepositoryProjectGraphTargetsImported)' != 'true'" />
 </Project>

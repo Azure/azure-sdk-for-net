@@ -13,6 +13,10 @@
     <IncludeIntegrationTests Condition="'$(IncludeIntegrationTests)' == ''">true</IncludeIntegrationTests>
     <IncludeSamplesApplications Condition="'$(IncludeSamplesApplications)' == ''">true</IncludeSamplesApplications>
     <IncludeSamplesApplications Condition="'$(ServiceDirectory)' != '*' or '$(IncludeSamples)' == 'false'">false</IncludeSamplesApplications>
+    <RepositoryProjectGraphPath Condition="'$(RepositoryProjectGraphPath)' == ''">$(RepoRoot)artifacts/obj/RepositoryProjectGraph/repository-project-graph.json</RepositoryProjectGraphPath>
+    <RepositoryProjectGraphRecordsPath Condition="'$(RepositoryProjectGraphRecordsPath)' == ''">$(RepositoryProjectGraphPath).records</RepositoryProjectGraphRecordsPath>
+    <RepositoryProjectGraphForwardOutputKind Condition="'$(RepositoryProjectGraphForwardOutputKind)' == ''">Projects</RepositoryProjectGraphForwardOutputKind>
+    <OverwriteResolvedReferenceOracle Condition="'$(OverwriteResolvedReferenceOracle)' == ''">false</OverwriteResolvedReferenceOracle>
   </PropertyGroup>
 
   <ItemGroup>
@@ -178,6 +182,60 @@
       <_WriteToLines Include="%24%28RepoRoot%29%(ProjectsToIncludeFitered.Identity)" />
     </ItemGroup>
     <WriteLinesToFile File="$(OutputProjectFilePath)" Lines="@(_WriteToLines)" />
+  </Target>
+
+  <Target Name="GenerateRepositoryProjectGraph">
+    <ItemGroup>
+      <_RepositoryProjectGraphSourceProject Include="$(RepoRoot)sdk/*/**/src/**/*.csproj;$(RepoRoot)sdk/*/**/gen/**/*.csproj;$(RepoRoot)sdk/*/**/shared/**/*.csproj;$(RepoRoot)common/**/*.csproj" />
+      <_RepositoryProjectGraphTestProject Include="$(RepoRoot)sdk/*/**/tests/**/*.csproj;$(RepoRoot)sdk/*/**/integration/**/*.csproj" />
+    </ItemGroup>
+    <RemoveDuplicates Inputs="@(_RepositoryProjectGraphSourceProject)">
+      <Output TaskParameter="Filtered" ItemName="_DistinctRepositoryProjectGraphSourceProject" />
+    </RemoveDuplicates>
+    <RemoveDuplicates Inputs="@(_RepositoryProjectGraphTestProject)">
+      <Output TaskParameter="Filtered" ItemName="_DistinctRepositoryProjectGraphTestProject" />
+    </RemoveDuplicates>
+    <MSBuild Projects="@(_DistinctRepositoryProjectGraphSourceProject)"
+             Targets="CollectRepositoryProjectGraph"
+             BuildInParallel="true"
+             UnloadProjectsOnCompletion="true"
+             Properties="IncludeRepositoryProjectGraphInputs=$(IncludeRepositoryProjectGraphInputs)">
+      <Output TaskParameter="TargetOutputs" ItemName="_RepositoryProjectGraphRecord" />
+    </MSBuild>
+    <MSBuild Projects="@(_DistinctRepositoryProjectGraphTestProject)"
+             Targets="CollectRepositoryProjectGraph"
+             BuildInParallel="true"
+             UnloadProjectsOnCompletion="true"
+             Properties="IncludeRepositoryProjectGraphInputs=$(IncludeRepositoryProjectGraphInputs)">
+      <Output TaskParameter="TargetOutputs" ItemName="_RepositoryProjectGraphRecord" />
+    </MSBuild>
+    <ItemGroup>
+      <_RepositoryProjectGraphRecord Include="DeclaredProject|%(_DistinctRepositoryProjectGraphSourceProject.FullPath)" />
+      <_RepositoryProjectGraphRecord Include="DeclaredProject|%(_DistinctRepositoryProjectGraphTestProject.FullPath)" />
+      <_RepositoryProjectGraphRecord Include="Root|%(ProjectReference.FullPath)" Condition="'@(ProjectReference)' != ''" />
+    </ItemGroup>
+    <MakeDir Directories="$([System.IO.Path]::GetDirectoryName('$(RepositoryProjectGraphRecordsPath)'))" />
+    <WriteLinesToFile File="$(RepositoryProjectGraphRecordsPath)" Lines="@(_RepositoryProjectGraphRecord)" Overwrite="true" Encoding="UTF-8" />
+    <Exec Command="pwsh -NoProfile -NonInteractive -File &quot;$(RepoRoot)eng/scripts/RepositoryProjectGraph.ps1&quot; -Operation Build -GraphPath &quot;$(RepositoryProjectGraphPath)&quot; -RecordsPath &quot;$(RepositoryProjectGraphRecordsPath)&quot; -RepoRoot &quot;$(RepoRoot)&quot;" />
+  </Target>
+
+  <Target Name="QueryRepositoryProjectGraphReverse" DependsOnTargets="GenerateRepositoryProjectGraph">
+    <Exec Command="pwsh -NoProfile -NonInteractive -File &quot;$(RepoRoot)eng/scripts/RepositoryProjectGraph.ps1&quot; -Operation Reverse -GraphPath &quot;$(RepositoryProjectGraphPath)&quot; -Dependencies &quot;$(TestDependsOnDependency)&quot; -PackageRootsOnly &quot;$(TestDependsIncludePackageRootDirectoryOnly)&quot; -OutputPath &quot;$(OutputProjectFilePath)&quot;" />
+  </Target>
+
+  <Target Name="QueryRepositoryProjectGraphForward" DependsOnTargets="GenerateRepositoryProjectGraph">
+    <Exec Command="pwsh -NoProfile -NonInteractive -File &quot;$(RepoRoot)eng/scripts/RepositoryProjectGraph.ps1&quot; -Operation Forward -GraphPath &quot;$(RepositoryProjectGraphPath)&quot; -RootProjects &quot;$(RepositoryProjectGraphRootProjects)&quot; -RootProjectsPath &quot;$(RepositoryProjectGraphRootProjectsPath)&quot; -ForwardOutputKind &quot;$(RepositoryProjectGraphForwardOutputKind)&quot; -OutputPath &quot;$(OutputProjectFilePath)&quot;" />
+  </Target>
+
+  <Target Name="GenerateResolvedReferenceOracle">
+    <MSBuild Projects="@(ProjectReference)"
+             Targets="CollectResolvedReferenceOracle"
+             BuildInParallel="true"
+             UnloadProjectsOnCompletion="true">
+      <Output TaskParameter="TargetOutputs" ItemName="_ResolvedReferenceOracleRecord" />
+    </MSBuild>
+    <MakeDir Directories="$([System.IO.Path]::GetDirectoryName('$(ResolvedReferenceOraclePath)'))" />
+    <WriteLinesToFile File="$(ResolvedReferenceOraclePath)" Lines="@(_ResolvedReferenceOracleRecord)" Overwrite="$(OverwriteResolvedReferenceOracle)" Encoding="UTF-8" />
   </Target>
 
   <Target Name="ProjectDependsOn">
