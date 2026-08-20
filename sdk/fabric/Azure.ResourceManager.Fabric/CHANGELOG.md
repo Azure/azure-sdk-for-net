@@ -6,6 +6,10 @@
 
 - Added support for capacity overage configuration.
 
+### Bugs Fixed
+
+- Fixed an ambiguous `ArmFabricModelFactory.FabricCapacityPatch` overload for callers passing null administration members.
+
 ## 1.1.0-beta.1 (2026-06-06)
 
 ### Other Changes
