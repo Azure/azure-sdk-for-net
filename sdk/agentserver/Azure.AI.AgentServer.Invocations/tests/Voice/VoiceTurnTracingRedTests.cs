@@ -374,8 +374,46 @@ public class VoiceTurnTracingRedTests
                     responseId: "response_invalid"),
                 Throws.TypeOf<ArgumentException>());
             Assert.That(
-                () => new VoiceTurnResult(VoiceTurnOutcome.None, outputItemCount: null),
+                () => new VoiceTurnResult(VoiceTurnOutcome.None, outputItemCount: 1),
                 Throws.TypeOf<ArgumentException>());
+        });
+    }
+
+    [Test]
+    public void VoiceTurnResult_NoneAcceptsUnknownOrZeroOutputItemCount()
+    {
+        var unknown = new VoiceTurnResult(VoiceTurnOutcome.None);
+        var zero = new VoiceTurnResult(VoiceTurnOutcome.None, outputItemCount: 0);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(unknown.Outcome, Is.EqualTo(VoiceTurnOutcome.None));
+            Assert.That(unknown.OutputItemCount, Is.Null);
+            Assert.That(unknown.ResponseId, Is.Null);
+            Assert.That(zero.OutputItemCount, Is.Zero);
+            Assert.That(zero.ResponseId, Is.Null);
+        });
+    }
+
+    [Test]
+    public void Complete_NoneWithUnknownOutputItemCount_OmitsCountTag()
+    {
+        var stopped = new ConcurrentQueue<Activity>();
+        using var listener = CreateListener(stoppedActivities: stopped);
+        var session = CreateSession(CreateConnectionContext(recorded: true));
+        using var turn = session.StartTurn(VoiceTurnOrigin.User, inputCount: 1);
+
+        turn.Complete(new VoiceTurnResult(VoiceTurnOutcome.None));
+        turn.Complete(new VoiceTurnResult(VoiceTurnOutcome.None, outputItemCount: 0));
+
+        var activity = stopped.Single(IsTargetTurn);
+        Assert.Multiple(() =>
+        {
+            Assert.That(stopped.Count(IsTargetTurn), Is.EqualTo(1));
+            Assert.That(activity.GetTagItem("bridge.outcome"), Is.EqualTo("none"));
+            Assert.That(activity.GetTagItem("bridge.output.item_count"), Is.Null);
+            Assert.That(activity.GetTagItem("gen_ai.response.id"), Is.Null);
+            Assert.That(activity.Status, Is.EqualTo(ActivityStatusCode.Unset));
         });
     }
 

@@ -322,18 +322,6 @@ public class VoiceConnectionTracingRedTests
         });
     }
 
-    [Test]
-    public void VoiceRouteRegistry_MatchesWholePathOnly()
-    {
-        var registry = new VoiceRouteRegistry();
-        registry.Add("/invocations_ws");
-        var context = new DefaultHttpContext();
-        context.Request.Path = "/invocations_ws";
-        Assert.That(registry.Contains(context), Is.True);
-        context.Request.Path = "/unknown/invocations_ws";
-        Assert.That(registry.Contains(context), Is.False);
-    }
-
     [TestCase("v1", "/v1/invocations_ws")]
     [TestCase("/tenants/{tenantId}", "/tenants/contoso/invocations_ws")]
     [TestCase(null, "/invocations_ws/")]
@@ -712,6 +700,137 @@ public class VoiceConnectionTracingRedTests
                 activities.Any(activity =>
                     IsGenericWebSocketRequest(activity) && activity.TraceId == successfulTraceId),
                 Is.False);
+        });
+    }
+
+    [TestCase(
+        "/tenants/{tenantId}",
+        "/tenants/contoso/invocations_ws",
+        null,
+        "/tenants/{tenantId}/invocations_ws",
+        "contoso")]
+    [TestCase(
+        "/tenants/{tenantId}",
+        "/base/tenants/contoso/invocations_ws",
+        "/base",
+        "/tenants/{tenantId}/invocations_ws",
+        "contoso")]
+    [TestCase(
+        "/tenants/{tenantId:int}",
+        "/tenants/42/invocations_ws",
+        null,
+        "/tenants/{tenantId:int}/invocations_ws",
+        "42")]
+    public async Task MiddlewareRejection_UsesSelectedRoutePatternWithoutRouteValues(
+        string prefix,
+        string requestPath,
+        string? pathBase,
+        string routePattern,
+        string routeValue)
+    {
+        var exporter = new CapturingActivityExporter();
+        var traceId = ActivityTraceId.CreateRandom();
+        await using var server = await StartVoiceServerAsync(
+            exporter,
+            prefix: prefix,
+            configureApplication: app => app.Run(context =>
+            {
+                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                return Task.CompletedTask;
+            }),
+            requestPath: requestPath,
+            pathBase: pathBase);
+        using var client = new HttpClient();
+        using var request = CreateWebSocketCandidateRequest(
+            server.HttpUri,
+            Convert.ToBase64String(new byte[16]));
+        request.Headers.TryAddWithoutValidation(
+            "traceparent",
+            $"00-{traceId}-{ActivitySpanId.CreateRandom()}-01");
+
+        using var response = await client.SendAsync(request).WaitAsync(TestTimeout);
+        var observed = await exporter.TryWaitForAsync(
+            activity =>
+                activity.Source.Name == InvocationsSourceName &&
+                activity.TraceId == traceId,
+            ObservationTimeout);
+        var activities = exporter.GetFinishedActivities();
+        var rejection = activities.SingleOrDefault(activity =>
+            activity.Source.Name == InvocationsSourceName &&
+            activity.TraceId == traceId);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
+            Assert.That(observed, Is.True);
+            Assert.That(rejection?.OperationName, Is.EqualTo($"GET {routePattern}"));
+            Assert.That(rejection?.GetTagItem("http.route"), Is.EqualTo(routePattern));
+            Assert.That(rejection?.GetTagItem("url.path"), Is.EqualTo(routePattern));
+            Assert.That(rejection?.OperationName, Does.Not.Contain(routeValue));
+            Assert.That(rejection?.TagObjects.Select(tag => tag.Value?.ToString()),
+                Has.None.Contains(routeValue));
+            Assert.That(activities.Any(activity =>
+                activity.Source.Name == "Microsoft.AspNetCore"), Is.False);
+        });
+    }
+
+    [Test]
+    public async Task ConstrainedVoiceRoute_NonMatchingValueKeepsGenericRequestSpan()
+    {
+        var exporter = new CapturingActivityExporter();
+        await using var server = await StartVoiceServerAsync(
+            exporter,
+            prefix: "/tenants/{tenantId:int}",
+            requestPath: "/tenants/contoso/invocations_ws");
+        using var client = new HttpClient();
+        using var request = CreateWebSocketCandidateRequest(
+            server.HttpUri,
+            Convert.ToBase64String(new byte[16]));
+
+        using var response = await client.SendAsync(request).WaitAsync(TestTimeout);
+        var genericObserved = await exporter.TryWaitForAsync(
+            activity => activity.Source.Name == "Microsoft.AspNetCore",
+            ObservationTimeout);
+        var activities = exporter.GetFinishedActivities();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+            Assert.That(genericObserved, Is.True);
+            Assert.That(activities.Any(activity =>
+                activity.Source.Name == InvocationsSourceName), Is.False);
+        });
+    }
+
+    [Test]
+    public async Task HigherPrecedenceNonVoiceRoute_KeepsGenericRequestSpan()
+    {
+        var exporter = new CapturingActivityExporter();
+        await using var server = await StartVoiceServerAsync(
+            exporter,
+            prefix: "/tenants/{tenantId}",
+            configureApplication: app =>
+                app.MapGet(
+                    "/tenants/admin/invocations_ws",
+                    () => Results.Ok()).WithOrder(-1),
+            requestPath: "/tenants/admin/invocations_ws");
+        using var client = new HttpClient();
+        using var request = CreateWebSocketCandidateRequest(
+            server.HttpUri,
+            Convert.ToBase64String(new byte[16]));
+
+        using var response = await client.SendAsync(request).WaitAsync(TestTimeout);
+        var genericObserved = await exporter.TryWaitForAsync(
+            activity => activity.Source.Name == "Microsoft.AspNetCore",
+            ObservationTimeout);
+        var activities = exporter.GetFinishedActivities();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(genericObserved, Is.True);
+            Assert.That(activities.Any(activity =>
+                activity.Source.Name == InvocationsSourceName), Is.False);
         });
     }
 

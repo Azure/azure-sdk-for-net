@@ -6,9 +6,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.AspNetCore.Routing.Template;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using OpenTelemetry.Context.Propagation;
 using OpenTelemetry.Instrumentation.AspNetCore;
 
@@ -41,16 +39,10 @@ internal static class VoiceTracingRegistration
                 }
 
                 httpContext.Items[s_tracedWebSocketCandidate] = null;
-                if (!httpContext.RequestServices.GetRequiredService<VoiceRouteRegistry>().Contains(httpContext))
-                {
-                    return true;
-                }
-
                 RegisterRejectionTrace(httpContext);
-                return false;
+                return true;
             };
         });
-        services.TryAddSingleton<VoiceRouteRegistry>();
     }
 
     internal static void MarkEndpointEntered(HttpContext httpContext)
@@ -83,9 +75,9 @@ internal static class VoiceTracingRegistration
             : new DateTimeOffset(requestActivity.StartTimeUtc);
         var state = new RejectionTraceState(
             httpContext,
+            requestActivity,
             parentContext,
-            startTime,
-            $"{httpContext.Request.Method} {httpContext.Request.Path}");
+            startTime);
         httpContext.Response.OnCompleted(
             static state =>
             {
@@ -120,6 +112,21 @@ internal static class VoiceTracingRegistration
             return;
         }
 
+        if (state.HttpContext.GetEndpoint() is not RouteEndpoint endpoint ||
+            endpoint.Metadata.GetMetadata<VoiceWebSocketEndpointMetadata>() is null ||
+            endpoint.RoutePattern.RawText is not { } rawRoutePattern)
+        {
+            return;
+        }
+
+        if (state.RequestActivity?.Source.Name == "Microsoft.AspNetCore")
+        {
+            SuppressRequestActivity(state.RequestActivity);
+        }
+
+        var routePattern = NormalizeRoutePattern(rawRoutePattern);
+        var operationName = $"{state.HttpContext.Request.Method} {routePattern}";
+
         var previousActivity = Activity.Current;
         var previousStartToken = s_rejectionStartToken.Value;
         var startToken = new object();
@@ -133,9 +140,9 @@ internal static class VoiceTracingRegistration
                 return;
             }
 
-            var candidate = IsRejectionActivity(args.Current, state.OperationName)
+            var candidate = IsRejectionActivity(args.Current, operationName)
                 ? args.Current
-                : IsRejectionActivity(args.Previous, state.OperationName)
+                : IsRejectionActivity(args.Previous, operationName)
                     ? args.Previous
                     : null;
             if (candidate is not null)
@@ -150,14 +157,15 @@ internal static class VoiceTracingRegistration
             var tags = new ActivityTagsCollection
             {
                 ["http.request.method"] = state.HttpContext.Request.Method,
-                ["url.path"] = state.HttpContext.Request.Path.Value,
+                ["http.route"] = routePattern,
+                ["url.path"] = routePattern,
                 ["http.response.status_code"] = statusCode,
             };
             TrySetCurrent(null);
             try
             {
                 activity = s_activitySource.StartActivity(
-                    state.OperationName,
+                    operationName,
                     ActivityKind.Server,
                     state.ParentContext,
                     tags,
@@ -166,7 +174,7 @@ internal static class VoiceTracingRegistration
             catch (Exception exception) when (!ContainsOutOfMemoryException(exception))
             {
                 activity = startedActivity ?? Activity.Current;
-                if (!IsRejectionActivity(activity, state.OperationName))
+                if (!IsRejectionActivity(activity, operationName))
                 {
                     activity = null;
                 }
@@ -197,6 +205,15 @@ internal static class VoiceTracingRegistration
     private static bool IsRejectionActivity(Activity? activity, string operationName) =>
         activity?.Source.Name == InvocationsActivitySource.DefaultName &&
         activity.OperationName == operationName;
+
+    private static void SuppressRequestActivity(Activity requestActivity)
+    {
+        requestActivity.IsAllDataRequested = false;
+        requestActivity.ActivityTraceFlags &= ~ActivityTraceFlags.Recorded;
+    }
+
+    private static string NormalizeRoutePattern(string routePattern) =>
+        routePattern.StartsWith('/') ? routePattern : $"/{routePattern}";
 
     private static bool IsWebSocketUpgrade(HttpContext httpContext)
     {
@@ -284,59 +301,12 @@ internal static class VoiceTracingRegistration
 
     private sealed record RejectionTraceState(
         HttpContext HttpContext,
+        Activity? RequestActivity,
         ActivityContext ParentContext,
-        DateTimeOffset StartTime,
-        string OperationName);
+        DateTimeOffset StartTime);
 }
 
-internal sealed class VoiceRouteRegistry
+internal sealed class VoiceWebSocketEndpointMetadata
 {
-    private readonly Dictionary<string, TemplateMatcher> _routes = new(StringComparer.OrdinalIgnoreCase);
-    private readonly object _gate = new();
-
-    internal void Add(string path)
-    {
-        var normalizedPath = NormalizePath(path);
-        var matcher = CreateMatcher(normalizedPath);
-        lock (_gate)
-        {
-            _routes[normalizedPath] = matcher;
-        }
-    }
-
-    internal bool Contains(HttpContext httpContext) =>
-        MatchesVoiceRoute(new PathString(NormalizePath(httpContext.Request.Path.Value)));
-
-    private bool MatchesVoiceRoute(PathString path)
-    {
-        lock (_gate)
-        {
-            foreach (var matcher in _routes.Values)
-            {
-                if (matcher.TryMatch(path, new RouteValueDictionary()))
-                {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    private static TemplateMatcher CreateMatcher(string pattern) =>
-        new(TemplateParser.Parse(pattern.TrimStart('/')), new RouteValueDictionary());
-
-    private static string NormalizePath(string? path)
-    {
-        if (string.IsNullOrEmpty(path))
-        {
-            return "/";
-        }
-
-        var normalized = path[0] == '/' ? path : $"/{path}";
-        return normalized.Length > 1 &&
-            normalized[^1] == '/' &&
-            normalized[^2] != '/'
-                ? normalized[..^1] : normalized;
-    }
+    internal static VoiceWebSocketEndpointMetadata Instance { get; } = new();
 }

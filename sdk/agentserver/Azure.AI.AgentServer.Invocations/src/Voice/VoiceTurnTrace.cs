@@ -81,10 +81,10 @@ public sealed class VoiceTurnResult
                 nameof(outcome));
         }
         if (outcome == VoiceTurnOutcome.None &&
-            (responseId is not null || outputItemCount != 0))
+            (responseId is not null || outputItemCount is > 0))
         {
             throw new ArgumentException(
-                "A none outcome requires no response ID and zero completed output items.",
+                "A none outcome requires no response ID and, when known, zero completed output items.",
                 nameof(outcome));
         }
 

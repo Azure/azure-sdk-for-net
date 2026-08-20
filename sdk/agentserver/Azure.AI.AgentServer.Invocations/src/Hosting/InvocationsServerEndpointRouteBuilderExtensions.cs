@@ -30,9 +30,6 @@ public static class InvocationsServerEndpointRouteBuilderExtensions
         var groupPrefix = string.IsNullOrEmpty(prefix) ? string.Empty : prefix.TrimEnd('/');
         var group = endpoints.MapGroup(groupPrefix);
 
-        endpoints.ServiceProvider.GetService<VoiceRouteRegistry>()?.Add(
-            $"{groupPrefix}{InvocationsWebSocketConstants.RoutePath}");
-
         // Register Invocations protocol identity with the version registry (if available)
         var registry = endpoints.ServiceProvider.GetService<ServerVersionRegistry>();
         if (registry is not null)
@@ -109,7 +106,7 @@ public static class InvocationsServerEndpointRouteBuilderExtensions
             InvocationHandler userHandler) =>
         {
             await endpointHandler.HandleAsync(httpContext, userHandler);
-        });
+        }).WithMetadata(VoiceWebSocketEndpointMetadata.Instance);
 
         group.WithTags("Invocations");
 
