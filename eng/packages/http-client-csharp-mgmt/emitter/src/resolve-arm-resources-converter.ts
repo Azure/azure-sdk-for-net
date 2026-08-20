@@ -432,7 +432,8 @@ function convertResolvedResourceToMetadata(
 
   // Convert resource scope
   const resourceScopeValue = convertScopeToResourceScope(
-    resolvedResource.scope
+    resolvedResource.scope,
+    resourceIdPattern
   );
 
   // Build resource type string
@@ -524,11 +525,15 @@ function getMethodIdFromOperation(
  * Convert scope string/object to ResourceScopeKind enum
  */
 function convertScopeToResourceScope(
-  scope: string | ResolvedResource | undefined
+  scope: string | ResolvedResource | undefined,
+  resourceIdPattern: string
 ): ResourceScopeKind {
+  const pathScope = resourceIdPattern
+    ? new RequestPath(resourceIdPattern).operationScope
+    : ResourceScopeKind.ResourceGroup;
+
   if (!scope) {
-    // TODO: does it make sense that we have something without scope??
-    return ResourceScopeKind.ResourceGroup; // Default
+    return pathScope;
   }
 
   if (typeof scope === "string") {
@@ -545,7 +550,7 @@ function convertScopeToResourceScope(
       case "ExternalResource":
         return ResourceScopeKind.Extension;
       default:
-        return ResourceScopeKind.ResourceGroup;
+        return pathScope;
     }
   }
 

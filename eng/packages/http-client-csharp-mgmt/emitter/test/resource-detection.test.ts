@@ -12,10 +12,7 @@ import { createModel } from "@typespec/http-client-csharp";
 import { buildArmProviderSchema } from "../src/resource-detection.js";
 import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
 import { ok, strictEqual, deepStrictEqual } from "assert";
-import {
-  ArmResourceSchema,
-  ResourceScopeKind
-} from "../src/resource-metadata.js";
+import { ResourceScopeKind } from "../src/resource-metadata.js";
 
 describe("Resource Detection", () => {
   let runner: TestHost;
@@ -2198,37 +2195,29 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
     const resolvedSchema = resolveArmResources(program, sdkContext);
     ok(resolvedSchema);
 
-    // Compare the entire schemas using deep equality
-    // Note: The two APIs have a known difference in how they classify ServiceGroup scope:
-    // - Legacy detection (buildArmProviderSchema): uses Tenant scope
-    // - resolveArmResources: uses Extension scope
-    // We normalize ResourceScopeKind and operationScope only for the ServiceGroup-scoped resource
-    const serviceGroupResourcePattern =
-      "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.ContosoProviderHub/sites/{siteName}";
-    const normalizeServiceGroupScopes = (resource: ArmResourceSchema) => {
-      const resourceIdPattern = (
-        resource.metadata as {
-          resourceIdPattern: string | { path: string };
-        }
-      ).resourceIdPattern;
-      const resourceIdPath =
-        typeof resourceIdPattern === "string"
-          ? resourceIdPattern
-          : resourceIdPattern.path;
-      if (resourceIdPath === serviceGroupResourcePattern) {
-        (resource.metadata as { scope: { kind: unknown } }).scope.kind =
-          "<normalized>";
-        for (const method of resource.metadata.methods) {
-          (method as { scope: { kind: unknown } }).scope.kind = "<normalized>";
-        }
-      }
-    };
+    const resolvedSiteResources = resolvedSchema.resources.filter(
+      (r) => r.resourceModelId === siteModelId
+    );
+    const getResolvedScope = (resourceIdPattern: string) =>
+      resolvedSiteResources.find(
+        (r) => r.metadata.resourceIdPattern.path === resourceIdPattern
+      )?.metadata.scope.kind;
+    strictEqual(
+      getResolvedScope(rgSite.metadata.resourceIdPattern.path),
+      ResourceScopeKind.ResourceGroup
+    );
+    strictEqual(
+      getResolvedScope(subSite.metadata.resourceIdPattern.path),
+      ResourceScopeKind.Subscription
+    );
+    strictEqual(
+      getResolvedScope(sgSite.metadata.resourceIdPattern.path),
+      ResourceScopeKind.Extension
+    );
+
     deepStrictEqual(
-      normalizeSchemaForComparison(resolvedSchema, normalizeServiceGroupScopes),
-      normalizeSchemaForComparison(
-        armProviderSchema,
-        normalizeServiceGroupScopes
-      )
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchema)
     );
   });
 
