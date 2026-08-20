@@ -30,7 +30,6 @@ public class BasicKubernetesConfigurationExtensionsTests
     }
 
     [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.kubernetesconfiguration")]
     public async Task CreateClusterExtension()
     {
         await using Trycep test = CreateClusterExtensionTest();

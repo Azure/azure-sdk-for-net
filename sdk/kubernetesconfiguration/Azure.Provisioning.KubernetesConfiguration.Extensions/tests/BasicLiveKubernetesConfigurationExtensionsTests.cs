@@ -12,7 +12,6 @@ public class BasicLiveKubernetesConfigurationExtensionsTests(bool async)
     : ProvisioningTestBase(async)
 {
     [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.kubernetesconfiguration")]
     [LiveOnly]
     public async Task CreateClusterExtension()
     {

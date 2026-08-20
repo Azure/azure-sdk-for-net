@@ -26,7 +26,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.Extensions
 
         /// <summary> Gets or sets the installation scope of the extension. </summary>
         [CodeGenMember("Scope")]
-        public global::Azure.Provisioning.KubernetesConfiguration.Extensions.KubernetesClusterExtensionScope InstallationScope
+        public KubernetesClusterExtensionScope InstallationScope
         {
             get => Properties is null ? default! : Properties.Scope;
             set
