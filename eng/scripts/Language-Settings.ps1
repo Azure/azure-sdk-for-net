@@ -129,12 +129,29 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
   Write-Host "Calculating dependencies for: $TestDependsOnDependency"
 
   $outputFilePath = Join-Path $RepoRoot "_dependencylist.txt"
+  $sourceGraphOutputFilePath = Join-Path $RepoRoot "_dependencylist.source-graph.txt"
+
+  $sourceGraphCommand = "dotnet msbuild /m /nr:false /t:QueryRepositoryProjectGraphReverse ./eng/service.proj /p:TestDependsOnDependency=`"$TestDependsOnDependency`" /p:TestDependsIncludePackageRootDirectoryOnly=true /p:IncludeSrc=false " +
+    "/p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false" +
+    " /p:OutputProjectFilePath=`"$sourceGraphOutputFilePath`""
+
+  Write-Host "Calculating dependencies using the repository source graph."
+  Invoke-LoggedMsbuildCommand $sourceGraphCommand
 
   $command = "dotnet build /t:ProjectDependsOn ./eng/service.proj /p:TestDependsOnDependency=`"$TestDependsOnDependency`" /p:TestDependsIncludePackageRootDirectoryOnly=true /p:IncludeSrc=false " +
     "/p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false" +
     " /p:OutputProjectFilePath=`"$outputFilePath`""
 
+  Write-Host "Calculating dependencies using ResolveReferences."
   Invoke-LoggedMsbuildCommand $command
+
+  $resolvedReferenceDependencies = @(Get-Content $outputFilePath | Sort-Object -Unique)
+  $sourceGraphDependencies = @(Get-Content $sourceGraphOutputFilePath | Sort-Object -Unique)
+  $dependencyDifferences = @(Compare-Object $resolvedReferenceDependencies $sourceGraphDependencies)
+  if ($dependencyDifferences.Count -gt 0) {
+    $dependencyDifferences | Format-Table | Out-String | Write-Host
+    throw "The repository source graph dependency calculation did not match ResolveReferences."
+  }
 
   if (Test-Path $outputFilePath) {
     $dependentProjects = Get-Content $outputFilePath

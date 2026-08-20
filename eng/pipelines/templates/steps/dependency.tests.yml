@@ -29,15 +29,6 @@ steps:
       EnableNuGetCache: false
 
   - pwsh: |
-      dotnet msbuild /m /nr:false /t:QueryRepositoryProjectGraphReverse ./eng/service.proj `
-        /p:TestDependsOnDependency="${{parameters.TestDependsOnDependency}}" `
-        /p:IncludeSrc=false /p:IncludeStress=false /p:IncludeSamples=false  `
-        /p:IncludePerf=false /p:RunApiCompat=false `
-        /p:InheritDocEnabled=false /p:BuildProjectReferences=false `
-        /p:OutputProjectFilePath="${{parameters.OutputProjectFilePath}}.source-graph"
-    displayName: Find test dependencies using source graph
-
-  - pwsh: |
       dotnet build /t:ProjectDependsOn ./eng/service.proj `
         /p:TestDependsOnDependency="${{parameters.TestDependsOnDependency}}" `
         /p:IncludeSrc=false /p:IncludeStress=false /p:IncludeSamples=false  `
@@ -45,16 +36,6 @@ steps:
         /p:InheritDocEnabled=false /p:BuildProjectReferences=false `
         /p:OutputProjectFilePath="${{parameters.OutputProjectFilePath}}"
     displayName: Find all test dependencies
-
-  - pwsh: |
-      $resolvedReferences = Get-Content "${{parameters.OutputProjectFilePath}}" | Sort-Object -Unique
-      $sourceGraph = Get-Content "${{parameters.OutputProjectFilePath}}.source-graph" | Sort-Object -Unique
-      $differences = Compare-Object $resolvedReferences $sourceGraph
-      if ($differences) {
-        $differences | Format-Table | Out-String | Write-Host
-        throw "The source graph dependency calculation did not match ResolveReferences."
-      }
-    displayName: Compare dependency calculation results
 
   - task: PowerShell@2
     inputs:
