@@ -14,51 +14,51 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Kubernetes Label Selector for matching labels in Kubernetes Selector Groups. </summary>
-    public partial class KubeLabelSelector : IJsonModel<KubeLabelSelector>
+    public partial class FirewallPolicyKubeLabelSelector : IJsonModel<FirewallPolicyKubeLabelSelector>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KubeLabelSelector PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual FirewallPolicyKubeLabelSelector PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KubeLabelSelector>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyKubeLabelSelector>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeKubeLabelSelector(document.RootElement, options);
+                        return DeserializeFirewallPolicyKubeLabelSelector(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubeLabelSelector)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicyKubeLabelSelector)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KubeLabelSelector>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyKubeLabelSelector>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(KubeLabelSelector)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicyKubeLabelSelector)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KubeLabelSelector>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FirewallPolicyKubeLabelSelector>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KubeLabelSelector IPersistableModel<KubeLabelSelector>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        FirewallPolicyKubeLabelSelector IPersistableModel<FirewallPolicyKubeLabelSelector>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KubeLabelSelector>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FirewallPolicyKubeLabelSelector>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<KubeLabelSelector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FirewallPolicyKubeLabelSelector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KubeLabelSelector>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyKubeLabelSelector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubeLabelSelector)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicyKubeLabelSelector)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(MatchLabels))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("matchExpressions"u8);
                 writer.WriteStartArray();
-                foreach (LabelSelectorExpression item in MatchExpressions)
+                foreach (FirewallPolicyLabelSelectorExpression item in MatchExpressions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -119,31 +119,31 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KubeLabelSelector IJsonModel<KubeLabelSelector>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        FirewallPolicyKubeLabelSelector IJsonModel<FirewallPolicyKubeLabelSelector>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KubeLabelSelector JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual FirewallPolicyKubeLabelSelector JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KubeLabelSelector>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyKubeLabelSelector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubeLabelSelector)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicyKubeLabelSelector)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKubeLabelSelector(document.RootElement, options);
+            return DeserializeFirewallPolicyKubeLabelSelector(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static KubeLabelSelector DeserializeKubeLabelSelector(JsonElement element, ModelReaderWriterOptions options)
+        internal static FirewallPolicyKubeLabelSelector DeserializeFirewallPolicyKubeLabelSelector(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IDictionary<string, string> matchLabels = default;
-            IList<LabelSelectorExpression> matchExpressions = default;
+            IList<FirewallPolicyLabelSelectorExpression> matchExpressions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<LabelSelectorExpression> array = new List<LabelSelectorExpression>();
+                    List<FirewallPolicyLabelSelectorExpression> array = new List<FirewallPolicyLabelSelectorExpression>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LabelSelectorExpression.DeserializeLabelSelectorExpression(item, options));
+                        array.Add(FirewallPolicyLabelSelectorExpression.DeserializeFirewallPolicyLabelSelectorExpression(item, options));
                     }
                     matchExpressions = array;
                     continue;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new KubeLabelSelector(matchLabels ?? new ChangeTrackingDictionary<string, string>(), matchExpressions ?? new ChangeTrackingList<LabelSelectorExpression>(), additionalBinaryDataProperties);
+            return new FirewallPolicyKubeLabelSelector(matchLabels ?? new ChangeTrackingDictionary<string, string>(), matchExpressions ?? new ChangeTrackingList<FirewallPolicyLabelSelectorExpression>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The resiliency level of the ExpressRoute circuit. </summary>
         [WirePath("properties.resiliencyLevel")]
-        public ResiliencyLevel? ResiliencyLevel
+        public ExpressRouteCircuitResiliencyLevel? ResiliencyLevel
         {
             get
             {

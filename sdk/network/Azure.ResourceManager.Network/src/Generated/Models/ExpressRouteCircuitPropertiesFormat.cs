@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="authorizationStatus"> The authorization status of the Circuit. </param>
         /// <param name="enableDirectPortRateLimit"> Flag denoting rate-limiting status of the ExpressRoute direct-port circuit. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteCircuitPropertiesFormat(bool? allowClassicOperations, string circuitProvisioningState, ServiceProviderProvisioningState? serviceProviderProvisioningState, IList<ExpressRouteCircuitAuthorizationData> authorizations, IList<ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, NetworkSubResource expressRoutePort, float? bandwidthInGbps, int? sTag, ResiliencyLevel? resiliencyLevel, string partnerAccountId, string activationKey, NetworkProvisioningState? provisioningState, string gatewayManagerETag, bool? globalReachEnabled, string authorizationKey, string authorizationStatus, bool? enableDirectPortRateLimit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpressRouteCircuitPropertiesFormat(bool? allowClassicOperations, string circuitProvisioningState, ServiceProviderProvisioningState? serviceProviderProvisioningState, IList<ExpressRouteCircuitAuthorizationData> authorizations, IList<ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, NetworkSubResource expressRoutePort, float? bandwidthInGbps, int? sTag, ExpressRouteCircuitResiliencyLevel? resiliencyLevel, string partnerAccountId, string activationKey, NetworkProvisioningState? provisioningState, string gatewayManagerETag, bool? globalReachEnabled, string authorizationKey, string authorizationStatus, bool? enableDirectPortRateLimit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AllowClassicOperations = allowClassicOperations;
             CircuitProvisioningState = circuitProvisioningState;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The resiliency level of the ExpressRoute circuit. </summary>
         [WirePath("resiliencyLevel")]
-        public ResiliencyLevel? ResiliencyLevel { get; }
+        public ExpressRouteCircuitResiliencyLevel? ResiliencyLevel { get; }
 
         /// <summary> Account ID of customer account on partner cloud provider. </summary>
         [WirePath("partnerAccountId")]

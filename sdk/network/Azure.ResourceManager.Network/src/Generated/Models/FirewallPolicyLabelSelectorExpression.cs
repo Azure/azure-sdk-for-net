@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.Network.Models
     /// A label selector requirement is a selector that contains values, a key, and an operator that
     /// relates the key and values.
     /// </summary>
-    public partial class LabelSelectorExpression
+    public partial class FirewallPolicyLabelSelectorExpression
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LabelSelectorExpression"/>. </summary>
-        public LabelSelectorExpression()
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyLabelSelectorExpression"/>. </summary>
+        public FirewallPolicyLabelSelectorExpression()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LabelSelectorExpression"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyLabelSelectorExpression"/>. </summary>
         /// <param name="key">
         /// key is a string of 63 characters or less, and must consist of alphanumeric characters,
         /// '-', '_' or '.'.
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
         /// the values array must be empty.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LabelSelectorExpression(string key, LabelSelectorOperator? @operator, IList<string> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FirewallPolicyLabelSelectorExpression(string key, FirewallPolicyLabelSelectorOperator? @operator, IList<string> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             Operator = @operator;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         /// Valid operators are In, NotIn, Exists and DoesNotExist.
         /// </summary>
         [WirePath("operator")]
-        public LabelSelectorOperator? Operator { get; set; }
+        public FirewallPolicyLabelSelectorOperator? Operator { get; set; }
 
         /// <summary>
         /// values is an array of string values. If the operator is In or NotIn,

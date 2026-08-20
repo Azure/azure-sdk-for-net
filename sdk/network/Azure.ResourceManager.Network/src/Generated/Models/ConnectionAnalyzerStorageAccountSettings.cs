@@ -13,26 +13,26 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Storage account where the connection analyzer writes its output. </summary>
-    public partial class StorageAccountSettings
+    public partial class ConnectionAnalyzerStorageAccountSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StorageAccountSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionAnalyzerStorageAccountSettings"/>. </summary>
         /// <param name="storageAccountId"> Resource ID of the storage account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountId"/> is null. </exception>
-        public StorageAccountSettings(ResourceIdentifier storageAccountId)
+        public ConnectionAnalyzerStorageAccountSettings(ResourceIdentifier storageAccountId)
         {
             Argument.AssertNotNull(storageAccountId, nameof(storageAccountId));
 
             StorageAccountId = storageAccountId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageAccountSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionAnalyzerStorageAccountSettings"/>. </summary>
         /// <param name="storageAccountId"> Resource ID of the storage account. </param>
         /// <param name="path"> Sub-path within the storage account where results are written. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountSettings(ResourceIdentifier storageAccountId, string path, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectionAnalyzerStorageAccountSettings(ResourceIdentifier storageAccountId, string path, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccountId = storageAccountId;
             Path = path;

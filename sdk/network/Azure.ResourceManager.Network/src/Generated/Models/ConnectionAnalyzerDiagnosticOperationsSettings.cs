@@ -12,21 +12,21 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Diagnostic settings to provide for the ConnectionAnalyzer operation. </summary>
-    public partial class DiagnosticOperationsSettings
+    public partial class ConnectionAnalyzerDiagnosticOperationsSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DiagnosticOperationsSettings"/>. </summary>
-        public DiagnosticOperationsSettings()
+        /// <summary> Initializes a new instance of <see cref="ConnectionAnalyzerDiagnosticOperationsSettings"/>. </summary>
+        public ConnectionAnalyzerDiagnosticOperationsSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiagnosticOperationsSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionAnalyzerDiagnosticOperationsSettings"/>. </summary>
         /// <param name="connectivityCheckSettings"> Settings for the ConnectivityCheck diagnostic operation. </param>
         /// <param name="expressRouteDiagnosticsSettings"> Settings for the ExpressRouteDiagnostic diagnostic operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticOperationsSettings(ConnectivityCheckSettings connectivityCheckSettings, ExpressRouteDiagnosticsSettings expressRouteDiagnosticsSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectionAnalyzerDiagnosticOperationsSettings(ConnectivityCheckSettings connectivityCheckSettings, ExpressRouteDiagnosticsSettings expressRouteDiagnosticsSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectivityCheckSettings = connectivityCheckSettings;
             ExpressRouteDiagnosticsSettings = expressRouteDiagnosticsSettings;

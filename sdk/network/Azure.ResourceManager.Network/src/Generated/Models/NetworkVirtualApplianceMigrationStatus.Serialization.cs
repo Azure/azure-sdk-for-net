@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            MigrationType? migrationType = default;
+            NetworkVirtualApplianceMigrationType? migrationType = default;
             string migrationPhase = default;
             string migrationPhaseStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    migrationType = new MigrationType(prop.Value.GetString());
+                    migrationType = new NetworkVirtualApplianceMigrationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("migrationPhase"u8))

@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkSubResource expressRoutePort = default;
             float? bandwidthInGbps = default;
             int? sTag = default;
-            ResiliencyLevel? resiliencyLevel = default;
+            ExpressRouteCircuitResiliencyLevel? resiliencyLevel = default;
             string partnerAccountId = default;
             string activationKey = default;
             NetworkProvisioningState? provisioningState = default;
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    resiliencyLevel = new ResiliencyLevel(prop.Value.GetString());
+                    resiliencyLevel = new ExpressRouteCircuitResiliencyLevel(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("partnerAccountId"u8))

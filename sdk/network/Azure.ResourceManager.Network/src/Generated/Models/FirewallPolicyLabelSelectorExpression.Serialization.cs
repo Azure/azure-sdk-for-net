@@ -17,51 +17,51 @@ namespace Azure.ResourceManager.Network.Models
     /// A label selector requirement is a selector that contains values, a key, and an operator that
     /// relates the key and values.
     /// </summary>
-    public partial class LabelSelectorExpression : IJsonModel<LabelSelectorExpression>
+    public partial class FirewallPolicyLabelSelectorExpression : IJsonModel<FirewallPolicyLabelSelectorExpression>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LabelSelectorExpression PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual FirewallPolicyLabelSelectorExpression PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LabelSelectorExpression>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyLabelSelectorExpression>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLabelSelectorExpression(document.RootElement, options);
+                        return DeserializeFirewallPolicyLabelSelectorExpression(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabelSelectorExpression)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicyLabelSelectorExpression)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LabelSelectorExpression>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyLabelSelectorExpression>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LabelSelectorExpression)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicyLabelSelectorExpression)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LabelSelectorExpression>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FirewallPolicyLabelSelectorExpression>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LabelSelectorExpression IPersistableModel<LabelSelectorExpression>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        FirewallPolicyLabelSelectorExpression IPersistableModel<FirewallPolicyLabelSelectorExpression>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LabelSelectorExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FirewallPolicyLabelSelectorExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LabelSelectorExpression>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FirewallPolicyLabelSelectorExpression>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LabelSelectorExpression>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyLabelSelectorExpression>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabelSelectorExpression)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicyLabelSelectorExpression)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Key))
             {
@@ -121,31 +121,31 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LabelSelectorExpression IJsonModel<LabelSelectorExpression>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        FirewallPolicyLabelSelectorExpression IJsonModel<FirewallPolicyLabelSelectorExpression>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LabelSelectorExpression JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual FirewallPolicyLabelSelectorExpression JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LabelSelectorExpression>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyLabelSelectorExpression>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabelSelectorExpression)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicyLabelSelectorExpression)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLabelSelectorExpression(document.RootElement, options);
+            return DeserializeFirewallPolicyLabelSelectorExpression(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LabelSelectorExpression DeserializeLabelSelectorExpression(JsonElement element, ModelReaderWriterOptions options)
+        internal static FirewallPolicyLabelSelectorExpression DeserializeFirewallPolicyLabelSelectorExpression(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string key = default;
-            LabelSelectorOperator? @operator = default;
+            FirewallPolicyLabelSelectorOperator? @operator = default;
             IList<string> values = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    @operator = new LabelSelectorOperator(prop.Value.GetString());
+                    @operator = new FirewallPolicyLabelSelectorOperator(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("values"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LabelSelectorExpression(key, @operator, values ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new FirewallPolicyLabelSelectorExpression(key, @operator, values ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

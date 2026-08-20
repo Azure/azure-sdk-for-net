@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteObjectValue(Destination, options);
             writer.WritePropertyName("diagnosticOperations"u8);
             writer.WriteStartArray();
-            foreach (DiagnosticOperation item in DiagnosticOperations)
+            foreach (ConnectionAnalyzerDiagnosticOperation item in DiagnosticOperations)
             {
                 writer.WriteStringValue(item.ToString());
             }
@@ -169,9 +169,9 @@ namespace Azure.ResourceManager.Network.Models
             }
             ConnectionAnalyzerEndpoint source = default;
             ConnectionAnalyzerEndpoint destination = default;
-            IList<DiagnosticOperation> diagnosticOperations = default;
-            ProtocolSettings protocolSettings = default;
-            DiagnosticOperationsSettings diagnosticOperationsSettings = default;
+            IList<ConnectionAnalyzerDiagnosticOperation> diagnosticOperations = default;
+            ConnectionAnalyzerProtocolSettings protocolSettings = default;
+            ConnectionAnalyzerDiagnosticOperationsSettings diagnosticOperationsSettings = default;
             int? expiryInDays = default;
             OutputSettings outputSettings = default;
             DateTimeOffset? requestOn = default;
@@ -192,10 +192,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("diagnosticOperations"u8))
                 {
-                    List<DiagnosticOperation> array = new List<DiagnosticOperation>();
+                    List<ConnectionAnalyzerDiagnosticOperation> array = new List<ConnectionAnalyzerDiagnosticOperation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new DiagnosticOperation(item.GetString()));
+                        array.Add(new ConnectionAnalyzerDiagnosticOperation(item.GetString()));
                     }
                     diagnosticOperations = array;
                     continue;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    protocolSettings = ProtocolSettings.DeserializeProtocolSettings(prop.Value, options);
+                    protocolSettings = ConnectionAnalyzerProtocolSettings.DeserializeConnectionAnalyzerProtocolSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("diagnosticOperationsSettings"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    diagnosticOperationsSettings = DiagnosticOperationsSettings.DeserializeDiagnosticOperationsSettings(prop.Value, options);
+                    diagnosticOperationsSettings = ConnectionAnalyzerDiagnosticOperationsSettings.DeserializeConnectionAnalyzerDiagnosticOperationsSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("expiryInDays"u8))

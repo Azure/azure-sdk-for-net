@@ -3286,7 +3286,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="sku"> The SKU. </param>
         /// <returns> A new <see cref="Network.ExpressRouteCircuitData"/> instance for mocking. </returns>
-        public static ExpressRouteCircuitData ExpressRouteCircuitData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, bool? allowClassicOperations = default, string circuitProvisioningState = default, ServiceProviderProvisioningState? serviceProviderProvisioningState = default, IEnumerable<ExpressRouteCircuitAuthorizationData> authorizations = default, IEnumerable<ExpressRouteCircuitPeeringData> peerings = default, string serviceKey = default, string serviceProviderNotes = default, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties = default, float? bandwidthInGbps = default, int? sTag = default, ResiliencyLevel? resiliencyLevel = default, string partnerAccountId = default, string activationKey = default, NetworkProvisioningState? provisioningState = default, string gatewayManagerETag = default, bool? globalReachEnabled = default, string authorizationKey = default, string authorizationStatus = default, bool? enableDirectPortRateLimit = default, ResourceIdentifier expressRoutePortId = default, ETag? eTag = default, ExpressRouteCircuitSku sku = default)
+        public static ExpressRouteCircuitData ExpressRouteCircuitData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, bool? allowClassicOperations = default, string circuitProvisioningState = default, ServiceProviderProvisioningState? serviceProviderProvisioningState = default, IEnumerable<ExpressRouteCircuitAuthorizationData> authorizations = default, IEnumerable<ExpressRouteCircuitPeeringData> peerings = default, string serviceKey = default, string serviceProviderNotes = default, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties = default, float? bandwidthInGbps = default, int? sTag = default, ExpressRouteCircuitResiliencyLevel? resiliencyLevel = default, string partnerAccountId = default, string activationKey = default, NetworkProvisioningState? provisioningState = default, string gatewayManagerETag = default, bool? globalReachEnabled = default, string authorizationKey = default, string authorizationStatus = default, bool? enableDirectPortRateLimit = default, ResourceIdentifier expressRoutePortId = default, ETag? eTag = default, ExpressRouteCircuitSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -4565,7 +4565,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="namespaceSelector"> Kubernetes Namespace selector for matching namespaces in the Kubernetes cluster. </param>
         /// <param name="provisioningState"> The provisioning state of the firewall policy Kubernetes selector group resource. </param>
         /// <returns> A new <see cref="Models.FirewallPolicyKubeSelectorGroupProperties"/> instance for mocking. </returns>
-        public static FirewallPolicyKubeSelectorGroupProperties FirewallPolicyKubeSelectorGroupProperties(KubeLabelSelector podSelector = default, KubeLabelSelector namespaceSelector = default, NetworkProvisioningState? provisioningState = default)
+        public static FirewallPolicyKubeSelectorGroupProperties FirewallPolicyKubeSelectorGroupProperties(FirewallPolicyKubeLabelSelector podSelector = default, FirewallPolicyKubeLabelSelector namespaceSelector = default, NetworkProvisioningState? provisioningState = default)
         {
             return new FirewallPolicyKubeSelectorGroupProperties(podSelector, namespaceSelector, provisioningState, default);
         }
@@ -4576,13 +4576,13 @@ namespace Azure.ResourceManager.Network.Models
         /// operator is "In", and the values array contains only "value". The requirements are ANDed.
         /// </param>
         /// <param name="matchExpressions"> matchExpressions is a list of label selector requirements. The requirements are ANDed. </param>
-        /// <returns> A new <see cref="Models.KubeLabelSelector"/> instance for mocking. </returns>
-        public static KubeLabelSelector KubeLabelSelector(IDictionary<string, string> matchLabels = default, IEnumerable<LabelSelectorExpression> matchExpressions = default)
+        /// <returns> A new <see cref="Models.FirewallPolicyKubeLabelSelector"/> instance for mocking. </returns>
+        public static FirewallPolicyKubeLabelSelector FirewallPolicyKubeLabelSelector(IDictionary<string, string> matchLabels = default, IEnumerable<FirewallPolicyLabelSelectorExpression> matchExpressions = default)
         {
             matchLabels ??= new ChangeTrackingDictionary<string, string>();
-            matchExpressions ??= new ChangeTrackingList<LabelSelectorExpression>();
+            matchExpressions ??= new ChangeTrackingList<FirewallPolicyLabelSelectorExpression>();
 
-            return new KubeLabelSelector(matchLabels ?? new ChangeTrackingDictionary<string, string>(), (matchExpressions ?? new ChangeTrackingList<LabelSelectorExpression>()).ToList(), default);
+            return new FirewallPolicyKubeLabelSelector(matchLabels ?? new ChangeTrackingDictionary<string, string>(), (matchExpressions ?? new ChangeTrackingList<FirewallPolicyLabelSelectorExpression>()).ToList(), default);
         }
 
         /// <param name="key">
@@ -4598,12 +4598,12 @@ namespace Azure.ResourceManager.Network.Models
         /// the values array must be non-empty. If the operator is Exists or DoesNotExist,
         /// the values array must be empty.
         /// </param>
-        /// <returns> A new <see cref="Models.LabelSelectorExpression"/> instance for mocking. </returns>
-        public static LabelSelectorExpression LabelSelectorExpression(string key = default, LabelSelectorOperator? @operator = default, IEnumerable<string> values = default)
+        /// <returns> A new <see cref="Models.FirewallPolicyLabelSelectorExpression"/> instance for mocking. </returns>
+        public static FirewallPolicyLabelSelectorExpression FirewallPolicyLabelSelectorExpression(string key = default, FirewallPolicyLabelSelectorOperator? @operator = default, IEnumerable<string> values = default)
         {
             values ??= new ChangeTrackingList<string>();
 
-            return new LabelSelectorExpression(key, @operator, (values ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new FirewallPolicyLabelSelectorExpression(key, @operator, (values ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -6314,7 +6314,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="migrationPhase"> The current phase of the migration workflow (for example, Prepare, Execute, Commit, or Abort). </param>
         /// <param name="migrationPhaseStatus"> The detailed status of the current migration phase. </param>
         /// <returns> A new <see cref="Models.NetworkVirtualApplianceMigrationStatus"/> instance for mocking. </returns>
-        public static NetworkVirtualApplianceMigrationStatus NetworkVirtualApplianceMigrationStatus(MigrationType? migrationType = default, string migrationPhase = default, string migrationPhaseStatus = default)
+        public static NetworkVirtualApplianceMigrationStatus NetworkVirtualApplianceMigrationStatus(NetworkVirtualApplianceMigrationType? migrationType = default, string migrationPhase = default, string migrationPhaseStatus = default)
         {
             return new NetworkVirtualApplianceMigrationStatus(migrationType, migrationPhase, migrationPhaseStatus, default);
         }
@@ -6354,21 +6354,21 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="migrationType"> The type of migration workflow to prepare. </param>
         /// <param name="marketPlaceVersion"> The marketplace version to migrate to. Applicable when migrationType is MigrateToNewOSVersion. </param>
         /// <returns> A new <see cref="Models.NetworkVirtualAppliancePrepareMigrationProperties"/> instance for mocking. </returns>
-        public static NetworkVirtualAppliancePrepareMigrationProperties NetworkVirtualAppliancePrepareMigrationProperties(MigrationType migrationType = default, string marketPlaceVersion = default)
+        public static NetworkVirtualAppliancePrepareMigrationProperties NetworkVirtualAppliancePrepareMigrationProperties(NetworkVirtualApplianceMigrationType migrationType = default, string marketPlaceVersion = default)
         {
             return new NetworkVirtualAppliancePrepareMigrationProperties(migrationType, marketPlaceVersion, default);
         }
 
         /// <param name="migrationType"> The type of migration workflow to execute. </param>
         /// <returns> A new <see cref="Models.NetworkVirtualApplianceExecuteMigrationContent"/> instance for mocking. </returns>
-        public static NetworkVirtualApplianceExecuteMigrationContent NetworkVirtualApplianceExecuteMigrationContent(MigrationType? migrationType = default)
+        public static NetworkVirtualApplianceExecuteMigrationContent NetworkVirtualApplianceExecuteMigrationContent(NetworkVirtualApplianceMigrationType? migrationType = default)
         {
             return new NetworkVirtualApplianceExecuteMigrationContent(migrationType is null ? default : new NetworkVirtualApplianceExecuteMigrationProperties(migrationType.GetValueOrDefault(), default), default);
         }
 
         /// <param name="migrationType"> The type of migration workflow to commit. </param>
         /// <returns> A new <see cref="Models.NetworkVirtualApplianceCommitMigrationContent"/> instance for mocking. </returns>
-        public static NetworkVirtualApplianceCommitMigrationContent NetworkVirtualApplianceCommitMigrationContent(MigrationType? migrationType = default)
+        public static NetworkVirtualApplianceCommitMigrationContent NetworkVirtualApplianceCommitMigrationContent(NetworkVirtualApplianceMigrationType? migrationType = default)
         {
             return new NetworkVirtualApplianceCommitMigrationContent(migrationType is null ? default : new NetworkVirtualApplianceCommitMigrationProperties(migrationType.GetValueOrDefault(), default), default);
         }
@@ -7044,14 +7044,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the connection analyzer resource. </param>
         /// <param name="status"> Current execution status of the connection analyzer. </param>
         /// <returns> A new <see cref="Models.ConnectionAnalyzerProperties"/> instance for mocking. </returns>
-        public static ConnectionAnalyzerProperties ConnectionAnalyzerProperties(ConnectionAnalyzerEndpoint source = default, ConnectionAnalyzerEndpoint destination = default, IEnumerable<DiagnosticOperation> diagnosticOperations = default, ProtocolSettings protocolSettings = default, DiagnosticOperationsSettings diagnosticOperationsSettings = default, int? expiryInDays = default, StorageAccountSettings outputStorageAccountSettings = default, DateTimeOffset? requestOn = default, NetworkProvisioningState? provisioningState = default, ConnectionAnalyzerStatus? status = default)
+        public static ConnectionAnalyzerProperties ConnectionAnalyzerProperties(ConnectionAnalyzerEndpoint source = default, ConnectionAnalyzerEndpoint destination = default, IEnumerable<ConnectionAnalyzerDiagnosticOperation> diagnosticOperations = default, ConnectionAnalyzerProtocolSettings protocolSettings = default, ConnectionAnalyzerDiagnosticOperationsSettings diagnosticOperationsSettings = default, int? expiryInDays = default, ConnectionAnalyzerStorageAccountSettings outputStorageAccountSettings = default, DateTimeOffset? requestOn = default, NetworkProvisioningState? provisioningState = default, ConnectionAnalyzerStatus? status = default)
         {
-            diagnosticOperations ??= new ChangeTrackingList<DiagnosticOperation>();
+            diagnosticOperations ??= new ChangeTrackingList<ConnectionAnalyzerDiagnosticOperation>();
 
             return new ConnectionAnalyzerProperties(
                 source,
                 destination,
-                (diagnosticOperations ?? new ChangeTrackingList<DiagnosticOperation>()).ToList(),
+                (diagnosticOperations ?? new ChangeTrackingList<ConnectionAnalyzerDiagnosticOperation>()).ToList(),
                 protocolSettings,
                 diagnosticOperationsSettings,
                 expiryInDays,
@@ -7085,18 +7085,18 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="protocol"> Network protocol. </param>
         /// <param name="httpConfiguration"> HTTP configuration (used when protocol is Http or Https). </param>
-        /// <returns> A new <see cref="Models.ProtocolSettings"/> instance for mocking. </returns>
-        public static ProtocolSettings ProtocolSettings(NetworkWatcherProtocol? protocol = default, NetworkHttpConfiguration httpConfiguration = default)
+        /// <returns> A new <see cref="Models.ConnectionAnalyzerProtocolSettings"/> instance for mocking. </returns>
+        public static ConnectionAnalyzerProtocolSettings ConnectionAnalyzerProtocolSettings(NetworkWatcherProtocol? protocol = default, NetworkHttpConfiguration httpConfiguration = default)
         {
-            return new ProtocolSettings(protocol, httpConfiguration, default);
+            return new ConnectionAnalyzerProtocolSettings(protocol, httpConfiguration, default);
         }
 
         /// <param name="connectivityCheckSettings"> Settings for the ConnectivityCheck diagnostic operation. </param>
         /// <param name="expressRouteDiagnosticsSettings"> Settings for the ExpressRouteDiagnostic diagnostic operation. </param>
-        /// <returns> A new <see cref="Models.DiagnosticOperationsSettings"/> instance for mocking. </returns>
-        public static DiagnosticOperationsSettings DiagnosticOperationsSettings(ConnectivityCheckSettings connectivityCheckSettings = default, ExpressRouteDiagnosticsSettings expressRouteDiagnosticsSettings = default)
+        /// <returns> A new <see cref="Models.ConnectionAnalyzerDiagnosticOperationsSettings"/> instance for mocking. </returns>
+        public static ConnectionAnalyzerDiagnosticOperationsSettings ConnectionAnalyzerDiagnosticOperationsSettings(ConnectivityCheckSettings connectivityCheckSettings = default, ExpressRouteDiagnosticsSettings expressRouteDiagnosticsSettings = default)
         {
-            return new DiagnosticOperationsSettings(connectivityCheckSettings, expressRouteDiagnosticsSettings, default);
+            return new ConnectionAnalyzerDiagnosticOperationsSettings(connectivityCheckSettings, expressRouteDiagnosticsSettings, default);
         }
 
         /// <param name="shouldGeneratePath"> Whether to generate a hop-by-hop path during the connectivity check. Default value is true. </param>
@@ -7117,30 +7117,30 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="storageAccountId"> Resource ID of the storage account. </param>
         /// <param name="path"> Sub-path within the storage account where results are written. </param>
-        /// <returns> A new <see cref="Models.StorageAccountSettings"/> instance for mocking. </returns>
-        public static StorageAccountSettings StorageAccountSettings(ResourceIdentifier storageAccountId = default, string path = default)
+        /// <returns> A new <see cref="Models.ConnectionAnalyzerStorageAccountSettings"/> instance for mocking. </returns>
+        public static ConnectionAnalyzerStorageAccountSettings ConnectionAnalyzerStorageAccountSettings(ResourceIdentifier storageAccountId = default, string path = default)
         {
-            return new StorageAccountSettings(storageAccountId, path, default);
+            return new ConnectionAnalyzerStorageAccountSettings(storageAccountId, path, default);
         }
 
         /// <param name="id"> Resource ID of the connection analyzer. </param>
         /// <param name="connectionAnalyzerStatus"> Current execution status of the connection analyzer. </param>
         /// <param name="error"> Error message if the connection analyzer operation failed. </param>
         /// <param name="outputStoragePath"> Storage path where the connection analyzer output is written. </param>
-        /// <param name="expiryInUtc"> UTC time when the connection analyzer expires. </param>
+        /// <param name="expiresOn"> UTC time when the connection analyzer expires. </param>
         /// <param name="diagnosticOperationResults"> Results of the individual diagnostic operations. </param>
         /// <returns> A new <see cref="Models.ConnectionAnalyzerQueryStatusResult"/> instance for mocking. </returns>
-        public static ConnectionAnalyzerQueryStatusResult ConnectionAnalyzerQueryStatusResult(string id = default, ConnectionAnalyzerStatus? connectionAnalyzerStatus = default, string error = default, string outputStoragePath = default, DateTimeOffset? expiryInUtc = default, IEnumerable<DiagnosticOperationResult> diagnosticOperationResults = default)
+        public static ConnectionAnalyzerQueryStatusResult ConnectionAnalyzerQueryStatusResult(string id = default, ConnectionAnalyzerStatus? connectionAnalyzerStatus = default, string error = default, string outputStoragePath = default, DateTimeOffset? expiresOn = default, IEnumerable<ConnectionAnalyzerDiagnosticOperationResult> diagnosticOperationResults = default)
         {
-            diagnosticOperationResults ??= new ChangeTrackingList<DiagnosticOperationResult>();
+            diagnosticOperationResults ??= new ChangeTrackingList<ConnectionAnalyzerDiagnosticOperationResult>();
 
             return new ConnectionAnalyzerQueryStatusResult(
                 id,
                 connectionAnalyzerStatus,
                 error,
                 outputStoragePath,
-                expiryInUtc,
-                (diagnosticOperationResults ?? new ChangeTrackingList<DiagnosticOperationResult>()).ToList(),
+                expiresOn,
+                (diagnosticOperationResults ?? new ChangeTrackingList<ConnectionAnalyzerDiagnosticOperationResult>()).ToList(),
                 default);
         }
 
@@ -7153,10 +7153,10 @@ namespace Azure.ResourceManager.Network.Models
         /// `{ "ConnectivityStatus": "Reachable" }`. Consumers should parse this
         /// string as JSON according to the corresponding diagnostic operation.
         /// </param>
-        /// <returns> A new <see cref="Models.DiagnosticOperationResult"/> instance for mocking. </returns>
-        public static DiagnosticOperationResult DiagnosticOperationResult(DiagnosticOperation diagnosticOperation = default, string error = default, string result = default)
+        /// <returns> A new <see cref="Models.ConnectionAnalyzerDiagnosticOperationResult"/> instance for mocking. </returns>
+        public static ConnectionAnalyzerDiagnosticOperationResult ConnectionAnalyzerDiagnosticOperationResult(ConnectionAnalyzerDiagnosticOperation diagnosticOperation = default, string error = default, string result = default)
         {
-            return new DiagnosticOperationResult(diagnosticOperation, error, result, default);
+            return new ConnectionAnalyzerDiagnosticOperationResult(diagnosticOperation, error, result, default);
         }
 
         /// <param name="privateLinkServiceAlias"> The alias of the private link service. </param>
@@ -10176,10 +10176,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <param name="status"> The status of the operation. </param>
-        /// <returns> A new <see cref="Models.ServiceGatewayActionOkResponseBody"/> instance for mocking. </returns>
-        public static ServiceGatewayActionOkResponseBody ServiceGatewayActionOkResponseBody(string status = default)
+        /// <returns> A new <see cref="Models.ServiceGatewayActionResult"/> instance for mocking. </returns>
+        public static ServiceGatewayActionResult ServiceGatewayActionResult(string status = default)
         {
-            return new ServiceGatewayActionOkResponseBody(status, default);
+            return new ServiceGatewayActionResult(status, default);
         }
 
         /// <param name="action">

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="NetworkVirtualAppliancePrepareMigrationProperties"/>. </summary>
         /// <param name="migrationType"> The type of migration workflow to prepare. </param>
-        public NetworkVirtualAppliancePrepareMigrationProperties(MigrationType migrationType)
+        public NetworkVirtualAppliancePrepareMigrationProperties(NetworkVirtualApplianceMigrationType migrationType)
         {
             MigrationType = migrationType;
         }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="migrationType"> The type of migration workflow to prepare. </param>
         /// <param name="marketPlaceVersion"> The marketplace version to migrate to. Applicable when migrationType is MigrateToNewOSVersion. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkVirtualAppliancePrepareMigrationProperties(MigrationType migrationType, string marketPlaceVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkVirtualAppliancePrepareMigrationProperties(NetworkVirtualApplianceMigrationType migrationType, string marketPlaceVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MigrationType = migrationType;
             MarketPlaceVersion = marketPlaceVersion;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The type of migration workflow to prepare. </summary>
         [WirePath("migrationType")]
-        public MigrationType MigrationType { get; }
+        public NetworkVirtualApplianceMigrationType MigrationType { get; }
 
         /// <summary> The marketplace version to migrate to. Applicable when migrationType is MigrateToNewOSVersion. </summary>
         [WirePath("marketPlaceVersion")]

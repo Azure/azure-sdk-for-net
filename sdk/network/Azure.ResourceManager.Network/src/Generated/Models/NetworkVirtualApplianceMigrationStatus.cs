@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="migrationPhase"> The current phase of the migration workflow (for example, Prepare, Execute, Commit, or Abort). </param>
         /// <param name="migrationPhaseStatus"> The detailed status of the current migration phase. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkVirtualApplianceMigrationStatus(MigrationType? migrationType, string migrationPhase, string migrationPhaseStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkVirtualApplianceMigrationStatus(NetworkVirtualApplianceMigrationType? migrationType, string migrationPhase, string migrationPhaseStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MigrationType = migrationType;
             MigrationPhase = migrationPhase;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The type of migration workflow currently in progress or last performed. </summary>
         [WirePath("migrationType")]
-        public MigrationType? MigrationType { get; }
+        public NetworkVirtualApplianceMigrationType? MigrationType { get; }
 
         /// <summary> The current phase of the migration workflow (for example, Prepare, Execute, Commit, or Abort). </summary>
         [WirePath("migrationPhase")]

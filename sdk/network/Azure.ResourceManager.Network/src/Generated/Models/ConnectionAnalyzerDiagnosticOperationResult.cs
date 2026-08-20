@@ -12,19 +12,19 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Result of an individual diagnostic operation run by a connection analyzer. </summary>
-    public partial class DiagnosticOperationResult
+    public partial class ConnectionAnalyzerDiagnosticOperationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DiagnosticOperationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionAnalyzerDiagnosticOperationResult"/>. </summary>
         /// <param name="diagnosticOperation"> The diagnostic operation that was run. </param>
-        internal DiagnosticOperationResult(DiagnosticOperation diagnosticOperation)
+        internal ConnectionAnalyzerDiagnosticOperationResult(ConnectionAnalyzerDiagnosticOperation diagnosticOperation)
         {
             DiagnosticOperation = diagnosticOperation;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiagnosticOperationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionAnalyzerDiagnosticOperationResult"/>. </summary>
         /// <param name="diagnosticOperation"> The diagnostic operation that was run. </param>
         /// <param name="error"> Error encountered while running the diagnostic operation, if any. </param>
         /// <param name="result">
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
         /// string as JSON according to the corresponding diagnostic operation.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticOperationResult(DiagnosticOperation diagnosticOperation, string error, string result, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectionAnalyzerDiagnosticOperationResult(ConnectionAnalyzerDiagnosticOperation diagnosticOperation, string error, string result, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiagnosticOperation = diagnosticOperation;
             Error = error;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The diagnostic operation that was run. </summary>
         [WirePath("diagnosticOperation")]
-        public DiagnosticOperation DiagnosticOperation { get; }
+        public ConnectionAnalyzerDiagnosticOperation DiagnosticOperation { get; }
 
         /// <summary> Error encountered while running the diagnostic operation, if any. </summary>
         [WirePath("error")]

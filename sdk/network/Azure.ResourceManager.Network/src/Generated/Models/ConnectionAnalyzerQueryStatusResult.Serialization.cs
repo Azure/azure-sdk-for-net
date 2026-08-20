@@ -102,16 +102,16 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("outputStoragePath"u8);
                 writer.WriteStringValue(OutputStoragePath);
             }
-            if (Optional.IsDefined(ExpiryInUtc))
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expiryInUtc"u8);
-                writer.WriteStringValue(ExpiryInUtc.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(DiagnosticOperationResults))
             {
                 writer.WritePropertyName("diagnosticOperationResults"u8);
                 writer.WriteStartArray();
-                foreach (DiagnosticOperationResult item in DiagnosticOperationResults)
+                foreach (ConnectionAnalyzerDiagnosticOperationResult item in DiagnosticOperationResults)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -163,8 +163,8 @@ namespace Azure.ResourceManager.Network.Models
             ConnectionAnalyzerStatus? connectionAnalyzerStatus = default;
             string error = default;
             string outputStoragePath = default;
-            DateTimeOffset? expiryInUtc = default;
-            IList<DiagnosticOperationResult> diagnosticOperationResults = default;
+            DateTimeOffset? expiresOn = default;
+            IList<ConnectionAnalyzerDiagnosticOperationResult> diagnosticOperationResults = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    expiryInUtc = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("diagnosticOperationResults"u8))
@@ -207,10 +207,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<DiagnosticOperationResult> array = new List<DiagnosticOperationResult>();
+                    List<ConnectionAnalyzerDiagnosticOperationResult> array = new List<ConnectionAnalyzerDiagnosticOperationResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticOperationResult.DeserializeDiagnosticOperationResult(item, options));
+                        array.Add(ConnectionAnalyzerDiagnosticOperationResult.DeserializeConnectionAnalyzerDiagnosticOperationResult(item, options));
                     }
                     diagnosticOperationResults = array;
                     continue;
@@ -225,8 +225,8 @@ namespace Azure.ResourceManager.Network.Models
                 connectionAnalyzerStatus,
                 error,
                 outputStoragePath,
-                expiryInUtc,
-                diagnosticOperationResults ?? new ChangeTrackingList<DiagnosticOperationResult>(),
+                expiresOn,
+                diagnosticOperationResults ?? new ChangeTrackingList<ConnectionAnalyzerDiagnosticOperationResult>(),
                 additionalBinaryDataProperties);
         }
     }

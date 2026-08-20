@@ -13,52 +13,52 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Settings that control where the connection analyzer writes its results. </summary>
-    internal partial class OutputSettings : IJsonModel<OutputSettings>
+    /// <summary> Protocol-level settings for the connection analyzer. </summary>
+    public partial class ConnectionAnalyzerProtocolSettings : IJsonModel<ConnectionAnalyzerProtocolSettings>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OutputSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ConnectionAnalyzerProtocolSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OutputSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectionAnalyzerProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOutputSettings(document.RootElement, options);
+                        return DeserializeConnectionAnalyzerProtocolSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OutputSettings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionAnalyzerProtocolSettings)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OutputSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectionAnalyzerProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OutputSettings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionAnalyzerProtocolSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OutputSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ConnectionAnalyzerProtocolSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OutputSettings IPersistableModel<OutputSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ConnectionAnalyzerProtocolSettings IPersistableModel<ConnectionAnalyzerProtocolSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OutputSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConnectionAnalyzerProtocolSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OutputSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConnectionAnalyzerProtocolSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,15 +69,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OutputSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectionAnalyzerProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OutputSettings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionAnalyzerProtocolSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(StorageAccountSettings))
+            if (Optional.IsDefined(Protocol))
             {
-                writer.WritePropertyName("storageAccountSettings"u8);
-                writer.WriteObjectValue(StorageAccountSettings, options);
+                writer.WritePropertyName("protocol"u8);
+                writer.WriteStringValue(Protocol.Value.ToString());
+            }
+            if (Optional.IsDefined(HttpConfiguration))
+            {
+                writer.WritePropertyName("httpConfiguration"u8);
+                writer.WriteObjectValue(HttpConfiguration, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -98,40 +103,50 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OutputSettings IJsonModel<OutputSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ConnectionAnalyzerProtocolSettings IJsonModel<ConnectionAnalyzerProtocolSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OutputSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ConnectionAnalyzerProtocolSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OutputSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectionAnalyzerProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OutputSettings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionAnalyzerProtocolSettings)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOutputSettings(document.RootElement, options);
+            return DeserializeConnectionAnalyzerProtocolSettings(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OutputSettings DeserializeOutputSettings(JsonElement element, ModelReaderWriterOptions options)
+        internal static ConnectionAnalyzerProtocolSettings DeserializeConnectionAnalyzerProtocolSettings(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ConnectionAnalyzerStorageAccountSettings storageAccountSettings = default;
+            NetworkWatcherProtocol? protocol = default;
+            NetworkHttpConfiguration httpConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("storageAccountSettings"u8))
+                if (prop.NameEquals("protocol"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageAccountSettings = ConnectionAnalyzerStorageAccountSettings.DeserializeConnectionAnalyzerStorageAccountSettings(prop.Value, options);
+                    protocol = new NetworkWatcherProtocol(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("httpConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    httpConfiguration = NetworkHttpConfiguration.DeserializeNetworkHttpConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +154,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OutputSettings(storageAccountSettings, additionalBinaryDataProperties);
+            return new ConnectionAnalyzerProtocolSettings(protocol, httpConfiguration, additionalBinaryDataProperties);
         }
     }
 }

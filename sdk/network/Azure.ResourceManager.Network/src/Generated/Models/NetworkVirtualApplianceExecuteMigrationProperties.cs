@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceExecuteMigrationProperties"/>. </summary>
         /// <param name="migrationType"> The type of migration workflow to execute. </param>
-        public NetworkVirtualApplianceExecuteMigrationProperties(MigrationType migrationType)
+        public NetworkVirtualApplianceExecuteMigrationProperties(NetworkVirtualApplianceMigrationType migrationType)
         {
             MigrationType = migrationType;
         }
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceExecuteMigrationProperties"/>. </summary>
         /// <param name="migrationType"> The type of migration workflow to execute. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkVirtualApplianceExecuteMigrationProperties(MigrationType migrationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkVirtualApplianceExecuteMigrationProperties(NetworkVirtualApplianceMigrationType migrationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MigrationType = migrationType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The type of migration workflow to execute. </summary>
         [WirePath("migrationType")]
-        public MigrationType MigrationType { get; }
+        public NetworkVirtualApplianceMigrationType MigrationType { get; }
     }
 }

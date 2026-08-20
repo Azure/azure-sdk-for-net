@@ -14,56 +14,56 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Result of an individual diagnostic operation run by a connection analyzer. </summary>
-    public partial class DiagnosticOperationResult : IJsonModel<DiagnosticOperationResult>
+    public partial class ConnectionAnalyzerDiagnosticOperationResult : IJsonModel<ConnectionAnalyzerDiagnosticOperationResult>
     {
-        /// <summary> Initializes a new instance of <see cref="DiagnosticOperationResult"/> for deserialization. </summary>
-        internal DiagnosticOperationResult()
+        /// <summary> Initializes a new instance of <see cref="ConnectionAnalyzerDiagnosticOperationResult"/> for deserialization. </summary>
+        internal ConnectionAnalyzerDiagnosticOperationResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DiagnosticOperationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ConnectionAnalyzerDiagnosticOperationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiagnosticOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectionAnalyzerDiagnosticOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDiagnosticOperationResult(document.RootElement, options);
+                        return DeserializeConnectionAnalyzerDiagnosticOperationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticOperationResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionAnalyzerDiagnosticOperationResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiagnosticOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectionAnalyzerDiagnosticOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticOperationResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionAnalyzerDiagnosticOperationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DiagnosticOperationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ConnectionAnalyzerDiagnosticOperationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DiagnosticOperationResult IPersistableModel<DiagnosticOperationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ConnectionAnalyzerDiagnosticOperationResult IPersistableModel<ConnectionAnalyzerDiagnosticOperationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DiagnosticOperationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConnectionAnalyzerDiagnosticOperationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DiagnosticOperationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConnectionAnalyzerDiagnosticOperationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiagnosticOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectionAnalyzerDiagnosticOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticOperationResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionAnalyzerDiagnosticOperationResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("diagnosticOperation"u8);
             writer.WriteStringValue(DiagnosticOperation.ToString());
@@ -110,30 +110,30 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DiagnosticOperationResult IJsonModel<DiagnosticOperationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ConnectionAnalyzerDiagnosticOperationResult IJsonModel<ConnectionAnalyzerDiagnosticOperationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DiagnosticOperationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ConnectionAnalyzerDiagnosticOperationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiagnosticOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectionAnalyzerDiagnosticOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticOperationResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionAnalyzerDiagnosticOperationResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDiagnosticOperationResult(document.RootElement, options);
+            return DeserializeConnectionAnalyzerDiagnosticOperationResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DiagnosticOperationResult DeserializeDiagnosticOperationResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static ConnectionAnalyzerDiagnosticOperationResult DeserializeConnectionAnalyzerDiagnosticOperationResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DiagnosticOperation diagnosticOperation = default;
+            ConnectionAnalyzerDiagnosticOperation diagnosticOperation = default;
             string error = default;
             string result = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (prop.NameEquals("diagnosticOperation"u8))
                 {
-                    diagnosticOperation = new DiagnosticOperation(prop.Value.GetString());
+                    diagnosticOperation = new ConnectionAnalyzerDiagnosticOperation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("error"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DiagnosticOperationResult(diagnosticOperation, error, result, additionalBinaryDataProperties);
+            return new ConnectionAnalyzerDiagnosticOperationResult(diagnosticOperation, error, result, additionalBinaryDataProperties);
         }
     }
 }

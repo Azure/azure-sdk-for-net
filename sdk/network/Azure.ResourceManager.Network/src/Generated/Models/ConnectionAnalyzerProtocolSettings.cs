@@ -12,21 +12,21 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Protocol-level settings for the connection analyzer. </summary>
-    public partial class ProtocolSettings
+    public partial class ConnectionAnalyzerProtocolSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProtocolSettings"/>. </summary>
-        public ProtocolSettings()
+        /// <summary> Initializes a new instance of <see cref="ConnectionAnalyzerProtocolSettings"/>. </summary>
+        public ConnectionAnalyzerProtocolSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProtocolSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionAnalyzerProtocolSettings"/>. </summary>
         /// <param name="protocol"> Network protocol. </param>
         /// <param name="httpConfiguration"> HTTP configuration (used when protocol is Http or Https). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProtocolSettings(NetworkWatcherProtocol? protocol, NetworkHttpConfiguration httpConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectionAnalyzerProtocolSettings(NetworkWatcherProtocol? protocol, NetworkHttpConfiguration httpConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Protocol = protocol;
             HttpConfiguration = httpConfiguration;

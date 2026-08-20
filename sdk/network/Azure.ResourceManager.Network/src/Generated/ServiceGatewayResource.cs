@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to create or update address locations in service gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ServiceGatewayActionOkResponseBody>> UpdateAddressLocationsAsync(ServiceGatewayUpdateAddressLocationsContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceGatewayActionResult>> UpdateAddressLocationsAsync(ServiceGatewayUpdateAddressLocationsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.Network
                 };
                 HttpMessage message = _serviceGatewaysRestClient.CreateUpdateAddressLocationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceGatewayUpdateAddressLocationsContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ServiceGatewayActionOkResponseBody> response = Response.FromValue(ServiceGatewayActionOkResponseBody.FromResponse(result), result);
+                Response<ServiceGatewayActionResult> response = Response.FromValue(ServiceGatewayActionResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to create or update address locations in service gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ServiceGatewayActionOkResponseBody> UpdateAddressLocations(ServiceGatewayUpdateAddressLocationsContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceGatewayActionResult> UpdateAddressLocations(ServiceGatewayUpdateAddressLocationsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.Network
                 };
                 HttpMessage message = _serviceGatewaysRestClient.CreateUpdateAddressLocationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceGatewayUpdateAddressLocationsContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ServiceGatewayActionOkResponseBody> response = Response.FromValue(ServiceGatewayActionOkResponseBody.FromResponse(result), result);
+                Response<ServiceGatewayActionResult> response = Response.FromValue(ServiceGatewayActionResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to create or update services in service gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ServiceGatewayActionOkResponseBody>> UpdateServicesAsync(ServiceGatewayUpdateServicesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceGatewayActionResult>> UpdateServicesAsync(ServiceGatewayUpdateServicesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.Network
                 };
                 HttpMessage message = _serviceGatewaysRestClient.CreateUpdateServicesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceGatewayUpdateServicesContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ServiceGatewayActionOkResponseBody> response = Response.FromValue(ServiceGatewayActionOkResponseBody.FromResponse(result), result);
+                Response<ServiceGatewayActionResult> response = Response.FromValue(ServiceGatewayActionResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to create or update services in service gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ServiceGatewayActionOkResponseBody> UpdateServices(ServiceGatewayUpdateServicesContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceGatewayActionResult> UpdateServices(ServiceGatewayUpdateServicesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.Network
                 };
                 HttpMessage message = _serviceGatewaysRestClient.CreateUpdateServicesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceGatewayUpdateServicesContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ServiceGatewayActionOkResponseBody> response = Response.FromValue(ServiceGatewayActionOkResponseBody.FromResponse(result), result);
+                Response<ServiceGatewayActionResult> response = Response.FromValue(ServiceGatewayActionResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

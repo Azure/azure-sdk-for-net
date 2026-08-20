@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="OutputSettings"/>. </summary>
         /// <param name="storageAccountSettings"> Storage account where output is written. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OutputSettings(StorageAccountSettings storageAccountSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OutputSettings(ConnectionAnalyzerStorageAccountSettings storageAccountSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccountSettings = storageAccountSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Storage account where output is written. </summary>
         [WirePath("storageAccountSettings")]
-        public StorageAccountSettings StorageAccountSettings { get; set; }
+        public ConnectionAnalyzerStorageAccountSettings StorageAccountSettings { get; set; }
     }
 }

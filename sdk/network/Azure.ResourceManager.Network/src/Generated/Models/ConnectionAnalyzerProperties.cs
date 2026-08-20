@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="destination"> Destination endpoint of the connection analyzer. </param>
         /// <param name="diagnosticOperations"> List of diagnostic operations to run. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/>, <paramref name="destination"/> or <paramref name="diagnosticOperations"/> is null. </exception>
-        public ConnectionAnalyzerProperties(ConnectionAnalyzerEndpoint source, ConnectionAnalyzerEndpoint destination, IEnumerable<DiagnosticOperation> diagnosticOperations)
+        public ConnectionAnalyzerProperties(ConnectionAnalyzerEndpoint source, ConnectionAnalyzerEndpoint destination, IEnumerable<ConnectionAnalyzerDiagnosticOperation> diagnosticOperations)
         {
             Argument.AssertNotNull(source, nameof(source));
             Argument.AssertNotNull(destination, nameof(destination));
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the connection analyzer resource. </param>
         /// <param name="status"> Current execution status of the connection analyzer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionAnalyzerProperties(ConnectionAnalyzerEndpoint source, ConnectionAnalyzerEndpoint destination, IList<DiagnosticOperation> diagnosticOperations, ProtocolSettings protocolSettings, DiagnosticOperationsSettings diagnosticOperationsSettings, int? expiryInDays, OutputSettings outputSettings, DateTimeOffset? requestOn, NetworkProvisioningState? provisioningState, ConnectionAnalyzerStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectionAnalyzerProperties(ConnectionAnalyzerEndpoint source, ConnectionAnalyzerEndpoint destination, IList<ConnectionAnalyzerDiagnosticOperation> diagnosticOperations, ConnectionAnalyzerProtocolSettings protocolSettings, ConnectionAnalyzerDiagnosticOperationsSettings diagnosticOperationsSettings, int? expiryInDays, OutputSettings outputSettings, DateTimeOffset? requestOn, NetworkProvisioningState? provisioningState, ConnectionAnalyzerStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             Destination = destination;
@@ -71,15 +71,15 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of diagnostic operations to run. </summary>
         [WirePath("diagnosticOperations")]
-        public IList<DiagnosticOperation> DiagnosticOperations { get; }
+        public IList<ConnectionAnalyzerDiagnosticOperation> DiagnosticOperations { get; }
 
         /// <summary> Protocol-level settings. </summary>
         [WirePath("protocolSettings")]
-        public ProtocolSettings ProtocolSettings { get; set; }
+        public ConnectionAnalyzerProtocolSettings ProtocolSettings { get; set; }
 
         /// <summary> Per-operation diagnostic settings. </summary>
         [WirePath("diagnosticOperationsSettings")]
-        public DiagnosticOperationsSettings DiagnosticOperationsSettings { get; set; }
+        public ConnectionAnalyzerDiagnosticOperationsSettings DiagnosticOperationsSettings { get; set; }
 
         /// <summary> Time-to-live (days) before the analyzer expires. </summary>
         [WirePath("expiryInDays")]
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Storage account where output is written. </summary>
         [WirePath("outputSettings.storageAccountSettings")]
-        public StorageAccountSettings OutputStorageAccountSettings
+        public ConnectionAnalyzerStorageAccountSettings OutputStorageAccountSettings
         {
             get
             {

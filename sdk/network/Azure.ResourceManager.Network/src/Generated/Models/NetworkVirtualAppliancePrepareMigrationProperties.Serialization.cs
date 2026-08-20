@@ -128,14 +128,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            MigrationType migrationType = default;
+            NetworkVirtualApplianceMigrationType migrationType = default;
             string marketPlaceVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("migrationType"u8))
                 {
-                    migrationType = new MigrationType(prop.Value.GetString());
+                    migrationType = new NetworkVirtualApplianceMigrationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("marketPlaceVersion"u8))

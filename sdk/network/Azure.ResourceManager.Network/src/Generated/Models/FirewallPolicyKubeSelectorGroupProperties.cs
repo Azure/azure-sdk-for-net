@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="namespaceSelector"> Kubernetes Namespace selector for matching namespaces in the Kubernetes cluster. </param>
         /// <param name="provisioningState"> The provisioning state of the firewall policy Kubernetes selector group resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FirewallPolicyKubeSelectorGroupProperties(KubeLabelSelector podSelector, KubeLabelSelector namespaceSelector, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FirewallPolicyKubeSelectorGroupProperties(FirewallPolicyKubeLabelSelector podSelector, FirewallPolicyKubeLabelSelector namespaceSelector, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PodSelector = podSelector;
             NamespaceSelector = namespaceSelector;
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Kubernetes Pod selector for matching pods in the Kubernetes cluster. </summary>
         [WirePath("podSelector")]
-        public KubeLabelSelector PodSelector { get; set; }
+        public FirewallPolicyKubeLabelSelector PodSelector { get; set; }
 
         /// <summary> Kubernetes Namespace selector for matching namespaces in the Kubernetes cluster. </summary>
         [WirePath("namespaceSelector")]
-        public KubeLabelSelector NamespaceSelector { get; set; }
+        public FirewallPolicyKubeLabelSelector NamespaceSelector { get; set; }
 
         /// <summary> The provisioning state of the firewall policy Kubernetes selector group resource. </summary>
         [WirePath("provisioningState")]

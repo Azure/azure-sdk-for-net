@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> operator represents a Kubernetes label selector requirement's relationship to a set of values. </summary>
-    public readonly partial struct LabelSelectorOperator : IEquatable<LabelSelectorOperator>
+    public readonly partial struct FirewallPolicyLabelSelectorOperator : IEquatable<FirewallPolicyLabelSelectorOperator>
     {
         private readonly string _value;
         /// <summary> The label value must be in the supplied set of values. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The label key must not exist. </summary>
         private const string DoesNotExistValue = "DoesNotExist";
 
-        /// <summary> Initializes a new instance of <see cref="LabelSelectorOperator"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyLabelSelectorOperator"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LabelSelectorOperator(string value)
+        public FirewallPolicyLabelSelectorOperator(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The label value must be in the supplied set of values. </summary>
-        public static LabelSelectorOperator In { get; } = new LabelSelectorOperator(InValue);
+        public static FirewallPolicyLabelSelectorOperator In { get; } = new FirewallPolicyLabelSelectorOperator(InValue);
 
         /// <summary> The label value must not be in the supplied set of values. </summary>
-        public static LabelSelectorOperator NotIn { get; } = new LabelSelectorOperator(NotInValue);
+        public static FirewallPolicyLabelSelectorOperator NotIn { get; } = new FirewallPolicyLabelSelectorOperator(NotInValue);
 
         /// <summary> The label key must exist, regardless of its value. </summary>
-        public static LabelSelectorOperator Exists { get; } = new LabelSelectorOperator(ExistsValue);
+        public static FirewallPolicyLabelSelectorOperator Exists { get; } = new FirewallPolicyLabelSelectorOperator(ExistsValue);
 
         /// <summary> The label key must not exist. </summary>
-        public static LabelSelectorOperator DoesNotExist { get; } = new LabelSelectorOperator(DoesNotExistValue);
+        public static FirewallPolicyLabelSelectorOperator DoesNotExist { get; } = new FirewallPolicyLabelSelectorOperator(DoesNotExistValue);
 
-        /// <summary> Determines if two <see cref="LabelSelectorOperator"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="FirewallPolicyLabelSelectorOperator"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(LabelSelectorOperator left, LabelSelectorOperator right) => left.Equals(right);
+        public static bool operator ==(FirewallPolicyLabelSelectorOperator left, FirewallPolicyLabelSelectorOperator right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="LabelSelectorOperator"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="FirewallPolicyLabelSelectorOperator"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(LabelSelectorOperator left, LabelSelectorOperator right) => !left.Equals(right);
+        public static bool operator !=(FirewallPolicyLabelSelectorOperator left, FirewallPolicyLabelSelectorOperator right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="LabelSelectorOperator"/>. </summary>
+        /// <summary> Converts a string to a <see cref="FirewallPolicyLabelSelectorOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LabelSelectorOperator(string value) => new LabelSelectorOperator(value);
+        public static implicit operator FirewallPolicyLabelSelectorOperator(string value) => new FirewallPolicyLabelSelectorOperator(value);
 
-        /// <summary> Converts a string to a <see cref="LabelSelectorOperator"/>. </summary>
+        /// <summary> Converts a string to a <see cref="FirewallPolicyLabelSelectorOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LabelSelectorOperator?(string value) => value == null ? null : new LabelSelectorOperator(value);
+        public static implicit operator FirewallPolicyLabelSelectorOperator?(string value) => value == null ? null : new FirewallPolicyLabelSelectorOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LabelSelectorOperator other && Equals(other);
+        public override bool Equals(object obj) => obj is FirewallPolicyLabelSelectorOperator other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(LabelSelectorOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(FirewallPolicyLabelSelectorOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

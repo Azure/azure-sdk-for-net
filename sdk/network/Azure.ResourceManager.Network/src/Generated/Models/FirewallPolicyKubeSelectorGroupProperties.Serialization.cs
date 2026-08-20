@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            KubeLabelSelector podSelector = default;
-            KubeLabelSelector namespaceSelector = default;
+            FirewallPolicyKubeLabelSelector podSelector = default;
+            FirewallPolicyKubeLabelSelector namespaceSelector = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    podSelector = KubeLabelSelector.DeserializeKubeLabelSelector(prop.Value, options);
+                    podSelector = FirewallPolicyKubeLabelSelector.DeserializeFirewallPolicyKubeLabelSelector(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("namespaceSelector"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    namespaceSelector = KubeLabelSelector.DeserializeKubeLabelSelector(prop.Value, options);
+                    namespaceSelector = FirewallPolicyKubeLabelSelector.DeserializeFirewallPolicyKubeLabelSelector(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

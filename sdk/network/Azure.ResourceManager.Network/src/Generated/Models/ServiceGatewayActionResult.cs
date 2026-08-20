@@ -12,20 +12,20 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Empty success response. </summary>
-    public partial class ServiceGatewayActionOkResponseBody
+    public partial class ServiceGatewayActionResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ServiceGatewayActionOkResponseBody"/>. </summary>
-        internal ServiceGatewayActionOkResponseBody()
+        /// <summary> Initializes a new instance of <see cref="ServiceGatewayActionResult"/>. </summary>
+        internal ServiceGatewayActionResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceGatewayActionOkResponseBody"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceGatewayActionResult"/>. </summary>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceGatewayActionOkResponseBody(string status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceGatewayActionResult(string status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

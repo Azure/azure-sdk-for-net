@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The type of diagnostic operation to run on a connection analyzer. </summary>
-    public readonly partial struct DiagnosticOperation : IEquatable<DiagnosticOperation>
+    public readonly partial struct ConnectionAnalyzerDiagnosticOperation : IEquatable<ConnectionAnalyzerDiagnosticOperation>
     {
         private readonly string _value;
         /// <summary> Determines the next hop for traffic from the source to the destination. </summary>
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Runs Express Route specific diagnostics for the connection. </summary>
         private const string ExpressRouteDiagnosticValue = "ExpressRouteDiagnostic";
 
-        /// <summary> Initializes a new instance of <see cref="DiagnosticOperation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionAnalyzerDiagnosticOperation"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DiagnosticOperation(string value)
+        public ConnectionAnalyzerDiagnosticOperation(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -37,44 +37,44 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Determines the next hop for traffic from the source to the destination. </summary>
-        public static DiagnosticOperation NextHop { get; } = new DiagnosticOperation(NextHopValue);
+        public static ConnectionAnalyzerDiagnosticOperation NextHop { get; } = new ConnectionAnalyzerDiagnosticOperation(NextHopValue);
 
         /// <summary> Evaluates the network security group rules that apply to the traffic. </summary>
-        public static DiagnosticOperation NSG { get; } = new DiagnosticOperation(NSGValue);
+        public static ConnectionAnalyzerDiagnosticOperation NSG { get; } = new ConnectionAnalyzerDiagnosticOperation(NSGValue);
 
         /// <summary> Scans the destination ports to determine their reachability. </summary>
-        public static DiagnosticOperation PortScan { get; } = new DiagnosticOperation(PortScanValue);
+        public static ConnectionAnalyzerDiagnosticOperation PortScan { get; } = new ConnectionAnalyzerDiagnosticOperation(PortScanValue);
 
         /// <summary> Performs an end-to-end connectivity check between the source and destination. </summary>
-        public static DiagnosticOperation ConnectivityCheck { get; } = new DiagnosticOperation(ConnectivityCheckValue);
+        public static ConnectionAnalyzerDiagnosticOperation ConnectivityCheck { get; } = new ConnectionAnalyzerDiagnosticOperation(ConnectivityCheckValue);
 
         /// <summary> Runs Express Route specific diagnostics for the connection. </summary>
-        public static DiagnosticOperation ExpressRouteDiagnostic { get; } = new DiagnosticOperation(ExpressRouteDiagnosticValue);
+        public static ConnectionAnalyzerDiagnosticOperation ExpressRouteDiagnostic { get; } = new ConnectionAnalyzerDiagnosticOperation(ExpressRouteDiagnosticValue);
 
-        /// <summary> Determines if two <see cref="DiagnosticOperation"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ConnectionAnalyzerDiagnosticOperation"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(DiagnosticOperation left, DiagnosticOperation right) => left.Equals(right);
+        public static bool operator ==(ConnectionAnalyzerDiagnosticOperation left, ConnectionAnalyzerDiagnosticOperation right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DiagnosticOperation"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ConnectionAnalyzerDiagnosticOperation"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(DiagnosticOperation left, DiagnosticOperation right) => !left.Equals(right);
+        public static bool operator !=(ConnectionAnalyzerDiagnosticOperation left, ConnectionAnalyzerDiagnosticOperation right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DiagnosticOperation"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ConnectionAnalyzerDiagnosticOperation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiagnosticOperation(string value) => new DiagnosticOperation(value);
+        public static implicit operator ConnectionAnalyzerDiagnosticOperation(string value) => new ConnectionAnalyzerDiagnosticOperation(value);
 
-        /// <summary> Converts a string to a <see cref="DiagnosticOperation"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ConnectionAnalyzerDiagnosticOperation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiagnosticOperation?(string value) => value == null ? null : new DiagnosticOperation(value);
+        public static implicit operator ConnectionAnalyzerDiagnosticOperation?(string value) => value == null ? null : new ConnectionAnalyzerDiagnosticOperation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DiagnosticOperation other && Equals(other);
+        public override bool Equals(object obj) => obj is ConnectionAnalyzerDiagnosticOperation other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(DiagnosticOperation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ConnectionAnalyzerDiagnosticOperation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

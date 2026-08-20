@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The type of migration workflow to execute. </summary>
         [WirePath("properties.migrationType")]
-        public MigrationType? MigrationType
+        public NetworkVirtualApplianceMigrationType? MigrationType
         {
             get
             {

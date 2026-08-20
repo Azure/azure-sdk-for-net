@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ConnectionAnalyzerQueryStatusResult"/>. </summary>
         internal ConnectionAnalyzerQueryStatusResult()
         {
-            DiagnosticOperationResults = new ChangeTrackingList<DiagnosticOperationResult>();
+            DiagnosticOperationResults = new ChangeTrackingList<ConnectionAnalyzerDiagnosticOperationResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectionAnalyzerQueryStatusResult"/>. </summary>
@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="connectionAnalyzerStatus"> Current execution status of the connection analyzer. </param>
         /// <param name="error"> Error message if the connection analyzer operation failed. </param>
         /// <param name="outputStoragePath"> Storage path where the connection analyzer output is written. </param>
-        /// <param name="expiryInUtc"> UTC time when the connection analyzer expires. </param>
+        /// <param name="expiresOn"> UTC time when the connection analyzer expires. </param>
         /// <param name="diagnosticOperationResults"> Results of the individual diagnostic operations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionAnalyzerQueryStatusResult(string id, ConnectionAnalyzerStatus? connectionAnalyzerStatus, string error, string outputStoragePath, DateTimeOffset? expiryInUtc, IList<DiagnosticOperationResult> diagnosticOperationResults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectionAnalyzerQueryStatusResult(string id, ConnectionAnalyzerStatus? connectionAnalyzerStatus, string error, string outputStoragePath, DateTimeOffset? expiresOn, IList<ConnectionAnalyzerDiagnosticOperationResult> diagnosticOperationResults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ConnectionAnalyzerStatus = connectionAnalyzerStatus;
             Error = error;
             OutputStoragePath = outputStoragePath;
-            ExpiryInUtc = expiryInUtc;
+            ExpiresOn = expiresOn;
             DiagnosticOperationResults = diagnosticOperationResults;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> UTC time when the connection analyzer expires. </summary>
         [WirePath("expiryInUtc")]
-        public DateTimeOffset? ExpiryInUtc { get; }
+        public DateTimeOffset? ExpiresOn { get; }
 
         /// <summary> Results of the individual diagnostic operations. </summary>
         [WirePath("diagnosticOperationResults")]
-        public IList<DiagnosticOperationResult> DiagnosticOperationResults { get; }
+        public IList<ConnectionAnalyzerDiagnosticOperationResult> DiagnosticOperationResults { get; }
     }
 }
