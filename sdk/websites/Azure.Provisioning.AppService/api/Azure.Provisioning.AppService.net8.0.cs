@@ -193,7 +193,6 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<string> SasUri { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version.")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AppServiceBuiltInRole : System.IEquatable<Azure.Provisioning.AppService.AppServiceBuiltInRole>
     {
@@ -728,6 +727,8 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<int> TargetWorkerSizeId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> VirtualNetworkSubnetId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> WorkerTierName { get { throw null; } set { } }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.AppService.AppServiceBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string bicepIdentifierSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.AppService.AppServiceBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.AppService.AppServicePlan FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
@@ -6024,6 +6025,8 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.AppServiceUsageState> UsageState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> VirtualNetworkSubnetId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> WorkloadProfileName { get { throw null; } set { } }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.AppService.AppServiceBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string bicepIdentifierSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.AppService.AppServiceBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.AppService.WebSite FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
@@ -6556,6 +6559,8 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.AppServiceUsageState> UsageState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> VirtualNetworkSubnetId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> WorkloadProfileName { get { throw null; } set { } }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.AppService.AppServiceBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string bicepIdentifierSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.AppService.AppServiceBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.AppService.WebSiteSlot FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
