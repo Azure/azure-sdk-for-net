@@ -193,6 +193,145 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<string> SasUri { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version.")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AppServiceBuiltInRole : System.IEquatable<Azure.Provisioning.AppService.AppServiceBuiltInRole>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AppServiceBuiltInRole(string value) { throw null; }
+        public static Azure.Provisioning.AppService.AppServiceBuiltInRole WebPlanContributor { get { throw null; } }
+        public static Azure.Provisioning.AppService.AppServiceBuiltInRole WebsiteContributor { get { throw null; } }
+        public bool Equals(Azure.Provisioning.AppService.AppServiceBuiltInRole other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public static string GetBuiltInRoleName(Azure.Provisioning.AppService.AppServiceBuiltInRole value) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Provisioning.AppService.AppServiceBuiltInRole left, Azure.Provisioning.AppService.AppServiceBuiltInRole right) { throw null; }
+        public static implicit operator Azure.Provisioning.AppService.AppServiceBuiltInRole (string value) { throw null; }
+        public static bool operator !=(Azure.Provisioning.AppService.AppServiceBuiltInRole left, Azure.Provisioning.AppService.AppServiceBuiltInRole right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version.")]
+    public partial class AppServiceCertificate : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public AppServiceCertificate(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> KeyVaultId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> KeyVaultSecretName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.AppService.AppServiceCertificateOrder Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.KeyVaultSecretStatus> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.AppService.AppServiceCertificate FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2015_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
+        }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version.")]
+    public partial class AppServiceCertificateDetails : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public AppServiceCertificateDetails() { }
+        public Azure.Provisioning.BicepValue<string> Issuer { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> NotAfter { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> NotBefore { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> RawData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> SerialNumber { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> SignatureAlgorithm { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Subject { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ThumbprintString { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> Version { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version.")]
+    public enum AppServiceCertificateNotRenewableReason
+    {
+        RegistrationStatusNotSupportedForRenewal = 0,
+        ExpirationNotInRenewalTimeRange = 1,
+        SubscriptionNotActive = 2,
+    }
+    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version.")]
+    public partial class AppServiceCertificateOrder : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public AppServiceCertificateOrder(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppService.AppServiceCertificateNotRenewableReason> AppServiceCertificateNotRenewableReasons { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<Azure.Provisioning.AppService.AppServiceCertificateProperties> Certificates { get { throw null; } set { } }
+        public Azure.Provisioning.AppService.CertificateOrderContact Contact { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Csr { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DistinguishedName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DomainVerificationToken { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.AppService.AppServiceCertificateDetails Intermediate { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsAutoRenew { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsPrivateKeyExternal { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> KeySize { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastCertificateIssuedOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> NextAutoRenewTimeStamp { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.CertificateProductType> ProductType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.ProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.AppService.AppServiceCertificateDetails Root { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> SerialNumber { get { throw null; } }
+        public Azure.Provisioning.AppService.AppServiceCertificateDetails SignedCertificate { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.CertificateOrderStatus> Status { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> ValidityInYears { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.AppService.AppServiceCertificateOrder FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2015_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
+        }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version.")]
+    public partial class AppServiceCertificateProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public AppServiceCertificateProperties() { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> KeyVaultId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> KeyVaultSecretName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.KeyVaultSecretStatus> ProvisioningState { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class AppServiceCorsSettings : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public AppServiceCorsSettings() { }
@@ -215,6 +354,91 @@ namespace Azure.Provisioning.AppService
         MySql = 1,
         LocalMySql = 2,
         PostgreSql = 3,
+    }
+    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version.")]
+    public enum AppServiceDnsType
+    {
+        AzureDns = 0,
+        DefaultDomainRegistrarDns = 1,
+    }
+    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version.")]
+    public partial class AppServiceDomain : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public AppServiceDomain(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> AuthCode { get { throw null; } set { } }
+        public Azure.Provisioning.AppService.DomainPurchaseConsent Consent { get { throw null; } set { } }
+        public Azure.Provisioning.AppService.RegistrationContactInfo ContactAdmin { get { throw null; } set { } }
+        public Azure.Provisioning.AppService.RegistrationContactInfo ContactBilling { get { throw null; } set { } }
+        public Azure.Provisioning.AppService.RegistrationContactInfo ContactRegistrant { get { throw null; } set { } }
+        public Azure.Provisioning.AppService.RegistrationContactInfo ContactTech { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.AppServiceDnsType> DnsType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DnsZoneId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppService.DomainNotRenewableReason> DomainNotRenewableReasons { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsAutoRenew { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsDnsRecordManagementReady { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsDomainPrivacyEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastRenewedOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppService.AppServiceHostName> ManagedHostNames { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> NameServers { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.ProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.AppServiceDomainStatus> RegistrationStatus { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.AppServiceDnsType> TargetDnsType { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.AppService.AppServiceDomain FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
+        }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version.")]
+    public enum AppServiceDomainStatus
+    {
+        Unknown = 0,
+        Active = 1,
+        Awaiting = 2,
+        Cancelled = 3,
+        Confiscated = 4,
+        Disabled = 5,
+        Excluded = 6,
+        Expired = 7,
+        Failed = 8,
+        Held = 9,
+        Locked = 10,
+        Parked = 11,
+        Pending = 12,
+        Reserved = 13,
+        Reverted = 14,
+        Suspended = 15,
+        Transferred = 16,
+        Unlocked = 17,
+        Unparked = 18,
+        Updated = 19,
+        JsonConverterFailed = 20,
     }
     public partial class AppServiceEnvironment : Azure.Provisioning.Primitives.ProvisionableResource
     {
@@ -357,6 +581,18 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepList<string> LoginScopes { get { throw null; } set { } }
         public Azure.Provisioning.AppService.ClientRegistration Registration { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> ValidationAllowedAudiences { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version.")]
+    public partial class AppServiceHostName : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public AppServiceHostName() { }
+        public Azure.Provisioning.BicepValue<string> AzureResourceName { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.AppServiceResourceType> AzureResourceType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.CustomHostNameDnsRecordType> CustomHostNameDnsRecordType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.AppServiceHostNameType> HostNameType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepList<string> SiteNames { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum AppServiceHostNameType
@@ -982,6 +1218,36 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppService.StatusCodesRangeBasedTrigger> StatusCodesRange { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version.")]
+    public partial class CertificateOrderContact : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public CertificateOrderContact() { }
+        public Azure.Provisioning.BicepValue<string> Email { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> NameFirst { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> NameLast { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Phone { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version.")]
+    public enum CertificateOrderStatus
+    {
+        Pendingissuance = 0,
+        Issued = 1,
+        Revoked = 2,
+        Canceled = 3,
+        Denied = 4,
+        Pendingrevocation = 5,
+        PendingRekey = 6,
+        Unused = 7,
+        Expired = 8,
+        NotSubmitted = 9,
+    }
+    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version.")]
+    public enum CertificateProductType
+    {
+        StandardDomainValidatedSsl = 0,
+        StandardDomainValidatedWildCardSsl = 1,
+    }
     public enum ClientCertMode
     {
         Required = 0,
@@ -1487,6 +1753,56 @@ namespace Azure.Provisioning.AppService
         public DiagnosticDataset() { }
         public Azure.Provisioning.AppService.DiagnosticDataRendering RenderingProperties { get { throw null; } }
         public Azure.Provisioning.AppService.DataTableResponseObject Table { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version.")]
+    public enum DomainNotRenewableReason
+    {
+        RegistrationStatusNotSupportedForRenewal = 0,
+        ExpirationNotInRenewalTimeRange = 1,
+        SubscriptionNotActive = 2,
+    }
+    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version.")]
+    public partial class DomainOwnershipIdentifier : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public DomainOwnershipIdentifier(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> OwnershipId { get { throw null; } set { } }
+        public Azure.Provisioning.AppService.AppServiceDomain Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.AppService.DomainOwnershipIdentifier FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
+        }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version.")]
+    public partial class DomainPurchaseConsent : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DomainPurchaseConsent() { }
+        public Azure.Provisioning.BicepValue<string> AgreedBy { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> AgreedOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> AgreementKeys { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum EnterpriseGradeCdnStatus
@@ -2424,6 +2740,33 @@ namespace Azure.Provisioning.AppService
         ActiveActive = 3,
         GeoRedundant = 4,
     }
+    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version.")]
+    public partial class RegistrationAddressInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public RegistrationAddressInfo() { }
+        public Azure.Provisioning.BicepValue<string> Address1 { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Address2 { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> City { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Country { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> PostalCode { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> State { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version.")]
+    public partial class RegistrationContactInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public RegistrationContactInfo() { }
+        public Azure.Provisioning.AppService.RegistrationAddressInfo AddressMailing { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Email { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Fax { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> JobTitle { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> NameFirst { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> NameLast { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> NameMiddle { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Organization { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Phone { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class RegistryAdapter : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public RegistryAdapter() { }
@@ -2521,6 +2864,12 @@ namespace Azure.Provisioning.AppService
         VSO = 12,
         [System.Runtime.Serialization.DataMemberAttribute(Name="VSTSRM")]
         Vstsrm = 13,
+    }
+    [System.ObsoleteAttribute("This class is deprecated and it will be removed in a future version. Please use WebSiteAuthSettingsV2 instead.")]
+    public partial class SiteAuthSettingsV2 : Azure.Provisioning.AppService.WebSiteAuthSettingsV2
+    {
+        public SiteAuthSettingsV2(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(string)) { }
+        public static new Azure.Provisioning.AppService.SiteAuthSettingsV2 FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
     }
     public partial class SiteBackup : Azure.Provisioning.Primitives.ProvisionableResource
     {
