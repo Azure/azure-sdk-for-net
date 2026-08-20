@@ -21,8 +21,32 @@ namespace Azure.ResourceManager.Fabric.Tests
             FabricCapacityPatch patchWithProperties = ArmFabricModelFactory.FabricCapacityPatchWithProperties(sku, tags, properties);
 
             Assert.IsNotNull(patchWithNullMembers);
+            Assert.IsNull(patchWithNullMembers.Properties);
             CollectionAssert.AreEqual(new[] { "admin@contoso.com" }, patchWithMembers.FabricCapacityUpdateAdministrationMembers);
             Assert.AreSame(properties, patchWithProperties.Properties);
+        }
+
+        [Test]
+        public void FabricCapacityUpdatePropertiesSupportsLegacyAndOverageCallShapes()
+        {
+            FabricCapacityUpdateProperties legacyProperties = ArmFabricModelFactory.FabricCapacityUpdateProperties(null);
+            FabricCapacityUpdateProperties overageProperties = ArmFabricModelFactory.FabricCapacityUpdateProperties(null, null);
+
+            Assert.IsNull(legacyProperties.Overage);
+            Assert.IsNull(overageProperties.Overage);
+        }
+
+        [Test]
+        public void FabricCapacityPropertiesSupportsLegacyAndOverageCallShapes()
+        {
+            FabricProvisioningState? provisioningState = null;
+            FabricResourceState? state = null;
+
+            FabricCapacityProperties legacyProperties = ArmFabricModelFactory.FabricCapacityProperties(provisioningState, state, null);
+            FabricCapacityProperties overageProperties = ArmFabricModelFactory.FabricCapacityProperties(provisioningState, state, null, null);
+
+            Assert.IsNull(legacyProperties.Overage);
+            Assert.IsNull(overageProperties.Overage);
         }
     }
 }

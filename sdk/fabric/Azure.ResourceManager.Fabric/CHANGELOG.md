@@ -1,14 +1,16 @@
 # Release History
 
+## 1.1.0-beta.3 (2026-08-20)
+
+### Bugs Fixed
+
+- Fixed an ambiguous `ArmFabricModelFactory.FabricCapacityPatch` overload for callers passing null administration members, by renaming one of the overloads `ArmFabricModelFactory.FabricCapacityPatchWithProperties`.
+
 ## 1.1.0-beta.2 (2026-08-18)
 
 ### Features Added
 
 - Added support for capacity overage configuration.
-
-### Bugs Fixed
-
-- Fixed an ambiguous `ArmFabricModelFactory.FabricCapacityPatch` overload for callers passing null administration members.
 
 ## 1.1.0-beta.1 (2026-06-06)
 
