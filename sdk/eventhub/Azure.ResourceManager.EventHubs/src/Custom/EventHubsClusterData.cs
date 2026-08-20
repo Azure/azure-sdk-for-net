@@ -4,6 +4,7 @@
 #nullable disable
 
 using Azure.ResourceManager.EventHubs.Models;
+using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.EventHubs
@@ -25,7 +26,8 @@ namespace Azure.ResourceManager.EventHubs
     // The old swagger-based SDK exposed this as simply "ConfidentialComputeMode" because AutoRest used
     // x-ms-client-flatten on ClusterProperties. To maintain API compatibility, we use [CodeGenMember]
     // to rename the generated property back to "ConfidentialComputeMode".
-    public partial class EventHubsClusterData
+    // The TypeSpec resource is modeled as a proxy resource, but the shipped SDK data type is tracked.
+    public partial class EventHubsClusterData : TrackedResourceData
     {
         /// <summary> Setting to Enable or Disable Confidential Compute. </summary>
         [CodeGenMember("PlatformCapabilitiesConfidentialComputeMode")]
