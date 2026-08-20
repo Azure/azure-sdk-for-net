@@ -34,6 +34,33 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.AppCertificate FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -226,6 +253,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.AppServiceEnvironment FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_08_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_01_01;
+            public static readonly string V2019_02_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -437,6 +496,35 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.AppServicePlan FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -558,6 +646,33 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.AppServiceSourceControl FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -761,6 +876,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.AseV3NetworkingConfiguration FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_08_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_01_01;
+            public static readonly string V2019_02_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -1071,6 +1218,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.CustomDnsSuffixConfiguration FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_08_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_01_01;
+            public static readonly string V2019_02_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -1535,6 +1714,37 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.HostingEnvironmentMultiRolePool FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_08_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_02_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -1554,6 +1764,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.HostingEnvironmentPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_08_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_01_01;
+            public static readonly string V2019_02_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -1618,6 +1860,37 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.HostingEnvironmentWorkerPool FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_08_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_02_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -1735,6 +2008,9 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.KubeEnvironment FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_03_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -1806,6 +2082,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.LogsSiteConfig FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -1825,6 +2133,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.LogsSiteSlotConfig FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -2004,6 +2344,33 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.PublishingUser FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -2219,6 +2586,7 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.SiteCertificate FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -2437,6 +2805,38 @@ namespace Azure.Provisioning.AppService
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -2482,6 +2882,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.SiteDeployment FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -2580,6 +3012,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.SiteDomainOwnershipIdentifier FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -2600,6 +3064,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.SiteExtension FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -2633,6 +3129,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.SiteFunction FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -2657,6 +3185,31 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.SiteHostNameBinding FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -2860,6 +3413,31 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.SiteNetworkConfig FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -2898,6 +3476,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.SitePrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -2993,6 +3603,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.SitePublicCertificate FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -3097,6 +3739,7 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.SiteSlotCertificate FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -3209,6 +3852,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.SiteSlotDeployment FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -3296,6 +3971,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.SiteSlotDomainOwnershipIdentifier FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -3316,6 +4023,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.SiteSlotExtension FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -3344,6 +4083,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.SiteSlotFunction FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -3368,6 +4139,31 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.SiteSlotHostNameBinding FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -3526,6 +4322,31 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.SiteSlotNetworkConfig FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -3545,6 +4366,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.SiteSlotPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -3651,6 +4504,38 @@ namespace Azure.Provisioning.AppService
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -3673,6 +4558,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.SiteSlotVirtualNetworkConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -3690,6 +4607,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.SiteSlotVirtualNetworkConnectionGateway FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -3730,6 +4679,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.SiteVirtualNetworkConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -3747,6 +4728,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.SiteVirtualNetworkConnectionGateway FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -3783,6 +4796,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.SlotConfigNames FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -3843,6 +4888,21 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.StaticSite FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -3868,6 +4928,21 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.StaticSiteBasicAuthProperty FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -3915,6 +4990,21 @@ namespace Azure.Provisioning.AppService
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -3934,6 +5024,21 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.StaticSiteBuildLinkedBackend FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -3975,6 +5080,17 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.StaticSiteBuildUserProvidedFunctionApp FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -3995,6 +5111,21 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.StaticSiteCustomDomainOverview FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -4016,6 +5147,21 @@ namespace Azure.Provisioning.AppService
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -4053,6 +5199,21 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.StaticSiteLinkedBackend FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -4081,6 +5242,21 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.StaticSitePrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -4109,6 +5285,17 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.StaticSiteUserProvidedFunctionApp FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -4492,6 +5679,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.WebSite FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -4606,6 +5825,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.WebSiteConfig FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -4689,6 +5940,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.WebSiteExtension FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -4710,6 +5993,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.WebSiteHybridConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -4732,6 +6047,29 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.WebSitePremierAddon FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -4749,6 +6087,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.WebSitePrivateAccess FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -4841,6 +6211,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.WebSiteSlot FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -4949,6 +6351,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.WebSiteSlotConfig FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -5055,6 +6489,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.WebSiteSlotExtension FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -5076,6 +6542,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.WebSiteSlotHybridConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -5098,6 +6596,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.WebSiteSlotPremierAddOn FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -5115,6 +6645,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.WebSiteSlotPrivateAccess FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -5133,6 +6695,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.WebSiteSlotPublicCertificate FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -5172,6 +6766,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.WebSiteSlotSourceControl FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -5259,6 +6885,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.WebSiteSourceControl FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
