@@ -85,13 +85,13 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <param name="importedDateTime"> Date and time in UTC when the update was imported. </param>
         /// <param name="createdDateTime"> Date and time in UTC when the update was created. </param>
         /// <param name="etag"> Update ETag. </param>
-        /// <returns> A new <see cref="_SoftwareUpdate.SoftwareUpdate"/> instance for mocking. </returns>
-        public static SoftwareUpdate SoftwareUpdate(UpdateId updateId = default, string description = default, string friendlyName = default, bool? isDeployable = default, string updateType = default, string installedCriteria = default, IEnumerable<SoftwareUpdateCompatibility> compatibility = default, SoftwareUpdateInstructions instructions = default, IEnumerable<UpdateId> referencedBy = default, string scanResult = default, string manifestVersion = default, DateTimeOffset importedDateTime = default, DateTimeOffset createdDateTime = default, ETag? etag = default)
+        /// <returns> A new <see cref="_SoftwareUpdate.UpdateContent"/> instance for mocking. </returns>
+        public static UpdateContent UpdateContent(UpdateId updateId = default, string description = default, string friendlyName = default, bool? isDeployable = default, string updateType = default, string installedCriteria = default, IEnumerable<SoftwareUpdateCompatibility> compatibility = default, SoftwareUpdateInstructions instructions = default, IEnumerable<UpdateId> referencedBy = default, string scanResult = default, string manifestVersion = default, DateTimeOffset importedDateTime = default, DateTimeOffset createdDateTime = default, ETag? etag = default)
         {
             compatibility ??= new ChangeTrackingList<SoftwareUpdateCompatibility>();
             referencedBy ??= new ChangeTrackingList<UpdateId>();
 
-            return new SoftwareUpdate(
+            return new UpdateContent(
                 updateId,
                 description,
                 friendlyName,

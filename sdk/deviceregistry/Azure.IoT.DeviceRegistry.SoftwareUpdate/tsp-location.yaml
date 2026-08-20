@@ -1,5 +1,5 @@
 directory: specification/deviceupdate/data-plane/sudeviceregistry
-commit: 194c28a23534a44456a2dc989d6ae8893dcb1f4b
+commit: 3fdc85ff0b38bf0e9a768a7bc21f1ac88088729e
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 

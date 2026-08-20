@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
 {
-    internal partial class SoftwareUpdateGetUpdatesAsyncCollectionResultOfT : AsyncPageable<SoftwareUpdate>
+    internal partial class SoftwareUpdateGetUpdatesAsyncCollectionResultOfT : AsyncPageable<UpdateContent>
     {
         private readonly SoftwareUpdate _client;
         private readonly string _search;
@@ -41,7 +41,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SoftwareUpdateGetUpdatesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<SoftwareUpdate>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<UpdateContent>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,7 +53,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
                 }
                 UpdateList result = (UpdateList)response;
                 nextPage = result.NextLink;
-                yield return Page<SoftwareUpdate>.FromValues((IReadOnlyList<SoftwareUpdate>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<UpdateContent>.FromValues((IReadOnlyList<UpdateContent>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
