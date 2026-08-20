@@ -18,6 +18,7 @@ steps:
     condition: >-
       and(
         succeeded(),
+        eq(variables['SetAsReleaseBuild'], 'true'),
         not(
           and(
             eq(variables['Skip.CheckPackageApproval'], 'true'),
