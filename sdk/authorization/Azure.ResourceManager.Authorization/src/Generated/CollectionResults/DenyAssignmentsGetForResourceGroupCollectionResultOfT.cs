@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Authorization
     internal partial class DenyAssignmentsGetForResourceGroupCollectionResultOfT : Pageable<DenyAssignmentData>
     {
         private readonly DenyAssignments _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _filter;
         private readonly RequestContext _context;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq '{name}' to search deny assignments by name at specified scope. Use $filter=principalId eq '{id}' to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq '{id}' to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DenyAssignmentsGetForResourceGroupCollectionResultOfT(DenyAssignments client, string subscriptionId, string resourceGroupName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DenyAssignmentsGetForResourceGroupCollectionResultOfT(DenyAssignments client, Guid subscriptionId, string resourceGroupName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

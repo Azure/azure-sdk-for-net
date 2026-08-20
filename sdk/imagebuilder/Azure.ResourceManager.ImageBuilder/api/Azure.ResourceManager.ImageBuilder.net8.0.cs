@@ -857,7 +857,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
     public partial class ImageTemplateVmProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateVmProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateVmProfile>
     {
         public ImageTemplateVmProfile() { }
-        public int? OsDiskSizeGB { get { throw null; } set { } }
+        public int? OSDiskSizeGB { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> UserAssignedIdentities { get { throw null; } }
         public string VmSize { get { throw null; } set { } }
         public Azure.ResourceManager.ImageBuilder.Models.ImageBuilderVirtualNetworkConfig VnetConfig { get { throw null; } set { } }
