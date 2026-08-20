@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -15,7 +16,7 @@ namespace Azure.Provisioning.Kusto
     {
         private BicepValue<string> _keyName;
         private BicepValue<string> _keyVersion;
-        private BicepValue<string> _keyVaultUri;
+        private BicepValue<Uri> _keyVaultUri;
         private BicepValue<string> _userIdentity;
         private BicepValue<string> _federatedIdentityClientId;
 
@@ -55,7 +56,7 @@ namespace Azure.Provisioning.Kusto
         }
 
         /// <summary> Gets or sets the KeyVaultUri. </summary>
-        public BicepValue<string> KeyVaultUri
+        public BicepValue<Uri> KeyVaultUri
         {
             get
             {
@@ -105,7 +106,7 @@ namespace Azure.Provisioning.Kusto
             base.DefineProvisionableProperties();
             _keyName = DefineProperty<string>(nameof(KeyName), new string[] { "keyName" });
             _keyVersion = DefineProperty<string>(nameof(KeyVersion), new string[] { "keyVersion" });
-            _keyVaultUri = DefineProperty<string>(nameof(KeyVaultUri), new string[] { "keyVaultUri" });
+            _keyVaultUri = DefineProperty<Uri>(nameof(KeyVaultUri), new string[] { "keyVaultUri" });
             _userIdentity = DefineProperty<string>(nameof(UserIdentity), new string[] { "userIdentity" });
             _federatedIdentityClientId = DefineProperty<string>(nameof(FederatedIdentityClientId), new string[] { "federatedIdentityClientId" });
             DefineAdditionalProperties();

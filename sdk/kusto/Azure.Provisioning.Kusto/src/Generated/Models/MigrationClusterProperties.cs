@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,8 +15,8 @@ namespace Azure.Provisioning.Kusto
     public partial class MigrationClusterProperties : ProvisionableConstruct
     {
         private BicepValue<string> _id;
-        private BicepValue<string> _uri;
-        private BicepValue<string> _dataIngestionUri;
+        private BicepValue<Uri> _uri;
+        private BicepValue<Uri> _dataIngestionUri;
         private BicepValue<MigrationClusterRole> _role;
 
         /// <summary> Creates a new MigrationClusterProperties. </summary>
@@ -34,7 +35,7 @@ namespace Azure.Provisioning.Kusto
         }
 
         /// <summary> Gets the Uri. </summary>
-        public BicepValue<string> Uri
+        public BicepValue<Uri> Uri
         {
             get
             {
@@ -44,7 +45,7 @@ namespace Azure.Provisioning.Kusto
         }
 
         /// <summary> Gets the DataIngestionUri. </summary>
-        public BicepValue<string> DataIngestionUri
+        public BicepValue<Uri> DataIngestionUri
         {
             get
             {
@@ -68,8 +69,8 @@ namespace Azure.Provisioning.Kusto
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<string>(nameof(Id), new string[] { "id" }, isOutput: true);
-            _uri = DefineProperty<string>(nameof(Uri), new string[] { "uri" }, isOutput: true);
-            _dataIngestionUri = DefineProperty<string>(nameof(DataIngestionUri), new string[] { "dataIngestionUri" }, isOutput: true);
+            _uri = DefineProperty<Uri>(nameof(Uri), new string[] { "uri" }, isOutput: true);
+            _dataIngestionUri = DefineProperty<Uri>(nameof(DataIngestionUri), new string[] { "dataIngestionUri" }, isOutput: true);
             _role = DefineProperty<MigrationClusterRole>(nameof(Role), new string[] { "role" }, isOutput: true);
             DefineAdditionalProperties();
         }

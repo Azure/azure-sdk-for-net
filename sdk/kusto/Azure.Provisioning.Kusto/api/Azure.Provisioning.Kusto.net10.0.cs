@@ -530,7 +530,7 @@ namespace Azure.Provisioning.Kusto
         public KustoKeyVaultProperties() { }
         public Azure.Provisioning.BicepValue<string> FederatedIdentityClientId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> KeyName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> KeyVaultUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> KeyVaultUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> KeyVersion { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> UserIdentity { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -847,10 +847,10 @@ namespace Azure.Provisioning.Kusto
     public partial class MigrationClusterProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public MigrationClusterProperties() { }
-        public Azure.Provisioning.BicepValue<string> DataIngestionUri { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Uri> DataIngestionUri { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kusto.MigrationClusterRole> Role { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Uri { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Uri> Uri { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum MigrationClusterRole
