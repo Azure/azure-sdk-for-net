@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="definition"> Gets or sets the user name of the activity. </param>
         /// <param name="parameterSets"> Gets or sets the parameter sets of the activity. </param>
         /// <param name="outputTypes"> Gets or sets the output types of the activity. </param>
-        /// <param name="creationOn"> Gets or sets the creation time. </param>
+        /// <param name="createdOn"> Gets or sets the creation time. </param>
         /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
         /// <param name="description"> Gets or sets the description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActivityProperties(string definition, IList<AutomationActivityParameterSet> parameterSets, IList<AutomationActivityOutputType> outputTypes, DateTimeOffset? creationOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActivityProperties(string definition, IList<AutomationActivityParameterSet> parameterSets, IList<AutomationActivityOutputType> outputTypes, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Definition = definition;
             ParameterSets = parameterSets;
             OutputTypes = outputTypes;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             Description = description;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Automation.Models
         public IList<AutomationActivityOutputType> OutputTypes { get; } = new ChangeTrackingList<AutomationActivityOutputType>();
 
         /// <summary> Gets or sets the creation time. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Gets or sets the last modified time. </summary>
         public DateTimeOffset? LastModifiedOn { get; }

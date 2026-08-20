@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("retentionDays"u8);
                 writer.WriteNumberValue(RetentionDays.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreationOn))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Sql.Models
             string storageEndpoint = default;
             string storageAccountAccessKey = default;
             int? retentionDays = default;
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Sql.Models
                 storageEndpoint,
                 storageAccountAccessKey,
                 retentionDays,
-                creationOn,
+                createdOn,
                 additionalBinaryDataProperties);
         }
     }

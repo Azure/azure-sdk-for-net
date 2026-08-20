@@ -94,15 +94,15 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("runtimeEnvironment"u8);
                 writer.WriteStringValue(RuntimeEnvironment);
             }
-            if (Optional.IsDefined(CreationOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(DeletionOn))
+            if (Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deletionTime"u8);
-                writer.WriteStringValue(DeletionOn.Value, "O");
+                writer.WriteStringValue(DeletedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.Automation.Models
             string runbookType = default;
             string runtime = default;
             string runtimeEnvironment = default;
-            DateTimeOffset? creationOn = default;
-            DateTimeOffset? deletionOn = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? deletedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("deletionTime"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    deletionOn = prop.Value.GetDateTimeOffset("O");
+                    deletedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -208,8 +208,8 @@ namespace Azure.ResourceManager.Automation.Models
                 runbookType,
                 runtime,
                 runtimeEnvironment,
-                creationOn,
-                deletionOn,
+                createdOn,
+                deletedOn,
                 additionalBinaryDataProperties);
         }
     }

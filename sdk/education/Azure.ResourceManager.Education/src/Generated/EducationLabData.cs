@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.Education
         }
 
         /// <summary> Default expiration date for each student in this lab. </summary>
-        public DateTimeOffset? ExpirationOn
+        public DateTimeOffset? ExpireOn
         {
             get
             {
-                return Properties is null ? default : Properties.ExpirationOn;
+                return Properties is null ? default : Properties.ExpireOn;
             }
             set
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Education
                     {
                         Properties = new LabProperties();
                     }
-                    Properties.ExpirationOn = value.Value;
+                    Properties.ExpireOn = value.Value;
                 }
             }
         }

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 throw new FormatException($"The model {nameof(ContainerRegistryTokenPassword)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(CreationOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(ExpireOn))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             DateTimeOffset? expireOn = default;
             ContainerRegistryTokenPasswordName? name = default;
             string value = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("expiry"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerRegistryTokenPassword(creationOn, expireOn, name, value, additionalBinaryDataProperties);
+            return new ContainerRegistryTokenPassword(createdOn, expireOn, name, value, additionalBinaryDataProperties);
         }
     }
 }

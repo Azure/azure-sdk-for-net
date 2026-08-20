@@ -205,10 +205,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             AllowASOverride? allowASOverride = default;
             long? fabricAsn = default;
             long? peerAsn = default;
-            IList<string> iPv4ListenRangePrefixes = default;
-            IList<string> iPv6ListenRangePrefixes = default;
-            IList<NeighborAddressPatch> iPv4NeighborAddress = default;
-            IList<NeighborAddressPatch> iPv6NeighborAddress = default;
+            IList<string> ipv4ListenRangePrefixes = default;
+            IList<string> ipv6ListenRangePrefixes = default;
+            IList<NeighborAddressPatch> ipv4NeighborAddress = default;
+            IList<NeighborAddressPatch> ipv6NeighborAddress = default;
             InternalNetworkBmpPatchProperties bmpConfiguration = default;
             NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = default;
             NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = default;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             array.Add(item.GetString());
                         }
                     }
-                    iPv4ListenRangePrefixes = array;
+                    ipv4ListenRangePrefixes = array;
                     continue;
                 }
                 if (prop.NameEquals("ipv6ListenRangePrefixes"u8))
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             array.Add(item.GetString());
                         }
                     }
-                    iPv6ListenRangePrefixes = array;
+                    ipv6ListenRangePrefixes = array;
                     continue;
                 }
                 if (prop.NameEquals("ipv4NeighborAddress"u8))
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         array.Add(NeighborAddressPatch.DeserializeNeighborAddressPatch(item, options));
                     }
-                    iPv4NeighborAddress = array;
+                    ipv4NeighborAddress = array;
                     continue;
                 }
                 if (prop.NameEquals("ipv6NeighborAddress"u8))
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         array.Add(NeighborAddressPatch.DeserializeNeighborAddressPatch(item, options));
                     }
-                    iPv6NeighborAddress = array;
+                    ipv6NeighborAddress = array;
                     continue;
                 }
                 if (prop.NameEquals("bmpConfiguration"u8))
@@ -384,10 +384,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 allowASOverride,
                 fabricAsn,
                 peerAsn,
-                iPv4ListenRangePrefixes ?? new ChangeTrackingList<string>(),
-                iPv6ListenRangePrefixes ?? new ChangeTrackingList<string>(),
-                iPv4NeighborAddress ?? new ChangeTrackingList<NeighborAddressPatch>(),
-                iPv6NeighborAddress ?? new ChangeTrackingList<NeighborAddressPatch>(),
+                ipv4ListenRangePrefixes ?? new ChangeTrackingList<string>(),
+                ipv6ListenRangePrefixes ?? new ChangeTrackingList<string>(),
+                ipv4NeighborAddress ?? new ChangeTrackingList<NeighborAddressPatch>(),
+                ipv6NeighborAddress ?? new ChangeTrackingList<NeighborAddressPatch>(),
                 bmpConfiguration,
                 v4OverV6BgpSession,
                 v6OverV4BgpSession);

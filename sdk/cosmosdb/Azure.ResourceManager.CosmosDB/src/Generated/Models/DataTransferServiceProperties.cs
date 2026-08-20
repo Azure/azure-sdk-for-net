@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataTransferServiceProperties"/>. </summary>
-        /// <param name="creationOn"> Time of the last state change (ISO-8601 format). </param>
+        /// <param name="createdOn"> Time of the last state change (ISO-8601 format). </param>
         /// <param name="instanceSize"> Instance type for the service. </param>
         /// <param name="instanceCount"> Instance count for the service. </param>
         /// <param name="serviceType"> ServiceType for the service. </param>
         /// <param name="status"> Describes the status of a service. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="locations"> An array that contains all of the locations for the service. </param>
-        internal DataTransferServiceProperties(DateTimeOffset? creationOn, CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, CosmosDBServiceStatus? status, IDictionary<string, BinaryData> additionalProperties, IReadOnlyList<DataTransferRegionalService> locations) : base(creationOn, instanceSize, instanceCount, serviceType, status, additionalProperties)
+        internal DataTransferServiceProperties(DateTimeOffset? createdOn, CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, CosmosDBServiceStatus? status, IDictionary<string, BinaryData> additionalProperties, IReadOnlyList<DataTransferRegionalService> locations) : base(createdOn, instanceSize, instanceCount, serviceType, status, additionalProperties)
         {
             Locations = locations;
         }

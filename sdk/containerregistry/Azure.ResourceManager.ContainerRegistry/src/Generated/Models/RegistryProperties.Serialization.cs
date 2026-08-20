@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("loginServer"u8);
                 writer.WriteStringValue(LoginServer);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreationOn))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationDate"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             string loginServer = default;
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             ContainerRegistryProvisioningState? provisioningState = default;
             ContainerRegistryResourceStatus status = default;
             bool? isAdminUserEnabled = default;
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             return new RegistryProperties(
                 loginServer,
-                creationOn,
+                createdOn,
                 provisioningState,
                 status,
                 isAdminUserEnabled,

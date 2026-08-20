@@ -28,18 +28,18 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="certificateKeyVaultProperties"> Certificate stored in Azure Key Vault. </param>
         /// <param name="certificateValue"> PFX or PEM blob. </param>
         /// <param name="certificatePassword"> Certificate password. </param>
-        /// <param name="expirationOn"> Certificate expiration date. </param>
+        /// <param name="expireOn"> Certificate expiration date. </param>
         /// <param name="thumbprint"> Certificate thumbprint. </param>
         /// <param name="subjectName"> Subject name of the certificate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppCustomDomainConfiguration(string customDomainVerificationId, string dnsSuffix, ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties, byte[] certificateValue, string certificatePassword, DateTimeOffset? expirationOn, string thumbprint, string subjectName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerAppCustomDomainConfiguration(string customDomainVerificationId, string dnsSuffix, ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties, byte[] certificateValue, string certificatePassword, DateTimeOffset? expireOn, string thumbprint, string subjectName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CustomDomainVerificationId = customDomainVerificationId;
             DnsSuffix = dnsSuffix;
             CertificateKeyVaultProperties = certificateKeyVaultProperties;
             CertificateValue = certificateValue;
             CertificatePassword = certificatePassword;
-            ExpirationOn = expirationOn;
+            ExpireOn = expireOn;
             Thumbprint = thumbprint;
             SubjectName = subjectName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Certificate expiration date. </summary>
         [WirePath("expirationDate")]
-        public DateTimeOffset? ExpirationOn { get; }
+        public DateTimeOffset? ExpireOn { get; }
 
         /// <summary> Certificate thumbprint. </summary>
         [WirePath("thumbprint")]

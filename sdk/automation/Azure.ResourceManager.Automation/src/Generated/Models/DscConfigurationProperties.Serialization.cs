@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("logVerbose"u8);
                 writer.WriteBooleanValue(IsLogVerboseEnabled.Value);
             }
-            if (Optional.IsDefined(CreationOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(LastModifiedOn))
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Automation.Models
             AutomationContentSource source = default;
             DscConfigurationState? state = default;
             bool? isLogVerboseEnabled = default;
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             DateTimeOffset? lastModifiedOn = default;
             int? nodeConfigurationCount = default;
             string description = default;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedTime"u8))
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Automation.Models
                 source,
                 state,
                 isLogVerboseEnabled,
-                creationOn,
+                createdOn,
                 lastModifiedOn,
                 nodeConfigurationCount,
                 description,

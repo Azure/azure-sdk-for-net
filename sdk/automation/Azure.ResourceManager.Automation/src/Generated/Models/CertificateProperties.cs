@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="thumbprintString"> Gets the thumbprint of the certificate. </param>
         /// <param name="expireOn"> Gets the expiry time of the certificate. </param>
         /// <param name="isExportable"> Gets the is exportable flag of the certificate. </param>
-        /// <param name="creationOn"> Gets the creation time. </param>
+        /// <param name="createdOn"> Gets the creation time. </param>
         /// <param name="lastModifiedOn"> Gets the last modified time. </param>
         /// <param name="description"> Gets or sets the description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CertificateProperties(string thumbprintString, DateTimeOffset? expireOn, bool? isExportable, DateTimeOffset? creationOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CertificateProperties(string thumbprintString, DateTimeOffset? expireOn, bool? isExportable, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ThumbprintString = thumbprintString;
             ExpireOn = expireOn;
             IsExportable = isExportable;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             Description = description;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Automation.Models
         public bool? IsExportable { get; }
 
         /// <summary> Gets the creation time. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Gets the last modified time. </summary>
         public DateTimeOffset? LastModifiedOn { get; }

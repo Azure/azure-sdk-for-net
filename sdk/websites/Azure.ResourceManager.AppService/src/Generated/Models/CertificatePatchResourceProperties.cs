@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="selfLink"> Self link. </param>
         /// <param name="issuer"> Certificate issuer. </param>
         /// <param name="issueOn"> Certificate issue Date. </param>
-        /// <param name="expirationOn"> Certificate expiration date. </param>
+        /// <param name="expireOn"> Certificate expiration date. </param>
         /// <param name="thumbprintString"> Certificate thumbprint. </param>
         /// <param name="isValid"> Is the certificate valid?. </param>
         /// <param name="cerBlob"> Raw bytes of .cer file. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="canonicalName"> CNAME of the certificate to be issued via free certificate. </param>
         /// <param name="domainValidationMethod"> Method of domain validation for free cert. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CertificatePatchResourceProperties(string password, string friendlyName, string subjectName, IList<string> hostNames, BinaryData pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expirationOn, string thumbprintString, bool? isValid, BinaryData cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, ResourceIdentifier serverFarmId, string canonicalName, string domainValidationMethod, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CertificatePatchResourceProperties(string password, string friendlyName, string subjectName, IList<string> hostNames, BinaryData pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprintString, bool? isValid, BinaryData cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, ResourceIdentifier serverFarmId, string canonicalName, string domainValidationMethod, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Password = password;
             FriendlyName = friendlyName;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
             SelfLink = selfLink;
             Issuer = issuer;
             IssueOn = issueOn;
-            ExpirationOn = expirationOn;
+            ExpireOn = expireOn;
             ThumbprintString = thumbprintString;
             IsValid = isValid;
             CerBlob = cerBlob;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Certificate expiration date. </summary>
         [WirePath("expirationDate")]
-        public DateTimeOffset? ExpirationOn { get; }
+        public DateTimeOffset? ExpireOn { get; }
 
         /// <summary> Certificate thumbprint. </summary>
         [WirePath("thumbprint")]

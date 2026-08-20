@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 
         /// <summary> Initializes a new instance of <see cref="TaskProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the task. </param>
-        /// <param name="creationOn"> The creation date of task. </param>
+        /// <param name="createdOn"> The creation date of task. </param>
         /// <param name="status"> The current status of task. </param>
         /// <param name="platform"> The platform properties against which the run has to happen. </param>
         /// <param name="agentConfiguration"> The machine configuration of the run agent. </param>
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="logTemplate"> The template that describes the repository and tag information for run log artifact. </param>
         /// <param name="isSystemTask"> The value of this property indicates whether the task resource is system task or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TaskProperties(ContainerRegistryTaskProvisioningState? provisioningState, DateTimeOffset? creationOn, ContainerRegistryTaskStatus? status, ContainerRegistryTaskPlatformProperties platform, AgentProperties agentConfiguration, string agentPoolName, int? timeoutInSeconds, ContainerRegistryTaskStepProperties step, ContainerRegistryTaskTriggerProperties trigger, ContainerRegistryTaskCredentials credentials, string logTemplate, bool? isSystemTask, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TaskProperties(ContainerRegistryTaskProvisioningState? provisioningState, DateTimeOffset? createdOn, ContainerRegistryTaskStatus? status, ContainerRegistryTaskPlatformProperties platform, AgentProperties agentConfiguration, string agentPoolName, int? timeoutInSeconds, ContainerRegistryTaskStepProperties step, ContainerRegistryTaskTriggerProperties trigger, ContainerRegistryTaskCredentials credentials, string logTemplate, bool? isSystemTask, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             Status = status;
             Platform = platform;
             AgentConfiguration = agentConfiguration;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public ContainerRegistryTaskProvisioningState? ProvisioningState { get; }
 
         /// <summary> The creation date of task. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The current status of task. </summary>
         public ContainerRegistryTaskStatus? Status { get; set; }

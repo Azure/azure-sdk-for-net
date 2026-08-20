@@ -33,16 +33,16 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="targetResourceId"> The Azure resource ID of the Azure Managed Redis destination cache to migrate. </param>
         /// <param name="provisioningState"> Current provisioning status of the migration. </param>
         /// <param name="statusDetails"> Additional details about the migration operation's status in free text format. </param>
-        /// <param name="creationOn"> The timestamp when the migration operation was created. </param>
+        /// <param name="createdOn"> The timestamp when the migration operation was created. </param>
         /// <param name="lastModifiedOn"> The timestamp when the migration operation was last updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RedisEnterpriseMigrationProperties(SourceType sourceType, ResourceIdentifier targetResourceId, RedisEnterpriseMigrationProvisioningState? provisioningState, string statusDetails, DateTimeOffset? creationOn, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RedisEnterpriseMigrationProperties(SourceType sourceType, ResourceIdentifier targetResourceId, RedisEnterpriseMigrationProvisioningState? provisioningState, string statusDetails, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceType = sourceType;
             TargetResourceId = targetResourceId;
             ProvisioningState = provisioningState;
             StatusDetails = statusDetails;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> The timestamp when the migration operation was created. </summary>
         [WirePath("creationTime")]
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The timestamp when the migration operation was last updated. </summary>
         [WirePath("lastModifiedTime")]

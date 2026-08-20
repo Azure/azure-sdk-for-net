@@ -328,10 +328,10 @@ namespace Azure.ResourceManager.Batch.Models
                 name,
                 resourceType,
                 systemData,
-                displayName is null && lastModifiedOn is null && provisioningState is null && provisioningStateTransitOn is null && allocationState is null && allocationStateTransitionOn is null && vmSize is null && deploymentVmConfiguration is null && currentDedicatedNodes is null && currentLowPriorityNodes is null && scaleSettings is null && autoScaleRun is null && interNodeCommunication is null && networkConfiguration is null && taskSlotsPerNode is null && taskSchedulingPolicy is null && userAccounts is null && metadata is null && startTask is null && applicationPackages is null && resizeOperationStatus is null && mountConfiguration is null && upgradePolicy is null ? default : new PoolProperties(
+                displayName is null && lastModifiedOn is null && createdOn is null && provisioningState is null && provisioningStateTransitOn is null && allocationState is null && allocationStateTransitionOn is null && vmSize is null && deploymentVmConfiguration is null && currentDedicatedNodes is null && currentLowPriorityNodes is null && scaleSettings is null && autoScaleRun is null && interNodeCommunication is null && networkConfiguration is null && taskSlotsPerNode is null && taskSchedulingPolicy is null && userAccounts is null && metadata is null && startTask is null && applicationPackages is null && resizeOperationStatus is null && mountConfiguration is null && upgradePolicy is null ? default : new PoolProperties(
                     displayName,
                     lastModifiedOn,
-                    default,
+                    createdOn,
                     provisioningState,
                     provisioningStateTransitOn,
                     allocationState,
@@ -1364,10 +1364,10 @@ namespace Azure.ResourceManager.Batch.Models
                 name,
                 resourceType,
                 systemData,
-                displayName is null && lastModifiedOn is null && provisioningState is null && provisioningStateTransitOn is null && allocationState is null && allocationStateTransitionOn is null && vmSize is null && deploymentVmConfiguration is null && currentDedicatedNodes is null && currentLowPriorityNodes is null && scaleSettings is null && autoScaleRun is null && interNodeCommunication is null && networkConfiguration is null && taskSlotsPerNode is null && taskSchedulingPolicy is null && userAccounts is null && metadata is null && startTask is null && applicationPackages is null && resizeOperationStatus is null && mountConfiguration is null && upgradePolicy is null ? default : new PoolProperties(
+                displayName is null && lastModifiedOn is null && createdOn is null && provisioningState is null && provisioningStateTransitOn is null && allocationState is null && allocationStateTransitionOn is null && vmSize is null && deploymentVmConfiguration is null && currentDedicatedNodes is null && currentLowPriorityNodes is null && scaleSettings is null && autoScaleRun is null && interNodeCommunication is null && networkConfiguration is null && taskSlotsPerNode is null && taskSchedulingPolicy is null && userAccounts is null && metadata is null && startTask is null && applicationPackages is null && resizeOperationStatus is null && mountConfiguration is null && upgradePolicy is null ? default : new PoolProperties(
                     displayName,
                     lastModifiedOn,
-                    default,
+                    createdOn,
                     provisioningState,
                     provisioningStateTransitOn,
                     allocationState,

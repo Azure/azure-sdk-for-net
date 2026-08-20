@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreationOn))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationDate"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(Status))
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 return null;
             }
             ContainerRegistryTaskProvisioningState? provisioningState = default;
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             ContainerRegistryTaskStatus? status = default;
             ContainerRegistryTaskPlatformProperties platform = default;
             AgentProperties agentConfiguration = default;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             return new TaskProperties(
                 provisioningState,
-                creationOn,
+                createdOn,
                 status,
                 platform,
                 agentConfiguration,

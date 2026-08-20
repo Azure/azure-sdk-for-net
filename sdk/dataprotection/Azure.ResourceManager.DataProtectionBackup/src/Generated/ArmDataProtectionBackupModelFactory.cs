@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.DataProtectionResourceDeletionInfo"/> instance for mocking. </returns>
         public static DataProtectionResourceDeletionInfo DataProtectionResourceDeletionInfo(DateTimeOffset? deletedOn = default, DateTimeOffset? scheduledPurgeOn = default, string deleteActivityId = default)
         {
-            return new DataProtectionResourceDeletionInfo(default, scheduledPurgeOn, deleteActivityId, default);
+            return new DataProtectionResourceDeletionInfo(deletedOn, scheduledPurgeOn, deleteActivityId, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1366,7 +1366,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static RecoveryPointDataStoreDetail RecoveryPointDataStoreDetail(DateTimeOffset? createdOn = default, DateTimeOffset? expireOn = default, Guid? recoveryPointDataStoreId = default, string metadata = default, string state = default, string recoveryPointDataStoreType = default, bool? isVisible = default, DateTimeOffset? rehydrationExpireOn = default, RecoveryPointDataStoreRehydrationStatus? rehydrationStatus = default)
         {
             return new RecoveryPointDataStoreDetail(
-                default,
+                createdOn,
                 expireOn,
                 recoveryPointDataStoreId,
                 metadata,

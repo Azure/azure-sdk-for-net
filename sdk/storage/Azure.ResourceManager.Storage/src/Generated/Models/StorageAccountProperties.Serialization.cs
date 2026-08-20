@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("statusOfSecondary"u8);
                 writer.WriteStringValue(StatusOfSecondary.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreationOn))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(CustomDomain))
             {
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Storage.Models
             DateTimeOffset? lastGeoFailoverOn = default;
             AzureLocation? secondaryLocation = default;
             StorageAccountStatus? statusOfSecondary = default;
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             StorageCustomDomain customDomain = default;
             StorageAccountSasPolicy sasPolicy = default;
             KeyPolicy keyPolicy = default;
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("customDomain"u8))
@@ -818,7 +818,7 @@ namespace Azure.ResourceManager.Storage.Models
                 lastGeoFailoverOn,
                 secondaryLocation,
                 statusOfSecondary,
-                creationOn,
+                createdOn,
                 customDomain,
                 sasPolicy,
                 keyPolicy,

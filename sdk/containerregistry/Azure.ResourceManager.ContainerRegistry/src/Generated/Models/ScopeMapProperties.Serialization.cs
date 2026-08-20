@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ScopeMapType);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreationOn))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationDate"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             string description = default;
             string scopeMapType = default;
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             ContainerRegistryProvisioningState? provisioningState = default;
             IList<string> actions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ScopeMapProperties(
                 description,
                 scopeMapType,
-                creationOn,
+                createdOn,
                 provisioningState,
                 actions,
                 additionalBinaryDataProperties);

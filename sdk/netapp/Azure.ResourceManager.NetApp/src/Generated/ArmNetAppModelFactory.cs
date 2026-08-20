@@ -1217,7 +1217,6 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppPeeringPassphrases(clusterPeeringCommand, clusterPeeringPassphrase, vserverPeeringCommand, criticalWarning, default);
         }
 
-        /// <param name="creationOn"> The creation date of the backup. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="size"> Size of backup in bytes. </param>
         /// <param name="label"> Label for backup. </param>
@@ -1229,10 +1228,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="elasticBackupPolicyResourceId"> ResourceId used to identify the elastic backup policy. </param>
         /// <param name="volumeSize"> Specifies if the backup is for a large volume. </param>
         /// <returns> A new <see cref="Models.ElasticBackupProperties"/> instance for mocking. </returns>
-        public static ElasticBackupProperties ElasticBackupProperties(DateTimeOffset? creationOn = default, NetAppProvisioningState? provisioningState = default, long? size = default, string label = default, ElasticBackupType? backupType = default, string failureReason = default, ResourceIdentifier elasticVolumeResourceId = default, ElasticBackupSnapshotUsage? snapshotUsage = default, ResourceIdentifier elasticSnapshotResourceId = default, ResourceIdentifier elasticBackupPolicyResourceId = default, ElasticBackupVolumeSize? volumeSize = default)
+        public static ElasticBackupProperties ElasticBackupProperties(NetAppProvisioningState? provisioningState = default, long? size = default, string label = default, ElasticBackupType? backupType = default, string failureReason = default, ResourceIdentifier elasticVolumeResourceId = default, ElasticBackupSnapshotUsage? snapshotUsage = default, ResourceIdentifier elasticSnapshotResourceId = default, ResourceIdentifier elasticBackupPolicyResourceId = default, ElasticBackupVolumeSize? volumeSize = default)
         {
             return new ElasticBackupProperties(
-                creationOn,
                 provisioningState,
                 size,
                 label,

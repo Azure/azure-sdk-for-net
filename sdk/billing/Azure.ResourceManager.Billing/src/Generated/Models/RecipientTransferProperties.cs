@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RecipientTransferProperties"/>. </summary>
-        /// <param name="expirationOn"> The time at which the transfer request expires. </param>
+        /// <param name="expireOn"> The time at which the transfer request expires. </param>
         /// <param name="allowedProductType"> Type of subscriptions that can be transferred. </param>
         /// <param name="transferStatus"> Overall transfer status. </param>
         /// <param name="recipientEmailId"> The email ID of the user to whom the transfer request was sent. </param>
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="customerTenantId"> The customer tenant id. </param>
         /// <param name="supportedAccounts"> List of supported account types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecipientTransferProperties(DateTimeOffset? expirationOn, IReadOnlyList<EligibleProductType> allowedProductType, PartnerTransferStatus? transferStatus, string recipientEmailId, string initiatorEmailId, string resellerId, string resellerName, InitiatorCustomerType? initiatorCustomerType, string canceledBy, IReadOnlyList<DetailedTransferStatus> detailedTransferStatus, Guid? customerTenantId, IReadOnlyList<BillingSupportedAccountType> supportedAccounts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecipientTransferProperties(DateTimeOffset? expireOn, IReadOnlyList<EligibleProductType> allowedProductType, PartnerTransferStatus? transferStatus, string recipientEmailId, string initiatorEmailId, string resellerId, string resellerName, InitiatorCustomerType? initiatorCustomerType, string canceledBy, IReadOnlyList<DetailedTransferStatus> detailedTransferStatus, Guid? customerTenantId, IReadOnlyList<BillingSupportedAccountType> supportedAccounts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ExpirationOn = expirationOn;
+            ExpireOn = expireOn;
             AllowedProductType = allowedProductType;
             TransferStatus = transferStatus;
             RecipientEmailId = recipientEmailId;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The time at which the transfer request expires. </summary>
         [WirePath("expirationTime")]
-        public DateTimeOffset? ExpirationOn { get; }
+        public DateTimeOffset? ExpireOn { get; }
 
         /// <summary> Type of subscriptions that can be transferred. </summary>
         [WirePath("allowedProductType")]

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryPointDataStoreDetail"/>. </summary>
-        /// <param name="creationOn"></param>
+        /// <param name="createdOn"></param>
         /// <param name="expireOn"></param>
         /// <param name="recoveryPointDataStoreId"></param>
         /// <param name="metadata"></param>
@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="rehydrationExpireOn"></param>
         /// <param name="rehydrationStatus"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryPointDataStoreDetail(DateTimeOffset? creationOn, DateTimeOffset? expireOn, Guid? recoveryPointDataStoreId, string metadata, string state, string recoveryPointDataStoreType, bool? isVisible, DateTimeOffset? rehydrationExpireOn, RecoveryPointDataStoreRehydrationStatus? rehydrationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecoveryPointDataStoreDetail(DateTimeOffset? createdOn, DateTimeOffset? expireOn, Guid? recoveryPointDataStoreId, string metadata, string state, string recoveryPointDataStoreType, bool? isVisible, DateTimeOffset? rehydrationExpireOn, RecoveryPointDataStoreRehydrationStatus? rehydrationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             ExpireOn = expireOn;
             RecoveryPointDataStoreId = recoveryPointDataStoreId;
             Metadata = metadata;
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the CreationOn. </summary>
-        public DateTimeOffset? CreationOn { get; set; }
+        /// <summary> Gets or sets the CreatedOn. </summary>
+        public DateTimeOffset? CreatedOn { get; set; }
 
         /// <summary> Gets or sets the ExpireOn. </summary>
         public DateTimeOffset? ExpireOn { get; set; }

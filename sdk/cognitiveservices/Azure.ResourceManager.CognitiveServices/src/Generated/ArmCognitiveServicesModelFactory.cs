@@ -3088,22 +3088,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="computeType"> The type of compute resource. </param>
         /// <param name="provisioningState"> Provisioning state of the compute resource. </param>
         /// <param name="errors"> Error details for the compute resource. </param>
-        /// <param name="creationOn"> Creation time of the compute resource. </param>
+        /// <param name="createdOn"> Creation time of the compute resource. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesComputeProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesComputeProperties CognitiveServicesComputeProperties(string computeType = default, CognitiveServicesComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? creationOn = default)
+        public static CognitiveServicesComputeProperties CognitiveServicesComputeProperties(string computeType = default, CognitiveServicesComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? createdOn = default)
         {
             errors ??= new ChangeTrackingList<ResponseError>();
 
-            return new UnknownCognitiveServicesComputeProperties(default, provisioningState, (errors ?? new ChangeTrackingList<ResponseError>()).ToList(), creationOn, default);
+            return new UnknownCognitiveServicesComputeProperties(default, provisioningState, (errors ?? new ChangeTrackingList<ResponseError>()).ToList(), createdOn, default);
         }
 
         /// <param name="provisioningState"> Provisioning state of the compute resource. </param>
         /// <param name="errors"> Error details for the compute resource. </param>
-        /// <param name="creationOn"> Creation time of the compute resource. </param>
+        /// <param name="createdOn"> Creation time of the compute resource. </param>
         /// <param name="pools"> Pools attached to this compute cluster. </param>
         /// <param name="subnetArmId"> ARM ID of the subnet used for compute. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesClusterComputeProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesClusterComputeProperties CognitiveServicesClusterComputeProperties(CognitiveServicesComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? creationOn = default, IEnumerable<CognitiveServicesComputePool> pools = default, string subnetArmId = default)
+        public static CognitiveServicesClusterComputeProperties CognitiveServicesClusterComputeProperties(CognitiveServicesComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? createdOn = default, IEnumerable<CognitiveServicesComputePool> pools = default, string subnetArmId = default)
         {
             errors ??= new ChangeTrackingList<ResponseError>();
             pools ??= new ChangeTrackingList<CognitiveServicesComputePool>();
@@ -3112,7 +3112,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 default,
                 provisioningState,
                 (errors ?? new ChangeTrackingList<ResponseError>()).ToList(),
-                creationOn,
+                createdOn,
                 default,
                 (pools ?? new ChangeTrackingList<CognitiveServicesComputePool>()).ToList(),
                 subnetArmId);
@@ -3130,14 +3130,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="provisioningState"> Provisioning state of the compute resource. </param>
         /// <param name="errors"> Error details for the compute resource. </param>
-        /// <param name="creationOn"> Creation time of the compute resource. </param>
+        /// <param name="createdOn"> Creation time of the compute resource. </param>
         /// <param name="targetClusterId"> ARM resource ID of the parent cluster that hosts this container instance. </param>
         /// <param name="imageLink"> Container image URI (e.g., MCR or ACR image path) for the container instance. </param>
         /// <param name="idleTimeBeforeShutdown"> ISO 8601 duration before the idle instance is automatically shut down (e.g., 'PT30M'). </param>
         /// <param name="sshSettings"> SSH configuration for remote access to the container instance. </param>
         /// <param name="connectivityEndpoints"> Network connectivity endpoints assigned to the container instance. </param>
         /// <returns> A new <see cref="Models.ContainerInstanceComputeProperties"/> instance for mocking. </returns>
-        public static ContainerInstanceComputeProperties ContainerInstanceComputeProperties(CognitiveServicesComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? creationOn = default, string targetClusterId = default, string imageLink = default, string idleTimeBeforeShutdown = default, CognitiveServicesComputeSshSettings sshSettings = default, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints = default)
+        public static ContainerInstanceComputeProperties ContainerInstanceComputeProperties(CognitiveServicesComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? createdOn = default, string targetClusterId = default, string imageLink = default, string idleTimeBeforeShutdown = default, CognitiveServicesComputeSshSettings sshSettings = default, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints = default)
         {
             errors ??= new ChangeTrackingList<ResponseError>();
 
@@ -3145,7 +3145,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 default,
                 provisioningState,
                 (errors ?? new ChangeTrackingList<ResponseError>()).ToList(),
-                creationOn,
+                createdOn,
                 default,
                 targetClusterId,
                 imageLink,
@@ -3206,9 +3206,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="webEndpoint"> The web endpoint URL for accessing the workbench. </param>
         /// <param name="provisioningState"> Provisioning state of the workbench resource. </param>
         /// <param name="errors"> Error details for the workbench resource. </param>
-        /// <param name="creationOn"> Creation time of the workbench resource. </param>
+        /// <param name="createdOn"> Creation time of the workbench resource. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesWorkbenchProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesWorkbenchProperties CognitiveServicesWorkbenchProperties(string targetClusterId = default, string imageLink = default, string idleTimeBeforeShutdown = default, string datasetId = default, CognitiveServicesComputeSshSettings sshSettings = default, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints = default, string webEndpoint = default, CognitiveServicesComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? creationOn = default)
+        public static CognitiveServicesWorkbenchProperties CognitiveServicesWorkbenchProperties(string targetClusterId = default, string imageLink = default, string idleTimeBeforeShutdown = default, string datasetId = default, CognitiveServicesComputeSshSettings sshSettings = default, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints = default, string webEndpoint = default, CognitiveServicesComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? createdOn = default)
         {
             errors ??= new ChangeTrackingList<ResponseError>();
 
@@ -3222,7 +3222,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 webEndpoint,
                 provisioningState,
                 (errors ?? new ChangeTrackingList<ResponseError>()).ToList(),
-                creationOn,
+                createdOn,
                 default);
         }
 

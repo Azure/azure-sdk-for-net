@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(CreationOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(LastModifiedOn))
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Automation.Models
             bool? isAutoPublishRunbookEnabled = default;
             SourceControlSourceType? sourceType = default;
             string description = default;
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             DateTimeOffset? lastModifiedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedTime"u8))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Automation.Models
                 isAutoPublishRunbookEnabled,
                 sourceType,
                 description,
-                creationOn,
+                createdOn,
                 lastModifiedOn,
                 additionalBinaryDataProperties);
         }

@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Gets or sets the creation time. </summary>
-        public DateTimeOffset? CreationOn
+        public DateTimeOffset? CreatedOn
         {
             get
             {
-                return Properties is null ? default : Properties.CreationOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
             set
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     Properties = new ModuleProperties();
                 }
-                Properties.CreationOn = value;
+                Properties.CreatedOn = value;
             }
         }
 

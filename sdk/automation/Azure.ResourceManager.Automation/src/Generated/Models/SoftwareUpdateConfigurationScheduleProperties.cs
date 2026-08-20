@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="frequency"> Gets or sets the frequency of the schedule. </param>
         /// <param name="timeZone"> Gets or sets the time zone of the schedule. </param>
         /// <param name="advancedSchedule"> Gets or sets the advanced schedule. </param>
-        /// <param name="creationOn"> Gets or sets the creation time. </param>
+        /// <param name="createdOn"> Gets or sets the creation time. </param>
         /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
         /// <param name="description"> Gets or sets the description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SoftwareUpdateConfigurationScheduleProperties(DateTimeOffset? startOn, double? startInMinutes, DateTimeOffset? expireOn, double? expireInMinutes, bool? isEnabled, DateTimeOffset? nextRunOn, double? nextRunInMinutes, long? interval, AutomationScheduleFrequency? frequency, string timeZone, AutomationAdvancedSchedule advancedSchedule, DateTimeOffset? creationOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SoftwareUpdateConfigurationScheduleProperties(DateTimeOffset? startOn, double? startInMinutes, DateTimeOffset? expireOn, double? expireInMinutes, bool? isEnabled, DateTimeOffset? nextRunOn, double? nextRunInMinutes, long? interval, AutomationScheduleFrequency? frequency, string timeZone, AutomationAdvancedSchedule advancedSchedule, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartOn = startOn;
             StartInMinutes = startInMinutes;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Automation.Models
             Frequency = frequency;
             TimeZone = timeZone;
             AdvancedSchedule = advancedSchedule;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             Description = description;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Automation.Models
         public AutomationAdvancedSchedule AdvancedSchedule { get; set; }
 
         /// <summary> Gets or sets the creation time. </summary>
-        public DateTimeOffset? CreationOn { get; set; }
+        public DateTimeOffset? CreatedOn { get; set; }
 
         /// <summary> Gets or sets the last modified time. </summary>
         public DateTimeOffset? LastModifiedOn { get; set; }

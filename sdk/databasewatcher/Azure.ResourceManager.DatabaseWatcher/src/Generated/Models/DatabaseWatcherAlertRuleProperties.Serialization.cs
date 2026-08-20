@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             writer.WritePropertyName("createdWithProperties"u8);
             writer.WriteStringValue(CreatedWithProperties.ToString());
             writer.WritePropertyName("creationTime"u8);
-            writer.WriteStringValue(CreationOn, "O");
+            writer.WriteStringValue(CreatedOn, "O");
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             }
             ResourceIdentifier alertRuleResourceId = default;
             AlertRuleCreationProperty createdWithProperties = default;
-            DateTimeOffset creationOn = default;
+            DateTimeOffset createdOn = default;
             DatabaseWatcherResourceProvisioningState? provisioningState = default;
             string alertRuleTemplateId = default;
             string alertRuleTemplateVersion = default;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                 }
                 if (prop.NameEquals("creationTime"u8))
                 {
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             return new DatabaseWatcherAlertRuleProperties(
                 alertRuleResourceId,
                 createdWithProperties,
-                creationOn,
+                createdOn,
                 provisioningState,
                 alertRuleTemplateId,
                 alertRuleTemplateVersion,

@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Support.Models
 
         /// <summary> Initializes a new instance of <see cref="FileWorkspaceDetailsProperties"/>. </summary>
         /// <param name="createdOn"> Time in UTC (ISO 8601 format) when file workspace was created. </param>
-        /// <param name="expirationOn"> Time in UTC (ISO 8601 format) when file workspace is going to expire. </param>
+        /// <param name="expireOn"> Time in UTC (ISO 8601 format) when file workspace is going to expire. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileWorkspaceDetailsProperties(DateTimeOffset? createdOn, DateTimeOffset? expirationOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileWorkspaceDetailsProperties(DateTimeOffset? createdOn, DateTimeOffset? expireOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedOn = createdOn;
-            ExpirationOn = expirationOn;
+            ExpireOn = expireOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Support.Models
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Time in UTC (ISO 8601 format) when file workspace is going to expire. </summary>
-        public DateTimeOffset? ExpirationOn { get; }
+        public DateTimeOffset? ExpireOn { get; }
     }
 }

@@ -25,18 +25,18 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="description"> The description of the formula. </param>
         /// <param name="author"> The author of the formula. </param>
         /// <param name="osType"> The OS type of the formula. </param>
-        /// <param name="creationOn"> The creation date of the formula. </param>
+        /// <param name="createdOn"> The creation date of the formula. </param>
         /// <param name="formulaContent"> The content of the formula. </param>
         /// <param name="vm"> Information about a VM from which a formula is to be created. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FormulaProperties(string description, string author, string osType, DateTimeOffset? creationOn, DevTestLabVmCreationContent formulaContent, FormulaPropertiesFromVm vm, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FormulaProperties(string description, string author, string osType, DateTimeOffset? createdOn, DevTestLabVmCreationContent formulaContent, FormulaPropertiesFromVm vm, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Author = author;
             OSType = osType;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             FormulaContent = formulaContent;
             Vm = vm;
             ProvisioningState = provisioningState;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string OSType { get; set; }
 
         /// <summary> The creation date of the formula. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The content of the formula. </summary>
         public DevTestLabVmCreationContent FormulaContent { get; set; }

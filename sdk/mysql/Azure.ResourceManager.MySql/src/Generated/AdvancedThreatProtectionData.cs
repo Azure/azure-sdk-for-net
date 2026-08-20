@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         internal AdvancedThreatProtectionProperties Properties { get; set; }
 
         /// <summary> Specifies the UTC creation time of the policy. </summary>
-        public DateTimeOffset? CreationOn
+        public DateTimeOffset? CreatedOn
         {
             get
             {
-                return Properties is null ? default : Properties.CreationOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 

@@ -4945,14 +4945,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourcePlatform"> Source platform for the project. </param>
         /// <param name="azureAuthenticationInfo"> Field that defines the Azure active directory application info, used to connect to the target Azure resource. </param>
         /// <param name="targetPlatform"> Target platform for the project. </param>
-        /// <param name="creationOn"> UTC Date and time when project was created. </param>
+        /// <param name="createdOn"> UTC Date and time when project was created. </param>
         /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
         /// <param name="databasesInfo"> List of DatabaseInfo. </param>
         /// <param name="provisioningState"> The project's provisioning state. </param>
         /// <param name="eTag"> HTTP strong entity tag value. This is ignored if submitted. </param>
         /// <returns> A new <see cref="DataMigration.DataMigrationProjectData"/> instance for mocking. </returns>
-        public static DataMigrationProjectData DataMigrationProjectData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DataMigrationProjectSourcePlatform? sourcePlatform = default, DataMigrationAadApp azureAuthenticationInfo = default, DataMigrationProjectTargetPlatform? targetPlatform = default, DateTimeOffset? creationOn = default, ServerConnectionInfo sourceConnectionInfo = default, ServerConnectionInfo targetConnectionInfo = default, IEnumerable<DataMigrationProjectDatabaseInfo> databasesInfo = default, DataMigrationProjectProvisioningState? provisioningState = default, ETag? eTag = default)
+        public static DataMigrationProjectData DataMigrationProjectData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DataMigrationProjectSourcePlatform? sourcePlatform = default, DataMigrationAadApp azureAuthenticationInfo = default, DataMigrationProjectTargetPlatform? targetPlatform = default, DateTimeOffset? createdOn = default, ServerConnectionInfo sourceConnectionInfo = default, ServerConnectionInfo targetConnectionInfo = default, IEnumerable<DataMigrationProjectDatabaseInfo> databasesInfo = default, DataMigrationProjectProvisioningState? provisioningState = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -4963,11 +4963,11 @@ namespace Azure.ResourceManager.DataMigration.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sourcePlatform is null && azureAuthenticationInfo is null && targetPlatform is null && creationOn is null && sourceConnectionInfo is null && targetConnectionInfo is null && databasesInfo is null && provisioningState is null ? default : new ProjectProperties(
+                sourcePlatform is null && azureAuthenticationInfo is null && targetPlatform is null && createdOn is null && sourceConnectionInfo is null && targetConnectionInfo is null && databasesInfo is null && provisioningState is null ? default : new ProjectProperties(
                     sourcePlatform.GetValueOrDefault(),
                     azureAuthenticationInfo,
                     targetPlatform.GetValueOrDefault(),
-                    creationOn,
+                    createdOn,
                     sourceConnectionInfo,
                     targetConnectionInfo,
                     (databasesInfo ?? new ChangeTrackingList<DataMigrationProjectDatabaseInfo>()).ToList(),
@@ -5580,11 +5580,11 @@ namespace Azure.ResourceManager.DataMigration.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sourcePlatform is null && azureAuthenticationInfo is null && targetPlatform is null && sourceConnectionInfo is null && targetConnectionInfo is null && databasesInfo is null && provisioningState is null ? default : new ProjectProperties(
+                sourcePlatform is null && azureAuthenticationInfo is null && targetPlatform is null && createdOn is null && sourceConnectionInfo is null && targetConnectionInfo is null && databasesInfo is null && provisioningState is null ? default : new ProjectProperties(
                     sourcePlatform.GetValueOrDefault(),
                     azureAuthenticationInfo,
                     targetPlatform.GetValueOrDefault(),
-                    default,
+                    createdOn,
                     sourceConnectionInfo,
                     targetConnectionInfo,
                     (databasesInfo ?? new ChangeTrackingList<DataMigrationProjectDatabaseInfo>()).ToList(),

@@ -27,14 +27,16 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of <see cref="DeletedManagedHsmProperties"/>. </summary>
         /// <param name="managedHsmId"> The resource id of the original managed HSM. </param>
         /// <param name="location"> The location of the original managed HSM. </param>
+        /// <param name="deletedOn"> The deleted date. </param>
         /// <param name="scheduledPurgeOn"> The scheduled purged date. </param>
         /// <param name="purgeProtectionEnabled"> Purge protection status of the original managed HSM. </param>
         /// <param name="tags"> Tags of the original managed HSM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedManagedHsmProperties(ResourceIdentifier managedHsmId, AzureLocation? location, DateTimeOffset? scheduledPurgeOn, bool? purgeProtectionEnabled, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeletedManagedHsmProperties(ResourceIdentifier managedHsmId, AzureLocation? location, DateTimeOffset? deletedOn, DateTimeOffset? scheduledPurgeOn, bool? purgeProtectionEnabled, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagedHsmId = managedHsmId;
             Location = location;
+            DeletedOn = deletedOn;
             ScheduledPurgeOn = scheduledPurgeOn;
             PurgeProtectionEnabled = purgeProtectionEnabled;
             Tags = tags;
@@ -48,6 +50,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> The location of the original managed HSM. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
+
+        /// <summary> The deleted date. </summary>
+        [WirePath("deletionDate")]
+        public DateTimeOffset? DeletedOn { get; }
 
         /// <summary> The scheduled purged date. </summary>
         [WirePath("scheduledPurgeDate")]

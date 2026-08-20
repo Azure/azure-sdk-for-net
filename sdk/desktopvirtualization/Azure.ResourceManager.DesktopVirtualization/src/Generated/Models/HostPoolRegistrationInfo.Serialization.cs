@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ExpirationOn))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTime"u8);
-                writer.WriteStringValue(ExpirationOn.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(Token))
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            DateTimeOffset? expirationOn = default;
+            DateTimeOffset? expireOn = default;
             string token = default;
             HostPoolRegistrationTokenOperation? registrationTokenOperation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    expirationOn = prop.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("token"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HostPoolRegistrationInfo(expirationOn, token, registrationTokenOperation, additionalBinaryDataProperties);
+            return new HostPoolRegistrationInfo(expireOn, token, registrationTokenOperation, additionalBinaryDataProperties);
         }
     }
 }

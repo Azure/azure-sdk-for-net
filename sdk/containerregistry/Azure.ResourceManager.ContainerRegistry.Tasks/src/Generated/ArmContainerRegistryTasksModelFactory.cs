@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> The provisioning state of the task. </param>
-        /// <param name="creationOn"> The creation date of task. </param>
+        /// <param name="createdOn"> The creation date of task. </param>
         /// <param name="status"> The current status of task. </param>
         /// <param name="platform"> The platform properties against which the run has to happen. </param>
         /// <param name="agentPoolName"> The dedicated agent pool for the task. </param>
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="agentCpu"> The CPU configuration in terms of number of cores required for the run. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="Tasks.ContainerRegistryTaskData"/> instance for mocking. </returns>
-        public static ContainerRegistryTaskData ContainerRegistryTaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ContainerRegistryTaskProvisioningState? provisioningState = default, DateTimeOffset? creationOn = default, ContainerRegistryTaskStatus? status = default, ContainerRegistryTaskPlatformProperties platform = default, string agentPoolName = default, int? timeoutInSeconds = default, ContainerRegistryTaskStepProperties step = default, ContainerRegistryTaskTriggerProperties trigger = default, ContainerRegistryTaskCredentials credentials = default, string logTemplate = default, bool? isSystemTask = default, int? agentCpu = default, ContainerRegistryTaskIdentityProperties identity = default)
+        public static ContainerRegistryTaskData ContainerRegistryTaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ContainerRegistryTaskProvisioningState? provisioningState = default, DateTimeOffset? createdOn = default, ContainerRegistryTaskStatus? status = default, ContainerRegistryTaskPlatformProperties platform = default, string agentPoolName = default, int? timeoutInSeconds = default, ContainerRegistryTaskStepProperties step = default, ContainerRegistryTaskTriggerProperties trigger = default, ContainerRegistryTaskCredentials credentials = default, string logTemplate = default, bool? isSystemTask = default, int? agentCpu = default, ContainerRegistryTaskIdentityProperties identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -541,9 +541,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState is null && creationOn is null && status is null && platform is null && agentCpu is null && agentPoolName is null && timeoutInSeconds is null && step is null && trigger is null && credentials is null && logTemplate is null && isSystemTask is null ? default : new TaskProperties(
+                provisioningState is null && createdOn is null && status is null && platform is null && agentCpu is null && agentPoolName is null && timeoutInSeconds is null && step is null && trigger is null && credentials is null && logTemplate is null && isSystemTask is null ? default : new TaskProperties(
                     provisioningState,
-                    creationOn,
+                    createdOn,
                     status,
                     platform,
                     new AgentProperties(agentCpu, default),

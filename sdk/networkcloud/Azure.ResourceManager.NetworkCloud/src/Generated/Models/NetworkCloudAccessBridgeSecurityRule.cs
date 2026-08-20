@@ -34,16 +34,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of <see cref="NetworkCloudAccessBridgeSecurityRule"/>. </summary>
         /// <param name="description"> The user provided value describing this rule. </param>
         /// <param name="direction"> The direction of allowed network traffic based on the rule. </param>
-        /// <param name="iPv4Addresses"> The set of IPv4 addresses permitted as the source or destination of the security rule. For as single address, utilize a /32 (CIDR notation). One or both Ipv4Addresses and Ipv6Addresses must be specified. Example formats: 10.10.10.10-10.10.10.20 or 10.10.10.10/24. </param>
-        /// <param name="iPv6Addresses"> The set of IPv6 addresses permitted as the source or destination of the security rule. For as single address, utilize a /128 (CIDR notation). One or both Ipv4Addresses and Ipv6Addresses must be specified. Example formats: 2001:db8:abcd::1-2001:db8:abcd::ff or 2001:db8:abcd::1/64. </param>
+        /// <param name="ipv4Addresses"> The set of IPv4 addresses permitted as the source or destination of the security rule. For as single address, utilize a /32 (CIDR notation). One or both Ipv4Addresses and Ipv6Addresses must be specified. Example formats: 10.10.10.10-10.10.10.20 or 10.10.10.10/24. </param>
+        /// <param name="ipv6Addresses"> The set of IPv6 addresses permitted as the source or destination of the security rule. For as single address, utilize a /128 (CIDR notation). One or both Ipv4Addresses and Ipv6Addresses must be specified. Example formats: 2001:db8:abcd::1-2001:db8:abcd::ff or 2001:db8:abcd::1/64. </param>
         /// <param name="port"> The source or destination port or port range. Example 24562 or 24562-24570. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudAccessBridgeSecurityRule(string description, NetworkCloudSecurityRuleDirection direction, IList<string> iPv4Addresses, IList<string> iPv6Addresses, string port, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkCloudAccessBridgeSecurityRule(string description, NetworkCloudSecurityRuleDirection direction, IList<string> ipv4Addresses, IList<string> ipv6Addresses, string port, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Direction = direction;
-            IPv4Addresses = iPv4Addresses;
-            IPv6Addresses = iPv6Addresses;
+            IPv4Addresses = ipv4Addresses;
+            IPv6Addresses = ipv6Addresses;
             Port = port;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }

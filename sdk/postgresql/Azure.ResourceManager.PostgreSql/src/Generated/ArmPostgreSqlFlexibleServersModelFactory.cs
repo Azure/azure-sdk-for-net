@@ -1171,7 +1171,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 name,
                 resourceType,
                 systemData,
-                state is null ? default : new AdvancedThreatProtectionSettingsProperties(state.GetValueOrDefault(), default, default),
+                state is null && createdOn is null ? default : new AdvancedThreatProtectionSettingsProperties(state.GetValueOrDefault(), createdOn, default),
                 default);
         }
 

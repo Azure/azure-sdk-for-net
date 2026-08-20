@@ -205,10 +205,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("applicableSchedule"u8);
                 writer.WriteObjectValue(ApplicableSchedule, options);
             }
-            if (Optional.IsDefined(ExpirationOn))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
-                writer.WriteStringValue(ExpirationOn.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(AllowClaim))
             {
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             ComputeVmProperties computeVm = default;
             DevTestLabNetworkInterface networkInterface = default;
             DevTestLabApplicableSchedule applicableSchedule = default;
-            DateTimeOffset? expirationOn = default;
+            DateTimeOffset? expireOn = default;
             bool? allowClaim = default;
             string storageType = default;
             DevTestLabVmCreationSource? vmCreationSource = default;
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    expirationOn = prop.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("allowClaim"u8))
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 computeVm,
                 networkInterface,
                 applicableSchedule,
-                expirationOn,
+                expireOn,
                 allowClaim,
                 storageType,
                 vmCreationSource,

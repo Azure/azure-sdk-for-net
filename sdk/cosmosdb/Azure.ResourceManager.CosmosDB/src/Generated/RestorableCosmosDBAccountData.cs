@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> The creation time of the restorable database account (ISO-8601 format). </summary>
         [WirePath("properties.creationTime")]
-        public DateTimeOffset? CreationOn
+        public DateTimeOffset? CreatedOn
         {
             get
             {
-                return Properties is null ? default : Properties.CreationOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 
@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> The time at which the restorable database account has been deleted (ISO-8601 format). </summary>
         [WirePath("properties.deletionTime")]
-        public DateTimeOffset? DeletionOn
+        public DateTimeOffset? DeletedOn
         {
             get
             {
-                return Properties is null ? default : Properties.DeletionOn;
+                return Properties is null ? default : Properties.DeletedOn;
             }
         }
 

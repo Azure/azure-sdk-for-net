@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
         /// <param name="readyNumberOfPods"> Number of ready pods. </param>
         /// <param name="currentNumberOfPods"> Number of current pods. </param>
-        /// <param name="creationOn"> Creation Time of replicaSet. </param>
+        /// <param name="createdOn"> Creation Time of replicaSet. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KubernetesReplicaSet(string name, string @namespace, int? desiredNumberOfPods, int? readyNumberOfPods, int? currentNumberOfPods, DateTimeOffset? creationOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KubernetesReplicaSet(string name, string @namespace, int? desiredNumberOfPods, int? readyNumberOfPods, int? currentNumberOfPods, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Namespace = @namespace;
             DesiredNumberOfPods = desiredNumberOfPods;
             ReadyNumberOfPods = readyNumberOfPods;
             CurrentNumberOfPods = currentNumberOfPods;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public int? CurrentNumberOfPods { get; }
 
         /// <summary> Creation Time of replicaSet. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
     }
 }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="runbook"> The runbook association. </param>
         /// <param name="jobId"> The id of the job. </param>
         /// <param name="startedBy"> Gets or sets the job started by. </param>
-        /// <param name="creationOn"> The creation time of the job. </param>
+        /// <param name="createdOn"> The creation time of the job. </param>
         /// <param name="status"> The status of the job. </param>
         /// <param name="startOn"> The start time of the job. </param>
         /// <param name="endOn"> The end time of the job. </param>
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="jobRuntimeEnvironment"> Runtime Environment Property. </param>
         /// <param name="runOn"> Specifies the runOn group name where the job was executed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobCollectionItemProperties(RunbookAssociationProperty runbook, Guid? jobId, string startedBy, DateTimeOffset? creationOn, AutomationJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? lastModifiedOn, string provisioningState, JobRuntimeEnvironment jobRuntimeEnvironment, string runOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobCollectionItemProperties(RunbookAssociationProperty runbook, Guid? jobId, string startedBy, DateTimeOffset? createdOn, AutomationJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? lastModifiedOn, string provisioningState, JobRuntimeEnvironment jobRuntimeEnvironment, string runOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Runbook = runbook;
             JobId = jobId;
             StartedBy = startedBy;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             Status = status;
             StartOn = startOn;
             EndOn = endOn;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Automation.Models
         public string StartedBy { get; }
 
         /// <summary> The creation time of the job. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The status of the job. </summary>
         public AutomationJobStatus? Status { get; }

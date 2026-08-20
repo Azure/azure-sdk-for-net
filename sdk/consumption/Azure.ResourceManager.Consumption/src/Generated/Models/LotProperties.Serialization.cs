@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("startDate"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpirationOn))
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
-                writer.WriteStringValue(ExpirationOn.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(PoNumber))
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Consumption.Models
             ConsumptionAmount closedBalance = default;
             ConsumptionLotSource? source = default;
             DateTimeOffset? startOn = default;
-            DateTimeOffset? expirationOn = default;
+            DateTimeOffset? expireOn = default;
             string poNumber = default;
             DateTimeOffset? purchasedOn = default;
             ConsumptionLotStatus? status = default;
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    expirationOn = prop.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("poNumber"u8))
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 closedBalance,
                 source,
                 startOn,
-                expirationOn,
+                expireOn,
                 poNumber,
                 purchasedOn,
                 status,

@@ -50,21 +50,21 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> The creation date of the database (ISO8601 format). </summary>
         [WirePath("properties.creationDate")]
-        public DateTimeOffset? CreationOn
+        public DateTimeOffset? CreatedOn
         {
             get
             {
-                return Properties is null ? default : Properties.CreationOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 
         /// <summary> The deletion date of the database (ISO8601 format). </summary>
         [WirePath("properties.deletionDate")]
-        public DateTimeOffset? DeletionOn
+        public DateTimeOffset? DeletedOn
         {
             get
             {
-                return Properties is null ? default : Properties.DeletionOn;
+                return Properties is null ? default : Properties.DeletedOn;
             }
         }
 

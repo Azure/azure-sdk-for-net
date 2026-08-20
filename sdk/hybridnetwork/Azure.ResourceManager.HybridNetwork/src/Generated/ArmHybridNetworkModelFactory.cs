@@ -420,9 +420,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="readyNumberOfPods"> Number of ready pods. </param>
         /// <param name="upToDateNumberOfPods"> Number of upto date pods. </param>
         /// <param name="availableNumberOfPods"> Number of available pods. </param>
-        /// <param name="creationOn"> Creation Time of deployment. </param>
+        /// <param name="createdOn"> Creation Time of deployment. </param>
         /// <returns> A new <see cref="Models.KubernetesDeployment"/> instance for mocking. </returns>
-        public static KubernetesDeployment KubernetesDeployment(string name = default, string @namespace = default, int? desiredNumberOfPods = default, int? readyNumberOfPods = default, int? upToDateNumberOfPods = default, int? availableNumberOfPods = default, DateTimeOffset? creationOn = default)
+        public static KubernetesDeployment KubernetesDeployment(string name = default, string @namespace = default, int? desiredNumberOfPods = default, int? readyNumberOfPods = default, int? upToDateNumberOfPods = default, int? availableNumberOfPods = default, DateTimeOffset? createdOn = default)
         {
             return new KubernetesDeployment(
                 name,
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 readyNumberOfPods,
                 upToDateNumberOfPods,
                 availableNumberOfPods,
-                creationOn,
+                createdOn,
                 default);
         }
 
@@ -440,10 +440,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="desiredNumberOfContainers"> Desired number of containers. </param>
         /// <param name="readyNumberOfContainers"> Number of ready containers. </param>
         /// <param name="status"> The status of a pod. </param>
-        /// <param name="creationOn"> Creation Time of Pod. </param>
+        /// <param name="createdOn"> Creation Time of Pod. </param>
         /// <param name="events"> Last 5 Pod events. </param>
         /// <returns> A new <see cref="Models.KubernetesPod"/> instance for mocking. </returns>
-        public static KubernetesPod KubernetesPod(string name = default, string @namespace = default, int? desiredNumberOfContainers = default, int? readyNumberOfContainers = default, PodStatus? status = default, DateTimeOffset? creationOn = default, IEnumerable<PodEvent> events = default)
+        public static KubernetesPod KubernetesPod(string name = default, string @namespace = default, int? desiredNumberOfContainers = default, int? readyNumberOfContainers = default, PodStatus? status = default, DateTimeOffset? createdOn = default, IEnumerable<PodEvent> events = default)
         {
             events ??= new ChangeTrackingList<PodEvent>();
 
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 desiredNumberOfContainers,
                 readyNumberOfContainers,
                 status,
-                creationOn,
+                createdOn,
                 (events ?? new ChangeTrackingList<PodEvent>()).ToList(),
                 default);
         }
@@ -473,9 +473,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
         /// <param name="readyNumberOfPods"> Number of ready pods. </param>
         /// <param name="currentNumberOfPods"> Number of current pods. </param>
-        /// <param name="creationOn"> Creation Time of replicaSet. </param>
+        /// <param name="createdOn"> Creation Time of replicaSet. </param>
         /// <returns> A new <see cref="Models.KubernetesReplicaSet"/> instance for mocking. </returns>
-        public static KubernetesReplicaSet KubernetesReplicaSet(string name = default, string @namespace = default, int? desiredNumberOfPods = default, int? readyNumberOfPods = default, int? currentNumberOfPods = default, DateTimeOffset? creationOn = default)
+        public static KubernetesReplicaSet KubernetesReplicaSet(string name = default, string @namespace = default, int? desiredNumberOfPods = default, int? readyNumberOfPods = default, int? currentNumberOfPods = default, DateTimeOffset? createdOn = default)
         {
             return new KubernetesReplicaSet(
                 name,
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 desiredNumberOfPods,
                 readyNumberOfPods,
                 currentNumberOfPods,
-                creationOn,
+                createdOn,
                 default);
         }
 
@@ -491,16 +491,16 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="namespace"> The namespace of the statefulset. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
         /// <param name="readyNumberOfPods"> Number of ready pods. </param>
-        /// <param name="creationOn"> Creation Time of statefulset. </param>
+        /// <param name="createdOn"> Creation Time of statefulset. </param>
         /// <returns> A new <see cref="Models.KubernetesStatefulSet"/> instance for mocking. </returns>
-        public static KubernetesStatefulSet KubernetesStatefulSet(string name = default, string @namespace = default, int? desiredNumberOfPods = default, int? readyNumberOfPods = default, DateTimeOffset? creationOn = default)
+        public static KubernetesStatefulSet KubernetesStatefulSet(string name = default, string @namespace = default, int? desiredNumberOfPods = default, int? readyNumberOfPods = default, DateTimeOffset? createdOn = default)
         {
             return new KubernetesStatefulSet(
                 name,
                 @namespace,
                 desiredNumberOfPods,
                 readyNumberOfPods,
-                creationOn,
+                createdOn,
                 default);
         }
 
@@ -511,9 +511,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="readyNumberOfPods"> Number of Ready pods. </param>
         /// <param name="upToDateNumberOfPods"> Number of  upto date pods. </param>
         /// <param name="availableNumberOfPods"> Number of available pods. </param>
-        /// <param name="creationOn"> Creation Time of daemonSet. </param>
+        /// <param name="createdOn"> Creation Time of daemonSet. </param>
         /// <returns> A new <see cref="Models.KubernetesDaemonSet"/> instance for mocking. </returns>
-        public static KubernetesDaemonSet KubernetesDaemonSet(string name = default, string @namespace = default, int? desiredNumberOfPods = default, int? currentNumberOfPods = default, int? readyNumberOfPods = default, int? upToDateNumberOfPods = default, int? availableNumberOfPods = default, DateTimeOffset? creationOn = default)
+        public static KubernetesDaemonSet KubernetesDaemonSet(string name = default, string @namespace = default, int? desiredNumberOfPods = default, int? currentNumberOfPods = default, int? readyNumberOfPods = default, int? upToDateNumberOfPods = default, int? availableNumberOfPods = default, DateTimeOffset? createdOn = default)
         {
             return new KubernetesDaemonSet(
                 name,
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 readyNumberOfPods,
                 upToDateNumberOfPods,
                 availableNumberOfPods,
-                creationOn,
+                createdOn,
                 default);
         }
 

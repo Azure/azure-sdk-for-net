@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Time in UTC (ISO 8601 format) when file workspace is going to expire. </summary>
-        public DateTimeOffset? ExpirationOn
+        public DateTimeOffset? ExpireOn
         {
             get
             {
-                return Properties is null ? default : Properties.ExpirationOn;
+                return Properties is null ? default : Properties.ExpireOn;
             }
         }
     }

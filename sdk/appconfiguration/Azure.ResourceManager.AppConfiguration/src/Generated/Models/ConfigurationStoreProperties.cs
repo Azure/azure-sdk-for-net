@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> Initializes a new instance of <see cref="ConfigurationStoreProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the configuration store. </param>
-        /// <param name="creationOn"> The creation date of configuration store. </param>
+        /// <param name="createdOn"> The creation date of configuration store. </param>
         /// <param name="endpoint"> The DNS endpoint where the configuration store API will be available. </param>
         /// <param name="encryption"> The encryption settings of the configuration store. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections that are set up for this resource. </param>
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="managedOnBehalfOfConfiguration"> Managed On Behalf Of Configuration. </param>
         /// <param name="azureFrontDoor"> Property specifying the configuration of Azure Front Door for this configuration store. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationStoreProperties(AppConfigurationProvisioningState? provisioningState, DateTimeOffset? creationOn, string endpoint, AppConfigurationStoreEncryptionProperties encryption, IReadOnlyList<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections, AppConfigurationPublicNetworkAccess? publicNetworkAccess, bool? disableLocalAuth, int? softDeleteRetentionInDays, long? defaultKeyValueRevisionRetentionPeriodInSeconds, bool? enablePurgeProtection, AppConfigurationDataPlaneProxyProperties dataPlaneProxy, AppConfigurationCreateMode? createMode, TelemetryProperties telemetry, AppConfigurationManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, AzureFrontDoorProperties azureFrontDoor, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConfigurationStoreProperties(AppConfigurationProvisioningState? provisioningState, DateTimeOffset? createdOn, string endpoint, AppConfigurationStoreEncryptionProperties encryption, IReadOnlyList<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections, AppConfigurationPublicNetworkAccess? publicNetworkAccess, bool? disableLocalAuth, int? softDeleteRetentionInDays, long? defaultKeyValueRevisionRetentionPeriodInSeconds, bool? enablePurgeProtection, AppConfigurationDataPlaneProxyProperties dataPlaneProxy, AppConfigurationCreateMode? createMode, TelemetryProperties telemetry, AppConfigurationManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, AzureFrontDoorProperties azureFrontDoor, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             Endpoint = endpoint;
             Encryption = encryption;
             PrivateEndpointConnections = privateEndpointConnections;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> The creation date of configuration store. </summary>
         [WirePath("creationDate")]
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The DNS endpoint where the configuration store API will be available. </summary>
         [WirePath("endpoint")]

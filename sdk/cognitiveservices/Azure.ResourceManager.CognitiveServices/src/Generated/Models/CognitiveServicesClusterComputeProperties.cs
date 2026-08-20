@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="computeType"> The type of compute resource. </param>
         /// <param name="provisioningState"> Provisioning state of the compute resource. </param>
         /// <param name="errors"> Error details for the compute resource. </param>
-        /// <param name="creationOn"> Creation time of the compute resource. </param>
+        /// <param name="createdOn"> Creation time of the compute resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="pools"> Pools attached to this compute cluster. </param>
         /// <param name="subnetArmId"> ARM ID of the subnet used for compute. </param>
-        internal CognitiveServicesClusterComputeProperties(ComputeType computeType, CognitiveServicesComputeProvisioningState? provisioningState, IReadOnlyList<ResponseError> errors, DateTimeOffset? creationOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<CognitiveServicesComputePool> pools, string subnetArmId) : base(computeType, provisioningState, errors, creationOn, additionalBinaryDataProperties)
+        internal CognitiveServicesClusterComputeProperties(ComputeType computeType, CognitiveServicesComputeProvisioningState? provisioningState, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<CognitiveServicesComputePool> pools, string subnetArmId) : base(computeType, provisioningState, errors, createdOn, additionalBinaryDataProperties)
         {
             Pools = pools;
             SubnetArmId = subnetArmId;

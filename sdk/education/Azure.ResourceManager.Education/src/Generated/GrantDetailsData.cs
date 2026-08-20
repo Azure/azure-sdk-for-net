@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.Education
         }
 
         /// <summary> Expiration Date. </summary>
-        public DateTimeOffset? ExpirationOn
+        public DateTimeOffset? ExpireOn
         {
             get
             {
-                return Properties is null ? default : Properties.ExpirationOn;
+                return Properties is null ? default : Properties.ExpireOn;
             }
         }
 

@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             ComputeType computeType = default;
             CognitiveServicesComputeProvisioningState? provisioningState = default;
             IReadOnlyList<ResponseError> errors = default;
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string targetClusterId = default;
             string imageLink = default;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("targetClusterId"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 computeType,
                 provisioningState,
                 errors ?? new ChangeTrackingList<ResponseError>(),
-                creationOn,
+                createdOn,
                 additionalBinaryDataProperties,
                 targetClusterId,
                 imageLink,

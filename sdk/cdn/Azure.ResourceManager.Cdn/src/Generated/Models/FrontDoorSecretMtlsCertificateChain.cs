@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="secretSource"> Resource reference to the Azure Key Vault secret. Expected to be in format of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{secretName}. </param>
         /// <param name="secretVersion"> Version of the secret to be used. </param>
-        /// <param name="expirationOn"> Soonest expiration date among certificates in customer's certificate chain in ISO 8601 compliant format yyyy-MM-ddTHH:mm:ss.fffffffK in UTC. </param>
-        internal FrontDoorSecretMtlsCertificateChain(SecretType secretType, IDictionary<string, BinaryData> additionalBinaryDataProperties, CdnResourceReference secretSource, string secretVersion, DateTimeOffset? expirationOn) : base(secretType, additionalBinaryDataProperties)
+        /// <param name="expireOn"> Soonest expiration date among certificates in customer's certificate chain in ISO 8601 compliant format yyyy-MM-ddTHH:mm:ss.fffffffK in UTC. </param>
+        internal FrontDoorSecretMtlsCertificateChain(SecretType secretType, IDictionary<string, BinaryData> additionalBinaryDataProperties, CdnResourceReference secretSource, string secretVersion, DateTimeOffset? expireOn) : base(secretType, additionalBinaryDataProperties)
         {
             SecretSource = secretSource;
             SecretVersion = secretVersion;
-            ExpirationOn = expirationOn;
+            ExpireOn = expireOn;
         }
 
         /// <summary> Resource reference to the Azure Key Vault secret. Expected to be in format of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{secretName}. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Soonest expiration date among certificates in customer's certificate chain in ISO 8601 compliant format yyyy-MM-ddTHH:mm:ss.fffffffK in UTC. </summary>
         [WirePath("expirationDate")]
-        public DateTimeOffset? ExpirationOn { get; }
+        public DateTimeOffset? ExpireOn { get; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("secretSource.id")]

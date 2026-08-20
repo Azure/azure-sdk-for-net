@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreationOn))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationDate"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(EarliestRestorePoint))
             {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             string collation = default;
             ManagedDatabaseStatus? status = default;
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             DateTimeOffset? earliestRestorePoint = default;
             DateTimeOffset? restorePointInTime = default;
             AzureLocation? defaultSecondaryLocation = default;
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("earliestRestorePoint"u8))
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedDatabaseProperties(
                 collation,
                 status,
-                creationOn,
+                createdOn,
                 earliestRestorePoint,
                 restorePointInTime,
                 defaultSecondaryLocation,

@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("modifiedTime"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpirationOn))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTime"u8);
-                writer.WriteStringValue(ExpirationOn.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(GeoMasterOperationId))
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.AppService.Models
             IReadOnlyList<ResponseError> errors = default;
             DateTimeOffset? createdOn = default;
             DateTimeOffset? modifiedOn = default;
-            DateTimeOffset? expirationOn = default;
+            DateTimeOffset? expireOn = default;
             Guid? geoMasterOperationId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    expirationOn = prop.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("geoMasterOperationId"u8))
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.AppService.Models
                 errors ?? new ChangeTrackingList<ResponseError>(),
                 createdOn,
                 modifiedOn,
-                expirationOn,
+                expireOn,
                 geoMasterOperationId,
                 additionalBinaryDataProperties);
         }

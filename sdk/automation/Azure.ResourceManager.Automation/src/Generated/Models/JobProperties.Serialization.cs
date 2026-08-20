@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId.Value);
             }
-            if (Optional.IsDefined(CreationOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(Status))
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Automation.Models
             string runOn = default;
             JobRuntimeEnvironment jobRuntimeEnvironment = default;
             Guid? jobId = default;
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             AutomationJobStatus? status = default;
             string statusDetails = default;
             DateTimeOffset? startOn = default;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Automation.Models
                 runOn,
                 jobRuntimeEnvironment,
                 jobId,
-                creationOn,
+                createdOn,
                 status,
                 statusDetails,
                 startOn,

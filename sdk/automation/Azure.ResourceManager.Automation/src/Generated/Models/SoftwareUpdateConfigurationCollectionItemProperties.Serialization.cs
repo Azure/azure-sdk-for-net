@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CreationOn))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Automation.Models
             SoftwareUpdateConfigurationTasks tasks = default;
             AutomationScheduleFrequency? frequency = default;
             DateTimeOffset? startOn = default;
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             DateTimeOffset? lastModifiedOn = default;
             string provisioningState = default;
             DateTimeOffset? nextRunOn = default;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedTime"u8))
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Automation.Models
                 tasks,
                 frequency,
                 startOn,
-                creationOn,
+                createdOn,
                 lastModifiedOn,
                 provisioningState,
                 nextRunOn,

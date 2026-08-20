@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Gets the creation date and time of the encryption scope in UTC. </summary>
         [WirePath("properties.creationTime")]
-        public DateTimeOffset? CreationOn
+        public DateTimeOffset? CreatedOn
         {
             get
             {
-                return EncryptionScopeProperties is null ? default : EncryptionScopeProperties.CreationOn;
+                return EncryptionScopeProperties is null ? default : EncryptionScopeProperties.CreatedOn;
             }
         }
 

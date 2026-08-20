@@ -31,16 +31,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// Target repository specified in docker pull command.
         /// Eg: docker pull myregistry.azurecr.io/{targetRepository}:{tag}
         /// </param>
-        /// <param name="creationOn"> The creation date of the cache rule. </param>
+        /// <param name="createdOn"> The creation date of the cache rule. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CacheRuleProperties(ResourceIdentifier credentialSetResourceId, ContainerRegistryCacheAuthentication additionalAuthenticationProperties, string sourceRepository, string targetRepository, DateTimeOffset? creationOn, ContainerRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CacheRuleProperties(ResourceIdentifier credentialSetResourceId, ContainerRegistryCacheAuthentication additionalAuthenticationProperties, string sourceRepository, string targetRepository, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CredentialSetResourceId = credentialSetResourceId;
             AdditionalAuthenticationProperties = additionalAuthenticationProperties;
             SourceRepository = sourceRepository;
             TargetRepository = targetRepository;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The creation date of the cache rule. </summary>
         [WirePath("creationDate")]
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Provisioning state of the resource. </summary>
         [WirePath("provisioningState")]

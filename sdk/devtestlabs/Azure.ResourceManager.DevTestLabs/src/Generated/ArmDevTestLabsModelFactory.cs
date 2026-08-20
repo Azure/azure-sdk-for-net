@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 title,
                 markdown,
                 enabled,
-                default,
+                expireOn,
                 isExpired,
                 provisioningState,
                 uniqueIdentifier,
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DevTestLabVmCreationContent(bulkCreationParametersInstanceCount is null && notes is null && ownerObjectId is null && ownerUserPrincipalName is null && createdOn is null && customImageId is null && size is null && userName is null && password is null && sshKey is null && isAuthenticationWithSshKey is null && labSubnetName is null && labVirtualNetworkId is null && disallowPublicIPAddress is null && artifacts is null && galleryImageReference is null && planId is null && networkInterface is null && allowClaim is null && storageType is null && environmentId is null && dataDiskParameters is null && scheduleParameters is null ? default : new LabVirtualMachineCreationParameterProperties(
+            return new DevTestLabVmCreationContent(bulkCreationParametersInstanceCount is null && notes is null && ownerObjectId is null && ownerUserPrincipalName is null && createdOn is null && customImageId is null && size is null && userName is null && password is null && sshKey is null && isAuthenticationWithSshKey is null && labSubnetName is null && labVirtualNetworkId is null && disallowPublicIPAddress is null && artifacts is null && galleryImageReference is null && planId is null && networkInterface is null && expireOn is null && allowClaim is null && storageType is null && environmentId is null && dataDiskParameters is null && scheduleParameters is null ? default : new LabVirtualMachineCreationParameterProperties(
                 new BulkCreationParameters(bulkCreationParametersInstanceCount, default),
                 notes,
                 ownerObjectId,
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 galleryImageReference,
                 planId,
                 networkInterface,
-                default,
+                expireOn,
                 allowClaim,
                 storageType,
                 environmentId,
@@ -820,13 +820,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="description"> The description of the formula. </param>
         /// <param name="author"> The author of the formula. </param>
         /// <param name="osType"> The OS type of the formula. </param>
-        /// <param name="creationOn"> The creation date of the formula. </param>
+        /// <param name="createdOn"> The creation date of the formula. </param>
         /// <param name="formulaContent"> The content of the formula. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         /// <param name="labVmId"> The identifier of the VM from which a formula is to be created. </param>
         /// <returns> A new <see cref="DevTestLabs.DevTestLabFormulaData"/> instance for mocking. </returns>
-        public static DevTestLabFormulaData DevTestLabFormulaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, string author = default, string osType = default, DateTimeOffset? creationOn = default, DevTestLabVmCreationContent formulaContent = default, string provisioningState = default, Guid? uniqueIdentifier = default, string labVmId = default)
+        public static DevTestLabFormulaData DevTestLabFormulaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, string author = default, string osType = default, DateTimeOffset? createdOn = default, DevTestLabVmCreationContent formulaContent = default, string provisioningState = default, Guid? uniqueIdentifier = default, string labVmId = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1756,11 +1756,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                description is null && author is null && osType is null && formulaContent is null && labVmId is null && provisioningState is null && uniqueIdentifier is null ? default : new FormulaProperties(
+                description is null && author is null && osType is null && createdOn is null && formulaContent is null && labVmId is null && provisioningState is null && uniqueIdentifier is null ? default : new FormulaProperties(
                     description,
                     author,
                     osType,
-                    default,
+                    createdOn,
                     formulaContent,
                     new FormulaPropertiesFromVm(labVmId, default),
                     provisioningState,

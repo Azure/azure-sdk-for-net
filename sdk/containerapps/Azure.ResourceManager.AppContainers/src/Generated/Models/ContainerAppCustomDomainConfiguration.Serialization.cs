@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("certificatePassword"u8);
                 writer.WriteStringValue(CertificatePassword);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpirationOn))
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
-                writer.WriteStringValue(ExpirationOn.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Thumbprint))
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties = default;
             byte[] certificateValue = default;
             string certificatePassword = default;
-            DateTimeOffset? expirationOn = default;
+            DateTimeOffset? expireOn = default;
             string thumbprint = default;
             string subjectName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    expirationOn = prop.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("thumbprint"u8))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 certificateKeyVaultProperties,
                 certificateValue,
                 certificatePassword,
-                expirationOn,
+                expireOn,
                 thumbprint,
                 subjectName,
                 additionalBinaryDataProperties);

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Initializes a new instance of <see cref="ElasticPoolProperties"/>. </summary>
         /// <param name="state"> The state of the elastic pool. </param>
-        /// <param name="creationOn"> The creation date of the elastic pool (ISO8601 format). </param>
+        /// <param name="createdOn"> The creation date of the elastic pool (ISO8601 format). </param>
         /// <param name="maxSizeBytes"> The storage limit for the database elastic pool in bytes. </param>
         /// <param name="minCapacity"> Minimal capacity that serverless pool will not shrink below, if not paused. </param>
         /// <param name="perDatabaseSettings"> The per database settings for the elastic pool. </param>
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="availabilityZone"> Specifies the availability zone the pool's primary replica is pinned to. </param>
         /// <param name="currentSku"> The name and tier of the current SKU. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticPoolProperties(ElasticPoolState? state, DateTimeOffset? creationOn, long? maxSizeBytes, double? minCapacity, ElasticPoolPerDatabaseSettings perDatabaseSettings, bool? isZoneRedundant, ElasticPoolLicenseType? licenseType, ResourceIdentifier maintenanceConfigurationId, int? highAvailabilityReplicaCount, int? autoPauseDelay, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, SqlAvailabilityZoneType? availabilityZone, SqlSku currentSku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ElasticPoolProperties(ElasticPoolState? state, DateTimeOffset? createdOn, long? maxSizeBytes, double? minCapacity, ElasticPoolPerDatabaseSettings perDatabaseSettings, bool? isZoneRedundant, ElasticPoolLicenseType? licenseType, ResourceIdentifier maintenanceConfigurationId, int? highAvailabilityReplicaCount, int? autoPauseDelay, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, SqlAvailabilityZoneType? availabilityZone, SqlSku currentSku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             MaxSizeBytes = maxSizeBytes;
             MinCapacity = minCapacity;
             PerDatabaseSettings = perDatabaseSettings;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The creation date of the elastic pool (ISO8601 format). </summary>
         [WirePath("creationDate")]
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The storage limit for the database elastic pool in bytes. </summary>
         [WirePath("maxSizeBytes")]

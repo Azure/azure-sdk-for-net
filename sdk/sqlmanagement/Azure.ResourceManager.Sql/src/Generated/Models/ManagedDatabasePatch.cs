@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Creation date of the database. </summary>
         [WirePath("properties.creationDate")]
-        public DateTimeOffset? CreationOn
+        public DateTimeOffset? CreatedOn
         {
             get
             {
-                return Properties is null ? default : Properties.CreationOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 

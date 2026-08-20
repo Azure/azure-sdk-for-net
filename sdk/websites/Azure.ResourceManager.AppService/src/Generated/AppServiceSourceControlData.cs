@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> OAuth token expiration. </summary>
         [WirePath("properties.expirationTime")]
-        public DateTimeOffset? ExpirationOn
+        public DateTimeOffset? ExpireOn
         {
             get
             {
-                return Properties is null ? default : Properties.ExpirationOn;
+                return Properties is null ? default : Properties.ExpireOn;
             }
             set
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new SourceControlProperties();
                 }
-                Properties.ExpirationOn = value;
+                Properties.ExpireOn = value;
             }
         }
     }

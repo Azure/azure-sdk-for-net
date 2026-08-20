@@ -31,18 +31,18 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourcePlatform"> Source platform for the project. </param>
         /// <param name="azureAuthenticationInfo"> Field that defines the Azure active directory application info, used to connect to the target Azure resource. </param>
         /// <param name="targetPlatform"> Target platform for the project. </param>
-        /// <param name="creationOn"> UTC Date and time when project was created. </param>
+        /// <param name="createdOn"> UTC Date and time when project was created. </param>
         /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
         /// <param name="databasesInfo"> List of DatabaseInfo. </param>
         /// <param name="provisioningState"> The project's provisioning state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectProperties(DataMigrationProjectSourcePlatform sourcePlatform, DataMigrationAadApp azureAuthenticationInfo, DataMigrationProjectTargetPlatform targetPlatform, DateTimeOffset? creationOn, ServerConnectionInfo sourceConnectionInfo, ServerConnectionInfo targetConnectionInfo, IList<DataMigrationProjectDatabaseInfo> databasesInfo, DataMigrationProjectProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectProperties(DataMigrationProjectSourcePlatform sourcePlatform, DataMigrationAadApp azureAuthenticationInfo, DataMigrationProjectTargetPlatform targetPlatform, DateTimeOffset? createdOn, ServerConnectionInfo sourceConnectionInfo, ServerConnectionInfo targetConnectionInfo, IList<DataMigrationProjectDatabaseInfo> databasesInfo, DataMigrationProjectProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourcePlatform = sourcePlatform;
             AzureAuthenticationInfo = azureAuthenticationInfo;
             TargetPlatform = targetPlatform;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             SourceConnectionInfo = sourceConnectionInfo;
             TargetConnectionInfo = targetConnectionInfo;
             DatabasesInfo = databasesInfo;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public DataMigrationProjectTargetPlatform TargetPlatform { get; set; }
 
         /// <summary> UTC Date and time when project was created. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Information for connecting to source. </summary>
         public ServerConnectionInfo SourceConnectionInfo { get; set; }

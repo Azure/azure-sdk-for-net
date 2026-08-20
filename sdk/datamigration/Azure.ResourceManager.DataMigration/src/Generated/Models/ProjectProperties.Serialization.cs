@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             writer.WritePropertyName("targetPlatform"u8);
             writer.WriteStringValue(TargetPlatform.ToString());
-            if (options.Format != "W" && Optional.IsDefined(CreationOn))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(SourceConnectionInfo))
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             DataMigrationProjectSourcePlatform sourcePlatform = default;
             DataMigrationAadApp azureAuthenticationInfo = default;
             DataMigrationProjectTargetPlatform targetPlatform = default;
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             ServerConnectionInfo sourceConnectionInfo = default;
             ServerConnectionInfo targetConnectionInfo = default;
             IList<DataMigrationProjectDatabaseInfo> databasesInfo = default;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("sourceConnectionInfo"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 sourcePlatform,
                 azureAuthenticationInfo,
                 targetPlatform,
-                creationOn,
+                createdOn,
                 sourceConnectionInfo,
                 targetConnectionInfo,
                 databasesInfo ?? new ChangeTrackingList<DataMigrationProjectDatabaseInfo>(),

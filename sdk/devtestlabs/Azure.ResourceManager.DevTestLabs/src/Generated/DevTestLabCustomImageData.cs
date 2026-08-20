@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> The creation date of the custom image. </summary>
-        public DateTimeOffset? CreationOn
+        public DateTimeOffset? CreatedOn
         {
             get
             {
-                return Properties is null ? default : Properties.CreationOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 

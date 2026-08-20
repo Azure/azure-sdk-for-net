@@ -4882,12 +4882,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 default);
         }
 
-        /// <param name="creationOn"> The creation time of the SQL Vulnerability Assessment settings. </param>
+        /// <param name="createdOn"> The creation time of the SQL Vulnerability Assessment settings. </param>
         /// <param name="state"> Represents the state of a SQL Vulnerability Assessment. </param>
         /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentSettingsProperties"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentSettingsProperties SqlVulnerabilityAssessmentSettingsProperties(DateTimeOffset? creationOn = default, SqlVulnerabilityAssessmentState? state = default)
+        public static SqlVulnerabilityAssessmentSettingsProperties SqlVulnerabilityAssessmentSettingsProperties(DateTimeOffset? createdOn = default, SqlVulnerabilityAssessmentState? state = default)
         {
-            return new SqlVulnerabilityAssessmentSettingsProperties(creationOn, state, default);
+            return new SqlVulnerabilityAssessmentSettingsProperties(createdOn, state, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

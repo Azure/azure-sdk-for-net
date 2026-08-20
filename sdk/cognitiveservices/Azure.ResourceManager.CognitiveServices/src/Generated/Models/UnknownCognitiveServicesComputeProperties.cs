@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="computeType"> The type of compute resource. </param>
         /// <param name="provisioningState"> Provisioning state of the compute resource. </param>
         /// <param name="errors"> Error details for the compute resource. </param>
-        /// <param name="creationOn"> Creation time of the compute resource. </param>
+        /// <param name="createdOn"> Creation time of the compute resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownCognitiveServicesComputeProperties(ComputeType computeType, CognitiveServicesComputeProvisioningState? provisioningState, IReadOnlyList<ResponseError> errors, DateTimeOffset? creationOn, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(computeType != default ? computeType : "unknown", provisioningState, errors, creationOn, additionalBinaryDataProperties)
+        internal UnknownCognitiveServicesComputeProperties(ComputeType computeType, CognitiveServicesComputeProvisioningState? provisioningState, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(computeType != default ? computeType : "unknown", provisioningState, errors, createdOn, additionalBinaryDataProperties)
         {
         }
     }

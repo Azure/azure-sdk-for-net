@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of <see cref="ConnectionProperties"/>. </summary>
         /// <param name="connectionType"> Gets or sets the connectionType of the connection. </param>
         /// <param name="fieldDefinitionValues"> Gets the field definition values of the connection. </param>
-        /// <param name="creationOn"> Gets the creation time. </param>
+        /// <param name="createdOn"> Gets the creation time. </param>
         /// <param name="lastModifiedOn"> Gets the last modified time. </param>
         /// <param name="description"> Gets or sets the description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionProperties(ConnectionTypeAssociationProperty connectionType, IReadOnlyDictionary<string, string> fieldDefinitionValues, DateTimeOffset? creationOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectionProperties(ConnectionTypeAssociationProperty connectionType, IReadOnlyDictionary<string, string> fieldDefinitionValues, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionType = connectionType;
             FieldDefinitionValues = fieldDefinitionValues;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             Description = description;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Automation.Models
         public IReadOnlyDictionary<string, string> FieldDefinitionValues { get; } = new ChangeTrackingDictionary<string, string>();
 
         /// <summary> Gets the creation time. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Gets the last modified time. </summary>
         public DateTimeOffset? LastModifiedOn { get; }

@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="source"> Gets or sets the source. </param>
         /// <param name="state"> Gets or sets the state of the configuration. </param>
         /// <param name="isLogVerboseEnabled"> Gets or sets verbose log option. </param>
-        /// <param name="creationOn"> Gets or sets the creation time. </param>
+        /// <param name="createdOn"> Gets or sets the creation time. </param>
         /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
         /// <param name="nodeConfigurationCount"> Gets the number of compiled node configurations. </param>
         /// <param name="description"> Gets or sets the description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DscConfigurationProperties(DscConfigurationProvisioningState? provisioningState, int? jobCount, IDictionary<string, DscConfigurationParameterDefinition> parameters, AutomationContentSource source, DscConfigurationState? state, bool? isLogVerboseEnabled, DateTimeOffset? creationOn, DateTimeOffset? lastModifiedOn, int? nodeConfigurationCount, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DscConfigurationProperties(DscConfigurationProvisioningState? provisioningState, int? jobCount, IDictionary<string, DscConfigurationParameterDefinition> parameters, AutomationContentSource source, DscConfigurationState? state, bool? isLogVerboseEnabled, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, int? nodeConfigurationCount, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             JobCount = jobCount;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Automation.Models
             Source = source;
             State = state;
             IsLogVerboseEnabled = isLogVerboseEnabled;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             NodeConfigurationCount = nodeConfigurationCount;
             Description = description;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Automation.Models
         public bool? IsLogVerboseEnabled { get; set; }
 
         /// <summary> Gets or sets the creation time. </summary>
-        public DateTimeOffset? CreationOn { get; set; }
+        public DateTimeOffset? CreatedOn { get; set; }
 
         /// <summary> Gets or sets the last modified time. </summary>
         public DateTimeOffset? LastModifiedOn { get; set; }

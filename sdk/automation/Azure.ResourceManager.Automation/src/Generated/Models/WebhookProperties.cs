@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="parameters"> Gets or sets the parameters of the job that is created when the webhook calls the runbook it is associated with. </param>
         /// <param name="runbook"> Gets or sets the runbook the webhook is associated with. </param>
         /// <param name="runOn"> Gets or sets the name of the hybrid worker group the webhook job will run on. </param>
-        /// <param name="creationOn"> Gets or sets the creation time. </param>
+        /// <param name="createdOn"> Gets or sets the creation time. </param>
         /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
         /// <param name="lastModifiedBy"> Details of the user who last modified the Webhook. </param>
         /// <param name="description"> Gets or sets the description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebhookProperties(bool? isEnabled, Uri uri, DateTimeOffset? expireOn, DateTimeOffset? lastInvokedOn, IDictionary<string, string> parameters, RunbookAssociationProperty runbook, string runOn, DateTimeOffset? creationOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebhookProperties(bool? isEnabled, Uri uri, DateTimeOffset? expireOn, DateTimeOffset? lastInvokedOn, IDictionary<string, string> parameters, RunbookAssociationProperty runbook, string runOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
             Uri = uri;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Automation.Models
             Parameters = parameters;
             Runbook = runbook;
             RunOn = runOn;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             LastModifiedBy = lastModifiedBy;
             Description = description;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Automation.Models
         public string RunOn { get; set; }
 
         /// <summary> Gets or sets the creation time. </summary>
-        public DateTimeOffset? CreationOn { get; set; }
+        public DateTimeOffset? CreatedOn { get; set; }
 
         /// <summary> Gets or sets the last modified time. </summary>
         public DateTimeOffset? LastModifiedOn { get; set; }

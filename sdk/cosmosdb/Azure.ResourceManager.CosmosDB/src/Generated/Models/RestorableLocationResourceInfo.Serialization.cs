@@ -85,15 +85,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("regionalDatabaseAccountInstanceId"u8);
                 writer.WriteStringValue(RegionalDatabaseAccountInstanceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreationOn))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(DeletionOn))
+            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deletionTime"u8);
-                writer.WriteStringValue(DeletionOn.Value, "O");
+                writer.WriteStringValue(DeletedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,8 +139,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             AzureLocation? locationName = default;
             string regionalDatabaseAccountInstanceId = default;
-            DateTimeOffset? creationOn = default;
-            DateTimeOffset? deletionOn = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? deletedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("deletionTime"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    deletionOn = prop.Value.GetDateTimeOffset("O");
+                    deletedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RestorableLocationResourceInfo(locationName, regionalDatabaseAccountInstanceId, creationOn, deletionOn, additionalBinaryDataProperties);
+            return new RestorableLocationResourceInfo(locationName, regionalDatabaseAccountInstanceId, createdOn, deletedOn, additionalBinaryDataProperties);
         }
     }
 }

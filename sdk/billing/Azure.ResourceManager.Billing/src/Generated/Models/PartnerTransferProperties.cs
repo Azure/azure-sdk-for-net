@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PartnerTransferProperties"/>. </summary>
-        /// <param name="expirationOn"> The time at which the transfer request expires. </param>
+        /// <param name="expireOn"> The time at which the transfer request expires. </param>
         /// <param name="transferStatus"> Overall transfer status. </param>
         /// <param name="recipientEmailId"> The email ID of the user to whom the transfer request was sent. </param>
         /// <param name="initiatorCustomerType"> The type of customer who sent the transfer request. </param>
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="canceledBy"> The email ID of the user who canceled the transfer request. </param>
         /// <param name="detailedTransferStatus"> Detailed transfer status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PartnerTransferProperties(DateTimeOffset? expirationOn, PartnerTransferStatus? transferStatus, string recipientEmailId, InitiatorCustomerType? initiatorCustomerType, string initiatorEmailId, string resellerId, string resellerName, string canceledBy, IReadOnlyList<DetailedTransferStatus> detailedTransferStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PartnerTransferProperties(DateTimeOffset? expireOn, PartnerTransferStatus? transferStatus, string recipientEmailId, InitiatorCustomerType? initiatorCustomerType, string initiatorEmailId, string resellerId, string resellerName, string canceledBy, IReadOnlyList<DetailedTransferStatus> detailedTransferStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ExpirationOn = expirationOn;
+            ExpireOn = expireOn;
             TransferStatus = transferStatus;
             RecipientEmailId = recipientEmailId;
             InitiatorCustomerType = initiatorCustomerType;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The time at which the transfer request expires. </summary>
         [WirePath("expirationTime")]
-        public DateTimeOffset? ExpirationOn { get; }
+        public DateTimeOffset? ExpireOn { get; }
 
         /// <summary> Overall transfer status. </summary>
         [WirePath("transferStatus")]

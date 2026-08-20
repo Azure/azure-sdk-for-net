@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenPassword"/>. </summary>
-        /// <param name="creationOn"> The creation datetime of the password. </param>
+        /// <param name="createdOn"> The creation datetime of the password. </param>
         /// <param name="expireOn"> The expiry datetime of the password. </param>
         /// <param name="name"> The password name "password1" or "password2". </param>
         /// <param name="value"> The password value. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryTokenPassword(DateTimeOffset? creationOn, DateTimeOffset? expireOn, ContainerRegistryTokenPasswordName? name, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryTokenPassword(DateTimeOffset? createdOn, DateTimeOffset? expireOn, ContainerRegistryTokenPasswordName? name, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             ExpireOn = expireOn;
             Name = name;
             Value = value;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The creation datetime of the password. </summary>
         [WirePath("creationTime")]
-        public DateTimeOffset? CreationOn { get; set; }
+        public DateTimeOffset? CreatedOn { get; set; }
 
         /// <summary> The expiry datetime of the password. </summary>
         [WirePath("expiry")]

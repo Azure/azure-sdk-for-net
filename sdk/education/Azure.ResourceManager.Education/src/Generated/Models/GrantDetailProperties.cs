@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="offerCap"> Offer Cap. </param>
         /// <param name="effectiveOn"> Grant Effective Date. </param>
         /// <param name="offerType"> Grant Offer Type. </param>
-        /// <param name="expirationOn"> Expiration Date. </param>
+        /// <param name="expireOn"> Expiration Date. </param>
         /// <param name="status"> Grant status. </param>
         /// <param name="allocatedBudget"> allocated budget. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GrantDetailProperties(EducationAmount offerCap, DateTimeOffset? effectiveOn, EducationGrantType? offerType, DateTimeOffset? expirationOn, EducationGrantStatus? status, EducationAmount allocatedBudget, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GrantDetailProperties(EducationAmount offerCap, DateTimeOffset? effectiveOn, EducationGrantType? offerType, DateTimeOffset? expireOn, EducationGrantStatus? status, EducationAmount allocatedBudget, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OfferCap = offerCap;
             EffectiveOn = effectiveOn;
             OfferType = offerType;
-            ExpirationOn = expirationOn;
+            ExpireOn = expireOn;
             Status = status;
             AllocatedBudget = allocatedBudget;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Education.Models
         public EducationGrantType? OfferType { get; }
 
         /// <summary> Expiration Date. </summary>
-        public DateTimeOffset? ExpirationOn { get; }
+        public DateTimeOffset? ExpireOn { get; }
 
         /// <summary> Grant status. </summary>
         public EducationGrantStatus? Status { get; }

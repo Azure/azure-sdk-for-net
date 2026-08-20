@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="draft"> Gets or sets the draft runbook properties. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state of the runbook. </param>
         /// <param name="lastModifiedBy"> Gets or sets the last modified by. </param>
-        /// <param name="creationOn"> Gets or sets the creation time. </param>
+        /// <param name="createdOn"> Gets or sets the creation time. </param>
         /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
         /// <param name="description"> Gets or sets the description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunbookProperties(string runtimeEnvironment, AutomationRunbookType? runbookType, AutomationContentLink publishContentLink, RunbookState? state, bool? isLogVerboseEnabled, bool? isLogProgressEnabled, int? logActivityTrace, int? jobCount, IDictionary<string, RunbookParameterDefinition> parameters, IList<string> outputTypes, AutomationRunbookDraft draft, RunbookProvisioningState? provisioningState, string lastModifiedBy, DateTimeOffset? creationOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunbookProperties(string runtimeEnvironment, AutomationRunbookType? runbookType, AutomationContentLink publishContentLink, RunbookState? state, bool? isLogVerboseEnabled, bool? isLogProgressEnabled, int? logActivityTrace, int? jobCount, IDictionary<string, RunbookParameterDefinition> parameters, IList<string> outputTypes, AutomationRunbookDraft draft, RunbookProvisioningState? provisioningState, string lastModifiedBy, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuntimeEnvironment = runtimeEnvironment;
             RunbookType = runbookType;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Automation.Models
             Draft = draft;
             ProvisioningState = provisioningState;
             LastModifiedBy = lastModifiedBy;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             Description = description;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Automation.Models
         public string LastModifiedBy { get; set; }
 
         /// <summary> Gets or sets the creation time. </summary>
-        public DateTimeOffset? CreationOn { get; set; }
+        public DateTimeOffset? CreatedOn { get; set; }
 
         /// <summary> Gets or sets the last modified time. </summary>
         public DateTimeOffset? LastModifiedOn { get; set; }

@@ -174,8 +174,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            string iPv4ConnectedPrefix = default;
-            string iPv6ConnectedPrefix = default;
+            string ipv4ConnectedPrefix = default;
+            string ipv6ConnectedPrefix = default;
             ResourceIdentifier networkId = default;
             IList<NetworkCloudAccessBridgeSecurityRule> securityRules = default;
             NetworkCloudAccessBridgeDetailedStatus? detailedStatus = default;
@@ -188,12 +188,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 if (prop.NameEquals("ipv4ConnectedPrefix"u8))
                 {
-                    iPv4ConnectedPrefix = prop.Value.GetString();
+                    ipv4ConnectedPrefix = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("ipv6ConnectedPrefix"u8))
                 {
-                    iPv6ConnectedPrefix = prop.Value.GetString();
+                    ipv6ConnectedPrefix = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("networkId"u8))
@@ -267,8 +267,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             return new AccessBridgeProperties(
-                iPv4ConnectedPrefix,
-                iPv6ConnectedPrefix,
+                ipv4ConnectedPrefix,
+                ipv6ConnectedPrefix,
                 networkId,
                 securityRules ?? new ChangeTrackingList<NetworkCloudAccessBridgeSecurityRule>(),
                 detailedStatus,

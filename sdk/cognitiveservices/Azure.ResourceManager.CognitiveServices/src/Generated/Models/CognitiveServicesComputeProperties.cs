@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="computeType"> The type of compute resource. </param>
         /// <param name="provisioningState"> Provisioning state of the compute resource. </param>
         /// <param name="errors"> Error details for the compute resource. </param>
-        /// <param name="creationOn"> Creation time of the compute resource. </param>
+        /// <param name="createdOn"> Creation time of the compute resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesComputeProperties(ComputeType computeType, CognitiveServicesComputeProvisioningState? provisioningState, IReadOnlyList<ResponseError> errors, DateTimeOffset? creationOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesComputeProperties(ComputeType computeType, CognitiveServicesComputeProvisioningState? provisioningState, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComputeType = computeType;
             ProvisioningState = provisioningState;
             Errors = errors;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -59,6 +59,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Creation time of the compute resource. </summary>
         [WirePath("creationTime")]
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
     }
 }

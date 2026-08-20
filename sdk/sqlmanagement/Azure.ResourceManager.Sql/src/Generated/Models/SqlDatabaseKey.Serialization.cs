@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreationOn))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationDate"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Subregion))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             SqlDatabaseKeyType? keyType = default;
             string thumbprint = default;
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             string subregion = default;
             string keyVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("subregion"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlDatabaseKey(
                 keyType,
                 thumbprint,
-                creationOn,
+                createdOn,
                 subregion,
                 keyVersion,
                 additionalBinaryDataProperties);

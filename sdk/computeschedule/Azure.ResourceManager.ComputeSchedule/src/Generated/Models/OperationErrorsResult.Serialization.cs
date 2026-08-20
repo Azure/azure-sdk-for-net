@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (Optional.IsDefined(CreationOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(ActivationOn))
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 return null;
             }
             string operationId = default;
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             DateTimeOffset? activationOn = default;
             DateTimeOffset? completedOn = default;
             IReadOnlyList<OperationErrorDetails> operationErrors = default;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("activationTime"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
             return new OperationErrorsResult(
                 operationId,
-                creationOn,
+                createdOn,
                 activationOn,
                 completedOn,
                 operationErrors ?? new ChangeTrackingList<OperationErrorDetails>(),

@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Initializes a new instance of <see cref="DscNodeConfigurationProperties"/>. </summary>
         /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
-        /// <param name="creationOn"> Gets or sets creation time. </param>
+        /// <param name="createdOn"> Gets or sets creation time. </param>
         /// <param name="configuration"> Gets or sets the configuration of the node. </param>
         /// <param name="source"> Source of node configuration. </param>
         /// <param name="nodeCount"> Number of nodes with this node configuration assigned. </param>
         /// <param name="isIncrementNodeConfigurationBuildRequired"> If a new build version of NodeConfiguration is required. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DscNodeConfigurationProperties(DateTimeOffset? lastModifiedOn, DateTimeOffset? creationOn, DscConfigurationAssociationProperty configuration, string source, long? nodeCount, bool? isIncrementNodeConfigurationBuildRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DscNodeConfigurationProperties(DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, DscConfigurationAssociationProperty configuration, string source, long? nodeCount, bool? isIncrementNodeConfigurationBuildRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LastModifiedOn = lastModifiedOn;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             Configuration = configuration;
             Source = source;
             NodeCount = nodeCount;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Automation.Models
         public DateTimeOffset? LastModifiedOn { get; set; }
 
         /// <summary> Gets or sets creation time. </summary>
-        public DateTimeOffset? CreationOn { get; set; }
+        public DateTimeOffset? CreatedOn { get; set; }
 
         /// <summary> Gets or sets the configuration of the node. </summary>
         internal DscConfigurationAssociationProperty Configuration { get; set; }

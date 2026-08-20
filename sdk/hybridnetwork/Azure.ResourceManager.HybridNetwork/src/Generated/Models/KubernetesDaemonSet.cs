@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="readyNumberOfPods"> Number of Ready pods. </param>
         /// <param name="upToDateNumberOfPods"> Number of  upto date pods. </param>
         /// <param name="availableNumberOfPods"> Number of available pods. </param>
-        /// <param name="creationOn"> Creation Time of daemonSet. </param>
+        /// <param name="createdOn"> Creation Time of daemonSet. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KubernetesDaemonSet(string name, string @namespace, int? desiredNumberOfPods, int? currentNumberOfPods, int? readyNumberOfPods, int? upToDateNumberOfPods, int? availableNumberOfPods, DateTimeOffset? creationOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KubernetesDaemonSet(string name, string @namespace, int? desiredNumberOfPods, int? currentNumberOfPods, int? readyNumberOfPods, int? upToDateNumberOfPods, int? availableNumberOfPods, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Namespace = @namespace;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             ReadyNumberOfPods = readyNumberOfPods;
             UpToDateNumberOfPods = upToDateNumberOfPods;
             AvailableNumberOfPods = availableNumberOfPods;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public int? AvailableNumberOfPods { get; }
 
         /// <summary> Creation Time of daemonSet. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
     }
 }

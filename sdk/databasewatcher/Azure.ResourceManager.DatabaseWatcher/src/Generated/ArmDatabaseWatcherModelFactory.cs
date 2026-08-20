@@ -112,17 +112,17 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
 
         /// <param name="alertRuleResourceId"> The resource ID of the alert rule resource. </param>
         /// <param name="createdWithProperties"> The properties with which the alert rule resource was created. </param>
-        /// <param name="creationOn"> The creation time of the alert rule resource. </param>
+        /// <param name="createdOn"> The creation time of the alert rule resource. </param>
         /// <param name="provisioningState"> The provisioning state of the alert rule resource. </param>
         /// <param name="alertRuleTemplateId"> The template ID associated with alert rule resource. </param>
         /// <param name="alertRuleTemplateVersion"> The alert rule template version. </param>
         /// <returns> A new <see cref="Models.DatabaseWatcherAlertRuleProperties"/> instance for mocking. </returns>
-        public static DatabaseWatcherAlertRuleProperties DatabaseWatcherAlertRuleProperties(ResourceIdentifier alertRuleResourceId = default, AlertRuleCreationProperty createdWithProperties = default, DateTimeOffset creationOn = default, DatabaseWatcherResourceProvisioningState? provisioningState = default, string alertRuleTemplateId = default, string alertRuleTemplateVersion = default)
+        public static DatabaseWatcherAlertRuleProperties DatabaseWatcherAlertRuleProperties(ResourceIdentifier alertRuleResourceId = default, AlertRuleCreationProperty createdWithProperties = default, DateTimeOffset createdOn = default, DatabaseWatcherResourceProvisioningState? provisioningState = default, string alertRuleTemplateId = default, string alertRuleTemplateVersion = default)
         {
             return new DatabaseWatcherAlertRuleProperties(
                 alertRuleResourceId,
                 createdWithProperties,
-                creationOn,
+                createdOn,
                 provisioningState,
                 alertRuleTemplateId,
                 alertRuleTemplateVersion,

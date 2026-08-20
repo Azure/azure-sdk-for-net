@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="targetResourceId"> The Azure resource ID of the Azure Managed Redis destination cache to migrate. </param>
         /// <param name="provisioningState"> Current provisioning status of the migration. </param>
         /// <param name="statusDetails"> Additional details about the migration operation's status in free text format. </param>
-        /// <param name="creationOn"> The timestamp when the migration operation was created. </param>
+        /// <param name="createdOn"> The timestamp when the migration operation was created. </param>
         /// <param name="lastModifiedOn"> The timestamp when the migration operation was last updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownRedisEnterpriseMigrationProperties(SourceType sourceType, ResourceIdentifier targetResourceId, RedisEnterpriseMigrationProvisioningState? provisioningState, string statusDetails, DateTimeOffset? creationOn, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(sourceType != default ? sourceType : "unknown", targetResourceId, provisioningState, statusDetails, creationOn, lastModifiedOn, additionalBinaryDataProperties)
+        internal UnknownRedisEnterpriseMigrationProperties(SourceType sourceType, ResourceIdentifier targetResourceId, RedisEnterpriseMigrationProvisioningState? provisioningState, string statusDetails, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(sourceType != default ? sourceType : "unknown", targetResourceId, provisioningState, statusDetails, createdOn, lastModifiedOn, additionalBinaryDataProperties)
         {
         }
     }

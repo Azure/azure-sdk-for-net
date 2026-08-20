@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeletionOn))
+            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deletionDate"u8);
-                writer.WriteStringValue(DeletionOn.Value, "O");
+                writer.WriteStringValue(DeletedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ScheduledPurgeOn))
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
             ResourceIdentifier configurationStoreId = default;
             AzureLocation? location = default;
-            DateTimeOffset? deletionOn = default;
+            DateTimeOffset? deletedOn = default;
             DateTimeOffset? scheduledPurgeOn = default;
             IReadOnlyDictionary<string, string> tags = default;
             bool? isPurgeProtectionEnabled = default;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     {
                         continue;
                     }
-                    deletionOn = prop.Value.GetDateTimeOffset("O");
+                    deletedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("scheduledPurgeDate"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             return new DeletedConfigurationStoreProperties(
                 configurationStoreId,
                 location,
-                deletionOn,
+                deletedOn,
                 scheduledPurgeOn,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 isPurgeProtectionEnabled,

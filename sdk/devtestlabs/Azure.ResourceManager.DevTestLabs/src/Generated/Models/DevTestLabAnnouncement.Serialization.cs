@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled.Value.ToString());
             }
-            if (Optional.IsDefined(ExpirationOn))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
-                writer.WriteStringValue(ExpirationOn.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(IsExpired))
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             string title = default;
             string markdown = default;
             DevTestLabEnableStatus? enabled = default;
-            DateTimeOffset? expirationOn = default;
+            DateTimeOffset? expireOn = default;
             bool? isExpired = default;
             string provisioningState = default;
             Guid? uniqueIdentifier = default;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    expirationOn = prop.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("expired"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 title,
                 markdown,
                 enabled,
-                expirationOn,
+                expireOn,
                 isExpired,
                 provisioningState,
                 uniqueIdentifier,

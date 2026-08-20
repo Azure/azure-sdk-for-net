@@ -402,11 +402,11 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> The expiration date for VM. </summary>
-        public DateTimeOffset? ExpirationOn
+        public DateTimeOffset? ExpireOn
         {
             get
             {
-                return Properties is null ? default : Properties.ExpirationOn;
+                return Properties is null ? default : Properties.ExpireOn;
             }
             set
             {
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     Properties = new LabVirtualMachineProperties();
                 }
-                Properties.ExpirationOn = value;
+                Properties.ExpireOn = value;
             }
         }
 

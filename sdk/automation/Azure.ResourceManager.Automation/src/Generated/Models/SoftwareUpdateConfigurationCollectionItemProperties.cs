@@ -26,18 +26,18 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="tasks"> Pre and Post Tasks defined. </param>
         /// <param name="frequency"> execution frequency of the schedule associated with the software update configuration. </param>
         /// <param name="startOn"> the start time of the update. </param>
-        /// <param name="creationOn"> Creation time of the software update configuration, which only appears in the response. </param>
+        /// <param name="createdOn"> Creation time of the software update configuration, which only appears in the response. </param>
         /// <param name="lastModifiedOn"> Last time software update configuration was modified, which only appears in the response. </param>
         /// <param name="provisioningState"> Provisioning state for the software update configuration, which only appears in the response. </param>
         /// <param name="nextRunOn"> ext run time of the update. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SoftwareUpdateConfigurationCollectionItemProperties(SoftwareUpdateConfigurationSpecificProperties updateConfiguration, SoftwareUpdateConfigurationTasks tasks, AutomationScheduleFrequency? frequency, DateTimeOffset? startOn, DateTimeOffset? creationOn, DateTimeOffset? lastModifiedOn, string provisioningState, DateTimeOffset? nextRunOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SoftwareUpdateConfigurationCollectionItemProperties(SoftwareUpdateConfigurationSpecificProperties updateConfiguration, SoftwareUpdateConfigurationTasks tasks, AutomationScheduleFrequency? frequency, DateTimeOffset? startOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string provisioningState, DateTimeOffset? nextRunOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UpdateConfiguration = updateConfiguration;
             Tasks = tasks;
             Frequency = frequency;
             StartOn = startOn;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             ProvisioningState = provisioningState;
             NextRunOn = nextRunOn;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Automation.Models
         public DateTimeOffset? StartOn { get; }
 
         /// <summary> Creation time of the software update configuration, which only appears in the response. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Last time software update configuration was modified, which only appears in the response. </summary>
         public DateTimeOffset? LastModifiedOn { get; }

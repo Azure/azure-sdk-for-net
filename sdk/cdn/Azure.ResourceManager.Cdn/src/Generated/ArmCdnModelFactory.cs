@@ -1949,11 +1949,11 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <param name="secretSourceId"> Resource ID. </param>
         /// <param name="secretVersion"> Version of the secret to be used. </param>
-        /// <param name="expirationOn"> Soonest expiration date among certificates in customer's certificate chain in ISO 8601 compliant format yyyy-MM-ddTHH:mm:ss.fffffffK in UTC. </param>
+        /// <param name="expireOn"> Soonest expiration date among certificates in customer's certificate chain in ISO 8601 compliant format yyyy-MM-ddTHH:mm:ss.fffffffK in UTC. </param>
         /// <returns> A new <see cref="Models.FrontDoorSecretMtlsCertificateChain"/> instance for mocking. </returns>
-        public static FrontDoorSecretMtlsCertificateChain FrontDoorSecretMtlsCertificateChain(ResourceIdentifier secretSourceId = default, string secretVersion = default, DateTimeOffset? expirationOn = default)
+        public static FrontDoorSecretMtlsCertificateChain FrontDoorSecretMtlsCertificateChain(ResourceIdentifier secretSourceId = default, string secretVersion = default, DateTimeOffset? expireOn = default)
         {
-            return new FrontDoorSecretMtlsCertificateChain(default, default, secretSourceId is null ? default : new CdnResourceReference(secretSourceId, default), secretVersion, expirationOn);
+            return new FrontDoorSecretMtlsCertificateChain(default, default, secretSourceId is null ? default : new CdnResourceReference(secretSourceId, default), secretVersion, expireOn);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3325,15 +3325,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <param name="deliveryRegion"> The delivery region of the ip address group. </param>
-        /// <param name="iPv4Addresses"> The list of ip v4 addresses. </param>
-        /// <param name="iPv6Addresses"> The list of ip v6 addresses. </param>
+        /// <param name="ipv4Addresses"> The list of ip v4 addresses. </param>
+        /// <param name="ipv6Addresses"> The list of ip v6 addresses. </param>
         /// <returns> A new <see cref="Models.IPAddressGroup"/> instance for mocking. </returns>
-        public static IPAddressGroup IPAddressGroup(string deliveryRegion = default, IEnumerable<CidrIPAddress> iPv4Addresses = default, IEnumerable<CidrIPAddress> iPv6Addresses = default)
+        public static IPAddressGroup IPAddressGroup(string deliveryRegion = default, IEnumerable<CidrIPAddress> ipv4Addresses = default, IEnumerable<CidrIPAddress> ipv6Addresses = default)
         {
-            iPv4Addresses ??= new ChangeTrackingList<CidrIPAddress>();
-            iPv6Addresses ??= new ChangeTrackingList<CidrIPAddress>();
+            ipv4Addresses ??= new ChangeTrackingList<CidrIPAddress>();
+            ipv6Addresses ??= new ChangeTrackingList<CidrIPAddress>();
 
-            return new IPAddressGroup(deliveryRegion, (iPv4Addresses ?? new ChangeTrackingList<CidrIPAddress>()).ToList(), (iPv6Addresses ?? new ChangeTrackingList<CidrIPAddress>()).ToList(), default);
+            return new IPAddressGroup(deliveryRegion, (ipv4Addresses ?? new ChangeTrackingList<CidrIPAddress>()).ToList(), (ipv6Addresses ?? new ChangeTrackingList<CidrIPAddress>()).ToList(), default);
         }
 
         /// <param name="baseIPAddress"> Ip address itself. </param>

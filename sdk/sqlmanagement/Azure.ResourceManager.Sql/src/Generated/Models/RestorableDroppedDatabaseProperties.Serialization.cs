@@ -84,15 +84,15 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteNumberValue(MaxSizeBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreationOn))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationDate"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(DeletionOn))
+            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deletionDate"u8);
-                writer.WriteStringValue(DeletionOn.Value, "O");
+                writer.WriteStringValue(DeletedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(EarliestRestoreOn))
             {
@@ -159,8 +159,8 @@ namespace Azure.ResourceManager.Sql.Models
             }
             string databaseName = default;
             long? maxSizeBytes = default;
-            DateTimeOffset? creationOn = default;
-            DateTimeOffset? deletionOn = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? deletedOn = default;
             DateTimeOffset? earliestRestoreOn = default;
             SqlBackupStorageRedundancy? backupStorageRedundancy = default;
             IDictionary<string, SqlDatabaseKey> keys = default;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("deletionDate"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    deletionOn = prop.Value.GetDateTimeOffset("O");
+                    deletedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("earliestRestoreDate"u8))
@@ -239,8 +239,8 @@ namespace Azure.ResourceManager.Sql.Models
             return new RestorableDroppedDatabaseProperties(
                 databaseName,
                 maxSizeBytes,
-                creationOn,
-                deletionOn,
+                createdOn,
+                deletedOn,
                 earliestRestoreOn,
                 backupStorageRedundancy,
                 keys ?? new ChangeTrackingDictionary<string, SqlDatabaseKey>(),

@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(CreationOn))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             ConnectionTypeAssociationProperty connectionType = default;
             IReadOnlyDictionary<string, string> fieldDefinitionValues = default;
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             DateTimeOffset? lastModifiedOn = default;
             string description = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedTime"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Automation.Models
             return new ConnectionProperties(
                 connectionType,
                 fieldDefinitionValues ?? new ChangeTrackingDictionary<string, string>(),
-                creationOn,
+                createdOn,
                 lastModifiedOn,
                 description,
                 additionalBinaryDataProperties);

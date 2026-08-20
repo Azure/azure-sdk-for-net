@@ -29,19 +29,19 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="scriptParameters"> Gets or sets the parameters of the script. </param>
         /// <param name="scriptRunOn"> Gets or sets the name of the hybrid worker group the watcher will run on. </param>
         /// <param name="status"> Gets the current status of the watcher. </param>
-        /// <param name="creationOn"> Gets or sets the creation time. </param>
+        /// <param name="createdOn"> Gets or sets the creation time. </param>
         /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
         /// <param name="lastModifiedBy"> Details of the user who last modified the watcher. </param>
         /// <param name="description"> Gets or sets the description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WatcherProperties(long? executionFrequencyInSeconds, string scriptName, IDictionary<string, string> scriptParameters, string scriptRunOn, string status, DateTimeOffset? creationOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WatcherProperties(long? executionFrequencyInSeconds, string scriptName, IDictionary<string, string> scriptParameters, string scriptRunOn, string status, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExecutionFrequencyInSeconds = executionFrequencyInSeconds;
             ScriptName = scriptName;
             ScriptParameters = scriptParameters;
             ScriptRunOn = scriptRunOn;
             Status = status;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             LastModifiedBy = lastModifiedBy;
             Description = description;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Automation.Models
         public string Status { get; }
 
         /// <summary> Gets or sets the creation time. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Gets or sets the last modified time. </summary>
         public DateTimeOffset? LastModifiedOn { get; }

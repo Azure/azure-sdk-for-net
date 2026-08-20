@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="sku"> Gets or sets the SKU of account. </param>
         /// <param name="lastModifiedBy"> Gets or sets the last modified by. </param>
         /// <param name="state"> Gets status of account. </param>
-        /// <param name="creationOn"> Gets the creation time. </param>
+        /// <param name="createdOn"> Gets the creation time. </param>
         /// <param name="lastModifiedOn"> Gets the last modified time. </param>
         /// <param name="description"> Gets or sets the description. </param>
         /// <param name="encryption"> Encryption properties for the automation account. </param>
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="isLocalAuthDisabled"> Indicates whether requests using non-AAD authentication are blocked. </param>
         /// <param name="automationHybridServiceUri"> URL of automation hybrid service which is used for hybrid worker on-boarding. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationAccountProperties(AutomationSku sku, string lastModifiedBy, AutomationAccountState? state, DateTimeOffset? creationOn, DateTimeOffset? lastModifiedOn, string description, AutomationEncryptionProperties encryption, IList<AutomationPrivateEndpointConnectionData> privateEndpointConnections, bool? isPublicNetworkAccessAllowed, bool? isLocalAuthDisabled, Uri automationHybridServiceUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutomationAccountProperties(AutomationSku sku, string lastModifiedBy, AutomationAccountState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, AutomationEncryptionProperties encryption, IList<AutomationPrivateEndpointConnectionData> privateEndpointConnections, bool? isPublicNetworkAccessAllowed, bool? isLocalAuthDisabled, Uri automationHybridServiceUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             LastModifiedBy = lastModifiedBy;
             State = state;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             Description = description;
             Encryption = encryption;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Automation.Models
         public AutomationAccountState? State { get; }
 
         /// <summary> Gets the creation time. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Gets the last modified time. </summary>
         public DateTimeOffset? LastModifiedOn { get; }

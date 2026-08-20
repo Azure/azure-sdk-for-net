@@ -1164,7 +1164,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
             return new OperationErrorsResult(
                 operationId,
-                default,
+                createdOn,
                 activationOn,
                 completedOn,
                 (operationErrors ?? new ChangeTrackingList<OperationErrorDetails>()).ToList(),

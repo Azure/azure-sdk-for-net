@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Initializes a new instance of <see cref="AdvancedThreatProtectionSettingsProperties"/>. </summary>
         /// <param name="state"> Specifies the state of the advanced threat protection, whether it is enabled, disabled, or a state has not been applied yet on the server. </param>
-        /// <param name="creationOn"> Specifies the creation time (UTC) of the policy. </param>
+        /// <param name="createdOn"> Specifies the creation time (UTC) of the policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AdvancedThreatProtectionSettingsProperties(ThreatProtectionState state, DateTimeOffset? creationOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AdvancedThreatProtectionSettingsProperties(ThreatProtectionState state, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Specifies the creation time (UTC) of the policy. </summary>
         [WirePath("creationTime")]
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
     }
 }

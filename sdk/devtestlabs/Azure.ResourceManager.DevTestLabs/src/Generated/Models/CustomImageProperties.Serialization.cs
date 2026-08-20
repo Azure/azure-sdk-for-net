@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("author"u8);
                 writer.WriteStringValue(Author);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreationOn))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationDate"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(ManagedImageId))
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             DevTestLabCustomImageVhd vhd = default;
             string description = default;
             string author = default;
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             string managedImageId = default;
             string managedSnapshotId = default;
             IList<DevTestLabDataDiskStorageTypeInfo> dataDiskStorageInfo = default;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("managedImageId"u8))
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 vhd,
                 description,
                 author,
-                creationOn,
+                createdOn,
                 managedImageId,
                 managedSnapshotId,
                 dataDiskStorageInfo ?? new ChangeTrackingList<DevTestLabDataDiskStorageTypeInfo>(),

@@ -23,17 +23,17 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Initializes a new instance of <see cref="SourceControlSyncJobByIdProperties"/>. </summary>
         /// <param name="sourceControlSyncJobId"> The source control sync job id. </param>
-        /// <param name="creationOn"> The creation time of the job. </param>
+        /// <param name="createdOn"> The creation time of the job. </param>
         /// <param name="provisioningState"> The provisioning state of the job. </param>
         /// <param name="startOn"> The start time of the job. </param>
         /// <param name="endOn"> The end time of the job. </param>
         /// <param name="syncType"> The sync type. </param>
         /// <param name="exception"> The exceptions that occurred while running the sync job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SourceControlSyncJobByIdProperties(string sourceControlSyncJobId, DateTimeOffset? creationOn, SourceControlProvisioningState? provisioningState, DateTimeOffset? startOn, DateTimeOffset? endOn, SourceControlSyncType? syncType, string exception, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SourceControlSyncJobByIdProperties(string sourceControlSyncJobId, DateTimeOffset? createdOn, SourceControlProvisioningState? provisioningState, DateTimeOffset? startOn, DateTimeOffset? endOn, SourceControlSyncType? syncType, string exception, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceControlSyncJobId = sourceControlSyncJobId;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             ProvisioningState = provisioningState;
             StartOn = startOn;
             EndOn = endOn;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Automation.Models
         public string SourceControlSyncJobId { get; }
 
         /// <summary> The creation time of the job. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The provisioning state of the job. </summary>
         public SourceControlProvisioningState? ProvisioningState { get; }

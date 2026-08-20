@@ -146,15 +146,15 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteObjectValue(CreatedBy, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreationOn))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationDate"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpirationOn))
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
-                writer.WriteStringValue(ExpirationOn.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(DecisionReason))
             {
@@ -305,8 +305,8 @@ namespace Azure.ResourceManager.Billing.Models
             string billingProfileName = default;
             string billingProfileDisplayName = default;
             BillingPrincipal createdBy = default;
-            DateTimeOffset? creationOn = default;
-            DateTimeOffset? expirationOn = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? expireOn = default;
             string decisionReason = default;
             ResourceIdentifier invoiceSectionId = default;
             string invoiceSectionName = default;
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("expirationDate"u8))
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    expirationOn = prop.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("decisionReason"u8))
@@ -591,8 +591,8 @@ namespace Azure.ResourceManager.Billing.Models
                 billingProfileName,
                 billingProfileDisplayName,
                 createdBy,
-                creationOn,
-                expirationOn,
+                createdOn,
+                expireOn,
                 decisionReason,
                 invoiceSectionId,
                 invoiceSectionName,

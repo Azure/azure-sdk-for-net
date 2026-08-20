@@ -26,18 +26,18 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="RestorableDroppedDatabaseProperties"/>. </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="maxSizeBytes"> The max size of the database expressed in bytes. </param>
-        /// <param name="creationOn"> The creation date of the database (ISO8601 format). </param>
-        /// <param name="deletionOn"> The deletion date of the database (ISO8601 format). </param>
+        /// <param name="createdOn"> The creation date of the database (ISO8601 format). </param>
+        /// <param name="deletedOn"> The deletion date of the database (ISO8601 format). </param>
         /// <param name="earliestRestoreOn"> The earliest restore date of the database (ISO8601 format). </param>
         /// <param name="backupStorageRedundancy"> The storage account type used to store backups for this database. </param>
         /// <param name="keys"> The resource ids of the user assigned identities to use. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorableDroppedDatabaseProperties(string databaseName, long? maxSizeBytes, DateTimeOffset? creationOn, DateTimeOffset? deletionOn, DateTimeOffset? earliestRestoreOn, SqlBackupStorageRedundancy? backupStorageRedundancy, IDictionary<string, SqlDatabaseKey> keys, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorableDroppedDatabaseProperties(string databaseName, long? maxSizeBytes, DateTimeOffset? createdOn, DateTimeOffset? deletedOn, DateTimeOffset? earliestRestoreOn, SqlBackupStorageRedundancy? backupStorageRedundancy, IDictionary<string, SqlDatabaseKey> keys, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DatabaseName = databaseName;
             MaxSizeBytes = maxSizeBytes;
-            CreationOn = creationOn;
-            DeletionOn = deletionOn;
+            CreatedOn = createdOn;
+            DeletedOn = deletedOn;
             EarliestRestoreOn = earliestRestoreOn;
             BackupStorageRedundancy = backupStorageRedundancy;
             Keys = keys;
@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The creation date of the database (ISO8601 format). </summary>
         [WirePath("creationDate")]
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The deletion date of the database (ISO8601 format). </summary>
         [WirePath("deletionDate")]
-        public DateTimeOffset? DeletionOn { get; }
+        public DateTimeOffset? DeletedOn { get; }
 
         /// <summary> The earliest restore date of the database (ISO8601 format). </summary>
         [WirePath("earliestRestoreDate")]

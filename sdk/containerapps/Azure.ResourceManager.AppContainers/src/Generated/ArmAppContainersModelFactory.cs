@@ -2287,7 +2287,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 certificateKeyVaultProperties,
                 certificateValue,
                 certificatePassword,
-                default,
+                expireOn,
                 thumbprint,
                 subjectName,
                 default);
@@ -2368,13 +2368,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="value"> PFX or PEM blob. </param>
         /// <param name="issuer"> Certificate issuer. </param>
         /// <param name="issueOn"> Certificate issue Date. </param>
-        /// <param name="expirationOn"> Certificate expiration date. </param>
+        /// <param name="expireOn"> Certificate expiration date. </param>
         /// <param name="thumbprint"> Certificate thumbprint. </param>
         /// <param name="isValid"> Is the certificate valid?. </param>
         /// <param name="publicKeyHash"> Public key hash. </param>
         /// <param name="certificateType"> The type of the certificate. Allowed values are `ServerSSLCertificate` and `ImagePullTrustedCA`. </param>
         /// <returns> A new <see cref="Models.ContainerAppCertificateProperties"/> instance for mocking. </returns>
-        public static ContainerAppCertificateProperties ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState = default, string deploymentErrors = default, ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties = default, string password = default, string subjectName = default, IEnumerable<string> subjectAlternativeNames = default, byte[] value = default, string issuer = default, DateTimeOffset? issueOn = default, DateTimeOffset? expirationOn = default, string thumbprint = default, bool? isValid = default, string publicKeyHash = default, CertificateType? certificateType = default)
+        public static ContainerAppCertificateProperties ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState = default, string deploymentErrors = default, ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties = default, string password = default, string subjectName = default, IEnumerable<string> subjectAlternativeNames = default, byte[] value = default, string issuer = default, DateTimeOffset? issueOn = default, DateTimeOffset? expireOn = default, string thumbprint = default, bool? isValid = default, string publicKeyHash = default, CertificateType? certificateType = default)
         {
             subjectAlternativeNames ??= new ChangeTrackingList<string>();
 
@@ -2388,7 +2388,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 value,
                 issuer,
                 issueOn,
-                expirationOn,
+                expireOn,
                 thumbprint,
                 isValid,
                 publicKeyHash,
@@ -3849,7 +3849,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 value,
                 issuer,
                 issueOn,
-                default,
+                expireOn,
                 thumbprint,
                 isValid,
                 publicKeyHash,
@@ -4373,7 +4373,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 value,
                 issuer,
                 issueOn,
-                default,
+                expireOn,
                 thumbprint,
                 isValid,
                 publicKeyHash,
@@ -4564,7 +4564,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 default,
                 certificateValue,
                 certificatePassword,
-                default,
+                expireOn,
                 thumbprint,
                 subjectName,
                 default);
@@ -4596,7 +4596,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 value,
                 issuer,
                 issueOn,
-                default,
+                expireOn,
                 thumbprint,
                 isValid,
                 publicKeyHash,

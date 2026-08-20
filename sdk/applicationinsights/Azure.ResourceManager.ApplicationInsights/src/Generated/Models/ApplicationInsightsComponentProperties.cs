@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="flowType"> Used by the Application Insights system to determine what kind of flow this component was created by. This is to be set to 'Bluefield' when creating/updating a component via the REST API. </param>
         /// <param name="requestSource"> Describes what tool created this Application Insights component. Customers using this API should set this to the default 'rest'. </param>
         /// <param name="instrumentationKey"> Application Insights Instrumentation key. A read-only value that applications can use to identify the destination for all telemetry sent to Azure Application Insights. This value will be supplied upon construction of each new Application Insights component. </param>
-        /// <param name="creationOn"> Creation Date for the Application Insights component, in ISO 8601 format. </param>
+        /// <param name="createdOn"> Creation Date for the Application Insights component, in ISO 8601 format. </param>
         /// <param name="tenantId"> Azure Tenant Id. </param>
         /// <param name="hockeyAppId"> The unique application ID created when a new application is added to HockeyApp, used for communications with HockeyApp. </param>
         /// <param name="hockeyAppToken"> Token used to authenticate communications with between Application Insights and HockeyApp. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="isDisableLocalAuth"> Disable Non-AAD based Auth. </param>
         /// <param name="isForceCustomerStorageForProfiler"> Force users to create their own storage account for profiler and debugger. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsightsComponentProperties(string applicationId, string appId, string namePropertiesName, ApplicationInsightsApplicationType applicationType, ComponentFlowType? flowType, ComponentRequestSource? requestSource, string instrumentationKey, DateTimeOffset? creationOn, Guid? tenantId, string hockeyAppId, string hockeyAppToken, string provisioningState, double? samplingPercentage, string connectionString, int? retentionInDays, bool? isDisableIPMasking, bool? isImmediatePurgeDataOn30Days, ResourceIdentifier workspaceResourceId, DateTimeOffset? laMigrationOn, IReadOnlyList<PrivateLinkScopedResourceReference> privateLinkScopedResources, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, ComponentIngestionMode? ingestionMode, bool? isDisableLocalAuth, bool? isForceCustomerStorageForProfiler, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationInsightsComponentProperties(string applicationId, string appId, string namePropertiesName, ApplicationInsightsApplicationType applicationType, ComponentFlowType? flowType, ComponentRequestSource? requestSource, string instrumentationKey, DateTimeOffset? createdOn, Guid? tenantId, string hockeyAppId, string hockeyAppToken, string provisioningState, double? samplingPercentage, string connectionString, int? retentionInDays, bool? isDisableIPMasking, bool? isImmediatePurgeDataOn30Days, ResourceIdentifier workspaceResourceId, DateTimeOffset? laMigrationOn, IReadOnlyList<PrivateLinkScopedResourceReference> privateLinkScopedResources, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, ComponentIngestionMode? ingestionMode, bool? isDisableLocalAuth, bool? isForceCustomerStorageForProfiler, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApplicationId = applicationId;
             AppId = appId;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             FlowType = flowType;
             RequestSource = requestSource;
             InstrumentationKey = instrumentationKey;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             TenantId = tenantId;
             HockeyAppId = hockeyAppId;
             HockeyAppToken = hockeyAppToken;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Creation Date for the Application Insights component, in ISO 8601 format. </summary>
         [WirePath("CreationDate")]
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Azure Tenant Id. </summary>
         [WirePath("TenantId")]

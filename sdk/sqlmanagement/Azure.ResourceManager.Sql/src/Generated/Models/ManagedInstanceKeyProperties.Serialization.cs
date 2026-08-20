@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreationOn))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationDate"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(IsAutoRotationEnabled))
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Sql.Models
             SqlServerKeyType serverKeyType = default;
             Uri uri = default;
             string thumbprint = default;
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             bool? isAutoRotationEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("autoRotationEnabled"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Sql.Models
                 serverKeyType,
                 uri,
                 thumbprint,
-                creationOn,
+                createdOn,
                 isAutoRotationEnabled,
                 additionalBinaryDataProperties);
         }

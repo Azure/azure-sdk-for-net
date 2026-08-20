@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 throw new FormatException($"The model {nameof(RecoveryPointDataStoreDetail)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(CreationOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(ExpireOn))
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             DateTimeOffset? expireOn = default;
             Guid? recoveryPointDataStoreId = default;
             string metadata = default;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("expiryTime"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             return new RecoveryPointDataStoreDetail(
-                creationOn,
+                createdOn,
                 expireOn,
                 recoveryPointDataStoreId,
                 metadata,

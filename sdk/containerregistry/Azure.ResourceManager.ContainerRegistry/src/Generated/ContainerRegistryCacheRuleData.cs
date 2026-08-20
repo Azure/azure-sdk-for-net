@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary> The creation date of the cache rule. </summary>
         [WirePath("properties.creationDate")]
-        public DateTimeOffset? CreationOn
+        public DateTimeOffset? CreatedOn
         {
             get
             {
-                return Properties is null ? default : Properties.CreationOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 

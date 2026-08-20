@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="iPv4ConnectedPrefix"> The IPv4 subnet from which the access bridge allocates an address. This subnet must be part of the internal network specified by networkId. </param>
-        /// <param name="iPv6ConnectedPrefix"> The IPv6 subnet from which the access bridge allocates an address. This subnet must be part of the internal network specified by networkId. </param>
+        /// <param name="ipv4ConnectedPrefix"> The IPv4 subnet from which the access bridge allocates an address. This subnet must be part of the internal network specified by networkId. </param>
+        /// <param name="ipv6ConnectedPrefix"> The IPv6 subnet from which the access bridge allocates an address. This subnet must be part of the internal network specified by networkId. </param>
         /// <param name="networkId"> The resource ID of the internal network in a layer 3 isolation domain containing the IP subnets to use. </param>
         /// <param name="securityRules"> The list of security rules enforced by the access bridge. </param>
         /// <param name="detailedStatus"> The detailed status reported by the access bridge. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkId"/> is null. </exception>
         /// <returns> A new <see cref="NetworkCloud.NetworkCloudAccessBridgeData"/> instance for mocking. </returns>
-        public static NetworkCloudAccessBridgeData NetworkCloudAccessBridgeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string iPv4ConnectedPrefix = default, string iPv6ConnectedPrefix = default, ResourceIdentifier networkId = default, IEnumerable<NetworkCloudAccessBridgeSecurityRule> securityRules = default, NetworkCloudAccessBridgeDetailedStatus? detailedStatus = default, string detailedStatusMessage = default, IEnumerable<NetworkCloudAccessBridgeEndpoint> endpoints = default, NetworkCloudTransportProtocol? protocol = default, NetworkCloudAccessBridgeProvisioningState? provisioningState = default, ETag? eTag = default, Resources.Models.ExtendedLocation extendedLocation = default)
+        public static NetworkCloudAccessBridgeData NetworkCloudAccessBridgeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string ipv4ConnectedPrefix = default, string ipv6ConnectedPrefix = default, ResourceIdentifier networkId = default, IEnumerable<NetworkCloudAccessBridgeSecurityRule> securityRules = default, NetworkCloudAccessBridgeDetailedStatus? detailedStatus = default, string detailedStatusMessage = default, IEnumerable<NetworkCloudAccessBridgeEndpoint> endpoints = default, NetworkCloudTransportProtocol? protocol = default, NetworkCloudAccessBridgeProvisioningState? provisioningState = default, ETag? eTag = default, Resources.Models.ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -60,32 +60,32 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <param name="description"> The user provided value describing this rule. </param>
         /// <param name="direction"> The direction of allowed network traffic based on the rule. </param>
-        /// <param name="iPv4Addresses"> The set of IPv4 addresses permitted as the source or destination of the security rule. For as single address, utilize a /32 (CIDR notation). One or both Ipv4Addresses and Ipv6Addresses must be specified. Example formats: 10.10.10.10-10.10.10.20 or 10.10.10.10/24. </param>
-        /// <param name="iPv6Addresses"> The set of IPv6 addresses permitted as the source or destination of the security rule. For as single address, utilize a /128 (CIDR notation). One or both Ipv4Addresses and Ipv6Addresses must be specified. Example formats: 2001:db8:abcd::1-2001:db8:abcd::ff or 2001:db8:abcd::1/64. </param>
+        /// <param name="ipv4Addresses"> The set of IPv4 addresses permitted as the source or destination of the security rule. For as single address, utilize a /32 (CIDR notation). One or both Ipv4Addresses and Ipv6Addresses must be specified. Example formats: 10.10.10.10-10.10.10.20 or 10.10.10.10/24. </param>
+        /// <param name="ipv6Addresses"> The set of IPv6 addresses permitted as the source or destination of the security rule. For as single address, utilize a /128 (CIDR notation). One or both Ipv4Addresses and Ipv6Addresses must be specified. Example formats: 2001:db8:abcd::1-2001:db8:abcd::ff or 2001:db8:abcd::1/64. </param>
         /// <param name="port"> The source or destination port or port range. Example 24562 or 24562-24570. </param>
         /// <returns> A new <see cref="Models.NetworkCloudAccessBridgeSecurityRule"/> instance for mocking. </returns>
-        public static NetworkCloudAccessBridgeSecurityRule NetworkCloudAccessBridgeSecurityRule(string description = default, NetworkCloudSecurityRuleDirection direction = default, IEnumerable<string> iPv4Addresses = default, IEnumerable<string> iPv6Addresses = default, string port = default)
+        public static NetworkCloudAccessBridgeSecurityRule NetworkCloudAccessBridgeSecurityRule(string description = default, NetworkCloudSecurityRuleDirection direction = default, IEnumerable<string> ipv4Addresses = default, IEnumerable<string> ipv6Addresses = default, string port = default)
         {
-            iPv4Addresses ??= new ChangeTrackingList<string>();
-            iPv6Addresses ??= new ChangeTrackingList<string>();
+            ipv4Addresses ??= new ChangeTrackingList<string>();
+            ipv6Addresses ??= new ChangeTrackingList<string>();
 
             return new NetworkCloudAccessBridgeSecurityRule(
                 description,
                 direction,
-                (iPv4Addresses ?? new ChangeTrackingList<string>()).ToList(),
-                (iPv6Addresses ?? new ChangeTrackingList<string>()).ToList(),
+                (ipv4Addresses ?? new ChangeTrackingList<string>()).ToList(),
+                (ipv6Addresses ?? new ChangeTrackingList<string>()).ToList(),
                 port,
                 default);
         }
 
         /// <param name="fqdn"> The fully qualified domain name used to describe the certificate name for the endpoint. </param>
-        /// <param name="iPv4Address"> The IPv4 address associated with the endpoint. </param>
-        /// <param name="iPv6Address"> The IPv6 address associated with the endpoint. </param>
+        /// <param name="ipv4Address"> The IPv4 address associated with the endpoint. </param>
+        /// <param name="ipv6Address"> The IPv6 address associated with the endpoint. </param>
         /// <param name="name"> The name that identifies the type of endpoint (for example VIP or host). </param>
         /// <returns> A new <see cref="Models.NetworkCloudAccessBridgeEndpoint"/> instance for mocking. </returns>
-        public static NetworkCloudAccessBridgeEndpoint NetworkCloudAccessBridgeEndpoint(string fqdn = default, string iPv4Address = default, string iPv6Address = default, string name = default)
+        public static NetworkCloudAccessBridgeEndpoint NetworkCloudAccessBridgeEndpoint(string fqdn = default, string ipv4Address = default, string ipv6Address = default, string name = default)
         {
-            return new NetworkCloudAccessBridgeEndpoint(fqdn, iPv4Address, iPv6Address, name, default);
+            return new NetworkCloudAccessBridgeEndpoint(fqdn, ipv4Address, ipv6Address, name, default);
         }
 
         /// <param name="accessBridgePatchSecurityRules"> The list of security rules enforced by the access bridge. </param>
@@ -1594,8 +1594,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="hybridAksPluginType"> Field Deprecated. The field was previously optional, now it will have no defined behavior and will be ignored. The network plugin type for Hybrid AKS. </param>
         /// <param name="interfaceName"> The default interface name for this L3 network in the virtual machine. This name can be overridden by the name supplied in the network attachment configuration of that virtual machine. </param>
         /// <param name="ipAllocationType"> The type of the IP address allocation, defaulted to "DualStack". </param>
-        /// <param name="iPv4ConnectedPrefix"> The IPV4 prefix (CIDR) assigned to this L3 network. Required when the IP allocation type is IPV4 or DualStack. </param>
-        /// <param name="iPv6ConnectedPrefix"> The IPV6 prefix (CIDR) assigned to this L3 network. Required when the IP allocation type is IPV6 or DualStack. </param>
+        /// <param name="ipv4ConnectedPrefix"> The IPV4 prefix (CIDR) assigned to this L3 network. Required when the IP allocation type is IPV4 or DualStack. </param>
+        /// <param name="ipv6ConnectedPrefix"> The IPV6 prefix (CIDR) assigned to this L3 network. Required when the IP allocation type is IPV6 or DualStack. </param>
         /// <param name="l3IsolationDomainId"> The resource ID of the Network Fabric l3IsolationDomain. </param>
         /// <param name="vlan"> The VLAN from the l3IsolationDomain that is used for this network. </param>
         /// <param name="associatedResourceIds"> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </param>
@@ -1609,7 +1609,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="l3IsolationDomainId"/> is null. </exception>
         /// <returns> A new <see cref="NetworkCloud.NetworkCloudL3NetworkData"/> instance for mocking. </returns>
-        public static NetworkCloudL3NetworkData NetworkCloudL3NetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridAksIpamEnabled? hybridAksIpamEnabled = default, HybridAksPluginType? hybridAksPluginType = default, string interfaceName = default, IPAllocationType? ipAllocationType = default, string iPv4ConnectedPrefix = default, string iPv6ConnectedPrefix = default, ResourceIdentifier l3IsolationDomainId = default, long vlan = default, IEnumerable<ResourceIdentifier> associatedResourceIds = default, ResourceIdentifier clusterId = default, L3NetworkDetailedStatus? detailedStatus = default, string detailedStatusMessage = default, IEnumerable<ResourceIdentifier> hybridAksClustersAssociatedIds = default, IEnumerable<ResourceIdentifier> virtualMachinesAssociatedIds = default, L3NetworkProvisioningState? provisioningState = default, ETag? eTag = default, ExtendedLocation extendedLocation = default)
+        public static NetworkCloudL3NetworkData NetworkCloudL3NetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridAksIpamEnabled? hybridAksIpamEnabled = default, HybridAksPluginType? hybridAksPluginType = default, string interfaceName = default, IPAllocationType? ipAllocationType = default, string ipv4ConnectedPrefix = default, string ipv6ConnectedPrefix = default, ResourceIdentifier l3IsolationDomainId = default, long vlan = default, IEnumerable<ResourceIdentifier> associatedResourceIds = default, ResourceIdentifier clusterId = default, L3NetworkDetailedStatus? detailedStatus = default, string detailedStatusMessage = default, IEnumerable<ResourceIdentifier> hybridAksClustersAssociatedIds = default, IEnumerable<ResourceIdentifier> virtualMachinesAssociatedIds = default, L3NetworkProvisioningState? provisioningState = default, ETag? eTag = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

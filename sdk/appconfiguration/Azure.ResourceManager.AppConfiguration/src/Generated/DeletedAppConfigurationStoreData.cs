@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.AppConfiguration
 
         /// <summary> The deleted date. </summary>
         [WirePath("properties.deletionDate")]
-        public DateTimeOffset? DeletionOn
+        public DateTimeOffset? DeletedOn
         {
             get
             {
-                return Properties is null ? default : Properties.DeletionOn;
+                return Properties is null ? default : Properties.DeletedOn;
             }
         }
 

@@ -170,10 +170,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("networkInterface"u8);
                 writer.WriteObjectValue(NetworkInterface, options);
             }
-            if (Optional.IsDefined(ExpirationOn))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
-                writer.WriteStringValue(ExpirationOn.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(AllowClaim))
             {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             DevTestLabGalleryImageReference galleryImageReference = default;
             string planId = default;
             DevTestLabNetworkInterface networkInterface = default;
-            DateTimeOffset? expirationOn = default;
+            DateTimeOffset? expireOn = default;
             bool? allowClaim = default;
             string storageType = default;
             string environmentId = default;
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    expirationOn = prop.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("allowClaim"u8))
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 galleryImageReference,
                 planId,
                 networkInterface,
-                expirationOn,
+                expireOn,
                 allowClaim,
                 storageType,
                 environmentId,

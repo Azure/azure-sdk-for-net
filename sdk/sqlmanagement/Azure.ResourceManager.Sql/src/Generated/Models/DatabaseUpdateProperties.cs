@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="sourceDatabaseId"> The resource identifier of the source database associated with create operation of this database. </param>
         /// <param name="status"> The status of the database. </param>
         /// <param name="databaseId"> The ID of the database. </param>
-        /// <param name="creationOn"> The creation date of the database (ISO8601 format). </param>
+        /// <param name="createdOn"> The creation date of the database (ISO8601 format). </param>
         /// <param name="currentServiceObjectiveName"> The current service level objective name of the database. </param>
         /// <param name="requestedServiceObjectiveName"> The requested service level objective name of the database. </param>
         /// <param name="defaultSecondaryLocation"> The default secondary region for this database. </param>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="encryptionProtectorAutoRotation"> The flag to enable or disable auto rotation of database encryption protector AKV key. </param>
         /// <param name="provisioningState"> Specifies the provisioning state for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseUpdateProperties(SqlDatabaseCreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, ResourceIdentifier elasticPoolId, ResourceIdentifier sourceDatabaseId, SqlDatabaseStatus? status, Guid? databaseId, DateTimeOffset? creationOn, string currentServiceObjectiveName, string requestedServiceObjectiveName, AzureLocation? defaultSecondaryLocation, ResourceIdentifier failoverGroupId, DateTimeOffset? restorePointInTime, DateTimeOffset? sourceDatabaseDeletedOn, ResourceIdentifier recoveryServicesRecoveryPointId, ResourceIdentifier longTermRetentionBackupResourceId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? isZoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreOn, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, SqlSku currentSku, int? autoPauseDelay, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedOn, DateTimeOffset? resumedOn, ResourceIdentifier maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled, Guid? federatedClientId, IDictionary<string, SqlDatabaseKey> keys, string encryptionProtector, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, bool? useFreeLimit, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior, bool? manualCutover, bool? performCutover, bool? encryptionProtectorAutoRotation, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseUpdateProperties(SqlDatabaseCreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, ResourceIdentifier elasticPoolId, ResourceIdentifier sourceDatabaseId, SqlDatabaseStatus? status, Guid? databaseId, DateTimeOffset? createdOn, string currentServiceObjectiveName, string requestedServiceObjectiveName, AzureLocation? defaultSecondaryLocation, ResourceIdentifier failoverGroupId, DateTimeOffset? restorePointInTime, DateTimeOffset? sourceDatabaseDeletedOn, ResourceIdentifier recoveryServicesRecoveryPointId, ResourceIdentifier longTermRetentionBackupResourceId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? isZoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreOn, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, SqlSku currentSku, int? autoPauseDelay, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedOn, DateTimeOffset? resumedOn, ResourceIdentifier maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled, Guid? federatedClientId, IDictionary<string, SqlDatabaseKey> keys, string encryptionProtector, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, bool? useFreeLimit, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior, bool? manualCutover, bool? performCutover, bool? encryptionProtectorAutoRotation, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreateMode = createMode;
             Collation = collation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Sql.Models
             SourceDatabaseId = sourceDatabaseId;
             Status = status;
             DatabaseId = databaseId;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             CurrentServiceObjectiveName = currentServiceObjectiveName;
             RequestedServiceObjectiveName = requestedServiceObjectiveName;
             DefaultSecondaryLocation = defaultSecondaryLocation;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The creation date of the database (ISO8601 format). </summary>
         [WirePath("creationDate")]
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The current service level objective name of the database. </summary>
         [WirePath("currentServiceObjectiveName")]

@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             CosmosDBServiceSize? instanceSize = default;
             int? instanceCount = default;
             CosmosDBServiceType serviceType = default;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("instanceSize"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
             return new GraphApiComputeServiceProperties(
-                creationOn,
+                createdOn,
                 instanceSize,
                 instanceCount,
                 serviceType,

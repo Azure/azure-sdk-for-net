@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary> The time at which the transfer request expires. </summary>
         [WirePath("properties.expirationTime")]
-        public DateTimeOffset? ExpirationOn
+        public DateTimeOffset? ExpireOn
         {
             get
             {
-                return Properties is null ? default : Properties.ExpirationOn;
+                return Properties is null ? default : Properties.ExpireOn;
             }
         }
 

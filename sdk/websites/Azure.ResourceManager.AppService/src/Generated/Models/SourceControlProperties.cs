@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="token"> OAuth access token. </param>
         /// <param name="tokenSecret"> OAuth access token secret. </param>
         /// <param name="refreshToken"> OAuth refresh token. </param>
-        /// <param name="expirationOn"> OAuth token expiration. </param>
+        /// <param name="expireOn"> OAuth token expiration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SourceControlProperties(string token, string tokenSecret, string refreshToken, DateTimeOffset? expirationOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SourceControlProperties(string token, string tokenSecret, string refreshToken, DateTimeOffset? expireOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Token = token;
             TokenSecret = tokenSecret;
             RefreshToken = refreshToken;
-            ExpirationOn = expirationOn;
+            ExpireOn = expireOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> OAuth token expiration. </summary>
         [WirePath("expirationTime")]
-        public DateTimeOffset? ExpirationOn { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
     }
 }

@@ -1587,7 +1587,7 @@ namespace Azure.ResourceManager.AppService.Models
                 (errors ?? new ChangeTrackingList<ResponseError>()).ToList(),
                 createdOn,
                 modifiedOn,
-                default,
+                expireOn,
                 geoMasterOperationId,
                 default);
         }
@@ -1959,8 +1959,8 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                recommendationId is null && resourceId is null && resourceScope is null && ruleName is null && displayName is null && message is null && level is null && channels is null && categoryTags is null && actionName is null && enabled is null && states is null && startOn is null && endOn is null && nextNotificationOn is null && notificationExpirationOn is null && notifiedOn is null && score is null && isDynamic is null && extensionName is null && bladeName is null && forwardLink is null ? default : new RecommendationProperties(
-                    default,
+                createdOn is null && recommendationId is null && resourceId is null && resourceScope is null && ruleName is null && displayName is null && message is null && level is null && channels is null && categoryTags is null && actionName is null && enabled is null && states is null && startOn is null && endOn is null && nextNotificationOn is null && notificationExpirationOn is null && notifiedOn is null && score is null && isDynamic is null && extensionName is null && bladeName is null && forwardLink is null ? default : new RecommendationProperties(
+                    createdOn,
                     recommendationId,
                     resourceId,
                     resourceScope,
@@ -9430,7 +9430,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                token is null && tokenSecret is null && refreshToken is null ? default : new SourceControlProperties(token, tokenSecret, refreshToken, default, default),
+                token is null && tokenSecret is null && refreshToken is null && expireOn is null ? default : new SourceControlProperties(token, tokenSecret, refreshToken, expireOn, default),
                 kind,
                 default);
         }
@@ -10803,7 +10803,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                password is null && friendlyName is null && subjectName is null && hostNames is null && siteName is null && selfLink is null && issuer is null && issueOn is null && thumbprintString is null && isValid is null && publicKeyHash is null && hostingEnvironmentProfile is null && keyVaultId is null && keyVaultSecretName is null && keyVaultSecretStatus is null && serverFarmId is null && canonicalName is null && domainValidationMethod is null ? default : new CertificatePatchResourceProperties(
+                password is null && friendlyName is null && subjectName is null && hostNames is null && siteName is null && selfLink is null && issuer is null && issueOn is null && expireOn is null && thumbprintString is null && isValid is null && publicKeyHash is null && hostingEnvironmentProfile is null && keyVaultId is null && keyVaultSecretName is null && keyVaultSecretStatus is null && serverFarmId is null && canonicalName is null && domainValidationMethod is null ? default : new CertificatePatchResourceProperties(
                     password,
                     friendlyName,
                     subjectName,
@@ -10813,7 +10813,7 @@ namespace Azure.ResourceManager.AppService.Models
                     selfLink,
                     issuer,
                     issueOn,
-                    default,
+                    expireOn,
                     thumbprintString,
                     isValid,
                     default,

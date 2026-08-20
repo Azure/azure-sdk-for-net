@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="RestorableLocationResourceInfo"/>. </summary>
         /// <param name="locationName"> The location of the regional restorable account. </param>
         /// <param name="regionalDatabaseAccountInstanceId"> The instance id of the regional restorable account. </param>
-        /// <param name="creationOn"> The creation time of the regional restorable database account (ISO-8601 format). </param>
-        /// <param name="deletionOn"> The time at which the regional restorable database account has been deleted (ISO-8601 format). </param>
+        /// <param name="createdOn"> The creation time of the regional restorable database account (ISO-8601 format). </param>
+        /// <param name="deletedOn"> The time at which the regional restorable database account has been deleted (ISO-8601 format). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorableLocationResourceInfo(AzureLocation? locationName, string regionalDatabaseAccountInstanceId, DateTimeOffset? creationOn, DateTimeOffset? deletionOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorableLocationResourceInfo(AzureLocation? locationName, string regionalDatabaseAccountInstanceId, DateTimeOffset? createdOn, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LocationName = locationName;
             RegionalDatabaseAccountInstanceId = regionalDatabaseAccountInstanceId;
-            CreationOn = creationOn;
-            DeletionOn = deletionOn;
+            CreatedOn = createdOn;
+            DeletedOn = deletedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The creation time of the regional restorable database account (ISO-8601 format). </summary>
         [WirePath("creationTime")]
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The time at which the regional restorable database account has been deleted (ISO-8601 format). </summary>
         [WirePath("deletionTime")]
-        public DateTimeOffset? DeletionOn { get; }
+        public DateTimeOffset? DeletedOn { get; }
     }
 }

@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary> The creation time of the pool. </summary>
-        public DateTimeOffset? CreationOn
+        public DateTimeOffset? CreatedOn
         {
             get
             {
-                return Properties is null ? default : Properties.CreationOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 

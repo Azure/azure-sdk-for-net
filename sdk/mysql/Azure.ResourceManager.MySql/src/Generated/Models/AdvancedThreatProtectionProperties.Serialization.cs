@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 throw new FormatException($"The model {nameof(AdvancedThreatProtectionProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(CreationOn))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(State))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             AdvancedThreatProtectionState? state = default;
             AdvancedThreatProtectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("state"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AdvancedThreatProtectionProperties(creationOn, state, provisioningState, additionalBinaryDataProperties);
+            return new AdvancedThreatProtectionProperties(createdOn, state, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 location,
                 kind,
                 etag,
-                applicationId is null && appId is null && namePropertiesName is null && applicationType is null && flowType is null && requestSource is null && instrumentationKey is null && tenantId is null && hockeyAppId is null && hockeyAppToken is null && provisioningState is null && samplingPercentage is null && connectionString is null && retentionInDays is null && isDisableIPMasking is null && isImmediatePurgeDataOn30Days is null && workspaceResourceId is null && laMigrationOn is null && privateLinkScopedResources is null && publicNetworkAccessForIngestion is null && publicNetworkAccessForQuery is null && ingestionMode is null && isDisableLocalAuth is null && isForceCustomerStorageForProfiler is null ? default : new ApplicationInsightsComponentProperties(
+                applicationId is null && appId is null && namePropertiesName is null && applicationType is null && flowType is null && requestSource is null && instrumentationKey is null && createdOn is null && tenantId is null && hockeyAppId is null && hockeyAppToken is null && provisioningState is null && samplingPercentage is null && connectionString is null && retentionInDays is null && isDisableIPMasking is null && isImmediatePurgeDataOn30Days is null && workspaceResourceId is null && laMigrationOn is null && privateLinkScopedResources is null && publicNetworkAccessForIngestion is null && publicNetworkAccessForQuery is null && ingestionMode is null && isDisableLocalAuth is null && isForceCustomerStorageForProfiler is null ? default : new ApplicationInsightsComponentProperties(
                     applicationId,
                     appId,
                     namePropertiesName,
@@ -727,7 +727,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     flowType,
                     requestSource,
                     instrumentationKey,
-                    default,
+                    createdOn,
                     tenantId,
                     hockeyAppId,
                     hockeyAppToken,

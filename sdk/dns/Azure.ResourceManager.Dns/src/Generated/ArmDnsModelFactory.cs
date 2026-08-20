@@ -129,18 +129,18 @@ namespace Azure.ResourceManager.Dns.Models
                 default);
         }
 
-        /// <param name="iPv4Address"> The IPv4 address of this A record. </param>
+        /// <param name="ipv4Address"> The IPv4 address of this A record. </param>
         /// <returns> A new <see cref="Models.DnsARecordInfo"/> instance for mocking. </returns>
-        public static DnsARecordInfo DnsARecordInfo(IPAddress iPv4Address = default)
+        public static DnsARecordInfo DnsARecordInfo(IPAddress ipv4Address = default)
         {
-            return new DnsARecordInfo(iPv4Address, default);
+            return new DnsARecordInfo(ipv4Address, default);
         }
 
-        /// <param name="iPv6Address"> The IPv6 address of this AAAA record. </param>
+        /// <param name="ipv6Address"> The IPv6 address of this AAAA record. </param>
         /// <returns> A new <see cref="Models.DnsAaaaRecordInfo"/> instance for mocking. </returns>
-        public static DnsAaaaRecordInfo DnsAaaaRecordInfo(IPAddress iPv6Address = default)
+        public static DnsAaaaRecordInfo DnsAaaaRecordInfo(IPAddress ipv6Address = default)
         {
-            return new DnsAaaaRecordInfo(iPv6Address, default);
+            return new DnsAaaaRecordInfo(ipv6Address, default);
         }
 
         /// <param name="preference"> The preference value for this MX record. </param>

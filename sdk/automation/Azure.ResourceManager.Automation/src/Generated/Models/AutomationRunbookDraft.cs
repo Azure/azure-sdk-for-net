@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of <see cref="AutomationRunbookDraft"/>. </summary>
         /// <param name="isInEditMode"> Gets or sets whether runbook is in edit mode. </param>
         /// <param name="draftContentLink"> Gets or sets the draft runbook content link. </param>
-        /// <param name="creationOn"> Gets or sets the creation time of the runbook draft. </param>
+        /// <param name="createdOn"> Gets or sets the creation time of the runbook draft. </param>
         /// <param name="lastModifiedOn"> Gets or sets the last modified time of the runbook draft. </param>
         /// <param name="parameters"> Gets or sets the runbook draft parameters. </param>
         /// <param name="outputTypes"> Gets or sets the runbook output types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationRunbookDraft(bool? isInEditMode, AutomationContentLink draftContentLink, DateTimeOffset? creationOn, DateTimeOffset? lastModifiedOn, IDictionary<string, RunbookParameterDefinition> parameters, IList<string> outputTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutomationRunbookDraft(bool? isInEditMode, AutomationContentLink draftContentLink, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IDictionary<string, RunbookParameterDefinition> parameters, IList<string> outputTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsInEditMode = isInEditMode;
             DraftContentLink = draftContentLink;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             Parameters = parameters;
             OutputTypes = outputTypes;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Automation.Models
         public AutomationContentLink DraftContentLink { get; set; }
 
         /// <summary> Gets or sets the creation time of the runbook draft. </summary>
-        public DateTimeOffset? CreationOn { get; set; }
+        public DateTimeOffset? CreatedOn { get; set; }
 
         /// <summary> Gets or sets the last modified time of the runbook draft. </summary>
         public DateTimeOffset? LastModifiedOn { get; set; }

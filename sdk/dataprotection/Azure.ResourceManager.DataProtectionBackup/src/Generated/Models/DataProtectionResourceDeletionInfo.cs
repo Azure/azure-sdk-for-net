@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionResourceDeletionInfo"/>. </summary>
-        /// <param name="deletionOn"> Specifies time of deletion for the tracked resource (Backup Vault). </param>
+        /// <param name="deletedOn"> Specifies time of deletion for the tracked resource (Backup Vault). </param>
         /// <param name="scheduledPurgeOn"> Specifies the scheduled purge time for the tracked resource (Backup Vault). </param>
         /// <param name="deleteActivityId"> Delete activity ID for troubleshooting the deletion of the tracked resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionResourceDeletionInfo(DateTimeOffset? deletionOn, DateTimeOffset? scheduledPurgeOn, string deleteActivityId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataProtectionResourceDeletionInfo(DateTimeOffset? deletedOn, DateTimeOffset? scheduledPurgeOn, string deleteActivityId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DeletionOn = deletionOn;
+            DeletedOn = deletedOn;
             ScheduledPurgeOn = scheduledPurgeOn;
             DeleteActivityId = deleteActivityId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies time of deletion for the tracked resource (Backup Vault). </summary>
-        public DateTimeOffset? DeletionOn { get; }
+        public DateTimeOffset? DeletedOn { get; }
 
         /// <summary> Specifies the scheduled purge time for the tracked resource (Backup Vault). </summary>
         public DateTimeOffset? ScheduledPurgeOn { get; }

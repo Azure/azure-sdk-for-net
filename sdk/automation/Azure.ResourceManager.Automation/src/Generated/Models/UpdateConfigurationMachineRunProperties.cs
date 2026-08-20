@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="endOn"> End time of the software update configuration machine run. </param>
         /// <param name="configuredDuration"> configured duration for the software update configuration run. </param>
         /// <param name="job"> Job associated with the software update configuration machine run. </param>
-        /// <param name="creationOn"> Creation time of the resource, which only appears in the response. </param>
+        /// <param name="createdOn"> Creation time of the resource, which only appears in the response. </param>
         /// <param name="createdBy"> createdBy property, which only appears in the response. </param>
         /// <param name="lastModifiedOn"> Last time resource was modified, which only appears in the response. </param>
         /// <param name="lastModifiedBy"> lastModifiedBy property, which only appears in the response. </param>
         /// <param name="error"> Details of provisioning error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateConfigurationMachineRunProperties(ResourceIdentifier targetComputerId, string targetComputerType, UpdateConfigurationNavigation softwareUpdateConfiguration, string status, string osType, Guid? correlationId, Guid? sourceComputerId, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? configuredDuration, JobNavigation job, DateTimeOffset? creationOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, AutomationResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpdateConfigurationMachineRunProperties(ResourceIdentifier targetComputerId, string targetComputerType, UpdateConfigurationNavigation softwareUpdateConfiguration, string status, string osType, Guid? correlationId, Guid? sourceComputerId, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? configuredDuration, JobNavigation job, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, AutomationResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetComputerId = targetComputerId;
             TargetComputerType = targetComputerType;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Automation.Models
             EndOn = endOn;
             ConfiguredDuration = configuredDuration;
             Job = job;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             CreatedBy = createdBy;
             LastModifiedOn = lastModifiedOn;
             LastModifiedBy = lastModifiedBy;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
         internal JobNavigation Job { get; }
 
         /// <summary> Creation time of the resource, which only appears in the response. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> createdBy property, which only appears in the response. </summary>
         public string CreatedBy { get; }

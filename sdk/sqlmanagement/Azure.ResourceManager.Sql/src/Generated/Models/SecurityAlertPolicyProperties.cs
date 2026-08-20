@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). This blob storage will hold all Threat Detection audit logs. </param>
         /// <param name="storageAccountAccessKey"> Specifies the identifier key of the Threat Detection audit storage account. </param>
         /// <param name="retentionDays"> Specifies the number of days to keep in the Threat Detection audit logs. </param>
-        /// <param name="creationOn"> Specifies the UTC creation time of the policy. </param>
+        /// <param name="createdOn"> Specifies the UTC creation time of the policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityAlertPolicyProperties(SecurityAlertPolicyState state, IList<string> disabledAlerts, IList<string> emailAddresses, bool? sendToEmailAccountAdmins, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, DateTimeOffset? creationOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityAlertPolicyProperties(SecurityAlertPolicyState state, IList<string> disabledAlerts, IList<string> emailAddresses, bool? sendToEmailAccountAdmins, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             DisabledAlerts = disabledAlerts;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Sql.Models
             StorageEndpoint = storageEndpoint;
             StorageAccountAccessKey = storageAccountAccessKey;
             RetentionDays = retentionDays;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -79,6 +79,6 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Specifies the UTC creation time of the policy. </summary>
         [WirePath("creationTime")]
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
     }
 }

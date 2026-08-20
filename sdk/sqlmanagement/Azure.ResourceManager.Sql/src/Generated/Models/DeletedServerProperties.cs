@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Initializes a new instance of <see cref="DeletedServerProperties"/>. </summary>
         /// <param name="version"> The version of the deleted server. </param>
-        /// <param name="deletionOn"> The deletion time of the deleted server. </param>
+        /// <param name="deletedOn"> The deletion time of the deleted server. </param>
         /// <param name="originalId"> The original ID of the server before deletion. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the server. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedServerProperties(string version, DateTimeOffset? deletionOn, ResourceIdentifier originalId, string fullyQualifiedDomainName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeletedServerProperties(string version, DateTimeOffset? deletedOn, ResourceIdentifier originalId, string fullyQualifiedDomainName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
-            DeletionOn = deletionOn;
+            DeletedOn = deletedOn;
             OriginalId = originalId;
             FullyQualifiedDomainName = fullyQualifiedDomainName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The deletion time of the deleted server. </summary>
         [WirePath("deletionTime")]
-        public DateTimeOffset? DeletionOn { get; }
+        public DateTimeOffset? DeletedOn { get; }
 
         /// <summary> The original ID of the server before deletion. </summary>
         [WirePath("originalId")]

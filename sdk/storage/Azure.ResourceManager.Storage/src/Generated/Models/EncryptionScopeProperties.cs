@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of <see cref="EncryptionScopeProperties"/>. </summary>
         /// <param name="source"> The provider for the encryption scope. Possible values (case-insensitive):  Microsoft.Storage, Microsoft.KeyVault. </param>
         /// <param name="state"> The state of the encryption scope. Possible values (case-insensitive):  Enabled, Disabled. </param>
-        /// <param name="creationOn"> Gets the creation date and time of the encryption scope in UTC. </param>
+        /// <param name="createdOn"> Gets the creation date and time of the encryption scope in UTC. </param>
         /// <param name="lastModifiedOn"> Gets the last modification date and time of the encryption scope in UTC. </param>
         /// <param name="keyVaultProperties"> The key vault properties for the encryption scope. This is a required field if encryption scope 'source' attribute is set to 'Microsoft.KeyVault'. </param>
         /// <param name="requireInfrastructureEncryption"> A boolean indicating whether or not the service applies a secondary layer of encryption with platform managed keys for data at rest. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EncryptionScopeProperties(EncryptionScopeSource? source, EncryptionScopeState? state, DateTimeOffset? creationOn, DateTimeOffset? lastModifiedOn, EncryptionScopeKeyVaultProperties keyVaultProperties, bool? requireInfrastructureEncryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EncryptionScopeProperties(EncryptionScopeSource? source, EncryptionScopeState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, EncryptionScopeKeyVaultProperties keyVaultProperties, bool? requireInfrastructureEncryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             State = state;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             KeyVaultProperties = keyVaultProperties;
             RequireInfrastructureEncryption = requireInfrastructureEncryption;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Gets the creation date and time of the encryption scope in UTC. </summary>
         [WirePath("creationTime")]
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Gets the last modification date and time of the encryption scope in UTC. </summary>
         [WirePath("lastModifiedTime")]

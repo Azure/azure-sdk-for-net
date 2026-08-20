@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> The creation time of the job. </summary>
-        public DateTimeOffset? CreationOn
+        public DateTimeOffset? CreatedOn
         {
             get
             {
-                return Properties is null ? default : Properties.CreationOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 

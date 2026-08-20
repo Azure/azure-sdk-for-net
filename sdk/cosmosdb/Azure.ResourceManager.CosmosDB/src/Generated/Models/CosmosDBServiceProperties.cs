@@ -29,15 +29,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBServiceProperties"/>. </summary>
-        /// <param name="creationOn"> Time of the last state change (ISO-8601 format). </param>
+        /// <param name="createdOn"> Time of the last state change (ISO-8601 format). </param>
         /// <param name="instanceSize"> Instance type for the service. </param>
         /// <param name="instanceCount"> Instance count for the service. </param>
         /// <param name="serviceType"> ServiceType for the service. </param>
         /// <param name="status"> Describes the status of a service. </param>
         /// <param name="additionalProperties"></param>
-        internal CosmosDBServiceProperties(DateTimeOffset? creationOn, CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, CosmosDBServiceStatus? status, IDictionary<string, BinaryData> additionalProperties)
+        internal CosmosDBServiceProperties(DateTimeOffset? createdOn, CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, CosmosDBServiceStatus? status, IDictionary<string, BinaryData> additionalProperties)
         {
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             InstanceSize = instanceSize;
             InstanceCount = instanceCount;
             ServiceType = serviceType;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Time of the last state change (ISO-8601 format). </summary>
         [WirePath("creationTime")]
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Instance type for the service. </summary>
         [WirePath("instanceSize")]

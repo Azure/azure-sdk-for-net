@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error, options);
             }
-            if (Optional.IsDefined(CreationOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(LastModifiedOn))
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Automation.Models
             AutomationModuleProvisioningState? moduleProvisioningState = default;
             AutomationContentLink contentLink = default;
             AutomationModuleErrorInfo error = default;
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             DateTimeOffset? lastModifiedOn = default;
             string description = default;
             bool? isComposite = default;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedTime"u8))
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Automation.Models
                 moduleProvisioningState,
                 contentLink,
                 error,
-                creationOn,
+                createdOn,
                 lastModifiedOn,
                 description,
                 isComposite,

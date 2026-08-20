@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CreationOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(LastModifiedOn))
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Automation.Models
             string definition = default;
             IList<AutomationActivityParameterSet> parameterSets = default;
             IList<AutomationActivityOutputType> outputTypes = default;
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             DateTimeOffset? lastModifiedOn = default;
             string description = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedTime"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Automation.Models
                 definition,
                 parameterSets ?? new ChangeTrackingList<AutomationActivityParameterSet>(),
                 outputTypes ?? new ChangeTrackingList<AutomationActivityOutputType>(),
-                creationOn,
+                createdOn,
                 lastModifiedOn,
                 description,
                 additionalBinaryDataProperties);

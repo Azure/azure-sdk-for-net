@@ -488,13 +488,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <param name="expirationOn"> Expiration time of registration token. </param>
+        /// <param name="expireOn"> Expiration time of registration token. </param>
         /// <param name="token"> The registration token base64 encoded string. </param>
         /// <param name="registrationTokenOperation"> The type of resetting the token. </param>
         /// <returns> A new <see cref="Models.HostPoolRegistrationInfo"/> instance for mocking. </returns>
-        public static HostPoolRegistrationInfo HostPoolRegistrationInfo(DateTimeOffset? expirationOn = default, string token = default, HostPoolRegistrationTokenOperation? registrationTokenOperation = default)
+        public static HostPoolRegistrationInfo HostPoolRegistrationInfo(DateTimeOffset? expireOn = default, string token = default, HostPoolRegistrationTokenOperation? registrationTokenOperation = default)
         {
-            return new HostPoolRegistrationInfo(expirationOn, token, registrationTokenOperation, default);
+            return new HostPoolRegistrationInfo(expireOn, token, registrationTokenOperation, default);
         }
 
         /// <param name="updateType"> The type of maintenance for session host components. </param>
@@ -617,12 +617,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <param name="expirationOn"> Expiration time of registration token. </param>
+        /// <param name="expireOn"> Expiration time of registration token. </param>
         /// <param name="registrationTokenOperation"> The type of resetting the token. </param>
         /// <returns> A new <see cref="Models.HostPoolRegistrationInfoPatch"/> instance for mocking. </returns>
-        public static HostPoolRegistrationInfoPatch HostPoolRegistrationInfoPatch(DateTimeOffset? expirationOn = default, HostPoolRegistrationTokenOperation? registrationTokenOperation = default)
+        public static HostPoolRegistrationInfoPatch HostPoolRegistrationInfoPatch(DateTimeOffset? expireOn = default, HostPoolRegistrationTokenOperation? registrationTokenOperation = default)
         {
-            return new HostPoolRegistrationInfoPatch(expirationOn, registrationTokenOperation, default);
+            return new HostPoolRegistrationInfoPatch(expireOn, registrationTokenOperation, default);
         }
 
         /// <param name="updateType"> The type of maintenance for session host components. </param>
@@ -645,12 +645,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new MaintenanceWindowPatchProperties(hour, dayOfWeek, default);
         }
 
-        /// <param name="expirationOn"> Expiration time of registration token. </param>
+        /// <param name="expireOn"> Expiration time of registration token. </param>
         /// <param name="token"> The registration token base64 encoded string. </param>
         /// <returns> A new <see cref="Models.DesktopVirtualizationRegistrationTokenMinimal"/> instance for mocking. </returns>
-        public static DesktopVirtualizationRegistrationTokenMinimal DesktopVirtualizationRegistrationTokenMinimal(DateTimeOffset? expirationOn = default, string token = default)
+        public static DesktopVirtualizationRegistrationTokenMinimal DesktopVirtualizationRegistrationTokenMinimal(DateTimeOffset? expireOn = default, string token = default)
         {
-            return new DesktopVirtualizationRegistrationTokenMinimal(expirationOn, token, default);
+            return new DesktopVirtualizationRegistrationTokenMinimal(expireOn, token, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

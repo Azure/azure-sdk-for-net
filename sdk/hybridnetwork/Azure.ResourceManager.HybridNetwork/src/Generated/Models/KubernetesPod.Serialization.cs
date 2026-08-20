@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(CreationOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(Events))
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             int? desiredNumberOfContainers = default;
             int? readyNumberOfContainers = default;
             PodStatus? status = default;
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             IList<PodEvent> events = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("events"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 desiredNumberOfContainers,
                 readyNumberOfContainers,
                 status,
-                creationOn,
+                createdOn,
                 events ?? new ChangeTrackingList<PodEvent>(),
                 additionalBinaryDataProperties);
         }

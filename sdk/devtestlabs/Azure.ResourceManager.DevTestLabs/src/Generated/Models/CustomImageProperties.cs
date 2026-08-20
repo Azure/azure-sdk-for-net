@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="vhd"> The VHD from which the image is to be created. </param>
         /// <param name="description"> The description of the custom image. </param>
         /// <param name="author"> The author of the custom image. </param>
-        /// <param name="creationOn"> The creation date of the custom image. </param>
+        /// <param name="createdOn"> The creation date of the custom image. </param>
         /// <param name="managedImageId"> The Managed Image Id backing the custom image. </param>
         /// <param name="managedSnapshotId"> The Managed Snapshot Id backing the custom image. </param>
         /// <param name="dataDiskStorageInfo"> Storage information about the data disks present in the custom image. </param>
@@ -37,13 +37,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomImageProperties(DevTestLabCustomImageVm vm, DevTestLabCustomImageVhd vhd, string description, string author, DateTimeOffset? creationOn, string managedImageId, string managedSnapshotId, IList<DevTestLabDataDiskStorageTypeInfo> dataDiskStorageInfo, DevTestLabCustomImagePlan customImagePlan, bool? isPlanAuthorized, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomImageProperties(DevTestLabCustomImageVm vm, DevTestLabCustomImageVhd vhd, string description, string author, DateTimeOffset? createdOn, string managedImageId, string managedSnapshotId, IList<DevTestLabDataDiskStorageTypeInfo> dataDiskStorageInfo, DevTestLabCustomImagePlan customImagePlan, bool? isPlanAuthorized, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Vm = vm;
             Vhd = vhd;
             Description = description;
             Author = author;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             ManagedImageId = managedImageId;
             ManagedSnapshotId = managedSnapshotId;
             DataDiskStorageInfo = dataDiskStorageInfo;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string Author { get; set; }
 
         /// <summary> The creation date of the custom image. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The Managed Image Id backing the custom image. </summary>
         public string ManagedImageId { get; set; }

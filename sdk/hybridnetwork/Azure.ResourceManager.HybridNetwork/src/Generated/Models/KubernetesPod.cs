@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="desiredNumberOfContainers"> Desired number of containers. </param>
         /// <param name="readyNumberOfContainers"> Number of ready containers. </param>
         /// <param name="status"> The status of a pod. </param>
-        /// <param name="creationOn"> Creation Time of Pod. </param>
+        /// <param name="createdOn"> Creation Time of Pod. </param>
         /// <param name="events"> Last 5 Pod events. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KubernetesPod(string name, string @namespace, int? desiredNumberOfContainers, int? readyNumberOfContainers, PodStatus? status, DateTimeOffset? creationOn, IList<PodEvent> events, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KubernetesPod(string name, string @namespace, int? desiredNumberOfContainers, int? readyNumberOfContainers, PodStatus? status, DateTimeOffset? createdOn, IList<PodEvent> events, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Namespace = @namespace;
             DesiredNumberOfContainers = desiredNumberOfContainers;
             ReadyNumberOfContainers = readyNumberOfContainers;
             Status = status;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             Events = events;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public PodStatus? Status { get; }
 
         /// <summary> Creation Time of Pod. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Last 5 Pod events. </summary>
         public IList<PodEvent> Events { get; }

@@ -1673,7 +1673,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="closedBalance"> The balance as of the last invoice. </param>
         /// <param name="source"> The source of the lot. </param>
         /// <param name="startOn"> The date when the lot became effective. </param>
-        /// <param name="expirationOn"> The expiration date of a lot. </param>
+        /// <param name="expireOn"> The expiration date of a lot. </param>
         /// <param name="poNumber"> The po number of the invoice on which the lot was added. This property is not available for ConsumptionCommitment lots. </param>
         /// <param name="purchasedOn"> The date when the lot was added. </param>
         /// <param name="status"> The status of the lot. </param>
@@ -1688,19 +1688,19 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="usedAmount"> Amount consumed from the commitment. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="Models.ConsumptionLotSummary"/> instance for mocking. </returns>
-        public static ConsumptionLotSummary ConsumptionLotSummary(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConsumptionAmount originalAmount = default, ConsumptionAmount closedBalance = default, ConsumptionLotSource? source = default, DateTimeOffset? startOn = default, DateTimeOffset? expirationOn = default, string poNumber = default, DateTimeOffset? purchasedOn = default, ConsumptionLotStatus? status = default, string creditCurrency = default, string billingCurrency = default, ConsumptionAmountWithExchangeRate originalAmountInBillingCurrency = default, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = default, ConsumptionReseller reseller = default, bool? isEstimatedBalance = default, string propertiesETag = default, OrganizationType? organizationType = default, ConsumptionAmount usedAmount = default, ETag? eTag = default)
+        public static ConsumptionLotSummary ConsumptionLotSummary(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConsumptionAmount originalAmount = default, ConsumptionAmount closedBalance = default, ConsumptionLotSource? source = default, DateTimeOffset? startOn = default, DateTimeOffset? expireOn = default, string poNumber = default, DateTimeOffset? purchasedOn = default, ConsumptionLotStatus? status = default, string creditCurrency = default, string billingCurrency = default, ConsumptionAmountWithExchangeRate originalAmountInBillingCurrency = default, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = default, ConsumptionReseller reseller = default, bool? isEstimatedBalance = default, string propertiesETag = default, OrganizationType? organizationType = default, ConsumptionAmount usedAmount = default, ETag? eTag = default)
         {
             return new ConsumptionLotSummary(
                 id,
                 name,
                 resourceType,
                 systemData,
-                originalAmount is null && closedBalance is null && source is null && startOn is null && expirationOn is null && poNumber is null && purchasedOn is null && status is null && creditCurrency is null && billingCurrency is null && originalAmountInBillingCurrency is null && closedBalanceInBillingCurrency is null && reseller is null && isEstimatedBalance is null && propertiesETag is null && organizationType is null && usedAmount is null ? default : new LotProperties(
+                originalAmount is null && closedBalance is null && source is null && startOn is null && expireOn is null && poNumber is null && purchasedOn is null && status is null && creditCurrency is null && billingCurrency is null && originalAmountInBillingCurrency is null && closedBalanceInBillingCurrency is null && reseller is null && isEstimatedBalance is null && propertiesETag is null && organizationType is null && usedAmount is null ? default : new LotProperties(
                     originalAmount,
                     closedBalance,
                     source,
                     startOn,
-                    expirationOn,
+                    expireOn,
                     poNumber,
                     purchasedOn,
                     status,
@@ -1897,12 +1897,12 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                originalAmount is null && closedBalance is null && source is null && startOn is null && poNumber is null && purchasedOn is null && status is null && creditCurrency is null && billingCurrency is null && originalAmountInBillingCurrency is null && closedBalanceInBillingCurrency is null && reseller is null ? default : new LotProperties(
+                originalAmount is null && closedBalance is null && source is null && startOn is null && expireOn is null && poNumber is null && purchasedOn is null && status is null && creditCurrency is null && billingCurrency is null && originalAmountInBillingCurrency is null && closedBalanceInBillingCurrency is null && reseller is null ? default : new LotProperties(
                     originalAmount,
                     closedBalance,
                     source,
                     startOn,
-                    default,
+                    expireOn,
                     poNumber,
                     purchasedOn,
                     status,

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RecommendationProperties"/>. </summary>
-        /// <param name="creationOn"> Timestamp when this instance was created. </param>
+        /// <param name="createdOn"> Timestamp when this instance was created. </param>
         /// <param name="recommendationId"> A GUID value that each recommendation object is associated with. </param>
         /// <param name="resourceId"> Full ARM resource ID string that this recommendation object is associated with. </param>
         /// <param name="resourceScope"> Name of a resource type this recommendation applies, e.g. Subscription, ServerFarm, Site. </param>
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="bladeName"> Deep link to a blade on the portal. </param>
         /// <param name="forwardLink"> Forward link to an external document associated with the rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendationProperties(DateTimeOffset? creationOn, Guid? recommendationId, ResourceIdentifier resourceId, ResourceScopeType? resourceScope, string ruleName, string displayName, string message, NotificationLevel? level, RecommendationChannel? channels, IReadOnlyList<string> categoryTags, string actionName, int? enabled, IList<string> states, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? nextNotificationOn, DateTimeOffset? notificationExpirationOn, DateTimeOffset? notifiedOn, double? score, bool? isDynamic, string extensionName, string bladeName, string forwardLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecommendationProperties(DateTimeOffset? createdOn, Guid? recommendationId, ResourceIdentifier resourceId, ResourceScopeType? resourceScope, string ruleName, string displayName, string message, NotificationLevel? level, RecommendationChannel? channels, IReadOnlyList<string> categoryTags, string actionName, int? enabled, IList<string> states, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? nextNotificationOn, DateTimeOffset? notificationExpirationOn, DateTimeOffset? notifiedOn, double? score, bool? isDynamic, string extensionName, string bladeName, string forwardLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             RecommendationId = recommendationId;
             ResourceId = resourceId;
             ResourceScope = resourceScope;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Timestamp when this instance was created. </summary>
         [WirePath("creationTime")]
-        public DateTimeOffset? CreationOn { get; set; }
+        public DateTimeOffset? CreatedOn { get; set; }
 
         /// <summary> A GUID value that each recommendation object is associated with. </summary>
         [WirePath("recommendationId")]

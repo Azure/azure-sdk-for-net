@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Education.Models
                 writer.WritePropertyName("offerType"u8);
                 writer.WriteStringValue(OfferType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpirationOn))
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
-                writer.WriteStringValue(ExpirationOn.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Education.Models
             EducationAmount offerCap = default;
             DateTimeOffset? effectiveOn = default;
             EducationGrantType? offerType = default;
-            DateTimeOffset? expirationOn = default;
+            DateTimeOffset? expireOn = default;
             EducationGrantStatus? status = default;
             EducationAmount allocatedBudget = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Education.Models
                     {
                         continue;
                     }
-                    expirationOn = prop.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Education.Models
                 offerCap,
                 effectiveOn,
                 offerType,
-                expirationOn,
+                expireOn,
                 status,
                 allocatedBudget,
                 additionalBinaryDataProperties);

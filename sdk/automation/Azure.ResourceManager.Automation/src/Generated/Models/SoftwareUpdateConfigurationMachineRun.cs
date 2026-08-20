@@ -126,11 +126,11 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Creation time of the resource, which only appears in the response. </summary>
-        public DateTimeOffset? CreationOn
+        public DateTimeOffset? CreatedOn
         {
             get
             {
-                return Properties is null ? default : Properties.CreationOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 

@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CreationOn))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationDate"u8);
-                writer.WriteStringValue(CreationOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             string loginServer = default;
             IList<ContainerRegistryAuthCredential> authCredentials = default;
-            DateTimeOffset? creationOn = default;
+            DateTimeOffset? createdOn = default;
             ContainerRegistryProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    creationOn = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CredentialSetProperties(loginServer, authCredentials ?? new ChangeTrackingList<ContainerRegistryAuthCredential>(), creationOn, provisioningState, additionalBinaryDataProperties);
+            return new CredentialSetProperties(loginServer, authCredentials ?? new ChangeTrackingList<ContainerRegistryAuthCredential>(), createdOn, provisioningState, additionalBinaryDataProperties);
         }
     }
 }
