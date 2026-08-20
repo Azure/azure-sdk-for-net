@@ -77,7 +77,7 @@ internal class ForceSequentialNonceAuthenticatedCryptographicTransform : IAuthen
                 AcceptedNoncePatterns.ZeroIndexBigEndian12 => BinaryPrimitives.ReadInt64BigEndian(actualBytes.Slice(NonceLength - longLength)),// we will never exceed 8 bytes. we can cast to a long just fine.
                 AcceptedNoncePatterns.ZeroIndexBigEndianLeading8 => BinaryPrimitives.ReadInt64BigEndian(actualBytes.Slice(0, longLength)),
                 AcceptedNoncePatterns.OneIndexLittleEndianTrailing8 => BinaryPrimitives.ReadInt64LittleEndian(actualBytes.Slice(NonceLength - longLength)),
-                _ => throw new Exception(),
+                _ => throw new Exception("Missing switch case. Please report."),
             };
             long expected = _noncePattern.Value switch
             {
