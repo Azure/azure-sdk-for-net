@@ -13,12 +13,14 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.KubernetesConfiguration.Extensions
 {
+    /// <summary> Properties of an Extension resource. </summary>
     internal partial class KubernetesClusterExtensionProperties : ProvisionableConstruct
     {
         private BicepValue<string> _extensionType;
         private BicepValue<bool> _isAutoUpgradeMinorVersionEnabled;
         private BicepValue<string> _releaseTrain;
         private BicepValue<string> _version;
+        private KubernetesClusterExtensionScope _scope;
         private BicepDictionary<string> _configurationSettings;
         private BicepDictionary<string> _configurationProtectedSettings;
         private BicepValue<string> _currentVersion;
@@ -96,6 +98,21 @@ namespace Azure.Provisioning.KubernetesConfiguration.Extensions
             {
                 Initialize();
                 _version.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the Scope. </summary>
+        public KubernetesClusterExtensionScope Scope
+        {
+            get
+            {
+                Initialize();
+                return _scope;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _scope, value);
             }
         }
 
@@ -282,6 +299,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.Extensions
             _isAutoUpgradeMinorVersionEnabled = DefineProperty<bool>(nameof(IsAutoUpgradeMinorVersionEnabled), new string[] { "autoUpgradeMinorVersion" });
             _releaseTrain = DefineProperty<string>(nameof(ReleaseTrain), new string[] { "releaseTrain" });
             _version = DefineProperty<string>(nameof(Version), new string[] { "version" });
+            _scope = DefineModelProperty<KubernetesClusterExtensionScope>(nameof(Scope), new string[] { "scope" });
             _configurationSettings = DefineDictionaryProperty<string>(nameof(ConfigurationSettings), new string[] { "configurationSettings" });
             _configurationProtectedSettings = DefineDictionaryProperty<string>(nameof(ConfigurationProtectedSettings), new string[] { "configurationProtectedSettings" });
             _currentVersion = DefineProperty<string>(nameof(CurrentVersion), new string[] { "currentVersion" }, isOutput: true);

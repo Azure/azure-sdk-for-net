@@ -11,7 +11,6 @@ using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.KubernetesConfiguration.Extensions
 {
@@ -126,21 +125,6 @@ namespace Azure.Provisioning.KubernetesConfiguration.Extensions
             {
                 Initialize();
                 AssignOrReplace(ref _plan, value);
-            }
-        }
-
-        /// <summary> Gets or sets the Scope. </summary>
-        public ProvisionableResource Scope
-        {
-            get
-            {
-                Initialize();
-                return _scope.Value;
-            }
-            set
-            {
-                Initialize();
-                _scope.Value = value;
             }
         }
 
@@ -419,24 +403,6 @@ namespace Azure.Provisioning.KubernetesConfiguration.Extensions
                     Properties = new KubernetesClusterExtensionProperties();
                 }
                 return Properties.ExtensionState;
-            }
-        }
-
-        /// <summary> Gets or sets the InstallationScope. </summary>
-        [CodeGenMember("Scope")]
-        public KubernetesClusterExtensionScope InstallationScope
-        {
-            get
-            {
-                return Properties is null ? default : Properties.InstallationScope;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new KubernetesClusterExtensionProperties();
-                }
-                Properties.InstallationScope = value;
             }
         }
 
