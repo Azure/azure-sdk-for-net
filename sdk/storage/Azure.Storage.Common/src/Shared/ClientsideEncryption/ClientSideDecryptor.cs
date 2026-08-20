@@ -190,7 +190,6 @@ namespace Azure.Storage.Cryptography
             if (!CompatSwitches.CseV2AllowMisorderedAuthRegions)
             {
                 Argument.AssertInRange(initialAuthRegion, 0, long.MaxValue, nameof(initialAuthRegion));
-                // regions are 0-indexed, but nonce values are 1-indexed
                 transform = new ForceSequentialNonceAuthenticatedCryptographicTransform(transform, initialAuthRegion);
             }
             return new AuthenticatedRegionCryptoStream(
