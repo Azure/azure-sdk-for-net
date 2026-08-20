@@ -10,6 +10,8 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.CosmosDB;
 
+// CUSTOMIZATION: Retain the Mongo cluster API exposed by previous releases for compatibility. It
+// belongs to a separate TypeSpec service and is not generated with DocumentDB.
 /// <summary>
 /// MongoCluster.
 /// </summary>

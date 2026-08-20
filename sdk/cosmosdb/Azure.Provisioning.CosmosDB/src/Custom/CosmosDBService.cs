@@ -13,6 +13,8 @@ namespace Azure.Provisioning.CosmosDB;
 /// </summary>
 public partial class CosmosDBService
 {
+    // CUSTOMIZATION: Preserve the legacy Properties member for API compatibility. The current
+    // generator flattens this response model and cannot implement the member without extensibility.
     /// <summary>
     /// Services response resource.
     /// </summary>

@@ -8,6 +8,8 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB;
 
+// CUSTOMIZATION: Restore a supporting type for the preview-only graph resource API exposed by the
+// previous GA package but omitted from the selected stable TypeSpec version.
 /// <summary>
 /// The GraphResourceGetPropertiesOptions.
 /// </summary>

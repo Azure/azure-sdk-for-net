@@ -3,6 +3,7 @@
 
 using Microsoft.TypeSpec.Generator.Customizations;
 
+// CUSTOMIZATION: Restore the legacy PointInTimeRestore enum value omitted by the stable TypeSpec projection.
 [assembly: CodeGenEnumValue(
     "CosmosDBAccountCreateMode",
     "PointInTimeRestore",

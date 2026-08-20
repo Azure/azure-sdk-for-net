@@ -5,7 +5,8 @@ namespace Azure.Provisioning.CosmosDB;
 
 public partial class CosmosDBSqlUserDefinedFunction
 {
-    // This create-body-only property is not projected by the provisioning generator.
+    // CUSTOMIZATION: Restore this legacy create-body-only property, which is not projected by the
+    // provisioning generator.
     // Remove this customization when https://github.com/Azure/azure-sdk-for-net/issues/61011 is fixed.
     /// <summary>
     /// A key-value pair of options to be applied for the request.

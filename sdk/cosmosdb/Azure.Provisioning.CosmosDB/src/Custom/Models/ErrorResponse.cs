@@ -8,6 +8,7 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB;
 
+// CUSTOMIZATION: Preserve the legacy error wrapper used by the preview-only data transfer API.
 /// <summary>
 /// Error response.
 /// </summary>

@@ -8,6 +8,8 @@ namespace Azure.Provisioning.CosmosDB;
 
 public partial class MongoDBRoleDefinition
 {
+    // CUSTOMIZATION: Preserve the legacy property name after the generated API renamed it to
+    // RoleDefinitionType.
     /// <summary>
     /// Indicates whether the Role Definition was built-in or user created.
     /// </summary>

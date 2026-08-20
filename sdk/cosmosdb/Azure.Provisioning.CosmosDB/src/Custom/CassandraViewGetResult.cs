@@ -10,6 +10,8 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.CosmosDB;
 
+// CUSTOMIZATION: Restore the preview-only Cassandra view API from the previous GA package because
+// the selected stable TypeSpec version does not generate it.
 /// <summary>
 /// CassandraViewGetResult.
 /// </summary>

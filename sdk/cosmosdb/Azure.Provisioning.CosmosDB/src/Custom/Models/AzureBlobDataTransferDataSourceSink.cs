@@ -9,6 +9,8 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB;
 
+// CUSTOMIZATION: Restore a supporting type for the preview-only data transfer API exposed by the
+// previous GA package but omitted from the selected stable TypeSpec version.
 /// <summary>
 /// An Azure Blob Storage data source/sink.
 /// </summary>

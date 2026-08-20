@@ -5,6 +5,8 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB;
 
+// CUSTOMIZATION: Restore the create-body options model required by the legacy public API.
+// Remove this customization when https://github.com/Azure/azure-sdk-for-net/issues/61011 is fixed.
 /// <summary>
 /// A list of key-value pairs that describe a Cosmos DB resource create or update request.
 /// </summary>

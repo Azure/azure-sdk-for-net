@@ -5,6 +5,8 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB;
 
+// CUSTOMIZATION: Restore the result model required by the legacy CosmosDBAccount.GetKeys API, which
+// is not projected by the current provisioning generator.
 /// <summary>
 /// The access keys for the given database account.
 /// </summary>

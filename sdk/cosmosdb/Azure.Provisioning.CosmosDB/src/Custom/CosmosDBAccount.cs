@@ -8,6 +8,8 @@ namespace Azure.Provisioning.CosmosDB;
 
 public partial class CosmosDBAccount
 {
+    // CUSTOMIZATION: Preserve the legacy listKeys convenience API, which is not projected by the
+    // current provisioning generator.
     /// <summary>
     /// Get access keys for this CosmosDBAccount resource.
     /// </summary>
