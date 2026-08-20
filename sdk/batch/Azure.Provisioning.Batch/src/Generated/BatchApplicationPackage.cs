@@ -198,7 +198,7 @@ namespace Azure.Provisioning.Batch
             _properties = DefineModelProperty<ApplicationPackageProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _parent = DefineResource<BatchApplication>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<BatchApplication>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
