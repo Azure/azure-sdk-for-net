@@ -121,7 +121,7 @@ internal class ForceSequentialNonceAuthenticatedCryptographicTransform : IAuthen
             {
                 1 => matches[0],
                 0 => throw new CryptographicException($"Encountered out-of-order nonce in region {_nextRegion}."),
-                _ => default,
+                _ => null,
             };
         }
         _nextRegion += 1;
