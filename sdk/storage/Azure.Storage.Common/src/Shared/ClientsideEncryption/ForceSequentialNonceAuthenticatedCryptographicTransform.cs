@@ -95,6 +95,10 @@ internal class ForceSequentialNonceAuthenticatedCryptographicTransform : IAuthen
             using IDisposable _2 = ArrayPool<byte>.Shared.RentAsSpanDisposable(NonceLength, out Span<byte> zeroBigLead8);
             using IDisposable _3 = ArrayPool<byte>.Shared.RentAsSpanDisposable(NonceLength, out Span<byte> oneLittleTrailing8);
 
+            zeroBig12.Clear();
+            zeroBigLead8.Clear();
+            oneLittleTrailing8.Clear();
+
             BinaryPrimitives.WriteInt64BigEndian(zeroBig12.Slice(NonceLength - longLength), _nextRegion);
             BinaryPrimitives.WriteInt64BigEndian(zeroBigLead8.Slice(0, longLength), _nextRegion);
             BinaryPrimitives.WriteInt64LittleEndian(oneLittleTrailing8.Slice(NonceLength - longLength), _nextRegion + 1);
