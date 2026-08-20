@@ -315,7 +315,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="required"> Whether or not this parameter is required. </param>
         /// <param name="allowed"> An array of allowed values. </param>
         /// <returns> A new <see cref="Models.EnvironmentDefinitionParameter"/> instance for mocking. </returns>
-        public static EnvironmentDefinitionParameter EnvironmentDefinitionParameter(string id = default, string name = default, string description = default, string defaultValue = default, EnvironmentDefinitionParameterType parameterType = default, bool? readOnly = default, bool @required = default, IEnumerable<string> allowed = default)
+        public static EnvironmentDefinitionParameter EnvironmentDefinitionParameter(string id = default, string name = default, string description = default, string defaultValue = default, EnvironmentDefinitionParameterType parameterType = default, bool? readOnly = default, bool @required = false, IEnumerable<string> allowed = default)
         {
             allowed ??= new ChangeTrackingList<string>();
 

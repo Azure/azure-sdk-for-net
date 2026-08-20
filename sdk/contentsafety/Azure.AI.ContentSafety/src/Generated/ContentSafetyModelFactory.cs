@@ -184,7 +184,7 @@ namespace Azure.AI.ContentSafety
         /// <param name="text"> BlocklistItem content. The length is counted using Unicode code point. </param>
         /// <param name="isRegex"> An optional properties indicating whether this item is to be matched as a regular expression. </param>
         /// <returns> A new <see cref="ContentSafety.TextBlocklistItem"/> instance for mocking. </returns>
-        public static TextBlocklistItem TextBlocklistItem(string blocklistItemId = default, string description = default, string text = default, bool? isRegex = default)
+        public static TextBlocklistItem TextBlocklistItem(string blocklistItemId, string description, string text, bool? isRegex)
         {
             return new TextBlocklistItem(blocklistItemId, description, text, isRegex, additionalBinaryDataProperties: null);
         }

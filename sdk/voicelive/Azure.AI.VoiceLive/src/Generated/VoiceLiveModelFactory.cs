@@ -38,7 +38,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="logprob"> The log probability of the token. </param>
         /// <param name="bytes"> The bytes that were used to generate the log probability. </param>
         /// <returns> A new <see cref="VoiceLive.LogProbProperties"/> instance for mocking. </returns>
-        public static LogProbProperties LogProbProperties(string token = default, float logprob = default, BinaryData bytes = default)
+        public static LogProbProperties LogProbProperties(string token = default, float logprob = 0F, BinaryData bytes = default)
         {
             return new LogProbProperties(token, logprob, bytes, additionalBinaryDataProperties: null);
         }
@@ -538,7 +538,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="width"> Width of the video in pixels. Must be greater than 0. </param>
         /// <param name="height"> Height of the video in pixels. Must be greater than 0. </param>
         /// <returns> A new <see cref="VoiceLive.VideoResolution"/> instance for mocking. </returns>
-        public static VideoResolution VideoResolution(int width = default, int height = default)
+        public static VideoResolution VideoResolution(int width = 0, int height = 0)
         {
             return new VideoResolution(width, height, additionalBinaryDataProperties: null);
         }
@@ -606,7 +606,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputProtocol"> Output protocol for avatar streaming. Default is 'webrtc'. </param>
         /// <param name="auditOutputAudio"> When enabled, forwards audit audio via WebSocket for review/debugging purposes, even when avatar output is delivered via WebRTC. </param>
         /// <returns> A new <see cref="VoiceLive.AvatarConfiguration"/> instance for mocking. </returns>
-        public static AvatarConfiguration AvatarConfiguration(AvatarConfigKind? avatarKind = default, IEnumerable<IceServer> iceServers = default, string character = default, string style = default, PhotoAvatarBaseMode? baseMode = default, bool customized = default, VideoParams video = default, SceneParams scene = default, AvatarOutputProtocol? outputProtocol = default, bool? auditOutputAudio = default)
+        public static AvatarConfiguration AvatarConfiguration(AvatarConfigKind? avatarKind = default, IEnumerable<IceServer> iceServers = default, string character = default, string style = default, PhotoAvatarBaseMode? baseMode = default, bool customized = false, VideoParams video = default, SceneParams scene = default, AvatarOutputProtocol? outputProtocol = default, bool? auditOutputAudio = default)
         {
             iceServers ??= new ChangeTrackingList<IceServer>();
 
@@ -1221,7 +1221,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="approve"> Whether the tool call was approved. </param>
         /// <param name="reason"> The reason for the approval decision. </param>
         /// <returns> A new <see cref="VoiceLive.SessionResponseMcpApprovalResponseItem"/> instance for mocking. </returns>
-        public static SessionResponseMcpApprovalResponseItem SessionResponseMcpApprovalResponseItem(string id = default, string @object = default, string approvalRequestId = default, bool approve = default, string reason = default)
+        public static SessionResponseMcpApprovalResponseItem SessionResponseMcpApprovalResponseItem(string id = default, string @object = default, string approvalRequestId = default, bool approve = false, string reason = default)
         {
             return new SessionResponseMcpApprovalResponseItem(
                 ItemType.McpApprovalResponse,
@@ -1290,7 +1290,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="audioTokens"> Number of cached audio tokens. </param>
         /// <param name="imageTokens"> Number of cached image tokens. </param>
         /// <returns> A new <see cref="VoiceLive.CachedTokenDetails"/> instance for mocking. </returns>
-        public static CachedTokenDetails CachedTokenDetails(int textTokens = default, int audioTokens = default, int imageTokens = default)
+        public static CachedTokenDetails CachedTokenDetails(int textTokens = 0, int audioTokens = 0, int imageTokens = 0)
         {
             return new CachedTokenDetails(textTokens, audioTokens, imageTokens, additionalBinaryDataProperties: null);
         }
@@ -1302,7 +1302,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="imageTokens"> Number of image tokens used in the input. </param>
         /// <param name="cachedTokensDetails"> Details of cached token usage. </param>
         /// <returns> A new <see cref="VoiceLive.InputTokenDetails"/> instance for mocking. </returns>
-        public static InputTokenDetails InputTokenDetails(int cachedTokens = default, int textTokens = default, int audioTokens = default, int imageTokens = default, CachedTokenDetails cachedTokensDetails = default)
+        public static InputTokenDetails InputTokenDetails(int cachedTokens = 0, int textTokens = 0, int audioTokens = 0, int imageTokens = 0, CachedTokenDetails cachedTokensDetails = default)
         {
             return new InputTokenDetails(
                 cachedTokens,
@@ -1318,7 +1318,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="audioTokens"> Number of audio tokens generated in the output. </param>
         /// <param name="reasoningTokens"> Number of reasoning tokens generated in the output. </param>
         /// <returns> A new <see cref="VoiceLive.OutputTokenDetails"/> instance for mocking. </returns>
-        public static OutputTokenDetails OutputTokenDetails(int textTokens = default, int audioTokens = default, int? reasoningTokens = default)
+        public static OutputTokenDetails OutputTokenDetails(int textTokens = 0, int audioTokens = 0, int? reasoningTokens = default)
         {
             return new OutputTokenDetails(textTokens, audioTokens, reasoningTokens, additionalBinaryDataProperties: null);
         }
@@ -1330,7 +1330,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="inputTokenDetails"> Detailed breakdown of input tokens. </param>
         /// <param name="outputTokenDetails"> Detailed breakdown of output tokens. </param>
         /// <returns> A new <see cref="VoiceLive.ResponseTokenStatistics"/> instance for mocking. </returns>
-        public static ResponseTokenStatistics ResponseTokenStatistics(int totalTokens = default, int inputTokens = default, int outputTokens = default, InputTokenDetails inputTokenDetails = default, OutputTokenDetails outputTokenDetails = default)
+        public static ResponseTokenStatistics ResponseTokenStatistics(int totalTokens = 0, int inputTokens = 0, int outputTokens = 0, InputTokenDetails inputTokenDetails = default, OutputTokenDetails outputTokenDetails = default)
         {
             return new ResponseTokenStatistics(
                 totalTokens,
@@ -1551,7 +1551,7 @@ namespace Azure.AI.VoiceLive
         /// </param>
         /// <param name="itemId"> The ID of the user message item that will be created when speech stops. </param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStarted"/> instance for mocking. </returns>
-        public static SessionUpdateInputAudioBufferSpeechStarted SessionUpdateInputAudioBufferSpeechStarted(string eventId = default, int audioStartMs = default, string itemId = default)
+        public static SessionUpdateInputAudioBufferSpeechStarted SessionUpdateInputAudioBufferSpeechStarted(string eventId = default, int audioStartMs = 0, string itemId = default)
         {
             return new SessionUpdateInputAudioBufferSpeechStarted(ServerEventType.InputAudioBufferSpeechStarted, eventId, additionalBinaryDataProperties: null, audioStartMs, itemId);
         }
@@ -1569,7 +1569,7 @@ namespace Azure.AI.VoiceLive
         /// </param>
         /// <param name="itemId"> The ID of the user message item that will be created. </param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStopped"/> instance for mocking. </returns>
-        public static SessionUpdateInputAudioBufferSpeechStopped SessionUpdateInputAudioBufferSpeechStopped(string eventId = default, int audioEndMs = default, string itemId = default)
+        public static SessionUpdateInputAudioBufferSpeechStopped SessionUpdateInputAudioBufferSpeechStopped(string eventId = default, int audioEndMs = 0, string itemId = default)
         {
             return new SessionUpdateInputAudioBufferSpeechStopped(ServerEventType.InputAudioBufferSpeechStopped, eventId, additionalBinaryDataProperties: null, audioEndMs, itemId);
         }
@@ -1615,7 +1615,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="logProbs"> The log probabilities of the transcription tokens. </param>
         /// <param name="phrases"> The transcription phrases with timing information. </param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionCompleted"/> instance for mocking. </returns>
-        public static SessionUpdateConversationItemInputAudioTranscriptionCompleted SessionUpdateConversationItemInputAudioTranscriptionCompleted(string eventId = default, string itemId = default, int contentIndex = default, string transcript = default, IEnumerable<LogProbProperties> logProbs = default, IEnumerable<TranscriptionPhrase> phrases = default)
+        public static SessionUpdateConversationItemInputAudioTranscriptionCompleted SessionUpdateConversationItemInputAudioTranscriptionCompleted(string eventId = default, string itemId = default, int contentIndex = 0, string transcript = default, IEnumerable<LogProbProperties> logProbs = default, IEnumerable<TranscriptionPhrase> phrases = default)
         {
             logProbs ??= new ChangeTrackingList<LogProbProperties>();
             phrases ??= new ChangeTrackingList<TranscriptionPhrase>();
@@ -1639,7 +1639,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="locale"> The locale of the transcription (e.g., 'en-US'). </param>
         /// <param name="confidence"> The confidence score of the transcription. </param>
         /// <returns> A new <see cref="VoiceLive.TranscriptionPhrase"/> instance for mocking. </returns>
-        public static TranscriptionPhrase TranscriptionPhrase(int offsetMilliseconds = default, int durationMilliseconds = default, string text = default, IEnumerable<TranscriptionWord> words = default, string locale = default, float? confidence = default)
+        public static TranscriptionPhrase TranscriptionPhrase(int offsetMilliseconds = 0, int durationMilliseconds = 0, string text = default, IEnumerable<TranscriptionWord> words = default, string locale = default, float? confidence = default)
         {
             words ??= new ChangeTrackingList<TranscriptionWord>();
 
@@ -1658,7 +1658,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="offsetMilliseconds"> Offset from the start of the audio in milliseconds. </param>
         /// <param name="durationMilliseconds"> Duration of the word in milliseconds. </param>
         /// <returns> A new <see cref="VoiceLive.TranscriptionWord"/> instance for mocking. </returns>
-        public static TranscriptionWord TranscriptionWord(string text = default, int offsetMilliseconds = default, int durationMilliseconds = default)
+        public static TranscriptionWord TranscriptionWord(string text = default, int offsetMilliseconds = 0, int durationMilliseconds = 0)
         {
             return new TranscriptionWord(text, offsetMilliseconds, durationMilliseconds, additionalBinaryDataProperties: null);
         }
@@ -1673,7 +1673,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="contentIndex"> The index of the content part containing the audio. </param>
         /// <param name="error"> Details of the transcription error. </param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed"/> instance for mocking. </returns>
-        public static SessionUpdateConversationItemInputAudioTranscriptionFailed SessionUpdateConversationItemInputAudioTranscriptionFailed(string eventId = default, string itemId = default, int contentIndex = default, VoiceLiveErrorDetails error = default)
+        public static SessionUpdateConversationItemInputAudioTranscriptionFailed SessionUpdateConversationItemInputAudioTranscriptionFailed(string eventId = default, string itemId = default, int contentIndex = 0, VoiceLiveErrorDetails error = default)
         {
             return new SessionUpdateConversationItemInputAudioTranscriptionFailed(
                 ServerEventType.ConversationItemInputAudioTranscriptionFailed,
@@ -1728,7 +1728,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"> The index of the output item in the Response. </param>
         /// <param name="item"></param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseOutputItemAdded"/> instance for mocking. </returns>
-        public static SessionUpdateResponseOutputItemAdded SessionUpdateResponseOutputItemAdded(string eventId = default, string responseId = default, int outputIndex = default, SessionResponseItem item = default)
+        public static SessionUpdateResponseOutputItemAdded SessionUpdateResponseOutputItemAdded(string eventId = default, string responseId = default, int outputIndex = 0, SessionResponseItem item = default)
         {
             return new SessionUpdateResponseOutputItemAdded(
                 ServerEventType.ResponseOutputItemAdded,
@@ -1748,7 +1748,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"> The index of the output item in the Response. </param>
         /// <param name="item"></param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseOutputItemDone"/> instance for mocking. </returns>
-        public static SessionUpdateResponseOutputItemDone SessionUpdateResponseOutputItemDone(string eventId = default, string responseId = default, int outputIndex = default, SessionResponseItem item = default)
+        public static SessionUpdateResponseOutputItemDone SessionUpdateResponseOutputItemDone(string eventId = default, string responseId = default, int outputIndex = 0, SessionResponseItem item = default)
         {
             return new SessionUpdateResponseOutputItemDone(
                 ServerEventType.ResponseOutputItemDone,
@@ -1770,7 +1770,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
         /// <param name="part"> The content part that was added. </param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseContentPartAdded"/> instance for mocking. </returns>
-        public static SessionUpdateResponseContentPartAdded SessionUpdateResponseContentPartAdded(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, VoiceLiveContentPart part = default)
+        public static SessionUpdateResponseContentPartAdded SessionUpdateResponseContentPartAdded(string eventId = default, string responseId = default, string itemId = default, int outputIndex = 0, int contentIndex = 0, VoiceLiveContentPart part = default)
         {
             return new SessionUpdateResponseContentPartAdded(
                 ServerEventType.ResponseContentPartAdded,
@@ -1794,7 +1794,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
         /// <param name="part"> The content part that is done. </param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseContentPartDone"/> instance for mocking. </returns>
-        public static SessionUpdateResponseContentPartDone SessionUpdateResponseContentPartDone(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, VoiceLiveContentPart part = default)
+        public static SessionUpdateResponseContentPartDone SessionUpdateResponseContentPartDone(string eventId = default, string responseId = default, string itemId = default, int outputIndex = 0, int contentIndex = 0, VoiceLiveContentPart part = default)
         {
             return new SessionUpdateResponseContentPartDone(
                 ServerEventType.ResponseContentPartDone,
@@ -1815,7 +1815,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
         /// <param name="delta"> The text delta. </param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseTextDelta"/> instance for mocking. </returns>
-        public static SessionUpdateResponseTextDelta SessionUpdateResponseTextDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, string delta = default)
+        public static SessionUpdateResponseTextDelta SessionUpdateResponseTextDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = 0, int contentIndex = 0, string delta = default)
         {
             return new SessionUpdateResponseTextDelta(
                 ServerEventType.ResponseTextDelta,
@@ -1839,7 +1839,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
         /// <param name="text"> The final text content. </param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseTextDone"/> instance for mocking. </returns>
-        public static SessionUpdateResponseTextDone SessionUpdateResponseTextDone(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, string text = default)
+        public static SessionUpdateResponseTextDone SessionUpdateResponseTextDone(string eventId = default, string responseId = default, string itemId = default, int outputIndex = 0, int contentIndex = 0, string text = default)
         {
             return new SessionUpdateResponseTextDone(
                 ServerEventType.ResponseTextDone,
@@ -1860,7 +1860,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
         /// <param name="delta"> The transcript delta. </param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseAudioTranscriptDelta"/> instance for mocking. </returns>
-        public static SessionUpdateResponseAudioTranscriptDelta SessionUpdateResponseAudioTranscriptDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, string delta = default)
+        public static SessionUpdateResponseAudioTranscriptDelta SessionUpdateResponseAudioTranscriptDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = 0, int contentIndex = 0, string delta = default)
         {
             return new SessionUpdateResponseAudioTranscriptDelta(
                 ServerEventType.ResponseAudioTranscriptDelta,
@@ -1885,7 +1885,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
         /// <param name="transcript"> The final transcript of the audio. </param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseAudioTranscriptDone"/> instance for mocking. </returns>
-        public static SessionUpdateResponseAudioTranscriptDone SessionUpdateResponseAudioTranscriptDone(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, string transcript = default)
+        public static SessionUpdateResponseAudioTranscriptDone SessionUpdateResponseAudioTranscriptDone(string eventId = default, string responseId = default, string itemId = default, int outputIndex = 0, int contentIndex = 0, string transcript = default)
         {
             return new SessionUpdateResponseAudioTranscriptDone(
                 ServerEventType.ResponseAudioTranscriptDone,
@@ -1906,7 +1906,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
         /// <param name="delta"> Base64-encoded audio data delta. </param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseAudioDelta"/> instance for mocking. </returns>
-        public static SessionUpdateResponseAudioDelta SessionUpdateResponseAudioDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, BinaryData delta = default)
+        public static SessionUpdateResponseAudioDelta SessionUpdateResponseAudioDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = 0, int contentIndex = 0, BinaryData delta = default)
         {
             return new SessionUpdateResponseAudioDelta(
                 ServerEventType.ResponseAudioDelta,
@@ -1929,7 +1929,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseAudioDone"/> instance for mocking. </returns>
-        public static SessionUpdateResponseAudioDone SessionUpdateResponseAudioDone(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default)
+        public static SessionUpdateResponseAudioDone SessionUpdateResponseAudioDone(string eventId = default, string responseId = default, string itemId = default, int outputIndex = 0, int contentIndex = 0)
         {
             return new SessionUpdateResponseAudioDone(
                 ServerEventType.ResponseAudioDone,
@@ -1950,7 +1950,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="frames"></param>
         /// <param name="frameIndex"></param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta"/> instance for mocking. </returns>
-        public static SessionUpdateResponseAnimationBlendshapeDelta SessionUpdateResponseAnimationBlendshapeDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, BinaryData frames = default, int frameIndex = default)
+        public static SessionUpdateResponseAnimationBlendshapeDelta SessionUpdateResponseAnimationBlendshapeDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = 0, int contentIndex = 0, BinaryData frames = default, int frameIndex = 0)
         {
             return new SessionUpdateResponseAnimationBlendshapeDelta(
                 ServerEventType.ResponseAnimationBlendshapesDelta,
@@ -1970,7 +1970,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseAnimationBlendshapeDone"/> instance for mocking. </returns>
-        public static SessionUpdateResponseAnimationBlendshapeDone SessionUpdateResponseAnimationBlendshapeDone(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default)
+        public static SessionUpdateResponseAnimationBlendshapeDone SessionUpdateResponseAnimationBlendshapeDone(string eventId = default, string responseId = default, string itemId = default, int outputIndex = 0)
         {
             return new SessionUpdateResponseAnimationBlendshapeDone(
                 ServerEventType.ResponseAnimationBlendshapesDone,
@@ -1991,7 +1991,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="audioDurationMs"></param>
         /// <param name="text"></param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDelta"/> instance for mocking. </returns>
-        public static SessionUpdateResponseAudioTimestampDelta SessionUpdateResponseAudioTimestampDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, int audioOffsetMs = default, int audioDurationMs = default, string text = default)
+        public static SessionUpdateResponseAudioTimestampDelta SessionUpdateResponseAudioTimestampDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = 0, int contentIndex = 0, int audioOffsetMs = 0, int audioDurationMs = 0, string text = default)
         {
             return new SessionUpdateResponseAudioTimestampDelta(
                 ServerEventType.ResponseAudioTimestampDelta,
@@ -2014,7 +2014,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"></param>
         /// <param name="contentIndex"></param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDone"/> instance for mocking. </returns>
-        public static SessionUpdateResponseAudioTimestampDone SessionUpdateResponseAudioTimestampDone(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default)
+        public static SessionUpdateResponseAudioTimestampDone SessionUpdateResponseAudioTimestampDone(string eventId = default, string responseId = default, string itemId = default, int outputIndex = 0, int contentIndex = 0)
         {
             return new SessionUpdateResponseAudioTimestampDone(
                 ServerEventType.ResponseAudioTimestampDone,
@@ -2035,7 +2035,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="audioOffsetMs"></param>
         /// <param name="visemeId"></param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseAnimationVisemeDelta"/> instance for mocking. </returns>
-        public static SessionUpdateResponseAnimationVisemeDelta SessionUpdateResponseAnimationVisemeDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, int audioOffsetMs = default, int visemeId = default)
+        public static SessionUpdateResponseAnimationVisemeDelta SessionUpdateResponseAnimationVisemeDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = 0, int contentIndex = 0, int audioOffsetMs = 0, int visemeId = 0)
         {
             return new SessionUpdateResponseAnimationVisemeDelta(
                 ServerEventType.ResponseAnimationVisemeDelta,
@@ -2056,7 +2056,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"></param>
         /// <param name="contentIndex"></param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseAnimationVisemeDone"/> instance for mocking. </returns>
-        public static SessionUpdateResponseAnimationVisemeDone SessionUpdateResponseAnimationVisemeDone(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default)
+        public static SessionUpdateResponseAnimationVisemeDone SessionUpdateResponseAnimationVisemeDone(string eventId = default, string responseId = default, string itemId = default, int outputIndex = 0, int contentIndex = 0)
         {
             return new SessionUpdateResponseAnimationVisemeDone(
                 ServerEventType.ResponseAnimationVisemeDone,
@@ -2106,7 +2106,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="callId"> The ID of the function call. </param>
         /// <param name="delta"> The arguments delta as a JSON string. </param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDelta"/> instance for mocking. </returns>
-        public static SessionUpdateResponseFunctionCallArgumentsDelta SessionUpdateResponseFunctionCallArgumentsDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, string callId = default, string delta = default)
+        public static SessionUpdateResponseFunctionCallArgumentsDelta SessionUpdateResponseFunctionCallArgumentsDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = 0, string callId = default, string delta = default)
         {
             return new SessionUpdateResponseFunctionCallArgumentsDelta(
                 ServerEventType.ResponseFunctionCallArgumentsDelta,
@@ -2131,7 +2131,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="arguments"> The final arguments as a JSON string. </param>
         /// <param name="name"> The name of the function call. </param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDone"/> instance for mocking. </returns>
-        public static SessionUpdateResponseFunctionCallArgumentsDone SessionUpdateResponseFunctionCallArgumentsDone(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, string callId = default, string arguments = default, string name = default)
+        public static SessionUpdateResponseFunctionCallArgumentsDone SessionUpdateResponseFunctionCallArgumentsDone(string eventId = default, string responseId = default, string itemId = default, int outputIndex = 0, string callId = default, string arguments = default, string name = default)
         {
             return new SessionUpdateResponseFunctionCallArgumentsDone(
                 ServerEventType.ResponseFunctionCallArgumentsDone,
@@ -2180,7 +2180,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"> The index of the output associated with the event. </param>
         /// <param name="obfuscation"> The obfuscation of the arguments. </param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseMcpCallArgumentsDelta"/> instance for mocking. </returns>
-        public static SessionUpdateResponseMcpCallArgumentsDelta SessionUpdateResponseMcpCallArgumentsDelta(string eventId = default, string delta = default, string itemId = default, string responseId = default, int outputIndex = default, string obfuscation = default)
+        public static SessionUpdateResponseMcpCallArgumentsDelta SessionUpdateResponseMcpCallArgumentsDelta(string eventId = default, string delta = default, string itemId = default, string responseId = default, int outputIndex = 0, string obfuscation = default)
         {
             return new SessionUpdateResponseMcpCallArgumentsDelta(
                 ServerEventType.ResponseMcpCallArgumentsDelta,
@@ -2200,7 +2200,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"> The index of the output associated with the event. </param>
         /// <param name="arguments"> The full arguments for the tool call. </param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseMcpCallArgumentsDone"/> instance for mocking. </returns>
-        public static SessionUpdateResponseMcpCallArgumentsDone SessionUpdateResponseMcpCallArgumentsDone(string eventId = default, string itemId = default, string responseId = default, int outputIndex = default, string arguments = default)
+        public static SessionUpdateResponseMcpCallArgumentsDone SessionUpdateResponseMcpCallArgumentsDone(string eventId = default, string itemId = default, string responseId = default, int outputIndex = 0, string arguments = default)
         {
             return new SessionUpdateResponseMcpCallArgumentsDone(
                 ServerEventType.ResponseMcpCallArgumentsDone,
@@ -2217,7 +2217,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"> The ID of the item associated with the event. </param>
         /// <param name="outputIndex"> The index of the output associated with the event. </param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseMcpCallInProgress"/> instance for mocking. </returns>
-        public static SessionUpdateResponseMcpCallInProgress SessionUpdateResponseMcpCallInProgress(string eventId = default, string itemId = default, int outputIndex = default)
+        public static SessionUpdateResponseMcpCallInProgress SessionUpdateResponseMcpCallInProgress(string eventId = default, string itemId = default, int outputIndex = 0)
         {
             return new SessionUpdateResponseMcpCallInProgress(ServerEventType.ResponseMcpCallInProgress, eventId, additionalBinaryDataProperties: null, itemId, outputIndex);
         }
@@ -2227,7 +2227,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"> The ID of the item associated with the event. </param>
         /// <param name="outputIndex"> The index of the output associated with the event. </param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseMcpCallCompleted"/> instance for mocking. </returns>
-        public static SessionUpdateResponseMcpCallCompleted SessionUpdateResponseMcpCallCompleted(string eventId = default, string itemId = default, int outputIndex = default)
+        public static SessionUpdateResponseMcpCallCompleted SessionUpdateResponseMcpCallCompleted(string eventId = default, string itemId = default, int outputIndex = 0)
         {
             return new SessionUpdateResponseMcpCallCompleted(ServerEventType.ResponseMcpCallCompleted, eventId, additionalBinaryDataProperties: null, itemId, outputIndex);
         }
@@ -2237,7 +2237,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"> The ID of the item associated with the event. </param>
         /// <param name="outputIndex"> The index of the output associated with the event. </param>
         /// <returns> A new <see cref="VoiceLive.SessionUpdateResponseMcpCallFailed"/> instance for mocking. </returns>
-        public static SessionUpdateResponseMcpCallFailed SessionUpdateResponseMcpCallFailed(string eventId = default, string itemId = default, int outputIndex = default)
+        public static SessionUpdateResponseMcpCallFailed SessionUpdateResponseMcpCallFailed(string eventId = default, string itemId = default, int outputIndex = 0)
         {
             return new SessionUpdateResponseMcpCallFailed(ServerEventType.ResponseMcpCallFailed, eventId, additionalBinaryDataProperties: null, itemId, outputIndex);
         }
@@ -2266,7 +2266,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="codec"> The codec used for the video data. </param>
         /// <param name="delta"> The base64-encoded video frame data. </param>
         /// <returns> A new <see cref="VoiceLive.ServerEventResponseVideoDelta"/> instance for mocking. </returns>
-        public static ServerEventResponseVideoDelta ServerEventResponseVideoDelta(string eventId = default, int outputIndex = default, string codec = default, string delta = default)
+        public static ServerEventResponseVideoDelta ServerEventResponseVideoDelta(string eventId = default, int outputIndex = 0, string codec = default, string delta = default)
         {
             return new ServerEventResponseVideoDelta(
                 ServerEventType.ResponseVideoDelta,
@@ -2284,7 +2284,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="sequenceNumber"> The sequence number of the web search call. </param>
         /// <returns> A new <see cref="VoiceLive.ServerEventResponseWebSearchCallSearching"/> instance for mocking. </returns>
-        public static ServerEventResponseWebSearchCallSearching ServerEventResponseWebSearchCallSearching(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int sequenceNumber = default)
+        public static ServerEventResponseWebSearchCallSearching ServerEventResponseWebSearchCallSearching(string eventId = default, string responseId = default, string itemId = default, int outputIndex = 0, int sequenceNumber = 0)
         {
             return new ServerEventResponseWebSearchCallSearching(
                 ServerEventType.ResponseWebSearchCallSearching,
@@ -2303,7 +2303,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="sequenceNumber"> The sequence number of the web search call. </param>
         /// <returns> A new <see cref="VoiceLive.ServerEventResponseWebSearchCallInProgress"/> instance for mocking. </returns>
-        public static ServerEventResponseWebSearchCallInProgress ServerEventResponseWebSearchCallInProgress(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int sequenceNumber = default)
+        public static ServerEventResponseWebSearchCallInProgress ServerEventResponseWebSearchCallInProgress(string eventId = default, string responseId = default, string itemId = default, int outputIndex = 0, int sequenceNumber = 0)
         {
             return new ServerEventResponseWebSearchCallInProgress(
                 ServerEventType.ResponseWebSearchCallInProgress,
@@ -2322,7 +2322,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="sequenceNumber"> The sequence number of the web search call. </param>
         /// <returns> A new <see cref="VoiceLive.ServerEventResponseWebSearchCallCompleted"/> instance for mocking. </returns>
-        public static ServerEventResponseWebSearchCallCompleted ServerEventResponseWebSearchCallCompleted(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int sequenceNumber = default)
+        public static ServerEventResponseWebSearchCallCompleted ServerEventResponseWebSearchCallCompleted(string eventId = default, string responseId = default, string itemId = default, int outputIndex = 0, int sequenceNumber = 0)
         {
             return new ServerEventResponseWebSearchCallCompleted(
                 ServerEventType.ResponseWebSearchCallCompleted,
@@ -2341,7 +2341,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="sequenceNumber"> The sequence number of the file search call. </param>
         /// <returns> A new <see cref="VoiceLive.ServerEventResponseFileSearchCallSearching"/> instance for mocking. </returns>
-        public static ServerEventResponseFileSearchCallSearching ServerEventResponseFileSearchCallSearching(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int sequenceNumber = default)
+        public static ServerEventResponseFileSearchCallSearching ServerEventResponseFileSearchCallSearching(string eventId = default, string responseId = default, string itemId = default, int outputIndex = 0, int sequenceNumber = 0)
         {
             return new ServerEventResponseFileSearchCallSearching(
                 ServerEventType.ResponseFileSearchCallSearching,
@@ -2360,7 +2360,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="sequenceNumber"> The sequence number of the file search call. </param>
         /// <returns> A new <see cref="VoiceLive.ServerEventResponseFileSearchCallInProgress"/> instance for mocking. </returns>
-        public static ServerEventResponseFileSearchCallInProgress ServerEventResponseFileSearchCallInProgress(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int sequenceNumber = default)
+        public static ServerEventResponseFileSearchCallInProgress ServerEventResponseFileSearchCallInProgress(string eventId = default, string responseId = default, string itemId = default, int outputIndex = 0, int sequenceNumber = 0)
         {
             return new ServerEventResponseFileSearchCallInProgress(
                 ServerEventType.ResponseFileSearchCallInProgress,
@@ -2379,7 +2379,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="sequenceNumber"> The sequence number of the file search call. </param>
         /// <returns> A new <see cref="VoiceLive.ServerEventResponseFileSearchCallCompleted"/> instance for mocking. </returns>
-        public static ServerEventResponseFileSearchCallCompleted ServerEventResponseFileSearchCallCompleted(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int sequenceNumber = default)
+        public static ServerEventResponseFileSearchCallCompleted ServerEventResponseFileSearchCallCompleted(string eventId = default, string responseId = default, string itemId = default, int outputIndex = 0, int sequenceNumber = 0)
         {
             return new ServerEventResponseFileSearchCallCompleted(
                 ServerEventType.ResponseFileSearchCallCompleted,
@@ -2408,7 +2408,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="annotationIndex"> The index of the annotation. </param>
         /// <param name="annotation"> The annotation object. </param>
         /// <returns> A new <see cref="VoiceLive.ServerEventResponseAudioTranscriptAnnotationAdded"/> instance for mocking. </returns>
-        public static ServerEventResponseAudioTranscriptAnnotationAdded ServerEventResponseAudioTranscriptAnnotationAdded(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, int annotationIndex = default, BinaryData annotation = default)
+        public static ServerEventResponseAudioTranscriptAnnotationAdded ServerEventResponseAudioTranscriptAnnotationAdded(string eventId = default, string responseId = default, string itemId = default, int outputIndex = 0, int contentIndex = 0, int annotationIndex = 0, BinaryData annotation = default)
         {
             return new ServerEventResponseAudioTranscriptAnnotationAdded(
                 ServerEventType.ResponseAudioTranscriptAnnotationAdded,
@@ -2660,7 +2660,7 @@ namespace Azure.AI.VoiceLive
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static InputTokenDetails InputTokenDetails(int cachedTokens, int textTokens, int audioTokens, CachedTokenDetails cachedTokensDetails)
         {
-            return InputTokenDetails(cachedTokens: cachedTokens, textTokens: textTokens, audioTokens: audioTokens, imageTokens: default, cachedTokensDetails: cachedTokensDetails);
+            return InputTokenDetails(cachedTokens: cachedTokens, textTokens: textTokens, audioTokens: audioTokens, imageTokens: 0, cachedTokensDetails: cachedTokensDetails);
         }
 
         /// <summary> Details of output token usage. </summary>
@@ -2670,7 +2670,7 @@ namespace Azure.AI.VoiceLive
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CachedTokenDetails CachedTokenDetails(int textTokens, int audioTokens)
         {
-            return CachedTokenDetails(textTokens: textTokens, audioTokens: audioTokens, imageTokens: default);
+            return CachedTokenDetails(textTokens: textTokens, audioTokens: audioTokens, imageTokens: 0);
         }
 
         /// <summary> Details of output token usage. </summary>
