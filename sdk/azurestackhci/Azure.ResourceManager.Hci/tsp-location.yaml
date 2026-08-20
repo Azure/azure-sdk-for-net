@@ -1,5 +1,5 @@
 directory: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI
-commit: 4c4afc68b618df35e3114b8006a5bc9cd21f2409
+commit: 50fa3b7bc44705172ef026be629731b4b9122a2a
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 
