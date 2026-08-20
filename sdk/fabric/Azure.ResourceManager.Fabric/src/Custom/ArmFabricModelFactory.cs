@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <param name="fabricCapacityUpdateAdministrationMembers"> An array of administrator user identities. </param>
         /// <returns> A new <see cref="Models.FabricCapacityPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FabricCapacityPatch FabricCapacityPatch(FabricSku sku, IDictionary<string, string> tags, IEnumerable<string> fabricCapacityUpdateAdministrationMembers)
+        public static FabricCapacityPatch FabricCapacityPatch(FabricSku sku = default, IDictionary<string, string> tags = default, IEnumerable<string> fabricCapacityUpdateAdministrationMembers = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
