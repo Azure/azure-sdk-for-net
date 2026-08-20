@@ -26,7 +26,11 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azsdk-common-sdk-breaking-change", "azsdk-common-generate-sdk-locally"]
+          required:
+            [
+              "azsdk-common-sdk-breaking-change",
+              "azsdk-common-generate-sdk-locally",
+            ]
       - type: tool-calls
         config:
           required: ["azure-sdk-mcp-azsdk_package_detect_breaking_change"]
