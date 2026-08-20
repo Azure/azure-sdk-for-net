@@ -83,7 +83,7 @@ function Invoke-ApiViewSourceUpload(
         }
 
         $headers = @{ Authorization = "Bearer $(Get-ApiViewBearerToken)" }
-        $response = Invoke-WebRequest -Method Post -Uri "$APIViewUri/upload" -Body $multipartContent -Headers $headers
+        $response = Invoke-WebRequest -Method Post -Uri "$APIViewUri/upload" -Body $multipartContent -Headers $headers -MaximumRetryCount 3
         Write-Host "API review: $($response.Content)"
         Write-Host "HTTP response code: $($response.StatusCode)"
     }
@@ -145,7 +145,7 @@ function Invoke-ApiViewTokenCreation(
     Write-Host "Creating APIView revision from review token file $ReviewFileName."
     Write-Host "Request to APIView: $uri"
     $headers = @{ Authorization = "Bearer $(Get-ApiViewBearerToken)" }
-    $response = Invoke-WebRequest -Method Post -Uri $uri -Headers $headers
+    $response = Invoke-WebRequest -Method Post -Uri $uri -Headers $headers -MaximumRetryCount 3
     Write-Host "API review: $($response.Content)"
     Write-Host "HTTP response code: $($response.StatusCode)"
 }

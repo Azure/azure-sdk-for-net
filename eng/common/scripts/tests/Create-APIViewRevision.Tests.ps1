@@ -17,7 +17,8 @@ Describe "Create-APIViewRevision.ps1" {
                 [string] $Method,
                 [string] $Uri,
                 [object] $Body,
-                [hashtable] $Headers
+                [hashtable] $Headers,
+                [int] $MaximumRetryCount
             )
 
             $global:ApiViewRequests += [PSCustomObject]@{
@@ -25,6 +26,7 @@ Describe "Create-APIViewRevision.ps1" {
                 Uri = $Uri
                 Body = if ($null -ne $Body) { $Body.ReadAsStringAsync().GetAwaiter().GetResult() } else { "" }
                 Headers = $Headers
+                MaximumRetryCount = $MaximumRetryCount
             }
             return [PSCustomObject]@{ Content = "created"; StatusCode = 200 }
         }
@@ -63,6 +65,7 @@ Describe "Create-APIViewRevision.ps1" {
         $global:ApiViewRequests.Count | Should Be 1
         $global:ApiViewRequests[0].Uri | Should Be "https://apiview.dev/autoreview/upload"
         $global:ApiViewRequests[0].Headers.Authorization | Should Be "Bearer test-token"
+        $global:ApiViewRequests[0].MaximumRetryCount | Should Be 3
         $global:ApiViewRequests[0].Body | Should Match '(?s)name="?label"?.*?Source Branch:main'
         $global:ApiViewRequests[0].Body | Should Match '(?s)name="?packageVersion"?.*?1.0.0'
         $global:ApiViewRequests[0].Body | Should Match '(?s)name="?setReleaseTag"?.*?False'
@@ -81,6 +84,7 @@ Describe "Create-APIViewRevision.ps1" {
         $global:ApiViewRequests[0].Uri | Should Match "packageName=test-package"
         $global:ApiViewRequests[0].Uri | Should Match "reviewFilePath=test-package_Unknown.json"
         $global:ApiViewRequests[0].Uri | Should Not Match "setReleaseTag"
+        $global:ApiViewRequests[0].MaximumRetryCount | Should Be 3
     }
 
     It "requires pipeline metadata when creating from a review token" {
