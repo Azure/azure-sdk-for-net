@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="tenantId"> The Microsoft Entra tenant ID. </param>
         /// <param name="passwordAuth"> Indicates whether password authentication is enabled or disabled. </param>
         /// <returns> A new <see cref="Models.HorizonDbClusterAuthConfig"/> instance for mocking. </returns>
-        public static HorizonDbClusterAuthConfig HorizonDbClusterAuthConfig(AuthenticationState? entraIdAuth = default, string tenantId = default, AuthenticationState? passwordAuth = default)
+        public static HorizonDbClusterAuthConfig HorizonDbClusterAuthConfig(HorizonDBAuthenticationState? entraIdAuth = default, string tenantId = default, HorizonDBAuthenticationState? passwordAuth = default)
         {
             return new HorizonDbClusterAuthConfig(entraIdAuth, tenantId, passwordAuth, default);
         }
@@ -467,19 +467,19 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <param name="properties"> The properties for adding a HorizonDB administrator. </param>
-        /// <returns> A new <see cref="Models.HorizonDBAdministratorAdd"/> instance for mocking. </returns>
-        public static HorizonDBAdministratorAdd HorizonDBAdministratorAdd(HorizonDBAdministratorPropertiesForAdd properties = default)
+        /// <returns> A new <see cref="Models.HorizonDBAdministratorContent"/> instance for mocking. </returns>
+        public static HorizonDBAdministratorContent HorizonDBAdministratorContent(HorizonDBAdministratorContentProperties properties = default)
         {
-            return new HorizonDBAdministratorAdd(properties, default);
+            return new HorizonDBAdministratorContent(properties, default);
         }
 
         /// <param name="principalName"> The display name or UPN of the Entra ID principal. For users, typically the User Principal Name (e.g., admin@contoso.com). For groups, the group display name. For service principals, the application display name. </param>
         /// <param name="principalType"> The type of the Entra ID principal. </param>
         /// <param name="tenantId"> The Entra ID tenant identifier (an RFC 4122 GUID). If omitted, defaults to the tenant of the subscription. </param>
-        /// <returns> A new <see cref="Models.HorizonDBAdministratorPropertiesForAdd"/> instance for mocking. </returns>
-        public static HorizonDBAdministratorPropertiesForAdd HorizonDBAdministratorPropertiesForAdd(string principalName = default, HorizonDBPrincipalType principalType = default, string tenantId = default)
+        /// <returns> A new <see cref="Models.HorizonDBAdministratorContentProperties"/> instance for mocking. </returns>
+        public static HorizonDBAdministratorContentProperties HorizonDBAdministratorContentProperties(string principalName = default, HorizonDBPrincipalType principalType = default, string tenantId = default)
         {
-            return new HorizonDBAdministratorPropertiesForAdd(principalName, principalType, tenantId, default);
+            return new HorizonDBAdministratorContentProperties(principalName, principalType, tenantId, default);
         }
     }
 }
