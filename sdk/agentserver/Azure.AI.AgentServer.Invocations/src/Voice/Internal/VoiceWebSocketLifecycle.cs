@@ -23,21 +23,22 @@ internal sealed class VoiceWebSocketLifecycle : IInvocationsWebSocketEndpointLif
 
     internal static VoiceWebSocketLifecycle Start(
         VoiceHandler handler,
-        IHeaderDictionary headers) =>
-        new(handler, VoiceConnectionTelemetry.Start(headers));
+        IHeaderDictionary headers,
+        InvocationCorrelationBaggage correlationBaggage = default) =>
+        new(handler, VoiceConnectionTelemetry.Start(headers, correlationBaggage));
 
     internal static async Task<InvocationsWebSocketCloseResult?> HandleAsync(
         VoiceHandler handler,
         WebSocket webSocket,
         InvocationContext context,
-        ActivityContext connectionContext,
+        VoiceTraceContext traceContext,
         CancellationToken cancellationToken)
     {
         var connection = new InvocationsWebSocketConnection(webSocket);
         var outcome = await handler.HandleWebSocketConnectionAsync(
             connection,
             context,
-            connectionContext,
+            traceContext,
             cancellationToken).ConfigureAwait(false);
         var closeException = await connection.CloseAsync(outcome.Status, outcome.Reason).ConfigureAwait(false);
         return outcome with { CloseException = closeException };

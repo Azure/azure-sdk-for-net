@@ -925,6 +925,147 @@ public class VoiceConnectionTracingRedTests
     }
 
     [Test]
+    public async Task VoiceHierarchy_PropagatesOnlySanctionedCorrelationBaggage()
+    {
+        var requestId = new string('r', 300);
+        var expectedRequestId = requestId[..256];
+        TargetTurnVoiceHandler.Reset();
+        var exporter = new CapturingActivityExporter();
+        await using var server = await StartVoiceServerAsync<TargetTurnVoiceHandler>(exporter);
+
+        await ConnectSendAndCloseAsync(
+            server.WebSocketUri,
+            SessionStartPayload,
+            requestId: requestId,
+            baggage:
+                "azure.ai.agentserver.invocation_id=inbound-invocation," +
+                "azure.ai.agentserver.session_id=inbound-session," +
+                "x-request-id=inbound-request," +
+                "customer-secret=must-not-propagate");
+
+        var connectionObserved = await exporter.TryWaitForAsync(
+            IsSemanticConnection,
+            ObservationTimeout);
+        var callbackObserved = await exporter.TryWaitForAsync(
+            IsCallbackDispatch,
+            ObservationTimeout);
+        var targetObserved = await exporter.TryWaitForAsync(
+            IsTargetTurn,
+            ObservationTimeout);
+        var customerObserved = await exporter.TryWaitForAsync(
+            IsTargetCustomerSpan,
+            ObservationTimeout);
+
+        var activities = exporter.GetFinishedActivities();
+        var hierarchy = new[]
+        {
+            activities.Single(IsSemanticConnection),
+            activities.Single(IsCallbackDispatch),
+            activities.Single(IsTargetTurn),
+            activities.Single(IsTargetCustomerSpan),
+        };
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(connectionObserved, Is.True);
+            Assert.That(callbackObserved, Is.True);
+            Assert.That(targetObserved, Is.True);
+            Assert.That(customerObserved, Is.True);
+            Assert.That(TargetTurnVoiceHandler.InvocationId, Is.Not.Null.And.Not.Empty);
+            Assert.That(TargetTurnVoiceHandler.SessionId, Is.Not.Null.And.Not.Empty);
+            foreach (var activity in hierarchy)
+            {
+                var baggage = activity.Baggage.ToArray();
+                Assert.That(baggage, Has.Length.EqualTo(3), activity.OperationName);
+                Assert.That(
+                    baggage.Single(item => item.Key == "azure.ai.agentserver.invocation_id").Value,
+                    Is.EqualTo(TargetTurnVoiceHandler.InvocationId),
+                    activity.OperationName);
+                Assert.That(
+                    baggage.Single(item => item.Key == "azure.ai.agentserver.session_id").Value,
+                    Is.EqualTo(TargetTurnVoiceHandler.SessionId),
+                    activity.OperationName);
+                Assert.That(
+                    baggage.Single(item => item.Key == PlatformHeaders.RequestId).Value,
+                    Is.EqualTo(expectedRequestId),
+                    activity.OperationName);
+                Assert.That(
+                    baggage.Any(item => item.Key == "customer-secret"),
+                    Is.False,
+                    activity.OperationName);
+            }
+        });
+    }
+
+    [Test]
+    public async Task VoiceHierarchy_CorrelationDoesNotDependOnAmbientRequestActivity()
+    {
+        const string requestId = "request_without_ambient_activity";
+        TargetTurnVoiceHandler.Reset();
+        var exporter = new CapturingActivityExporter();
+        await using var server = await StartVoiceServerAsync<TargetTurnVoiceHandler>(
+            exporter,
+            configureApplication: app => app.Use(async (_, next) =>
+            {
+                var previous = Activity.Current;
+                Activity.Current = null;
+                try
+                {
+                    await next();
+                }
+                finally
+                {
+                    Activity.Current = previous;
+                }
+            }));
+
+        await ConnectSendAndCloseAsync(
+            server.WebSocketUri,
+            SessionStartPayload,
+            requestId: requestId);
+
+        var connectionObserved = await exporter.TryWaitForAsync(
+            IsSemanticConnection,
+            ObservationTimeout);
+        var callbackObserved = await exporter.TryWaitForAsync(
+            IsCallbackDispatch,
+            ObservationTimeout);
+        var targetObserved = await exporter.TryWaitForAsync(
+            IsTargetTurn,
+            ObservationTimeout);
+        var customerObserved = await exporter.TryWaitForAsync(
+            IsTargetCustomerSpan,
+            ObservationTimeout);
+        var hierarchy = exporter.GetFinishedActivities()
+            .Where(activity =>
+                IsSemanticConnection(activity) ||
+                IsCallbackDispatch(activity) ||
+                IsTargetTurn(activity) ||
+                IsTargetCustomerSpan(activity))
+            .ToArray();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(connectionObserved, Is.True);
+            Assert.That(callbackObserved, Is.True);
+            Assert.That(targetObserved, Is.True);
+            Assert.That(customerObserved, Is.True);
+            Assert.That(hierarchy, Has.Length.EqualTo(4));
+            Assert.That(
+                hierarchy.Select(activity => activity.GetBaggageItem(
+                    "azure.ai.agentserver.invocation_id")),
+                Is.All.EqualTo(TargetTurnVoiceHandler.InvocationId));
+            Assert.That(
+                hierarchy.Select(activity => activity.GetBaggageItem(
+                    "azure.ai.agentserver.session_id")),
+                Is.All.EqualTo(TargetTurnVoiceHandler.SessionId));
+            Assert.That(
+                hierarchy.Select(activity => activity.GetBaggageItem(PlatformHeaders.RequestId)),
+                Is.All.EqualTo(requestId));
+        });
+    }
+
+    [Test]
     public async Task CallbackTelemetryCannotContaminateSemanticConnectionOrStructuredCloseLog()
     {
         ContaminatingVoiceHandler.Reset();
@@ -1073,6 +1214,40 @@ public class VoiceConnectionTracingRedTests
     }
 
     [Test]
+    public async Task UnsampledRemoteParent_PropagatesOnlySanctionedBaggage()
+    {
+        const string requestId = "request_unsampled_voice";
+        ContextCapturingVoiceHandler.Reset();
+        var exporter = new CapturingActivityExporter();
+        await using var server = await StartVoiceServerAsync<ContextCapturingVoiceHandler>(exporter);
+
+        await ConnectSendAndCloseAsync(
+            server.WebSocketUri,
+            SessionStartPayload,
+            ActivityTraceId.CreateRandom(),
+            ActivitySpanId.CreateRandom(),
+            recorded: false,
+            requestId: requestId,
+            baggage:
+                "azure.ai.agentserver.invocation_id=inbound-invocation," +
+                "azure.ai.agentserver.session_id=inbound-session," +
+                "x-request-id=inbound-request," +
+                "customer-secret=must-not-propagate");
+        await ContextCapturingVoiceHandler.Captured.Task.WaitAsync(TestTimeout);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(ContextCapturingVoiceHandler.TraceFlags, Is.EqualTo(ActivityTraceFlags.None));
+            Assert.That(ContextCapturingVoiceHandler.InvocationBaggage, Is.Not.Null.And.Not.Empty);
+            Assert.That(ContextCapturingVoiceHandler.SessionBaggage, Is.Not.Null.And.Not.Empty);
+            Assert.That(ContextCapturingVoiceHandler.RequestBaggage, Is.EqualTo(requestId));
+            Assert.That(ContextCapturingVoiceHandler.ArbitraryBaggage, Is.Null);
+            Assert.That(exporter.GetFinishedActivities().Any(IsSemanticConnection), Is.False);
+            Assert.That(exporter.GetFinishedActivities().Any(IsTargetTurn), Is.False);
+        });
+    }
+
+    [Test]
     public void Callback_WhenInvocationsSourceDrops_StillParentsCustomerSpan()
     {
         var traceId = ActivityTraceId.CreateRandom();
@@ -1084,6 +1259,12 @@ public class VoiceConnectionTracingRedTests
             ActivityTraceFlags.Recorded,
             traceState,
             isRemote: false);
+        var traceContext = new VoiceTraceContext(
+            connectionContext,
+            new InvocationCorrelationBaggage(
+                "invocation_callback_drop",
+                "session_callback_drop",
+                "request_callback_drop"));
         Activity? customerActivity = null;
         using var customerListener = new ActivityListener
         {
@@ -1097,7 +1278,7 @@ public class VoiceConnectionTracingRedTests
         var previousActivity = Activity.Current;
 
         using var callback = VoiceCallbackTrace.Start(
-            connectionContext,
+            traceContext,
             "session.start",
             static (_, _) => null);
         ActivitySpanId callbackSpanId;
@@ -1115,6 +1296,15 @@ public class VoiceConnectionTracingRedTests
             Assert.That(customerActivity?.TraceId, Is.EqualTo(traceId));
             Assert.That(customerActivity?.ParentSpanId, Is.EqualTo(callbackSpanId));
             Assert.That(customerActivity?.TraceStateString, Is.EqualTo(traceState));
+            Assert.That(
+                customerActivity?.GetBaggageItem("azure.ai.agentserver.invocation_id"),
+                Is.EqualTo("invocation_callback_drop"));
+            Assert.That(
+                customerActivity?.GetBaggageItem("azure.ai.agentserver.session_id"),
+                Is.EqualTo("session_callback_drop"));
+            Assert.That(
+                customerActivity?.GetBaggageItem(PlatformHeaders.RequestId),
+                Is.EqualTo("request_callback_drop"));
             Assert.That(Activity.Current, Is.SameAs(previousActivity));
         });
     }
@@ -1255,7 +1445,12 @@ public class VoiceConnectionTracingRedTests
         ActivitySource.AddActivityListener(customerListener);
         using var customerSource = new ActivitySource(TargetTurnCustomerSourceName);
 
-        var connection = VoiceConnectionTelemetry.Start(headers);
+        var connection = VoiceConnectionTelemetry.Start(
+            headers,
+            new InvocationCorrelationBaggage(
+                "invocation_turn_drop",
+                "session_turn_drop",
+                "request_turn_drop"));
         using var turn = VoiceTurnTrace.Start(
             connection.Context,
             VoiceTurnOrigin.User,
@@ -1278,6 +1473,15 @@ public class VoiceConnectionTracingRedTests
             Assert.That(customerActivity, Is.Not.Null);
             Assert.That(customerActivity?.TraceId, Is.EqualTo(traceId));
             Assert.That(customerActivity?.ParentSpanId, Is.EqualTo(turnSpanId));
+            Assert.That(
+                customerActivity?.GetBaggageItem("azure.ai.agentserver.invocation_id"),
+                Is.EqualTo("invocation_turn_drop"));
+            Assert.That(
+                customerActivity?.GetBaggageItem("azure.ai.agentserver.session_id"),
+                Is.EqualTo("session_turn_drop"));
+            Assert.That(
+                customerActivity?.GetBaggageItem(PlatformHeaders.RequestId),
+                Is.EqualTo("request_turn_drop"));
         });
     }
 
@@ -2424,7 +2628,9 @@ public class VoiceConnectionTracingRedTests
         string payload,
         ActivityTraceId? traceId = null,
         ActivitySpanId? parentSpanId = null,
-        bool recorded = true)
+        bool recorded = true,
+        string? requestId = null,
+        string? baggage = null)
     {
         using var client = new ClientWebSocket();
         if (traceId is { } propagatedTraceId && parentSpanId is { } propagatedParentSpanId)
@@ -2432,6 +2638,14 @@ public class VoiceConnectionTracingRedTests
             client.Options.SetRequestHeader(
                 "traceparent",
                 $"00-{propagatedTraceId}-{propagatedParentSpanId}-{(recorded ? "01" : "00")}");
+        }
+        if (requestId is not null)
+        {
+            client.Options.SetRequestHeader(PlatformHeaders.RequestId, requestId);
+        }
+        if (baggage is not null)
+        {
+            client.Options.SetRequestHeader("baggage", baggage);
         }
         await client.ConnectAsync(uri, CancellationToken.None).WaitAsync(TestTimeout);
         await client.SendAsync(
@@ -2574,11 +2788,23 @@ public class VoiceConnectionTracingRedTests
     {
         private static readonly ActivitySource s_customerSource = new(TargetTurnCustomerSourceName);
 
+        public static string? InvocationId { get; private set; }
+
+        public static string? SessionId { get; private set; }
+
+        public static void Reset()
+        {
+            InvocationId = null;
+            SessionId = null;
+        }
+
         protected override Task OnSessionStartAsync(
             VoiceSession session,
             VoiceSessionStartEvent start,
             CancellationToken cancellationToken)
         {
+            InvocationId = session.InvocationContext.InvocationId;
+            SessionId = session.InvocationContext.SessionId;
             using var turn = session.StartTurn(VoiceTurnOrigin.User, inputCount: 1);
             using (turn.Activate())
             {
@@ -2710,6 +2936,14 @@ public class VoiceConnectionTracingRedTests
 
         public static ActivitySpanId ParentSpanId { get; private set; }
 
+        public static string? InvocationBaggage { get; private set; }
+
+        public static string? SessionBaggage { get; private set; }
+
+        public static string? RequestBaggage { get; private set; }
+
+        public static string? ArbitraryBaggage { get; private set; }
+
         public static void Reset()
         {
             Captured = new(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -2717,6 +2951,10 @@ public class VoiceConnectionTracingRedTests
             TraceFlags = default;
             OperationName = null;
             ParentSpanId = default;
+            InvocationBaggage = null;
+            SessionBaggage = null;
+            RequestBaggage = null;
+            ArbitraryBaggage = null;
         }
 
         protected override Task OnSessionStartAsync(
@@ -2731,6 +2969,12 @@ public class VoiceConnectionTracingRedTests
                 TraceFlags = Activity.Current?.ActivityTraceFlags ?? default;
                 OperationName = Activity.Current?.OperationName;
                 ParentSpanId = Activity.Current?.ParentSpanId ?? default;
+                InvocationBaggage = Activity.Current?.GetBaggageItem(
+                    "azure.ai.agentserver.invocation_id");
+                SessionBaggage = Activity.Current?.GetBaggageItem(
+                    "azure.ai.agentserver.session_id");
+                RequestBaggage = Activity.Current?.GetBaggageItem(PlatformHeaders.RequestId);
+                ArbitraryBaggage = Activity.Current?.GetBaggageItem("customer-secret");
             }
             turn.Complete(new VoiceTurnResult(VoiceTurnOutcome.None, outputItemCount: 0));
             Captured.TrySetResult();

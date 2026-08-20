@@ -180,6 +180,12 @@ public class VoiceTurnTrace : IDisposable
     internal static VoiceTurnTrace Start(
         ActivityContext connectionContext,
         VoiceTurnOrigin origin,
+        int inputCount) =>
+        Start(new VoiceTraceContext(connectionContext, default), origin, inputCount);
+
+    internal static VoiceTurnTrace Start(
+        VoiceTraceContext traceContext,
+        VoiceTurnOrigin origin,
         int inputCount)
     {
         if (inputCount < 0)
@@ -190,7 +196,7 @@ public class VoiceTurnTrace : IDisposable
         {
             throw new ArgumentOutOfRangeException(nameof(origin));
         }
-        if (connectionContext == default)
+        if (traceContext.ActivityContext == default)
         {
             return new VoiceTurnTrace(activity: null);
         }
@@ -232,16 +238,16 @@ public class VoiceTurnTrace : IDisposable
             activity = s_activitySource.StartActivity(
                 OperationName,
                 ActivityKind.Internal,
-                connectionContext,
+                traceContext.ActivityContext,
                 tags);
             if (activity is null)
             {
                 propagationActivity = new Activity(OperationName)
                     .SetParentId(
-                        connectionContext.TraceId,
-                        connectionContext.SpanId,
-                        connectionContext.TraceFlags);
-                propagationActivity.TraceStateString = connectionContext.TraceState;
+                        traceContext.ActivityContext.TraceId,
+                        traceContext.ActivityContext.SpanId,
+                        traceContext.ActivityContext.TraceFlags);
+                propagationActivity.TraceStateString = traceContext.ActivityContext.TraceState;
                 foreach (var tag in tags)
                 {
                     propagationActivity.SetTag(tag.Key, tag.Value);
@@ -267,6 +273,7 @@ public class VoiceTurnTrace : IDisposable
             s_startToken.Value = previousStartToken;
             VoiceActivityScope.TrySetCurrent(previous);
         }
+        traceContext.ApplyBaggage(activity);
         return new VoiceTurnTrace(activity);
     }
 

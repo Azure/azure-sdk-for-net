@@ -20,14 +20,14 @@ internal sealed class VoiceConnectionTelemetry
         "azure.ai.agentserver.trace_context.propagation_failures");
 
     private readonly Activity? _activity;
-    private readonly ActivityContext _context;
+    private readonly VoiceTraceContext _context;
     private readonly Activity? _previousActivity;
     private bool _requestCancelled;
     private int _completed;
 
     private VoiceConnectionTelemetry(
         Activity? activity,
-        ActivityContext context,
+        VoiceTraceContext context,
         Activity? previousActivity)
     {
         _activity = activity;
@@ -35,9 +35,11 @@ internal sealed class VoiceConnectionTelemetry
         _previousActivity = previousActivity;
     }
 
-    internal ActivityContext Context => _context;
+    internal VoiceTraceContext Context => _context;
 
-    internal static VoiceConnectionTelemetry Start(IHeaderDictionary headers)
+    internal static VoiceConnectionTelemetry Start(
+        IHeaderDictionary headers,
+        InvocationCorrelationBaggage correlationBaggage = default)
     {
         var previousActivity = Activity.Current;
         var previousStartToken = s_connectionStartToken.Value;
@@ -125,7 +127,9 @@ internal sealed class VoiceConnectionTelemetry
 
         var connectionContext = activity?.Context ??
             CreateUnsampledChildContext(extractedContext);
-        return new VoiceConnectionTelemetry(activity, connectionContext, previousActivity);
+        var traceContext = new VoiceTraceContext(connectionContext, correlationBaggage);
+        traceContext.ApplyBaggage(activity);
+        return new VoiceConnectionTelemetry(activity, traceContext, previousActivity);
     }
 
     internal bool TryMarkRequestCancellation(CancellationToken requestCancellation)
@@ -293,5 +297,42 @@ internal sealed class VoiceConnectionTelemetry
         }
         return exception is AggregateException aggregateException &&
             aggregateException.InnerExceptions.Any(ContainsOutOfMemoryException);
+    }
+}
+
+internal readonly record struct VoiceTraceContext(
+    ActivityContext ActivityContext,
+    InvocationCorrelationBaggage CorrelationBaggage)
+{
+    internal ActivityTraceId TraceId => ActivityContext.TraceId;
+
+    internal ActivitySpanId SpanId => ActivityContext.SpanId;
+
+    internal ActivityTraceFlags TraceFlags => ActivityContext.TraceFlags;
+
+    internal string? TraceState => ActivityContext.TraceState;
+
+    internal void ApplyBaggage(Activity? activity)
+    {
+        if (activity is null)
+        {
+            return;
+        }
+        if (CorrelationBaggage.InvocationId is not null)
+        {
+            activity.SetBaggage(
+                "azure.ai.agentserver.invocation_id",
+                CorrelationBaggage.InvocationId);
+        }
+        if (CorrelationBaggage.SessionId is not null)
+        {
+            activity.SetBaggage(
+                "azure.ai.agentserver.session_id",
+                CorrelationBaggage.SessionId);
+        }
+        if (CorrelationBaggage.RequestId is not null)
+        {
+            activity.SetBaggage(PlatformHeaders.RequestId, CorrelationBaggage.RequestId);
+        }
     }
 }

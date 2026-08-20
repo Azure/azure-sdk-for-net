@@ -88,15 +88,14 @@ internal sealed class WebSocketEndpointHandler
             httpContext.Response.Headers[SessionIdResponseHeader] = sessionId;
         }
 
-        var lifecycle = webSocketHandler.CreateEndpointLifecycle(httpContext);
-
-        // Propagate invocation/session/x-request-id baggage onto the current request
-        // Activity for downstream correlation. Reuses the same helper the HTTP
-        // `POST /invocations` endpoint uses so HTTP and WS paths produce
-        // the same baggage shape. No framework-level WS span is created — ASP.NET
-        // Core auto-propagates the inbound W3C trace context to the request
-        // Activity, so any spans the handler starts inherit it directly.
-        _activitySource.PropagateInvocationBaggage(context, httpContext.Request.Headers);
+        // Apply the normalized correlation baggage to the request Activity when present,
+        // and pass the same allowlisted snapshot to the Voice semantic hierarchy.
+        var correlationBaggage = _activitySource.PropagateInvocationBaggage(
+            context,
+            httpContext.Request.Headers);
+        var lifecycle = webSocketHandler.CreateEndpointLifecycle(
+            httpContext,
+            correlationBaggage);
 
         var logScopeState = new Dictionary<string, object>
         {

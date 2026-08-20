@@ -18,8 +18,13 @@ internal sealed class VoiceCallbackTrace : IDisposable
     internal static VoiceCallbackTrace Start(
         ActivityContext connectionContext,
         string eventType) =>
+        Start(new VoiceTraceContext(connectionContext, default), eventType);
+
+    internal static VoiceCallbackTrace Start(
+        VoiceTraceContext traceContext,
+        string eventType) =>
         Start(
-            connectionContext,
+            traceContext,
             eventType,
             static (context, tags) => s_activitySource.StartActivity(
                 OperationName,
@@ -30,10 +35,19 @@ internal sealed class VoiceCallbackTrace : IDisposable
     internal static VoiceCallbackTrace Start(
         ActivityContext connectionContext,
         string eventType,
+        Func<ActivityContext, ActivityTagsCollection, Activity?> startActivity) =>
+        Start(
+            new VoiceTraceContext(connectionContext, default),
+            eventType,
+            startActivity);
+
+    internal static VoiceCallbackTrace Start(
+        VoiceTraceContext traceContext,
+        string eventType,
         Func<ActivityContext, ActivityTagsCollection, Activity?> startActivity)
     {
         ArgumentNullException.ThrowIfNull(startActivity);
-        if (connectionContext == default)
+        if (traceContext.ActivityContext == default)
         {
             return new VoiceCallbackTrace(activity: null);
         }
@@ -72,15 +86,15 @@ internal sealed class VoiceCallbackTrace : IDisposable
             VoiceActivityScope.TrySetCurrent(null);
             try
             {
-                activity = startActivity(connectionContext, tags);
+                activity = startActivity(traceContext.ActivityContext, tags);
                 if (activity is null)
                 {
                     propagationActivity = new Activity(OperationName)
                         .SetParentId(
-                            connectionContext.TraceId,
-                            connectionContext.SpanId,
-                            connectionContext.TraceFlags);
-                    propagationActivity.TraceStateString = connectionContext.TraceState;
+                            traceContext.ActivityContext.TraceId,
+                            traceContext.ActivityContext.SpanId,
+                            traceContext.ActivityContext.TraceFlags);
+                    propagationActivity.TraceStateString = traceContext.ActivityContext.TraceState;
                     foreach (var tag in tags)
                     {
                         propagationActivity.SetTag(tag.Key, tag.Value);
@@ -113,6 +127,7 @@ internal sealed class VoiceCallbackTrace : IDisposable
             s_startToken.Value = previousStartToken;
             VoiceActivityScope.TrySetCurrent(previousActivity);
         }
+        traceContext.ApplyBaggage(activity);
         return new VoiceCallbackTrace(activity);
     }
 

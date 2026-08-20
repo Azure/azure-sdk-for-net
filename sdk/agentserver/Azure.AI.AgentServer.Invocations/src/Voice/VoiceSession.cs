@@ -12,7 +12,7 @@ namespace Azure.AI.AgentServer.Invocations.Voice;
 public class VoiceSession
 {
     private readonly InvocationsWebSocketConnection? _connection;
-    private readonly ActivityContext _connectionContext;
+    private readonly VoiceTraceContext _traceContext;
 
     /// <summary>Initializes a mockable Voice session.</summary>
     protected VoiceSession()
@@ -34,17 +34,28 @@ public class VoiceSession
     internal VoiceSession(InvocationContext invocationContext, ActivityContext connectionContext)
         : this(invocationContext)
     {
-        _connectionContext = connectionContext;
+        _traceContext = new VoiceTraceContext(connectionContext, default);
     }
 
     internal VoiceSession(
         InvocationsWebSocketConnection connection,
         InvocationContext invocationContext,
         ActivityContext connectionContext = default)
+        : this(
+            connection,
+            invocationContext,
+            new VoiceTraceContext(connectionContext, default))
+    {
+    }
+
+    internal VoiceSession(
+        InvocationsWebSocketConnection connection,
+        InvocationContext invocationContext,
+        VoiceTraceContext traceContext)
     {
         _connection = connection;
         InvocationContext = invocationContext;
-        _connectionContext = connectionContext;
+        _traceContext = traceContext;
     }
 
     /// <summary>Gets the explicit per-connection Invocations context.</summary>
@@ -55,7 +66,7 @@ public class VoiceSession
     /// <param name="inputCount">The number of inputs consumed by this decision.</param>
     /// <returns>A mockable handle that the application activates and completes explicitly.</returns>
     public virtual VoiceTurnTrace StartTurn(VoiceTurnOrigin origin, int inputCount) =>
-        VoiceTurnTrace.Start(_connectionContext, origin, inputCount);
+        VoiceTurnTrace.Start(_traceContext, origin, inputCount);
 
     /// <summary>
     /// Encodes and sends one explicit agent-to-Bridge message. Concurrent sends are serialized;

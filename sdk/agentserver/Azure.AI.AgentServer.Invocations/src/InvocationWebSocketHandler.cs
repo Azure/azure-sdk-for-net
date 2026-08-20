@@ -38,7 +38,8 @@ namespace Azure.AI.AgentServer.Invocations;
 public abstract class InvocationWebSocketHandler : InvocationHandler
 {
     internal virtual IInvocationsWebSocketEndpointLifecycle? CreateEndpointLifecycle(
-        HttpContext httpContext) => null;
+        HttpContext httpContext,
+        InvocationCorrelationBaggage correlationBaggage) => null;
 
     internal virtual async Task<InvocationsWebSocketCloseResult?> HandleWebSocketWithOutcomeAsync(
         WebSocket webSocket,
