@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(CognitiveServicesComputeResource.ResourceType, out string cognitiveServicesComputeApiVersion);
             _computesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesComputeResource.ResourceType.Namespace, Diagnostics);
-            _computesRestClient = new Computes(_computesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesComputeApiVersion ?? "2026-05-15-preview");
+            _computesRestClient = new Computes(_computesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesComputeApiVersion ?? "2026-07-15-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="computeName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="computeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<CognitiveServicesComputeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string computeName, CognitiveServicesComputeData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, string computeName, CognitiveServicesComputeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(computeName, nameof(computeName));
             Argument.AssertNotNull(data, nameof(data));
@@ -92,16 +92,10 @@ namespace Azure.ResourceManager.CognitiveServices
                 };
                 HttpMessage message = _computesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computeName, CognitiveServicesComputeData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CognitiveServicesArmOperation<CognitiveServicesComputeResource> operation = new CognitiveServicesArmOperation<CognitiveServicesComputeResource>(
-                    new CognitiveServicesComputeResourceOperationSource(Client),
-                    _computesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_computesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }
@@ -125,7 +119,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,7 +129,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="computeName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="computeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<CognitiveServicesComputeResource> CreateOrUpdate(WaitUntil waitUntil, string computeName, CognitiveServicesComputeData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, string computeName, CognitiveServicesComputeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(computeName, nameof(computeName));
             Argument.AssertNotNull(data, nameof(data));
@@ -150,16 +144,10 @@ namespace Azure.ResourceManager.CognitiveServices
                 };
                 HttpMessage message = _computesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computeName, CognitiveServicesComputeData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CognitiveServicesArmOperation<CognitiveServicesComputeResource> operation = new CognitiveServicesArmOperation<CognitiveServicesComputeResource>(
-                    new CognitiveServicesComputeResourceOperationSource(Client),
-                    _computesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_computesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
             }
@@ -183,7 +171,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +220,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +269,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -315,7 +303,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -349,7 +337,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,7 +394,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,7 +451,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +512,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-15-preview. </description>
+        /// <description> 2026-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

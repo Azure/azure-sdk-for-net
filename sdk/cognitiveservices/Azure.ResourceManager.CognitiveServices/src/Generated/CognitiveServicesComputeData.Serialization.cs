@@ -111,11 +111,6 @@ namespace Azure.ResourceManager.CognitiveServices
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
-            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -190,7 +185,6 @@ namespace Azure.ResourceManager.CognitiveServices
             SystemData systemData = default;
             CognitiveServicesComputeProperties properties = default;
             ETag? eTag = default;
-            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             string kind = default;
             ManagedServiceIdentity identity = default;
@@ -243,15 +237,6 @@ namespace Azure.ResourceManager.CognitiveServices
                     eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -299,7 +284,6 @@ namespace Azure.ResourceManager.CognitiveServices
                 systemData,
                 properties,
                 eTag,
-                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 kind,
                 identity,

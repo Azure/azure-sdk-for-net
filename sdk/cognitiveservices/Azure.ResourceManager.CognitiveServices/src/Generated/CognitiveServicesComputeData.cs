@@ -41,16 +41,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Polymorphic properties of the compute resource. Use computeType to select Cluster or ContainerInstance. </param>
         /// <param name="eTag"> Resource Etag. </param>
-        /// <param name="location"> The location of the compute resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="kind"> The kind (type) of compute resource. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesComputeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CognitiveServicesComputeProperties properties, ETag? eTag, AzureLocation? location, IDictionary<string, string> tags, string kind, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal CognitiveServicesComputeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CognitiveServicesComputeProperties properties, ETag? eTag, IDictionary<string, string> tags, string kind, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
-            Location = location;
             Tags = tags;
             Kind = kind;
             Identity = identity;
@@ -64,10 +62,6 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <summary> Resource Etag. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
-
-        /// <summary> The location of the compute resource. </summary>
-        [WirePath("location")]
-        public AzureLocation? Location { get; set; }
 
         /// <summary> Resource tags. </summary>
         [WirePath("tags")]

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -129,6 +130,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             ComputeType computeType = default;
+            AzureLocation location = default;
             CognitiveServicesComputeProvisioningState? provisioningState = default;
             IReadOnlyList<ResponseError> errors = default;
             DateTimeOffset? createdOn = default;
@@ -143,6 +145,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 if (prop.NameEquals("computeType"u8))
                 {
                     computeType = new ComputeType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -224,6 +231,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             return new ContainerInstanceComputeProperties(
                 computeType,
+                location,
                 provisioningState,
                 errors ?? new ChangeTrackingList<ResponseError>(),
                 createdOn,
