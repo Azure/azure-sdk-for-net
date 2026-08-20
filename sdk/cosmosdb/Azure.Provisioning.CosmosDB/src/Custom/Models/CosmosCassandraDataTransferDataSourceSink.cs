@@ -2,35 +2,50 @@
 // Licensed under the MIT License.
 
 #nullable enable
-#pragma warning disable CS1591
 
 using System.ComponentModel;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB;
 
+/// <summary>
+/// A CosmosDB Cassandra API data source/sink.
+/// </summary>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public partial class CosmosCassandraDataTransferDataSourceSink : BaseCosmosDataTransferDataSourceSink
 {
     private BicepValue<string>? _keyspaceName;
     private BicepValue<string>? _tableName;
 
+    /// <summary>
+    /// Gets or sets the keyspace name.
+    /// </summary>
     public BicepValue<string> KeyspaceName
     {
         get { Initialize(); return _keyspaceName!; }
         set { Initialize(); _keyspaceName!.Assign(value); }
     }
 
+    /// <summary>
+    /// Gets or sets the table name.
+    /// </summary>
     public BicepValue<string> TableName
     {
         get { Initialize(); return _tableName!; }
         set { Initialize(); _tableName!.Assign(value); }
     }
 
+    /// <summary>
+    /// Creates a new CosmosCassandraDataTransferDataSourceSink.
+    /// </summary>
     public CosmosCassandraDataTransferDataSourceSink() : base()
     {
     }
 
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// CosmosCassandraDataTransferDataSourceSink.
+    /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();

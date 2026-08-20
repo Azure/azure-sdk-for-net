@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable enable
-#pragma warning disable CS1591
 
 using System.ComponentModel;
 using Azure;
@@ -10,6 +9,9 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB;
 
+/// <summary>
+/// The CassandraViewGetPropertiesResource.
+/// </summary>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public partial class CassandraViewGetPropertiesResource : CassandraViewResource
 {
@@ -17,25 +19,43 @@ public partial class CassandraViewGetPropertiesResource : CassandraViewResource
     private BicepValue<float>? _timestamp;
     private BicepValue<ETag>? _eTag;
 
+    /// <summary>
+    /// A system generated property. A unique identifier.
+    /// </summary>
     public BicepValue<string> Rid
     {
         get { Initialize(); return _rid!; }
     }
 
+    /// <summary>
+    /// A system generated property that denotes the last updated timestamp of
+    /// the resource.
+    /// </summary>
     public BicepValue<float> Timestamp
     {
         get { Initialize(); return _timestamp!; }
     }
 
+    /// <summary>
+    /// A system generated property representing the resource etag required for
+    /// optimistic concurrency control.
+    /// </summary>
     public BicepValue<ETag> ETag
     {
         get { Initialize(); return _eTag!; }
     }
 
+    /// <summary>
+    /// Creates a new CassandraViewGetPropertiesResource.
+    /// </summary>
     public CassandraViewGetPropertiesResource() : base()
     {
     }
 
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// CassandraViewGetPropertiesResource.
+    /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
