@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
+    [JsonConverter(typeof(MultiFlattenPropertiesConverter))]
     internal partial class MultiFlattenProperties : IJsonModel<MultiFlattenProperties>
     {
         /// <summary> Initializes a new instance of <see cref="MultiFlattenProperties"/> for deserialization. </summary>
@@ -204,5 +206,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return false;
         }
 #pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
+        internal partial class MultiFlattenPropertiesConverter : JsonConverter<MultiFlattenProperties>
+        {
+            /// <summary> Writes the JSON representation of the model. </summary>
+            /// <param name="writer"> The writer. </param>
+            /// <param name="model"> The model to write. </param>
+            /// <param name="options"> The serialization options. </param>
+            public override void Write(Utf8JsonWriter writer, MultiFlattenProperties model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue<IJsonModel<MultiFlattenProperties>>(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            /// <summary> Reads the JSON representation and converts into the model. </summary>
+            /// <param name="reader"> The reader. </param>
+            /// <param name="typeToConvert"> The type to convert. </param>
+            /// <param name="options"> The serialization options. </param>
+            public override MultiFlattenProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return DeserializeMultiFlattenProperties(document.RootElement, document.RootElement.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions);
+            }
+        }
     }
 }

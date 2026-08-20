@@ -32,16 +32,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="applicationProfile"> Application profile. </param>
         /// <param name="patch"></param>
 #pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         internal VmProfile(ApplicationProfile applicationProfile, in JsonPatch patch)
         {
             ApplicationProfile = applicationProfile;
             _patch = patch;
             _patch.SetPropagators(PropagateSet, PropagateGet);
-            _patch = patch;
-            _patch.SetPropagators(PropagateSet, PropagateGet);
         }
-#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 #pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         /// <summary> Gets the Patch. </summary>

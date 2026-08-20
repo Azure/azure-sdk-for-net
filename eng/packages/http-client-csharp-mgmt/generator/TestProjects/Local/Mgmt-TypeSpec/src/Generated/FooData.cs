@@ -56,8 +56,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="plan"> Details of the resource plan. </param>
         /// <param name="patch"></param>
 #pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         internal FooData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FooProperties properties, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, ArmPlan plan, in JsonPatch patch) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
@@ -66,13 +64,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             Plan = plan;
             _patch = patch;
             _patch.SetPropagators(PropagateSet, PropagateGet);
-            _patch = patch;
-            _patch.SetPropagators(PropagateSet, PropagateGet);
-            _patch = patch;
-            _patch.SetPropagators(PropagateSet, PropagateGet);
         }
-#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 #pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         /// <summary> Gets the Patch. </summary>

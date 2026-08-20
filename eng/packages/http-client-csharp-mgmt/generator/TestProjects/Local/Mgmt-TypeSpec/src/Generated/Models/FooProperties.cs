@@ -62,7 +62,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="computeFleetVmProfile"> Test case for multi-layer safe flatten. </param>
         /// <param name="patch"></param>
 #pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         internal FooProperties(Uri serviceUri, ManagedServiceIdentity something, bool? boolValue, float? floatValue, double? doubleValue, IList<string> prop1, IList<int> prop2, NestedFooModel nestedProperty, SafeFlattenModel optionalProperty, VmProfile vmProfile, ETag? eTag, WritableSubResource writableSubResourceProp, ComputeFleetVmProfile computeFleetVmProfile, in JsonPatch patch)
         {
             ServiceUri = serviceUri;
@@ -80,10 +79,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             ComputeFleetVmProfile = computeFleetVmProfile;
             _patch = patch;
             _patch.SetPropagators(PropagateSet, PropagateGet);
-            _patch = patch;
-            _patch.SetPropagators(PropagateSet, PropagateGet);
         }
-#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 #pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         /// <summary> Gets the Patch. </summary>

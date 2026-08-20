@@ -34,14 +34,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="selectionType"></param>
         /// <param name="patch"></param>
 #pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         internal SafeFlattenInner(string selectionType, in JsonPatch patch)
         {
             SelectionType = selectionType;
             _patch = patch;
-            _patch = patch;
         }
-#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 #pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         /// <summary> Gets the Patch. </summary>

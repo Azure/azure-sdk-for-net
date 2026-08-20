@@ -3,6 +3,7 @@
 
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.IO;
 
@@ -25,10 +26,22 @@ namespace Azure.Generator.Management.Providers
     /// </remarks>
     internal class ResourceDataModelProvider : ScmModelProvider
     {
+        private ConstructorProvider[]? _builtConstructors;
+
         public ResourceDataModelProvider(InputModelType inputModel)
             : base(inputModel)
         {
             InputModel = inputModel;
+        }
+
+        // See ManagementModelProvider.BuildConstructors for why the built constructors are cached.
+        protected override ConstructorProvider[] BuildConstructors()
+            => _builtConstructors ??= base.BuildConstructors();
+
+        public override void Reset()
+        {
+            base.Reset();
+            _builtConstructors = null;
         }
 
         // Preserve the original input model so later visitors can distinguish output-only resource data
