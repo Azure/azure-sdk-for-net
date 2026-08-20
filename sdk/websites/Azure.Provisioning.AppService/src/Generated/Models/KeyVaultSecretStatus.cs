@@ -11,26 +11,26 @@ namespace Azure.Provisioning.AppService
     public enum KeyVaultSecretStatus
     {
         /// <summary> Initialized. </summary>
-        Initialized = 0,
+        Initialized = 1,
         /// <summary> WaitingOnCertificateOrder. </summary>
-        WaitingOnCertificateOrder = 1,
+        WaitingOnCertificateOrder = 2,
         /// <summary> Succeeded. </summary>
-        Succeeded = 2,
+        Succeeded = 3,
         /// <summary> CertificateOrderFailed. </summary>
-        CertificateOrderFailed = 3,
+        CertificateOrderFailed = 4,
         /// <summary> OperationNotPermittedOnKeyVault. </summary>
-        OperationNotPermittedOnKeyVault = 4,
+        OperationNotPermittedOnKeyVault = 5,
         /// <summary> AzureServiceUnauthorizedToAccessKeyVault. </summary>
-        AzureServiceUnauthorizedToAccessKeyVault = 5,
+        AzureServiceUnauthorizedToAccessKeyVault = 6,
         /// <summary> KeyVaultDoesNotExist. </summary>
-        KeyVaultDoesNotExist = 6,
+        KeyVaultDoesNotExist = 7,
         /// <summary> KeyVaultSecretDoesNotExist. </summary>
-        KeyVaultSecretDoesNotExist = 7,
+        KeyVaultSecretDoesNotExist = 8,
         /// <summary> UnknownError. </summary>
-        UnknownError = 8,
+        UnknownError = 9,
         /// <summary> ExternalPrivateKey. </summary>
-        ExternalPrivateKey = 9,
+        ExternalPrivateKey = 10,
         /// <summary> Unknown. </summary>
-        Unknown = 10
+        Unknown = 0
     }
 }

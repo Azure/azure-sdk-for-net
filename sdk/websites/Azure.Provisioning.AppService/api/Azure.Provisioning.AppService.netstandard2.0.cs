@@ -2289,17 +2289,17 @@ namespace Azure.Provisioning.AppService
     }
     public enum KeyVaultSecretStatus
     {
-        Initialized = 0,
-        WaitingOnCertificateOrder = 1,
-        Succeeded = 2,
-        CertificateOrderFailed = 3,
-        OperationNotPermittedOnKeyVault = 4,
-        AzureServiceUnauthorizedToAccessKeyVault = 5,
-        KeyVaultDoesNotExist = 6,
-        KeyVaultSecretDoesNotExist = 7,
-        UnknownError = 8,
-        ExternalPrivateKey = 9,
-        Unknown = 10,
+        Unknown = 0,
+        Initialized = 1,
+        WaitingOnCertificateOrder = 2,
+        Succeeded = 3,
+        CertificateOrderFailed = 4,
+        OperationNotPermittedOnKeyVault = 5,
+        AzureServiceUnauthorizedToAccessKeyVault = 6,
+        KeyVaultDoesNotExist = 7,
+        KeyVaultSecretDoesNotExist = 8,
+        UnknownError = 9,
+        ExternalPrivateKey = 10,
     }
     public partial class KubeEnvironment : Azure.Provisioning.Primitives.ProvisionableResource
     {
@@ -2641,9 +2641,9 @@ namespace Azure.Provisioning.AppService
     }
     public enum PublicCertificateLocation
     {
-        CurrentUserMy = 0,
-        LocalMachineMy = 1,
-        Unknown = 2,
+        Unknown = 0,
+        CurrentUserMy = 1,
+        LocalMachineMy = 2,
     }
     public partial class PublishingUser : Azure.Provisioning.Primitives.ProvisionableResource
     {

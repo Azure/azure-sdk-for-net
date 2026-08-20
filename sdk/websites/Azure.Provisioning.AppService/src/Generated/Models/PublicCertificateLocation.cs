@@ -11,10 +11,10 @@ namespace Azure.Provisioning.AppService
     public enum PublicCertificateLocation
     {
         /// <summary> CurrentUserMy. </summary>
-        CurrentUserMy = 0,
+        CurrentUserMy = 1,
         /// <summary> LocalMachineMy. </summary>
-        LocalMachineMy = 1,
+        LocalMachineMy = 2,
         /// <summary> Unknown. </summary>
-        Unknown = 2
+        Unknown = 0
     }
 }
