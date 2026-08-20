@@ -308,12 +308,12 @@ namespace Azure.ResourceManager.HorizonDB
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="content"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
-        public virtual async Task<ArmOperation<HorizonDBAdministratorResource>> UpdateAsync(WaitUntil waitUntil, HorizonDBAdministratorAdd resource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<HorizonDBAdministratorResource>> UpdateAsync(WaitUntil waitUntil, HorizonDBAdministratorContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resource, nameof(resource));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _horizonDBAdministratorsClientDiagnostics.CreateScope("HorizonDBAdministratorResource.Update");
             scope.Start();
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBAdministratorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HorizonDBAdministratorAdd.ToRequestContent(resource), context);
+                HttpMessage message = _horizonDBAdministratorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HorizonDBAdministratorContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HorizonDBArmOperation<HorizonDBAdministratorResource> operation = new HorizonDBArmOperation<HorizonDBAdministratorResource>(
                     new HorizonDBAdministratorResourceOperationSource(Client),
@@ -367,12 +367,12 @@ namespace Azure.ResourceManager.HorizonDB
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="content"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
-        public virtual ArmOperation<HorizonDBAdministratorResource> Update(WaitUntil waitUntil, HorizonDBAdministratorAdd resource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<HorizonDBAdministratorResource> Update(WaitUntil waitUntil, HorizonDBAdministratorContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resource, nameof(resource));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _horizonDBAdministratorsClientDiagnostics.CreateScope("HorizonDBAdministratorResource.Update");
             scope.Start();
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBAdministratorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HorizonDBAdministratorAdd.ToRequestContent(resource), context);
+                HttpMessage message = _horizonDBAdministratorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HorizonDBAdministratorContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HorizonDBArmOperation<HorizonDBAdministratorResource> operation = new HorizonDBArmOperation<HorizonDBAdministratorResource>(
                     new HorizonDBAdministratorResourceOperationSource(Client),
