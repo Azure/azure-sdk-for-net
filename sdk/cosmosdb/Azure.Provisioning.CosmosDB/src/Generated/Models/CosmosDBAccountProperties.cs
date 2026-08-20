@@ -58,7 +58,7 @@ namespace Azure.Provisioning.CosmosDB
         private BicepValue<bool> _enablePriorityBasedExecution;
         private BicepValue<DefaultPriorityLevel> _defaultPriorityLevel;
         private BicepValue<bool> _enablePerRegionPerPartitionAutoscale;
-        private BicepValue<bool> _enforceHierarchicalPartitionKeyIdLastLevel;
+        private BicepValue<bool> _isHierarchicalPartitionKeyIdLastLevelEnforced;
 
         /// <summary> Creates a new CosmosDBAccountProperties. </summary>
         public CosmosDBAccountProperties()
@@ -655,18 +655,18 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the EnforceHierarchicalPartitionKeyIdLastLevel. </summary>
-        public BicepValue<bool> EnforceHierarchicalPartitionKeyIdLastLevel
+        /// <summary> Gets or sets the IsHierarchicalPartitionKeyIdLastLevelEnforced. </summary>
+        public BicepValue<bool> IsHierarchicalPartitionKeyIdLastLevelEnforced
         {
             get
             {
                 Initialize();
-                return _enforceHierarchicalPartitionKeyIdLastLevel;
+                return _isHierarchicalPartitionKeyIdLastLevelEnforced;
             }
             set
             {
                 Initialize();
-                _enforceHierarchicalPartitionKeyIdLastLevel.Assign(value);
+                _isHierarchicalPartitionKeyIdLastLevelEnforced.Assign(value);
             }
         }
 
@@ -785,7 +785,7 @@ namespace Azure.Provisioning.CosmosDB
             _enablePriorityBasedExecution = DefineProperty<bool>(nameof(EnablePriorityBasedExecution), new string[] { "enablePriorityBasedExecution" });
             _defaultPriorityLevel = DefineProperty<DefaultPriorityLevel>(nameof(DefaultPriorityLevel), new string[] { "defaultPriorityLevel" });
             _enablePerRegionPerPartitionAutoscale = DefineProperty<bool>(nameof(EnablePerRegionPerPartitionAutoscale), new string[] { "enablePerRegionPerPartitionAutoscale" });
-            _enforceHierarchicalPartitionKeyIdLastLevel = DefineProperty<bool>(nameof(EnforceHierarchicalPartitionKeyIdLastLevel), new string[] { "enforceHierarchicalPartitionKeyIdLastLevel" });
+            _isHierarchicalPartitionKeyIdLastLevelEnforced = DefineProperty<bool>(nameof(IsHierarchicalPartitionKeyIdLastLevelEnforced), new string[] { "enforceHierarchicalPartitionKeyIdLastLevel" });
             DefineAdditionalProperties();
         }
 

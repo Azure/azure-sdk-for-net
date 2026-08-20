@@ -36,7 +36,7 @@ namespace Azure.Provisioning.CosmosDB
         private CassandraError _provisionError;
         private BicepList<string> _extensions;
         private BicepList<CassandraClusterBackupSchedule> _backupSchedules;
-        private BicepValue<ScheduledEventStrategy> _scheduledEventStrategy;
+        private BicepValue<CassandraScheduledEventStrategy> _scheduledEventStrategy;
         private BicepValue<ServiceConnectionType> _azureConnectionMethod;
         private BicepValue<ResourceIdentifier> _privateLinkResourceId;
 
@@ -366,7 +366,7 @@ namespace Azure.Provisioning.CosmosDB
         }
 
         /// <summary> Gets or sets the ScheduledEventStrategy. </summary>
-        public BicepValue<ScheduledEventStrategy> ScheduledEventStrategy
+        public BicepValue<CassandraScheduledEventStrategy> ScheduledEventStrategy
         {
             get
             {
@@ -448,7 +448,7 @@ namespace Azure.Provisioning.CosmosDB
             _provisionError = DefineModelProperty<CassandraError>(nameof(ProvisionError), new string[] { "provisionError" });
             _extensions = DefineListProperty<string>(nameof(Extensions), new string[] { "extensions" });
             _backupSchedules = DefineListProperty<CassandraClusterBackupSchedule>(nameof(BackupSchedules), new string[] { "backupSchedules" });
-            _scheduledEventStrategy = DefineProperty<ScheduledEventStrategy>(nameof(ScheduledEventStrategy), new string[] { "scheduledEventStrategy" });
+            _scheduledEventStrategy = DefineProperty<CassandraScheduledEventStrategy>(nameof(ScheduledEventStrategy), new string[] { "scheduledEventStrategy" });
             _azureConnectionMethod = DefineProperty<ServiceConnectionType>(nameof(AzureConnectionMethod), new string[] { "azureConnectionMethod" });
             _privateLinkResourceId = DefineProperty<ResourceIdentifier>(nameof(PrivateLinkResourceId), new string[] { "privateLinkResourceId" }, isOutput: true);
             DefineAdditionalProperties();

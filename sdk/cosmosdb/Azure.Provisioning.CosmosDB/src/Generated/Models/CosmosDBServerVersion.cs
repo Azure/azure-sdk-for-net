@@ -12,18 +12,18 @@ namespace Azure.Provisioning.CosmosDB
     /// <summary> Describes the version of the MongoDB account. </summary>
     public enum CosmosDBServerVersion
     {
-        /// <summary> Three2. </summary>
+        /// <summary> V3_2. </summary>
         [DataMember(Name = "3.2")]
-        Three2 = 0,
-        /// <summary> Three6. </summary>
+        V3_2 = 0,
+        /// <summary> V3_6. </summary>
         [DataMember(Name = "3.6")]
-        Three6 = 1,
-        /// <summary> Four0. </summary>
+        V3_6 = 1,
+        /// <summary> V4_0. </summary>
         [DataMember(Name = "4.0")]
-        Four0 = 2,
-        /// <summary> Four2. </summary>
+        V4_0 = 2,
+        /// <summary> V4_2. </summary>
         [DataMember(Name = "4.2")]
-        Four2 = 3,
+        V4_2 = 3,
         /// <summary> Five0. </summary>
         [DataMember(Name = "5.0")]
         Five0 = 4,

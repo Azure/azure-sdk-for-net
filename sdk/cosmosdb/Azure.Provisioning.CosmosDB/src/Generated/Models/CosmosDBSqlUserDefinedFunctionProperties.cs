@@ -9,7 +9,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB
 {
-    /// <summary> The properties of an Azure Cosmos DB userDefinedFunction. </summary>
     internal partial class CosmosDBSqlUserDefinedFunctionProperties : ProvisionableConstruct
     {
         private ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo _resource;

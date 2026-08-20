@@ -9,7 +9,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB
 {
-    /// <summary> The properties of an Azure Cosmos DB StoredProcedure. </summary>
     internal partial class CosmosDBSqlStoredProcedureProperties : ProvisionableConstruct
     {
         private ExtendedCosmosDBSqlStoredProcedureResourceInfo _resource;

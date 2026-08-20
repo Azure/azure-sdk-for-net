@@ -19,7 +19,6 @@ namespace Azure.Provisioning.CosmosDB
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
-        private CosmosDBServiceProperties _createOrUpdateProperties;
         private ResourceReference<CosmosDBAccount> _parent;
 
         /// <summary> Creates a new CosmosDBService. </summary>
@@ -64,21 +63,6 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the CreateOrUpdateProperties. </summary>
-        public CosmosDBServiceProperties CreateOrUpdateProperties
-        {
-            get
-            {
-                Initialize();
-                return _createOrUpdateProperties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _createOrUpdateProperties, value);
-            }
-        }
-
         /// <summary> Gets or sets the Parent. </summary>
         public CosmosDBAccount Parent
         {
@@ -101,7 +85,6 @@ namespace Azure.Provisioning.CosmosDB
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _createOrUpdateProperties = DefineModelProperty<CosmosDBServiceProperties>(nameof(CreateOrUpdateProperties), new string[] { "properties" });
             _parent = DefineResource<CosmosDBAccount>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

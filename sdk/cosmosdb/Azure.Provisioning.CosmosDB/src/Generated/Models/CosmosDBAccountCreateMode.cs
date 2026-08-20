@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.ComponentModel;
+
 namespace Azure.Provisioning.CosmosDB
 {
     /// <summary> Enum to indicate the mode of account creation. </summary>
@@ -13,6 +15,9 @@ namespace Azure.Provisioning.CosmosDB
         /// <summary> Default. </summary>
         Default = 0,
         /// <summary> Restore. </summary>
-        Restore = 1
+        Restore = 1,
+        /// <summary> PointInTimeRestore. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        PointInTimeRestore = 2
     }
 }

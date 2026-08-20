@@ -761,12 +761,12 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the EnforceHierarchicalPartitionKeyIdLastLevel. </summary>
-        public BicepValue<bool> EnforceHierarchicalPartitionKeyIdLastLevel
+        /// <summary> Gets or sets the IsHierarchicalPartitionKeyIdLastLevelEnforced. </summary>
+        public BicepValue<bool> IsHierarchicalPartitionKeyIdLastLevelEnforced
         {
             get
             {
-                return Properties is null ? default : Properties.EnforceHierarchicalPartitionKeyIdLastLevel;
+                return Properties is null ? default : Properties.IsHierarchicalPartitionKeyIdLastLevelEnforced;
             }
             set
             {
@@ -774,7 +774,7 @@ namespace Azure.Provisioning.CosmosDB
                 {
                     Properties = new CosmosDBAccountProperties();
                 }
-                Properties.EnforceHierarchicalPartitionKeyIdLastLevel = value;
+                Properties.IsHierarchicalPartitionKeyIdLastLevelEnforced = value;
             }
         }
 

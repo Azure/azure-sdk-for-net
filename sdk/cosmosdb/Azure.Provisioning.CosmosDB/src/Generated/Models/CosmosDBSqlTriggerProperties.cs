@@ -9,7 +9,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB
 {
-    /// <summary> The properties of an Azure Cosmos DB trigger. </summary>
     internal partial class CosmosDBSqlTriggerProperties : ProvisionableConstruct
     {
         private ExtendedCosmosDBSqlTriggerResourceInfo _resource;

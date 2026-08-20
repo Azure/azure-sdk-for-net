@@ -8,7 +8,7 @@
 namespace Azure.Provisioning.CosmosDB
 {
     /// <summary> How the nodes in the cluster react to scheduled events. </summary>
-    public enum ScheduledEventStrategy
+    public enum CassandraScheduledEventStrategy
     {
         /// <summary> Ignore. </summary>
         Ignore = 0,
