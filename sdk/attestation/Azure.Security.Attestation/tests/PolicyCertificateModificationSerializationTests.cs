@@ -11,6 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Security.Attestation.Tests
 {
+#if NET6_0_OR_GREATER
     /// <summary>
     /// Guards the JSON body produced for policy management certificate add/remove operations.
     /// </summary>
@@ -21,6 +22,11 @@ namespace Azure.Security.Attestation.Tests
     /// <c>IJsonModel</c> implementation and the model's internal payload property; without an explicit
     /// <c>JsonConverter</c> the body silently serializes to <c>{}</c> and the service receives a signed token
     /// with no certificate in it.
+    /// <para>
+    /// The behavior under test is framework independent, so the test is restricted to the frameworks that can
+    /// build a certificate in process. <c>CertificateRequest</c> and <c>RSA.Create(int)</c> do not exist on
+    /// .NET Framework 4.6.2.
+    /// </para>
     /// </remarks>
     public class PolicyCertificateModificationSerializationTests
     {
@@ -91,4 +97,5 @@ namespace Azure.Security.Attestation.Tests
             return body.ToString();
         }
     }
+#endif
 }
