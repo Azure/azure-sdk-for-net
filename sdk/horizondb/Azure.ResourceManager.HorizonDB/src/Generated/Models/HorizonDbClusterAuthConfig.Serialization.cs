@@ -131,9 +131,9 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 return null;
             }
-            AuthenticationState? entraIdAuth = default;
+            HorizonDBAuthenticationState? entraIdAuth = default;
             string tenantId = default;
-            AuthenticationState? passwordAuth = default;
+            HorizonDBAuthenticationState? passwordAuth = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    entraIdAuth = new AuthenticationState(prop.Value.GetString());
+                    entraIdAuth = new HorizonDBAuthenticationState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tenantId"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    passwordAuth = new AuthenticationState(prop.Value.GetString());
+                    passwordAuth = new HorizonDBAuthenticationState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
