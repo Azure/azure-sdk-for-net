@@ -3,7 +3,6 @@
 
 #nullable enable
 
-using System;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.Provisioning.Primitives;
@@ -14,7 +13,6 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CassandraViewGetResult.
 /// </summary>
-[Obsolete("CassandraViewGetResult is retained for compatibility and should not be used. Cassandra views are only available in preview API versions.")]
 [EditorBrowsable(EditorBrowsableState.Never)]
 public partial class CassandraViewGetResult : ProvisionableResource
 {

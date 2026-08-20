@@ -23,9 +23,7 @@ public partial class CassandraViewThroughputSetting : ProvisionableResource
     private BicepDictionary<string>? _tags;
     private BicepValue<ResourceIdentifier>? _id;
     private SystemData? _systemData;
-#pragma warning disable CS0618 // CassandraViewGetResult is retained for API compatibility.
     private ResourceReference<CassandraViewGetResult>? _parent;
-#pragma warning restore CS0618
 
     /// <summary>
     /// Gets the Name.
@@ -90,9 +88,7 @@ public partial class CassandraViewThroughputSetting : ProvisionableResource
     /// <summary>
     /// Gets or sets a reference to the parent CassandraViewGetResult.
     /// </summary>
-#pragma warning disable CS0618 // CassandraViewGetResult is retained for API compatibility.
     public CassandraViewGetResult? Parent
-#pragma warning restore CS0618
     {
         get { Initialize(); return _parent!.Value; }
         set { Initialize(); _parent!.Value = value; }
@@ -127,9 +123,7 @@ public partial class CassandraViewThroughputSetting : ProvisionableResource
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
-#pragma warning disable CS0618 // CassandraViewGetResult is retained for API compatibility.
         _parent = DefineResource<CassandraViewGetResult>("Parent", ["parent"], isRequired: true);
-#pragma warning restore CS0618
     }
 
     /// <summary>
