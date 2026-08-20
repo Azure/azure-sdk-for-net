@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="extendedLocation"></param>
+        /// <param name="extendedLocation"> The extended location of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal EdgeTargetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EdgeTargetProperties properties, ETag? eTag, ExtendedLocation extendedLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <summary> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
         public ETag? ETag { get; }
 
-        /// <summary> Gets or sets the ExtendedLocation. </summary>
+        /// <summary> The extended location of the resource. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
     }
 }

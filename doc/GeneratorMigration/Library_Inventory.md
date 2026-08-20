@@ -26,8 +26,8 @@
   - New Emitter (TypeSpec): 53
   - Old TypeSpec: 0
 - Provisioning: 59
-  - Reflection-based generator: 24
-  - TypeSpec-based generator: 33
+  - Reflection-based generator: 22
+  - TypeSpec-based generator: 35
   - No generator: 2
 - No generator: 41
 
@@ -416,7 +416,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 43
 
 Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
 
-**Migration Status**: 33 / 59 migrated to TypeSpec-based generator
+**Migration Status**: 35 / 59 migrated to TypeSpec-based generator
 
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
@@ -427,7 +427,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | batch | Azure.Provisioning.Batch | Azure.ResourceManager.Batch ✅ | TypeSpec ✅ |
 | botservice | Azure.Provisioning.BotService | Azure.ResourceManager.BotService ✅ | TypeSpec ✅ |
 | cdn | Azure.Provisioning.Cdn | Azure.ResourceManager.Cdn ✅ | TypeSpec ✅ |
-| cognitiveservices | Azure.Provisioning.CognitiveServices | Azure.ResourceManager.CognitiveServices ✅ | Reflection |
+| cognitiveservices | Azure.Provisioning.CognitiveServices | Azure.ResourceManager.CognitiveServices ✅ | TypeSpec ✅ |
 | communication | Azure.Provisioning.Communication | Azure.ResourceManager.Communication ✅ | TypeSpec ✅ |
 | compute | Azure.Provisioning.Compute | Azure.ResourceManager.Compute ✅ | TypeSpec ✅ |
 | containerapps | Azure.Provisioning.AppContainers | Azure.ResourceManager.AppContainers ✅ | Reflection |
@@ -468,7 +468,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | resourcegraph | Azure.Provisioning.ResourceGraph | Azure.ResourceManager.ResourceGraph ✅ | TypeSpec ✅ |
 | search | Azure.Provisioning.Search | Azure.ResourceManager.Search ✅ | TypeSpec ✅ |
 | securitycenter | Azure.Provisioning.SecurityCenter | Azure.ResourceManager.SecurityCenter ✅ | Reflection |
-| servicebus | Azure.Provisioning.ServiceBus | Azure.ResourceManager.ServiceBus ✅ | Reflection |
+| servicebus | Azure.Provisioning.ServiceBus | Azure.ResourceManager.ServiceBus ✅ | TypeSpec ✅ |
 | servicefabric | Azure.Provisioning.ServiceFabric | Azure.ResourceManager.ServiceFabric ✅ | TypeSpec ✅ |
 | servicefabricmanagedclusters | Azure.Provisioning.ServiceFabricManagedClusters | Azure.ResourceManager.ServiceFabricManagedClusters ✅ | TypeSpec ✅ |
 | servicenetworking | Azure.Provisioning.ServiceNetworking | Azure.ResourceManager.ServiceNetworking ✅ | TypeSpec ✅ |

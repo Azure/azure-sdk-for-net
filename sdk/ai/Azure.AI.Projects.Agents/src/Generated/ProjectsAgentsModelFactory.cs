@@ -109,10 +109,17 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Container-based deployment configuration for a hosted agent. </summary>
         /// <param name="image"> The container image for the hosted agent. </param>
+        /// <param name="registryConnectionId">
+        /// The id (or name) of the Foundry project connection that provides the credentials used to
+        /// authenticate to the private container registry hosting `image`. The connection abstracts the
+        /// auth mechanism — for example a managed-identity-federated token exchange, or a username/token
+        /// secret — so registry credentials are never part of the agent definition. Omit for public images
+        /// or registries already reachable by the platform's default identity (for example, Azure Container Registry).
+        /// </param>
         /// <returns> A new <see cref="Agents.ContainerConfiguration"/> instance for mocking. </returns>
-        public static ContainerConfiguration ContainerConfiguration(string image = default)
+        public static ContainerConfiguration ContainerConfiguration(string image = default, string registryConnectionId = default)
         {
-            return new ContainerConfiguration(image, additionalBinaryDataProperties: null);
+            return new ContainerConfiguration(image, registryConnectionId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A record mapping for a single protocol and its version. </summary>
@@ -234,6 +241,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="textOptions"> Configuration options for a text response from the model. Can be plain text or structured JSON data. </param>
         /// <param name="structuredInputs"> Set of structured inputs that can participate in prompt template substitution or tool argument bindings. </param>
         /// <returns> A new <see cref="Agents.DeclarativeAgentDefinition"/> instance for mocking. </returns>
+        [Experimental("AAIP002")]
         public static DeclarativeAgentDefinition DeclarativeAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, string model = default, string instructions = default, float? temperature = default, float? topP = default, ResponseReasoningOptions reasoningOptions = default, IEnumerable<ResponseTool> tools = default, BinaryData toolChoice = default, ResponseTextOptions textOptions = default, IDictionary<string, StructuredInputDefinition> structuredInputs = default)
         {
             tools ??= new ChangeTrackingList<ResponseTool>();
@@ -836,7 +844,11 @@ namespace Azure.AI.Projects.Agents
             return new StructuredInputDefinition(description, defaultValue, schema, isRequired, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The workflow agent definition. </summary>
+        /// <summary>
+        /// The workflow agent definition. Microsoft Foundry is retiring workflows on December 1, 2026.
+        /// If you're looking to build new workflows, use Microsoft Agent Framework. To migrate existing workflows,
+        /// see the [Migration guide](https://learn.microsoft.com/azure/foundry/agents/concepts/workflow#migration-guide).
+        /// </summary>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="workflowYaml"> The CSDL YAML definition of the workflow. </param>
         /// <returns> A new <see cref="Agents.WorkflowAgentDefinition"/> instance for mocking. </returns>
@@ -1727,13 +1739,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="validationDataset"> Optional held-out validation dataset for measuring generalization of the final candidate. </param>
         /// <param name="evaluators"> Job-level evaluators referenced by name and optional version. Required; at least one must be provided. </param>
         /// <param name="options"> Tuning knobs and run-mode. </param>
-        /// <returns> A new <see cref="Agents.OptimizationJobInputs"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.AgentOptimizationJobInputs"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static OptimizationJobInputs OptimizationJobInputs(OptimizationAgentIdentifier agent = default, OptimizationDatasetInput trainDataset = default, OptimizationDatasetInput validationDataset = default, IEnumerable<OptimizationEvaluatorRef> evaluators = default, OptimizationOptions options = default)
+        public static AgentOptimizationJobInputs AgentOptimizationJobInputs(OptimizedAgentIdentifier agent = default, AgentOptimizationDatasetInput trainDataset = default, AgentOptimizationDatasetInput validationDataset = default, IEnumerable<AgentOptimizationEvaluatorRef> evaluators = default, AgentOptimizationOptions options = default)
         {
-            evaluators ??= new ChangeTrackingList<OptimizationEvaluatorRef>();
+            evaluators ??= new ChangeTrackingList<AgentOptimizationEvaluatorRef>();
 
-            return new OptimizationJobInputs(
+            return new AgentOptimizationJobInputs(
                 agent,
                 trainDataset,
                 validationDataset,
@@ -1745,34 +1757,34 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Identifies the registered Foundry agent to optimize (request-only). Skills, tools, and system_prompt are specified in options.optimization_config. </summary>
         /// <param name="agentName"> Registered Foundry agent name (required). </param>
         /// <param name="agentVersion"> Pinned agent version. Defaults to latest if omitted. </param>
-        /// <returns> A new <see cref="Agents.OptimizationAgentIdentifier"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.OptimizedAgentIdentifier"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static OptimizationAgentIdentifier OptimizationAgentIdentifier(string agentName = default, string agentVersion = default)
+        public static OptimizedAgentIdentifier OptimizedAgentIdentifier(string agentName = default, string agentVersion = default)
         {
-            return new OptimizationAgentIdentifier(agentName, agentVersion, additionalBinaryDataProperties: null);
+            return new OptimizedAgentIdentifier(agentName, agentVersion, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
         /// Base discriminated model for dataset input. Either inline items or a registered reference.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.OptimizationInlineDatasetInput"/> and <see cref="Agents.OptimizationReferenceDatasetInput"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.AgentOptimizationInlineDatasetInput"/> and <see cref="Agents.AgentOptimizationReferenceDatasetInput"/>.
         /// </summary>
         /// <param name="type"> Dataset input type discriminator. </param>
-        /// <returns> A new <see cref="Agents.OptimizationDatasetInput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.AgentOptimizationDatasetInput"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static OptimizationDatasetInput OptimizationDatasetInput(string @type = default)
+        public static AgentOptimizationDatasetInput AgentOptimizationDatasetInput(string @type = default)
         {
-            return new UnknownOptimizationDatasetInput(new OptimizationDatasetInputType(@type), additionalBinaryDataProperties: null);
+            return new UnknownAgentOptimizationDatasetInput(new AgentOptimizationDatasetInputType(@type), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Inline dataset — items supplied directly in the request body. </summary>
         /// <param name="items"> Dataset items. </param>
-        /// <returns> A new <see cref="Agents.OptimizationInlineDatasetInput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.AgentOptimizationInlineDatasetInput"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static OptimizationInlineDatasetInput OptimizationInlineDatasetInput(IEnumerable<OptimizationDatasetItem> items = default)
+        public static AgentOptimizationInlineDatasetInput AgentOptimizationInlineDatasetInput(IEnumerable<AgentOptimizationDatasetItem> items = default)
         {
-            items ??= new ChangeTrackingList<OptimizationDatasetItem>();
+            items ??= new ChangeTrackingList<AgentOptimizationDatasetItem>();
 
-            return new OptimizationInlineDatasetInput(OptimizationDatasetInputType.Inline, additionalBinaryDataProperties: null, items.ToList());
+            return new AgentOptimizationInlineDatasetInput(AgentOptimizationDatasetInputType.Inline, additionalBinaryDataProperties: null, items.ToList());
         }
 
         /// <summary> A single item in an inline dataset. </summary>
@@ -1780,43 +1792,43 @@ namespace Azure.AI.Projects.Agents
         /// <param name="groundTruth"> Expected ground truth answer. </param>
         /// <param name="desiredTurnCount"> Desired number of conversation turns for simulation mode (1-20). </param>
         /// <param name="criteria"> Per-item evaluation criteria. </param>
-        /// <returns> A new <see cref="Agents.OptimizationDatasetItem"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.AgentOptimizationDatasetItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static OptimizationDatasetItem OptimizationDatasetItem(string query = default, string groundTruth = default, int? desiredTurnCount = default, IEnumerable<OptimizationDatasetCriterion> criteria = default)
+        public static AgentOptimizationDatasetItem AgentOptimizationDatasetItem(string query = default, string groundTruth = default, int? desiredTurnCount = default, IEnumerable<AgentOptimizationDatasetCriterion> criteria = default)
         {
-            criteria ??= new ChangeTrackingList<OptimizationDatasetCriterion>();
+            criteria ??= new ChangeTrackingList<AgentOptimizationDatasetCriterion>();
 
-            return new OptimizationDatasetItem(query, groundTruth, desiredTurnCount, criteria.ToList(), additionalBinaryDataProperties: null);
+            return new AgentOptimizationDatasetItem(query, groundTruth, desiredTurnCount, criteria.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Evaluation criterion: a name + instruction pair used for per-item scoring. </summary>
         /// <param name="name"> Criterion name. </param>
         /// <param name="instruction"> Criterion instruction / description. </param>
-        /// <returns> A new <see cref="Agents.OptimizationDatasetCriterion"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.AgentOptimizationDatasetCriterion"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static OptimizationDatasetCriterion OptimizationDatasetCriterion(string name = default, string instruction = default)
+        public static AgentOptimizationDatasetCriterion AgentOptimizationDatasetCriterion(string name = default, string instruction = default)
         {
-            return new OptimizationDatasetCriterion(name, instruction, additionalBinaryDataProperties: null);
+            return new AgentOptimizationDatasetCriterion(name, instruction, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Reference to a registered Foundry dataset. </summary>
         /// <param name="name"> Registered dataset name. </param>
         /// <param name="version"> Dataset version. If not specified, the latest version is used. </param>
-        /// <returns> A new <see cref="Agents.OptimizationReferenceDatasetInput"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.AgentOptimizationReferenceDatasetInput"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static OptimizationReferenceDatasetInput OptimizationReferenceDatasetInput(string name = default, string version = default)
+        public static AgentOptimizationReferenceDatasetInput AgentOptimizationReferenceDatasetInput(string name = default, string version = default)
         {
-            return new OptimizationReferenceDatasetInput(OptimizationDatasetInputType.Reference, additionalBinaryDataProperties: null, name, version);
+            return new AgentOptimizationReferenceDatasetInput(AgentOptimizationDatasetInputType.Reference, additionalBinaryDataProperties: null, name, version);
         }
 
         /// <summary> Reference to a named evaluator, optionally pinned to a version. </summary>
         /// <param name="name"> Evaluator name. </param>
         /// <param name="version"> Evaluator version. If not specified, the latest version is used. </param>
-        /// <returns> A new <see cref="Agents.OptimizationEvaluatorRef"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.AgentOptimizationEvaluatorRef"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static OptimizationEvaluatorRef OptimizationEvaluatorRef(string name = default, string version = default)
+        public static AgentOptimizationEvaluatorRef AgentOptimizationEvaluatorRef(string name = default, string version = default)
         {
-            return new OptimizationEvaluatorRef(name, version, additionalBinaryDataProperties: null);
+            return new AgentOptimizationEvaluatorRef(name, version, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Tuning knobs and run-mode for an optimization job. </summary>
@@ -1826,13 +1838,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="optimizationModel"> Model deployment for optimization reasoning (must be gpt-5 family). Falls back to the default eval model when not set. </param>
         /// <param name="evaluationLevel"> Evaluation granularity. Null/omitted means per-item single-turn. Set to 'conversation' for per-conversation multi-turn simulation scoring. </param>
         /// <param name="maxStalls"> Maximum number of consecutive reflective minibatch rejections before stopping early. A 'stall' occurs when the optimizer proposes a prompt change, evaluates it on a small subset, and the score does not improve — so no full validation-set evaluation is triggered. The counter resets whenever a minibatch passes and its full-validation score beats the current best. Only a sustained plateau of `max_stalls` consecutive minibatch failures triggers the stop. The service defaults to 5 if a value is not specified by the caller. Must be &gt;= 1 when set. </param>
-        /// <returns> A new <see cref="Agents.OptimizationOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.AgentOptimizationOptions"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static OptimizationOptions OptimizationOptions(int? maxCandidates = default, IDictionary<string, BinaryData> optimizationConfig = default, string evalModel = default, string optimizationModel = default, AgentsEvaluationLevel? evaluationLevel = default, int? maxStalls = default)
+        public static AgentOptimizationOptions AgentOptimizationOptions(int? maxCandidates = default, IDictionary<string, BinaryData> optimizationConfig = default, string evalModel = default, string optimizationModel = default, AgentsEvaluationLevel? evaluationLevel = default, int? maxStalls = default)
         {
             optimizationConfig ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new OptimizationOptions(
+            return new AgentOptimizationOptions(
                 maxCandidates,
                 optimizationConfig,
                 evalModel,
@@ -1846,13 +1858,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="baseline"> Candidate ID of the original (un-optimized) baseline evaluation. </param>
         /// <param name="best"> Candidate ID of the highest-scoring candidate found during optimization. </param>
         /// <param name="candidates"> All evaluated candidates including baseline. </param>
-        /// <returns> A new <see cref="Agents.OptimizationJobResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.AgentOptimizationJobResult"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static OptimizationJobResult OptimizationJobResult(string baseline = default, string best = default, IEnumerable<OptimizationCandidate> candidates = default)
+        public static AgentOptimizationJobResult AgentOptimizationJobResult(string baseline = default, string best = default, IEnumerable<AgentOptimizationCandidate> candidates = default)
         {
-            candidates ??= new ChangeTrackingList<OptimizationCandidate>();
+            candidates ??= new ChangeTrackingList<AgentOptimizationCandidate>();
 
-            return new OptimizationJobResult(baseline, best, candidates.ToList(), additionalBinaryDataProperties: null);
+            return new AgentOptimizationJobResult(baseline, best, candidates.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Aggregated evaluation result for a single candidate agent configuration across all tasks. </summary>
@@ -1864,13 +1876,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="evalId"> Foundry evaluation identifier used to score this candidate. </param>
         /// <param name="evalRunId"> Foundry evaluation run identifier for this candidate's scoring run. </param>
         /// <param name="promotion"> Promotion metadata. Null if the candidate has not been promoted. </param>
-        /// <returns> A new <see cref="Agents.OptimizationCandidate"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.AgentOptimizationCandidate"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static OptimizationCandidate OptimizationCandidate(string candidateId = default, string name = default, IDictionary<string, BinaryData> mutations = default, double avgScore = default, double avgTokens = default, string evalId = default, string evalRunId = default, PromotionInfo promotion = default)
+        public static AgentOptimizationCandidate AgentOptimizationCandidate(string candidateId = default, string name = default, IDictionary<string, BinaryData> mutations = default, double avgScore = default, double avgTokens = default, string evalId = default, string evalRunId = default, PromotionInfo promotion = default)
         {
             mutations ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new OptimizationCandidate(
+            return new AgentOptimizationCandidate(
                 candidateId,
                 name,
                 mutations,
@@ -1896,12 +1908,12 @@ namespace Azure.AI.Projects.Agents
         /// <summary> In-flight progress; only populated while status is queued or in_progress. </summary>
         /// <param name="candidatesCompleted"> Number of candidates whose evaluation has completed so far. </param>
         /// <param name="bestScore"> Best score observed so far across all candidates. </param>
-        /// <param name="elapsedSecondsInternal"> Wall-clock time elapsed in seconds since the job began executing. </param>
-        /// <returns> A new <see cref="Agents.OptimizationJobProgress"/> instance for mocking. </returns>
+        /// <param name="elapsedSeconds"> Wall-clock time elapsed in seconds since the job began executing. </param>
+        /// <returns> A new <see cref="Agents.AgentOptimizationJobProgress"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static OptimizationJobProgress OptimizationJobProgress(int candidatesCompleted = default, double bestScore = default, double elapsedSecondsInternal = default)
+        public static AgentOptimizationJobProgress AgentOptimizationJobProgress(int candidatesCompleted = default, double bestScore = default, double elapsedSeconds = default)
         {
-            return new OptimizationJobProgress(candidatesCompleted, bestScore, elapsedSecondsInternal, additionalBinaryDataProperties: null);
+            return new AgentOptimizationJobProgress(candidatesCompleted, bestScore, elapsedSeconds, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ProjectsAgentVersionCreationOptions. </summary>
