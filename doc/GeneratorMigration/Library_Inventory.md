@@ -17,17 +17,17 @@
 ## Summary
 
 - Total libraries: 444
-- Management Plane (MPG): 261
-  - Autorest/Swagger: 43
-  - New Emitter (TypeSpec): 218
+- Management Plane (MPG): 260
+  - Autorest/Swagger: 41
+  - New Emitter (TypeSpec): 219
   - Old TypeSpec: 0
 - Data Plane (DPG): 124
   - Autorest/Swagger: 30
   - New Emitter (TypeSpec): 53
   - Old TypeSpec: 0
-- Provisioning: 59
+- Provisioning: 60
   - Reflection-based generator: 22
-  - TypeSpec-based generator: 35
+  - TypeSpec-based generator: 36
   - No generator: 2
 - No generator: 41
 
@@ -137,7 +137,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 30
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 218 / 218 (100%)
+**Migration Status**: 219 / 219 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -337,6 +337,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | servicefabric | Azure.ResourceManager.ServiceFabric | ✅ |
 | servicefabricmanagedclusters | Azure.ResourceManager.ServiceFabricManagedClusters | ✅ |
 | servicegroups | Azure.ResourceManager.ServiceGroups | ✅ |
+| servicelinker | Azure.ResourceManager.ServiceLinker | ✅ |
 | servicenetworking | Azure.ResourceManager.ServiceNetworking | ✅ |
 | signalr | Azure.ResourceManager.SignalR | ✅ |
 | sitemanager | Azure.ResourceManager.SiteManager | ✅ |
@@ -363,7 +364,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 43
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 41
 
 | Service | Library |
 | ------- | ------- |
@@ -401,7 +402,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 43
 | resourcemover | Azure.ResourceManager.ResourceMover |
 | resources | Azure.ResourceManager.Resources |
 | securitydevops | Azure.ResourceManager.SecurityDevOps |
-| servicelinker | Azure.ResourceManager.ServiceLinker |
 | springappdiscovery | Azure.ResourceManager.SpringAppDiscovery |
 | storagepool | Azure.ResourceManager.StoragePool |
 | streamanalytics | Azure.ResourceManager.StreamAnalytics |
@@ -415,7 +415,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 43
 
 Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
 
-**Migration Status**: 35 / 59 migrated to TypeSpec-based generator
+**Migration Status**: 36 / 60 migrated to TypeSpec-based generator
 
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
@@ -447,7 +447,8 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | hybridkubernetes | Azure.Provisioning.Kubernetes | Azure.ResourceManager.Kubernetes ✅ | TypeSpec ✅ |
 | iothub | Azure.Provisioning.IotHub | Azure.ResourceManager.IotHub ✅ | TypeSpec ✅ |
 | keyvault | Azure.Provisioning.KeyVault | Azure.ResourceManager.KeyVault ✅ | TypeSpec ✅ |
-| kubernetesconfiguration | Azure.Provisioning.KubernetesConfiguration | Azure.ResourceManager.KubernetesConfiguration.Extensions ✅<br>Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations ✅ | Reflection |
+| kubernetesconfiguration | Azure.Provisioning.KubernetesConfiguration | Azure.ResourceManager.KubernetesConfiguration | Reflection |
+| kubernetesconfiguration | Azure.Provisioning.KubernetesConfiguration.Extensions | Azure.ResourceManager.KubernetesConfiguration.Extensions ✅ | TypeSpec ✅ |
 | kusto | Azure.Provisioning.Kusto | Azure.ResourceManager.Kusto ✅ | Reflection |
 | loadtestservice | Azure.Provisioning.LoadTesting | Azure.ResourceManager.LoadTesting ✅ | TypeSpec ✅ |
 | logic | Azure.Provisioning.Logic | Azure.ResourceManager.Logic | Reflection |
