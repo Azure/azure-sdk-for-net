@@ -11,6 +11,7 @@
 
 - Fixed `GetPolicyManagementCertificates` failing to deserialize the service response.
 - Fixed `GetPolicy` throwing instead of returning a null policy when the requested attestation type has no policy configured.
+- Fixed `AddPolicyManagementCertificate` and `RemovePolicyManagementCertificate` sending a malformed request body, which caused the service to return `InvalidParameter`.
 
 ### Other Changes
 
