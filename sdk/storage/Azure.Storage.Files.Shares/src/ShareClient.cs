@@ -472,6 +472,64 @@ namespace Azure.Storage.Files.Shares
             => GetDirectoryClient("");
 
         /// <summary>
+        /// Create a new <see cref="ShareFileClient"/> object that addresses a
+        /// file by its file ID rather than by its path.  The new
+        /// <see cref="ShareFileClient"/> uses the same request policy pipeline
+        /// as the <see cref="ShareClient"/>.
+        ///
+        /// A file ID can be obtained from the
+        /// <see cref="Models.FileSmbProperties.FileId"/> returned by
+        /// Get Properties, or from a change feed event.
+        ///
+        /// Clients that address a file by its file ID only support a subset of
+        /// the file operations.  Unsupported operations throw
+        /// <see cref="InvalidOperationException"/>.
+        /// </summary>
+        /// <param name="fileId">The file ID of the file.</param>
+        /// <returns>A new <see cref="ShareFileClient"/> instance.</returns>
+        public virtual ShareFileClient GetFileClientByFileId(string fileId)
+        {
+            Argument.AssertNotNullOrWhiteSpace(fileId, nameof(fileId));
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri)
+            {
+                DirectoryOrFilePath = null,
+                FileId = fileId
+            };
+            return new ShareFileClient(
+                shareUriBuilder.ToUri(),
+                ClientConfiguration);
+        }
+
+        /// <summary>
+        /// Create a new <see cref="ShareDirectoryClient"/> object that addresses
+        /// a directory by its file ID rather than by its path.  The new
+        /// <see cref="ShareDirectoryClient"/> uses the same request policy
+        /// pipeline as the <see cref="ShareClient"/>.
+        ///
+        /// A file ID can be obtained from the
+        /// <see cref="Models.FileSmbProperties.FileId"/> returned by
+        /// Get Properties, or from a change feed event.
+        ///
+        /// Clients that address a directory by its file ID only support a
+        /// subset of the directory operations.  Unsupported operations throw
+        /// <see cref="InvalidOperationException"/>.
+        /// </summary>
+        /// <param name="fileId">The file ID of the directory.</param>
+        /// <returns>A new <see cref="ShareDirectoryClient"/> instance.</returns>
+        public virtual ShareDirectoryClient GetDirectoryClientByFileId(string fileId)
+        {
+            Argument.AssertNotNullOrWhiteSpace(fileId, nameof(fileId));
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri)
+            {
+                DirectoryOrFilePath = null,
+                FileId = fileId
+            };
+            return new ShareDirectoryClient(
+                shareUriBuilder.ToUri(),
+                ClientConfiguration);
+        }
+
+        /// <summary>
         /// Sets the various name fields if they are currently null.
         /// </summary>
         private void SetNameFieldsIfNull()

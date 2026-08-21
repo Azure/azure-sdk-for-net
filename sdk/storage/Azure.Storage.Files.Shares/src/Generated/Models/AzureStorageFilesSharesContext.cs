@@ -21,6 +21,8 @@ namespace Azure.Storage.Files.Shares
     [ModelReaderWriterBuildable(typeof(FileRange))]
     [ModelReaderWriterBuildable(typeof(FilesAndDirectoriesListSegment))]
     [ModelReaderWriterBuildable(typeof(HandleItem))]
+    [ModelReaderWriterBuildable(typeof(HardLink))]
+    [ModelReaderWriterBuildable(typeof(HardLinkList))]
     [ModelReaderWriterBuildable(typeof(KeyInfo))]
     [ModelReaderWriterBuildable(typeof(ListFilesAndDirectoriesSegmentResponse))]
     [ModelReaderWriterBuildable(typeof(ListHandlesResponse))]

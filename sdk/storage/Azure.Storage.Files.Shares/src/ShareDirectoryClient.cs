@@ -99,6 +99,7 @@ namespace Azure.Storage.Files.Shares
         {
             get
             {
+                ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(Name));
                 SetNameFieldsIfNull();
                 return _name;
             }
@@ -116,16 +117,48 @@ namespace Azure.Storage.Files.Shares
         {
             get
             {
+                ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(Path));
                 SetNameFieldsIfNull();
                 return _path;
             }
         }
 
         /// <summary>
+        /// The file ID of the directory, if this client addresses the directory
+        /// by its file ID rather than by its path.
+        /// </summary>
+        private string _fileId;
+
+        /// <summary>
+        /// Gets the file ID of the directory, if this client addresses the
+        /// directory by its file ID rather than by its path.  The value is
+        /// <see cref="string.Empty"/> if the directory is addressed by its path.
+        ///
+        /// See <see cref="ShareClient.GetDirectoryClientByFileId(string)"/> for
+        /// creating a client that addresses a directory by its file ID.
+        /// </summary>
+        public virtual string FileId
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _fileId;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether this client addresses the directory by its file ID
+        /// rather than by its path.  A client is file ID addressed when the
+        /// <see cref="Uri"/> it was constructed with contains a file ID query
+        /// parameter.
+        /// </summary>
+        internal virtual bool IsFileIdAddressed => !string.IsNullOrEmpty(FileId);
+
+        /// <summary>
         /// Indicates whether the client is able to generate a SAS uri.
         /// Client can generate a SAS url if it is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
-        public virtual bool CanGenerateSasUri => ClientConfiguration.SharedKeyCredential != null;
+        public virtual bool CanGenerateSasUri => !IsFileIdAddressed && ClientConfiguration.SharedKeyCredential != null;
 
         #region ctors
         /// <summary>
@@ -496,6 +529,7 @@ namespace Azure.Storage.Files.Shares
         /// <returns>A new <see cref="ShareFileClient"/> instance.</returns>
         public virtual ShareFileClient GetFileClient(string fileName)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(GetFileClient));
             ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri);
             shareUriBuilder.DirectoryOrFilePath += $"/{fileName}";
             return new ShareFileClient(
@@ -513,6 +547,7 @@ namespace Azure.Storage.Files.Shares
         /// <returns>A new <see cref="ShareDirectoryClient"/> instance.</returns>
         public virtual ShareDirectoryClient GetSubdirectoryClient(string subdirectoryName)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(GetSubdirectoryClient));
             ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri);
             shareUriBuilder.DirectoryOrFilePath += $"/{subdirectoryName}";
             return new ShareDirectoryClient(
@@ -525,13 +560,14 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         private void SetNameFieldsIfNull()
         {
-            if (_name == null || _shareName == null || _accountName == null || _path == null)
+            if (_name == null || _shareName == null || _accountName == null || _path == null || _fileId == null)
             {
                 var builder = new ShareUriBuilder(Uri);
                 _name ??= builder.LastDirectoryOrFileName;
                 _shareName ??= builder.ShareName;
                 _accountName ??= builder.AccountName;
                 _path ??= builder.DirectoryOrFilePath;
+                _fileId ??= builder.FileId;
             }
         }
 
@@ -772,6 +808,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken,
             string operationName = default)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(Create));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -1083,6 +1120,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken,
             string operationName = default)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(CreateIfNotExists));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -1196,6 +1234,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(Exists));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -1311,6 +1350,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken,
             string operationName = default)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(DeleteIfExists));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -1423,6 +1463,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken,
             string operationName = default)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(Delete));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -1817,6 +1858,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(SetHttpHeaders));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -1985,6 +2027,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(SetMetadata));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -2240,6 +2283,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(GetFilesAndDirectories));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -2409,6 +2453,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(GetHandles));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -2770,6 +2815,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken,
             string operationName = null)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(ForceCloseHandle));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -2927,6 +2973,7 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(Rename));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -3769,6 +3816,8 @@ namespace Azure.Storage.Files.Shares
 
         private void SetBuilderAndValidate(ShareSasBuilder builder)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(GenerateSasUri));
+
             // Assign builder's ShareName and Path, if they are null.
             builder.ShareName ??= ShareName;
             builder.FilePath ??= Path;
