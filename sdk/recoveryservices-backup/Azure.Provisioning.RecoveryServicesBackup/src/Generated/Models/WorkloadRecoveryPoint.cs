@@ -10,10 +10,7 @@ using Azure.Provisioning;
 
 namespace Azure.Provisioning.RecoveryServicesBackup
 {
-    /// <summary>
-    /// Workload specific recovery point, specifically encapsulates full/diff recovery point
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="WorkloadPointInTimeRecoveryPoint"/>, <see cref="WorkloadSapHanaPointInTimeRecoveryPoint"/>, <see cref="WorkloadSapHanaRecoveryPoint"/>, <see cref="WorkloadSapAsePointInTimeRecoveryPoint"/>, <see cref="WorkloadSapAseRecoveryPoint"/>, <see cref="WorkloadSqlPointInTimeRecoveryPoint"/>, and <see cref="WorkloadSqlRecoveryPoint"/>.
-    /// </summary>
+    /// <summary> Workload specific recovery point, specifically encapsulates full/diff recovery point. </summary>
     public partial class WorkloadRecoveryPoint : BackupGenericRecoveryPoint
     {
         private BicepValue<DateTimeOffset> _recoveryPointCreatedOn;

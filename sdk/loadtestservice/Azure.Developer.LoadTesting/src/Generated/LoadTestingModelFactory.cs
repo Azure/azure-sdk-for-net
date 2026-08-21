@@ -36,7 +36,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="displayName"> Display name of a test. </param>
         /// <param name="subnetId"> Subnet ID on which the load test instances should run. </param>
         /// <param name="kind"> Kind of test. </param>
-        /// <param name="publicIpDisabled"> Inject load test engines without deploying public IP for outbound access. </param>
+        /// <param name="publicIPDisabled"> Inject load test engines without deploying public IP for outbound access. </param>
         /// <param name="keyvaultReferenceIdentityType"> Type of the managed identity referencing the Key vault. </param>
         /// <param name="keyvaultReferenceIdentityId"> Resource Id of the managed identity referencing the Key vault. </param>
         /// <param name="metricsReferenceIdentityType"> Type of the managed identity referencing the metrics. </param>
@@ -50,7 +50,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="LoadTesting.LoadTest"/> instance for mocking. </returns>
-        public static LoadTest LoadTest(PassFailCriteria passFailCriteria = default, AutoStopCriteria autoStopCriteria = default, IDictionary<string, TestSecret> secrets = default, TestCertificate certificate = default, IDictionary<string, string> environmentVariables = default, LoadTestConfiguration loadTestConfiguration = default, string baselineTestRunId = default, TestInputArtifacts inputArtifacts = default, string testId = default, string description = default, string displayName = default, string subnetId = default, LoadTestKind? kind = default, bool? publicIpDisabled = default, string keyvaultReferenceIdentityType = default, string keyvaultReferenceIdentityId = default, LoadTestingManagedIdentityType? metricsReferenceIdentityType = default, string metricsReferenceIdentityId = default, LoadTestingManagedIdentityType? engineBuiltInIdentityType = default, IEnumerable<string> engineBuiltInIdentityIds = default, double? estimatedVirtualUserHours = default, TestPreferences preferences = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
+        public static LoadTest LoadTest(PassFailCriteria passFailCriteria = default, AutoStopCriteria autoStopCriteria = default, IDictionary<string, TestSecret> secrets = default, TestCertificate certificate = default, IDictionary<string, string> environmentVariables = default, LoadTestConfiguration loadTestConfiguration = default, string baselineTestRunId = default, TestInputArtifacts inputArtifacts = default, string testId = default, string description = default, string displayName = default, string subnetId = default, LoadTestKind? kind = default, bool? publicIPDisabled = default, string keyvaultReferenceIdentityType = default, string keyvaultReferenceIdentityId = default, LoadTestingManagedIdentityType? metricsReferenceIdentityType = default, string metricsReferenceIdentityId = default, LoadTestingManagedIdentityType? engineBuiltInIdentityType = default, IEnumerable<string> engineBuiltInIdentityIds = default, double? estimatedVirtualUserHours = default, TestPreferences preferences = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
         {
             secrets ??= new ChangeTrackingDictionary<string, TestSecret>();
             environmentVariables ??= new ChangeTrackingDictionary<string, string>();
@@ -70,7 +70,7 @@ namespace Azure.Developer.LoadTesting
                 displayName,
                 subnetId,
                 kind,
-                publicIpDisabled,
+                publicIPDisabled,
                 keyvaultReferenceIdentityType,
                 keyvaultReferenceIdentityId,
                 metricsReferenceIdentityType,
@@ -803,7 +803,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="kind"> Type of test. </param>
         /// <param name="requestDataLevel"> Request data collection level for test run. </param>
         /// <param name="debugLogsEnabled"> Enable or disable debug level logging. True if debug logs are enabled for the test run. False otherwise. </param>
-        /// <param name="publicIpDisabled"> Inject load test engines without deploying public IP for outbound access. </param>
+        /// <param name="publicIPDisabled"> Inject load test engines without deploying public IP for outbound access. </param>
         /// <param name="createdByType"> The type of the entity that created the test run. (E.x. User, ScheduleTrigger, etc). </param>
         /// <param name="createdByUri"> The URI pointing to the entity that created the test run. </param>
         /// <param name="estimatedVirtualUserHours"> Estimated virtual user hours for the test run. </param>
@@ -814,7 +814,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="LoadTesting.LoadTestRun"/> instance for mocking. </returns>
-        public static LoadTestRun LoadTestRun(string testRunId = default, PassFailCriteria passFailCriteria = default, AutoStopCriteria autoStopCriteria = default, IDictionary<string, TestSecret> secrets = default, TestCertificate certificate = default, IDictionary<string, string> environmentVariables = default, IEnumerable<ErrorDetails> errorDetails = default, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics = default, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics = default, LoadTestConfiguration loadTestConfiguration = default, TestRunArtifacts testArtifacts = default, PassFailTestResult? testResult = default, int? virtualUsers = default, string displayName = default, string testId = default, string description = default, TestRunStatus? status = default, DateTimeOffset? startDateTime = default, DateTimeOffset? endDateTime = default, DateTimeOffset? executedDateTime = default, Uri portalUri = default, long? duration = default, double? virtualUserHours = default, string subnetId = default, LoadTestKind? kind = default, RequestDataLevel? requestDataLevel = default, bool? debugLogsEnabled = default, bool? publicIpDisabled = default, CreatedByType? createdByType = default, Uri createdByUri = default, double? estimatedVirtualUserHours = default, DateTimeOffset? executionStartDateTime = default, DateTimeOffset? executionEndDateTime = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
+        public static LoadTestRun LoadTestRun(string testRunId = default, PassFailCriteria passFailCriteria = default, AutoStopCriteria autoStopCriteria = default, IDictionary<string, TestSecret> secrets = default, TestCertificate certificate = default, IDictionary<string, string> environmentVariables = default, IEnumerable<ErrorDetails> errorDetails = default, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics = default, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics = default, LoadTestConfiguration loadTestConfiguration = default, TestRunArtifacts testArtifacts = default, PassFailTestResult? testResult = default, int? virtualUsers = default, string displayName = default, string testId = default, string description = default, TestRunStatus? status = default, DateTimeOffset? startDateTime = default, DateTimeOffset? endDateTime = default, DateTimeOffset? executedDateTime = default, Uri portalUri = default, long? duration = default, double? virtualUserHours = default, string subnetId = default, LoadTestKind? kind = default, RequestDataLevel? requestDataLevel = default, bool? debugLogsEnabled = default, bool? publicIPDisabled = default, CreatedByType? createdByType = default, Uri createdByUri = default, double? estimatedVirtualUserHours = default, DateTimeOffset? executionStartDateTime = default, DateTimeOffset? executionEndDateTime = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
         {
             secrets ??= new ChangeTrackingDictionary<string, TestSecret>();
             environmentVariables ??= new ChangeTrackingDictionary<string, string>();
@@ -850,7 +850,7 @@ namespace Azure.Developer.LoadTesting
                 kind,
                 requestDataLevel,
                 debugLogsEnabled,
-                publicIpDisabled,
+                publicIPDisabled,
                 createdByType,
                 createdByUri,
                 estimatedVirtualUserHours,

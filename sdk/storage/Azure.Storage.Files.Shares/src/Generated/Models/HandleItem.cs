@@ -18,19 +18,19 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="path"> The path. </param>
         /// <param name="fileId"> FileId uniquely identifies the file or directory. </param>
         /// <param name="sessionId"> SMB session ID in context of which the file handle was opened. </param>
-        /// <param name="clientIp"> Client IP that opened the handle. </param>
+        /// <param name="clientIP"> Client IP that opened the handle. </param>
         /// <param name="clientName"> Name of the client machine where the share is being mounted. </param>
         /// <param name="openTime">
         /// Time when the session that previously opened the handle has last been
         /// reconnected. (UTC)
         /// </param>
-        internal HandleItem(string handleId, StringEncoded path, string fileId, string sessionId, string clientIp, string clientName, DateTimeOffset openTime)
+        internal HandleItem(string handleId, StringEncoded path, string fileId, string sessionId, string clientIP, string clientName, DateTimeOffset openTime)
         {
             HandleId = handleId;
             Path = path;
             FileId = fileId;
             SessionId = sessionId;
-            ClientIp = clientIp;
+            ClientIP = clientIP;
             ClientName = clientName;
             OpenTime = openTime;
             AccessRightList = new ChangeTrackingList<AccessRight>();
@@ -42,7 +42,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="fileId"> FileId uniquely identifies the file or directory. </param>
         /// <param name="parentId"> ParentId uniquely identifies the parent directory of the object. </param>
         /// <param name="sessionId"> SMB session ID in context of which the file handle was opened. </param>
-        /// <param name="clientIp"> Client IP that opened the handle. </param>
+        /// <param name="clientIP"> Client IP that opened the handle. </param>
         /// <param name="clientName"> Name of the client machine where the share is being mounted. </param>
         /// <param name="openTime">
         /// Time when the session that previously opened the handle has last been
@@ -50,14 +50,14 @@ namespace Azure.Storage.Files.Shares.Models
         /// </param>
         /// <param name="lastReconnectTime"> Time handle was last connected to (UTC). </param>
         /// <param name="accessRightList"> The access rights. </param>
-        internal HandleItem(string handleId, StringEncoded path, string fileId, string parentId, string sessionId, string clientIp, string clientName, DateTimeOffset openTime, DateTimeOffset? lastReconnectTime, IList<AccessRight> accessRightList)
+        internal HandleItem(string handleId, StringEncoded path, string fileId, string parentId, string sessionId, string clientIP, string clientName, DateTimeOffset openTime, DateTimeOffset? lastReconnectTime, IList<AccessRight> accessRightList)
         {
             HandleId = handleId;
             Path = path;
             FileId = fileId;
             ParentId = parentId;
             SessionId = sessionId;
-            ClientIp = clientIp;
+            ClientIP = clientIP;
             ClientName = clientName;
             OpenTime = openTime;
             LastReconnectTime = lastReconnectTime;
@@ -80,7 +80,7 @@ namespace Azure.Storage.Files.Shares.Models
         public string SessionId { get; }
 
         /// <summary> Client IP that opened the handle. </summary>
-        public string ClientIp { get; }
+        public string ClientIP { get; }
 
         /// <summary> Name of the client machine where the share is being mounted. </summary>
         public string ClientName { get; }
