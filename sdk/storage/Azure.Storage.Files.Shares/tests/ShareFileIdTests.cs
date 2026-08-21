@@ -93,8 +93,8 @@ namespace Azure.Storage.Files.Shares.Tests
                 new Uri($"{ShareUriString}?fileid={FileId}"),
                 GetOptions());
 
-            Assert.Throws<InvalidOperationException>(() => _ = fileClient.Name);
-            Assert.Throws<InvalidOperationException>(() => _ = fileClient.Path);
+            Assert.IsEmpty(fileClient.Name);
+            Assert.IsEmpty(fileClient.Path);
             Assert.AreEqual(FileId, fileClient.FileId);
         }
 
@@ -127,7 +127,8 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual("2011-03-09T01:42:34.9360000Z", builder.Snapshot);
 
             // The derived client is still file ID addressed.
-            Assert.Throws<InvalidOperationException>(() => _ = fileClient.Path);
+            Assert.AreEqual(FileId, fileClient.FileId);
+            Assert.IsEmpty(fileClient.Path);
         }
 
         [RecordedTest]
@@ -135,11 +136,14 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             ShareFileClient fileClient = GetFileIdFileClient();
 
-            Assert.Throws<InvalidOperationException>(() => _ = fileClient.Name);
-            Assert.Throws<InvalidOperationException>(() => _ = fileClient.Path);
             Assert.Throws<InvalidOperationException>(() => fileClient.GetParentShareDirectoryClient());
             Assert.Throws<InvalidOperationException>(
                 () => fileClient.GenerateSasUri(ShareFileSasPermissions.Read, Recording.UtcNow.AddDays(1)));
+
+            // Name and Path are not known when addressing by file ID, but they
+            // return empty rather than throwing.
+            Assert.IsEmpty(fileClient.Name);
+            Assert.IsEmpty(fileClient.Path);
 
             // The share is still known, so these remain available.
             Assert.AreEqual("share", fileClient.ShareName);
@@ -152,12 +156,15 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             ShareDirectoryClient directoryClient = GetFileIdDirectoryClient();
 
-            Assert.Throws<InvalidOperationException>(() => _ = directoryClient.Name);
-            Assert.Throws<InvalidOperationException>(() => _ = directoryClient.Path);
             Assert.Throws<InvalidOperationException>(() => directoryClient.GetFileClient("file"));
             Assert.Throws<InvalidOperationException>(() => directoryClient.GetSubdirectoryClient("subdirectory"));
             Assert.Throws<InvalidOperationException>(
                 () => directoryClient.GenerateSasUri(ShareFileSasPermissions.Read, Recording.UtcNow.AddDays(1)));
+
+            // Name and Path are not known when addressing by file ID, but they
+            // return empty rather than throwing.
+            Assert.IsEmpty(directoryClient.Name);
+            Assert.IsEmpty(directoryClient.Path);
 
             Assert.AreEqual("share", directoryClient.ShareName);
             Assert.IsFalse(directoryClient.CanGenerateSasUri);

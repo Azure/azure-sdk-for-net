@@ -97,13 +97,14 @@ namespace Azure.Storage.Files.Shares
         private string _name;
 
         /// <summary>
-        /// Gets the name of the file.
+        /// Gets the name of the file.  The value is <see cref="string.Empty"/>
+        /// if the file is addressed by its file ID, since the path of the file
+        /// is not known in that case.
         /// </summary>
         public virtual string Name
         {
             get
             {
-                ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(Name));
                 SetNameFieldsIfNull();
                 return _name;
             }
@@ -115,13 +116,14 @@ namespace Azure.Storage.Files.Shares
         private string _path;
 
         /// <summary>
-        /// Gets the path of the file.
+        /// Gets the path of the file.  The value is <see cref="string.Empty"/>
+        /// if the file is addressed by its file ID, since the path of the file
+        /// is not known in that case.
         /// </summary>
         public virtual string Path
         {
             get
             {
-                ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(Path));
                 SetNameFieldsIfNull();
                 return _path;
             }
