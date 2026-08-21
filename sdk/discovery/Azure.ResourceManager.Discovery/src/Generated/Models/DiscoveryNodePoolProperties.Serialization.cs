@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.Discovery.Models
                 writer.WritePropertyName("scaleSetPriority"u8);
                 writer.WriteStringValue(ScaleSetPriority.Value.ToString());
             }
-            if (Optional.IsDefined(OSDiskSizeGb))
+            if (Optional.IsDefined(OsDiskSizeGb))
             {
                 writer.WritePropertyName("osDiskSizeGb"u8);
-                writer.WriteNumberValue(OSDiskSizeGb.Value);
+                writer.WriteNumberValue(OsDiskSizeGb.Value);
             }
             if (Optional.IsDefined(ImageCacheLowerThreshold))
             {

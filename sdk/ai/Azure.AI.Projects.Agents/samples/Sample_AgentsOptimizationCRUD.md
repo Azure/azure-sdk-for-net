@@ -47,7 +47,7 @@ Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Na
 3. Create an optimization criterion based on the groundedness.
 
 ```C# Snippet:Sample_OptimizationCriterion_AgentsOptimization
-private readonly AgentOptimizationDatasetCriterion _criterion = new(
+private readonly OptimizationDatasetCriterion _criterion = new(
     name: "Groundedness",
     instruction: """
     You are a Groundedness Evaluator.
@@ -91,12 +91,12 @@ private readonly AgentOptimizationDatasetCriterion _criterion = new(
 4. Create a toy data set. Please note that we are asking Agent to return the string as an answer, it is needed because evaluation works only on text values.
 
 ```C# Snippet:Sample_Dataset_AgentsOptimization
-private AgentOptimizationInlineDatasetInput GetDataset(int start, int itemNumber)
+private OptimizationInlineDatasetInput GetDataset(int start, int itemNumber)
 {
-    List<AgentOptimizationDatasetItem> items = [];
+    List<OptimizationDatasetItem> items = [];
     for (int i = start; i < start + itemNumber; i++)
     {
-        items.Add(new AgentOptimizationDatasetItem()
+        items.Add(new OptimizationDatasetItem()
         {
             Query = $"What is 42 + {i * 2}? Please save the result as text: The answer is .... For example: Q: What is 42 + 12? A: The answer is 56.",
             GroundTruth = $"The answer is {(42 + i * 2)}",
@@ -116,19 +116,19 @@ private AgentOptimizationInlineDatasetInput GetDataset(int start, int itemNumber
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateOptimizationJob_AgentsOptimization_Sync
-AgentOptimizationJob job = new()
+OptimizationJob job = new()
 {
     Inputs = new(
-        agent: new OptimizedAgentIdentifier(agentName: agentVersion.Name)
+        agent: new OptimizationAgentIdentifier(agentName: agentVersion.Name)
         {
             AgentVersion = agentVersion.Version
         },
         trainDataset: GetDataset(0, 7),
-        evaluators: [new AgentOptimizationEvaluatorRef(name: "builtin.meteor_score")]
+        evaluators: [new OptimizationEvaluatorRef(name: "builtin.meteor_score")]
     )
     {
         ValidationDataset = GetDataset(7, 3),
-        Options = new AgentOptimizationOptions()
+        Options = new OptimizationOptions()
         {
             OptimizationModel = modelDeploymentName,
             EvalModel = modelDeploymentName,
@@ -141,25 +141,25 @@ AgentOptimizationJob job = new()
         }
     }
 };
-AgentOptimizationJob submittedJob1 = jobsClient.Create(job: job, operationId: null, cancellationToken: default);
+OptimizationJob submittedJob1 = jobsClient.Create(job: job, operationId: null, cancellationToken: default);
 Console.WriteLine($"Submitted optimization job: {submittedJob1.Id}");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateOptimizationJob_AgentsOptimization_Async
-AgentOptimizationJob job = new()
+OptimizationJob job = new()
 {
     Inputs = new(
-        agent: new OptimizedAgentIdentifier(agentName: agentVersion.Name)
+        agent: new OptimizationAgentIdentifier(agentName: agentVersion.Name)
         {
             AgentVersion = agentVersion.Version
         },
         trainDataset: GetDataset(0, 7),
-        evaluators: [new AgentOptimizationEvaluatorRef(name: "builtin.meteor_score")]
+        evaluators: [new OptimizationEvaluatorRef(name: "builtin.meteor_score")]
     )
     {
         ValidationDataset = GetDataset(7, 3),
-        Options = new AgentOptimizationOptions()
+        Options = new OptimizationOptions()
         {
             OptimizationModel = modelDeploymentName,
             EvalModel = modelDeploymentName,
@@ -172,7 +172,7 @@ AgentOptimizationJob job = new()
         }
     }
 };
-AgentOptimizationJob submittedJob1 = await jobsClient.CreateAsync(job: job, operationId: null, cancellationToken: default);
+OptimizationJob submittedJob1 = await jobsClient.CreateAsync(job: job, operationId: null, cancellationToken: default);
 Console.WriteLine($"Submitted optimization job: {submittedJob1.Id}");
 ```
 
@@ -226,9 +226,9 @@ if (submittedJob1.Status == AgentsJobStatus.Failed)
 
 Synchronous sample:
 ```C# Snippet:Sample_CancelOptimizationJob_AgentsOptimization_Sync
-AgentOptimizationJob submittedJob2 = jobsClient.Create(job: job, operationId: null, cancellationToken: default);
+OptimizationJob submittedJob2 = jobsClient.Create(job: job, operationId: null, cancellationToken: default);
 Console.WriteLine($"Submitted optimization job: {submittedJob2.Id}");
-AgentOptimizationJob cancelledJob = jobsClient.Cancel(jobId: submittedJob2.Id, cancellationToken: default);
+OptimizationJob cancelledJob = jobsClient.Cancel(jobId: submittedJob2.Id, cancellationToken: default);
 while (cancelledJob.Status != AgentsJobStatus.Failed && cancelledJob.Status != AgentsJobStatus.Succeeded && cancelledJob.Status != AgentsJobStatus.Cancelled)
 {
     cancelledJob = jobsClient.Get(cancelledJob.Id, cancellationToken: default);
@@ -242,9 +242,9 @@ Console.WriteLine($"The job {cancelledJob.Id} was cancelled.");
 
 Asynchronous sample:
 ```C# Snippet:Sample_CancelOptimizationJob_AgentsOptimization_Async
-AgentOptimizationJob submittedJob2 = await jobsClient.CreateAsync(job: job, operationId: null, cancellationToken: default);
+OptimizationJob submittedJob2 = await jobsClient.CreateAsync(job: job, operationId: null, cancellationToken: default);
 Console.WriteLine($"Submitted optimization job: {submittedJob2.Id}");
-AgentOptimizationJob cancelledJob = await jobsClient.CancelAsync(jobId: submittedJob2.Id, cancellationToken: default);
+OptimizationJob cancelledJob = await jobsClient.CancelAsync(jobId: submittedJob2.Id, cancellationToken: default);
 while (cancelledJob.Status != AgentsJobStatus.Failed && cancelledJob.Status != AgentsJobStatus.Succeeded && cancelledJob.Status != AgentsJobStatus.Cancelled)
 {
     cancelledJob = await jobsClient.GetAsync(cancelledJob.Id, cancellationToken: default);
@@ -261,7 +261,7 @@ Console.WriteLine($"The job {cancelledJob.Id} was cancelled.");
 Synchronous sample:
 ```C# Snippet:Sample_ListOptimizationJobs_AgentsOptimization_Sync
 Console.WriteLine("Listing optimization jobs:");
-foreach (AgentOptimizationJobListItem oneJob in jobsClient.GetAll())
+foreach (OptimizationJobListItem oneJob in jobsClient.GetAll())
 {
     Console.WriteLine($"    Job: {oneJob.Id}, Status: {oneJob.Status}.");
 }
@@ -270,7 +270,7 @@ foreach (AgentOptimizationJobListItem oneJob in jobsClient.GetAll())
 Asynchronous sample:
 ```C# Snippet:Sample_ListOptimizationJobs_AgentsOptimization_Async
 Console.WriteLine("Listing optimization jobs:");
-await foreach (AgentOptimizationJobListItem oneJob in jobsClient.GetAllAsync())
+await foreach (OptimizationJobListItem oneJob in jobsClient.GetAllAsync())
 {
     Console.WriteLine($"    Job: {oneJob.Id}, Status: {oneJob.Status}.");
 }

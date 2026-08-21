@@ -426,11 +426,6 @@ namespace Azure.Messaging.ServiceBus
         ///   belong to sessions that are locked by other receivers.
         ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.ServiceTimeout"/> in this case.
         /// </exception>
-        /// <exception cref="NotSupportedException">
-        ///   <see cref="ServiceBusSessionReceiverOptions.EnableNonExclusiveSession"/> was set and the endpoint declined the
-        ///   request in one of the ways this client recognizes as the feature being unavailable. See
-        ///   <see cref="ServiceBusSessionReceiverOptions.EnableNonExclusiveSession"/> for how to detect availability.
-        /// </exception>
         public virtual async Task<ServiceBusSessionReceiver> AcceptNextSessionAsync(
             string queueName,
             ServiceBusSessionReceiverOptions options = default,
@@ -471,11 +466,6 @@ namespace Azure.Messaging.ServiceBus
         ///   belong to sessions that are locked by other receivers.
         ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.ServiceTimeout"/> in this case.
         /// </exception>
-        /// <exception cref="NotSupportedException">
-        ///   <see cref="ServiceBusSessionReceiverOptions.EnableNonExclusiveSession"/> was set and the endpoint declined the
-        ///   request in one of the ways this client recognizes as the feature being unavailable. See
-        ///   <see cref="ServiceBusSessionReceiverOptions.EnableNonExclusiveSession"/> for how to detect availability.
-        /// </exception>
         public virtual async Task<ServiceBusSessionReceiver> AcceptNextSessionAsync(
             string topicName,
             string subscriptionName,
@@ -514,11 +504,6 @@ namespace Azure.Messaging.ServiceBus
         /// <exception cref="ServiceBusException">
         ///   The <paramref name="sessionId"/> corresponds to a session that is currently locked by another receiver.
         ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionCannotBeLocked"/> in this case.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        ///   <see cref="ServiceBusSessionReceiverOptions.EnableNonExclusiveSession"/> was set and the endpoint declined the
-        ///   request in one of the ways this client recognizes as the feature being unavailable. See
-        ///   <see cref="ServiceBusSessionReceiverOptions.EnableNonExclusiveSession"/> for how to detect availability.
         /// </exception>
         public virtual async Task<ServiceBusSessionReceiver> AcceptSessionAsync(
             string queueName,
@@ -560,11 +545,6 @@ namespace Azure.Messaging.ServiceBus
         /// <exception cref="ServiceBusException">
         ///   The <paramref name="sessionId"/> corresponds to a session that is currently locked by another receiver.
         ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionCannotBeLocked"/> in this case.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        ///   <see cref="ServiceBusSessionReceiverOptions.EnableNonExclusiveSession"/> was set and the endpoint declined the
-        ///   request in one of the ways this client recognizes as the feature being unavailable. See
-        ///   <see cref="ServiceBusSessionReceiverOptions.EnableNonExclusiveSession"/> for how to detect availability.
         /// </exception>
         public virtual async Task<ServiceBusSessionReceiver> AcceptSessionAsync(
             string topicName,
@@ -702,8 +682,6 @@ namespace Azure.Messaging.ServiceBus
                 sessionId: null,
                 isSessionReceiver: false,
                 isProcessor: false,
-                isSessionExclusive: true,
-                sessionLockToken: null,
                 cancellationToken: cancellationToken);
 
             try

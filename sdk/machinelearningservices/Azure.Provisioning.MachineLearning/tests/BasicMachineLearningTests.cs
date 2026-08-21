@@ -179,11 +179,11 @@ public class BasicMachineLearningTests
             resource registry 'Microsoft.ContainerRegistry/registries@2022-12-01' = {
               name: take('registry${uniqueString(resourceGroup().id)}', 50)
               location: location
-              properties: {
-                adminUserEnabled: false
-              }
               sku: {
                 name: 'Standard'
+              }
+              properties: {
+                adminUserEnabled: false
               }
             }
 

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     yield break;
                 }
-                IPCommunitiesListResult result = IPCommunitiesListResult.FromResponse(response);
+                IpCommunitiesListResult result = IpCommunitiesListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<NetworkFabricIPCommunityData>.FromValues((IReadOnlyList<NetworkFabricIPCommunityData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

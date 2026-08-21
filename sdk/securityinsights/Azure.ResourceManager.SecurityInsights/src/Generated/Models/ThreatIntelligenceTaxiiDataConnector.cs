@@ -171,11 +171,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The lookback period for the TAXII server. </summary>
         [WirePath("properties.taxiiLookbackPeriod")]
-        public DateTimeOffset? TaxiiLookbackOn
+        public DateTimeOffset? TaxiiLookbackPeriod
         {
             get
             {
-                return Properties is null ? default : Properties.TaxiiLookbackOn;
+                return Properties is null ? default : Properties.TaxiiLookbackPeriod;
             }
             set
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     Properties = new TiTaxiiDataConnectorProperties();
                 }
-                Properties.TaxiiLookbackOn = value;
+                Properties.TaxiiLookbackPeriod = value;
             }
         }
 

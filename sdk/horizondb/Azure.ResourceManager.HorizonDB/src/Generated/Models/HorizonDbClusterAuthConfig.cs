@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> Authentication configuration for a HorizonDB cluster. </summary>
-    public partial class HorizonDBClusterAuthConfig
+    public partial class HorizonDbClusterAuthConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDBClusterAuthConfig"/>. </summary>
-        public HorizonDBClusterAuthConfig()
+        /// <summary> Initializes a new instance of <see cref="HorizonDbClusterAuthConfig"/>. </summary>
+        public HorizonDbClusterAuthConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDBClusterAuthConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDbClusterAuthConfig"/>. </summary>
         /// <param name="entraIdAuth"> Indicates whether Microsoft Entra ID authentication is enabled or disabled. </param>
         /// <param name="tenantId"> The Microsoft Entra tenant ID. </param>
         /// <param name="passwordAuth"> Indicates whether password authentication is enabled or disabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBClusterAuthConfig(HorizonDBAuthenticationState? entraIdAuth, string tenantId, HorizonDBAuthenticationState? passwordAuth, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDbClusterAuthConfig(HorizonDBAuthenticationState? entraIdAuth, string tenantId, HorizonDBAuthenticationState? passwordAuth, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EntraIdAuth = entraIdAuth;
             TenantId = tenantId;

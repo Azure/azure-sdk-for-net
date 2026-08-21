@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("managedNetworkKind"u8);
                 writer.WriteStringValue(ManagedNetworkKind.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(FirewallPublicIPAddress))
+            if (options.Format != "W" && Optional.IsDefined(FirewallPublicIpAddress))
             {
                 writer.WritePropertyName("firewallPublicIpAddress"u8);
-                writer.WriteStringValue(FirewallPublicIPAddress);
+                writer.WriteStringValue(FirewallPublicIpAddress);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ManagedNetworkProvisionStatus status = default;
             FirewallSku? firewallSku = default;
             ManagedNetworkKind? managedNetworkKind = default;
-            string firewallPublicIPAddress = default;
+            string firewallPublicIpAddress = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -241,10 +241,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        firewallPublicIPAddress = null;
+                        firewallPublicIpAddress = null;
                         continue;
                     }
-                    firewallPublicIPAddress = prop.Value.GetString();
+                    firewallPublicIpAddress = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 status,
                 firewallSku,
                 managedNetworkKind,
-                firewallPublicIPAddress,
+                firewallPublicIpAddress,
                 additionalBinaryDataProperties);
         }
     }

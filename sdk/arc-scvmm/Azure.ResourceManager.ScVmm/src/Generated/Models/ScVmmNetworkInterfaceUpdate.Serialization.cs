@@ -154,8 +154,8 @@ namespace Azure.ResourceManager.ScVmm.Models
             string name = default;
             string macAddress = default;
             string virtualNetworkId = default;
-            AllocationMethod? ipv4AddressType = default;
-            AllocationMethod? ipv6AddressType = default;
+            AllocationMethod? iPv4AddressType = default;
+            AllocationMethod? iPv6AddressType = default;
             AllocationMethod? macAddressType = default;
             string nicId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                     {
                         continue;
                     }
-                    ipv4AddressType = new AllocationMethod(prop.Value.GetString());
+                    iPv4AddressType = new AllocationMethod(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ipv6AddressType"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                     {
                         continue;
                     }
-                    ipv6AddressType = new AllocationMethod(prop.Value.GetString());
+                    iPv6AddressType = new AllocationMethod(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("macAddressType"u8))
@@ -217,8 +217,8 @@ namespace Azure.ResourceManager.ScVmm.Models
                 name,
                 macAddress,
                 virtualNetworkId,
-                ipv4AddressType,
-                ipv6AddressType,
+                iPv4AddressType,
+                iPv6AddressType,
                 macAddressType,
                 nicId,
                 additionalBinaryDataProperties);

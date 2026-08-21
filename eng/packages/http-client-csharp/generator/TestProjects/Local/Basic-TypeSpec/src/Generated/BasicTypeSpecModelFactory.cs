@@ -47,7 +47,7 @@ namespace BasicTypeSpec
                 requiredBadDescription,
                 optionalNullableList.ToList(),
                 requiredNullableList.ToList(),
-                default);
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> this is a roundtrip model. </summary>
@@ -114,7 +114,7 @@ namespace BasicTypeSpec
                 readOnlyOptionalRecordUnknown,
                 modelWithRequiredNullable,
                 requiredBytes,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> A model with a few required nullable properties. </summary>
@@ -124,7 +124,7 @@ namespace BasicTypeSpec
         /// <returns> A new <see cref="BasicTypeSpec.ModelWithRequiredNullableProperties"/> instance for mocking. </returns>
         public static ModelWithRequiredNullableProperties ModelWithRequiredNullableProperties(int? requiredNullablePrimitive = default, StringExtensibleEnum? requiredExtensibleEnum = default, StringFixedEnum? requiredFixedEnum = default)
         {
-            return new ModelWithRequiredNullableProperties(requiredNullablePrimitive, requiredExtensibleEnum, requiredFixedEnum, default);
+            return new ModelWithRequiredNullableProperties(requiredNullablePrimitive, requiredExtensibleEnum, requiredFixedEnum, additionalBinaryDataProperties: null);
         }
 
         /// <summary> this is not a friendly model but with a friendly name. </summary>

@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The IP entity id of this network interface. </summary>
         [WirePath("properties.ipAddressEntityId")]
-        public string IPAddressEntityId
+        public string IpAddressEntityId
         {
             get
             {
-                return Properties is null ? default : Properties.IPAddressEntityId;
+                return Properties is null ? default : Properties.IpAddressEntityId;
             }
         }
 

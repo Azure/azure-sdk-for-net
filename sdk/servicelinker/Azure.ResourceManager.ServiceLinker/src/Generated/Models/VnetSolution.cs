@@ -13,8 +13,37 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The VNet solution for linker. </summary>
     internal partial class VnetSolution
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="VnetSolution"/>. </summary>
         public VnetSolution()
@@ -23,19 +52,14 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary> Initializes a new instance of <see cref="VnetSolution"/>. </summary>
         /// <param name="solutionType"> Type of VNet solution. </param>
-        /// <param name="deleteOrUpdateBehavior"> Indicates whether to clean up previous operation when Linker is updating or deleting. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VnetSolution(VnetSolutionType? solutionType, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VnetSolution(VnetSolutionType? solutionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SolutionType = solutionType;
-            DeleteOrUpdateBehavior = deleteOrUpdateBehavior;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of VNet solution. </summary>
         public VnetSolutionType? SolutionType { get; set; }
-
-        /// <summary> Indicates whether to clean up previous operation when Linker is updating or deleting. </summary>
-        public LinkerDeleteOrUpdateBehavior? DeleteOrUpdateBehavior { get; set; }
     }
 }

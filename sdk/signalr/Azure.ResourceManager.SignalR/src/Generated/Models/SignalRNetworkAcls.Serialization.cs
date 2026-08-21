@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPRules))
+            if (Optional.IsCollectionDefined(IpRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
-                foreach (SignalRIPRule item in IPRules)
+                foreach (SignalRIPRule item in IpRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }

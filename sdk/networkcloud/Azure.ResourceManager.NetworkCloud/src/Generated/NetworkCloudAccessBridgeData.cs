@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.NetworkCloud
         public Resources.Models.ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> The IPv4 subnet from which the access bridge allocates an address. This subnet must be part of the internal network specified by networkId. </summary>
-        public string IPv4ConnectedPrefix
+        public string Ipv4ConnectedPrefix
         {
             get
             {
-                return Properties is null ? default : Properties.IPv4ConnectedPrefix;
+                return Properties is null ? default : Properties.Ipv4ConnectedPrefix;
             }
             set
             {
@@ -76,16 +76,16 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new AccessBridgeProperties();
                 }
-                Properties.IPv4ConnectedPrefix = value;
+                Properties.Ipv4ConnectedPrefix = value;
             }
         }
 
         /// <summary> The IPv6 subnet from which the access bridge allocates an address. This subnet must be part of the internal network specified by networkId. </summary>
-        public string IPv6ConnectedPrefix
+        public string Ipv6ConnectedPrefix
         {
             get
             {
-                return Properties is null ? default : Properties.IPv6ConnectedPrefix;
+                return Properties is null ? default : Properties.Ipv6ConnectedPrefix;
             }
             set
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new AccessBridgeProperties();
                 }
-                Properties.IPv6ConnectedPrefix = value;
+                Properties.Ipv6ConnectedPrefix = value;
             }
         }
 

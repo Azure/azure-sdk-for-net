@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             string targetResourceName = default;
             DateTimeOffset? lastJobEndOn = default;
-            JobProvisioningState? lastJobProvisioningState = default;
+            TriggeredAnalyticsRuleRunProvisioningState? lastJobProvisioningState = default;
             IList<WorkspaceManagerAssignmentItem> items = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    lastJobProvisioningState = new JobProvisioningState(prop.Value.GetString());
+                    lastJobProvisioningState = new TriggeredAnalyticsRuleRunProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("items"u8))

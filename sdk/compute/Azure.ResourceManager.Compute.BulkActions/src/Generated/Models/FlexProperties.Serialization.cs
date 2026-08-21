@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("osType"u8);
-            writer.WriteStringValue(OSType.ToString());
+            writer.WriteStringValue(OsType.ToString());
             writer.WritePropertyName("priorityProfile"u8);
             writer.WriteObjectValue(PriorityProfile, options);
             if (Optional.IsDefined(ZoneAllocationPolicy))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 return null;
             }
             IList<VmSizeProfile> vmSizeProfiles = default;
-            OSType osType = default;
+            OsType osType = default;
             PriorityProfile priorityProfile = default;
             ZoneAllocationPolicy zoneAllocationPolicy = default;
             int? minCapacity = default;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (prop.NameEquals("osType"u8))
                 {
-                    osType = new OSType(prop.Value.GetString());
+                    osType = new OsType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("priorityProfile"u8))

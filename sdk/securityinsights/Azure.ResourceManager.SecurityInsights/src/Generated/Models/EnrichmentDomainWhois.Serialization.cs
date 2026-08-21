@@ -92,20 +92,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("server"u8);
                 writer.WriteStringValue(Server);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(Created))
             {
                 writer.WritePropertyName("created"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(Created.Value, "O");
             }
             if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpiresOn))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expires"u8);
-                writer.WriteStringValue(ExpiresOn.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(ParsedWhois))
             {
@@ -156,9 +156,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             string domain = default;
             string server = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? created = default;
             DateTimeOffset? updatedOn = default;
-            DateTimeOffset? expiresOn = default;
+            DateTimeOffset? expireOn = default;
             EnrichmentDomainWhoisDetails parsedWhois = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    created = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("updated"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    expiresOn = prop.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("parsedWhois"u8))
@@ -217,9 +217,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new EnrichmentDomainWhois(
                 domain,
                 server,
-                createdOn,
+                created,
                 updatedOn,
-                expiresOn,
+                expireOn,
                 parsedWhois,
                 additionalBinaryDataProperties);
         }

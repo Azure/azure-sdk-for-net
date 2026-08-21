@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ServiceLinker;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="principalId"> Principal Id for servicePrincipal auth. </param>
         /// <param name="certificate"> ServicePrincipal certificate for servicePrincipal auth. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> or <paramref name="certificate"/> is null. </exception>
-        public ServicePrincipalCertificateAuthInfo(string clientId, Guid principalId, string certificate) : base(LinkerAuthType.ServicePrincipalCertificate)
+        public ServicePrincipalCertificateAuthInfo(string clientId, Guid principalId, string certificate)
         {
             Argument.AssertNotNull(clientId, nameof(clientId));
             Argument.AssertNotNull(certificate, nameof(certificate));
@@ -27,40 +26,33 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             ClientId = clientId;
             PrincipalId = principalId;
             Certificate = certificate;
-            Roles = new ChangeTrackingList<string>();
+            AuthType = LinkerAuthType.ServicePrincipalCertificate;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServicePrincipalCertificateAuthInfo"/>. </summary>
         /// <param name="authType"> The authentication type. </param>
-        /// <param name="authMode"> Optional. Indicates how to configure authentication. If optInAllAuth, service linker configures authentication such as enabling identity on source resource and granting RBAC roles. If optOutAllAuth, opt out authentication setup. Default is optInAllAuth. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="clientId"> Application clientId for servicePrincipal auth. </param>
         /// <param name="principalId"> Principal Id for servicePrincipal auth. </param>
         /// <param name="certificate"> ServicePrincipal certificate for servicePrincipal auth. </param>
-        /// <param name="deleteOrUpdateBehavior"> Indicates whether to clean up previous operation when Linker is updating or deleting. </param>
-        /// <param name="roles"> Optional, this value specifies the Azure roles to be assigned. Automatically. </param>
-        internal ServicePrincipalCertificateAuthInfo(LinkerAuthType authType, LinkerAuthMode? authMode, IDictionary<string, BinaryData> additionalBinaryDataProperties, string clientId, Guid principalId, string certificate, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior, IList<string> roles) : base(authType, authMode, additionalBinaryDataProperties)
+        internal ServicePrincipalCertificateAuthInfo(LinkerAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, string clientId, Guid principalId, string certificate) : base(authType, serializedAdditionalRawData)
         {
             ClientId = clientId;
             PrincipalId = principalId;
             Certificate = certificate;
-            DeleteOrUpdateBehavior = deleteOrUpdateBehavior;
-            Roles = roles;
+            AuthType = authType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalCertificateAuthInfo"/> for deserialization. </summary>
+        internal ServicePrincipalCertificateAuthInfo()
+        {
         }
 
         /// <summary> Application clientId for servicePrincipal auth. </summary>
         public string ClientId { get; set; }
-
         /// <summary> Principal Id for servicePrincipal auth. </summary>
         public Guid PrincipalId { get; set; }
-
         /// <summary> ServicePrincipal certificate for servicePrincipal auth. </summary>
         public string Certificate { get; set; }
-
-        /// <summary> Indicates whether to clean up previous operation when Linker is updating or deleting. </summary>
-        public LinkerDeleteOrUpdateBehavior? DeleteOrUpdateBehavior { get; set; }
-
-        /// <summary> Optional, this value specifies the Azure roles to be assigned. Automatically. </summary>
-        public IList<string> Roles { get; }
     }
 }

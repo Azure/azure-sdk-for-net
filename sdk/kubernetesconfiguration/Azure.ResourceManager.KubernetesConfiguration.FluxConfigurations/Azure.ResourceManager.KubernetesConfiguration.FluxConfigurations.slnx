@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.csproj" />
-  <Project Path="tests/Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Tests.csproj" />
-</Solution>

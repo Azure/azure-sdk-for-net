@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("imageReference"u8);
                 writer.WriteObjectValue(ImageReference, options);
             }
-            if (Optional.IsDefined(OSDisk))
+            if (Optional.IsDefined(OsDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
-                writer.WriteObjectValue(OSDisk, options);
+                writer.WriteObjectValue(OsDisk, options);
             }
             if (Optional.IsCollectionDefined(DataDisks))
             {

@@ -5,23 +5,22 @@
 
 using System.ComponentModel;
 using System.Net;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+    // Customized: restore legacy IP address aliases whose casing/type differs from TypeSpec naming.
     public partial class MachineLearningComputeInstanceConnectivityEndpoints
     {
-        // TODO: Remove this workaround after https://github.com/microsoft/typespec/issues/11696 is fixed.
         /// <summary> Public IP Address of this ComputeInstance. </summary>
-        [CodeGenMember("PublicIpAddress")]
         [WirePath("publicIpAddress")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string PublicIPAddress { get; }
+        public string PublicIPAddress => PublicIpAddress;
 
         /// <summary> Private IP Address of this ComputeInstance (local to the VNET in which the compute instance is deployed). </summary>
-        [CodeGenMember("PrivateIpAddress")]
         [WirePath("privateIpAddress")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string PrivateIPAddress { get; }
+        public string PrivateIPAddress => PrivateIpAddress;
     }
+
+    // Customized: restore legacy IP address alias whose casing differs from TypeSpec naming.
 }

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Databricks.Models
             {
                 throw new FormatException($"The model {nameof(DatabricksEndpointDetail)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IPAddress))
+            if (Optional.IsDefined(IpAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IPAddress);
+                writer.WriteStringValue(IpAddress);
             }
             if (Optional.IsDefined(Port))
             {

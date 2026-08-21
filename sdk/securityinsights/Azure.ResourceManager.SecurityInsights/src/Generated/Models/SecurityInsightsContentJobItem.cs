@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="executionOn"> The time the item publishing was completed. </param>
         /// <param name="errors"> The list of error descriptions if the item publication fails. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsContentJobItem(ResourceIdentifier resourceId, SecurityInsightsContentStatus? status, DateTimeOffset? executionOn, IList<PublicationFailedError> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityInsightsContentJobItem(string resourceId, SecurityInsightsContentStatus? status, DateTimeOffset? executionOn, IList<PublicationFailedError> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             Status = status;
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The resource id of the content item. </summary>
         [WirePath("resourceId")]
-        public ResourceIdentifier ResourceId { get; set; }
+        public string ResourceId { get; set; }
 
         /// <summary> Status of the item publication. </summary>
         [WirePath("status")]

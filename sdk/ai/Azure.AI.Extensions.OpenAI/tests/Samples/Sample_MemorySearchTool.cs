@@ -86,7 +86,6 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         }
         #endregion
         #region Snippet:Sample_CheckMemorySearch_Async
-        /*
         MemorySearchOptions searchOptions = new(scope)
         {
             Items = { ResponseItem.CreateUserMessageItem("What was the joke?") },
@@ -101,7 +100,6 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
             Console.WriteLine(item.MemoryItem.Content);
         }
         Console.WriteLine("==End of memory tool output.==");
-        */
         #endregion
         #region Snippet:Sample_CreateAgentWithTool_MemoryTool_Async
         agentDefinition = new(model: modelDeploymentName)
@@ -199,14 +197,13 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         }
         #endregion
         #region Snippet:Sample_CheckMemorySearch_Sync
-        /*
         MemorySearchOptions searchOptions = new(scope)
         {
             Items = { ResponseItem.CreateUserMessageItem("What was the joke?") },
         };
         MemoryStoreSearchResponse resp = projectClient.MemoryStores.SearchMemories(
             memoryStoreName: memoryStore.Name,
-            options: searchOptionscd
+            options: searchOptions
         );
         Console.WriteLine("==The output from memory search tool.==");
         foreach (MemorySearchItem item in resp.Memories)
@@ -214,7 +211,6 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
             Console.WriteLine(item.MemoryItem.Content);
         }
         Console.WriteLine("==End of memory search tool output.==");
-        */
         #endregion
         #region Snippet:Sample_CreateAgentWithTool_MemoryTool_Sync
         agentDefinition = new(model: modelDeploymentName)

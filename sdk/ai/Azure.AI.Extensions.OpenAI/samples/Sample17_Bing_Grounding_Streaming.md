@@ -21,7 +21,7 @@ Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_BingGroundingStreaming_Sync
 AIProjectConnection bingConnectionName = projectClient.Connections.GetConnection(connectionName: connectionName);
 BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOptions(
-    searchConfigurations: [new BingGroundingSearchOptions(projectConnectionId: bingConnectionName.Id)]
+    searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
     )
 );
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -38,7 +38,7 @@ Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_BingGroundingStreaming_Async
 AIProjectConnection bingConnectionName = projectClient.Connections.GetConnection(connectionName: connectionName);
 BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOptions(
-    searchConfigurations: [new BingGroundingSearchOptions(projectConnectionId: bingConnectionName.Id)]
+    searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
     )
 );
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)

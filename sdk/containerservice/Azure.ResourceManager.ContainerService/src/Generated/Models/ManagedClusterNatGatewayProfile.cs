@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="outboundIPs"> Desired outbound IP resources for the managed NAT Gateway. </param>
         /// <param name="idleTimeoutInMinutes"> Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 4 minutes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterNatGatewayProfile(ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile, IList<WritableSubResource> effectiveOutboundIPs, ManagedClusterNATGatewayProfileOutboundIPPrefixes outboundIPPrefixes, ManagedClusterNATGatewayProfileOutboundIPs outboundIPs, int? idleTimeoutInMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterNatGatewayProfile(ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile, IList<WritableSubResource> effectiveOutboundIPs, ManagedClusterNATGatewayProfileOutboundIpPrefixes outboundIPPrefixes, ManagedClusterNATGatewayProfileOutboundIPs outboundIPs, int? idleTimeoutInMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagedOutboundIPProfile = managedOutboundIPProfile;
             EffectiveOutboundIPs = effectiveOutboundIPs;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Desired outbound IP Prefix resources for the managed NAT Gateway. Only compatible with NAT Gateway V2. </summary>
         [WirePath("outboundIPPrefixes")]
-        internal ManagedClusterNATGatewayProfileOutboundIPPrefixes OutboundIPPrefixes { get; set; }
+        internal ManagedClusterNATGatewayProfileOutboundIpPrefixes OutboundIPPrefixes { get; set; }
 
         /// <summary> Desired outbound IP resources for the managed NAT Gateway. </summary>
         [WirePath("outboundIPs")]
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 if (OutboundIPPrefixes is null)
                 {
-                    OutboundIPPrefixes = new ManagedClusterNATGatewayProfileOutboundIPPrefixes();
+                    OutboundIPPrefixes = new ManagedClusterNATGatewayProfileOutboundIpPrefixes();
                 }
                 return OutboundIPPrefixes.PublicIPPrefixes;
             }

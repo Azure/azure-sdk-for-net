@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             writer.WriteStringValue(ClusterTier.ToString());
             writer.WritePropertyName("regionName"u8);
             writer.WriteStringValue(RegionName);
-            if (options.Format != "W" && Optional.IsDefined(MongoDBVersion))
+            if (options.Format != "W" && Optional.IsDefined(MongoDbVersion))
             {
                 writer.WritePropertyName("mongoDbVersion"u8);
-                writer.WriteStringValue(MongoDBVersion);
+                writer.WriteStringValue(MongoDbVersion);
             }
             if (options.Format != "W" && Optional.IsDefined(IsBackupsEnabled))
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             string clusterName = default;
             MongoDBAtlasClusterTier clusterTier = default;
             string regionName = default;
-            string mongoDBVersion = default;
+            string mongoDbVersion = default;
             bool? isBackupsEnabled = default;
             string state = default;
             MongoDBAtlasResourceProvisioningState? provisioningState = default;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 }
                 if (prop.NameEquals("mongoDbVersion"u8))
                 {
-                    mongoDBVersion = prop.Value.GetString();
+                    mongoDbVersion = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("backups"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 clusterName,
                 clusterTier,
                 regionName,
-                mongoDBVersion,
+                mongoDbVersion,
                 isBackupsEnabled,
                 state,
                 provisioningState,

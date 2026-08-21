@@ -4,20 +4,25 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Request from the service for the user to perform OAuth consent. </summary>
-    [Experimental("AAIP002")]
-    public partial class OAuthConsentRequestResponseItem : ResponseItem
+    public partial class OAuthConsentRequestResponseItem : AgentResponseItem
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> The link the user can use to perform OAuth consent. </summary>
-        public Uri ConsentLink { get; set; }
+        /// <summary> Initializes a new instance of <see cref="OAuthConsentRequestResponseItem"/>. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"> The agent that created the item. </param>
+        /// <param name="responseId"> The response on which the item is created. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="internalConsentLink"> The link the user can use to perform OAuth consent. </param>
+        /// <param name="serverLabel"> The server label for the OAuth consent request. </param>
+        internal OAuthConsentRequestResponseItem(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string internalConsentLink, string serverLabel) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        {
+            InternalConsentLink = internalConsentLink;
+            ServerLabel = serverLabel;
+        }
 
         /// <summary> The server label for the OAuth consent request. </summary>
         public string ServerLabel { get; set; }

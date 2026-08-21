@@ -80,15 +80,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 throw new FormatException($"The model {nameof(AccessBridgeProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IPv4ConnectedPrefix))
+            if (Optional.IsDefined(Ipv4ConnectedPrefix))
             {
                 writer.WritePropertyName("ipv4ConnectedPrefix"u8);
-                writer.WriteStringValue(IPv4ConnectedPrefix);
+                writer.WriteStringValue(Ipv4ConnectedPrefix);
             }
-            if (Optional.IsDefined(IPv6ConnectedPrefix))
+            if (Optional.IsDefined(Ipv6ConnectedPrefix))
             {
                 writer.WritePropertyName("ipv6ConnectedPrefix"u8);
-                writer.WriteStringValue(IPv6ConnectedPrefix);
+                writer.WriteStringValue(Ipv6ConnectedPrefix);
             }
             writer.WritePropertyName("networkId"u8);
             writer.WriteStringValue(NetworkId);

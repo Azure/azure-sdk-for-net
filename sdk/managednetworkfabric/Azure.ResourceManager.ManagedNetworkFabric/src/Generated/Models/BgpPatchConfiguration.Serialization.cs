@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("peerASN"u8);
                 writer.WriteNumberValue(PeerAsn.Value);
             }
-            if (Optional.IsCollectionDefined(IPv4ListenRangePrefixes))
+            if (Optional.IsCollectionDefined(Ipv4ListenRangePrefixes))
             {
                 writer.WritePropertyName("ipv4ListenRangePrefixes"u8);
                 writer.WriteStartArray();
-                foreach (string item in IPv4ListenRangePrefixes)
+                foreach (string item in Ipv4ListenRangePrefixes)
                 {
                     if (item == null)
                     {
@@ -120,11 +120,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPv6ListenRangePrefixes))
+            if (Optional.IsCollectionDefined(Ipv6ListenRangePrefixes))
             {
                 writer.WritePropertyName("ipv6ListenRangePrefixes"u8);
                 writer.WriteStartArray();
-                foreach (string item in IPv6ListenRangePrefixes)
+                foreach (string item in Ipv6ListenRangePrefixes)
                 {
                     if (item == null)
                     {
@@ -135,21 +135,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPv4NeighborAddress))
+            if (Optional.IsCollectionDefined(Ipv4NeighborAddress))
             {
                 writer.WritePropertyName("ipv4NeighborAddress"u8);
                 writer.WriteStartArray();
-                foreach (NeighborAddressPatch item in IPv4NeighborAddress)
+                foreach (NeighborAddressPatch item in Ipv4NeighborAddress)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPv6NeighborAddress))
+            if (Optional.IsCollectionDefined(Ipv6NeighborAddress))
             {
                 writer.WritePropertyName("ipv6NeighborAddress"u8);
                 writer.WriteStartArray();
-                foreach (NeighborAddressPatch item in IPv6NeighborAddress)
+                foreach (NeighborAddressPatch item in Ipv6NeighborAddress)
                 {
                     writer.WriteObjectValue(item, options);
                 }

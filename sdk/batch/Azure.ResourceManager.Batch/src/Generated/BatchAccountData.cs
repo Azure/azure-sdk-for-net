@@ -20,11 +20,9 @@ namespace Azure.ResourceManager.Batch
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchAccountData"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        public BatchAccountData(AzureLocation? location)
+        public BatchAccountData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            Location = location;
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchAccountData"/>. </summary>
@@ -32,7 +30,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The properties associated with the account. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The identity of the Batch account. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
@@ -46,16 +44,14 @@ namespace Azure.ResourceManager.Batch
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchAccountData"/>. </summary>
-        public BatchAccountData() : this(default)
-        {
-        }
-
-        /// <summary> The properties associated with the account. </summary>
+        /// <summary> The resource-specific properties for this resource. </summary>
         internal BatchAccountProperties Properties { get; set; }
 
         /// <summary> The identity of the Batch account. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> The geo-location where the resource lives. </summary>
+        public AzureLocation? Location { get; set; }
 
         /// <summary> The account endpoint used to interact with the Batch service. </summary>
         public string AccountEndpoint

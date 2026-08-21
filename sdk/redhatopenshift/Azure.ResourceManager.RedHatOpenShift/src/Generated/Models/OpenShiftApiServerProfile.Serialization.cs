@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(IP))
+            if (options.Format != "W" && Optional.IsDefined(Ip))
             {
                 writer.WritePropertyName("ip"u8);
-                writer.WriteStringValue(IP.ToString());
+                writer.WriteStringValue(Ip.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

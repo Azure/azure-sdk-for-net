@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ServiceLinker;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
@@ -15,59 +14,41 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     public readonly partial struct LinkerValidationResultStatus : IEquatable<LinkerValidationResultStatus>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="LinkerValidationResultStatus"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public LinkerValidationResultStatus(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string SuccessValue = "success";
         private const string FailureValue = "failure";
         private const string WarningValue = "warning";
 
-        /// <summary> Initializes a new instance of <see cref="LinkerValidationResultStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LinkerValidationResultStatus(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Success. </summary>
+        /// <summary> success. </summary>
         public static LinkerValidationResultStatus Success { get; } = new LinkerValidationResultStatus(SuccessValue);
-
-        /// <summary> Gets the Failure. </summary>
+        /// <summary> failure. </summary>
         public static LinkerValidationResultStatus Failure { get; } = new LinkerValidationResultStatus(FailureValue);
-
-        /// <summary> Gets the Warning. </summary>
+        /// <summary> warning. </summary>
         public static LinkerValidationResultStatus Warning { get; } = new LinkerValidationResultStatus(WarningValue);
-
         /// <summary> Determines if two <see cref="LinkerValidationResultStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LinkerValidationResultStatus left, LinkerValidationResultStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="LinkerValidationResultStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LinkerValidationResultStatus left, LinkerValidationResultStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="LinkerValidationResultStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LinkerValidationResultStatus"/>. </summary>
         public static implicit operator LinkerValidationResultStatus(string value) => new LinkerValidationResultStatus(value);
 
-        /// <summary> Converts a string to a <see cref="LinkerValidationResultStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator LinkerValidationResultStatus?(string value) => value == null ? null : new LinkerValidationResultStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LinkerValidationResultStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(LinkerValidationResultStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -82,9 +82,8 @@ public class Sample_EvaluationsCatalogPromptBased : EvaluationSampleBase
                     new
                     {
                         required = new[] { "query", "response", "ground_truth" },
-                        type = "object",
-                        properties = new
-                        {
+                        type ="object",
+                        properties = new {
                             query = new { type = "string" },
                             response = new { type = "string" },
                             ground_truth = new { type = "string" },

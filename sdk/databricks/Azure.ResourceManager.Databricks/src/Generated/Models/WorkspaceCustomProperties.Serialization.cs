@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Databricks.Models
                 writer.WritePropertyName("customPrivateSubnetName"u8);
                 writer.WriteObjectValue(CustomPrivateSubnetName, options);
             }
-            if (Optional.IsDefined(EnableNoPublicIP))
+            if (Optional.IsDefined(EnableNoPublicIp))
             {
                 writer.WritePropertyName("enableNoPublicIp"u8);
-                writer.WriteObjectValue(EnableNoPublicIP, options);
+                writer.WriteObjectValue(EnableNoPublicIp, options);
             }
             if (Optional.IsDefined(LoadBalancerBackendPoolName))
             {
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.Databricks.Models
                 writer.WritePropertyName("natGatewayName"u8);
                 writer.WriteObjectValue(NatGatewayName, options);
             }
-            if (Optional.IsDefined(PublicIPName))
+            if (Optional.IsDefined(PublicIpName))
             {
                 writer.WritePropertyName("publicIpName"u8);
-                writer.WriteObjectValue(PublicIPName, options);
+                writer.WriteObjectValue(PublicIpName, options);
             }
             if (Optional.IsDefined(PrepareEncryption))
             {
@@ -200,11 +200,11 @@ namespace Azure.ResourceManager.Databricks.Models
             WorkspaceCustomStringParameterValue customVirtualNetworkId = default;
             WorkspaceCustomStringParameterValue customPublicSubnetName = default;
             WorkspaceCustomStringParameterValue customPrivateSubnetName = default;
-            WorkspaceNoPublicIPBooleanParameterValue enableNoPublicIP = default;
+            WorkspaceNoPublicIPBooleanParameterValue enableNoPublicIp = default;
             WorkspaceCustomStringParameterValue loadBalancerBackendPoolName = default;
             WorkspaceCustomStringParameterValue loadBalancerId = default;
             WorkspaceCustomStringParameterValue natGatewayName = default;
-            WorkspaceCustomStringParameterValue publicIPName = default;
+            WorkspaceCustomStringParameterValue publicIpName = default;
             WorkspaceCustomBooleanParameterValue prepareEncryption = default;
             WorkspaceEncryptionParameterValue encryption = default;
             WorkspaceCustomBooleanParameterValue requireInfrastructureEncryption = default;
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Databricks.Models
                     {
                         continue;
                     }
-                    enableNoPublicIP = WorkspaceNoPublicIPBooleanParameterValue.DeserializeWorkspaceNoPublicIPBooleanParameterValue(prop.Value, options);
+                    enableNoPublicIp = WorkspaceNoPublicIPBooleanParameterValue.DeserializeWorkspaceNoPublicIPBooleanParameterValue(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("loadBalancerBackendPoolName"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Databricks.Models
                     {
                         continue;
                     }
-                    publicIPName = WorkspaceCustomStringParameterValue.DeserializeWorkspaceCustomStringParameterValue(prop.Value, options);
+                    publicIpName = WorkspaceCustomStringParameterValue.DeserializeWorkspaceCustomStringParameterValue(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("prepareEncryption"u8))
@@ -369,11 +369,11 @@ namespace Azure.ResourceManager.Databricks.Models
                 customVirtualNetworkId,
                 customPublicSubnetName,
                 customPrivateSubnetName,
-                enableNoPublicIP,
+                enableNoPublicIp,
                 loadBalancerBackendPoolName,
                 loadBalancerId,
                 natGatewayName,
-                publicIPName,
+                publicIpName,
                 prepareEncryption,
                 encryption,
                 requireInfrastructureEncryption,

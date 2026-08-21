@@ -4,7 +4,6 @@
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents;
-
 public partial class FileSearchToolboxTool
 {
     [CodeGenMember("RankingOptions")]

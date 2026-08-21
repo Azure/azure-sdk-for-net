@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPRules))
+            if (Optional.IsCollectionDefined(IpRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
-                foreach (WebPubSubIPRule item in IPRules)
+                foreach (WebPubSubIPRule item in IpRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
