@@ -2636,6 +2636,50 @@ namespace Azure.Search.Documents.Indexes
             }
         }
 
+        /// <summary> Uploads a file to a File knowledge source for processing and indexing. </summary>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="contentDisposition">
+        /// The Content-Disposition header specifying the filename of the uploaded file.
+        /// Must follow the format: `attachment; filename="&lt;filename&gt;"`.
+        /// For example: `attachment; filename="installation-guide.pdf"`.
+        /// </param>
+        /// <param name="file"> The file content to upload. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="contentDisposition"/> or <paramref name="file"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="contentDisposition"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<KnowledgeSourceFile> UploadKnowledgeSourceFile(string sourceName, string contentDisposition, BinaryData @file, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            Argument.AssertNotNullOrEmpty(contentDisposition, nameof(contentDisposition));
+            Argument.AssertNotNull(@file, nameof(@file));
+
+            Response result = UploadKnowledgeSourceFile(sourceName, contentDisposition, RequestContent.Create(@file), cancellationToken.ToRequestContext());
+            return Response.FromValue((KnowledgeSourceFile)result, result);
+        }
+
+        /// <summary> Uploads a file to a File knowledge source for processing and indexing. </summary>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="contentDisposition">
+        /// The Content-Disposition header specifying the filename of the uploaded file.
+        /// Must follow the format: `attachment; filename="&lt;filename&gt;"`.
+        /// For example: `attachment; filename="installation-guide.pdf"`.
+        /// </param>
+        /// <param name="file"> The file content to upload. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="contentDisposition"/> or <paramref name="file"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="contentDisposition"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<KnowledgeSourceFile>> UploadKnowledgeSourceFileAsync(string sourceName, string contentDisposition, BinaryData @file, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            Argument.AssertNotNullOrEmpty(contentDisposition, nameof(contentDisposition));
+            Argument.AssertNotNull(@file, nameof(@file));
+
+            Response result = await UploadKnowledgeSourceFileAsync(sourceName, contentDisposition, RequestContent.Create(@file), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((KnowledgeSourceFile)result, result);
+        }
+
         /// <summary>
         /// [Protocol Method] Uploads a file to a File knowledge source using multipart/form-data: a JSON 'metadata' part (file name and custom metadata) and a 'content' part with the raw file bytes.
         /// <list type="bullet">

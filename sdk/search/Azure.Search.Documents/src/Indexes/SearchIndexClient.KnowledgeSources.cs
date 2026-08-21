@@ -125,63 +125,6 @@ namespace Azure.Search.Documents.Indexes
             MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = knowledgeSource?.ETag } : null;
             return await DeleteKnowledgeSourceAsync(knowledgeSource?.Name, matchConditions, cancellationToken).ConfigureAwait(false);
         }
-
-        /// <summary> Uploads a file to a File knowledge source for processing and indexing. </summary>
-        /// <param name="sourceName"> The name of the knowledge source. </param>
-        /// <param name="fileName"> The name to associate with the uploaded file, such as <c>installation-guide.pdf</c>. </param>
-        /// <param name="file"> The file content to upload. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="fileName"/> or <paramref name="file"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<KnowledgeSourceFile> UploadKnowledgeSourceFile(string sourceName, string fileName, BinaryData file, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
-            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
-            Argument.AssertNotNull(file, nameof(file));
-
-            Response result = UploadKnowledgeSourceFile(sourceName, CreateContentDisposition(fileName), RequestContent.Create(file), cancellationToken.ToRequestContext());
-            return Response.FromValue((KnowledgeSourceFile)result, result);
-        }
-
-        /// <summary> Uploads a file to a File knowledge source for processing and indexing. </summary>
-        /// <param name="sourceName"> The name of the knowledge source. </param>
-        /// <param name="fileName"> The name to associate with the uploaded file, such as <c>installation-guide.pdf</c>. </param>
-        /// <param name="file"> The file content to upload. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="fileName"/> or <paramref name="file"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<KnowledgeSourceFile>> UploadKnowledgeSourceFileAsync(string sourceName, string fileName, BinaryData file, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
-            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
-            Argument.AssertNotNull(file, nameof(file));
-
-            Response result = await UploadKnowledgeSourceFileAsync(sourceName, CreateContentDisposition(fileName), RequestContent.Create(file), cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((KnowledgeSourceFile)result, result);
-        }
-
-        /// <summary>
-        /// Builds the <c>Content-Disposition</c> header value required by the service, which must follow
-        /// the format <c>attachment; filename="&lt;filename&gt;"</c>.
-        /// </summary>
-        /// <param name="fileName"> The name to associate with the uploaded file. </param>
-        /// <returns> The <c>Content-Disposition</c> header value. </returns>
-        private static string CreateContentDisposition(string fileName)
-        {
-            if (fileName.IndexOf('\r') >= 0 || fileName.IndexOf('\n') >= 0)
-            {
-                throw new ArgumentException("File name cannot contain carriage return or line feed characters.", nameof(fileName));
-            }
-
-            // Escape backslashes and quotes so they survive the quoted-string form of the header.
-            string escapedFileName = fileName.Replace("\\", "\\\\").Replace("\"", "\\\"");
-            return $"attachment; filename=\"{escapedFileName}\"";
-        }
-
         #endregion
     }
 }

@@ -8,7 +8,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// <summary> An event type not recognized by this version of the client library. </summary>
     public sealed class UnknownKnowledgeBaseRetrievalStreamEvent : KnowledgeBaseRetrievalStreamEvent
     {
-        internal UnknownKnowledgeBaseRetrievalStreamEvent(BinaryData data)
+        internal UnknownKnowledgeBaseRetrievalStreamEvent(string eventName, BinaryData data)
+            : base(eventName)
         {
             Data = data ?? throw new ArgumentNullException(nameof(data));
         }

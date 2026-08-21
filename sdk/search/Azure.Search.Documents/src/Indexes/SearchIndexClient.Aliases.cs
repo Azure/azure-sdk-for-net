@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using System.ComponentModel;
 using Azure.Core;
 using Azure.Search.Documents.Indexes.Models;
-using System;
 
 namespace Azure.Search.Documents.Indexes
 {

@@ -15,7 +15,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Emitted when a fully validated and post-processed synthesized answer is available. </summary>
-    public partial class KnowledgeBaseAnswerCompletedEvent : KnowledgeBaseRetrievalStreamEvent, IJsonModel<KnowledgeBaseAnswerCompletedEvent>
+    public partial class KnowledgeBaseAnswerCompletedEvent : IJsonModel<KnowledgeBaseAnswerCompletedEvent>
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAnswerCompletedEvent"/> for deserialization. </summary>
         internal KnowledgeBaseAnswerCompletedEvent()

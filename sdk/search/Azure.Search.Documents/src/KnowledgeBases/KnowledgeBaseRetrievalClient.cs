@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.ServerSentEvents;
 using System.Runtime.CompilerServices;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -24,8 +23,8 @@ namespace Azure.Search.Documents.KnowledgeBases
     /// <summary>
     /// Azure Cognitive Search client that can be used to query an knowledge base.
     /// </summary>
-    // Bug in C# emitter for SSE code gen using incorrect PipelineMessage instead of Httpessage. Remove once fixed. ETA after 2026-08-01-preview
-    //[CodeGenSuppress(nameof(RetrieveStreamAsync), typeof(RequestContent), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress(nameof(RetrieveStreamAsync), typeof(KnowledgeBaseRetrievalRequest), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress(nameof(RetrieveStreamAsync), typeof(RequestContent), typeof(string), typeof(string), typeof(RequestContext))]
     public partial class KnowledgeBaseRetrievalClient
     {
         /// <summary>
@@ -91,7 +90,50 @@ namespace Azure.Search.Documents.KnowledgeBases
         [ForwardsClientCalls]
         public virtual Task<Response> RetrieveAsync(RequestContent content, RequestContext context) =>
             RetrieveAsync(content, querySourceAuthorization: null, context: context);
-        /*
+
+#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        /// <summary> Retrieves relevant data and streams raw server-sent events. </summary>
+        public virtual async Task<AsyncStreamingClientResult<SseItem<BinaryData>>> RetrieveStreamAsync(
+            RequestContent content,
+            string querySourceAuthorization = default,
+            string queryWorkIQSourceAuthorization = default,
+            RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KnowledgeBaseRetrievalClient.RetrieveStream");
+            scope.Start();
+            HttpMessage message = null;
+            Stream extractedContent = null;
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                message = CreateRetrieveStreamRequest(
+                    content,
+                    querySourceAuthorization,
+                    queryWorkIQSourceAuthorization,
+                    context);
+                message.BufferResponse = false;
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+
+                extractedContent = message.ExtractResponseContent()
+                    ?? throw new InvalidOperationException("The streaming response did not contain a content stream.");
+                StreamingPipelineResponse pipelineResponse = new StreamingPipelineResponse(response, extractedContent);
+                extractedContent = null;
+                message.Dispose();
+                message = null;
+
+                return AsyncStreamingClientResult.CreateSse(pipelineResponse);
+            }
+            catch (Exception exception)
+            {
+                extractedContent?.Dispose();
+                message?.Dispose();
+                scope.Failed(exception);
+                throw;
+            }
+        }
+#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
         /// <summary>
         /// KnowledgeBase retrieves relevant data from backing stores, streaming progress and results as
         /// server-sent events on the same connection as they become available, instead of waiting for the
@@ -111,6 +153,7 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// </returns>
 #pragma warning disable AZC0004 // Streaming APIs are async-only.
 #pragma warning disable AZC0015 // IAsyncEnumerable<T> is the temporary streaming convenience shape.
+    [ForwardsClientCalls(true)]
         public virtual async IAsyncEnumerable<SseItem<KnowledgeBaseRetrievalStreamEvent>> RetrieveStreamAsync(
             KnowledgeBaseRetrievalRequest retrievalRequest,
             string querySourceAuthorization = default,
@@ -119,128 +162,138 @@ namespace Azure.Search.Documents.KnowledgeBases
         {
             Argument.AssertNotNull(retrievalRequest, nameof(retrievalRequest));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KnowledgeBaseRetrievalClient.RetrieveStream");
-            scope.Start();
+#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            AsyncStreamingClientResult<SseItem<BinaryData>> result = await RetrieveStreamAsync(
+                retrievalRequest,
+                querySourceAuthorization,
+                queryWorkIQSourceAuthorization,
+                cancellationToken.ToRequestContext()).ConfigureAwait(false);
+#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
-            HttpMessage message = null;
-            Response response = null;
-            try
+            await using (((IAsyncDisposable)result).ConfigureAwait(false))
             {
-                RequestContext context = cancellationToken.ToRequestContext();
-                message = CreateRetrieveStreamRequest(retrievalRequest, querySourceAuthorization, queryWorkIQSourceAuthorization, context);
-                message.BufferResponse = false;
-                response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                message?.Dispose();
-                response?.Dispose();
-                scope.Failed(e);
-                throw;
-            }
-
-            using (message)
-            using (response)
-            {
-                Stream contentStream = response.ContentStream
-                    ?? throw new InvalidOperationException("The streaming response did not contain a content stream.");
-                IAsyncEnumerator<SseItem<byte[]>> enumerator = SseParser
-                    .Create(contentStream, static (_, bytes) => bytes.ToArray())
-                    .EnumerateAsync(cancellationToken)
-                    .GetAsyncEnumerator(cancellationToken);
-
-                await using (enumerator.ConfigureAwait(false))
+                await foreach (SseItem<BinaryData> item in result.WithCancellation(cancellationToken).ConfigureAwait(false))
                 {
-                    while (true)
+                    if (item.Data.ToMemory().Span.SequenceEqual("[DONE]"u8))
                     {
-                        bool hasNext;
-                        try
-                        {
-                            hasNext = await enumerator.MoveNextAsync().ConfigureAwait(false);
-                        }
-                        catch (Exception e)
-                        {
-                            scope.Failed(e);
-                            throw;
-                        }
+                        yield break;
+                    }
 
-                        if (!hasNext)
-                        {
-                            throw new InvalidDataException("The retrieval stream ended before a terminal event was received.");
-                        }
+                    KnowledgeBaseRetrievalStreamEvent value = KnowledgeBaseRetrievalStreamEvent.Deserialize(item.EventType, item.Data);
+                    yield return new SseItem<KnowledgeBaseRetrievalStreamEvent>(value, item.EventType)
+                    {
+                        EventId = item.EventId,
+                        ReconnectionInterval = item.ReconnectionInterval,
+                    };
 
-                        SseItem<byte[]> item = enumerator.Current;
-                        if (item.Data.AsSpan().SequenceEqual("[DONE]"u8))
-                        {
-                            yield break;
-                        }
-
-                        KnowledgeBaseRetrievalStreamEvent value;
-                        try
-                        {
-                            value = DeserializeStreamEvent(item.EventType, BinaryData.FromBytes(item.Data));
-                        }
-                        catch (Exception e)
-                        {
-                            scope.Failed(e);
-                            throw;
-                        }
-
-                        yield return new SseItem<KnowledgeBaseRetrievalStreamEvent>(value, item.EventType)
-                        {
-                            EventId = item.EventId,
-                            ReconnectionInterval = item.ReconnectionInterval,
-                        };
-
-                        if (item.EventType is "error" or "response.completed")
-                        {
-                            yield break;
-                        }
+                    if (value.IsTerminal)
+                    {
+                        yield break;
                     }
                 }
             }
+
+            throw new InvalidDataException("The retrieval stream ended before a terminal event was received.");
         }
 #pragma warning restore AZC0015
 #pragma warning restore AZC0004
 
-        private static KnowledgeBaseRetrievalStreamEvent DeserializeStreamEvent(string eventType, BinaryData data)
+        private sealed class StreamingPipelineResponse : PipelineResponse
         {
-            using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-            JsonElement element = document.RootElement;
-            ModelReaderWriterOptions options = ModelSerializationExtensions.WireOptions;
+            private readonly int _status;
+            private readonly string _reasonPhrase;
+            private readonly StreamingPipelineResponseHeaders _headers;
+            private Stream _contentStream;
+            private BinaryData _content;
 
-            return eventType switch
+            public StreamingPipelineResponse(Response response, Stream contentStream)
             {
-                // TODO: Revisit this to see how we should model. Should have a base class for all events? Or a factory method that returns the proper type to avoid incorrect inheritance.
-                // e.g., KnowledgeBaseActivityRecord now inherits from KnowledgeBaseRetrievalStreamEvent, but it is not a stream event, it is only used as a payload for the event.
-                "retrieval.started" => KnowledgeBaseRetrievalStartedEvent.DeserializeKnowledgeBaseRetrievalStartedEvent(element, options),
-                "activity.started" => KnowledgeBaseActivityStartedEvent.DeserializeKnowledgeBaseActivityStartedEvent(element, options),
-                "activity.completed" => KnowledgeBaseActivityRecord.DeserializeKnowledgeBaseActivityRecord(element, options),
-                "answer.completed" => KnowledgeBaseAnswerCompletedEvent.DeserializeKnowledgeBaseAnswerCompletedEvent(element, options),
-                "references.completed" => DeserializeReferencesCompletedEvent(element, options),
-                "error" => KnowledgeBaseStreamErrorEvent.DeserializeKnowledgeBaseStreamErrorEvent(element, options),
-                "response.completed" => KnowledgeBaseResponseCompletedEvent.DeserializeKnowledgeBaseResponseCompletedEvent(element, options),
-                _ => new UnknownKnowledgeBaseRetrievalStreamEvent(data),
-            };
-        }
-
-        private static KnowledgeBaseReferencesCompletedEvent DeserializeReferencesCompletedEvent(
-            JsonElement element,
-            ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind != JsonValueKind.Array)
-            {
-                throw new JsonException("The references.completed event payload must be a JSON array.");
+                _status = response.Status;
+                _reasonPhrase = response.ReasonPhrase;
+                _headers = new StreamingPipelineResponseHeaders(response.Headers);
+                _contentStream = contentStream;
             }
 
-            List<KnowledgeBaseReference> references = new();
-            foreach (JsonElement item in element.EnumerateArray())
+            public override int Status => _status;
+
+            public override string ReasonPhrase => _reasonPhrase;
+
+            protected override PipelineResponseHeaders HeadersCore => _headers;
+
+            public override Stream ContentStream
             {
-                references.Add(KnowledgeBaseReference.DeserializeKnowledgeBaseReference(item, options));
+                get => _contentStream;
+                set => _contentStream = value;
             }
 
-            return new KnowledgeBaseReferencesCompletedEvent(references);
+            public override BinaryData Content =>
+                _content ?? throw new InvalidOperationException("The streaming response has not been buffered.");
+
+            public override BinaryData BufferContent(CancellationToken cancellationToken = default)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                MemoryStream buffered = new MemoryStream();
+                _contentStream?.CopyTo(buffered);
+                buffered.Position = 0;
+                _content = BinaryData.FromStream(buffered);
+                buffered.Position = 0;
+                _contentStream?.Dispose();
+                _contentStream = buffered;
+                return _content;
+            }
+
+            public override async ValueTask<BinaryData> BufferContentAsync(CancellationToken cancellationToken = default)
+            {
+                MemoryStream buffered = new MemoryStream();
+                if (_contentStream != null)
+                {
+                    await _contentStream.CopyToAsync(buffered, 81920, cancellationToken).ConfigureAwait(false);
+                }
+                buffered.Position = 0;
+                _content = BinaryData.FromStream(buffered);
+                buffered.Position = 0;
+                _contentStream?.Dispose();
+                _contentStream = buffered;
+                return _content;
+            }
+
+            public override void Dispose()
+            {
+                _contentStream?.Dispose();
+                _contentStream = null;
+            }
         }
-        */
+
+        private sealed class StreamingPipelineResponseHeaders : PipelineResponseHeaders
+        {
+            private readonly Dictionary<string, string> _headers =
+                new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+            public StreamingPipelineResponseHeaders(ResponseHeaders headers)
+            {
+                foreach (HttpHeader header in headers)
+                {
+                    _headers[header.Name] = header.Value;
+                }
+            }
+
+            public override bool TryGetValue(string name, out string value) =>
+                _headers.TryGetValue(name, out value);
+
+            public override bool TryGetValues(string name, out IEnumerable<string> values)
+            {
+                if (_headers.TryGetValue(name, out string value))
+                {
+                    values = new[] { value };
+                    return true;
+                }
+
+                values = null;
+                return false;
+            }
+
+            public override IEnumerator<KeyValuePair<string, string>> GetEnumerator() =>
+                _headers.GetEnumerator();
+        }
     }
 }
