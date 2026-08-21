@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="computeModel"> The compute model for the cluster. </param>
         /// <param name="mirroring"> Mirroring configuration for the HorizonDB cluster. </param>
         /// <returns> A new <see cref="Models.HorizonDBClusterProperties"/> instance for mocking. </returns>
-        public static HorizonDBClusterProperties HorizonDBClusterProperties(string administratorLogin = default, string administratorLoginPassword = default, string version = default, HorizonDBClusterCreateMode? createMode = default, DateTimeOffset? pointInTimeUtcOn = default, ResourceIdentifier sourceClusterResourceId = default, string poolName = default, int? replicaCount = default, int? vCores = default, string processorType = default, HorizonDBPublicNetworkAccessState? publicNetworkAccess = default, HorizonDBClusterState? state = default, string fullyQualifiedDomainName = default, string readOnlyEndpoint = default, HorizonDBProvisioningState? provisioningState = default, HorizonDBZonePlacementPolicy? zonePlacementPolicy = default, HorizonDBClusterParameterGroupConnectionProperties parameterGroup = default, HorizonDbClusterAuthConfig authConfig = default, HorizonDbComputeModel computeModel = default, HorizonDbClusterMirroring mirroring = default)
+        public static HorizonDBClusterProperties HorizonDBClusterProperties(string administratorLogin = default, string administratorLoginPassword = default, string version = default, HorizonDBClusterCreateMode? createMode = default, DateTimeOffset? pointInTimeUtcOn = default, ResourceIdentifier sourceClusterResourceId = default, string poolName = default, int? replicaCount = default, int? vCores = default, string processorType = default, HorizonDBPublicNetworkAccessState? publicNetworkAccess = default, HorizonDBClusterState? state = default, string fullyQualifiedDomainName = default, string readOnlyEndpoint = default, HorizonDBProvisioningState? provisioningState = default, HorizonDBZonePlacementPolicy? zonePlacementPolicy = default, HorizonDBClusterParameterGroupConnectionProperties parameterGroup = default, HorizonDBClusterAuthConfig authConfig = default, HorizonDBComputeModel computeModel = default, HorizonDBClusterMirroring mirroring = default)
         {
             return new HorizonDBClusterProperties(
                 administratorLogin,
@@ -102,30 +102,30 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="entraIdAuth"> Indicates whether Microsoft Entra ID authentication is enabled or disabled. </param>
         /// <param name="tenantId"> The Microsoft Entra tenant ID. </param>
         /// <param name="passwordAuth"> Indicates whether password authentication is enabled or disabled. </param>
-        /// <returns> A new <see cref="Models.HorizonDbClusterAuthConfig"/> instance for mocking. </returns>
-        public static HorizonDbClusterAuthConfig HorizonDbClusterAuthConfig(HorizonDBAuthenticationState? entraIdAuth = default, string tenantId = default, HorizonDBAuthenticationState? passwordAuth = default)
+        /// <returns> A new <see cref="Models.HorizonDBClusterAuthConfig"/> instance for mocking. </returns>
+        public static HorizonDBClusterAuthConfig HorizonDBClusterAuthConfig(HorizonDBAuthenticationState? entraIdAuth = default, string tenantId = default, HorizonDBAuthenticationState? passwordAuth = default)
         {
-            return new HorizonDbClusterAuthConfig(entraIdAuth, tenantId, passwordAuth, default);
+            return new HorizonDBClusterAuthConfig(entraIdAuth, tenantId, passwordAuth, default);
         }
 
         /// <param name="type"> The compute model type. Supported values: 'Provisioned', 'Serverless'. </param>
         /// <param name="vCores"> The fixed vCore count for Provisioned compute. </param>
         /// <param name="minvCores"> The minimum vCores for Serverless compute. Defines the lower autoscaling bound. </param>
         /// <param name="maxvCores"> The maximum vCores for Serverless compute. Defines the upper autoscaling bound. </param>
-        /// <returns> A new <see cref="Models.HorizonDbComputeModel"/> instance for mocking. </returns>
-        public static HorizonDbComputeModel HorizonDbComputeModel(HorizonDbComputeModelType? @type = default, int? vCores = default, double? minvCores = default, double? maxvCores = default)
+        /// <returns> A new <see cref="Models.HorizonDBComputeModel"/> instance for mocking. </returns>
+        public static HorizonDBComputeModel HorizonDBComputeModel(HorizonDBComputeModelType? @type = default, int? vCores = default, double? minvCores = default, double? maxvCores = default)
         {
-            return new HorizonDbComputeModel(@type, vCores, minvCores, maxvCores, default);
+            return new HorizonDBComputeModel(@type, vCores, minvCores, maxvCores, default);
         }
 
         /// <param name="databaseNames"> The names of the databases to mirror. </param>
         /// <param name="userAssignedIdentityId"> The resource ID of the user-assigned managed identity used for mirroring. </param>
-        /// <returns> A new <see cref="Models.HorizonDbClusterMirroring"/> instance for mocking. </returns>
-        public static HorizonDbClusterMirroring HorizonDbClusterMirroring(IEnumerable<string> databaseNames = default, ResourceIdentifier userAssignedIdentityId = default)
+        /// <returns> A new <see cref="Models.HorizonDBClusterMirroring"/> instance for mocking. </returns>
+        public static HorizonDBClusterMirroring HorizonDBClusterMirroring(IEnumerable<string> databaseNames = default, ResourceIdentifier userAssignedIdentityId = default)
         {
             databaseNames ??= new ChangeTrackingList<string>();
 
-            return new HorizonDbClusterMirroring((databaseNames ?? new ChangeTrackingList<string>()).ToList(), userAssignedIdentityId, default);
+            return new HorizonDBClusterMirroring((databaseNames ?? new ChangeTrackingList<string>()).ToList(), userAssignedIdentityId, default);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="computeModel"> The compute model for the cluster. </param>
         /// <param name="mirroring"> Mirroring configuration for the HorizonDB cluster. </param>
         /// <returns> A new <see cref="Models.HorizonDBClusterPatchProperties"/> instance for mocking. </returns>
-        public static HorizonDBClusterPatchProperties HorizonDBClusterPatchProperties(string administratorLoginPassword = default, int? vCores = default, HorizonDBClusterParameterGroupConnectionProperties parameterGroup = default, HorizonDbClusterAuthConfig authConfig = default, HorizonDbComputeModel computeModel = default, HorizonDbClusterMirroring mirroring = default)
+        public static HorizonDBClusterPatchProperties HorizonDBClusterPatchProperties(string administratorLoginPassword = default, int? vCores = default, HorizonDBClusterParameterGroupConnectionProperties parameterGroup = default, HorizonDBClusterAuthConfig authConfig = default, HorizonDBComputeModel computeModel = default, HorizonDBClusterMirroring mirroring = default)
         {
             return new HorizonDBClusterPatchProperties(
                 administratorLoginPassword,
