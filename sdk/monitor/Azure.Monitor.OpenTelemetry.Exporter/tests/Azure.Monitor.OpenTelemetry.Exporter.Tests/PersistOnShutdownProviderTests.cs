@@ -299,6 +299,79 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
+        public void LogForceFlushTransmitsByDefault()
+        {
+            var options = BuildOptions(out var transmitter, out var transport);
+
+            using var serviceProvider = BuildLoggerServices(options);
+
+            serviceProvider.GetRequiredService<ILoggerFactory>()
+                .CreateLogger<PersistOnShutdownProviderTests>()
+                .LogInformation("Deliver me.");
+
+            serviceProvider.GetRequiredService<LoggerProvider>().ForceFlush();
+
+            Assert.Single(transport.Requests);
+            Assert.Empty(transmitter._fileBlobProvider!.GetBlobs());
+        }
+
+        [Fact]
+        public void LogShutdownTransmitsWhenPersistenceIsDisabled()
+        {
+            AppContext.SetSwitch(PersistOnShutdownConfig.DisablePersistOnShutdownSwitchName, true);
+
+            try
+            {
+                var options = BuildOptions(out var transmitter, out var transport);
+
+                using var serviceProvider = BuildLoggerServices(options);
+
+                serviceProvider.GetRequiredService<ILoggerFactory>()
+                    .CreateLogger<PersistOnShutdownProviderTests>()
+                    .LogInformation("Deliver me.");
+
+                serviceProvider.GetRequiredService<LoggerProvider>().Shutdown();
+
+                Assert.Single(transport.Requests);
+                Assert.Empty(transmitter._fileBlobProvider!.GetBlobs());
+            }
+            finally
+            {
+                AppContext.SetSwitch(PersistOnShutdownConfig.DisablePersistOnShutdownSwitchName, false);
+            }
+        }
+
+        [Fact]
+        public void MetricShutdownTransmitsWhenPersistenceIsDisabled()
+        {
+            AppContext.SetSwitch(PersistOnShutdownConfig.DisablePersistOnShutdownSwitchName, true);
+
+            try
+            {
+                var options = BuildOptions(out var transmitter, out var transport);
+
+                var meterName = $"OTel.PersistProvider.{Guid.NewGuid():N}";
+                using var meter = new Meter(meterName);
+
+                using var meterProvider = Sdk.CreateMeterProviderBuilder()
+                    .AddMeter(meterName)
+                    .AddReader(new AzureMonitorPeriodicExportingMetricReader(new AzureMonitorMetricExporter(options)))
+                    .Build()!;
+
+                meter.CreateCounter<long>("TestCounter").Add(1);
+
+                meterProvider.Shutdown();
+
+                Assert.Single(transport.Requests);
+                Assert.Empty(transmitter._fileBlobProvider!.GetBlobs());
+            }
+            finally
+            {
+                AppContext.SetSwitch(PersistOnShutdownConfig.DisablePersistOnShutdownSwitchName, false);
+            }
+        }
+
+        [Fact]
         public void MetricDisposeDrainsPersistedTelemetryWithinTheBudget()
         {
             var options = BuildOptions(out var transmitter, out var transport);
