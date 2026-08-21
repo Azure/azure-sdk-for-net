@@ -11,6 +11,8 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
 {
     public static partial class ArmManufacturingPlatformModelFactory
     {
+        // This keeps model-factory mocking support for read-only flattened properties. Regeneration does not
+        // emit this method because the model has a public constructor, but that constructor cannot set the internal envelopes.
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="version"> Mds Resource Version. </param>
         /// <param name="enableCopilot"> Enable Copilot. </param>

@@ -10,6 +10,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ManufacturingPlatform.Models
 {
+    // The generated public model flattens BrokerResources onto ManufacturingDataServiceProperties,
+    // but service payloads still require the internal managedOnBehalfOfConfiguration envelope.
     [CodeGenSerialization(nameof(BrokerResources), SerializationValueHook = nameof(SerializeBrokerResources))]
     internal partial class ManagedOnBehalfOfConfiguration
     {
