@@ -14,8 +14,8 @@ dotnet run -c Release -f net8.0 --filter *ShutdownBenchmarks*
 dotnet run -c Release -f net8.0 --filter *StartupBenchmarks*
 ```
 
-`DrainBudgetOverride` is applied through `AppContext.SetData`, which does not exist on .NET
-Framework, so that parameter has no effect if these are run on net462.
+`DrainBudgetOverride` is applied through `AppDomain.CurrentDomain.SetData`, which writes to the store
+`AppContext` reads from, so the parameter takes effect on every target framework including net462.
 
 ## Why shutdown has a cost at all
 

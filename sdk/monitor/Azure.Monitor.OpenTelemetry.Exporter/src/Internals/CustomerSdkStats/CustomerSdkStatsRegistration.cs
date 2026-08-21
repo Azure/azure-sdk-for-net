@@ -72,8 +72,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
 
             // No network timeout override: transmitters are cached per connection string and these
             // stats share the customer's, so setting one here would either be discarded or, if this
-            // ran first, impose a five second timeout on the customer's own telemetry.
-            // BackgroundMeterProviderDisposer is what keeps the final export off the exit path.
+            // ran first, impose a five second timeout on the customer's own telemetry. Nothing
+            // disposes this provider, so it never exports on the exit path either way.
 
             return options;
         }

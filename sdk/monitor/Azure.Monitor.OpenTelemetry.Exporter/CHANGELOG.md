@@ -22,7 +22,7 @@
 
 - Telemetry is no longer dropped when the offline storage directory reaches its size cap. The oldest stored telemetry is evicted to make room.
 
-- The internal telemetry exporters (Statsbeat and customer SDK stats) no longer hold up process exit. Both export once more as their meter providers are disposed, which put an ingestion round trip on the exit path; that final export is now started in the background. Statsbeat, which transmits to its own endpoint, additionally bounds its network timeout at five seconds rather than the pipeline default of 100 seconds.
+- Statsbeat no longer holds up process exit. It exports once more as its meter provider is disposed, which put an ingestion round trip on the exit path; that final export now runs in the background, and its network timeout is bounded at five seconds rather than the pipeline default of 100 seconds. The customer SDK stats meter provider is instead left to live for the process lifetime, so it never exports on the exit path at all; its stats are delivered by its own periodic reader.
 
 - Log fields are now culture-invariant. ([#61996](https://github.com/Azure/azure-sdk-for-net/pull/61996))
 - Added the `telemetrySuccess` dimension to `Item_Dropped_Count` for request and dependency telemetry.
