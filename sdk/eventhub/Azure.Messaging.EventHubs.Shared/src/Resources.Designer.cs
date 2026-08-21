@@ -956,5 +956,16 @@ namespace Azure.Messaging.EventHubs
                 return ResourceManager.GetString("LongLastEnqueuedOffsetOffsetUnsupported", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The consumer was disconnected by a connection-level fault, which may mask a partition steal; the consumer will be invalidated so that ownership can be re-arbitrated..
+        /// </summary>
+        internal static string ConsumerDisconnectedByMaskedPartitionSteal
+        {
+            get
+            {
+                return ResourceManager.GetString("ConsumerDisconnectedByMaskedPartitionSteal", resourceCulture);
+            }
+        }
     }
 }
