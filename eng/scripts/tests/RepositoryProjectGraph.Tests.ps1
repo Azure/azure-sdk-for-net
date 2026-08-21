@@ -41,7 +41,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
 
     It "builds a versioned artifact that unions evaluated target frameworks" {
         $graph = Get-Content -Raw $graphPath | ConvertFrom-Json -Depth 100
-        $graph.schemaVersion | Should -Be 1
+        $graph.schemaVersion | Should -Be 2
         $graph.diagnostics.isComplete | Should -BeTrue
         $node = $graph.nodes | Where-Object packageId -eq "Azure.A" | Select-Object -First 1
         $node.targetFrameworks | Should -Be @("net8.0", "net9.0")
@@ -49,6 +49,42 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $edge.to | Should -Be "Azure.B"
         $edge.targetFrameworks | Should -Be @("net9.0")
         $graph.diagnostics.unmappedRepositoryPackageReferences | Should -Contain "Azure.External"
+        $graph.diagnostics.hasUnresolvedExternalPackageClosure | Should -BeTrue
+    }
+
+    It "adds resolved external package closure edges and diagnostics" {
+        $packageRecordsPath = Join-Path $TestDrive "package-closure.records"
+        $closureGraphPath = Join-Path $TestDrive "closure.json"
+        @(
+            "TransitivePackageReference|$testProject|net9.0|Azure.B|Azure.External|1.2.3|Azure.External 1.2.3>Azure.B [1.0.0, )"
+            "PackageClosureSummary|1|1|1|0|2|2|0|0.125|isolated-package-metadata|false|false"
+        ) | Set-Content $packageRecordsPath
+
+        & $scriptPath -Operation Build -GraphPath $closureGraphPath -RecordsPath $recordsPath -PackageRecordsPath $packageRecordsPath -RepoRoot $repoRoot
+        if ($LASTEXITCODE) { throw "Graph build failed with exit code $LASTEXITCODE" }
+        $graph = Get-Content -Raw $closureGraphPath | ConvertFrom-Json -Depth 100
+        $edge = $graph.edges | Where-Object { $_.kind -eq "TransitivePackageReference" }
+        $edge.to | Should -Be "Azure.B"
+        $edge.viaPackage | Should -Be "Azure.External"
+        $edge.viaVersion | Should -Be "1.2.3"
+        $edge.targetFrameworks | Should -Be @("net9.0")
+        $graph.diagnostics.isComplete | Should -BeTrue
+        $graph.diagnostics.packageClosure.resolutionMode | Should -Be "isolated-package-metadata"
+        $graph.diagnostics.packageClosure.restoreEquivalent | Should -BeFalse
+        $graph.diagnostics.packageClosure.transitiveDependencyAssetFiltersApplied | Should -BeFalse
+        $graph.diagnostics.hasUnresolvedExternalPackageClosure | Should -BeFalse
+    }
+
+    It "fails closed when the package closure summary contradicts its detail records" {
+        $packageRecordsPath = Join-Path $TestDrive "inconsistent-package-closure.records"
+        $closureGraphPath = Join-Path $TestDrive "inconsistent-closure.json"
+        "PackageClosureSummary|1|0|0|1|1|0|1|0.125|isolated-package-metadata|false|false" | Set-Content $packageRecordsPath
+
+        & $scriptPath -Operation Build -GraphPath $closureGraphPath -RecordsPath $recordsPath -PackageRecordsPath $packageRecordsPath -RepoRoot $repoRoot
+        if ($LASTEXITCODE) { throw "Graph build failed with exit code $LASTEXITCODE" }
+        $graph = Get-Content -Raw $closureGraphPath | ConvertFrom-Json -Depth 100
+        $graph.diagnostics.packageClosureSummaryConsistent | Should -BeFalse
+        $graph.diagnostics.isComplete | Should -BeFalse
         $graph.diagnostics.hasUnresolvedExternalPackageClosure | Should -BeTrue
     }
 
@@ -107,11 +143,11 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
     It "rejects unsupported graph schemas" {
         $unsupportedPath = Join-Path $TestDrive "unsupported.json"
         $graph = Get-Content -Raw $graphPath | ConvertFrom-Json -Depth 100
-        $graph.schemaVersion = 2
+        $graph.schemaVersion = 3
         $graph | ConvertTo-Json -Depth 100 | Set-Content $unsupportedPath
         $outputPath = Join-Path $TestDrive "unsupported.txt"
         { & $scriptPath -Operation Reverse -GraphPath $unsupportedPath -Dependencies "Azure.A" -OutputPath $outputPath } |
-            Should -Throw "*schema version '2'*"
+            Should -Throw "*schema version '3'*"
     }
 
     It "diagnoses unevaluated declarations and cross-TFM identity conflicts" {
@@ -150,6 +186,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
   <ItemGroup>
+    <PackageVersion Include="Azure.B" Version="1.2.3" />
     <PackageReference Include="Azure.B" Condition="'$(TargetFramework)' == 'net8.0'" />
     <ProjectReference Include="../../B/src/B.csproj" Condition="'$(TargetFramework)' == 'net9.0'" />
   </ItemGroup>
@@ -196,7 +233,9 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $taskGraph = Get-Content -Raw $taskGraphPath | ConvertFrom-Json -Depth 100
         $taskGraph.diagnostics.isComplete | Should -BeTrue
         ($taskGraph.nodes | Where-Object packageId -eq "Azure.A.Tests").targetFrameworks | Should -Be @("net8.0", "net9.0")
-        ($taskGraph.edges | Where-Object { $_.kind -eq "PackageReference" -and $_.fromProject -like "*/A.Tests.csproj" }).targetFrameworks | Should -Be @("net8.0")
+        $taskPackageEdge = $taskGraph.edges | Where-Object { $_.kind -eq "PackageReference" -and $_.fromProject -like "*/A.Tests.csproj" }
+        $taskPackageEdge.targetFrameworks | Should -Be @("net8.0")
+        $taskPackageEdge.version | Should -Be "1.2.3"
         ($taskGraph.edges | Where-Object { $_.kind -eq "ProjectReference" -and $_.fromProject -like "*/A.Tests.csproj" }).targetFrameworks | Should -Be @("net9.0")
     }
 }
