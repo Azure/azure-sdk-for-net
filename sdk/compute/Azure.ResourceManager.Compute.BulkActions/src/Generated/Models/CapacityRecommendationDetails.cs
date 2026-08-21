@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Initializes a new instance of <see cref="CapacityRecommendationDetails"/>. </summary>
         /// <param name="desiredLocations"> The list of desired Azure regions from the request. </param>
-        /// <param name="recommendationRequestedAtUtc"> The UTC timestamp of when the recommendation was requested. </param>
+        /// <param name="recommendationRequestedOn"> The UTC timestamp of when the recommendation was requested. </param>
         /// <param name="desiredSizes"> The list of desired VM sizes from the request. </param>
-        /// <param name="availabilityZones"> Whether the response is split by availability zone. </param>
+        /// <param name="isSplitByAvailabilityZone"> Whether the response is split by availability zone. </param>
         /// <param name="placementScores"> The array of placement scores per SKU, region and zone. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CapacityRecommendationDetails(IList<string> desiredLocations, DateTimeOffset? recommendationRequestedAtUtc, IList<CapacityRecommendationSize> desiredSizes, bool? availabilityZones, IList<CapacityRecommendationPlacementScore> placementScores, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CapacityRecommendationDetails(IList<string> desiredLocations, DateTimeOffset? recommendationRequestedOn, IList<CapacityRecommendationSize> desiredSizes, bool? isSplitByAvailabilityZone, IList<CapacityRecommendationPlacementScore> placementScores, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DesiredLocations = desiredLocations;
-            RecommendationRequestedAtUtc = recommendationRequestedAtUtc;
+            RecommendationRequestedOn = recommendationRequestedOn;
             DesiredSizes = desiredSizes;
-            AvailabilityZones = availabilityZones;
+            IsSplitByAvailabilityZone = isSplitByAvailabilityZone;
             PlacementScores = placementScores;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public IList<string> DesiredLocations { get; }
 
         /// <summary> The UTC timestamp of when the recommendation was requested. </summary>
-        public DateTimeOffset? RecommendationRequestedAtUtc { get; }
+        public DateTimeOffset? RecommendationRequestedOn { get; }
 
         /// <summary> The list of desired VM sizes from the request. </summary>
         public IList<CapacityRecommendationSize> DesiredSizes { get; }
 
         /// <summary> Whether the response is split by availability zone. </summary>
-        public bool? AvailabilityZones { get; }
+        public bool? IsSplitByAvailabilityZone { get; }
 
         /// <summary> The array of placement scores per SKU, region and zone. </summary>
         public IList<CapacityRecommendationPlacementScore> PlacementScores { get; }

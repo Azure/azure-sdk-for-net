@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Initializes a new instance of <see cref="BulkActionsCapacityRecommendationParametersContent"/>. </summary>
         /// <param name="desiredLocations"> The list of desired Azure regions to be considered for the capacity recommendation. </param>
         /// <param name="desiredSizes"> The list of desired VM sizes (SKUs) to be considered for the capacity recommendation. </param>
-        /// <param name="availabilityZones"> Whether the capacity recommendation should be computed per availability zone. </param>
+        /// <param name="isAvailabilityZoneEnabled"> Whether the capacity recommendation should be computed per availability zone. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkActionsCapacityRecommendationParametersContent(IList<string> desiredLocations, IList<string> desiredSizes, bool? availabilityZones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionsCapacityRecommendationParametersContent(IList<string> desiredLocations, IList<string> desiredSizes, bool? isAvailabilityZoneEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DesiredLocations = desiredLocations;
             DesiredSizes = desiredSizes;
-            AvailabilityZones = availabilityZones;
+            IsAvailabilityZoneEnabled = isAvailabilityZoneEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public IList<string> DesiredSizes { get; }
 
         /// <summary> Whether the capacity recommendation should be computed per availability zone. </summary>
-        public bool? AvailabilityZones { get; set; }
+        public bool? IsAvailabilityZoneEnabled { get; set; }
     }
 }

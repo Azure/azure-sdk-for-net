@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AvailabilityZones))
+            if (Optional.IsDefined(IsAvailabilityZoneEnabled))
             {
                 writer.WritePropertyName("availabilityZones"u8);
-                writer.WriteBooleanValue(AvailabilityZones.Value);
+                writer.WriteBooleanValue(IsAvailabilityZoneEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             IList<string> desiredLocations = default;
             IList<string> desiredSizes = default;
-            bool? availabilityZones = default;
+            bool? isAvailabilityZoneEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    availabilityZones = prop.Value.GetBoolean();
+                    isAvailabilityZoneEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BulkActionsCapacityRecommendationParametersContent(desiredLocations ?? new ChangeTrackingList<string>(), desiredSizes ?? new ChangeTrackingList<string>(), availabilityZones, additionalBinaryDataProperties);
+            return new BulkActionsCapacityRecommendationParametersContent(desiredLocations ?? new ChangeTrackingList<string>(), desiredSizes ?? new ChangeTrackingList<string>(), isAvailabilityZoneEnabled, additionalBinaryDataProperties);
         }
     }
 }

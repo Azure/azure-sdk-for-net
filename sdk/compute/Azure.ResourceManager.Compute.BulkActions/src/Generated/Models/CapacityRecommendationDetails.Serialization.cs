@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RecommendationRequestedAtUtc))
+            if (Optional.IsDefined(RecommendationRequestedOn))
             {
                 writer.WritePropertyName("recommendationRequestedAtUtc"u8);
-                writer.WriteStringValue(RecommendationRequestedAtUtc.Value, "O");
+                writer.WriteStringValue(RecommendationRequestedOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(DesiredSizes))
             {
@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AvailabilityZones))
+            if (Optional.IsDefined(IsSplitByAvailabilityZone))
             {
                 writer.WritePropertyName("availabilityZones"u8);
-                writer.WriteBooleanValue(AvailabilityZones.Value);
+                writer.WriteBooleanValue(IsSplitByAvailabilityZone.Value);
             }
             if (Optional.IsCollectionDefined(PlacementScores))
             {
@@ -162,9 +162,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 return null;
             }
             IList<string> desiredLocations = default;
-            DateTimeOffset? recommendationRequestedAtUtc = default;
+            DateTimeOffset? recommendationRequestedOn = default;
             IList<CapacityRecommendationSize> desiredSizes = default;
-            bool? availabilityZones = default;
+            bool? isSplitByAvailabilityZone = default;
             IList<CapacityRecommendationPlacementScore> placementScores = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    recommendationRequestedAtUtc = prop.Value.GetDateTimeOffset("O");
+                    recommendationRequestedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("desiredSizes"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    availabilityZones = prop.Value.GetBoolean();
+                    isSplitByAvailabilityZone = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("placementScores"u8))
@@ -243,9 +243,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             return new CapacityRecommendationDetails(
                 desiredLocations ?? new ChangeTrackingList<string>(),
-                recommendationRequestedAtUtc,
+                recommendationRequestedOn,
                 desiredSizes ?? new ChangeTrackingList<CapacityRecommendationSize>(),
-                availabilityZones,
+                isSplitByAvailabilityZone,
                 placementScores ?? new ChangeTrackingList<CapacityRecommendationPlacementScore>(),
                 additionalBinaryDataProperties);
         }

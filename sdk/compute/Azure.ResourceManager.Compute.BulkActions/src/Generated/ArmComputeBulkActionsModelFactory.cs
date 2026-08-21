@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="desiredLocations"> The list of desired Azure regions to be considered for the capacity recommendation. </param>
         /// <param name="desiredSizes"> The list of desired VM sizes (SKUs) to be considered for the capacity recommendation. </param>
-        /// <param name="availabilityZones"> Whether the capacity recommendation should be computed per availability zone. </param>
+        /// <param name="isAvailabilityZoneEnabled"> Whether the capacity recommendation should be computed per availability zone. </param>
         /// <returns> A new <see cref="Models.BulkActionsCapacityRecommendationParametersContent"/> instance for mocking. </returns>
-        public static BulkActionsCapacityRecommendationParametersContent BulkActionsCapacityRecommendationParametersContent(IEnumerable<string> desiredLocations = default, IEnumerable<string> desiredSizes = default, bool? availabilityZones = default)
+        public static BulkActionsCapacityRecommendationParametersContent BulkActionsCapacityRecommendationParametersContent(IEnumerable<string> desiredLocations = default, IEnumerable<string> desiredSizes = default, bool? isAvailabilityZoneEnabled = default)
         {
             desiredLocations ??= new ChangeTrackingList<string>();
             desiredSizes ??= new ChangeTrackingList<string>();
 
-            return new BulkActionsCapacityRecommendationParametersContent((desiredLocations ?? new ChangeTrackingList<string>()).ToList(), (desiredSizes ?? new ChangeTrackingList<string>()).ToList(), availabilityZones, default);
+            return new BulkActionsCapacityRecommendationParametersContent((desiredLocations ?? new ChangeTrackingList<string>()).ToList(), (desiredSizes ?? new ChangeTrackingList<string>()).ToList(), isAvailabilityZoneEnabled, default);
         }
 
         /// <param name="ids"> The resource ids used for the request. </param>
@@ -178,12 +178,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <param name="desiredLocations"> The list of desired Azure regions from the request. </param>
-        /// <param name="recommendationRequestedAtUtc"> The UTC timestamp of when the recommendation was requested. </param>
+        /// <param name="recommendationRequestedOn"> The UTC timestamp of when the recommendation was requested. </param>
         /// <param name="desiredSizes"> The list of desired VM sizes from the request. </param>
-        /// <param name="availabilityZones"> Whether the response is split by availability zone. </param>
+        /// <param name="isSplitByAvailabilityZone"> Whether the response is split by availability zone. </param>
         /// <param name="placementScores"> The array of placement scores per SKU, region and zone. </param>
         /// <returns> A new <see cref="Models.CapacityRecommendationDetails"/> instance for mocking. </returns>
-        public static CapacityRecommendationDetails CapacityRecommendationDetails(IEnumerable<string> desiredLocations = default, DateTimeOffset? recommendationRequestedAtUtc = default, IEnumerable<CapacityRecommendationSize> desiredSizes = default, bool? availabilityZones = default, IEnumerable<CapacityRecommendationPlacementScore> placementScores = default)
+        public static CapacityRecommendationDetails CapacityRecommendationDetails(IEnumerable<string> desiredLocations = default, DateTimeOffset? recommendationRequestedOn = default, IEnumerable<CapacityRecommendationSize> desiredSizes = default, bool? isSplitByAvailabilityZone = default, IEnumerable<CapacityRecommendationPlacementScore> placementScores = default)
         {
             desiredLocations ??= new ChangeTrackingList<string>();
             desiredSizes ??= new ChangeTrackingList<CapacityRecommendationSize>();
@@ -191,9 +191,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
             return new CapacityRecommendationDetails(
                 (desiredLocations ?? new ChangeTrackingList<string>()).ToList(),
-                recommendationRequestedAtUtc,
+                recommendationRequestedOn,
                 (desiredSizes ?? new ChangeTrackingList<CapacityRecommendationSize>()).ToList(),
-                availabilityZones,
+                isSplitByAvailabilityZone,
                 (placementScores ?? new ChangeTrackingList<CapacityRecommendationPlacementScore>()).ToList(),
                 default);
         }
