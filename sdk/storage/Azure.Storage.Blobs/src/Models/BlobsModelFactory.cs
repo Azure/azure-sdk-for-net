@@ -2669,5 +2669,28 @@ namespace Azure.Storage.Blobs.Models
             };
         }
         #endregion
+
+        #region BlobLegalHoldResult
+        /// <summary>
+        /// Creates a new <see cref="Models.BlobLegalHoldResult"/> instance for mocking.
+        /// </summary>
+        public static BlobLegalHoldResult BlobLegalHoldResult(bool hasLegalHold)
+            => new BlobLegalHoldResult()
+            {
+                HasLegalHold = hasLegalHold
+            };
+        #endregion
+
+        #region PageRangeItem
+        /// <summary>
+        /// Creates a new <see cref="Models.PageRangeItem"/> instance for mocking.
+        /// </summary>
+        public static PageRangeItem PageRangeItem(HttpRange range, bool isClear)
+            => new PageRangeItem()
+            {
+                Range = range,
+                IsClear = isClear
+            };
+        #endregion
     }
 }
