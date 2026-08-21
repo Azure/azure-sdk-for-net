@@ -10,8 +10,10 @@ using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
+using Microsoft.TypeSpec.Generator.Statements;
 using Moq;
 using NUnit.Framework;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Tests.Visitors
 {
@@ -39,6 +41,61 @@ namespace Azure.Generator.Tests.Visitors
             Assert.IsNotNull(wrappedResponse);
             Assert.AreEqual(typeof(AzurePipelineResponse), wrappedResponse!.Type?.FrameworkType);
             Assert.AreSame(message, wrappedResponse.Parameters[0]);
+        }
+
+        [Test]
+        public void PreservesPipelineProcessingBeforeCreatingStreamingResult()
+        {
+            MockHelpers.LoadMockGenerator();
+            var message = new VariableExpression(typeof(HttpMessage), "message");
+            var processMessage = CreateInvocation(
+                "ProcessMessageAsync",
+                new CSharpType(typeof(Task<>), typeof(Response)),
+                message);
+            processMessage.Update(callAsAsync: true);
+            var response = new ScopedApi<Response>(processMessage);
+            var createResult = CreateInvocation("CreateSse", typeof(BinaryData), response);
+            var method = CreateMethod(CreateStreamingResponseType());
+            var visitor = new TestStreamingResponseVisitor();
+            var statements = visitor.Visit(new MethodBodyStatements([Return(createResult)]), method);
+
+            visitor.Visit(createResult, method);
+
+            Assert.AreEqual(2, statements.Statements.Count);
+            Assert.AreSame(response, ((ExpressionStatement)statements.Statements[0]).Expression);
+            var wrappedResponse = (createResult.Arguments[0] as ScopedApi)?.Original as NewInstanceExpression;
+            Assert.IsNotNull(wrappedResponse);
+            Assert.AreSame(message, wrappedResponse!.Parameters[0]);
+        }
+
+        [Test]
+        public void PreservesPipelineProcessingInsideTry()
+        {
+            MockHelpers.LoadMockGenerator();
+            var message = new VariableExpression(typeof(HttpMessage), "message");
+            var processMessage = CreateInvocation(
+                "ProcessMessageAsync",
+                new CSharpType(typeof(Task<>), typeof(Response)),
+                message);
+            processMessage.Update(callAsAsync: true);
+            var response = new ScopedApi<Response>(processMessage);
+            var createResult = CreateInvocation("CreateSse", typeof(BinaryData), response);
+            var method = CreateMethod(CreateStreamingResponseType());
+            var tryExpression = new TryExpression(new ExpressionStatement(message), Return(createResult));
+            var visitor = new TestStreamingResponseVisitor();
+
+            tryExpression = visitor.Visit(tryExpression, method);
+            visitor.Visit(createResult, method);
+
+            var body = (MethodBodyStatements)tryExpression.Body;
+            var statements = body.Statements.Count == 1 && body.Statements[0] is MethodBodyStatements nested
+                ? nested
+                : body;
+            Assert.AreEqual(3, statements.Statements.Count);
+            Assert.AreSame(response, ((ExpressionStatement)statements.Statements[1]).Expression);
+            var wrappedResponse = (createResult.Arguments[0] as ScopedApi)?.Original as NewInstanceExpression;
+            Assert.IsNotNull(wrappedResponse);
+            Assert.AreSame(message, wrappedResponse!.Parameters[0]);
         }
 
         [Test]
@@ -114,6 +171,12 @@ namespace Azure.Generator.Tests.Visitors
         {
             public void Visit(InvokeMethodExpression expression, MethodProvider method)
                 => VisitInvokeMethodExpression(expression, method);
+
+            public MethodBodyStatements Visit(MethodBodyStatements statements, MethodProvider method)
+                => (MethodBodyStatements)VisitStatements(statements, method);
+
+            public TryExpression Visit(TryExpression expression, MethodProvider method)
+                => VisitTryExpression(expression, method);
         }
 
         private class TestMethodProvider : MethodProvider

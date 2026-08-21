@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.ClientModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,12 +11,51 @@ using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
+using Microsoft.TypeSpec.Generator.Statements;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Visitors
 {
     internal class StreamingResponseVisitor : ScmLibraryVisitor
     {
+        private readonly HashSet<ValueExpression> _processedStreamingResponses = new(ReferenceEqualityComparer.Instance);
+
+        protected override MethodBodyStatement VisitStatements(MethodBodyStatements statements, MethodProvider method)
+        {
+            if (!IsStreamingResponseType(method.Signature.ReturnType))
+            {
+                return statements;
+            }
+
+            return AddPipelineProcessing(statements);
+        }
+
+        protected override TryExpression VisitTryExpression(TryExpression expression, MethodProvider method)
+        {
+            if (IsStreamingResponseType(method.Signature.ReturnType)
+                && expression.Body is MethodBodyStatements statements)
+            {
+                expression.Update(AddPipelineProcessing(statements));
+            }
+
+            return base.VisitTryExpression(expression, method);
+        }
+
+        private MethodBodyStatements AddPipelineProcessing(MethodBodyStatements statements)
+        {
+            var updatedStatements = new List<MethodBodyStatement>(statements.Statements.Count + 1);
+            foreach (MethodBodyStatement statement in statements.Statements)
+            {
+                if (TryGetStreamingResponse(statement, out ValueExpression response)
+                    && _processedStreamingResponses.Add(response))
+                {
+                    updatedStatements.Add(new ExpressionStatement(response));
+                }
+                updatedStatements.Add(statement);
+            }
+            return new MethodBodyStatements(updatedStatements);
+        }
+
         protected override ValueExpression? VisitInvokeMethodExpression(InvokeMethodExpression expression, MethodProvider method)
         {
             if (expression.Arguments.Count > 0
@@ -31,6 +71,27 @@ namespace Azure.Generator.Visitors
             }
 
             return base.VisitInvokeMethodExpression(expression, method);
+        }
+
+        private static bool TryGetStreamingResponse(MethodBodyStatement statement, out ValueExpression response)
+        {
+            if (statement is ExpressionStatement
+                {
+                    Expression: KeywordExpression
+                    {
+                        Keyword: "return",
+                        Expression: InvokeMethodExpression invocation
+                    }
+                }
+                && invocation.Arguments.Count > 0
+                && IsAzureResponse(invocation.Arguments[0]))
+            {
+                response = invocation.Arguments[0];
+                return true;
+            }
+
+            response = null!;
+            return false;
         }
 
 #pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
