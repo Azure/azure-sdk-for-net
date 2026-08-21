@@ -78,10 +78,10 @@ namespace Azure.AI.AnomalyDetector
             {
                 throw new FormatException($"The model {nameof(TimeSeriesPoint)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Timestamp))
+            if (Optional.IsDefined(On))
             {
                 writer.WritePropertyName("timestamp"u8);
-                writer.WriteStringValue(Timestamp.Value, "O");
+                writer.WriteStringValue(On.Value, "O");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteNumberValue(Value);
@@ -127,7 +127,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 return null;
             }
-            DateTimeOffset? timestamp = default;
+            DateTimeOffset? @on = default;
             float value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -138,7 +138,7 @@ namespace Azure.AI.AnomalyDetector
                     {
                         continue;
                     }
-                    timestamp = prop.Value.GetDateTimeOffset("O");
+                    @on = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("value"u8))
@@ -151,7 +151,7 @@ namespace Azure.AI.AnomalyDetector
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TimeSeriesPoint(timestamp, value, additionalBinaryDataProperties);
+            return new TimeSeriesPoint(@on, value, additionalBinaryDataProperties);
         }
     }
 }
