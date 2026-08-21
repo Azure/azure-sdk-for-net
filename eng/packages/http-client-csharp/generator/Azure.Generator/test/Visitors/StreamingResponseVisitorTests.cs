@@ -36,6 +36,31 @@ namespace Azure.Generator.Tests.Visitors
         }
 
         [Test]
+        public void TransfersHttpMessageContentForStreamingReturnType()
+        {
+            MockHelpers.LoadMockGenerator();
+            var message = new VariableExpression(typeof(HttpMessage), "message");
+            var processMessage = CreateInvocation(
+                "ProcessMessageAsync",
+                new CSharpType(typeof(Task<>), typeof(Response)),
+                message);
+            processMessage.Update(callAsAsync: true);
+            var response = new ScopedApi<Response>(processMessage);
+            var expression = CreateInvocation(
+                "CreateSse",
+                typeof(BinaryData),
+                response);
+
+            new TestStreamingResponseVisitor().Visit(expression, CreateMethod(CreateStreamingResponseType()));
+
+            var wrappedResponse = (expression.Arguments[0] as ScopedApi)?.Original as NewInstanceExpression;
+            Assert.IsNotNull(wrappedResponse);
+            Assert.AreEqual(typeof(AzurePipelineResponse), wrappedResponse!.Type?.FrameworkType);
+            Assert.AreSame(response, wrappedResponse.Parameters[0]);
+            Assert.AreSame(message, wrappedResponse.Parameters[1]);
+        }
+
+        [Test]
         public void DoesNotWrapAzureResponseForNonStreamingReturnType()
         {
             MockHelpers.LoadMockGenerator();

@@ -25,6 +25,31 @@ namespace Azure.Generator.Tests.Primitives
         }
 
         [Test]
+        public void DetachedResponseSurvivesHttpMessageDisposal()
+        {
+            var response = new Mock<Response> { CallBase = true };
+            response.SetupGet(r => r.Status).Returns(200);
+            response.SetupGet(r => r.ReasonPhrase).Returns("OK");
+            var networkStream = new TrackingStream([1, 2, 3]);
+            response.SetupProperty(r => r.ContentStream, networkStream);
+            using var message = new HttpMessage(new Mock<Request>().Object, new Mock<ResponseClassifier>().Object)
+            {
+                Response = response.Object
+            };
+            var pipelineResponse = new AzurePipelineResponse(response.Object, message);
+
+            message.Dispose();
+
+            Assert.AreEqual(200, pipelineResponse.Status);
+            Assert.AreEqual("OK", pipelineResponse.ReasonPhrase);
+            Assert.AreSame(networkStream, pipelineResponse.ContentStream);
+            Assert.IsFalse(networkStream.IsDisposed);
+
+            pipelineResponse.Dispose();
+            Assert.IsTrue(networkStream.IsDisposed);
+        }
+
+        [Test]
         public void BufferContentDisposesNetworkStream()
         {
             var response = new Mock<Response> { CallBase = true };
