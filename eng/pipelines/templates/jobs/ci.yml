@@ -42,6 +42,9 @@ parameters:
   - name: ExcludePaths
     type: object
     default: []
+  - name: EnableTestCheckoutNarrowing
+    type: boolean
+    default: false
 
 jobs:
   - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
@@ -247,6 +250,7 @@ jobs:
                 ServiceDirectory: ${{ parameters.ServiceDirectory }}
                 PublishingArtifactName: TestPackagesArtifact
                 ExcludePaths: ${{ parameters.ExcludePaths }}
+                EnableTestCheckoutNarrowing: ${{ parameters.EnableTestCheckoutNarrowing }}
                 EnableTestRuntimeWeighting: true
 
         AdditionalParameters:
@@ -254,6 +258,8 @@ jobs:
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
           TestSetupSteps: ${{ parameters.TestSetupSteps }}
           TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+          ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+            EnableTestCheckoutNarrowing: ${{ parameters.EnableTestCheckoutNarrowing }}
 
   - ${{ if ne(parameters.TestDependsOnDependency, 'not-specified') }}:
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
