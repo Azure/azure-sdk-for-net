@@ -281,6 +281,12 @@ public sealed class RepositoryProjectGraphTask : Task
     {
         string projectPath = GetProjectPath(project);
         string targetFramework = project.GetPropertyValue("TargetFramework");
+        Dictionary<string, string> packageVersions = project.GetItems("PackageVersion")
+            .GroupBy(item => item.EvaluatedInclude, StringComparer.OrdinalIgnoreCase)
+            .ToDictionary(
+                group => group.Key,
+                group => group.Last().GetMetadataValue("Version"),
+                StringComparer.OrdinalIgnoreCase);
         string packageId = project.GetPropertyValue("PackageId");
         if (string.IsNullOrEmpty(packageId))
         {
@@ -334,7 +340,8 @@ public sealed class RepositoryProjectGraphTask : Task
                 reference.EvaluatedInclude,
                 NormalizeAssetMetadata(reference.GetMetadataValue("PrivateAssets")),
                 NormalizeAssetMetadata(reference.GetMetadataValue("IncludeAssets")),
-                NormalizeAssetMetadata(reference.GetMetadataValue("ExcludeAssets"))));
+                NormalizeAssetMetadata(reference.GetMetadataValue("ExcludeAssets")),
+                GetPackageVersion(reference, packageVersions)));
         }
 
         if (IncludeInputs)
@@ -387,6 +394,22 @@ public sealed class RepositoryProjectGraphTask : Task
     }
 
     private static string NormalizeAssetMetadata(string value) => value.Replace(';', ',');
+
+    private static string GetPackageVersion(
+        ProjectItemInstance reference,
+        IReadOnlyDictionary<string, string> packageVersions)
+    {
+        string version = reference.GetMetadataValue("VersionOverride");
+        if (string.IsNullOrEmpty(version))
+        {
+            version = reference.GetMetadataValue("Version");
+        }
+        if (string.IsNullOrEmpty(version))
+        {
+            packageVersions.TryGetValue(reference.EvaluatedInclude, out version);
+        }
+        return version ?? string.Empty;
+    }
 
     private static string GetProjectPath(ProjectInstance project) => Path.GetFullPath(project.FullPath);
 

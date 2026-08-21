@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <Compile Include="RepositoryProjectGraphTask.cs" />
+    <Compile Include="ResolveExternalPackageClosureTask.cs" />
     <Compile Include="RunIsolatedRepositoryProjectGraphTask.cs" />
     <Reference Include="Microsoft.Build"
                HintPath="$(MSBuildToolsPath)/Microsoft.Build.dll"
@@ -22,6 +23,24 @@
                Private="false" />
     <Reference Include="Microsoft.Build.Utilities.Core"
                HintPath="$(MSBuildToolsPath)/Microsoft.Build.Utilities.Core.dll"
+               Private="false" />
+    <Reference Include="NuGet.Common"
+               HintPath="$(MSBuildToolsPath)/NuGet.Common.dll"
+               Private="false" />
+    <Reference Include="NuGet.Configuration"
+               HintPath="$(MSBuildToolsPath)/NuGet.Configuration.dll"
+               Private="false" />
+    <Reference Include="NuGet.Frameworks"
+               HintPath="$(MSBuildToolsPath)/NuGet.Frameworks.dll"
+               Private="false" />
+    <Reference Include="NuGet.Packaging"
+               HintPath="$(MSBuildToolsPath)/NuGet.Packaging.dll"
+               Private="false" />
+    <Reference Include="NuGet.Protocol"
+               HintPath="$(MSBuildToolsPath)/NuGet.Protocol.dll"
+               Private="false" />
+    <Reference Include="NuGet.Versioning"
+               HintPath="$(MSBuildToolsPath)/NuGet.Versioning.dll"
                Private="false" />
   </ItemGroup>
 </Project>

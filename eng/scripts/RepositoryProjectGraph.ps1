@@ -9,6 +9,7 @@ param(
 
   [string] $RepoRoot,
   [string] $RecordsPath,
+  [string] $PackageRecordsPath,
   [string] $OutputPath,
   [string] $Dependencies,
   [string] $RootProjects,
@@ -52,8 +53,8 @@ function Read-Graph([string] $Path) {
     throw "Repository project graph does not exist: $Path"
   }
   $graph = Get-Content -Raw $Path | ConvertFrom-Json -Depth 100
-  if ($graph.schemaVersion -ne 1) {
-    throw "Unsupported repository project graph schema version '$($graph.schemaVersion)'. Expected 1."
+  if ($graph.schemaVersion -ne 2) {
+    throw "Unsupported repository project graph schema version '$($graph.schemaVersion)'. Expected 2."
   }
   return $graph
 }
@@ -135,11 +136,25 @@ function Build-Graph {
   $roots = [System.Collections.Generic.List[string]]::new()
   $rootSet = New-CaseInsensitiveSet
   $nodeMetadataConflicts = [System.Collections.Generic.List[object]]::new()
+  $unresolvedPackageClosure = [System.Collections.Generic.List[object]]::new()
+  $packageClosureSummary = $null
+  $packageClosureSummaryCount = 0
+  $transitivePackageRecordCount = 0
+  $packageClosureAttempted = !!$PackageRecordsPath
+  $recordPaths = [System.Collections.Generic.List[string]]::new()
+  $recordPaths.Add($RecordsPath)
+  if ($PackageRecordsPath) {
+    if (!(Test-Path $PackageRecordsPath)) {
+      throw "Repository package closure records do not exist: $PackageRecordsPath"
+    }
+    $recordPaths.Add($PackageRecordsPath)
+  }
 
-  foreach ($line in [System.IO.File]::ReadLines($RecordsPath)) {
-    if ([string]::IsNullOrWhiteSpace($line)) { continue }
-    $parts = $line.Split('|')
-    switch ($parts[0]) {
+  foreach ($recordPath in $recordPaths) {
+    foreach ($line in [System.IO.File]::ReadLines($recordPath)) {
+      if ([string]::IsNullOrWhiteSpace($line)) { continue }
+      $parts = $line.Split('|')
+      switch ($parts[0]) {
       'Node' {
         if ($parts.Length -lt 10) { throw "Invalid node record: $line" }
         $path = Get-RelativePath $root $parts[1]
@@ -191,6 +206,10 @@ function Build-Graph {
             privateAssets = ''
             includeAssets = ''
             excludeAssets = ''
+            version = ''
+            viaPackage = ''
+            viaVersion = ''
+            dependencyPath = ''
             targetFrameworks = (New-CaseInsensitiveSet)
           }
         }
@@ -200,7 +219,8 @@ function Build-Graph {
         if ($parts.Length -lt 7) { throw "Invalid package-reference record: $line" }
         if (!$parts[3]) { continue }
         $from = Get-RelativePath $root $parts[1]
-        $key = "PackageReference|$from|$($parts[3])|$($parts[4])|$($parts[5])|$($parts[6])"
+        $version = if ($parts.Length -ge 8) { $parts[7] } else { '' }
+        $key = "PackageReference|$from|$($parts[3])|$($parts[4])|$($parts[5])|$($parts[6])|$version"
         if (!$edges.ContainsKey($key)) {
           $edges[$key] = [pscustomobject][ordered]@{
             kind = 'PackageReference'
@@ -211,10 +231,66 @@ function Build-Graph {
             privateAssets = $parts[4]
             includeAssets = $parts[5]
             excludeAssets = $parts[6]
+            version = $version
+            viaPackage = ''
+            viaVersion = ''
+            dependencyPath = ''
             targetFrameworks = (New-CaseInsensitiveSet)
           }
         }
         if ($parts[2]) { $null = $edges[$key].targetFrameworks.Add($parts[2]) }
+      }
+      'TransitivePackageReference' {
+        if ($parts.Length -lt 7) { throw "Invalid transitive package-reference record: $line" }
+        if (!$parts[3]) { continue }
+        $transitivePackageRecordCount++
+        $from = Get-RelativePath $root $parts[1]
+        $key = "TransitivePackageReference|$from|$($parts[3])|$($parts[4])|$($parts[5])|$($parts[6])"
+        if (!$edges.ContainsKey($key)) {
+          $edges[$key] = [pscustomobject][ordered]@{
+            kind = 'TransitivePackageReference'
+            fromProject = $from
+            to = $parts[3]
+            referenceOutputAssembly = ''
+            outputItemType = ''
+            privateAssets = ''
+            includeAssets = ''
+            excludeAssets = ''
+            version = ''
+            viaPackage = $parts[4]
+            viaVersion = $parts[5]
+            dependencyPath = $parts[6]
+            targetFrameworks = (New-CaseInsensitiveSet)
+          }
+        }
+        if ($parts[2]) { $null = $edges[$key].targetFrameworks.Add($parts[2]) }
+      }
+      'UnresolvedPackageClosure' {
+        if ($parts.Length -lt 6) { throw "Invalid unresolved package-closure record: $line" }
+        $unresolvedPackageClosure.Add([ordered]@{
+          projectPath = Get-RelativePath $root $parts[1]
+          targetFramework = $parts[2]
+          packageId = $parts[3]
+          version = $parts[4]
+          reason = $parts[5]
+        })
+      }
+      'PackageClosureSummary' {
+        if ($parts.Length -lt 12) { throw "Invalid package-closure summary record: $line" }
+        $packageClosureSummaryCount++
+        $packageClosureSummary = [ordered]@{
+          rootCount = [int]$parts[1]
+          resolvedRootCount = [int]$parts[2]
+          derivedEdgeCount = [int]$parts[3]
+          unresolvedRootCount = [int]$parts[4]
+          metadataRequestCount = [int]$parts[5]
+          packageCacheHitCount = [int]$parts[6]
+          remoteMetadataRequestCount = [int]$parts[7]
+          elapsedSeconds = [double]::Parse($parts[8], [System.Globalization.CultureInfo]::InvariantCulture)
+          resolutionMode = $parts[9]
+          restoreEquivalent = [bool]::Parse($parts[10])
+          transitiveDependencyAssetFiltersApplied = [bool]::Parse($parts[11])
+        }
       }
       'Input' {
         if ($parts.Length -lt 5) { throw "Invalid input record: $line" }
@@ -243,6 +319,7 @@ function Build-Graph {
         if ($parts[1]) { $null = $declaredProjects.Add((Get-RelativePath $root $parts[1])) }
       }
       default { throw "Unknown repository project graph record: $line" }
+      }
     }
   }
 
@@ -272,9 +349,21 @@ function Build-Graph {
   $externalPackages = @($edges.Values | Where-Object { $_.kind -eq 'PackageReference' -and !$packageProjects.ContainsKey($_.to) } | Select-Object -ExpandProperty to -Unique | Sort-Object)
   $missingDeclaredProjects = @($declaredProjects | Where-Object { !$nodes.ContainsKey($_) } | Sort-Object)
   $rootsWithoutNodes = @($roots | Where-Object { !$nodes.ContainsKey($_) } | Sort-Object)
+  $packageClosureSummaryConsistent = !$packageClosureAttempted
+  if ($packageClosureAttempted -and $packageClosureSummaryCount -eq 1 -and $null -ne $packageClosureSummary) {
+    $packageClosureSummaryConsistent =
+      $packageClosureSummary.resolvedRootCount + $packageClosureSummary.unresolvedRootCount -eq $packageClosureSummary.rootCount -and
+      $packageClosureSummary.derivedEdgeCount -eq $transitivePackageRecordCount -and
+      (($packageClosureSummary.unresolvedRootCount -eq 0) -eq ($unresolvedPackageClosure.Count -eq 0))
+  }
+  $packageClosureHasUnresolved = $externalPackages.Count -gt 0
+  if ($packageClosureAttempted) {
+    $packageClosureHasUnresolved = !$packageClosureSummaryConsistent -or
+      $packageClosureSummary.unresolvedRootCount -gt 0 -or $unresolvedPackageClosure.Count -gt 0
+  }
 
   $graph = [ordered]@{
-    schemaVersion = 1
+    schemaVersion = 2
     repositoryRoot = $root.Replace('\', '/')
     nodes = @($nodes.Values | Sort-Object projectPath | ForEach-Object {
       $_.targetFrameworks = @($_.targetFrameworks | Sort-Object)
@@ -291,7 +380,8 @@ function Build-Graph {
     roots = @($roots)
     diagnostics = [ordered]@{
       isComplete = $duplicatePackageIds.Count -eq 0 -and $missingProjectReferences.Count -eq 0 -and
-        $missingDeclaredProjects.Count -eq 0 -and $rootsWithoutNodes.Count -eq 0 -and $nodeMetadataConflicts.Count -eq 0
+        $missingDeclaredProjects.Count -eq 0 -and $rootsWithoutNodes.Count -eq 0 -and $nodeMetadataConflicts.Count -eq 0 -and
+        $packageClosureSummaryConsistent -and (!$packageClosureAttempted -or !$packageClosureHasUnresolved)
       projectCount = $nodes.Count
       edgeCount = $edges.Count
       inputCount = $inputs.Count
@@ -302,7 +392,12 @@ function Build-Graph {
       nodeMetadataConflicts = @($nodeMetadataConflicts)
       unmappedRepositoryPackageReferences = $unmappedRepositoryPackages
       externalPackageReferences = $externalPackages
-      hasUnresolvedExternalPackageClosure = $externalPackages.Count -gt 0
+      packageClosureAttempted = $packageClosureAttempted
+      packageClosureSummaryCount = $packageClosureSummaryCount
+      packageClosureSummaryConsistent = $packageClosureSummaryConsistent
+      packageClosure = $packageClosureSummary
+      unresolvedExternalPackageClosure = @($unresolvedPackageClosure)
+      hasUnresolvedExternalPackageClosure = $packageClosureHasUnresolved
     }
   }
 
