@@ -88,11 +88,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 throw new FormatException($"The model {nameof(QuestionAnsweringAuthoringProjectDeploymentJobState)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("createdDateTime"u8);
-            writer.WriteStringValue(CreatedDateTime, "O");
-            if (Optional.IsDefined(ExpirationDateTime))
+            writer.WriteStringValue(CreatedOn, "O");
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDateTime"u8);
-                writer.WriteStringValue(ExpirationDateTime.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (options.Format != "W")
             {
@@ -100,7 +100,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 writer.WriteStringValue(JobId);
             }
             writer.WritePropertyName("lastUpdatedDateTime"u8);
-            writer.WriteStringValue(LastUpdatedDateTime, "O");
+            writer.WriteStringValue(LastUpdatedOn, "O");
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             if (Optional.IsCollectionDefined(Errors))
@@ -160,10 +160,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 return null;
             }
-            DateTimeOffset createdDateTime = default;
-            DateTimeOffset? expirationDateTime = default;
+            DateTimeOffset createdOn = default;
+            DateTimeOffset? expireOn = default;
             string jobId = default;
-            DateTimeOffset lastUpdatedDateTime = default;
+            DateTimeOffset lastUpdatedOn = default;
             JobStatus status = default;
             IList<ResponseError> errors = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -171,7 +171,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 if (prop.NameEquals("createdDateTime"u8))
                 {
-                    createdDateTime = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("expirationDateTime"u8))
@@ -180,7 +180,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     {
                         continue;
                     }
-                    expirationDateTime = prop.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("jobId"u8))
@@ -190,7 +190,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 }
                 if (prop.NameEquals("lastUpdatedDateTime"u8))
                 {
-                    lastUpdatedDateTime = prop.Value.GetDateTimeOffset("O");
+                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -225,10 +225,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 }
             }
             return new QuestionAnsweringAuthoringProjectDeploymentJobState(
-                createdDateTime,
-                expirationDateTime,
+                createdOn,
+                expireOn,
                 jobId,
-                lastUpdatedDateTime,
+                lastUpdatedOn,
                 status,
                 errors ?? new ChangeTrackingList<ResponseError>(),
                 additionalBinaryDataProperties);
