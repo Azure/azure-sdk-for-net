@@ -192,8 +192,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             _containerName = await ContainerDiscovery.DiscoverContainerNameAsync(
                 _shareClient, async, cancellationToken).ConfigureAwait(false);
 
-            // We need to strip the leading $ off the container name.
-            _containerName = _containerName.Substring(1, _containerName.Length - 1);
+            // The leading $ is part of the real container name (e.g. $fileschangefeed-<guid>),
+            // so it must be preserved when resolving the container client.
             _containerClient = _blobServiceClient.GetBlobContainerClient(_containerName);
             return _containerClient;
         }
