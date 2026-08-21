@@ -1385,10 +1385,10 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The properties of the connection. </param>
-        /// <returns> A new <see cref="Chaos.ConnectionData"/> instance for mocking. </returns>
-        public static ConnectionData ConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConnectionProperties properties = default)
+        /// <returns> A new <see cref="Chaos.ChaosConnectionData"/> instance for mocking. </returns>
+        public static ChaosConnectionData ChaosConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ChaosConnectionProperties properties = default)
         {
-            return new ConnectionData(
+            return new ChaosConnectionData(
                 id,
                 name,
                 resourceType,
@@ -1411,10 +1411,10 @@ namespace Azure.ResourceManager.Chaos.Models
         /// </param>
         /// <param name="status"> The current status of the connection. </param>
         /// <param name="provisioningState"> The most recent provisioning state for the connection resource. </param>
-        /// <returns> A new <see cref="Models.ConnectionProperties"/> instance for mocking. </returns>
-        public static ConnectionProperties ConnectionProperties(ConnectionKind kind = default, ResourceIdentifier targetResourceId = default, Guid? principalId = default, Guid? tenantId = default, string certificateSubjectName = default, string certificateIssuer = default, string dstsPrincipal = default, Uri dataPlaneEndpoint = default, ConnectionStatus? status = default, ChaosProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.ChaosConnectionProperties"/> instance for mocking. </returns>
+        public static ChaosConnectionProperties ChaosConnectionProperties(ChaosConnectionKind kind = default, ResourceIdentifier targetResourceId = default, Guid? principalId = default, Guid? tenantId = default, string certificateSubjectName = default, string certificateIssuer = default, string dstsPrincipal = default, Uri dataPlaneEndpoint = default, ChaosConnectionStatus? status = default, ChaosProvisioningState? provisioningState = default)
         {
-            return new ConnectionProperties(
+            return new ChaosConnectionProperties(
                 kind,
                 targetResourceId,
                 principalId,

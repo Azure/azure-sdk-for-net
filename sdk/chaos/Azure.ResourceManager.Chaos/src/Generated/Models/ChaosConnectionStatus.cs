@@ -12,7 +12,7 @@ using Azure.ResourceManager.Chaos;
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> The status of a connection. </summary>
-    public readonly partial struct ConnectionStatus : IEquatable<ConnectionStatus>
+    public readonly partial struct ChaosConnectionStatus : IEquatable<ChaosConnectionStatus>
     {
         private readonly string _value;
         /// <summary> The connection has been created but is not yet sending heartbeats; the trust relationship is not yet established. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> The connection's credentials have been revoked. </summary>
         private const string RevokedValue = "Revoked";
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChaosConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConnectionStatus(string value)
+        public ChaosConnectionStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> The connection has been created but is not yet sending heartbeats; the trust relationship is not yet established. </summary>
-        public static ConnectionStatus Pending { get; } = new ConnectionStatus(PendingValue);
+        public static ChaosConnectionStatus Pending { get; } = new ChaosConnectionStatus(PendingValue);
 
         /// <summary> The connection is established and actively heartbeating. </summary>
-        public static ConnectionStatus Connected { get; } = new ConnectionStatus(ConnectedValue);
+        public static ChaosConnectionStatus Connected { get; } = new ChaosConnectionStatus(ConnectedValue);
 
         /// <summary> The connection's heartbeat has gone stale; heartbeats are no longer being received. </summary>
-        public static ConnectionStatus Disconnected { get; } = new ConnectionStatus(DisconnectedValue);
+        public static ChaosConnectionStatus Disconnected { get; } = new ChaosConnectionStatus(DisconnectedValue);
 
         /// <summary> The connection's credentials have been revoked. </summary>
-        public static ConnectionStatus Revoked { get; } = new ConnectionStatus(RevokedValue);
+        public static ChaosConnectionStatus Revoked { get; } = new ChaosConnectionStatus(RevokedValue);
 
-        /// <summary> Determines if two <see cref="ConnectionStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ChaosConnectionStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ConnectionStatus left, ConnectionStatus right) => left.Equals(right);
+        public static bool operator ==(ChaosConnectionStatus left, ChaosConnectionStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ConnectionStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ChaosConnectionStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ConnectionStatus left, ConnectionStatus right) => !left.Equals(right);
+        public static bool operator !=(ChaosConnectionStatus left, ChaosConnectionStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ConnectionStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ChaosConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectionStatus(string value) => new ConnectionStatus(value);
+        public static implicit operator ChaosConnectionStatus(string value) => new ChaosConnectionStatus(value);
 
-        /// <summary> Converts a string to a <see cref="ConnectionStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ChaosConnectionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectionStatus?(string value) => value == null ? null : new ConnectionStatus(value);
+        public static implicit operator ChaosConnectionStatus?(string value) => value == null ? null : new ChaosConnectionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ConnectionStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is ChaosConnectionStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ConnectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ChaosConnectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

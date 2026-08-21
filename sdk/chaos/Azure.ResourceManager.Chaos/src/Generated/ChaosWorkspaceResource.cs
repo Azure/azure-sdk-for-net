@@ -965,11 +965,11 @@ namespace Azure.ResourceManager.Chaos
             return GetChaosScenarios().Get(scenarioName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Connections in the <see cref="ChaosWorkspaceResource"/>. </summary>
-        /// <returns> An object representing collection of Connections and their operations over a ConnectionResource. </returns>
-        public virtual ConnectionCollection GetConnections()
+        /// <summary> Gets a collection of ChaosConnections in the <see cref="ChaosWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of ChaosConnections and their operations over a ChaosConnectionResource. </returns>
+        public virtual ChaosConnectionCollection GetChaosConnections()
         {
-            return GetCachedClient(client => new ConnectionCollection(client, Id));
+            return GetCachedClient(client => new ChaosConnectionCollection(client, Id));
         }
 
         /// <summary> Get a connection. </summary>
@@ -978,11 +978,11 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ConnectionResource>> GetConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ChaosConnectionResource>> GetChaosConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            return await GetConnections().GetAsync(connectionName, cancellationToken).ConfigureAwait(false);
+            return await GetChaosConnections().GetAsync(connectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a connection. </summary>
@@ -991,11 +991,11 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ConnectionResource> GetConnection(string connectionName, CancellationToken cancellationToken = default)
+        public virtual Response<ChaosConnectionResource> GetChaosConnection(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            return GetConnections().Get(connectionName, cancellationToken);
+            return GetChaosConnections().Get(connectionName, cancellationToken);
         }
     }
 }

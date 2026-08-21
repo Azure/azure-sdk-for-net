@@ -237,13 +237,13 @@ namespace Azure.ResourceManager.Chaos.Mocking
             return new ChaosScenarioRunResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ChaosConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConnectionResource"/> object. </returns>
-        public virtual ConnectionResource GetConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ChaosConnectionResource"/> object. </returns>
+        public virtual ChaosConnectionResource GetChaosConnectionResource(ResourceIdentifier id)
         {
-            ConnectionResource.ValidateResourceId(id);
-            return new ConnectionResource(Client, id);
+            ChaosConnectionResource.ValidateResourceId(id);
+            return new ChaosConnectionResource(Client, id);
         }
     }
 }

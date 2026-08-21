@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ConnectionResource"/> and their operations.
-    /// Each <see cref="ConnectionResource"/> in the collection will belong to the same instance of <see cref="ChaosWorkspaceResource"/>.
-    /// To get a <see cref="ConnectionCollection"/> instance call the GetConnections method from an instance of <see cref="ChaosWorkspaceResource"/>.
+    /// A class representing a collection of <see cref="ChaosConnectionResource"/> and their operations.
+    /// Each <see cref="ChaosConnectionResource"/> in the collection will belong to the same instance of <see cref="ChaosWorkspaceResource"/>.
+    /// To get a <see cref="ChaosConnectionCollection"/> instance call the GetChaosConnections method from an instance of <see cref="ChaosWorkspaceResource"/>.
     /// </summary>
-    public partial class ConnectionCollection : ArmCollection, IEnumerable<ConnectionResource>, IAsyncEnumerable<ConnectionResource>
+    public partial class ChaosConnectionCollection : ArmCollection, IEnumerable<ChaosConnectionResource>, IAsyncEnumerable<ChaosConnectionResource>
     {
         private readonly ClientDiagnostics _connectionsClientDiagnostics;
         private readonly Connections _connectionsRestClient;
 
-        /// <summary> Initializes a new instance of ConnectionCollection for mocking. </summary>
-        protected ConnectionCollection()
+        /// <summary> Initializes a new instance of ChaosConnectionCollection for mocking. </summary>
+        protected ChaosConnectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChaosConnectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ChaosConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ConnectionResource.ResourceType, out string connectionApiVersion);
-            _connectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ConnectionResource.ResourceType.Namespace, Diagnostics);
-            _connectionsRestClient = new Connections(_connectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, connectionApiVersion ?? "2026-08-01-preview");
+            TryGetApiVersion(ChaosConnectionResource.ResourceType, out string chaosConnectionApiVersion);
+            _connectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosConnectionResource.ResourceType.Namespace, Diagnostics);
+            _connectionsRestClient = new Connections(_connectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, chaosConnectionApiVersion ?? "2026-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectionName, ConnectionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ChaosConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectionName, ChaosConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _connectionsClientDiagnostics.CreateScope("ConnectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _connectionsClientDiagnostics.CreateScope("ChaosConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, ConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _connectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, ChaosConnectionData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ConnectionData> response = Response.FromValue(ConnectionData.FromResponse(result), result);
+                Response<ChaosConnectionData> response = Response.FromValue(ChaosConnectionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ChaosArmOperation<ConnectionResource> operation = new ChaosArmOperation<ConnectionResource>(Response.FromValue(new ConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ChaosArmOperation<ChaosConnectionResource> operation = new ChaosArmOperation<ChaosConnectionResource>(Response.FromValue(new ChaosConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string connectionName, ConnectionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ChaosConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string connectionName, ChaosConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _connectionsClientDiagnostics.CreateScope("ConnectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _connectionsClientDiagnostics.CreateScope("ChaosConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, ConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _connectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, ChaosConnectionData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ConnectionData> response = Response.FromValue(ConnectionData.FromResponse(result), result);
+                Response<ChaosConnectionData> response = Response.FromValue(ChaosConnectionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ChaosArmOperation<ConnectionResource> operation = new ChaosArmOperation<ConnectionResource>(Response.FromValue(new ConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ChaosArmOperation<ChaosConnectionResource> operation = new ChaosArmOperation<ChaosConnectionResource>(Response.FromValue(new ChaosConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -185,11 +185,11 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ConnectionResource>> GetAsync(string connectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ChaosConnectionResource>> GetAsync(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using DiagnosticScope scope = _connectionsClientDiagnostics.CreateScope("ConnectionCollection.Get");
+            using DiagnosticScope scope = _connectionsClientDiagnostics.CreateScope("ChaosConnectionCollection.Get");
             scope.Start();
             try
             {
@@ -199,12 +199,12 @@ namespace Azure.ResourceManager.Chaos
                 };
                 HttpMessage message = _connectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ConnectionData> response = Response.FromValue(ConnectionData.FromResponse(result), result);
+                Response<ChaosConnectionData> response = Response.FromValue(ChaosConnectionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ChaosConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -234,11 +234,11 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ConnectionResource> Get(string connectionName, CancellationToken cancellationToken = default)
+        public virtual Response<ChaosConnectionResource> Get(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using DiagnosticScope scope = _connectionsClientDiagnostics.CreateScope("ConnectionCollection.Get");
+            using DiagnosticScope scope = _connectionsClientDiagnostics.CreateScope("ChaosConnectionCollection.Get");
             scope.Start();
             try
             {
@@ -248,12 +248,12 @@ namespace Azure.ResourceManager.Chaos
                 };
                 HttpMessage message = _connectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ConnectionData> response = Response.FromValue(ConnectionData.FromResponse(result), result);
+                Response<ChaosConnectionData> response = Response.FromValue(ChaosConnectionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ChaosConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -280,20 +280,20 @@ namespace Azure.ResourceManager.Chaos
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ChaosConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ChaosConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConnectionData, ConnectionResource>(new ConnectionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ChaosConnectionData, ChaosConnectionResource>(new ConnectionsGetAllAsyncCollectionResultOfT(
                 _connectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "ConnectionCollection.GetAll"), data => new ConnectionResource(Client, data));
+                "ChaosConnectionCollection.GetAll"), data => new ChaosConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -314,20 +314,20 @@ namespace Azure.ResourceManager.Chaos
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConnectionResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ChaosConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ChaosConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConnectionData, ConnectionResource>(new ConnectionsGetAllCollectionResultOfT(
+            return new PageableWrapper<ChaosConnectionData, ChaosConnectionResource>(new ConnectionsGetAllCollectionResultOfT(
                 _connectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "ConnectionCollection.GetAll"), data => new ConnectionResource(Client, data));
+                "ChaosConnectionCollection.GetAll"), data => new ChaosConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Chaos
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using DiagnosticScope scope = _connectionsClientDiagnostics.CreateScope("ConnectionCollection.Exists");
+            using DiagnosticScope scope = _connectionsClientDiagnostics.CreateScope("ChaosConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -366,14 +366,14 @@ namespace Azure.ResourceManager.Chaos
                 HttpMessage message = _connectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ConnectionData> response = default;
+                Response<ChaosConnectionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ConnectionData.FromResponse(result), result);
+                        response = Response.FromValue(ChaosConnectionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ConnectionData)null, result);
+                        response = Response.FromValue((ChaosConnectionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Chaos
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using DiagnosticScope scope = _connectionsClientDiagnostics.CreateScope("ConnectionCollection.Exists");
+            using DiagnosticScope scope = _connectionsClientDiagnostics.CreateScope("ChaosConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -423,14 +423,14 @@ namespace Azure.ResourceManager.Chaos
                 HttpMessage message = _connectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ConnectionData> response = default;
+                Response<ChaosConnectionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ConnectionData.FromResponse(result), result);
+                        response = Response.FromValue(ChaosConnectionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ConnectionData)null, result);
+                        response = Response.FromValue((ChaosConnectionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -465,11 +465,11 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<ConnectionResource>> GetIfExistsAsync(string connectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ChaosConnectionResource>> GetIfExistsAsync(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using DiagnosticScope scope = _connectionsClientDiagnostics.CreateScope("ConnectionCollection.GetIfExists");
+            using DiagnosticScope scope = _connectionsClientDiagnostics.CreateScope("ChaosConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -480,23 +480,23 @@ namespace Azure.ResourceManager.Chaos
                 HttpMessage message = _connectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ConnectionData> response = default;
+                Response<ChaosConnectionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ConnectionData.FromResponse(result), result);
+                        response = Response.FromValue(ChaosConnectionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ConnectionData)null, result);
+                        response = Response.FromValue((ChaosConnectionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ConnectionResource>(response.GetRawResponse());
+                    return new NoValueResponse<ChaosConnectionResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ChaosConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -526,11 +526,11 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<ConnectionResource> GetIfExists(string connectionName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ChaosConnectionResource> GetIfExists(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using DiagnosticScope scope = _connectionsClientDiagnostics.CreateScope("ConnectionCollection.GetIfExists");
+            using DiagnosticScope scope = _connectionsClientDiagnostics.CreateScope("ChaosConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -541,23 +541,23 @@ namespace Azure.ResourceManager.Chaos
                 HttpMessage message = _connectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ConnectionData> response = default;
+                Response<ChaosConnectionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ConnectionData.FromResponse(result), result);
+                        response = Response.FromValue(ChaosConnectionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ConnectionData)null, result);
+                        response = Response.FromValue((ChaosConnectionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ConnectionResource>(response.GetRawResponse());
+                    return new NoValueResponse<ChaosConnectionResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ChaosConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
-        IEnumerator<ConnectionResource> IEnumerable<ConnectionResource>.GetEnumerator()
+        IEnumerator<ChaosConnectionResource> IEnumerable<ChaosConnectionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.Chaos
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<ConnectionResource> IAsyncEnumerable<ConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ChaosConnectionResource> IAsyncEnumerable<ChaosConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

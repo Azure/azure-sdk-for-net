@@ -12,7 +12,7 @@ using Azure.ResourceManager.Chaos;
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> The kind of connection, indicating the actor type authorized to reach the Chaos Studio data plane for the workspace and target. </summary>
-    public readonly partial struct ConnectionKind : IEquatable<ConnectionKind>
+    public readonly partial struct ChaosConnectionKind : IEquatable<ChaosConnectionKind>
     {
         private readonly string _value;
         /// <summary> A connection backed by the Chaos AKS cluster extension. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> A connection backed by Cloud Service Fault Injection (CSFI). </summary>
         private const string CsfiValue = "Csfi";
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChaosConnectionKind"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConnectionKind(string value)
+        public ChaosConnectionKind(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> A connection backed by the Chaos AKS cluster extension. </summary>
-        public static ConnectionKind AksExtension { get; } = new ConnectionKind(AksExtensionValue);
+        public static ChaosConnectionKind AksExtension { get; } = new ChaosConnectionKind(AksExtensionValue);
 
         /// <summary> A connection backed by the Chaos agent installed on the target resource. </summary>
-        public static ConnectionKind ChaosAgent { get; } = new ConnectionKind(ChaosAgentValue);
+        public static ChaosConnectionKind ChaosAgent { get; } = new ChaosConnectionKind(ChaosAgentValue);
 
         /// <summary> A connection backed by Cloud Service Fault Injection (CSFI). </summary>
-        public static ConnectionKind Csfi { get; } = new ConnectionKind(CsfiValue);
+        public static ChaosConnectionKind Csfi { get; } = new ChaosConnectionKind(CsfiValue);
 
-        /// <summary> Determines if two <see cref="ConnectionKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ChaosConnectionKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ConnectionKind left, ConnectionKind right) => left.Equals(right);
+        public static bool operator ==(ChaosConnectionKind left, ChaosConnectionKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ConnectionKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ChaosConnectionKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ConnectionKind left, ConnectionKind right) => !left.Equals(right);
+        public static bool operator !=(ChaosConnectionKind left, ChaosConnectionKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ConnectionKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ChaosConnectionKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectionKind(string value) => new ConnectionKind(value);
+        public static implicit operator ChaosConnectionKind(string value) => new ChaosConnectionKind(value);
 
-        /// <summary> Converts a string to a <see cref="ConnectionKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ChaosConnectionKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectionKind?(string value) => value == null ? null : new ConnectionKind(value);
+        public static implicit operator ChaosConnectionKind?(string value) => value == null ? null : new ChaosConnectionKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ConnectionKind other && Equals(other);
+        public override bool Equals(object obj) => obj is ChaosConnectionKind other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ConnectionKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ChaosConnectionKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

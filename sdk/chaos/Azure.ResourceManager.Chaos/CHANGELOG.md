@@ -5,8 +5,8 @@
 ### Features Added
 
 - Updated the default api-version to `2026-08-01-preview`.
-- Added new resource `ConnectionResource` and collection `ConnectionCollection` (with `GetConnection`, `GetConnections`, and `GetConnectionResource` accessors).
-- Added new models `ResourceTargeting`, `ResourceTargetingCriteria`, `WorkspaceDiscovery`, `WorkspaceDiscoveryProperties`, `WorkspaceDiscoveryStatus`, `ConnectionKind`, `ConnectionStatus`, `ConnectionProperties`, `TemplateEvaluationResultItem`, and `ValidationProperties`.
+- Added new resource `ChaosConnectionResource` and collection `ChaosConnectionCollection` (with `GetChaosConnection`, `GetChaosConnections`, and `GetChaosConnectionResource` accessors).
+- Added new models `ResourceTargeting`, `ResourceTargetingCriteria`, `WorkspaceDiscovery`, `WorkspaceDiscoveryProperties`, `WorkspaceDiscoveryStatus`, `ChaosConnectionKind`, `ChaosConnectionStatus`, `ChaosConnectionProperties`, `TemplateEvaluationResultItem`, and `ValidationProperties`.
 
 ### Breaking Changes
 

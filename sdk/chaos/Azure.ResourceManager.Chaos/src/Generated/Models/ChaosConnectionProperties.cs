@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.Chaos.Models
     /// superset across all connection kinds; which fields are required is
     /// validated by the service per kind.
     /// </summary>
-    public partial class ConnectionProperties
+    public partial class ChaosConnectionProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChaosConnectionProperties"/>. </summary>
         /// <param name="kind"> The kind of connection, indicating the actor type authorized to reach the Chaos Studio data plane for the workspace and target. </param>
         /// <param name="targetResourceId"> The fully qualified Azure resource ID of the target resource this connection is established with. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> is null. </exception>
-        public ConnectionProperties(ConnectionKind kind, ResourceIdentifier targetResourceId)
+        public ChaosConnectionProperties(ChaosConnectionKind kind, ResourceIdentifier targetResourceId)
         {
             Argument.AssertNotNull(targetResourceId, nameof(targetResourceId));
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Chaos.Models
             TargetResourceId = targetResourceId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChaosConnectionProperties"/>. </summary>
         /// <param name="kind"> The kind of connection, indicating the actor type authorized to reach the Chaos Studio data plane for the workspace and target. </param>
         /// <param name="targetResourceId"> The fully qualified Azure resource ID of the target resource this connection is established with. </param>
         /// <param name="principalId"> The Microsoft Entra principal (object) ID of the identity used by the connection. </param>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="status"> The current status of the connection. </param>
         /// <param name="provisioningState"> The most recent provisioning state for the connection resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionProperties(ConnectionKind kind, ResourceIdentifier targetResourceId, Guid? principalId, Guid? tenantId, string certificateSubjectName, string certificateIssuer, string dstsPrincipal, Uri dataPlaneEndpoint, ConnectionStatus? status, ChaosProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChaosConnectionProperties(ChaosConnectionKind kind, ResourceIdentifier targetResourceId, Guid? principalId, Guid? tenantId, string certificateSubjectName, string certificateIssuer, string dstsPrincipal, Uri dataPlaneEndpoint, ChaosConnectionStatus? status, ChaosProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             TargetResourceId = targetResourceId;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> The kind of connection, indicating the actor type authorized to reach the Chaos Studio data plane for the workspace and target. </summary>
-        public ConnectionKind Kind { get; set; }
+        public ChaosConnectionKind Kind { get; set; }
 
         /// <summary> The fully qualified Azure resource ID of the target resource this connection is established with. </summary>
         public ResourceIdentifier TargetResourceId { get; set; }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Chaos.Models
         public Uri DataPlaneEndpoint { get; }
 
         /// <summary> The current status of the connection. </summary>
-        public ConnectionStatus? Status { get; }
+        public ChaosConnectionStatus? Status { get; }
 
         /// <summary> The most recent provisioning state for the connection resource. </summary>
         public ChaosProvisioningState? ProvisioningState { get; }

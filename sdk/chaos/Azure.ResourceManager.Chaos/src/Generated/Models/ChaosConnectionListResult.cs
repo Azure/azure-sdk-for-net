@@ -13,23 +13,23 @@ using Azure.ResourceManager.Chaos;
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> Model that represents a list of connections and a link for pagination. </summary>
-    internal partial class ConnectionListResult
+    internal partial class ChaosConnectionListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChaosConnectionListResult"/>. </summary>
         /// <param name="value"> The Connection items on this page. </param>
-        internal ConnectionListResult(IEnumerable<ConnectionData> value)
+        internal ChaosConnectionListResult(IEnumerable<ChaosConnectionData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChaosConnectionListResult"/>. </summary>
         /// <param name="value"> The Connection items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionListResult(IList<ConnectionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChaosConnectionListResult(IList<ChaosConnectionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> The Connection items on this page. </summary>
-        public IList<ConnectionData> Value { get; }
+        public IList<ChaosConnectionData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

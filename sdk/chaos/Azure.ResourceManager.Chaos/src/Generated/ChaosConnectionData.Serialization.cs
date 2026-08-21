@@ -23,68 +23,68 @@ namespace Azure.ResourceManager.Chaos
     /// actor to reach the Chaos Studio data plane for the workspace and target during
     /// fault injection.
     /// </summary>
-    public partial class ConnectionData : ResourceData, IJsonModel<ConnectionData>
+    public partial class ChaosConnectionData : ResourceData, IJsonModel<ChaosConnectionData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ChaosConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeConnectionData(document.RootElement, options);
+                        return DeserializeChaosConnectionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosConnectionData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ChaosConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerChaosContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosConnectionData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConnectionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ChaosConnectionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConnectionData IPersistableModel<ConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConnectionData)PersistableModelCreateCore(data, options);
+        ChaosConnectionData IPersistableModel<ChaosConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ChaosConnectionData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ChaosConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="connectionData"> The <see cref="ConnectionData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ConnectionData connectionData)
+        /// <param name="chaosConnectionData"> The <see cref="ChaosConnectionData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ChaosConnectionData chaosConnectionData)
         {
-            if (connectionData == null)
+            if (chaosConnectionData == null)
             {
                 return null;
             }
-            return RequestContent.Create(connectionData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(chaosConnectionData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ConnectionData"/> from. </param>
-        internal static ConnectionData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ChaosConnectionData"/> from. </param>
+        internal static ChaosConnectionData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeChaosConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ChaosConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ChaosConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosConnectionData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -125,24 +125,24 @@ namespace Azure.ResourceManager.Chaos
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConnectionData IJsonModel<ConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConnectionData)JsonModelCreateCore(ref reader, options);
+        ChaosConnectionData IJsonModel<ChaosConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ChaosConnectionData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ChaosConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosConnectionData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConnectionData(document.RootElement, options);
+            return DeserializeChaosConnectionData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ConnectionData DeserializeConnectionData(JsonElement element, ModelReaderWriterOptions options)
+        internal static ChaosConnectionData DeserializeChaosConnectionData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Chaos
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            ConnectionProperties properties = default;
+            ChaosConnectionProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Chaos
                     {
                         continue;
                     }
-                    properties = ConnectionProperties.DeserializeConnectionProperties(prop.Value, options);
+                    properties = ChaosConnectionProperties.DeserializeChaosConnectionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Chaos
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConnectionData(
+            return new ChaosConnectionData(
                 id,
                 name,
                 resourceType,
