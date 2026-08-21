@@ -203,8 +203,7 @@ namespace Azure.Generator.Management.Providers
             }
 
             var originalMethodList = originalMethods as IReadOnlyList<MethodProvider> ?? [.. originalMethods];
-            var methodsWithETagBackCompat = BackCompatHelper.AddETagBackwardCompatibilityMethods(this, originalMethodList, LastContractView.Methods);
-            var backCompatMethods = base.BuildMethodsForBackCompatibility(methodsWithETagBackCompat);
+            var backCompatMethods = base.BuildMethodsForBackCompatibility(originalMethodList);
 
             return BackCompatHelper.DecorateBackwardCompatibilityMethods(backCompatMethods, originalMethodList);
         }

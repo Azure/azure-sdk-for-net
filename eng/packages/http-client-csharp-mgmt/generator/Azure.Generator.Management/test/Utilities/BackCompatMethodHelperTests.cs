@@ -8,6 +8,7 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
+using System.Reflection;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Mgmt.Tests.Utilities
@@ -38,23 +39,16 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                     new ParameterProvider(parameterName, $"The condition.", new CSharpType(typeof(ETag), isNullable: true), defaultValue: Default),
                     OptionalCancellationToken()
                 ]);
-            var previousParameter = new ParameterProvider(parameterName, $"The condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default);
-            var previous = CreateMethod(enclosingType, [previousParameter, OptionalCancellationToken()]);
+            var previous = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider(parameterName, $"The condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default),
+                    OptionalCancellationToken()
+                ]);
 
-            var result = BackCompatHelper.AddETagBackwardCompatibilityMethods(enclosingType, [current], [previous]);
-            BackCompatHelper.DecorateBackwardCompatibilityMethods(result, [current]);
-
-            Assert.That(result, Has.Count.EqualTo(2));
-            var overload = result.Single(method => !ReferenceEquals(method, current));
-            Assert.That(overload.Signature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(string)));
-            Assert.That(overload.Signature.Parameters[0].DefaultValue, Is.Null);
-            Assert.That(overload.Signature.Parameters[1].DefaultValue, Is.Not.Null);
-            Assert.That(previousParameter.DefaultValue, Is.Not.Null);
-            Assert.That(HasForwardsClientCalls(overload), Is.True);
-
+            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
             var rendered = Render(WithMethods(enclosingType, result.ToArray()));
-            Assert.That(rendered, Does.Contain($"Get(string {parameterName}, global::System.Threading.CancellationToken cancellationToken = default)"));
-            Assert.That(rendered, Does.Contain($"return this.Get(({parameterName} != null) ? new global::Azure.ETag({parameterName}) : ((global::Azure.ETag?)null), cancellationToken);"));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile(parameterName)));
         }
 
         [Test]
@@ -76,12 +70,9 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                     OptionalCancellationToken()
                 ]);
 
-            var result = BackCompatHelper.AddETagBackwardCompatibilityMethods(enclosingType, [current], [previous]);
-
-            var overload = result.Single(method => !ReferenceEquals(method, current));
-            Assert.That(overload.Signature.Parameters[0].DefaultValue, Is.Null);
-            Assert.That(overload.Signature.Parameters[1].DefaultValue, Is.Not.Null);
-            Assert.That(overload.Signature.Parameters[2].DefaultValue, Is.Not.Null);
+            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [TestCase("etag")]
@@ -96,9 +87,9 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                 enclosingType,
                 [new ParameterProvider(parameterName, $"The value.", typeof(string))]);
 
-            var result = BackCompatHelper.AddETagBackwardCompatibilityMethods(enclosingType, [current], [previous]);
-
-            Assert.That(result, Is.EqualTo(new[] { current }));
+            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile(parameterName)));
         }
 
         [Test]
@@ -118,9 +109,9 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                     new ParameterProvider("ifMatch", $"The condition.", typeof(string))
                 ]);
 
-            var result = BackCompatHelper.AddETagBackwardCompatibilityMethods(enclosingType, [current], [previous]);
-
-            Assert.That(result, Is.EqualTo(new[] { current }));
+            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [Test]
@@ -310,6 +301,23 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
 
         private static bool HasForwardsClientCalls(MethodProvider method)
             => method.Signature.Attributes.Any(a => a.Type.Name == ForwardsClientCallsAttributeName);
+
+        private static IReadOnlyList<MethodProvider> DecorateWithLastContract(
+            TestTypeView enclosingType,
+            IReadOnlyList<MethodProvider> currentMethods,
+            IReadOnlyList<MethodProvider> previousMethods)
+        {
+            var lastContractView = new TestTypeView(enclosingType.Name)
+            {
+                MethodsToBuild = previousMethods.ToArray()
+            };
+            typeof(TypeProvider).GetField(
+                    "_lastContractView",
+                    BindingFlags.NonPublic | BindingFlags.Instance)!
+                .SetValue(enclosingType, new Lazy<TypeProvider?>(() => lastContractView));
+
+            return BackCompatHelper.DecorateBackwardCompatibilityMethods(currentMethods, currentMethods);
+        }
 
         private static string Render(TypeProvider typeProvider)
             => new TypeProviderWriter(typeProvider).Write().Content.Replace("\r\n", "\n");

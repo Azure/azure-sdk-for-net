@@ -25,16 +25,19 @@ namespace Azure.Generator.Management.Utilities
             "Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. " +
             "Making it optional would introduce an ambiguous call with the new method.";
 
-        internal static IReadOnlyList<MethodProvider> AddETagBackwardCompatibilityMethods(
+        private static void AddETagBackwardCompatibilityMethods(
             TypeProvider enclosingType,
+            List<MethodProvider> methods,
             IReadOnlyList<MethodProvider> currentMethods,
             IReadOnlyList<MethodProvider> previousMethods)
         {
-            var methods = new List<MethodProvider>(currentMethods);
-            var candidates = enclosingType.CustomCodeView?.Methods is { } customMethods
-                ? currentMethods.Concat(customMethods)
-                : currentMethods;
-            var candidateList = candidates.ToList();
+            var customMethods = enclosingType.CustomCodeView?.Methods;
+            var candidateList = new List<MethodProvider>(currentMethods.Count + (customMethods?.Count ?? 0));
+            candidateList.AddRange(currentMethods);
+            if (customMethods is not null)
+            {
+                candidateList.AddRange(customMethods);
+            }
 
             foreach (var previousMethod in previousMethods)
             {
@@ -52,36 +55,46 @@ namespace Azure.Generator.Management.Utilities
                 }
 
                 var overload = BuildStringToETagOverload(enclosingType, previousMethod, currentMethod);
+                DecorateBackwardCompatibilityMethod(overload);
                 methods.Add(overload);
                 candidateList.Add(overload);
             }
-
-            return methods;
         }
 
         /// <summary>
-        /// Applies the management back-compat decorations to the overloads that were added on top of <paramref name="originalMethods"/>.
+        /// Applies management back-compat decorations and adds management-specific overloads.
         /// </summary>
         /// <param name="backCompatMethods">The full method list produced by the base back-compat generation.</param>
         /// <param name="originalMethods">The methods that existed before the base synthesized the compatibility overloads.</param>
-        /// <returns>The same <paramref name="backCompatMethods"/> list, with the synthesized overloads decorated.</returns>
+        /// <returns>The complete list of decorated back-compat methods.</returns>
         internal static IReadOnlyList<MethodProvider> DecorateBackwardCompatibilityMethods(
             IReadOnlyList<MethodProvider> backCompatMethods,
             IEnumerable<MethodProvider> originalMethods)
         {
-            var originalMethodSet = new HashSet<MethodProvider>(originalMethods, ReferenceEqualityComparer.Instance);
+            var originalMethodList = originalMethods as IReadOnlyList<MethodProvider> ?? [.. originalMethods];
+            var originalMethodSet = new HashSet<MethodProvider>(originalMethodList, ReferenceEqualityComparer.Instance);
+            var methods = new List<MethodProvider>(backCompatMethods.Count);
 
             foreach (var method in backCompatMethods)
             {
-                if (originalMethodSet.Contains(method))
+                methods.Add(method);
+                if (!originalMethodSet.Contains(method))
                 {
-                    continue;
+                    DecorateBackwardCompatibilityMethod(method);
                 }
-
-                DecorateBackwardCompatibilityMethod(method);
             }
 
-            return backCompatMethods;
+            if (originalMethodList.Count > 0
+                && originalMethodList[0].EnclosingType.LastContractView?.Methods is { Count: > 0 } previousMethods)
+            {
+                AddETagBackwardCompatibilityMethods(
+                    originalMethodList[0].EnclosingType,
+                    methods,
+                    originalMethodList,
+                    previousMethods);
+            }
+
+            return methods;
         }
 
         private static void DecorateBackwardCompatibilityMethod(MethodProvider method)
