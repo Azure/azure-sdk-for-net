@@ -25,9 +25,9 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Initializes a new instance of <see cref="DiscoveryRunResult"/>. </summary>
-        /// <param name="submittedDate"> The date for when the disco run was created in the system. </param>
-        /// <param name="startedDate"> The date for when the disco run was actually started by the system. </param>
-        /// <param name="completedDate"> The date for when the disco run was completed by the system. </param>
+        /// <param name="submittedOn"> The date for when the disco run was created in the system. </param>
+        /// <param name="startedOn"> The date for when the disco run was actually started by the system. </param>
+        /// <param name="completedOn"> The date for when the disco run was completed by the system. </param>
         /// <param name="tier"> The tier which will affect the algorithm used for the disco run. </param>
         /// <param name="state"> The State of the disco run. </param>
         /// <param name="totalAssetsFoundCount"> The total count of assets that were found this disco run. </param>
@@ -35,11 +35,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="excludes"> The list of excludes used for the disco run, aka assets to exclude from the discovery algorithm. </param>
         /// <param name="names"> The list of names used for the disco run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoveryRunResult(DateTimeOffset? submittedDate, DateTimeOffset? startedDate, DateTimeOffset? completedDate, string tier, DiscoRunState? state, long? totalAssetsFoundCount, IList<DiscoverySource> seeds, IList<DiscoverySource> excludes, IList<string> names, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiscoveryRunResult(DateTimeOffset? submittedOn, DateTimeOffset? startedOn, DateTimeOffset? completedOn, string tier, DiscoRunState? state, long? totalAssetsFoundCount, IList<DiscoverySource> seeds, IList<DiscoverySource> excludes, IList<string> names, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SubmittedDate = submittedDate;
-            StartedDate = startedDate;
-            CompletedDate = completedDate;
+            SubmittedOn = submittedOn;
+            StartedOn = startedOn;
+            CompletedOn = completedOn;
             Tier = tier;
             State = state;
             TotalAssetsFoundCount = totalAssetsFoundCount;
@@ -50,13 +50,13 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> The date for when the disco run was created in the system. </summary>
-        public DateTimeOffset? SubmittedDate { get; }
+        public DateTimeOffset? SubmittedOn { get; }
 
         /// <summary> The date for when the disco run was actually started by the system. </summary>
-        public DateTimeOffset? StartedDate { get; }
+        public DateTimeOffset? StartedOn { get; }
 
         /// <summary> The date for when the disco run was completed by the system. </summary>
-        public DateTimeOffset? CompletedDate { get; }
+        public DateTimeOffset? CompletedOn { get; }
 
         /// <summary> The tier which will affect the algorithm used for the disco run. </summary>
         public string Tier { get; }

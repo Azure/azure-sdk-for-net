@@ -73,10 +73,10 @@ namespace Azure.Analytics.Defender.Easm
             {
                 throw new FormatException($"The model {nameof(ReportBillableAssetSnapshotResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Date))
+            if (Optional.IsDefined(On))
             {
                 writer.WritePropertyName("date"u8);
-                writer.WriteStringValue(Date.Value, "D");
+                writer.WriteStringValue(On.Value, "D");
             }
             if (Optional.IsDefined(Total))
             {
@@ -135,7 +135,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            DateTimeOffset? date = default;
+            DateTimeOffset? @on = default;
             long? total = default;
             IList<ReportBillableAssetBreakdown> assetBreakdown = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -147,7 +147,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    date = prop.Value.GetDateTimeOffset("D");
+                    @on = prop.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (prop.NameEquals("total"u8))
@@ -178,7 +178,7 @@ namespace Azure.Analytics.Defender.Easm
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ReportBillableAssetSnapshotResult(date, total, assetBreakdown ?? new ChangeTrackingList<ReportBillableAssetBreakdown>(), additionalBinaryDataProperties);
+            return new ReportBillableAssetSnapshotResult(@on, total, assetBreakdown ?? new ChangeTrackingList<ReportBillableAssetBreakdown>(), additionalBinaryDataProperties);
         }
     }
 }
