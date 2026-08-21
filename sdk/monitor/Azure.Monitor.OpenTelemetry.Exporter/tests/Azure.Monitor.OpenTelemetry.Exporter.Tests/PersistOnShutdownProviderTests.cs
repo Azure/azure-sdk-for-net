@@ -212,6 +212,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void DisposeDoesNotWaitWhenTheDrainBudgetIsZero()
         {
+            // The drain has to actually run, or this would pass no matter what the budget resolved to.
+            TransmitFromStorageHandler.DisableShutdownDrainForTesting = false;
             SetDrainBudgetOverride(0);
 
             try
@@ -407,13 +409,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void MetricDisposePersistsWithoutTransmittingWhenTheDrainBudgetIsZero()
+        public void MetricDisposeDoesNotWaitWhenTheDrainBudgetIsZero()
         {
+            // The drain has to actually run, or this would pass no matter what the budget resolved to.
+            TransmitFromStorageHandler.DisableShutdownDrainForTesting = false;
             SetDrainBudgetOverride(0);
 
             try
             {
-                var options = BuildOptions(out _, out var transport);
+                // An endpoint that never answers keeps the drain from deleting what was persisted,
+                // so the count below is not racing it.
+                var options = BuildOptions(
+                    out _,
+                    out _,
+                    _ =>
+                    {
+                        System.Threading.Thread.Sleep(TimeSpan.FromSeconds(30));
+                        return new MockResponse(200);
+                    });
 
                 var meterName = $"OTel.PersistProvider.{Guid.NewGuid():N}";
                 using var meter = new Meter(meterName);
@@ -425,9 +438,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
                 meter.CreateCounter<long>("TestCounter").Add(1);
 
+                var stopwatch = Stopwatch.StartNew();
                 meterProvider.Dispose();
+                stopwatch.Stop();
 
-                Assert.Empty(transport.Requests);
+                // The default budget would spend up to two seconds of Dispose's window waiting on a
+                // drain that cannot finish.
+                Assert.True(stopwatch.Elapsed < TimeSpan.FromSeconds(1), $"Dispose took {stopwatch.Elapsed}.");
                 Assert.Equal(1, CountStoredPayloads());
             }
             finally
