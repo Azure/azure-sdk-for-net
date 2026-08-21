@@ -14,7 +14,7 @@ namespace Azure.Analytics.Defender.Easm
 {
     /// <summary>
     /// The items in the current page of results.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AsAssetResource"/>, <see cref="ContactAssetResource"/>, <see cref="DomainAssetResource"/>, <see cref="HostAssetResource"/>, <see cref="IPAddressAssetResource"/>, <see cref="IPBlockAssetResource"/>, <see cref="PageAssetResource"/>, and <see cref="SslCertAssetResource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AsAssetResource"/>, <see cref="ContactAssetResource"/>, <see cref="DomainAssetResource"/>, <see cref="HostAssetResource"/>, <see cref="IpAddressAssetResource"/>, <see cref="IpBlockAssetResource"/>, <see cref="PageAssetResource"/>, and <see cref="SslCertAssetResource"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAssetResource))]
     public abstract partial class AssetResource : IJsonModel<AssetResource>
@@ -226,9 +226,9 @@ namespace Azure.Analytics.Defender.Easm
                     case "host":
                         return HostAssetResource.DeserializeHostAssetResource(element, options);
                     case "ipAddress":
-                        return IPAddressAssetResource.DeserializeIPAddressAssetResource(element, options);
+                        return IpAddressAssetResource.DeserializeIpAddressAssetResource(element, options);
                     case "ipBlock":
-                        return IPBlockAssetResource.DeserializeIPBlockAssetResource(element, options);
+                        return IpBlockAssetResource.DeserializeIpBlockAssetResource(element, options);
                     case "page":
                         return PageAssetResource.DeserializePageAssetResource(element, options);
                     case "sslCert":

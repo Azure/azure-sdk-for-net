@@ -10,10 +10,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
@@ -24,38 +23,42 @@ namespace Azure.ResourceManager.ServiceLinker
     /// </summary>
     public partial class LinkerResourceCollection : ArmCollection, IEnumerable<LinkerResource>, IAsyncEnumerable<LinkerResource>
     {
-        private readonly ClientDiagnostics _linkerResourcesClientDiagnostics;
-        private readonly LinkerResources _linkerResourcesRestClient;
+        private readonly ClientDiagnostics _linkerResourceLinkerClientDiagnostics;
+        private readonly LinkerRestOperations _linkerResourceLinkerRestClient;
 
-        /// <summary> Initializes a new instance of LinkerResourceCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LinkerResourceCollection"/> class for mocking. </summary>
         protected LinkerResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LinkerResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LinkerResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal LinkerResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(LinkerResource.ResourceType, out string linkerResourceApiVersion);
-            _linkerResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceLinker", LinkerResource.ResourceType.Namespace, Diagnostics);
-            _linkerResourcesRestClient = new LinkerResources(_linkerResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, linkerResourceApiVersion ?? "2024-07-01-preview");
+            _linkerResourceLinkerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceLinker", LinkerResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(LinkerResource.ResourceType, out string linkerResourceLinkerApiVersion);
+            _linkerResourceLinkerRestClient = new LinkerRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, linkerResourceLinkerApiVersion);
         }
 
         /// <summary>
-        /// Create or update Linker resource.
+        /// Create or update linker resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Linker_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Linker_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -63,34 +66,21 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="linkerName"> The name Linker resource. </param>
         /// <param name="data"> Linker details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LinkerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string linkerName, LinkerResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _linkerResourcesClientDiagnostics.CreateScope("LinkerResourceCollection.CreateOrUpdate");
+            using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _linkerResourcesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), linkerName, LinkerResourceData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ServiceLinkerArmOperation<LinkerResource> operation = new ServiceLinkerArmOperation<LinkerResource>(
-                    new LinkerResourceOperationSource(Client),
-                    _linkerResourcesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _linkerResourceLinkerRestClient.CreateOrUpdateAsync(Id, linkerName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceLinkerArmOperation<LinkerResource>(new LinkerResourceOperationSource(Client), _linkerResourceLinkerClientDiagnostics, Pipeline, _linkerResourceLinkerRestClient.CreateCreateOrUpdateRequest(Id, linkerName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -101,19 +91,23 @@ namespace Azure.ResourceManager.ServiceLinker
         }
 
         /// <summary>
-        /// Create or update Linker resource.
+        /// Create or update linker resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Linker_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Linker_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,34 +115,21 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="linkerName"> The name Linker resource. </param>
         /// <param name="data"> Linker details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LinkerResource> CreateOrUpdate(WaitUntil waitUntil, string linkerName, LinkerResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _linkerResourcesClientDiagnostics.CreateScope("LinkerResourceCollection.CreateOrUpdate");
+            using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _linkerResourcesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), linkerName, LinkerResourceData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ServiceLinkerArmOperation<LinkerResource> operation = new ServiceLinkerArmOperation<LinkerResource>(
-                    new LinkerResourceOperationSource(Client),
-                    _linkerResourcesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _linkerResourceLinkerRestClient.CreateOrUpdate(Id, linkerName, data, cancellationToken);
+                var operation = new ServiceLinkerArmOperation<LinkerResource>(new LinkerResourceOperationSource(Client), _linkerResourceLinkerClientDiagnostics, Pipeline, _linkerResourceLinkerRestClient.CreateCreateOrUpdateRequest(Id, linkerName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -162,42 +143,38 @@ namespace Azure.ResourceManager.ServiceLinker
         /// Returns Linker resource for a given name.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Linker_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Linker_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="linkerName"> The name Linker resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
         public virtual async Task<Response<LinkerResource>> GetAsync(string linkerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
 
-            using DiagnosticScope scope = _linkerResourcesClientDiagnostics.CreateScope("LinkerResourceCollection.Get");
+            using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResourceCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _linkerResourcesRestClient.CreateGetRequest(Id.ToString(), linkerName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<LinkerResourceData> response = Response.FromValue(LinkerResourceData.FromResponse(result), result);
+                var response = await _linkerResourceLinkerRestClient.GetAsync(Id, linkerName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new LinkerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -211,42 +188,38 @@ namespace Azure.ResourceManager.ServiceLinker
         /// Returns Linker resource for a given name.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Linker_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Linker_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="linkerName"> The name Linker resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
         public virtual Response<LinkerResource> Get(string linkerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
 
-            using DiagnosticScope scope = _linkerResourcesClientDiagnostics.CreateScope("LinkerResourceCollection.Get");
+            using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResourceCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _linkerResourcesRestClient.CreateGetRequest(Id.ToString(), linkerName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<LinkerResourceData> response = Response.FromValue(LinkerResourceData.FromResponse(result), result);
+                var response = _linkerResourceLinkerRestClient.Get(Id, linkerName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new LinkerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -257,47 +230,53 @@ namespace Azure.ResourceManager.ServiceLinker
         }
 
         /// <summary>
-        /// Returns list of Linkers which connects to the resource. which supports to config both application and target service during the resource provision.
+        /// Returns list of Linkers which connects to the resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.ServiceLinker/linkers. </description>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Linker_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>Linker_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LinkerResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LinkerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LinkerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<LinkerResourceData, LinkerResource>(new LinkerResourcesGetAllAsyncCollectionResultOfT(_linkerResourcesRestClient, Id.ToString(), context, "LinkerResourceCollection.GetAll"), data => new LinkerResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _linkerResourceLinkerRestClient.CreateListRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _linkerResourceLinkerRestClient.CreateListNextPageRequest(nextLink, Id);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LinkerResource(Client, LinkerResourceData.DeserializeLinkerResourceData(e)), _linkerResourceLinkerClientDiagnostics, Pipeline, "LinkerResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Returns list of Linkers which connects to the resource. which supports to config both application and target service during the resource provision.
+        /// Returns list of Linkers which connects to the resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.ServiceLinker/linkers. </description>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Linker_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>Linker_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,61 +284,45 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <returns> A collection of <see cref="LinkerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LinkerResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<LinkerResourceData, LinkerResource>(new LinkerResourcesGetAllCollectionResultOfT(_linkerResourcesRestClient, Id.ToString(), context, "LinkerResourceCollection.GetAll"), data => new LinkerResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _linkerResourceLinkerRestClient.CreateListRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _linkerResourceLinkerRestClient.CreateListNextPageRequest(nextLink, Id);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LinkerResource(Client, LinkerResourceData.DeserializeLinkerResourceData(e)), _linkerResourceLinkerClientDiagnostics, Pipeline, "LinkerResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Linker_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Linker_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="linkerName"> The name Linker resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string linkerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
 
-            using DiagnosticScope scope = _linkerResourcesClientDiagnostics.CreateScope("LinkerResourceCollection.Exists");
+            using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResourceCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _linkerResourcesRestClient.CreateGetRequest(Id.ToString(), linkerName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<LinkerResourceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(LinkerResourceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((LinkerResourceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _linkerResourceLinkerRestClient.GetAsync(Id, linkerName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -373,50 +336,36 @@ namespace Azure.ResourceManager.ServiceLinker
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Linker_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Linker_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="linkerName"> The name Linker resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
         public virtual Response<bool> Exists(string linkerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
 
-            using DiagnosticScope scope = _linkerResourcesClientDiagnostics.CreateScope("LinkerResourceCollection.Exists");
+            using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResourceCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _linkerResourcesRestClient.CreateGetRequest(Id.ToString(), linkerName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<LinkerResourceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(LinkerResourceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((LinkerResourceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _linkerResourceLinkerRestClient.Get(Id, linkerName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -430,54 +379,38 @@ namespace Azure.ResourceManager.ServiceLinker
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Linker_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Linker_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="linkerName"> The name Linker resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
         public virtual async Task<NullableResponse<LinkerResource>> GetIfExistsAsync(string linkerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
 
-            using DiagnosticScope scope = _linkerResourcesClientDiagnostics.CreateScope("LinkerResourceCollection.GetIfExists");
+            using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _linkerResourcesRestClient.CreateGetRequest(Id.ToString(), linkerName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<LinkerResourceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(LinkerResourceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((LinkerResourceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _linkerResourceLinkerRestClient.GetAsync(Id, linkerName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<LinkerResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new LinkerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -491,54 +424,38 @@ namespace Azure.ResourceManager.ServiceLinker
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Linker_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Linker_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="linkerName"> The name Linker resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkerName"/> is null. </exception>
         public virtual NullableResponse<LinkerResource> GetIfExists(string linkerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkerName, nameof(linkerName));
 
-            using DiagnosticScope scope = _linkerResourcesClientDiagnostics.CreateScope("LinkerResourceCollection.GetIfExists");
+            using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _linkerResourcesRestClient.CreateGetRequest(Id.ToString(), linkerName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<LinkerResourceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(LinkerResourceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((LinkerResourceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _linkerResourceLinkerRestClient.Get(Id, linkerName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<LinkerResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new LinkerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -558,7 +475,6 @@ namespace Azure.ResourceManager.ServiceLinker
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<LinkerResource> IAsyncEnumerable<LinkerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

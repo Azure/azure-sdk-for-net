@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("osType"u8);
-            writer.WriteStringValue(OSType.ToString());
+            writer.WriteStringValue(OsType.ToString());
             writer.WritePropertyName("priorityProfile"u8);
             writer.WriteObjectValue(PriorityProfile, options);
             if (Optional.IsDefined(ZoneAllocationPolicy))

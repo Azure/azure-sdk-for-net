@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             bool? isPrune = default;
             bool? isForce = default;
             bool? isWait = default;
-            FluxPostBuildPatch postBuild = default;
+            PostBuildPatch postBuild = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                         postBuild = null;
                         continue;
                     }
-                    postBuild = FluxPostBuildPatch.DeserializeFluxPostBuildPatch(prop.Value, options);
+                    postBuild = PostBuildPatch.DeserializePostBuildPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

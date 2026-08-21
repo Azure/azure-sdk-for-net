@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             }
             writer.WritePropertyName("ipConfigurations"u8);
             writer.WriteStartArray();
-            foreach (ComputeBulkActionsVirtualMachineNetworkInterfaceIPConfiguration item in IPConfigurations)
+            foreach (ComputeBulkActionsVirtualMachineNetworkInterfaceIPConfiguration item in IpConfigurations)
             {
                 writer.WriteObjectValue(item, options);
             }

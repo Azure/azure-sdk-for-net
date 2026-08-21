@@ -77,11 +77,6 @@ namespace Azure.AI.Projects.Agents
             }
             writer.WritePropertyName("image"u8);
             writer.WriteStringValue(Image);
-            if (Optional.IsDefined(RegistryConnectionId))
-            {
-                writer.WritePropertyName("registry_connection_id"u8);
-                writer.WriteStringValue(RegistryConnectionId);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -125,7 +120,6 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             string image = default;
-            string registryConnectionId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,17 +128,12 @@ namespace Azure.AI.Projects.Agents
                     image = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("registry_connection_id"u8))
-                {
-                    registryConnectionId = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerConfiguration(image, registryConnectionId, additionalBinaryDataProperties);
+            return new ContainerConfiguration(image, additionalBinaryDataProperties);
         }
     }
 }

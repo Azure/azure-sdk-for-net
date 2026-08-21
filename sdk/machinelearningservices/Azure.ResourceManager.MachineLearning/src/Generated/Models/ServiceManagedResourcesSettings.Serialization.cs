@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(ServiceManagedResourcesSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(CosmosDB))
+            if (Optional.IsDefined(CosmosDb))
             {
                 writer.WritePropertyName("cosmosDb"u8);
-                writer.WriteObjectValue(CosmosDB, options);
+                writer.WriteObjectValue(CosmosDb, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            CosmosDBSettings cosmosDB = default;
+            CosmosDbSettings cosmosDb = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    cosmosDB = CosmosDBSettings.DeserializeCosmosDBSettings(prop.Value, options);
+                    cosmosDb = CosmosDbSettings.DeserializeCosmosDbSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ServiceManagedResourcesSettings(cosmosDB, additionalBinaryDataProperties);
+            return new ServiceManagedResourcesSettings(cosmosDb, additionalBinaryDataProperties);
         }
     }
 }

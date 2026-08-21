@@ -15,6 +15,7 @@ using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
+    /// <summary> The SQL virtual machine properties. </summary>
     internal partial class SqlVirtualMachineProperties : IJsonModel<SqlVirtualMachineProperties>
     {
         /// <param name="data"> The data to parse. </param>

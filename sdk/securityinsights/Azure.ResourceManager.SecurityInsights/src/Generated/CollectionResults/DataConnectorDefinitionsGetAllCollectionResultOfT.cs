@@ -55,8 +55,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     yield break;
                 }
                 DataConnectorDefinitionArmCollectionWrapper result = DataConnectorDefinitionArmCollectionWrapper.FromResponse(response);
-                string nextPageString = result.NextLink;
-                nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
+                nextPage = result.NextLink;
                 yield return Page<SecurityInsightsDataConnectorDefinitionData>.FromValues((IReadOnlyList<SecurityInsightsDataConnectorDefinitionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {

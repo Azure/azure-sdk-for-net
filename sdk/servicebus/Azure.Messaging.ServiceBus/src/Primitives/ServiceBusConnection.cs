@@ -250,9 +250,7 @@ namespace Azure.Messaging.ServiceBus
             string sessionId,
             bool isSessionReceiver,
             bool isProcessor,
-            bool isSessionExclusive = true,
-            Guid? sessionLockToken = null,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken) =>
                 InnerClient.CreateReceiver(
                     entityPath,
                     retryPolicy,
@@ -262,8 +260,6 @@ namespace Azure.Messaging.ServiceBus
                     sessionId,
                     isSessionReceiver,
                     isProcessor,
-                    isSessionExclusive,
-                    sessionLockToken,
                     cancellationToken);
 
         internal virtual TransportRuleManager CreateTransportRuleManager(

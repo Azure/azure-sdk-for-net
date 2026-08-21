@@ -95,7 +95,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 serviceProvider!.EnsureSingleUseAzureMonitorExporterRegistration();
 
                 var exporterOptions = serviceProvider!.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(Options.DefaultName);
-                meterProviderBuilder.AddReader(new AzureMonitorPeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions)));
+                meterProviderBuilder.AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions))
+                    { TemporalityPreference = MetricReaderTemporalityPreference.Delta });
 
                 // Register customer SDK stats if enabled
                 CustomerSdkStatsRegistration.RegisterCustomerSdkStats(builder.Services, exporterOptions);

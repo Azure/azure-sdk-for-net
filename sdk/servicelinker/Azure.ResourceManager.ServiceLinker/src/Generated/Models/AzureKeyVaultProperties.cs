@@ -14,17 +14,19 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     public partial class AzureKeyVaultProperties : AzureResourceBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AzureKeyVaultProperties"/>. </summary>
-        public AzureKeyVaultProperties() : base(AzureResourceType.KeyVault)
+        public AzureKeyVaultProperties()
         {
+            AzureResourceType = AzureResourceType.KeyVault;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureKeyVaultProperties"/>. </summary>
-        /// <param name="type"> The azure resource type. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="azureResourceType"> The azure resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="doesConnectAsKubernetesCsiDriver"> True if connect via Kubernetes CSI Driver. </param>
-        internal AzureKeyVaultProperties(AzureResourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? doesConnectAsKubernetesCsiDriver) : base(@type, additionalBinaryDataProperties)
+        internal AzureKeyVaultProperties(AzureResourceType azureResourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? doesConnectAsKubernetesCsiDriver) : base(azureResourceType, serializedAdditionalRawData)
         {
             DoesConnectAsKubernetesCsiDriver = doesConnectAsKubernetesCsiDriver;
+            AzureResourceType = azureResourceType;
         }
 
         /// <summary> True if connect via Kubernetes CSI Driver. </summary>

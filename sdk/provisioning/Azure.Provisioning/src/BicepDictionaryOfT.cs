@@ -263,12 +263,12 @@ public class BicepDictionary<T> :
     IEnumerator<KeyValuePair<string, IBicepValue>> IEnumerable<KeyValuePair<string, IBicepValue>>.GetEnumerator() =>
         _values.Select(p => new KeyValuePair<string, IBicepValue>(p.Key, p.Value)).GetEnumerator();
 
-    private protected override BicepExpression CompileLiteralValue(string? format)
+    private protected override BicepExpression CompileLiteralValue()
     {
         Dictionary<string, BicepExpression> compiledValues = [];
         foreach (var kv in _values)
         {
-            compiledValues[kv.Key] = kv.Value.Compile(format);
+            compiledValues[kv.Key] = kv.Value.Compile();
         }
         return BicepSyntax.Object(compiledValues);
     }

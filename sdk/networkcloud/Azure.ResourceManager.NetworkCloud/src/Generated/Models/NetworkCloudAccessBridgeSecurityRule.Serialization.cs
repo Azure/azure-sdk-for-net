@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("direction"u8);
             writer.WriteStringValue(Direction.ToString());
-            if (Optional.IsCollectionDefined(IPv4Addresses))
+            if (Optional.IsCollectionDefined(Ipv4Addresses))
             {
                 writer.WritePropertyName("ipv4Addresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in IPv4Addresses)
+                foreach (string item in Ipv4Addresses)
                 {
                     if (item == null)
                     {
@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPv6Addresses))
+            if (Optional.IsCollectionDefined(Ipv6Addresses))
             {
                 writer.WritePropertyName("ipv6Addresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in IPv6Addresses)
+                foreach (string item in Ipv6Addresses)
                 {
                     if (item == null)
                     {

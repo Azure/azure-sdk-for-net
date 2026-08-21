@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -7,7 +7,6 @@ using Azure.AI.Projects;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using OpenAI.Conversations;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
@@ -28,27 +27,27 @@ public class Sample_conversation_CRUD : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_CreateConversations_ConversationCRUD_Async
-        ConversationResource conversation1 = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ProjectConversation conversation1 = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
         Console.WriteLine($"Created conversation (id: {conversation1.Id})");
 
-        ConversationResource conversation2 = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ProjectConversation conversation2 = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
         Console.WriteLine($"Created conversation (id: {conversation2.Id})");
         #endregion
 
         #region Snippet:Sample_GetConversation_ConversationCRUD_Async
-        ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationAsync(conversationId: conversation1.Id);
+        ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationAsync(conversationId: conversation1.Id);
         Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversation.Metadata})");
         #endregion
 
         #region Snippet:Sample_ListConversations_ConversationCRUD_Async
-        await foreach (ConversationResource res in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationsAsync())
+        await foreach (ProjectConversation res in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationsAsync())
         {
             Console.WriteLine($"Listed conversation (id: {res.Id})");
         }
         #endregion
 
         #region Snippet:Sample_UpdateConversations_ConversationCRUD_Async
-        ConversationUpdateOptions updateOptions = new()
+        ProjectConversationUpdateOptions updateOptions = new()
         {
             Metadata = { ["key"] = "value" },
         };
@@ -78,27 +77,27 @@ public class Sample_conversation_CRUD : ProjectsOpenAITestBase
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
         #region Snippet:Sample_CreateConversations_ConversationCRUD_Sync
-        ConversationResource conversation1 = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
+        ProjectConversation conversation1 = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
         Console.WriteLine($"Created conversation (id: {conversation1.Id})");
 
-        ConversationResource conversation2 = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
+        ProjectConversation conversation2 = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
         Console.WriteLine($"Created conversation (id: {conversation2.Id})");
         #endregion
 
         #region Snippet:Sample_GetConversation_ConversationCRUD_Sync
-        ConversationResource conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversation(conversationId: conversation1.Id);
+        ProjectConversation conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversation(conversationId: conversation1.Id);
         Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversation.Metadata})");
         #endregion
 
         #region Snippet:Sample_ListConversations_ConversationCRUD_Sync
-        foreach (ConversationResource res in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversations())
+        foreach (ProjectConversation res in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversations())
         {
             Console.WriteLine($"Listed conversation (id: {res.Id})");
         }
         #endregion
 
         #region Snippet:Sample_UpdateConversations_ConversationCRUD_Sync
-        ConversationUpdateOptions updateOptions = new()
+        ProjectConversationUpdateOptions updateOptions = new()
         {
             Metadata = { ["key"] = "value" },
         };

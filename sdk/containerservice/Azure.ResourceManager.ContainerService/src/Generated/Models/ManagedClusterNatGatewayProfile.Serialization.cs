@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile = default;
             IList<WritableSubResource> effectiveOutboundIPs = default;
-            ManagedClusterNATGatewayProfileOutboundIPPrefixes outboundIPPrefixes = default;
+            ManagedClusterNATGatewayProfileOutboundIpPrefixes outboundIPPrefixes = default;
             ManagedClusterNATGatewayProfileOutboundIPs outboundIPs = default;
             int? idleTimeoutInMinutes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    outboundIPPrefixes = ManagedClusterNATGatewayProfileOutboundIPPrefixes.DeserializeManagedClusterNATGatewayProfileOutboundIPPrefixes(prop.Value, options);
+                    outboundIPPrefixes = ManagedClusterNATGatewayProfileOutboundIpPrefixes.DeserializeManagedClusterNATGatewayProfileOutboundIpPrefixes(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("outboundIPs"u8))

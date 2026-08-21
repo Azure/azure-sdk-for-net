@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 throw new FormatException($"The model {nameof(NodeImageVersion)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(OS))
+            if (Optional.IsDefined(Os))
             {
                 writer.WritePropertyName("os"u8);
-                writer.WriteStringValue(OS);
+                writer.WriteStringValue(Os);
             }
             if (Optional.IsDefined(Sku))
             {

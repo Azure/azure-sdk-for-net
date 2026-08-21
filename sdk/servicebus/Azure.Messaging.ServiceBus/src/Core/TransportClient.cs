@@ -55,9 +55,7 @@ namespace Azure.Messaging.ServiceBus.Core
             string sessionId,
             bool isSessionReceiver,
             bool isProcessor,
-            bool isSessionExclusive = true,
-            Guid? sessionLockToken = null,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken);
 
         /// <summary>
         ///   Creates a rule manager strongly aligned with the active protocol and transport,

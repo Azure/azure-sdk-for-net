@@ -15,6 +15,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    /// <summary> Migration. </summary>
     internal partial class MigrationProperties : IJsonModel<MigrationProperties>
     {
         /// <param name="data"> The data to parse. </param>

@@ -10,19 +10,19 @@ namespace Azure.Provisioning.Search
     /// <summary> Provisioning state of a network security perimeter configuration that is being created or updated. </summary>
     public enum SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState
     {
-        /// <summary> The configuration was provisioned successfully. </summary>
+        /// <summary> Succeeded. </summary>
         Succeeded = 0,
-        /// <summary> The configuration is being created. </summary>
+        /// <summary> Creating. </summary>
         Creating = 1,
-        /// <summary> The configuration is being updated. </summary>
+        /// <summary> Updating. </summary>
         Updating = 2,
-        /// <summary> The configuration is being deleted. </summary>
+        /// <summary> Deleting. </summary>
         Deleting = 3,
-        /// <summary> The configuration request was accepted and provisioning has not started yet. </summary>
+        /// <summary> Accepted. </summary>
         Accepted = 4,
-        /// <summary> The configuration failed to provision. </summary>
+        /// <summary> Failed. </summary>
         Failed = 5,
-        /// <summary> The configuration provisioning was canceled. </summary>
+        /// <summary> Canceled. </summary>
         Canceled = 6
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public WebPubSubNetworkAcls()
         {
             PrivateEndpoints = new ChangeTrackingList<PrivateEndpointAcl>();
-            IPRules = new ChangeTrackingList<WebPubSubIPRule>();
+            IpRules = new ChangeTrackingList<WebPubSubIPRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WebPubSubNetworkAcls"/>. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             DefaultAction = defaultAction;
             PublicNetwork = publicNetwork;
             PrivateEndpoints = privateEndpoints;
-            IPRules = ipRules;
+            IpRules = ipRules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> IP rules for filtering public traffic. </summary>
         [WirePath("ipRules")]
-        public IList<WebPubSubIPRule> IPRules { get; }
+        public IList<WebPubSubIPRule> IpRules { get; }
     }
 }

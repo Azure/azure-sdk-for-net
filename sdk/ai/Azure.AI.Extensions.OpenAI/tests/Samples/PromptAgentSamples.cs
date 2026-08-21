@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -10,7 +10,6 @@ using Azure.AI.Projects.Agents;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using OpenAI.Conversations;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
@@ -160,8 +159,8 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         #region Snippet:ConversationClient
         CreateResponseOptions CreateResponseOptions = new();
         // Optionally, use a conversation to automatically maintain state between calls.
-        ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
-        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(FOUNDRY_AGENT_NAME, conversation.Id);
+        ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(FOUNDRY_AGENT_NAME, conversation);
         #endregion
         List<ResponseItem> items = [ResponseItem.CreateUserMessageItem("Tell me a one-line story.")];
         ResponseResult response = await responseClient.CreateResponseAsync("Tell me a one-line story.");
@@ -207,12 +206,12 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         // Create a conversation to maintain state between calls
         //
         #region Snippet:ExistingConversations
-        ConversationCreationOptions conversationOptions = new()
+        ProjectConversationCreationOptions conversationOptions = new()
         {
             Items = { ResponseItem.CreateSystemMessageItem("Your preferred genre of story today is: horror.") },
             Metadata = { ["foo"] = "bar" },
         };
-        ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(conversationOptions);
+        ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(conversationOptions);
 
         //
         // Add items to an existing conversation to supplement the interaction state

@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure;
@@ -35,7 +34,7 @@ namespace BasicTypeSpec
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRoundTripModel(document.RootElement, data, options);
+                        return DeserializeRoundTripModel(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(RoundTripModel)} does not support reading '{options.Format}' format.");
@@ -78,23 +77,14 @@ namespace BasicTypeSpec
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RoundTripModel"/> from. </param>
         public static explicit operator RoundTripModel(Response response)
         {
-            BinaryData data = response.Content;
-            using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeRoundTripModel(document.RootElement, data, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeRoundTripModel(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RoundTripModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-            if (Patch.Contains("$"u8))
-            {
-                writer.WriteRawValue(Patch.GetJson("$"u8));
-                return;
-            }
-#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
@@ -109,210 +99,112 @@ namespace BasicTypeSpec
             {
                 throw new FormatException($"The model {nameof(RoundTripModel)} does not support writing '{format}' format.");
             }
-#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-            if (!Patch.Contains("$.requiredString"u8))
+            writer.WritePropertyName("requiredString"u8);
+            writer.WriteStringValue(RequiredString);
+            writer.WritePropertyName("requiredInt"u8);
+            writer.WriteNumberValue(RequiredInt);
+            writer.WritePropertyName("requiredCollection"u8);
+            writer.WriteStartArray();
+            foreach (StringFixedEnum item in RequiredCollection)
             {
-                writer.WritePropertyName("requiredString"u8);
-                writer.WriteStringValue(RequiredString);
+                writer.WriteStringValue(item.ToSerialString());
             }
-            if (!Patch.Contains("$.requiredInt"u8))
+            writer.WriteEndArray();
+            writer.WritePropertyName("requiredDictionary"u8);
+            writer.WriteStartObject();
+            foreach (var item in RequiredDictionary)
             {
-                writer.WritePropertyName("requiredInt"u8);
-                writer.WriteNumberValue(RequiredInt);
+                writer.WritePropertyName(item.Key);
+                writer.WriteStringValue(item.Value.ToString());
             }
-            if (Patch.Contains("$.requiredCollection"u8))
-            {
-                if (!Patch.IsRemoved("$.requiredCollection"u8))
-                {
-                    writer.WritePropertyName("requiredCollection"u8);
-                    Patch.WriteTo(writer, "$.requiredCollection"u8);
-                }
-            }
-            else
-            {
-                writer.WritePropertyName("requiredCollection"u8);
-                writer.WriteStartArray();
-                for (int i = 0; i < RequiredCollection.Count; i++)
-                {
-                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.requiredCollection[{i}]")))
-                    {
-                        continue;
-                    }
-                    writer.WriteStringValue(RequiredCollection[i].ToSerialString());
-                }
-                Patch.WriteTo(writer, "$.requiredCollection"u8);
-                writer.WriteEndArray();
-            }
-            if (!Patch.Contains("$.requiredDictionary"u8))
-            {
-                writer.WritePropertyName("requiredDictionary"u8);
-                writer.WriteStartObject();
-#if NET8_0_OR_GREATER
-                global::System.Span<byte> buffer = stackalloc byte[256];
-#endif
-                foreach (var item in RequiredDictionary)
-                {
-#if NET8_0_OR_GREATER
-                    int bytesWritten = global::System.Text.Encoding.UTF8.GetBytes(item.Key.AsSpan(), buffer);
-                    bool patchContains = (bytesWritten == 256) ? Patch.Contains("$.requiredDictionary"u8, global::System.Text.Encoding.UTF8.GetBytes(item.Key)) : Patch.Contains("$.requiredDictionary"u8, buffer.Slice(0, bytesWritten));
-#else
-                    bool patchContains = Patch.Contains("$.requiredDictionary"u8, Encoding.UTF8.GetBytes(item.Key));
-#endif
-                    if (!patchContains)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value.ToString());
-                    }
-                }
-
-                Patch.WriteTo(writer, "$.requiredDictionary"u8);
-                writer.WriteEndObject();
-            }
-            if (!Patch.Contains("$.requiredModel"u8))
-            {
-                writer.WritePropertyName("requiredModel"u8);
-                writer.WriteObjectValue(RequiredModel, options);
-            }
-            if (Optional.IsDefined(IntExtensibleEnum) && !Patch.Contains("$.intExtensibleEnum"u8))
+            writer.WriteEndObject();
+            writer.WritePropertyName("requiredModel"u8);
+            writer.WriteObjectValue(RequiredModel, options);
+            if (Optional.IsDefined(IntExtensibleEnum))
             {
                 writer.WritePropertyName("intExtensibleEnum"u8);
                 writer.WriteNumberValue(IntExtensibleEnum.Value.ToSerialInt32());
             }
-            if (Patch.Contains("$.intExtensibleEnumCollection"u8))
-            {
-                if (!Patch.IsRemoved("$.intExtensibleEnumCollection"u8))
-                {
-                    writer.WritePropertyName("intExtensibleEnumCollection"u8);
-                    Patch.WriteTo(writer, "$.intExtensibleEnumCollection"u8);
-                }
-            }
-            else if (Optional.IsCollectionDefined(IntExtensibleEnumCollection))
+            if (Optional.IsCollectionDefined(IntExtensibleEnumCollection))
             {
                 writer.WritePropertyName("intExtensibleEnumCollection"u8);
                 writer.WriteStartArray();
-                for (int i = 0; i < IntExtensibleEnumCollection.Count; i++)
+                foreach (IntExtensibleEnum item in IntExtensibleEnumCollection)
                 {
-                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.intExtensibleEnumCollection[{i}]")))
-                    {
-                        continue;
-                    }
-                    writer.WriteNumberValue(IntExtensibleEnumCollection[i].ToSerialInt32());
+                    writer.WriteNumberValue(item.ToSerialInt32());
                 }
-                Patch.WriteTo(writer, "$.intExtensibleEnumCollection"u8);
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FloatExtensibleEnum) && !Patch.Contains("$.floatExtensibleEnum"u8))
+            if (Optional.IsDefined(FloatExtensibleEnum))
             {
                 writer.WritePropertyName("floatExtensibleEnum"u8);
                 writer.WriteNumberValue(FloatExtensibleEnum.Value.ToSerialSingle());
             }
-            if (Optional.IsDefined(FloatExtensibleEnumWithIntValue) && !Patch.Contains("$.floatExtensibleEnumWithIntValue"u8))
+            if (Optional.IsDefined(FloatExtensibleEnumWithIntValue))
             {
                 writer.WritePropertyName("floatExtensibleEnumWithIntValue"u8);
                 writer.WriteNumberValue(FloatExtensibleEnumWithIntValue.Value.ToSerialSingle());
             }
-            if (Patch.Contains("$.floatExtensibleEnumCollection"u8))
-            {
-                if (!Patch.IsRemoved("$.floatExtensibleEnumCollection"u8))
-                {
-                    writer.WritePropertyName("floatExtensibleEnumCollection"u8);
-                    Patch.WriteTo(writer, "$.floatExtensibleEnumCollection"u8);
-                }
-            }
-            else if (Optional.IsCollectionDefined(FloatExtensibleEnumCollection))
+            if (Optional.IsCollectionDefined(FloatExtensibleEnumCollection))
             {
                 writer.WritePropertyName("floatExtensibleEnumCollection"u8);
                 writer.WriteStartArray();
-                for (int i = 0; i < FloatExtensibleEnumCollection.Count; i++)
+                foreach (FloatExtensibleEnum item in FloatExtensibleEnumCollection)
                 {
-                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.floatExtensibleEnumCollection[{i}]")))
-                    {
-                        continue;
-                    }
-                    writer.WriteNumberValue(FloatExtensibleEnumCollection[i].ToSerialSingle());
+                    writer.WriteNumberValue(item.ToSerialSingle());
                 }
-                Patch.WriteTo(writer, "$.floatExtensibleEnumCollection"u8);
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FloatFixedEnum) && !Patch.Contains("$.floatFixedEnum"u8))
+            if (Optional.IsDefined(FloatFixedEnum))
             {
                 writer.WritePropertyName("floatFixedEnum"u8);
                 writer.WriteNumberValue(FloatFixedEnum.Value.ToSerialSingle());
             }
-            if (Optional.IsDefined(FloatFixedEnumWithIntValue) && !Patch.Contains("$.floatFixedEnumWithIntValue"u8))
+            if (Optional.IsDefined(FloatFixedEnumWithIntValue))
             {
                 writer.WritePropertyName("floatFixedEnumWithIntValue"u8);
                 writer.WriteNumberValue((int)FloatFixedEnumWithIntValue.Value);
             }
-            if (Patch.Contains("$.floatFixedEnumCollection"u8))
-            {
-                if (!Patch.IsRemoved("$.floatFixedEnumCollection"u8))
-                {
-                    writer.WritePropertyName("floatFixedEnumCollection"u8);
-                    Patch.WriteTo(writer, "$.floatFixedEnumCollection"u8);
-                }
-            }
-            else if (Optional.IsCollectionDefined(FloatFixedEnumCollection))
+            if (Optional.IsCollectionDefined(FloatFixedEnumCollection))
             {
                 writer.WritePropertyName("floatFixedEnumCollection"u8);
                 writer.WriteStartArray();
-                for (int i = 0; i < FloatFixedEnumCollection.Count; i++)
+                foreach (FloatFixedEnum item in FloatFixedEnumCollection)
                 {
-                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.floatFixedEnumCollection[{i}]")))
-                    {
-                        continue;
-                    }
-                    writer.WriteNumberValue(FloatFixedEnumCollection[i].ToSerialSingle());
+                    writer.WriteNumberValue(item.ToSerialSingle());
                 }
-                Patch.WriteTo(writer, "$.floatFixedEnumCollection"u8);
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IntFixedEnum) && !Patch.Contains("$.intFixedEnum"u8))
+            if (Optional.IsDefined(IntFixedEnum))
             {
                 writer.WritePropertyName("intFixedEnum"u8);
                 writer.WriteNumberValue((int)IntFixedEnum.Value);
             }
-            if (Patch.Contains("$.intFixedEnumCollection"u8))
-            {
-                if (!Patch.IsRemoved("$.intFixedEnumCollection"u8))
-                {
-                    writer.WritePropertyName("intFixedEnumCollection"u8);
-                    Patch.WriteTo(writer, "$.intFixedEnumCollection"u8);
-                }
-            }
-            else if (Optional.IsCollectionDefined(IntFixedEnumCollection))
+            if (Optional.IsCollectionDefined(IntFixedEnumCollection))
             {
                 writer.WritePropertyName("intFixedEnumCollection"u8);
                 writer.WriteStartArray();
-                for (int i = 0; i < IntFixedEnumCollection.Count; i++)
+                foreach (IntFixedEnum item in IntFixedEnumCollection)
                 {
-                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.intFixedEnumCollection[{i}]")))
-                    {
-                        continue;
-                    }
-                    writer.WriteNumberValue((int)IntFixedEnumCollection[i]);
+                    writer.WriteNumberValue((int)item);
                 }
-                Patch.WriteTo(writer, "$.intFixedEnumCollection"u8);
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(StringFixedEnum) && !Patch.Contains("$.stringFixedEnum"u8))
+            if (Optional.IsDefined(StringFixedEnum))
             {
                 writer.WritePropertyName("stringFixedEnum"u8);
                 writer.WriteStringValue(StringFixedEnum.Value.ToSerialString());
             }
-            if (!Patch.Contains("$.requiredUnknown"u8))
-            {
-                writer.WritePropertyName("requiredUnknown"u8);
+            writer.WritePropertyName("requiredUnknown"u8);
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(RequiredUnknown);
+            writer.WriteRawValue(RequiredUnknown);
 #else
-                using (JsonDocument document = JsonDocument.Parse(RequiredUnknown))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+            using (JsonDocument document = JsonDocument.Parse(RequiredUnknown))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
             }
-            if (Optional.IsDefined(OptionalUnknown) && !Patch.Contains("$.optionalUnknown"u8))
+#endif
+            if (Optional.IsDefined(OptionalUnknown))
             {
                 writer.WritePropertyName("optionalUnknown"u8);
 #if NET6_0_OR_GREATER
@@ -324,167 +216,114 @@ namespace BasicTypeSpec
                 }
 #endif
             }
-            if (!Patch.Contains("$.requiredRecordUnknown"u8))
+            writer.WritePropertyName("requiredRecordUnknown"u8);
+            writer.WriteStartObject();
+            foreach (var item in RequiredRecordUnknown)
             {
-                writer.WritePropertyName("requiredRecordUnknown"u8);
-                writer.WriteStartObject();
-#if NET8_0_OR_GREATER
-                global::System.Span<byte> buffer = stackalloc byte[256];
-#endif
-                foreach (var item in RequiredRecordUnknown)
+                writer.WritePropertyName(item.Key);
+                if (item.Value == null)
                 {
-#if NET8_0_OR_GREATER
-                    int bytesWritten = global::System.Text.Encoding.UTF8.GetBytes(item.Key.AsSpan(), buffer);
-                    bool patchContains = (bytesWritten == 256) ? Patch.Contains("$.requiredRecordUnknown"u8, global::System.Text.Encoding.UTF8.GetBytes(item.Key)) : Patch.Contains("$.requiredRecordUnknown"u8, buffer.Slice(0, bytesWritten));
-#else
-                    bool patchContains = Patch.Contains("$.requiredRecordUnknown"u8, Encoding.UTF8.GetBytes(item.Key));
-#endif
-                    if (!patchContains)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        if (item.Value == null)
-                        {
-                            writer.WriteNullValue();
-                            continue;
-                        }
-#if NET6_0_OR_GREATER
-                        writer.WriteRawValue(item.Value);
-#else
-                        using (JsonDocument document = JsonDocument.Parse(item.Value))
-                        {
-                            JsonSerializer.Serialize(writer, document.RootElement);
-                        }
-#endif
-                    }
+                    writer.WriteNullValue();
+                    continue;
                 }
-
-                Patch.WriteTo(writer, "$.requiredRecordUnknown"u8);
-                writer.WriteEndObject();
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
-            if (Optional.IsCollectionDefined(OptionalRecordUnknown) && !Patch.Contains("$.optionalRecordUnknown"u8))
+            writer.WriteEndObject();
+            if (Optional.IsCollectionDefined(OptionalRecordUnknown))
             {
                 writer.WritePropertyName("optionalRecordUnknown"u8);
                 writer.WriteStartObject();
-#if NET8_0_OR_GREATER
-                global::System.Span<byte> buffer = stackalloc byte[256];
-#endif
                 foreach (var item in OptionalRecordUnknown)
                 {
-#if NET8_0_OR_GREATER
-                    int bytesWritten = global::System.Text.Encoding.UTF8.GetBytes(item.Key.AsSpan(), buffer);
-                    bool patchContains = (bytesWritten == 256) ? Patch.Contains("$.optionalRecordUnknown"u8, global::System.Text.Encoding.UTF8.GetBytes(item.Key)) : Patch.Contains("$.optionalRecordUnknown"u8, buffer.Slice(0, bytesWritten));
-#else
-                    bool patchContains = Patch.Contains("$.optionalRecordUnknown"u8, Encoding.UTF8.GetBytes(item.Key));
-#endif
-                    if (!patchContains)
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
                     {
-                        writer.WritePropertyName(item.Key);
-                        if (item.Value == null)
-                        {
-                            writer.WriteNullValue();
-                            continue;
-                        }
-#if NET6_0_OR_GREATER
-                        writer.WriteRawValue(item.Value);
-#else
-                        using (JsonDocument document = JsonDocument.Parse(item.Value))
-                        {
-                            JsonSerializer.Serialize(writer, document.RootElement);
-                        }
-#endif
+                        writer.WriteNullValue();
+                        continue;
                     }
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
-
-                Patch.WriteTo(writer, "$.optionalRecordUnknown"u8);
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && !Patch.Contains("$.readOnlyRequiredRecordUnknown"u8))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("readOnlyRequiredRecordUnknown"u8);
                 writer.WriteStartObject();
-#if NET8_0_OR_GREATER
-                global::System.Span<byte> buffer = stackalloc byte[256];
-#endif
                 foreach (var item in ReadOnlyRequiredRecordUnknown)
                 {
-#if NET8_0_OR_GREATER
-                    int bytesWritten = global::System.Text.Encoding.UTF8.GetBytes(item.Key.AsSpan(), buffer);
-                    bool patchContains = (bytesWritten == 256) ? Patch.Contains("$.readOnlyRequiredRecordUnknown"u8, global::System.Text.Encoding.UTF8.GetBytes(item.Key)) : Patch.Contains("$.readOnlyRequiredRecordUnknown"u8, buffer.Slice(0, bytesWritten));
-#else
-                    bool patchContains = Patch.Contains("$.readOnlyRequiredRecordUnknown"u8, Encoding.UTF8.GetBytes(item.Key));
-#endif
-                    if (!patchContains)
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
                     {
-                        writer.WritePropertyName(item.Key);
-                        if (item.Value == null)
-                        {
-                            writer.WriteNullValue();
-                            continue;
-                        }
-#if NET6_0_OR_GREATER
-                        writer.WriteRawValue(item.Value);
-#else
-                        using (JsonDocument document = JsonDocument.Parse(item.Value))
-                        {
-                            JsonSerializer.Serialize(writer, document.RootElement);
-                        }
-#endif
+                        writer.WriteNullValue();
+                        continue;
                     }
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
-
-                Patch.WriteTo(writer, "$.readOnlyRequiredRecordUnknown"u8);
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ReadOnlyOptionalRecordUnknown) && !Patch.Contains("$.readOnlyOptionalRecordUnknown"u8))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ReadOnlyOptionalRecordUnknown))
             {
                 writer.WritePropertyName("readOnlyOptionalRecordUnknown"u8);
                 writer.WriteStartObject();
-#if NET8_0_OR_GREATER
-                global::System.Span<byte> buffer = stackalloc byte[256];
-#endif
                 foreach (var item in ReadOnlyOptionalRecordUnknown)
                 {
-#if NET8_0_OR_GREATER
-                    int bytesWritten = global::System.Text.Encoding.UTF8.GetBytes(item.Key.AsSpan(), buffer);
-                    bool patchContains = (bytesWritten == 256) ? Patch.Contains("$.readOnlyOptionalRecordUnknown"u8, global::System.Text.Encoding.UTF8.GetBytes(item.Key)) : Patch.Contains("$.readOnlyOptionalRecordUnknown"u8, buffer.Slice(0, bytesWritten));
-#else
-                    bool patchContains = Patch.Contains("$.readOnlyOptionalRecordUnknown"u8, Encoding.UTF8.GetBytes(item.Key));
-#endif
-                    if (!patchContains)
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
                     {
-                        writer.WritePropertyName(item.Key);
-                        if (item.Value == null)
-                        {
-                            writer.WriteNullValue();
-                            continue;
-                        }
-#if NET6_0_OR_GREATER
-                        writer.WriteRawValue(item.Value);
-#else
-                        using (JsonDocument document = JsonDocument.Parse(item.Value))
-                        {
-                            JsonSerializer.Serialize(writer, document.RootElement);
-                        }
-#endif
+                        writer.WriteNullValue();
+                        continue;
                     }
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
-
-                Patch.WriteTo(writer, "$.readOnlyOptionalRecordUnknown"u8);
                 writer.WriteEndObject();
             }
-            if (!Patch.Contains("$.modelWithRequiredNullable"u8))
+            writer.WritePropertyName("modelWithRequiredNullable"u8);
+            writer.WriteObjectValue(ModelWithRequiredNullable, options);
+            writer.WritePropertyName("requiredBytes"u8);
+            writer.WriteBase64StringValue(RequiredBytes, "D");
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("modelWithRequiredNullable"u8);
-                writer.WriteObjectValue(ModelWithRequiredNullable, options);
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
-            if (!Patch.Contains("$.requiredBytes"u8))
-            {
-                writer.WritePropertyName("requiredBytes"u8);
-                writer.WriteBase64StringValue(RequiredBytes, "D");
-            }
-
-            Patch.WriteTo(writer);
-#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -501,13 +340,12 @@ namespace BasicTypeSpec
                 throw new FormatException($"The model {nameof(RoundTripModel)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRoundTripModel(document.RootElement, null, options);
+            return DeserializeRoundTripModel(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RoundTripModel DeserializeRoundTripModel(JsonElement element, BinaryData data, ModelReaderWriterOptions options)
+        internal static RoundTripModel DeserializeRoundTripModel(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -537,9 +375,7 @@ namespace BasicTypeSpec
             IReadOnlyDictionary<string, BinaryData> readOnlyOptionalRecordUnknown = default;
             ModelWithRequiredNullableProperties modelWithRequiredNullable = default;
             BinaryData requiredBytes = default;
-#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-            JsonPatch patch = new JsonPatch(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
-#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("requiredString"u8))
@@ -574,7 +410,7 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("requiredModel"u8))
                 {
-                    requiredModel = ThingModel.DeserializeThingModel(prop.Value, prop.Value.GetUtf8Bytes(), options);
+                    requiredModel = ThingModel.DeserializeThingModel(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("intExtensibleEnum"u8))
@@ -788,7 +624,7 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("modelWithRequiredNullable"u8))
                 {
-                    modelWithRequiredNullable = ModelWithRequiredNullableProperties.DeserializeModelWithRequiredNullableProperties(prop.Value, prop.Value.GetUtf8Bytes(), options);
+                    modelWithRequiredNullable = ModelWithRequiredNullableProperties.DeserializeModelWithRequiredNullableProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("requiredBytes"u8))
@@ -796,7 +632,10 @@ namespace BasicTypeSpec
                     requiredBytes = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
                     continue;
                 }
-                patch.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(prop.Name)], prop.Value.GetUtf8Bytes());
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
             }
             return new RoundTripModel(
                 requiredString,
@@ -823,53 +662,8 @@ namespace BasicTypeSpec
                 readOnlyOptionalRecordUnknown ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 modelWithRequiredNullable,
                 requiredBytes,
-                patch);
+                additionalBinaryDataProperties);
         }
-
-        /// <summary></summary>
-        /// <param name="jsonPath"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-        private bool PropagateGet(ReadOnlySpan<byte> jsonPath, out JsonPatch.EncodedValue value)
-        {
-            ReadOnlySpan<byte> local = jsonPath.SliceToStartOfPropertyName();
-            value = default;
-
-            if (local.StartsWith("requiredModel"u8))
-            {
-                return RequiredModel.Patch.TryGetEncodedValue([.. "$"u8, .. local.Slice("requiredModel"u8.Length)], out value);
-            }
-            if (local.StartsWith("modelWithRequiredNullable"u8))
-            {
-                return ModelWithRequiredNullable.Patch.TryGetEncodedValue([.. "$"u8, .. local.Slice("modelWithRequiredNullable"u8.Length)], out value);
-            }
-            return false;
-        }
-#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-
-        /// <summary></summary>
-        /// <param name="jsonPath"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-        private bool PropagateSet(ReadOnlySpan<byte> jsonPath, JsonPatch.EncodedValue value)
-        {
-            ReadOnlySpan<byte> local = jsonPath.SliceToStartOfPropertyName();
-
-            if (local.StartsWith("requiredModel"u8))
-            {
-                RequiredModel.Patch.Set([.. "$"u8, .. local.Slice("requiredModel"u8.Length)], value);
-                return true;
-            }
-            if (local.StartsWith("modelWithRequiredNullable"u8))
-            {
-                ModelWithRequiredNullable.Patch.Set([.. "$"u8, .. local.Slice("modelWithRequiredNullable"u8.Length)], value);
-                return true;
-            }
-            return false;
-        }
-#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         internal partial class RoundTripModelConverter : JsonConverter<RoundTripModel>
         {
@@ -889,7 +683,7 @@ namespace BasicTypeSpec
             public override RoundTripModel Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeRoundTripModel(document.RootElement, document.RootElement.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions);
+                return DeserializeRoundTripModel(document.RootElement, ModelSerializationExtensions.WireOptions);
             }
         }
     }

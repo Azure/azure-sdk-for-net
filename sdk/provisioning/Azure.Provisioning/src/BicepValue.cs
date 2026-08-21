@@ -92,9 +92,7 @@ public abstract class BicepValue : IBicepValue
     public override string ToString() => Compile().ToString();
 
     /// <inheritdoc />
-    public BicepExpression Compile() => Compile(format: null);
-
-    internal BicepExpression Compile(string? format)
+    public BicepExpression Compile()
     {
         if (_kind == BicepValueKind.Expression)
         {
@@ -102,7 +100,7 @@ public abstract class BicepValue : IBicepValue
         }
         if (_kind == BicepValueKind.Literal)
         {
-            return CompileLiteralValue(format ?? Format);
+            return CompileLiteralValue();
         }
         if (_self is not null)
         {
@@ -120,7 +118,7 @@ public abstract class BicepValue : IBicepValue
         throw new InvalidOperationException($"Cannot convert {this} to a Bicep expression.");
     }
 
-    private protected abstract BicepExpression CompileLiteralValue(string? format);
+    private protected abstract BicepExpression CompileLiteralValue();
 
     /// <inheritdoc />
     void IBicepValue.Assign(IBicepValue source) => Assign(source);

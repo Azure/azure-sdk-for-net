@@ -1,11 +1,10 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 using System.Threading;
 using OpenAI;
@@ -17,12 +16,9 @@ namespace Azure.AI.Extensions.OpenAI;
 /// <summary> Provides OpenAI clients scoped to an Azure AI project. </summary>
 public partial class ProjectOpenAIClient : OpenAIClient
 {
-    [Experimental("OPENAI001")]
     private ProjectConversationsClient _cachedConversationClient;
-    [Experimental("OPENAI001")]
     private ProjectResponsesClient _cachedResponseClient;
     private ProjectFilesClient _cachedFileClient;
-    [Experimental("OPENAI001")]
     private ProjectVectorStoresClient _cachedVectorStoreClient;
 
     private readonly ProjectOpenAIClientOptions _options;
@@ -85,13 +81,11 @@ public partial class ProjectOpenAIClient : OpenAIClient
     /// <summary> Gets the project conversations client as the default conversation client. </summary>
     /// <returns> The project conversations client. </returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Experimental("OPENAI001")]
     public override ConversationClient GetConversationClient()
         => GetProjectConversationsClient();
 
     /// <summary> Gets a client for project conversation operations. </summary>
     /// <returns> The project conversations client. </returns>
-    [Experimental("OPENAI001")]
     public virtual ProjectConversationsClient GetProjectConversationsClient()
     {
         return Volatile.Read(ref _cachedConversationClient)
@@ -115,7 +109,6 @@ public partial class ProjectOpenAIClient : OpenAIClient
 
     /// <summary> Gets a client for project vector store operations. </summary>
     /// <returns> The project vector stores client. </returns>
-    [Experimental("OPENAI001")]
     public virtual ProjectVectorStoresClient GetProjectVectorStoresClient()
     {
         return Volatile.Read(ref _cachedVectorStoreClient)
@@ -125,11 +118,10 @@ public partial class ProjectOpenAIClient : OpenAIClient
 
     /// <summary> Gets a client for project response operations. </summary>
     /// <returns> The project responses client. </returns>
-    [Experimental("OPENAI001")]
     public virtual ProjectResponsesClient GetProjectResponsesClient()
     {
         return Volatile.Read(ref _cachedResponseClient)
-            ?? Interlocked.CompareExchange(ref _cachedResponseClient, new ProjectResponsesClient(Pipeline, ProjectResponsesClientOptions.ToProjectResponsesClientOptions(_options), defaultAgent: null, defaultConversationId: null), null)
+            ?? Interlocked.CompareExchange(ref _cachedResponseClient, new ProjectResponsesClient(Pipeline, _options, defaultAgent: null, defaultConversationId: null), null)
             ?? _cachedResponseClient;
     }
 
@@ -137,13 +129,12 @@ public partial class ProjectOpenAIClient : OpenAIClient
     /// <param name="defaultAgent"> The default agent used for response requests. </param>
     /// <param name="defaultConversationId"> The default conversation ID used for response requests. </param>
     /// <returns> The project responses client configured with the default agent. </returns>
-    [Experimental("OPENAI001")]
     public virtual ProjectResponsesClient GetProjectResponsesClientForAgent(AgentReference defaultAgent, string defaultConversationId = null)
     {
         Argument.AssertNotNull(defaultAgent, nameof(defaultAgent));
         return new ProjectResponsesClient(
             Pipeline,
-            ProjectResponsesClientOptions.ToProjectResponsesClientOptions(_options),
+            _options,
             defaultAgent,
             defaultConversationId);
     }
@@ -153,7 +144,6 @@ public partial class ProjectOpenAIClient : OpenAIClient
     /// <param name="defaultConversationId"> The default conversation ID used for response requests. </param>
     /// <param name="options"> The options used to configure the project responses client. </param>
     /// <returns> The project responses client configured for the agent endpoint. </returns>
-    [Experimental("OPENAI001")]
     public virtual ProjectResponsesClient GetProjectResponsesClientForAgentEndpoint(string agentName, string defaultConversationId = null, ProjectOpenAIClientOptions options = null)
     {
         Argument.AssertNotNull(agentName, nameof(agentName));
@@ -168,7 +158,7 @@ public partial class ProjectOpenAIClient : OpenAIClient
         ClientPipeline endpointPipeline = CreatePipeline(CreateAuthenticationPolicy(options.TokenProvider, options), options);
         return new ProjectResponsesClient(
             pipeline: endpointPipeline,
-            options: ProjectResponsesClientOptions.ToProjectResponsesClientOptions(options),
+            options: options,
             defaultAgent: null,
             defaultConversationId: defaultConversationId
         );
@@ -178,13 +168,12 @@ public partial class ProjectOpenAIClient : OpenAIClient
     /// <param name="defaultModel"> The default model used for response requests. </param>
     /// <param name="defaultConversationId"> The default conversation ID used for response requests. </param>
     /// <returns> The project responses client configured with the default model. </returns>
-    [Experimental("OPENAI001")]
     public virtual ProjectResponsesClient GetProjectResponsesClientForModel(string defaultModel, string defaultConversationId = null)
     {
         Argument.AssertNotNullOrEmpty(defaultModel, nameof(defaultModel));
         return new ProjectResponsesClient(
             Pipeline,
-            ProjectResponsesClientOptions.ToProjectResponsesClientOptions(_options),
+            _options,
             new AgentReference($"model:{defaultModel}"),
             defaultConversationId);
     }
@@ -205,7 +194,7 @@ public partial class ProjectOpenAIClient : OpenAIClient
         }
         PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "User-Agent", $"{prefix} {telemetryDetails.UserAgent}");
         PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "x-ms-client-request-id", () => Guid.NewGuid().ToString().ToLowerInvariant());
-        PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "Foundry-Features", "MemoryStores=V1Preview,ContainerAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,AgentsOptimization=V2Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview");
+        PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "Foundry-Features", "MemoryStores=V1Preview,ContainerAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,AgentsOptimization=V2Preview,Routines=V1Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview");
         PipelinePolicyHelpers.OpenAI.AddResponseItemInputTransformPolicy(options);
         PipelinePolicyHelpers.OpenAI.AddErrorTransformPolicy(options);
         PipelinePolicyHelpers.OpenAI.AddAzureFinetuningParityPolicy(options);

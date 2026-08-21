@@ -4,17 +4,19 @@
 #nullable disable
 
 using System.ComponentModel;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class ContainerEndpoint
     {
-        // TODO: Remove this workaround after https://github.com/microsoft/typespec/issues/11696 is fixed.
+        // Customized: restore legacy casing alias.
         /// <summary> The host IP address over which the application is exposed from the container. </summary>
-        [CodeGenMember("HostIp")]
         [WirePath("hostIp")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string HostIP { get; set; }
+        public string HostIP
+        {
+            get => HostIp;
+            set => HostIp = value;
+        }
     }
 }

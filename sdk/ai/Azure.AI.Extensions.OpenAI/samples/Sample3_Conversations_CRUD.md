@@ -9,45 +9,45 @@ var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
-2. Use the client to create a `ConversationClient`, which will be used to create two `ConversationResource` objects.
+2. Use the client to create a `ConversationClient`, which will be used to create two `ProjectConversation` objects.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateConversations_ConversationCRUD_Sync
-ConversationResource conversation1 = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
+ProjectConversation conversation1 = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
 Console.WriteLine($"Created conversation (id: {conversation1.Id})");
 
-ConversationResource conversation2 = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
+ProjectConversation conversation2 = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
 Console.WriteLine($"Created conversation (id: {conversation2.Id})");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateConversations_ConversationCRUD_Async
-ConversationResource conversation1 = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
+ProjectConversation conversation1 = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
 Console.WriteLine($"Created conversation (id: {conversation1.Id})");
 
-ConversationResource conversation2 = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
+ProjectConversation conversation2 = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
 Console.WriteLine($"Created conversation (id: {conversation2.Id})");
 ```
 
-3. Retrieve the `ConversationResource` object.
+3. Retrieve the `ProjectConversation` object.
 
 Synchronous sample:
 ```C# Snippet:Sample_GetConversation_ConversationCRUD_Sync
-ConversationResource conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversation(conversationId: conversation1.Id);
+ProjectConversation conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversation(conversationId: conversation1.Id);
 Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversation.Metadata})");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_GetConversation_ConversationCRUD_Async
-ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationAsync(conversationId: conversation1.Id);
+ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationAsync(conversationId: conversation1.Id);
 Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversation.Metadata})");
 ```
 
-4. List all `ConversationResource` objects.
+4. List all `ProjectConversation` objects.
 
 Synchronous sample:
 ```C# Snippet:Sample_ListConversations_ConversationCRUD_Sync
-foreach (ConversationResource res in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversations())
+foreach (ProjectConversation res in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversations())
 {
     Console.WriteLine($"Listed conversation (id: {res.Id})");
 }
@@ -55,17 +55,17 @@ foreach (ConversationResource res in projectClient.ProjectOpenAIClient.GetProjec
 
 Asynchronous sample:
 ```C# Snippet:Sample_ListConversations_ConversationCRUD_Async
-await foreach (ConversationResource res in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationsAsync())
+await foreach (ProjectConversation res in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationsAsync())
 {
     Console.WriteLine($"Listed conversation (id: {res.Id})");
 }
 ```
 
-5. Update the `ConversationResource` object metadata and retrieve it again.
+5. Update the `ProjectConversation` object metadata and retrieve it again.
 
 Synchronous sample:
 ```C# Snippet:Sample_UpdateConversations_ConversationCRUD_Sync
-ConversationUpdateOptions updateOptions = new()
+ProjectConversationUpdateOptions updateOptions = new()
 {
     Metadata = { ["key"] = "value" },
 };
@@ -78,7 +78,7 @@ Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversa
 
 Asynchronous sample:
 ```C# Snippet:Sample_UpdateConversations_ConversationCRUD_Async
-ConversationUpdateOptions updateOptions = new()
+ProjectConversationUpdateOptions updateOptions = new()
 {
     Metadata = { ["key"] = "value" },
 };
@@ -89,7 +89,7 @@ conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsCl
 Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversation.Metadata})");
 ```
 
-6. Finally, remove `ConversationResource` objects we have created.
+6. Finally, remove `ProjectConversation` objects we have created.
 
 Synchronous sample:
 ```C# Snippet:Sample_DeleteConversations_ConversationCRUD_Sync

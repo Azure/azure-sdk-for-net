@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 writer.WritePropertyName("customerPropertiesOverviewCacheNodesUnhealthyCount"u8);
                 writer.WriteNumberValue(CustomerPropertiesOverviewCacheNodesUnhealthyCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsSignupComplete))
+            if (options.Format != "W" && Optional.IsDefined(SignupStatus))
             {
                 writer.WritePropertyName("signupStatus"u8);
-                writer.WriteBooleanValue(IsSignupComplete.Value);
+                writer.WriteBooleanValue(SignupStatus.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(SignupStatusCode))
             {
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             DateTimeOffset? customerPropertiesOverviewMissMbpsMaxOn = default;
             int? customerPropertiesOverviewCacheNodesHealthyCount = default;
             int? customerPropertiesOverviewCacheNodesUnhealthyCount = default;
-            bool? isSignupComplete = default;
+            bool? signupStatus = default;
             int? signupStatusCode = default;
             string signupStatusText = default;
             int? signupPhaseStatusCode = default;
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                     {
                         continue;
                     }
-                    isSignupComplete = prop.Value.GetBoolean();
+                    signupStatus = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("signupStatusCode"u8))
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 customerPropertiesOverviewMissMbpsMaxOn,
                 customerPropertiesOverviewCacheNodesHealthyCount,
                 customerPropertiesOverviewCacheNodesUnhealthyCount,
-                isSignupComplete,
+                signupStatus,
                 signupStatusCode,
                 signupStatusText,
                 signupPhaseStatusCode,

@@ -76,12 +76,12 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         ProjectOpenAIClient openAIClientWithoutApp = new(
             projectEndpoint: new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT),
             tokenProvider: new MockCredential(),
-            options: WithExtraPolicy(new ProjectOpenAIClientOptions()));
+            options: WithExtraPolicy(new ProjectResponsesClientOptions()));
 
         ProjectOpenAIClient openAIClientWithApp = new(
             projectEndpoint: new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT),
             tokenProvider: new MockCredential(),
-            options: WithExtraPolicy(new ProjectOpenAIClientOptions()
+            options: WithExtraPolicy(new ProjectResponsesClientOptions()
             {
                 UserAgentApplicationId = "MyOtherApplication",
             }));
@@ -193,8 +193,7 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
             oaiClient = GetTestProjectOpenAIClient().GetProjectResponsesClientForModel(TestEnvironment.FOUNDRY_MODEL_NAME);
         }
         BinaryData options = BinaryData.FromObjectAsJson(
-        new
-        {
+        new {
             model = TestEnvironment.FOUNDRY_MODEL_NAME,
             input = new[]
             {
@@ -211,7 +210,7 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         ClientResult result;
         using BinaryContent optionsContent = BinaryContent.Create(options);
         {
-            result = await oaiClient.CompactResponseAsync(optionsContent, "application/json");
+            result = await oaiClient.CompactResponseAsync("application/json", optionsContent);
         }
         List<object> items = ParseAndValidateCompactedResponse(result);
         items.Add(new
@@ -227,9 +226,8 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         });
         using BinaryContent newOptionsContent = BinaryContent.Create(options);
         {
-            result = await oaiClient.CompactResponseAsync(newOptionsContent, "application/json");
+            result = await oaiClient.CompactResponseAsync("application/json", newOptionsContent);
         }
-
         ParseAndValidateCompactedResponse(result);
     }
 
@@ -286,7 +284,7 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         }
         CreateResponseOptions options = new()
         {
-            InputItems = { ResponseItem.CreateUserMessageItem("Hello, tell me a joke.") },
+            InputItems = {ResponseItem.CreateUserMessageItem("Hello, tell me a joke.")},
             StoredOutputEnabled = storeResponse
         };
         ResponseResult result = await oaiClient.CreateResponseAsync(options);

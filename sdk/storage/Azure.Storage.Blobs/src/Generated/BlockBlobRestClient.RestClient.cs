@@ -139,7 +139,7 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        internal HttpMessage CreateUploadBlobFromUriRequest(string copySource, IDictionary<string, string> metadata, int? timeout, BinaryData transactionalContentMD5, string blobContentType, string blobContentEncoding, string blobContentLanguage, BinaryData blobContentMd5, string blobCacheControl, string leaseId, string blobContentDisposition, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, string tier, RequestConditions requestConditions, string ifTags, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string sourceIfTags, BinaryData sourceContentMd5, string blobTagsString, bool? copySourceBlobProperties, string copySourceAuthorization, string copySourceTags, string fileRequestIntent, string sourceEncryptionKey, string sourceEncryptionKeySha256, string sourceEncryptionAlgorithm, RequestContext context)
+        internal HttpMessage CreateUploadBlobFromUrlRequest(string copySource, IDictionary<string, string> metadata, int? timeout, BinaryData transactionalContentMD5, string blobContentType, string blobContentEncoding, string blobContentLanguage, BinaryData blobContentMd5, string blobCacheControl, string leaseId, string blobContentDisposition, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, string tier, RequestConditions requestConditions, string ifTags, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string sourceIfTags, BinaryData sourceContentMd5, string blobTagsString, bool? copySourceBlobProperties, string copySourceAuthorization, string copySourceTags, string fileRequestIntent, string sourceEncryptionKey, string sourceEncryptionKeySha256, string sourceEncryptionAlgorithm, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -341,7 +341,7 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        internal HttpMessage CreateStageBlockFromUriRequest(string blockId, long contentLength, string sourceUrl, string sourceRange, BinaryData sourceContentMd5, BinaryData sourceContentCrc64, int? timeout, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, string leaseId, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string copySourceAuthorization, string fileRequestIntent, string sourceEncryptionKey, string sourceEncryptionKeySha256, string sourceEncryptionAlgorithm, RequestContext context)
+        internal HttpMessage CreateStageBlockFromUrlRequest(string blockId, long contentLength, string sourceUrl, string sourceRange, BinaryData sourceContentMd5, BinaryData sourceContentCrc64, int? timeout, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, string leaseId, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string copySourceAuthorization, string fileRequestIntent, string sourceEncryptionKey, string sourceEncryptionKeySha256, string sourceEncryptionAlgorithm, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

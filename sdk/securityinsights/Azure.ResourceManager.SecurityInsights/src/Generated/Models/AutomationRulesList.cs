@@ -7,39 +7,41 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The AutomationRulesList. </summary>
+    /// <summary> Paged collection of AutomationRule items. </summary>
     internal partial class AutomationRulesList
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutomationRulesList"/>. </summary>
-        internal AutomationRulesList()
+        /// <param name="value"> The AutomationRule items on this page. </param>
+        internal AutomationRulesList(IEnumerable<SecurityInsightsAutomationRuleData> value)
         {
-            Value = new ChangeTrackingList<SecurityInsightsAutomationRuleData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationRulesList"/>. </summary>
-        /// <param name="value"> List of automation rules. </param>
+        /// <param name="value"> The AutomationRule items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationRulesList(IList<SecurityInsightsAutomationRuleData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutomationRulesList(IList<SecurityInsightsAutomationRuleData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> List of automation rules. </summary>
+        /// <summary> The AutomationRule items on this page. </summary>
         [WirePath("value")]
         public IList<SecurityInsightsAutomationRuleData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             Argument.AssertNotNull(ipConfigurations, nameof(ipConfigurations));
 
-            IPConfigurations = ipConfigurations.ToList();
+            IpConfigurations = ipConfigurations.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkInterfaceConfigurationProperties"/>. </summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             EnableIPForwarding = enableIPForwarding;
             NetworkSecurityGroup = networkSecurityGroup;
             DnsSettings = dnsSettings;
-            IPConfigurations = ipConfigurations;
+            IpConfigurations = ipConfigurations;
             DscpConfiguration = dscpConfiguration;
             AuxiliaryMode = auxiliaryMode;
             AuxiliarySku = auxiliarySku;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         internal VirtualMachineNetworkInterfaceDnsSettingsConfiguration DnsSettings { get; set; }
 
         /// <summary> Specifies the IP configurations of the network interface. </summary>
-        public IList<VirtualMachineNetworkInterfaceIPConfiguration> IPConfigurations { get; }
+        public IList<VirtualMachineNetworkInterfaceIPConfiguration> IpConfigurations { get; }
 
         /// <summary> The DSCP configuration for the network interface. </summary>
         internal SubResource DscpConfiguration { get; set; }

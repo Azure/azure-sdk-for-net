@@ -87,7 +87,6 @@
 
 /sdk/ai/Azure.AI.Projects.Agents/    @rhurey
 
-
 # PRLabel: %AI Agents
 /sdk/agentserver/    @ankitbko @RaviPidaparthi @Shivakishore14 @vangarp
 
@@ -513,7 +512,7 @@
 # ServiceOwners: @wanyang7
 
 # PRLabel: %Tables
-/sdk/tables/    @jorgerangel-msft @jsquire
+/sdk/tables/    @jorgerangel-msft
 
 # AzureSdkOwners: @jorgerangel-msft
 # ServiceLabel: %Tables

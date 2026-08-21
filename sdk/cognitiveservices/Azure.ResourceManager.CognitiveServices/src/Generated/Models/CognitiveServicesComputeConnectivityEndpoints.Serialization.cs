@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 throw new FormatException($"The model {nameof(CognitiveServicesComputeConnectivityEndpoints)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicIPAddress))
+            if (options.Format != "W" && Optional.IsDefined(PublicIpAddress))
             {
                 writer.WritePropertyName("publicIpAddress"u8);
-                writer.WriteStringValue(PublicIPAddress);
+                writer.WriteStringValue(PublicIpAddress);
             }
             if (options.Format != "W" && Optional.IsDefined(SshPort))
             {
@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            string publicIPAddress = default;
+            string publicIpAddress = default;
             int? sshPort = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("publicIpAddress"u8))
                 {
-                    publicIPAddress = prop.Value.GetString();
+                    publicIpAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("sshPort"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CognitiveServicesComputeConnectivityEndpoints(publicIPAddress, sshPort, additionalBinaryDataProperties);
+            return new CognitiveServicesComputeConnectivityEndpoints(publicIpAddress, sshPort, additionalBinaryDataProperties);
         }
     }
 }

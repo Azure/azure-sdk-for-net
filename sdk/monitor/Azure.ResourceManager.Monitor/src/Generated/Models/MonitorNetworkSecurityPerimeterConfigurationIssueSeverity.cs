@@ -15,9 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
     public readonly partial struct MonitorNetworkSecurityPerimeterConfigurationIssueSeverity : IEquatable<MonitorNetworkSecurityPerimeterConfigurationIssueSeverity>
     {
         private readonly string _value;
-        /// <summary> The issue is a warning and does not prevent the configuration from being applied. </summary>
         private const string WarningValue = "Warning";
-        /// <summary> The issue is an error and prevents the configuration from being applied. </summary>
         private const string ErrorValue = "Error";
 
         /// <summary> Initializes a new instance of <see cref="MonitorNetworkSecurityPerimeterConfigurationIssueSeverity"/>. </summary>
@@ -30,10 +28,10 @@ namespace Azure.ResourceManager.Monitor.Models
             _value = value;
         }
 
-        /// <summary> The issue is a warning and does not prevent the configuration from being applied. </summary>
+        /// <summary> Gets the Warning. </summary>
         public static MonitorNetworkSecurityPerimeterConfigurationIssueSeverity Warning { get; } = new MonitorNetworkSecurityPerimeterConfigurationIssueSeverity(WarningValue);
 
-        /// <summary> The issue is an error and prevents the configuration from being applied. </summary>
+        /// <summary> Gets the Error. </summary>
         public static MonitorNetworkSecurityPerimeterConfigurationIssueSeverity Error { get; } = new MonitorNetworkSecurityPerimeterConfigurationIssueSeverity(ErrorValue);
 
         /// <summary> Determines if two <see cref="MonitorNetworkSecurityPerimeterConfigurationIssueSeverity"/> values are the same. </summary>

@@ -3912,7 +3912,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     if (async)
                     {
-                        response = await BlobRestClient.StartCopyFromUriAsync(
+                        response = await BlobRestClient.StartCopyFromUrlAsync(
                             copySource: source.AbsoluteUri,
                             metadata: metadata,
                             tier: accessTier,
@@ -3935,7 +3935,7 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        response = BlobRestClient.StartCopyFromUri(
+                        response = BlobRestClient.StartCopyFromUrl(
                             copySource: source.AbsoluteUri,
                             metadata: metadata,
                             tier: accessTier,
@@ -4125,7 +4125,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     if (async)
                     {
-                        response = await BlobRestClient.AbortCopyFromUriAsync(
+                        response = await BlobRestClient.AbortCopyFromUrlAsync(
                             copyId: copyId,
                             leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken)
@@ -4133,7 +4133,7 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        response = BlobRestClient.AbortCopyFromUri(
+                        response = BlobRestClient.AbortCopyFromUrl(
                             copyId: copyId,
                             leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken);
@@ -4396,7 +4396,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     if (async)
                     {
-                        response = await BlobRestClient.CopyFromUriAsync(
+                        response = await BlobRestClient.CopyFromUrlAsync(
                             copySource: source.AbsoluteUri,
                             metadata: metadata,
                             tier: accessTier,
@@ -4420,7 +4420,7 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        response = BlobRestClient.CopyFromUri(
+                        response = BlobRestClient.CopyFromUrl(
                             copySource: source.AbsoluteUri,
                             metadata: metadata,
                             tier: accessTier,
