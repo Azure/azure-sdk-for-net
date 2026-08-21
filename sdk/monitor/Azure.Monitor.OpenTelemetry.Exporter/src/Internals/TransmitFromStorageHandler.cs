@@ -34,6 +34,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// </summary>
         internal const int DrainPostBudgetMilliseconds = 30000;
 
+        /// <summary>
+        /// Only yields to application startup. Kept small so a process that exits in a few hundred
+        /// milliseconds still gets the drain underway.
+        /// </summary>
+        internal const int EagerDrainDelayMilliseconds = 50;
+
         private const int MaxBlobsPerBatch = 50;
 
         private const int MaxBatchBytes = 2 * 1024 * 1024;
@@ -78,8 +84,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         /// <summary>
         /// Short-lived processes exit long before the first timer tick, so telemetry left behind by
-        /// previous runs is uploaded near startup instead. Jittered because parallel invocations
-        /// (for example MSBuild nodes) share one storage directory.
+        /// previous runs is uploaded near startup instead. Concurrent invocations sharing a storage
+        /// directory are separated by blob leases, not by staggering this.
         /// </summary>
         private void ScheduleEagerDrain()
         {
@@ -88,11 +94,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return;
             }
 
-            var delay = new Random().Next(200, 1200);
-
             _ = Task.Run(async () =>
             {
-                await Task.Delay(delay).ConfigureAwait(false);
+                await Task.Delay(EagerDrainDelayMilliseconds).ConfigureAwait(false);
                 Drain();
             });
         }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using OpenTelemetry;
@@ -42,7 +43,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
                     .Build();
 
                 // Register the MeterProvider for disposal
-                services.AddSingleton(meterProvider);
+                services.AddSingleton(new BackgroundMeterProviderDisposer(meterProvider));
 
                 AzureMonitorExporterEventSource.Log.CustomerSdkStatsEnabled(exportInterval);
             }
@@ -73,6 +74,35 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
             options.Retry.NetworkTimeout = ShutdownPersistence.PersistOnShutdownConfig.InternalTelemetryNetworkTimeout;
 
             return options;
+        }
+
+        /// <summary>
+        /// Registered in place of the meter provider itself. Disposing the provider exports one last
+        /// time, and customer SDK stats have no offline storage behind them, so losing that export is
+        /// preferable to holding up container teardown for an ingestion round trip.
+        /// </summary>
+        private sealed class BackgroundMeterProviderDisposer : IDisposable
+        {
+            private readonly MeterProvider _meterProvider;
+
+            public BackgroundMeterProviderDisposer(MeterProvider meterProvider) => _meterProvider = meterProvider;
+
+            public void Dispose()
+            {
+                var meterProvider = _meterProvider;
+
+                _ = Task.Run(() =>
+                {
+                    try
+                    {
+                        meterProvider.Dispose();
+                    }
+                    catch (Exception)
+                    {
+                        // The process is going away; there is nothing useful to report.
+                    }
+                });
+            }
         }
     }
 }
