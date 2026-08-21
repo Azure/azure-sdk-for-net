@@ -28,6 +28,7 @@ namespace Azure.Generator.Management.Utilities
         private static void AddETagBackwardCompatibilityMethods(
             TypeProvider enclosingType,
             List<MethodProvider> methods,
+            HashSet<MethodSignature> existingSignatures,
             IReadOnlyList<MethodProvider> currentMethods,
             IReadOnlyList<MethodProvider> previousMethods)
         {
@@ -42,7 +43,7 @@ namespace Azure.Generator.Management.Utilities
             foreach (var previousMethod in previousMethods)
             {
                 if (!IsPublicApi(previousMethod.Signature.Modifiers)
-                    || candidateList.Any(candidate => MethodSignature.MethodSignatureComparer.Equals(candidate.Signature, previousMethod.Signature))
+                    || existingSignatures.Contains(previousMethod.Signature)
                     || IsMethodRemovalAcceptedInBaseline(enclosingType, previousMethod.Signature))
                 {
                     continue;
@@ -57,6 +58,7 @@ namespace Azure.Generator.Management.Utilities
                 var overload = BuildStringToETagOverload(enclosingType, previousMethod, currentMethod);
                 DecorateBackwardCompatibilityMethod(overload);
                 methods.Add(overload);
+                existingSignatures.Add(overload.Signature);
                 candidateList.Add(overload);
             }
         }
@@ -74,10 +76,12 @@ namespace Azure.Generator.Management.Utilities
             var originalMethodList = originalMethods as IReadOnlyList<MethodProvider> ?? [.. originalMethods];
             var originalMethodSet = new HashSet<MethodProvider>(originalMethodList, ReferenceEqualityComparer.Instance);
             var methods = new List<MethodProvider>(backCompatMethods.Count);
+            var existingSignatures = new HashSet<MethodSignature>(MethodSignature.MethodSignatureComparer);
 
             foreach (var method in backCompatMethods)
             {
                 methods.Add(method);
+                existingSignatures.Add(method.Signature);
                 if (!originalMethodSet.Contains(method))
                 {
                     DecorateBackwardCompatibilityMethod(method);
@@ -90,6 +94,7 @@ namespace Azure.Generator.Management.Utilities
                 AddETagBackwardCompatibilityMethods(
                     originalMethodList[0].EnclosingType,
                     methods,
+                    existingSignatures,
                     originalMethodList,
                     previousMethods);
             }

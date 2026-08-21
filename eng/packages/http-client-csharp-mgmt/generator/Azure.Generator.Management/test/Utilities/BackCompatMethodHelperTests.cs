@@ -97,6 +97,25 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
+        [Test]
+        public void DoesNotDuplicateBaseGeneratedETagCompatibilityOverload()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var current = CreateMethod(
+                enclosingType,
+                [new ParameterProvider("ifMatch", $"The match condition.", new CSharpType(typeof(ETag), isNullable: true), defaultValue: Default)]);
+            var previous = CreateMethod(
+                enclosingType,
+                [new ParameterProvider("ifMatch", $"The match condition.", typeof(string))]);
+            var baseGenerated = CreateMethod(
+                enclosingType,
+                [new ParameterProvider("ifMatch", $"The match condition.", typeof(string))]);
+
+            var result = DecorateWithLastContract(enclosingType, [current, baseGenerated], [current], [previous]);
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
+        }
+
         [TestCase("etag")]
         [TestCase("condition")]
         public void DoesNotAddStringOverloadForNonConditionalETagParameter(string parameterName)
@@ -328,6 +347,13 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             TestTypeView enclosingType,
             IReadOnlyList<MethodProvider> currentMethods,
             IReadOnlyList<MethodProvider> previousMethods)
+            => DecorateWithLastContract(enclosingType, currentMethods, currentMethods, previousMethods);
+
+        private static IReadOnlyList<MethodProvider> DecorateWithLastContract(
+            TestTypeView enclosingType,
+            IReadOnlyList<MethodProvider> backCompatMethods,
+            IReadOnlyList<MethodProvider> originalMethods,
+            IReadOnlyList<MethodProvider> previousMethods)
         {
             var lastContractView = new TestTypeView(enclosingType.Name)
             {
@@ -338,7 +364,7 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                     BindingFlags.NonPublic | BindingFlags.Instance)!
                 .SetValue(enclosingType, new Lazy<TypeProvider?>(() => lastContractView));
 
-            return BackCompatHelper.DecorateBackwardCompatibilityMethods(currentMethods, currentMethods);
+            return BackCompatHelper.DecorateBackwardCompatibilityMethods(backCompatMethods, originalMethods);
         }
 
         private static string Render(TypeProvider typeProvider)
