@@ -45,12 +45,12 @@ namespace Azure.Developer.LoadTesting
         /// <param name="engineBuiltInIdentityIds"> Resource Ids of the managed identity built in to load test engines. Required if engineBuiltInIdentityType is UserAssigned. </param>
         /// <param name="estimatedVirtualUserHours"> Estimated virtual user hours for the test. </param>
         /// <param name="preferences"> Preferences for the test. </param>
-        /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
+        /// <param name="createdOn"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
-        /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
+        /// <param name="lastModifiedOn"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="LoadTesting.LoadTest"/> instance for mocking. </returns>
-        public static LoadTest LoadTest(PassFailCriteria passFailCriteria = default, AutoStopCriteria autoStopCriteria = default, IDictionary<string, TestSecret> secrets = default, TestCertificate certificate = default, IDictionary<string, string> environmentVariables = default, LoadTestConfiguration loadTestConfiguration = default, string baselineTestRunId = default, TestInputArtifacts inputArtifacts = default, string testId = default, string description = default, string displayName = default, string subnetId = default, LoadTestKind? kind = default, bool? publicIPDisabled = default, string keyvaultReferenceIdentityType = default, string keyvaultReferenceIdentityId = default, LoadTestingManagedIdentityType? metricsReferenceIdentityType = default, string metricsReferenceIdentityId = default, LoadTestingManagedIdentityType? engineBuiltInIdentityType = default, IEnumerable<string> engineBuiltInIdentityIds = default, double? estimatedVirtualUserHours = default, TestPreferences preferences = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
+        public static LoadTest LoadTest(PassFailCriteria passFailCriteria = default, AutoStopCriteria autoStopCriteria = default, IDictionary<string, TestSecret> secrets = default, TestCertificate certificate = default, IDictionary<string, string> environmentVariables = default, LoadTestConfiguration loadTestConfiguration = default, string baselineTestRunId = default, TestInputArtifacts inputArtifacts = default, string testId = default, string description = default, string displayName = default, string subnetId = default, LoadTestKind? kind = default, bool? publicIPDisabled = default, string keyvaultReferenceIdentityType = default, string keyvaultReferenceIdentityId = default, LoadTestingManagedIdentityType? metricsReferenceIdentityType = default, string metricsReferenceIdentityId = default, LoadTestingManagedIdentityType? engineBuiltInIdentityType = default, IEnumerable<string> engineBuiltInIdentityIds = default, double? estimatedVirtualUserHours = default, TestPreferences preferences = default, DateTimeOffset? createdOn = default, string createdBy = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default)
         {
             secrets ??= new ChangeTrackingDictionary<string, TestSecret>();
             environmentVariables ??= new ChangeTrackingDictionary<string, string>();
@@ -79,9 +79,9 @@ namespace Azure.Developer.LoadTesting
                 engineBuiltInIdentityIds.ToList(),
                 estimatedVirtualUserHours,
                 preferences,
-                createdDateTime,
+                createdOn,
                 createdBy,
-                lastModifiedDateTime,
+                lastModifiedOn,
                 lastModifiedBy,
                 additionalBinaryDataProperties: null);
         }
@@ -304,21 +304,21 @@ namespace Azure.Developer.LoadTesting
         /// : resource object } 
         /// </param>
         /// <param name="testId"> Test identifier. </param>
-        /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
+        /// <param name="createdOn"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
-        /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
+        /// <param name="lastModifiedOn"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="LoadTesting.TestAppComponents"/> instance for mocking. </returns>
-        public static TestAppComponents TestAppComponents(IDictionary<string, LoadTestingAppComponent> components = default, string testId = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
+        public static TestAppComponents TestAppComponents(IDictionary<string, LoadTestingAppComponent> components = default, string testId = default, DateTimeOffset? createdOn = default, string createdBy = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default)
         {
             components ??= new ChangeTrackingDictionary<string, LoadTestingAppComponent>();
 
             return new TestAppComponents(
                 components,
                 testId,
-                createdDateTime,
+                createdOn,
                 createdBy,
-                lastModifiedDateTime,
+                lastModifiedOn,
                 lastModifiedBy,
                 additionalBinaryDataProperties: null);
         }
@@ -352,21 +352,21 @@ namespace Azure.Developer.LoadTesting
         /// https://learn.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition
         /// for metric id).
         /// </param>
-        /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
+        /// <param name="createdOn"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
-        /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
+        /// <param name="lastModifiedOn"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="LoadTesting.TestServerMetricsConfiguration"/> instance for mocking. </returns>
-        public static TestServerMetricsConfiguration TestServerMetricsConfiguration(string testId = default, IDictionary<string, ResourceMetric> metrics = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
+        public static TestServerMetricsConfiguration TestServerMetricsConfiguration(string testId = default, IDictionary<string, ResourceMetric> metrics = default, DateTimeOffset? createdOn = default, string createdBy = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default)
         {
             metrics ??= new ChangeTrackingDictionary<string, ResourceMetric>();
 
             return new TestServerMetricsConfiguration(
                 testId,
                 metrics,
-                createdDateTime,
+                createdOn,
                 createdBy,
-                lastModifiedDateTime,
+                lastModifiedOn,
                 lastModifiedBy,
                 additionalBinaryDataProperties: null);
         }
@@ -406,12 +406,12 @@ namespace Azure.Developer.LoadTesting
         /// <param name="testId"> Associated test ID for the test profile. This property is required for creating a Test Profile and it's not allowed to be updated. </param>
         /// <param name="targetResourceId"> Target resource ID on which the test profile is created. This property is required for creating a Test Profile and it's not allowed to be updated. </param>
         /// <param name="targetResourceConfigurations"> Configurations of the target resource on which testing would be done. </param>
-        /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
+        /// <param name="createdOn"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
-        /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
+        /// <param name="lastModifiedOn"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="LoadTesting.TestProfile"/> instance for mocking. </returns>
-        public static TestProfile TestProfile(string testProfileId = default, string displayName = default, string description = default, string testId = default, ResourceIdentifier targetResourceId = default, TargetResourceConfigurations targetResourceConfigurations = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
+        public static TestProfile TestProfile(string testProfileId = default, string displayName = default, string description = default, string testId = default, ResourceIdentifier targetResourceId = default, TargetResourceConfigurations targetResourceConfigurations = default, DateTimeOffset? createdOn = default, string createdBy = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default)
         {
             return new TestProfile(
                 testProfileId,
@@ -420,9 +420,9 @@ namespace Azure.Developer.LoadTesting
                 testId,
                 targetResourceId,
                 targetResourceConfigurations,
-                createdDateTime,
+                createdOn,
                 createdBy,
-                lastModifiedDateTime,
+                lastModifiedOn,
                 lastModifiedBy,
                 additionalBinaryDataProperties: null);
         }
@@ -467,12 +467,12 @@ namespace Azure.Developer.LoadTesting
         /// <param name="kind"> The type of the trigger. </param>
         /// <param name="state"> The current state of the trigger. </param>
         /// <param name="stateDetails"> Details of current state of the trigger. </param>
-        /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
+        /// <param name="createdOn"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
-        /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
+        /// <param name="lastModifiedOn"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="LoadTesting.LoadTestingTrigger"/> instance for mocking. </returns>
-        public static LoadTestingTrigger LoadTestingTrigger(string triggerId = default, string displayName = default, string description = default, string kind = default, TriggerState? state = default, StateDetails stateDetails = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
+        public static LoadTestingTrigger LoadTestingTrigger(string triggerId = default, string displayName = default, string description = default, string kind = default, TriggerState? state = default, StateDetails stateDetails = default, DateTimeOffset? createdOn = default, string createdBy = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default)
         {
             return new UnknownLoadTestingTrigger(
                 triggerId,
@@ -481,9 +481,9 @@ namespace Azure.Developer.LoadTesting
                 new TriggerType(kind),
                 state,
                 stateDetails,
-                createdDateTime,
+                createdOn,
                 createdBy,
-                lastModifiedDateTime,
+                lastModifiedOn,
                 lastModifiedBy,
                 additionalBinaryDataProperties: null);
         }
@@ -502,16 +502,16 @@ namespace Azure.Developer.LoadTesting
         /// <param name="description"> The description of the trigger. </param>
         /// <param name="state"> The current state of the trigger. </param>
         /// <param name="stateDetails"> Details of current state of the trigger. </param>
-        /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
+        /// <param name="createdOn"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
-        /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
+        /// <param name="lastModifiedOn"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="testIds"> The test id of test to be triggered by this schedule trigger. Currently only one test is supported for a trigger. </param>
-        /// <param name="startDateTime"> Start date time of the trigger in UTC timezone. (RFC 3339 literal format). </param>
+        /// <param name="startOn"> Start date time of the trigger in UTC timezone. (RFC 3339 literal format). </param>
         /// <param name="recurrenceStatus"></param>
         /// <param name="recurrence"> Recurrence details of the trigger. Null if schedule is not recurring. </param>
         /// <returns> A new <see cref="LoadTesting.ScheduleTestsTrigger"/> instance for mocking. </returns>
-        public static ScheduleTestsTrigger ScheduleTestsTrigger(string triggerId = default, string displayName = default, string description = default, TriggerState? state = default, StateDetails stateDetails = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default, IEnumerable<string> testIds = default, DateTimeOffset? startDateTime = default, RecurrenceStatus recurrenceStatus = default, LoadTestingRecurrence recurrence = default)
+        public static ScheduleTestsTrigger ScheduleTestsTrigger(string triggerId = default, string displayName = default, string description = default, TriggerState? state = default, StateDetails stateDetails = default, DateTimeOffset? createdOn = default, string createdBy = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default, IEnumerable<string> testIds = default, DateTimeOffset? startOn = default, RecurrenceStatus recurrenceStatus = default, LoadTestingRecurrence recurrence = default)
         {
             testIds ??= new ChangeTrackingList<string>();
 
@@ -522,13 +522,13 @@ namespace Azure.Developer.LoadTesting
                 TriggerType.ScheduleTestsTrigger,
                 state,
                 stateDetails,
-                createdDateTime,
+                createdOn,
                 createdBy,
-                lastModifiedDateTime,
+                lastModifiedOn,
                 lastModifiedBy,
                 additionalBinaryDataProperties: null,
                 testIds.ToList(),
-                startDateTime,
+                startOn,
                 recurrenceStatus,
                 recurrence);
         }
@@ -558,11 +558,11 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Recurrence end model. Either provide numberOfOccurrences if you want recurrence to end after a specified number of occurrences or provide endDate if you want recurrence to end after a specified end date. If both values are provided, a validation error will be thrown indicating that only one field should be provided. If neither value is provided, the recurrence will end when manually ended. </summary>
         /// <param name="numberOfOccurrences"> Number of occurrences after which the recurrence will end. </param>
-        /// <param name="endDateTime"> The date after which the recurrence will end. (RFC 3339 literal format). </param>
+        /// <param name="endOn"> The date after which the recurrence will end. (RFC 3339 literal format). </param>
         /// <returns> A new <see cref="LoadTesting.RecurrenceEnd"/> instance for mocking. </returns>
-        public static RecurrenceEnd RecurrenceEnd(int? numberOfOccurrences = default, DateTimeOffset? endDateTime = default)
+        public static RecurrenceEnd RecurrenceEnd(int? numberOfOccurrences = default, DateTimeOffset? endOn = default)
         {
-            return new RecurrenceEnd(numberOfOccurrences, endDateTime, additionalBinaryDataProperties: null);
+            return new RecurrenceEnd(numberOfOccurrences, endOn, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Recurrence model when frequency is set as Daily. </summary>
@@ -643,12 +643,12 @@ namespace Azure.Developer.LoadTesting
         /// <param name="displayName"> The name of the notification rule. </param>
         /// <param name="actionGroupIds"> The action groups to notify. </param>
         /// <param name="scope"> The scope of the notification rule. </param>
-        /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
+        /// <param name="createdOn"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
-        /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
+        /// <param name="lastModifiedOn"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="LoadTesting.NotificationRule"/> instance for mocking. </returns>
-        public static NotificationRule NotificationRule(string notificationRuleId = default, string displayName = default, IEnumerable<string> actionGroupIds = default, string scope = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
+        public static NotificationRule NotificationRule(string notificationRuleId = default, string displayName = default, IEnumerable<string> actionGroupIds = default, string scope = default, DateTimeOffset? createdOn = default, string createdBy = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default)
         {
             actionGroupIds ??= new ChangeTrackingList<string>();
 
@@ -657,9 +657,9 @@ namespace Azure.Developer.LoadTesting
                 displayName,
                 actionGroupIds.ToList(),
                 new NotificationScopeType(scope),
-                createdDateTime,
+                createdOn,
                 createdBy,
-                lastModifiedDateTime,
+                lastModifiedOn,
                 lastModifiedBy,
                 additionalBinaryDataProperties: null);
         }
@@ -668,9 +668,9 @@ namespace Azure.Developer.LoadTesting
         /// <param name="notificationRuleId"> The unique identifier of the notification rule. </param>
         /// <param name="displayName"> The name of the notification rule. </param>
         /// <param name="actionGroupIds"> The action groups to notify. </param>
-        /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
+        /// <param name="createdOn"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
-        /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
+        /// <param name="lastModifiedOn"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="testIds"> The test ids to include. If not provided, notification will be sent for all testIds. </param>
         /// <param name="eventFilters">
@@ -678,7 +678,7 @@ namespace Azure.Developer.LoadTesting
         /// Key is a user-assigned identifier for the event filter.
         /// </param>
         /// <returns> A new <see cref="LoadTesting.TestsNotificationRule"/> instance for mocking. </returns>
-        public static TestsNotificationRule TestsNotificationRule(string notificationRuleId = default, string displayName = default, IEnumerable<string> actionGroupIds = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default, IEnumerable<string> testIds = default, IDictionary<string, TestsNotificationEventFilter> eventFilters = default)
+        public static TestsNotificationRule TestsNotificationRule(string notificationRuleId = default, string displayName = default, IEnumerable<string> actionGroupIds = default, DateTimeOffset? createdOn = default, string createdBy = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default, IEnumerable<string> testIds = default, IDictionary<string, TestsNotificationEventFilter> eventFilters = default)
         {
             actionGroupIds ??= new ChangeTrackingList<string>();
             testIds ??= new ChangeTrackingList<string>();
@@ -689,9 +689,9 @@ namespace Azure.Developer.LoadTesting
                 displayName,
                 actionGroupIds.ToList(),
                 NotificationScopeType.Tests,
-                createdDateTime,
+                createdOn,
                 createdBy,
-                lastModifiedDateTime,
+                lastModifiedOn,
                 lastModifiedBy,
                 additionalBinaryDataProperties: null,
                 testIds.ToList(),
@@ -793,9 +793,9 @@ namespace Azure.Developer.LoadTesting
         /// <param name="testId"> Associated test Id. </param>
         /// <param name="description"> The test run description. </param>
         /// <param name="status"> The test run status. </param>
-        /// <param name="startDateTime"> The test run start DateTime(RFC 3339 literal format). </param>
-        /// <param name="endDateTime"> The test run end DateTime(RFC 3339 literal format). </param>
-        /// <param name="executedDateTime"> Test run initiated time. This is legacy, new developments should use createdDateTime. </param>
+        /// <param name="startOn"> The test run start DateTime(RFC 3339 literal format). </param>
+        /// <param name="endOn"> The test run end DateTime(RFC 3339 literal format). </param>
+        /// <param name="executedOn"> Test run initiated time. This is legacy, new developments should use createdDateTime. </param>
         /// <param name="portalUri"> Portal url. </param>
         /// <param name="duration"> Test run duration in milliseconds. </param>
         /// <param name="virtualUserHours"> Virtual user hours consumed by the test run. </param>
@@ -807,14 +807,14 @@ namespace Azure.Developer.LoadTesting
         /// <param name="createdByType"> The type of the entity that created the test run. (E.x. User, ScheduleTrigger, etc). </param>
         /// <param name="createdByUri"> The URI pointing to the entity that created the test run. </param>
         /// <param name="estimatedVirtualUserHours"> Estimated virtual user hours for the test run. </param>
-        /// <param name="executionStartDateTime"> The test run execution start DateTime(RFC 3339 literal format). </param>
-        /// <param name="executionEndDateTime"> The test run execution end DateTime(RFC 3339 literal format). </param>
-        /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
+        /// <param name="executionStartOn"> The test run execution start DateTime(RFC 3339 literal format). </param>
+        /// <param name="executionEndOn"> The test run execution end DateTime(RFC 3339 literal format). </param>
+        /// <param name="createdOn"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
-        /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
+        /// <param name="lastModifiedOn"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="LoadTesting.LoadTestRun"/> instance for mocking. </returns>
-        public static LoadTestRun LoadTestRun(string testRunId = default, PassFailCriteria passFailCriteria = default, AutoStopCriteria autoStopCriteria = default, IDictionary<string, TestSecret> secrets = default, TestCertificate certificate = default, IDictionary<string, string> environmentVariables = default, IEnumerable<ErrorDetails> errorDetails = default, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics = default, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics = default, LoadTestConfiguration loadTestConfiguration = default, TestRunArtifacts testArtifacts = default, PassFailTestResult? testResult = default, int? virtualUsers = default, string displayName = default, string testId = default, string description = default, TestRunStatus? status = default, DateTimeOffset? startDateTime = default, DateTimeOffset? endDateTime = default, DateTimeOffset? executedDateTime = default, Uri portalUri = default, long? duration = default, double? virtualUserHours = default, string subnetId = default, LoadTestKind? kind = default, RequestDataLevel? requestDataLevel = default, bool? debugLogsEnabled = default, bool? publicIPDisabled = default, CreatedByType? createdByType = default, Uri createdByUri = default, double? estimatedVirtualUserHours = default, DateTimeOffset? executionStartDateTime = default, DateTimeOffset? executionEndDateTime = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
+        public static LoadTestRun LoadTestRun(string testRunId = default, PassFailCriteria passFailCriteria = default, AutoStopCriteria autoStopCriteria = default, IDictionary<string, TestSecret> secrets = default, TestCertificate certificate = default, IDictionary<string, string> environmentVariables = default, IEnumerable<ErrorDetails> errorDetails = default, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics = default, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics = default, LoadTestConfiguration loadTestConfiguration = default, TestRunArtifacts testArtifacts = default, PassFailTestResult? testResult = default, int? virtualUsers = default, string displayName = default, string testId = default, string description = default, TestRunStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DateTimeOffset? executedOn = default, Uri portalUri = default, long? duration = default, double? virtualUserHours = default, string subnetId = default, LoadTestKind? kind = default, RequestDataLevel? requestDataLevel = default, bool? debugLogsEnabled = default, bool? publicIPDisabled = default, CreatedByType? createdByType = default, Uri createdByUri = default, double? estimatedVirtualUserHours = default, DateTimeOffset? executionStartOn = default, DateTimeOffset? executionEndOn = default, DateTimeOffset? createdOn = default, string createdBy = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default)
         {
             secrets ??= new ChangeTrackingDictionary<string, TestSecret>();
             environmentVariables ??= new ChangeTrackingDictionary<string, string>();
@@ -840,9 +840,9 @@ namespace Azure.Developer.LoadTesting
                 testId,
                 description,
                 status,
-                startDateTime,
-                endDateTime,
-                executedDateTime,
+                startOn,
+                endOn,
+                executedOn,
                 portalUri,
                 duration,
                 virtualUserHours,
@@ -854,11 +854,11 @@ namespace Azure.Developer.LoadTesting
                 createdByType,
                 createdByUri,
                 estimatedVirtualUserHours,
-                executionStartDateTime,
-                executionEndDateTime,
-                createdDateTime,
+                executionStartOn,
+                executionEndOn,
+                createdOn,
                 createdBy,
-                lastModifiedDateTime,
+                lastModifiedOn,
                 lastModifiedBy,
                 additionalBinaryDataProperties: null);
         }
@@ -1001,21 +1001,21 @@ namespace Azure.Developer.LoadTesting
         /// : resource object } 
         /// </param>
         /// <param name="testRunId"> Test run identifier. </param>
-        /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
+        /// <param name="createdOn"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
-        /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
+        /// <param name="lastModifiedOn"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="LoadTesting.TestRunAppComponents"/> instance for mocking. </returns>
-        public static TestRunAppComponents TestRunAppComponents(IDictionary<string, LoadTestingAppComponent> components = default, string testRunId = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
+        public static TestRunAppComponents TestRunAppComponents(IDictionary<string, LoadTestingAppComponent> components = default, string testRunId = default, DateTimeOffset? createdOn = default, string createdBy = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default)
         {
             components ??= new ChangeTrackingDictionary<string, LoadTestingAppComponent>();
 
             return new TestRunAppComponents(
                 components,
                 testRunId,
-                createdDateTime,
+                createdOn,
                 createdBy,
-                lastModifiedDateTime,
+                lastModifiedOn,
                 lastModifiedBy,
                 additionalBinaryDataProperties: null);
         }
@@ -1027,21 +1027,21 @@ namespace Azure.Developer.LoadTesting
         /// https://learn.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition
         /// for metric id).
         /// </param>
-        /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
+        /// <param name="createdOn"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
-        /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
+        /// <param name="lastModifiedOn"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="LoadTesting.TestRunServerMetricsConfiguration"/> instance for mocking. </returns>
-        public static TestRunServerMetricsConfiguration TestRunServerMetricsConfiguration(string testRunId = default, IDictionary<string, ResourceMetric> metrics = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
+        public static TestRunServerMetricsConfiguration TestRunServerMetricsConfiguration(string testRunId = default, IDictionary<string, ResourceMetric> metrics = default, DateTimeOffset? createdOn = default, string createdBy = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default)
         {
             metrics ??= new ChangeTrackingDictionary<string, ResourceMetric>();
 
             return new TestRunServerMetricsConfiguration(
                 testRunId,
                 metrics,
-                createdDateTime,
+                createdOn,
                 createdBy,
-                lastModifiedDateTime,
+                lastModifiedOn,
                 lastModifiedBy,
                 additionalBinaryDataProperties: null);
         }
@@ -1165,12 +1165,12 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary> Represents a metric value. </summary>
-        /// <param name="timestamp"> The timestamp for the metric value in RFC 3339 format. </param>
+        /// <param name="on"> The timestamp for the metric value in RFC 3339 format. </param>
         /// <param name="value"> The metric value. </param>
         /// <returns> A new <see cref="LoadTesting.MetricValue"/> instance for mocking. </returns>
-        public static MetricValue MetricValue(DateTimeOffset? timestamp = default, double? value = default)
+        public static MetricValue MetricValue(DateTimeOffset? @on = default, double? value = default)
         {
-            return new MetricValue(timestamp, value, additionalBinaryDataProperties: null);
+            return new MetricValue(@on, value, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents a metric dimension value. </summary>
@@ -1191,20 +1191,20 @@ namespace Azure.Developer.LoadTesting
         /// <param name="targetResourceConfigurations"> Configurations of the target resource on which the test profile ran. </param>
         /// <param name="status"> The test profile run status. </param>
         /// <param name="errorDetails"> Error details if there is any failure in test profile run. These errors are specific to the Test Profile Run. </param>
-        /// <param name="startDateTime"> The test profile run start DateTime(RFC 3339 literal format). </param>
-        /// <param name="endDateTime"> The test profile run end DateTime(RFC 3339 literal format). </param>
+        /// <param name="startOn"> The test profile run start DateTime(RFC 3339 literal format). </param>
+        /// <param name="endOn"> The test profile run end DateTime(RFC 3339 literal format). </param>
         /// <param name="durationInSeconds"> Test profile run duration in seconds. </param>
         /// <param name="testRunDetails">
         /// Details of the test runs ran as part of the test profile run.
         /// Key is the testRunId of the corresponding testRun.
         /// </param>
         /// <param name="recommendations"> Recommendations provided based on a successful test profile run. </param>
-        /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
+        /// <param name="createdOn"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
-        /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
+        /// <param name="lastModifiedOn"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="LoadTesting.TestProfileRun"/> instance for mocking. </returns>
-        public static TestProfileRun TestProfileRun(string testProfileRunId = default, string displayName = default, string description = default, string testProfileId = default, ResourceIdentifier targetResourceId = default, TargetResourceConfigurations targetResourceConfigurations = default, TestProfileRunStatus? status = default, IEnumerable<ErrorDetails> errorDetails = default, DateTimeOffset? startDateTime = default, DateTimeOffset? endDateTime = default, long? durationInSeconds = default, IReadOnlyDictionary<string, TestRunDetail> testRunDetails = default, IEnumerable<TestProfileRunRecommendation> recommendations = default, DateTimeOffset? createdDateTime = default, string createdBy = default, DateTimeOffset? lastModifiedDateTime = default, string lastModifiedBy = default)
+        public static TestProfileRun TestProfileRun(string testProfileRunId = default, string displayName = default, string description = default, string testProfileId = default, ResourceIdentifier targetResourceId = default, TargetResourceConfigurations targetResourceConfigurations = default, TestProfileRunStatus? status = default, IEnumerable<ErrorDetails> errorDetails = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, long? durationInSeconds = default, IReadOnlyDictionary<string, TestRunDetail> testRunDetails = default, IEnumerable<TestProfileRunRecommendation> recommendations = default, DateTimeOffset? createdOn = default, string createdBy = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default)
         {
             errorDetails ??= new ChangeTrackingList<ErrorDetails>();
             testRunDetails ??= new ChangeTrackingDictionary<string, TestRunDetail>();
@@ -1219,14 +1219,14 @@ namespace Azure.Developer.LoadTesting
                 targetResourceConfigurations,
                 status,
                 errorDetails.ToList(),
-                startDateTime,
-                endDateTime,
+                startOn,
+                endOn,
                 durationInSeconds,
                 testRunDetails,
                 recommendations.ToList(),
-                createdDateTime,
+                createdOn,
                 createdBy,
-                lastModifiedDateTime,
+                lastModifiedOn,
                 lastModifiedBy,
                 additionalBinaryDataProperties: null);
         }
