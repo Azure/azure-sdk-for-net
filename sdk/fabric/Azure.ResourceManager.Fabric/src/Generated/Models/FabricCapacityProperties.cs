@@ -19,12 +19,14 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <summary> Initializes a new instance of <see cref="FabricCapacityProperties"/>. </summary>
         /// <param name="provisioningState"> The current deployment state of Microsoft Fabric resource. The provisioningState is to indicate states for resource provisioning. </param>
         /// <param name="state"> The current state of Microsoft Fabric resource. The state is to indicate more states outside of resource provisioning. </param>
+        /// <param name="overage"> The capacity overage properties of the Fabric capacity resource. </param>
         /// <param name="administration"> The capacity administration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FabricCapacityProperties(FabricProvisioningState? provisioningState, FabricResourceState? state, FabricCapacityAdministration administration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FabricCapacityProperties(FabricProvisioningState? provisioningState, FabricResourceState? state, CapacityOverageProperties overage, FabricCapacityAdministration administration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             State = state;
+            Overage = overage;
             Administration = administration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -34,6 +36,9 @@ namespace Azure.ResourceManager.Fabric.Models
 
         /// <summary> The current state of Microsoft Fabric resource. The state is to indicate more states outside of resource provisioning. </summary>
         public FabricResourceState? State { get; }
+
+        /// <summary> The capacity overage properties of the Fabric capacity resource. </summary>
+        public CapacityOverageProperties Overage { get; set; }
 
         /// <summary> The capacity administration. </summary>
         internal FabricCapacityAdministration Administration { get; set; }

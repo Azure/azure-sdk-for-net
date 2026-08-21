@@ -183,6 +183,10 @@ safe-outputs:
               }
 
 tools:
+  # With github.min-integrity none, strict mode requires bash to be explicit.
+  # This agent uses only web-fetch and the github issues toolset, no shell.
+  bash: false
+  cli-proxy: false
   web-fetch:
   github:
     toolsets: [issues]

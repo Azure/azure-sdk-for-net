@@ -82,9 +82,6 @@
         $(MSBuildProjectName) == 'Azure.Monitor.OpenTelemetry.Exporter.Tests' or
         $(MSBuildProjectName) == 'Azure.Monitor.Query.Logs.Tests' or
         $(MSBuildProjectName) == 'Azure.Monitor.Query.Metrics.Tests' or
-        $(MSBuildProjectName) == 'Azure.Projects.AI.Tests' or
-        $(MSBuildProjectName) == 'Azure.Projects.Provisioning.Tests' or
-        $(MSBuildProjectName) == 'Azure.Projects.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Advisor.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.AgFoodPlatform.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.AgriculturePlatform.Tests' or
@@ -201,7 +198,6 @@
         $(MSBuildProjectName) == 'Azure.ResourceManager.Kubernetes.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.KubernetesConfiguration.Extensions.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Tests' or
-        $(MSBuildProjectName) == 'Azure.ResourceManager.KubernetesConfiguration.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Kusto.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.LabServices.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.LambdaTestHyperExecute.Tests' or

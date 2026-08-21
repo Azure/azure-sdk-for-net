@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsVirtualMachinePublicIPAddressConfigurationProperties"/>. </summary>
         public ComputeBulkActionsVirtualMachinePublicIPAddressConfigurationProperties()
         {
-            IpTags = new ChangeTrackingList<ComputeBulkActionsVirtualMachineIpTag>();
+            IPTags = new ChangeTrackingList<ComputeBulkActionsVirtualMachineIPTag>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsVirtualMachinePublicIPAddressConfigurationProperties"/>. </summary>
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'. </param>
         /// <param name="publicIPAllocationMethod"> Specify the public IP allocation type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeBulkActionsVirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes, ComputeBulkActionsDeleteOption? deleteOption, ComputeBulkActionsVirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings, IList<ComputeBulkActionsVirtualMachineIpTag> ipTags, ComputeBulkActionsSubResource publicIPPrefix, ComputeBulkActionsIPVersion? publicIPAddressVersion, ComputeBulkActionsPublicIPAllocationMethod? publicIPAllocationMethod, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkActionsVirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes, ComputeBulkActionsDeleteOption? deleteOption, ComputeBulkActionsVirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings, IList<ComputeBulkActionsVirtualMachineIPTag> ipTags, ComputeBulkActionsSubResource publicIPPrefix, ComputeBulkActionsIPVersion? publicIPAddressVersion, ComputeBulkActionsPublicIPAllocationMethod? publicIPAllocationMethod, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             DeleteOption = deleteOption;
             DnsSettings = dnsSettings;
-            IpTags = ipTags;
+            IPTags = ipTags;
             PublicIPPrefix = publicIPPrefix;
             PublicIPAddressVersion = publicIPAddressVersion;
             PublicIPAllocationMethod = publicIPAllocationMethod;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public ComputeBulkActionsVirtualMachinePublicIPAddressDnsSettingsConfiguration DnsSettings { get; set; }
 
         /// <summary> The list of IP tags associated with the public IP address. </summary>
-        public IList<ComputeBulkActionsVirtualMachineIpTag> IpTags { get; }
+        public IList<ComputeBulkActionsVirtualMachineIPTag> IPTags { get; }
 
         /// <summary> The PublicIPPrefix from which to allocate publicIP addresses. </summary>
         internal ComputeBulkActionsSubResource PublicIPPrefix { get; set; }
