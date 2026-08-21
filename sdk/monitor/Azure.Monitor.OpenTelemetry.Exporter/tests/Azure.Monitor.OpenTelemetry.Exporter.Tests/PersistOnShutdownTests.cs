@@ -422,19 +422,31 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void InternalTelemetryExportersCannotStallProcessExit()
+        public void StatsbeatCannotStallProcessExit()
         {
-            // Both meter providers export once more as they are disposed, which happens on the exit
-            // path. The pipeline default of 100 seconds would let an unreachable endpoint stall it.
+            // Statsbeat has its own connection string, so it gets its own transmitter and this
+            // timeout reaches it. The pipeline default of 100 seconds would let an unreachable
+            // endpoint stall the final export it does as it is disposed.
             var statsbeat = AzureMonitorStatsbeat.CreateExporterOptions($"InstrumentationKey={Guid.NewGuid()};IngestionEndpoint={TestEndpoint}");
-            var customerStats = CustomerSdkStatsRegistration.CreateCustomerSdkStatsOptions(new AzureMonitorExporterOptions
-            {
-                ConnectionString = $"InstrumentationKey={Guid.NewGuid()};IngestionEndpoint={TestEndpoint}",
-            });
 
             Assert.Equal(PersistOnShutdownConfig.InternalTelemetryNetworkTimeout, statsbeat.Retry.NetworkTimeout);
-            Assert.Equal(PersistOnShutdownConfig.InternalTelemetryNetworkTimeout, customerStats.Retry.NetworkTimeout);
             Assert.True(PersistOnShutdownConfig.InternalTelemetryNetworkTimeout < TimeSpan.FromSeconds(30));
+        }
+
+        [Fact]
+        public void CustomerSdkStatsLeaveTheCustomersNetworkTimeoutAlone()
+        {
+            // These stats reuse the customer's connection string, and transmitters are cached per
+            // connection string, so a timeout set here would either be discarded or - if this ran
+            // first - impose five seconds on the customer's own telemetry.
+            var original = new AzureMonitorExporterOptions
+            {
+                ConnectionString = $"InstrumentationKey={Guid.NewGuid()};IngestionEndpoint={TestEndpoint}",
+            };
+
+            var customerStats = CustomerSdkStatsRegistration.CreateCustomerSdkStatsOptions(original);
+
+            Assert.Equal(original.Retry.NetworkTimeout, customerStats.Retry.NetworkTimeout);
         }
 
         [Fact]

@@ -5,8 +5,9 @@ short-lived processes such as CLI tools, which pay both costs on every invocatio
 opportunity to amortise them.
 
 Measured with BenchmarkDotNet on .NET 8.0.30, X64 RyuJIT, `RunStrategy=Monitoring`. Ingestion is a
-loopback stub ([LocalIngestionServer.cs](LocalIngestionServer.cs)) with a configurable response
-delay, so the numbers isolate the exporter from real network variance. Run them with:
+loopback stub ([LocalIngestionServer.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/tests/Azure.Monitor.OpenTelemetry.Exporter.Benchmarks/LocalIngestionServer.cs))
+with a configurable response delay, so the numbers isolate the exporter from real network variance.
+Run them with:
 
 ```dotnetcli
 dotnet run -c Release -f net8.0 --filter *ShutdownBenchmarks*

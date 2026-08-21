@@ -51,10 +51,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ShutdownPersistence
         internal const int FallbackPostBudgetMilliseconds = 3000;
 
         /// <summary>
-        /// Network timeout for the internal telemetry exporters (Statsbeat, customer SDK stats).
-        /// Their meter providers export once more as they are disposed, which is on the process exit
-        /// path, and the pipeline default of 100 seconds would make an unreachable endpoint stall it.
-        /// Losing internal telemetry is acceptable; stalling exit is not.
+        /// Network timeout for the Statsbeat exporter. Its meter provider exports once more as it is
+        /// disposed, which is on the process exit path, and the pipeline default of 100 seconds would
+        /// make an unreachable endpoint stall it. Losing internal telemetry is acceptable; stalling
+        /// exit is not. This applies only to Statsbeat, which transmits to its own endpoint and so
+        /// gets a transmitter of its own rather than sharing the customer's.
         /// </summary>
         internal static readonly TimeSpan InternalTelemetryNetworkTimeout = TimeSpan.FromSeconds(5);
 

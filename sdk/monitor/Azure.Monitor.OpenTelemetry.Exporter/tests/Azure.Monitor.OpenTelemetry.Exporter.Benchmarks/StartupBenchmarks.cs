@@ -8,6 +8,8 @@ using System.IO;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Engines;
 
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+
 using OpenTelemetry;
 using OpenTelemetry.Trace;
 
@@ -47,6 +49,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
         {
             Activity.DefaultIdFormat = ActivityIdFormat.W3C;
             Activity.ForceDefaultIdFormat = true;
+
+            // Each provider would otherwise schedule a drain that outlives the iteration and lands
+            // in the middle of a later measurement.
+            TransmitFromStorageHandler.DisableEagerDrainForTesting = true;
 
             _storageDirectory = Path.Combine(Path.GetTempPath(), "AzMonStartupBenchmarks", Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(_storageDirectory);

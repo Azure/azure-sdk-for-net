@@ -70,8 +70,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
                 EnableLiveMetrics = false,
             };
 
-            // Disposing this meter provider exports once more on the process exit path.
-            options.Retry.NetworkTimeout = ShutdownPersistence.PersistOnShutdownConfig.InternalTelemetryNetworkTimeout;
+            // No network timeout override: transmitters are cached per connection string and these
+            // stats share the customer's, so setting one here would either be discarded or, if this
+            // ran first, impose a five second timeout on the customer's own telemetry.
+            // BackgroundMeterProviderDisposer is what keeps the final export off the exit path.
 
             return options;
         }
