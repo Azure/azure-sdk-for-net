@@ -23,7 +23,11 @@ namespace Azure.Generator.Visitors
                 && IsAzureResponse(expression.Arguments[0]))
             {
                 var arguments = expression.Arguments.ToList();
-                arguments[0] = New.Instance<AzurePipelineResponse>(arguments[0]);
+                var response = arguments[0];
+                var message = FindHttpMessage(response);
+                arguments[0] = message is null
+                    ? New.Instance<AzurePipelineResponse>(response)
+                    : New.Instance<AzurePipelineResponse>(response, message);
                 expression.Update(arguments: arguments);
                 return expression;
             }
@@ -48,6 +52,29 @@ namespace Azure.Generator.Visitors
 
         private static bool IsAzureResponseType(CSharpType? type)
             => UnwrapTask(type)?.Equals(typeof(Response)) == true;
+
+        private static ValueExpression? FindHttpMessage(ValueExpression expression)
+        {
+            if (expression is ScopedApi api)
+            {
+                return FindHttpMessage(api.Original);
+            }
+
+            if (expression is InvokeMethodExpression invocation)
+            {
+                return invocation.Arguments.FirstOrDefault(IsHttpMessage);
+            }
+
+            return null;
+        }
+
+        private static bool IsHttpMessage(ValueExpression expression)
+            => expression switch
+            {
+                ScopedApi api => api.Type.Equals(typeof(HttpMessage)),
+                VariableExpression variable => variable.Type.Equals(typeof(HttpMessage)),
+                _ => false
+            };
 
         private static CSharpType? UnwrapTask(CSharpType? type)
             => type is { IsFrameworkType: true, Arguments.Count: 1 } &&
