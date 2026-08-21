@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageSharedSources)Argument.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)BufferExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\*.cs" LinkBase="Shared\ClientsideEncryption" />
     <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\Models\*.cs" LinkBase="Shared\ClientsideEncryption\Models" />
     <Compile Include="$(AzureStorageSharedSources)Constants.cs" LinkBase="Shared" />
