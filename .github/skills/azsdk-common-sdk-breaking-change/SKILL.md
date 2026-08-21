@@ -4,7 +4,7 @@ license: MIT
 metadata:
   version: "1.0.0"
   distribution: shared
-description: 'Detect and mitigate SDK Breaking changes for an SDK package which is generated from TypeSpec. WHEN: "Detect SDK breaking changes for a service", "Detect SDK breaking changes for an SDK package", "Detect and mitigate SDK breaking changes for a service", "Detect and mitigate SDK breaking changes for an SDK package". INVOKES: skill: azsdk-common-generate-sdk-locally; MCP tools: azsdk_customized_code_update, azsdk_package_detect_breaking_change.'
+description: 'Detect and mitigate SDK Breaking changes for an SDK package which is generated from TypeSpec. WHEN: "Detect SDK breaking changes for a service", "Detect SDK breaking changes for an SDK package", "Detect and mitigate SDK breaking changes for a service", "Detect and mitigate SDK breaking changes for an SDK package". INVOKES: skill: azsdk-common-generate-sdk-locally; MCP tools: azure-sdk-mcp:azsdk_customized_code_update, azure-sdk-mcp:azsdk_package_detect_breaking_change.'
 compatibility: "azure-sdk-mcp server, local azure-sdk-for-{language} clone, language build tools"
 ---
 
@@ -27,7 +27,7 @@ Prerequisites: azure-sdk-mcp server must be running.
 
 2. Follow `azsdk-common-generate-sdk-locally` skill to generate SDK only.
 3. **Detect SDK breaking Changes** - Run `azure-sdk-mcp:azsdk_package_detect_breaking_change`
-4. **Display detected breaking changes** — If step 3 detects breaking changes, display a `## Detected Breaking Changes` title followed by a Markdown table. Include exactly one breaking change per row with these columns: `Breaking Change`, `Category`, and `Resolution`. Preserve the category and resolution returned by the detection tool; do not replace them with a summary.
+4. **Display detected breaking changes** — If step 3 detects breaking changes, display a `## Detected Breaking Changes` title followed by a Markdown table. Include exactly one breaking change per row with these columns: `Breaking Change`, `Category`, and `Resolution`. Preserve the category and resolution returned by the detection tool; do not replace them with a summary. If no breaking changes are detected, report that result and stop processing the current language.
 5. **Prompt the user to choose breaking changes to mitigate** — Present the list from step 3 as a multiple-choice selection.
 6. **Mitigate SDK breaking changes** - Run `azure-sdk-mcp:azsdk_customized_code_update` with parameters:
 
