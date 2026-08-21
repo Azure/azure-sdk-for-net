@@ -25,17 +25,17 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="statusDetails"> The status details of restore operation. </param>
         /// <param name="error"> Error encountered, if any, during the restore operation. </param>
         /// <param name="jobId"> Identifier for the restore operation. </param>
-        /// <param name="startTime"> The start time of the restore operation. </param>
-        /// <param name="endTime"> The end time of the restore operation. </param>
+        /// <param name="startOn"> The start time of the restore operation. </param>
+        /// <param name="endOn"> The end time of the restore operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestoreDetailsInternal(OperationStatus? status, string statusDetails, KeyVaultServiceError error, string jobId, DateTimeOffset? startTime, DateTimeOffset? endTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestoreDetailsInternal(OperationStatus? status, string statusDetails, KeyVaultServiceError error, string jobId, DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             StatusDetails = statusDetails;
             Error = error;
             JobId = jobId;
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -52,9 +52,9 @@ namespace Azure.Security.KeyVault.Administration.Models
         public string JobId { get; }
 
         /// <summary> The start time of the restore operation. </summary>
-        public DateTimeOffset? StartTime { get; }
+        public DateTimeOffset? StartOn { get; }
 
         /// <summary> The end time of the restore operation. </summary>
-        public DateTimeOffset? EndTime { get; }
+        public DateTimeOffset? EndOn { get; }
     }
 }
