@@ -50,6 +50,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         public PersistOnShutdownProviderTests()
         {
+            // Shutdown starts the drain without waiting for it, so tests asserting on what was
+            // persisted would otherwise race it. Tests that are about the drain turn this back on.
+            TransmitFromStorageHandler.DisableShutdownDrainForTesting = true;
+
             _storageRoot = Path.Combine(Path.GetTempPath(), "AzMonPersistProviderTests", Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(_storageRoot);
 
@@ -65,6 +69,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         public void Dispose()
         {
+            TransmitFromStorageHandler.DisableShutdownDrainForTesting = false;
+
             _listener.Dispose();
             _activitySource.Dispose();
 
@@ -99,6 +105,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void DisposeDoesNotLoseTelemetryWhenIngestionIsUnavailable()
         {
+            TransmitFromStorageHandler.DisableShutdownDrainForTesting = false;
+
             var tracerProvider = BuildTracerProvider(out _, out _, _ => new MockResponse(503).SetContent("Service Unavailable"));
 
             EmitActivity();
@@ -178,6 +186,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void ShutdownDoesNotBlockOnAHangingEndpoint()
         {
+            TransmitFromStorageHandler.DisableShutdownDrainForTesting = false;
+
             var tracerProvider = BuildTracerProvider(
                 out _,
                 out _,
@@ -374,6 +384,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void MetricDisposeDrainsPersistedTelemetryWithinTheBudget()
         {
+            TransmitFromStorageHandler.DisableShutdownDrainForTesting = false;
+
             var options = BuildOptions(out var transmitter, out var transport);
 
             var meterName = $"OTel.PersistProvider.{Guid.NewGuid():N}";

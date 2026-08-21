@@ -53,6 +53,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// </summary>
         internal static bool DisableEagerDrainForTesting;
 
+        /// <summary>
+        /// Set by tests that assert on what shutdown persisted. Shutdown starts the drain without
+        /// waiting for it, so it would otherwise be free to lease and delete those blobs while the
+        /// assertions run.
+        /// </summary>
+        internal static bool DisableShutdownDrainForTesting;
+
         private readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
         private readonly ConnectionVars _connectionVars;
         internal PersistentBlobProvider _blobProvider;
@@ -103,7 +110,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal void TransmitFromStorage(object? sender, ElapsedEventArgs? e) => Drain();
 
-        internal Task DrainAsync() => Task.Run(Drain);
+        internal Task DrainAsync() => DisableShutdownDrainForTesting ? Task.CompletedTask : Task.Run(Drain);
 
         internal void Drain()
         {
