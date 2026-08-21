@@ -27,7 +27,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// resource attached to the tool.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SharePointGroundingToolOptions(IList<ToolProjectConnection> projectConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SharePointGroundingToolOptions(IList<ResponsesToolProjectConnection> projectConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProjectConnections = projectConnections;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -7,17 +7,14 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
+using Azure.AI.Extensions.OpenAI.Internal;
 
 namespace Azure.AI.Discovery
 {
-    /// <summary>
-    /// Response indicating the KnowledgeBase operation.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseIndexingOperationResponse"/> and <see cref="KnowledgeBaseSearchOperationResponse"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownKnowledgeBaseOperationResponse))]
-    public abstract partial class KnowledgeBaseOperationResponse : IJsonModel<KnowledgeBaseOperationResponse>
+    /// <summary> The input format for the custom tool. Default is unconstrained text. </summary>
+    public partial class ResponsesCustomToolParamFormat : IJsonModel<ResponsesCustomToolParamFormat>
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseOperationResponse"/> for deserialization. </summary>
         internal KnowledgeBaseOperationResponse()
@@ -142,17 +139,21 @@ namespace Azure.AI.Discovery
             {
                 return null;
             }
-            if (element.TryGetProperty("operationType"u8, out JsonElement discriminator))
+            CustomToolParamFormatType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("type"u8))
                 {
-                    case "Indexing":
-                        return KnowledgeBaseIndexingOperationResponse.DeserializeKnowledgeBaseIndexingOperationResponse(element, options);
-                    case "Search":
-                        return KnowledgeBaseSearchOperationResponse.DeserializeKnowledgeBaseSearchOperationResponse(element, options);
+                    @type = new CustomToolParamFormatType(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownKnowledgeBaseOperationResponse.DeserializeUnknownKnowledgeBaseOperationResponse(element, options);
+            return new ResponsesCustomToolParamFormat(@type, additionalBinaryDataProperties);
         }
     }
 }

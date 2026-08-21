@@ -45,7 +45,26 @@ public partial class ProjectsAgentRecord
 [CodeGenType("ImplicitUserMessage")] internal partial class InternalImplicitUserMessage { }
 [CodeGenType("Location")] internal partial class InternalLocation { }
 [CodeGenType("LogProb")] internal partial class InternalLogProb { }
-[CodeGenType("MCPListToolsTool")] internal partial class InternalMCPListToolsTool { }
+[CodeGenType("MCPListToolsTool")] public partial class VoiceMcpListToolsTool { }
+[CodeGenType("MCPListToolsToolAnnotations")] public partial class VoiceMcpListToolsToolAnnotations { }
+[CodeGenType("MCPListToolsToolInputSchema")] public partial class VoiceMcpListToolsToolInputSchema { }
+[CodeGenType("InternalToolChoiceParam")] public abstract partial class VoiceAgentToolChoice { }
+[CodeGenType("SpecificApplyPatchParam")] internal partial class InternalVoiceApplyPatchToolChoice { }
+[CodeGenType("SpecificFunctionShellParam")] internal partial class InternalVoiceFunctionShellToolChoice { }
+[CodeGenType("ToolChoiceAllowed")] internal partial class InternalVoiceAllowedToolChoice { }
+[CodeGenType("ToolChoiceCodeInterpreter")] internal partial class InternalVoiceCodeInterpreterToolChoice { }
+[CodeGenType("ToolChoiceComputer")] internal partial class InternalVoiceComputerToolChoice { }
+[CodeGenType("ToolChoiceComputerUse")] internal partial class InternalVoiceComputerUseToolChoice { }
+[CodeGenType("ToolChoiceComputerUsePreview")] internal partial class InternalVoiceComputerUsePreviewToolChoice { }
+[CodeGenType("ToolChoiceCustom")] internal partial class InternalVoiceCustomToolChoice { }
+[CodeGenType("ToolChoiceFileSearch")] internal partial class InternalVoiceFileSearchToolChoice { }
+[CodeGenType("ToolChoiceImageGeneration")] internal partial class InternalVoiceImageGenerationToolChoice { }
+[CodeGenType("ToolChoiceWebSearchPreview")] internal partial class InternalVoiceWebSearchPreviewToolChoice { }
+[CodeGenType("ToolChoiceWebSearchPreview20250311")] internal partial class InternalVoiceWebSearchPreview20250311ToolChoice { }
+[CodeGenType("OmitPropertiesOutputModality")] public readonly partial struct VoiceResponseOutputModality { }
+[CodeGenType("OmitPropertiesRealtimeResponse")] public partial class VoiceResponseProperties { }
+[CodeGenType("OmitPropertiesRealtimeResponseObject")] public readonly partial struct VoiceResponseObject { }
+[CodeGenType("OmitPropertiesStatus")] public readonly partial struct VoiceResponseStatus { }
 [CodeGenType("MCPTool")] internal partial class InternalMCPTool { }
 [CodeGenType("MCPToolAllowedTools1")] internal partial class InternalMCPToolAllowedTools1 { }
 [CodeGenType("MCPToolRequireApproval1")] internal partial class InternalMCPToolRequireApproval1 { }
@@ -60,3 +79,5 @@ public partial class ProjectsAgentRecord
 [CodeGenType("NamespaceToolParam")] internal partial class InternalNamespaceToolParam { }
 [CodeGenType("ToolSearchToolParam")] public partial class ToolSearchTool { }
 [CodeGenType("ToolSearchExecutionType")] public partial struct ToolSearchExecutionKind { }
+
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP001")] public partial class VoiceAgentSemanticVadTurnDetection { }

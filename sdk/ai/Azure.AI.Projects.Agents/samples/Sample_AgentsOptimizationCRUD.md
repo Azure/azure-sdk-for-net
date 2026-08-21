@@ -261,7 +261,7 @@ Console.WriteLine($"The job {cancelledJob.Id} was cancelled.");
 Synchronous sample:
 ```C# Snippet:Sample_ListOptimizationJobs_AgentsOptimization_Sync
 Console.WriteLine("Listing optimization jobs:");
-foreach (AgentOptimizationJobListItem oneJob in jobsClient.GetAll())
+foreach (AgentOptimizationJob oneJob in jobsClient.GetAll())
 {
     Console.WriteLine($"    Job: {oneJob.Id}, Status: {oneJob.Status}.");
 }
@@ -270,7 +270,7 @@ foreach (AgentOptimizationJobListItem oneJob in jobsClient.GetAll())
 Asynchronous sample:
 ```C# Snippet:Sample_ListOptimizationJobs_AgentsOptimization_Async
 Console.WriteLine("Listing optimization jobs:");
-await foreach (AgentOptimizationJobListItem oneJob in jobsClient.GetAllAsync())
+await foreach (AgentOptimizationJob oneJob in jobsClient.GetAllAsync())
 {
     Console.WriteLine($"    Job: {oneJob.Id}, Status: {oneJob.Status}.");
 }

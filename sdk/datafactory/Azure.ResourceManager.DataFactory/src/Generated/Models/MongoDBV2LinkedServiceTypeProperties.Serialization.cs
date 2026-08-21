@@ -9,13 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
+using Azure.AI.Extensions.OpenAI.Internal;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> MongoDB linked service properties. </summary>
-    internal partial class MongoDBV2LinkedServiceTypeProperties : IJsonModel<MongoDBV2LinkedServiceTypeProperties>
+    /// <summary> Network access policy for the container. </summary>
+    public partial class ResponsesContainerNetworkPolicyParam : IJsonModel<ResponsesContainerNetworkPolicyParam>
     {
         /// <summary> Initializes a new instance of <see cref="MongoDBV2LinkedServiceTypeProperties"/> for deserialization. </summary>
         internal MongoDBV2LinkedServiceTypeProperties()
@@ -126,19 +125,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            DataFactoryElement<string> connectionString = default;
-            DataFactoryElement<string> database = default;
+            ContainerNetworkPolicyParamType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("connectionString"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    connectionString = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("database"u8))
-                {
-                    database = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    @type = new ContainerNetworkPolicyParamType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -146,7 +139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MongoDBV2LinkedServiceTypeProperties(connectionString, database, additionalBinaryDataProperties);
+            return new ResponsesContainerNetworkPolicyParam(@type, additionalBinaryDataProperties);
         }
     }
 }

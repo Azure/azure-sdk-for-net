@@ -9,12 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ServiceLinker;
+using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.ResourceManager.ServiceLinker.Models
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
-    /// <summary> The configuration names. </summary>
-    public partial class LinkerConfigurationName : IJsonModel<LinkerConfigurationName>
+    /// <summary> A computer screenshot image used with the computer use tool. </summary>
+    internal partial class ComputerScreenshotImage : IJsonModel<ComputerScreenshotImage>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -74,10 +74,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 throw new FormatException($"The model {nameof(LinkerConfigurationName)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Value))
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type);
+            if (Optional.IsDefined(ImageUrl))
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStringValue(Value);
+                writer.WritePropertyName("image_url"u8);
+                writer.WriteStringValue(ImageUrl.AbsoluteUri);
             }
             if (Optional.IsDefined(Description))
             {
@@ -131,15 +133,15 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            string value = default;
-            string description = default;
-            bool? isRequired = default;
+            string @type = default;
+            Uri imageUrl = default;
+            string fileId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    value = prop.Value.GetString();
+                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -153,7 +155,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     {
                         continue;
                     }
-                    isRequired = prop.Value.GetBoolean();
+                    imageUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    continue;
+                }
+                if (prop.NameEquals("file_id"u8))
+                {
+                    fileId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -161,7 +168,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LinkerConfigurationName(value, description, isRequired, additionalBinaryDataProperties);
+            return new ComputerScreenshotImage(@type, imageUrl, fileId, additionalBinaryDataProperties);
         }
     }
 }

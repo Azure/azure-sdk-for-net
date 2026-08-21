@@ -10,61 +10,61 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using Azure;
+using OpenAI;
 
-namespace Azure.AI.Discovery
+namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Response for indexing operations. </summary>
-    public partial class KnowledgeBaseIndexingOperationResponse : KnowledgeBaseOperationResponse, IJsonModel<KnowledgeBaseIndexingOperationResponse>
+    /// <summary> An agent implementing the A2A protocol. </summary>
+    public partial class A2ATool : ProjectsAgentTool, IJsonModel<A2ATool>
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseIndexingOperationResponse"/> for deserialization. </summary>
-        internal KnowledgeBaseIndexingOperationResponse()
+        /// <summary> Initializes a new instance of <see cref="A2ATool"/> for deserialization. </summary>
+        internal A2ATool()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override KnowledgeBaseOperationResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ProjectsAgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseIndexingOperationResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<A2ATool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeKnowledgeBaseIndexingOperationResponse(document.RootElement, options);
+                        return DeserializeA2ATool(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeBaseIndexingOperationResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2ATool)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseIndexingOperationResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<A2ATool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIDiscoveryContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeBaseIndexingOperationResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2ATool)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KnowledgeBaseIndexingOperationResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<A2ATool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeBaseIndexingOperationResponse IPersistableModel<KnowledgeBaseIndexingOperationResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => (KnowledgeBaseIndexingOperationResponse)PersistableModelCreateCore(data, options);
+        A2ATool IPersistableModel<A2ATool>.Create(BinaryData data, ModelReaderWriterOptions options) => (A2ATool)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KnowledgeBaseIndexingOperationResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<A2ATool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<KnowledgeBaseIndexingOperationResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<A2ATool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,58 +75,95 @@ namespace Azure.AI.Discovery
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseIndexingOperationResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<A2ATool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KnowledgeBaseIndexingOperationResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(A2ATool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(IndexingResult))
+            if (Optional.IsDefined(BaseUrl))
             {
-                writer.WritePropertyName("indexingResult"u8);
-                writer.WriteObjectValue(IndexingResult, options);
+                writer.WritePropertyName("base_url"u8);
+                writer.WriteStringValue(BaseUrl.AbsoluteUri);
             }
+            if (Optional.IsDefined(AgentCardPath))
+            {
+                writer.WritePropertyName("agent_card_path"u8);
+                writer.WriteStringValue(AgentCardPath);
+            }
+            if (Optional.IsDefined(ProjectConnectionId))
+            {
+                writer.WritePropertyName("project_connection_id"u8);
+                writer.WriteStringValue(ProjectConnectionId);
+            }
+            if (Optional.IsDefined(SendCredentialsForAgentCard))
+            {
+                writer.WritePropertyName("send_credentials_for_agent_card"u8);
+                writer.WriteBooleanValue(SendCredentialsForAgentCard.Value);
+            }
+            writer.WritePropertyName("a2a_version"u8);
+            writer.WriteStringValue(A2aVersion.ToString());
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeBaseIndexingOperationResponse IJsonModel<KnowledgeBaseIndexingOperationResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KnowledgeBaseIndexingOperationResponse)JsonModelCreateCore(ref reader, options);
+        A2ATool IJsonModel<A2ATool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (A2ATool)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override KnowledgeBaseOperationResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ProjectsAgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseIndexingOperationResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<A2ATool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KnowledgeBaseIndexingOperationResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(A2ATool)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKnowledgeBaseIndexingOperationResponse(document.RootElement, options);
+            return DeserializeA2ATool(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static KnowledgeBaseIndexingOperationResponse DeserializeKnowledgeBaseIndexingOperationResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static A2ATool DeserializeA2ATool(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string id = default;
-            OperationState status = default;
-            ResponseError error = default;
-            KnowledgeBaseOperationType operationType = default;
+            ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IndexingOperationResult indexingResult = default;
+            Uri baseUrl = default;
+            string agentCardPath = default;
+            string projectConnectionId = default;
+            bool? sendCredentialsForAgentCard = default;
+            A2AProtocolVersion a2aVersion = default;
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    id = prop.Value.GetString();
+                    @type = new ToolType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("status"u8))
+                if (prop.NameEquals("base_url"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    baseUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    continue;
+                }
+                if (prop.NameEquals("agent_card_path"u8))
+                {
+                    agentCardPath = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("project_connection_id"u8))
+                {
+                    projectConnectionId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("send_credentials_for_agent_card"u8))
                 {
                     status = new OperationState(prop.Value.GetString());
                     continue;
@@ -137,21 +174,12 @@ namespace Azure.AI.Discovery
                     {
                         continue;
                     }
-                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options, AzureAIDiscoveryContext.Default);
+                    sendCredentialsForAgentCard = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("operationType"u8))
+                if (prop.NameEquals("a2a_version"u8))
                 {
-                    operationType = new KnowledgeBaseOperationType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("indexingResult"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    indexingResult = IndexingOperationResult.DeserializeIndexingOperationResult(prop.Value, options);
+                    a2aVersion = new A2AProtocolVersion(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -159,13 +187,14 @@ namespace Azure.AI.Discovery
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new KnowledgeBaseIndexingOperationResponse(
-                id,
-                status,
-                error,
-                operationType,
+            return new A2ATool(
+                @type,
                 additionalBinaryDataProperties,
-                indexingResult);
+                baseUrl,
+                agentCardPath,
+                projectConnectionId,
+                sendCredentialsForAgentCard,
+                a2aVersion);
         }
     }
 }

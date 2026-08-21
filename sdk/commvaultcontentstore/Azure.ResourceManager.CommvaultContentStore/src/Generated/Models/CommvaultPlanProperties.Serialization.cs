@@ -9,10 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
-using Azure.ResourceManager.CommvaultContentStore;
+using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.ResourceManager.CommvaultContentStore.Models
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> The properties of Commvault Plan. </summary>
     public partial class CommvaultPlanProperties : IJsonModel<CommvaultPlanProperties>

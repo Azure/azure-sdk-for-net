@@ -19,7 +19,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="specification"> The openapi function shape, described as a JSON Schema object. </param>
         /// <param name="authentication"> Open API authentication details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="specification"/> or <paramref name="authentication"/> is null. </exception>
-        public OpenApiFunctionDefinition(string name, BinaryData specification, OpenApiAuthenticationDetails authentication)
+        public ResponsesOpenApiFunctionDefinition(string name, IDictionary<string, BinaryData> specification, OpenApiAuthenticationDetails authentication)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(specification, nameof(specification));
@@ -29,7 +29,7 @@ namespace Azure.AI.Extensions.OpenAI
             Specification = specification;
             Authentication = authentication;
             DefaultParameters = new ChangeTrackingList<string>();
-            Functions = new ChangeTrackingList<OpenApiFunctionDefinitionFunction>();
+            Functions = new ChangeTrackingList<ResponsesOpenApiFunctionDefinitionFunction>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenApiFunctionDefinition"/>. </summary>
@@ -40,7 +40,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="defaultParameters"> List of OpenAPI spec parameters that will use user-provided defaults. </param>
         /// <param name="functions"> List of function definitions used by OpenApi tool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenApiFunctionDefinition(string name, string description, BinaryData specification, OpenApiAuthenticationDetails authentication, IList<string> defaultParameters, IReadOnlyList<OpenApiFunctionDefinitionFunction> functions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesOpenApiFunctionDefinition(string name, string description, IDictionary<string, BinaryData> specification, OpenApiAuthenticationDetails authentication, IList<string> defaultParameters, IReadOnlyList<ResponsesOpenApiFunctionDefinitionFunction> functions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;

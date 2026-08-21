@@ -1102,18 +1102,18 @@ Search requires an existing Azure AI Search Index. For more information and setu
 guides, see [Azure AI Search Tool Guide](https://learn.microsoft.com/azure/ai-services/agents/how-to/tools/azure-ai-search).
 
 ```C# Snippet:Sample_CreateAgent_AzureAISearch_Async
-AzureAISearchToolIndex index = new()
+AgentsAzureAISearchToolIndex index = new()
 {
     ProjectConnectionId = aiSearchConnectionName,
     IndexName = "sample_index",
     TopK = 5,
     Filter = "category eq 'sleeping bag'",
-    QueryType = AzureAISearchQueryKind.Simple
+    QueryType = AgentsAzureAISearchQueryType.Simple
 };
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant. You must always provide citations for answers using the tool and render them as: `\u3010message_idx:search_idx\u2020source\u3011`.",
-    Tools = { new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [index])) }
+    Tools = { new AgentsAzureAISearchTool(new AgentsAzureAISearchToolOptions(indexes: [index])) }
 };
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
@@ -1220,8 +1220,8 @@ create the `BingGroundingTool` and use it in `DeclarativeAgentDefinition` object
 
 ```C# Snippet:Sample_CreateAgent_BingGrounding_Sync
 AIProjectConnection bingConnectionName = projectClient.Connections.GetConnection(connectionName: connectionName);
-BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOptions(
-    searchConfigurations: [new BingGroundingSearchOptions(projectConnectionId: bingConnectionName.Id)]
+AgentsBingGroundingTool bingGroundingAgentTool = new(new AgentsBingGroundingSearchToolOptions(
+    searchConfigurations: [new AgentsBingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
     )
 );
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -1289,8 +1289,8 @@ en.wikipedia.org. This configuration is called "wikipedia" its search URL is con
 
 ```C# Snippet:Sample_CreateAgent_CustomBingSearch_Async
 AIProjectConnection bingConnectionName = await projectClient.Connections.GetConnectionAsync(connectionName: connectionName);
-BingCustomSearchPreviewTool customBingSearchAgentTool = new(new BingCustomSearchToolOptions(
-    searchConfigurations: [new BingCustomSearchOptions(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
+AgentsBingCustomSearchPreviewTool customBingSearchAgentTool = new(new AgentsBingCustomSearchToolOptions(
+    searchConfigurations: [new AgentsBingCustomSearchConfiguration(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
     )
 );
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -1439,17 +1439,15 @@ Contrary to OpenAPI tool without authentication, in this scenario we need to pro
 ```C# Snippet:Sample_CreateAgent_OpenAPIProjectConnection_Sync
 string filePath = GetFile();
 AIProjectConnection tripadvisorConnection = projectClient.Connections.GetConnection("tripadvisor");
-OpenApiFunctionDefinition toolDefinition = new(
+AgentsOpenApiFunctionDefinition toolDefinition = new(
     name: "tripadvisor",
-    specification: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
-    authentication: new OpenApiProjectConnectionAuthenticationDetails(new OpenApiProjectConnectionSecurityScheme(
+    specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+    authentication: new AgentsOpenApiProjectConnectionAuthenticationDetails(new AgentsOpenApiProjectConnectionSecurityScheme(
         projectConnectionId: tripadvisorConnection.Id
     ))
-)
-{
-    Description = "Trip Advisor API to get travel information."
-};
-OpenApiTool openapiTool = new(toolDefinition);
+);
+toolDefinition.Description = "Trip Advisor API to get travel information.";
+AgentsOpenAPITool openapiTool = new(toolDefinition);
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
@@ -1516,9 +1514,9 @@ To use Azure Playwright workspace we need to create agent with `BrowserAutomatio
 
 ```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Async
 AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
-BrowserAutomationPreviewTool playwrightTool = new(
-    new BrowserAutomationToolOptions(
-        new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
+AgentsBrowserAutomationPreviewTool playwrightTool = new(
+    new AgentsBrowserAutomationToolOptions(
+        new AgentsBrowserAutomationToolConnectionParameters(playwrightConnection.Id)
     ));
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -1562,14 +1560,14 @@ await foreach (StreamingResponseUpdate update in responseClient.CreateResponseSt
 
 ```C# Snippet:Sample_CreateAgent_Sharepoint_Async
 AIProjectConnection sharepointConnection = await projectClient.Connections.GetConnectionAsync(sharepointConnectionName);
-SharePointGroundingToolOptions sharepointToolOption = new()
+AgentsSharePointGroundingToolOptions sharepointToolOption = new()
 {
-    ProjectConnections = { new ToolProjectConnection(projectConnectionId: sharepointConnection.Id) }
+    ProjectConnections = { new AgentsToolProjectConnection(projectConnectionId: sharepointConnection.Id) }
 };
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
-    Tools = { new SharePointPreviewTool(sharepointToolOption), }
+    Tools = { new AgentsSharepointPreviewTool(sharepointToolOption), }
 };
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",

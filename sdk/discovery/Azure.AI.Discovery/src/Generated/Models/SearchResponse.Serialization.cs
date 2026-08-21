@@ -9,11 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Discovery
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
-    /// <summary> Results of a knowledge base search. </summary>
-    public partial class SearchResponse : IJsonModel<SearchResponse>
+    /// <summary> The ContainerSkill. </summary>
+    public partial class ContainerSkill : IJsonModel<ContainerSkill>
     {
         /// <summary> Initializes a new instance of <see cref="SearchResponse"/> for deserialization. </summary>
         internal SearchResponse()
@@ -127,18 +128,13 @@ namespace Azure.AI.Discovery
             {
                 return null;
             }
-            IList<SearchResultItem> searchResults = default;
+            ContainerSkillType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("searchResults"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    List<SearchResultItem> array = new List<SearchResultItem>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(SearchResultItem.DeserializeSearchResultItem(item, options));
-                    }
-                    searchResults = array;
+                    @type = new ContainerSkillType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -146,7 +142,7 @@ namespace Azure.AI.Discovery
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SearchResponse(searchResults, additionalBinaryDataProperties);
+            return new ContainerSkill(@type, additionalBinaryDataProperties);
         }
     }
 }

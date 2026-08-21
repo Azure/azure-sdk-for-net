@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
@@ -16,10 +15,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CaptureStructuredOutputsTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResponsesCaptureStructuredOutputsTool"/>. </summary>
         /// <param name="outputDefinition"> The structured outputs to capture from the model. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="outputDefinition"/> is null. </exception>
-        public CaptureStructuredOutputsTool(StructuredOutputDefinition outputDefinition) : base("capture_structured_outputs")
+        public ResponsesCaptureStructuredOutputsTool(ResponsesStructuredOutputDefinition outputDefinition) : base("capture_structured_outputs")
         {
             Argument.AssertNotNull(outputDefinition, nameof(outputDefinition));
 
@@ -34,7 +33,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="outputDefinition"> The structured outputs to capture from the model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CaptureStructuredOutputsTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, StructuredOutputDefinition outputDefinition, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal ResponsesCaptureStructuredOutputsTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesStructuredOutputDefinition outputDefinition, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Name = name;
             Description = description;

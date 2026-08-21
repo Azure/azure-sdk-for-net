@@ -16,8 +16,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="A2APreviewTool"/>. </summary>
-        public A2APreviewTool() : base("a2a_preview")
+        /// <summary> Initializes a new instance of <see cref="ResponsesA2APreviewTool"/>. </summary>
+        public ResponsesA2APreviewTool() : base("a2a_preview")
         {
         }
 
@@ -38,7 +38,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// specified by the caller (anonymous fetch).
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal A2APreviewTool(ResponseToolKind @type, Uri baseUri, string agentCardPath, string projectConnectionId, bool? sendCredentialsForAgentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal ResponsesA2APreviewTool(ResponseToolKind @type, Uri baseUri, string agentCardPath, string projectConnectionId, bool? sendCredentialsForAgentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             BaseUri = baseUri;
             AgentCardPath = agentCardPath;

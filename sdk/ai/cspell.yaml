@@ -31,5 +31,12 @@ words:
   - wfresp
   - aiservices
   - aaip
+  - BYOS
+  - dedup
+  - MCPHTTP
+  - Pcma
+  - Pcmu
+  - Webrtc
+  - Xhigh
 ignorePaths:
   - "**/*jsonl"

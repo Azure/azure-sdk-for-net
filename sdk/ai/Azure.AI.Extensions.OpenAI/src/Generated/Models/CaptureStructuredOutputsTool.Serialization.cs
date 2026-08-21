@@ -141,7 +141,7 @@ namespace Azure.AI.Extensions.OpenAI
             string name = default;
             string description = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
-            StructuredOutputDefinition outputDefinition = default;
+            ResponsesStructuredOutputDefinition outputDefinition = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

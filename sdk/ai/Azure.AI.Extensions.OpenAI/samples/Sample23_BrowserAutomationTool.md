@@ -38,9 +38,9 @@ AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenPro
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Sync
 AIProjectConnection playwrightConnection = projectClient.Connections.GetConnection(playwrightConnectionName);
-BrowserAutomationPreviewTool playwrightTool = new(
-    new BrowserAutomationToolOptions(
-        new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
+AgentsBrowserAutomationPreviewTool playwrightTool = new(
+    new AgentsBrowserAutomationToolOptions(
+        new AgentsBrowserAutomationToolConnectionParameters(playwrightConnection.Id)
     ));
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -58,9 +58,9 @@ ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.Crea
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Async
 AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
-BrowserAutomationPreviewTool playwrightTool = new(
-    new BrowserAutomationToolOptions(
-        new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
+AgentsBrowserAutomationPreviewTool playwrightTool = new(
+    new AgentsBrowserAutomationToolOptions(
+        new AgentsBrowserAutomationToolConnectionParameters(playwrightConnection.Id)
     ));
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)

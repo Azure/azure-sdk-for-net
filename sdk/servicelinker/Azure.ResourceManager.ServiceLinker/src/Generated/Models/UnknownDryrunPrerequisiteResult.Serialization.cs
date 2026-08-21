@@ -13,59 +13,56 @@ using Azure.ResourceManager.ServiceLinker;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    internal partial class UnknownDryrunPrerequisiteResult : DryrunPrerequisiteResult, IJsonModel<DryrunPrerequisiteResult>
+    internal partial class UnknownAgentOptimizationDatasetInput : AgentOptimizationDatasetInput, IJsonModel<AgentOptimizationDatasetInput>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownDryrunPrerequisiteResult"/> for deserialization. </summary>
-        internal UnknownDryrunPrerequisiteResult()
+        /// <summary> Initializes a new instance of <see cref="UnknownAgentOptimizationDatasetInput"/> for deserialization. </summary>
+        internal UnknownAgentOptimizationDatasetInput()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DryrunPrerequisiteResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override AgentOptimizationDatasetInput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DryrunPrerequisiteResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentOptimizationDatasetInput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDryrunPrerequisiteResult(document.RootElement, options);
+                        return DeserializeAgentOptimizationDatasetInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DryrunPrerequisiteResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentOptimizationDatasetInput)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DryrunPrerequisiteResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentOptimizationDatasetInput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DryrunPrerequisiteResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentOptimizationDatasetInput)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DryrunPrerequisiteResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AgentOptimizationDatasetInput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DryrunPrerequisiteResult IPersistableModel<DryrunPrerequisiteResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return PersistableModelCreateCore(data, options);
-        }
+        AgentOptimizationDatasetInput IPersistableModel<AgentOptimizationDatasetInput>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DryrunPrerequisiteResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AgentOptimizationDatasetInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DryrunPrerequisiteResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AgentOptimizationDatasetInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -76,49 +73,46 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DryrunPrerequisiteResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentOptimizationDatasetInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DryrunPrerequisiteResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentOptimizationDatasetInput)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DryrunPrerequisiteResult IJsonModel<DryrunPrerequisiteResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return JsonModelCreateCore(ref reader, options);
-        }
+        AgentOptimizationDatasetInput IJsonModel<AgentOptimizationDatasetInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DryrunPrerequisiteResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AgentOptimizationDatasetInput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DryrunPrerequisiteResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentOptimizationDatasetInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DryrunPrerequisiteResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentOptimizationDatasetInput)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDryrunPrerequisiteResult(document.RootElement, options);
+            return DeserializeAgentOptimizationDatasetInput(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownDryrunPrerequisiteResult DeserializeUnknownDryrunPrerequisiteResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownAgentOptimizationDatasetInput DeserializeUnknownAgentOptimizationDatasetInput(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DryrunPrerequisiteResultType @type = default;
+            AgentOptimizationDatasetInputType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new DryrunPrerequisiteResultType(prop.Value.GetString());
+                    @type = new AgentOptimizationDatasetInputType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +120,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownDryrunPrerequisiteResult(@type, additionalBinaryDataProperties);
+            return new UnknownAgentOptimizationDatasetInput(@type, additionalBinaryDataProperties);
         }
     }
 }

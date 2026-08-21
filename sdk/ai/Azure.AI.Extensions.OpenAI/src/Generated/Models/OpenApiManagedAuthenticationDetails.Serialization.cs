@@ -107,7 +107,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             OpenApiAuthenticationKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            OpenApiManagedSecurityScheme securityScheme = default;
+            ResponsesOpenApiManagedSecurityScheme securityScheme = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -117,7 +117,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("security_scheme"u8))
                 {
-                    securityScheme = OpenApiManagedSecurityScheme.DeserializeOpenApiManagedSecurityScheme(prop.Value, options);
+                    securityScheme = ResponsesOpenApiManagedSecurityScheme.DeserializeResponsesOpenApiManagedSecurityScheme(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

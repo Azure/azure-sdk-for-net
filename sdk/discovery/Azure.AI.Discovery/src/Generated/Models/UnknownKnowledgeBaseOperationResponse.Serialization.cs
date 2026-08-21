@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using Azure;
+using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Discovery
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     internal partial class UnknownKnowledgeBaseOperationResponse : KnowledgeBaseOperationResponse, IJsonModel<KnowledgeBaseOperationResponse>
     {

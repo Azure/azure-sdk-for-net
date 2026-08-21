@@ -19,7 +19,7 @@
   <PropertyGroup>
     <IncludeSystemClientModelSharedSourceForTracing>true</IncludeSystemClientModelSharedSourceForTracing>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="OpenAI" />
     <PackageReference Include="Azure.Core" />
@@ -27,5 +27,6 @@
 
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared" />
+    <Compile Include="..\Compatibility\**\*.cs" LinkBase="Compatibility" />
   </ItemGroup>
 </Project>

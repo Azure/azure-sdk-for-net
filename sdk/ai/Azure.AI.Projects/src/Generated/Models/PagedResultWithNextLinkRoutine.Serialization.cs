@@ -7,8 +7,10 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> A page of items with a URL cursor to the next page. </summary>
     internal partial class PagedResultWithNextLinkRoutine : IJsonModel<PagedResultWithNextLinkRoutine>
@@ -138,8 +140,11 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            IList<ProjectsRoutine> data = default;
-            Uri nextLink = default;
+            string id = default;
+            string @object = default;
+            IList<ItemField> output = default;
+            DateTimeOffset createdAt = default;
+            ResponseTokenUsage usage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,11 +160,12 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("next_link"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    continue;
+                }
+                if (prop.NameEquals("usage"u8))
+                {
+                    usage = ModelReaderWriter.Read<ResponseTokenUsage>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.MachineLearning;
+using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.ResourceManager.MachineLearning.Models
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> The CosmosDBSettings. </summary>
     internal partial class CosmosDBSettings : IJsonModel<CosmosDBSettings>

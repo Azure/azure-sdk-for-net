@@ -5,39 +5,39 @@
 ### Features Added
 
 - Added distributed tracing support.
+- Added preview support for creating voice agents and retrieving their persisted conversations, responses, items, metrics, and audio.
+- Added preview real-time voice-agent sessions over WebSockets, including text and binary message exchange.
+- Added `GenerateVoiceAgentRequest` for generating editable voice-agent definitions from authoring inputs.
+- Added `A2ATool` and `A2AToolboxTool` for agent-to-agent integrations.
+- Added preview `WebIQPreviewTool` and `WebIQPreviewToolboxTool` support.
+- Added `SessionConfiguration` for configuring hosted-agent session defaults.
 
 ### Breaking Changes
 
-- The Agent optimization-related classes were renamed
-
-| Old (2.x) | New (3.0.0-beta.1) |
-| --- | --- |
-| `OptimizationCandidate` | `AgentOptimizationCandidate` |
-| `OptimizationDatasetCriterion` | `AgentOptimizationDatasetCriterion` |
-| `OptimizationDatasetInput` | `AgentOptimizationDatasetInput` |
-| `OptimizationDatasetItem` | `AgentOptimizationDatasetItem` |
-| `OptimizationEvaluatorRef` | `AgentOptimizationEvaluatorRef` |
-| `OptimizationInlineDatasetInput` | `AgentOptimizationInlineDatasetInput` |
-| `OptimizationJob` | `AgentOptimizationJob` |
-| `OptimizationJobInputs` | `AgentOptimizationJobInputs` |
-| `OptimizationJobListItem` | `AgentOptimizationJobListItem` |
-| `OptimizationJobProgress` | `AgentOptimizationJobProgress` |
-| `OptimizationJobResult` | `AgentOptimizationJobResult` |
-| `OptimizationOptions` | `AgentOptimizationOptions` |
-| `OptimizationReferenceDatasetInput` | `AgentOptimizationReferenceDatasetInput` |
-| `OptimizationAgentIdentifier` | `OptimizedAgentIdentifier` |
+- Renamed Agent Optimization models to the `AgentOptimization*` family and renamed `OptimizationAgentIdentifier` to `OptimizedAgentIdentifier`.
+- Agent Optimization list operations now return complete `AgentOptimizationJob` models instead of `OptimizationJobListItem` models.
+- Normalized persisted voice conversation items and function-call statuses to the corresponding OpenAI realtime models.
+- Changed voice implementation values from strings to `VoiceType` and changed voice duration fields expressed in milliseconds to `TimeSpan`.
+- Removed the fixed avatar video codec setting; the service now controls the codec.
 
 ### Bugs Fixed
+
 - Fixed listing of Agent Optimization Jobs.
 - Fixed the `StopSession` and `StopSessionAsync` calls.
+- Fixed generation of the persisted voice conversation item base constructor.
 
 ### Other Changes
 - Updated the `OpenAI` package dependency to `2.12.0`.
 
+- Regenerated the SDK from the unified Foundry v1 Agents and voice data-plane contract.
+
 ### Sample Updates
+
 - Added sample demonstrating disabling and enabling Hosted Agent.
 - Added samples for Agent optimization jobs.
 - Added sample for creating Agent version drafts.
+- Added a sample demonstrating voice-agent creation, real-time interaction, and persisted conversation retrieval.
+- Updated Agent Optimization samples to use the unified `AgentOptimization*` models.
 
 ## 2.1.0-beta.4 (2026-06-30)
 
@@ -80,7 +80,7 @@
 ### Features Added
 - Added `AgentToolboxes` client, which can be retrieved using `GetAgentToolboxes` method of `AgentAdministrationClient`.
 - In `AgentAdministrationClient` added CRUD operations for sessions on the hosted Agent.
-- Added `AgentSessionFiles` client to work with the files in the session samdbox.
+- Added `AgentSessionFiles` client to work with the files in the session sandbox.
 - Added `ProjectAgentSkills` to manage agent skills.
 - Added `GetSessionLogStreamAsync` and `GetSessionLogStream` to get the logs from the hosted Agent docker container.
 

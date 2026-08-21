@@ -12,6 +12,10 @@ namespace Azure.AI.Projects;
 [Experimental("AAIP001")]
 [CodeGenSuppress("GetRoutineRuns", typeof(string), typeof(FoundryFeaturesOptInKeys?), typeof(string), typeof(int?), typeof(string), typeof(MemoryStoreListOrder?), typeof(CancellationToken))]
 [CodeGenSuppress("GetRoutineRunsAsync", typeof(string), typeof(FoundryFeaturesOptInKeys?), typeof(string), typeof(int?), typeof(string), typeof(MemoryStoreListOrder?), typeof(CancellationToken))]
+[CodeGenSuppress("GetRoutineRuns", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("GetRoutineRunsAsync", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("GetRoutines", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("GetRoutinesAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetRoutines", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(string), typeof(MemoryStoreListOrder?), typeof(CancellationToken))]
 [CodeGenSuppress("GetRoutinesAsync", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(string), typeof(MemoryStoreListOrder?), typeof(CancellationToken))]
 public partial class AIProjectRoutines
@@ -31,17 +35,21 @@ public partial class AIProjectRoutines
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual CollectionResult<RoutineRun> GetRoutineRuns(string routineName, string filter = default, int? limit = default, string after = default, MemoryStoreListOrder? order = default, CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-
-        return new AIProjectRoutinesGetRoutineRunsCollectionResultOfT(
-            client: this,
-            routineName: routineName,
-            foundryFeatures: default,
-            filter: filter,
-            limit: limit,
-            after: after,
-            order: order?.ToString(),
-            options: cancellationToken.ToRequestOptions());
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        return new InternalOpenAICollectionResultOfT<RoutineRun>(
+            Pipeline,
+            messageGenerator: (localCollectionOptions, localRequestOptions)
+                => CreateGetRoutineRunsRequest(
+                    routineName: localCollectionOptions.Filters[0],
+                    foundryFeatures: default,
+                    filter: localCollectionOptions.Filters.Count > 1 ? localCollectionOptions.Filters[1] : null,
+                    limit: localCollectionOptions.Limit,
+                    order: localCollectionOptions.Order,
+                    after: localCollectionOptions.AfterId,
+                    options: localRequestOptions),
+            dataItemDeserializer: RoutineRun.DeserializeRoutineRun,
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [name, filter]),
+            cancellationToken.ToRequestOptions());
     }
 
     /// <summary> Returns prior runs recorded for the specified routine. </summary>
@@ -59,17 +67,21 @@ public partial class AIProjectRoutines
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual AsyncCollectionResult<RoutineRun> GetRoutineRunsAsync(string routineName, string filter = default, int? limit = default, string after = default, MemoryStoreListOrder? order = default, CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-
-        return new AIProjectRoutinesGetRoutineRunsAsyncCollectionResultOfT(
-            client: this,
-            routineName: routineName,
-            foundryFeatures: default,
-            filter: filter,
-            limit: limit,
-            after: after,
-            order: order?.ToString(),
-            options: cancellationToken.ToRequestOptions());
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        return new InternalOpenAIAsyncCollectionResultOfT<RoutineRun>(
+            Pipeline,
+            messageGenerator: (localCollectionOptions, localRequestOptions)
+                => CreateGetRoutineRunsRequest(
+                    routineName: localCollectionOptions.Filters[0],
+                    foundryFeatures: default,
+                    filter: localCollectionOptions.Filters.Count > 1 ? localCollectionOptions.Filters[1] : null,
+                    limit: localCollectionOptions.Limit,
+                    order: localCollectionOptions.Order,
+                    after: localCollectionOptions.AfterId,
+                    options: localRequestOptions),
+            dataItemDeserializer: RoutineRun.DeserializeRoutineRun,
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [name, filter]),
+            cancellationToken.ToRequestOptions());
     }
 
     /// <summary> Returns the routines available in the current project. </summary>
@@ -83,13 +95,18 @@ public partial class AIProjectRoutines
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual CollectionResult<ProjectsRoutine> GetRoutines(int? limit = default, string after = default, MemoryStoreListOrder? order = default, CancellationToken cancellationToken = default)
     {
-        return new AIProjectRoutinesGetRoutinesCollectionResultOfT(
-                client: this,
-                foundryFeatures: default,
-                limit: limit,
-                after: after,
-                order: order?.ToString(),
-                options: cancellationToken.ToRequestOptions());
+        return new InternalOpenAICollectionResultOfT<ProjectsRoutine>(
+            Pipeline,
+            messageGenerator: (localCollectionOptions, localRequestOptions)
+                => CreateGetRoutinesRequest(
+                    foundryFeatures: default,
+                    limit: localCollectionOptions.Limit,
+                    order: localCollectionOptions.Order,
+                    after: localCollectionOptions.AfterId,
+                    options: localRequestOptions),
+            dataItemDeserializer: ProjectsRoutine.DeserializeProjectsRoutine,
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before),
+            cancellationToken.ToRequestOptions());
     }
 
     /// <summary> Returns the routines available in the current project. </summary>
@@ -103,13 +120,18 @@ public partial class AIProjectRoutines
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual AsyncCollectionResult<ProjectsRoutine> GetRoutinesAsync(int? limit = default, string after = default, MemoryStoreListOrder? order = default, CancellationToken cancellationToken = default)
     {
-        return new AIProjectRoutinesGetRoutinesAsyncCollectionResultOfT(
-                client: this,
-                foundryFeatures: default,
-                limit: limit,
-                after: after,
-                order: order?.ToString(),
-                options: cancellationToken.ToRequestOptions());
+        return new InternalOpenAIAsyncCollectionResultOfT<ProjectsRoutine>(
+            Pipeline,
+            messageGenerator: (localCollectionOptions, localRequestOptions)
+                => CreateGetRoutinesRequest(
+                    foundryFeatures: default,
+                    limit: localCollectionOptions.Limit,
+                    order: localCollectionOptions.Order,
+                    after: localCollectionOptions.AfterId,
+                    options: localRequestOptions),
+            dataItemDeserializer: ProjectsRoutine.DeserializeProjectsRoutine,
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before),
+            cancellationToken.ToRequestOptions());
     }
 
     /// <summary> Create or update a routine. </summary>

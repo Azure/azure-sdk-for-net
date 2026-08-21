@@ -9,6 +9,10 @@ using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
+using AgentsAzureAISearchQueryType = Azure.AI.Projects.Agents.AzureAISearchQueryType;
+using AgentsAzureAISearchTool = Azure.AI.Projects.Agents.AzureAISearchTool;
+using AgentsAzureAISearchToolIndex = Azure.AI.Projects.Agents.AzureAISearchToolIndex;
+using AgentsAzureAISearchToolOptions = Azure.AI.Projects.Agents.AzureAISearchToolOptions;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
@@ -33,18 +37,18 @@ public class Sample_AzureAISearchStreaming : ProjectsOpenAITestBase
 
         #endregion
         #region Snippet:Sample_CreateAgent_AzureAISearchStreaming_Async
-        AzureAISearchToolIndex index = new()
+        AgentsAzureAISearchToolIndex index = new()
         {
             ProjectConnectionId = aiSearchConnectionName,
             IndexName = "sample_index",
             TopK = 5,
             Filter = "category eq 'sleeping bag'",
-            QueryType = AzureAISearchQueryKind.Simple
+            QueryType = AgentsAzureAISearchQueryType.Simple
         };
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant. You must always provide citations for answers using the tool and render them as: `\u3010message_idx:search_idx\u2020source\u3011`.",
-            Tools = { new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [index])) }
+            Tools = { new AgentsAzureAISearchTool(new AgentsAzureAISearchToolOptions(indexes: [index])) }
         };
         ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent",
@@ -106,18 +110,18 @@ public class Sample_AzureAISearchStreaming : ProjectsOpenAITestBase
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
         #region Snippet:Sample_CreateAgent_AzureAISearchStreaming_Sync
-        AzureAISearchToolIndex index = new()
+        AgentsAzureAISearchToolIndex index = new()
         {
             ProjectConnectionId = aiSearchConnectionName,
             IndexName = "sample_index",
             TopK = 5,
             Filter = "category eq 'sleeping bag'",
-            QueryType = AzureAISearchQueryKind.Simple
+            QueryType = AgentsAzureAISearchQueryType.Simple
         };
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant. You must always provide citations for answers using the tool and render them as: `\u3010message_idx:search_idx\u2020source\u3011`.",
-            Tools = { new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [index])) }
+            Tools = { new AgentsAzureAISearchTool(new AgentsAzureAISearchToolOptions(indexes: [index])) }
         };
         ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "myAgent",

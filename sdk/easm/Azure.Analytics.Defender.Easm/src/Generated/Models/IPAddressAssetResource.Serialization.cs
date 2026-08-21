@@ -9,8 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
-namespace Azure.Analytics.Defender.Easm
+namespace OpenAI
 {
     /// <summary> The IPAddressAssetResource. </summary>
     public partial class IPAddressAssetResource : AssetResource, IJsonModel<IPAddressAssetResource>
@@ -79,8 +81,76 @@ namespace Azure.Analytics.Defender.Easm
                 throw new FormatException($"The model {nameof(IPAddressAssetResource)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("asset"u8);
-            writer.WriteObjectValue(Asset, options);
+            writer.WritePropertyName("vector_store_ids"u8);
+            writer.WriteStartArray();
+            foreach (string item in VectorStoreIds)
+            {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteStringValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(MaxNumResults))
+            {
+                writer.WritePropertyName("max_num_results"u8);
+                writer.WriteNumberValue(MaxNumResults.Value);
+            }
+            if (Optional.IsDefined(RankingOptions))
+            {
+                writer.WritePropertyName("ranking_options"u8);
+                writer.WriteObjectValue<object>(RankingOptions, options);
+            }
+            if (Optional.IsDefined(Filters))
+            {
+                writer.WritePropertyName("filters"u8);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(Filters);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Filters))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsCollectionDefined(ToolConfigs))
+            {
+                writer.WritePropertyName("tool_configs"u8);
+                writer.WriteStartObject();
+                foreach (var item in ToolConfigs)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -108,27 +178,20 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            string kind = "ipAddress";
-            string id = default;
+            ResponseToolKind @type = "file_search";
+            IList<string> vectorStoreIds = default;
+            long? maxNumResults = default;
+            object rankingOptions = default;
+            BinaryData filters = default;
             string name = default;
-            string displayName = default;
-            Guid? uuid = default;
-            DateTimeOffset? createdDate = default;
-            DateTimeOffset? updatedDate = default;
-            AssetState? state = default;
-            string externalId = default;
-            IList<string> labels = default;
-            bool? wildcard = default;
-            string discoGroupName = default;
-            IList<AuditTrailItem> auditTrail = default;
-            string reason = default;
+            string description = default;
+            IDictionary<string, ToolConfig> toolConfigs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IPAddressAsset asset = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
                 {
-                    kind = prop.Value.GetString();
+                    @type = new ResponseToolKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("id"u8))
@@ -228,8 +291,12 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<AuditTrailItem> array = new List<AuditTrailItem>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    rankingOptions = prop.Value.GetObject();
+                    continue;
+                }
+                if (prop.NameEquals("filters"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         array.Add(AuditTrailItem.DeserializeAuditTrailItem(item, options));
                     }
@@ -251,23 +318,16 @@ namespace Azure.Analytics.Defender.Easm
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IPAddressAssetResource(
-                kind,
-                id,
+            return new InternalFileSearchTool(
+                @type,
+                vectorStoreIds,
+                maxNumResults,
+                rankingOptions,
+                filters,
                 name,
-                displayName,
-                uuid,
-                createdDate,
-                updatedDate,
-                state,
-                externalId,
-                labels ?? new ChangeTrackingList<string>(),
-                wildcard,
-                discoGroupName,
-                auditTrail ?? new ChangeTrackingList<AuditTrailItem>(),
-                reason,
-                additionalBinaryDataProperties,
-                asset);
+                description,
+                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
+                additionalBinaryDataProperties);
         }
     }
 }

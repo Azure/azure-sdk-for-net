@@ -9,9 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ServiceLinker;
+using Azure.AI.Extensions.OpenAI;
+using OpenAI;
 
-namespace Azure.ResourceManager.ServiceLinker.Models
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> The access key directly from target resource properties, which target service is Azure Resource, such as Microsoft.Storage. </summary>
     public partial class AccessKeyInfoBase : AuthBaseInfo, IJsonModel<AccessKeyInfoBase>

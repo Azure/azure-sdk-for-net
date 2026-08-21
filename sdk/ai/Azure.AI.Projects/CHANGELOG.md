@@ -16,6 +16,9 @@
 
 ### Other Changes
 
+- Regenerated the SDK from the unified Foundry v1 data-plane contract.
+- Aligned routine listing requests with the service's forward-only `after` pagination contract; the compatibility `before` parameter is no longer sent.
+
 ### Sample Updates
 - Added sample for Model weights.
 - Added sample for `GitHubIssueRoutineTrigger`.

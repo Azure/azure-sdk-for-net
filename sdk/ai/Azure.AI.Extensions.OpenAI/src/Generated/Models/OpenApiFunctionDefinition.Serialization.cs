@@ -162,10 +162,10 @@ namespace Azure.AI.Extensions.OpenAI
             }
             string name = default;
             string description = default;
-            BinaryData specification = default;
+            IDictionary<string, BinaryData> specification = default;
             OpenApiAuthenticationDetails authentication = default;
             IList<string> defaultParameters = default;
-            IReadOnlyList<OpenApiFunctionDefinitionFunction> functions = default;
+            IReadOnlyList<ResponsesOpenApiFunctionDefinitionFunction> functions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -235,7 +235,7 @@ namespace Azure.AI.Extensions.OpenAI
                 specification,
                 authentication,
                 defaultParameters ?? new ChangeTrackingList<string>(),
-                functions ?? new ChangeTrackingList<OpenApiFunctionDefinitionFunction>(),
+                functions ?? new ChangeTrackingList<ResponsesOpenApiFunctionDefinitionFunction>(),
                 additionalBinaryDataProperties);
         }
     }

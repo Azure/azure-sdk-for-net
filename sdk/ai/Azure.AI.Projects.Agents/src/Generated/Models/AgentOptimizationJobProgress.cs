@@ -18,8 +18,8 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="AgentOptimizationJobProgress"/>. </summary>
         /// <param name="candidatesCompleted"> Number of candidates whose evaluation has completed so far. </param>
         /// <param name="bestScore"> Best score observed so far across all candidates. </param>
-        /// <param name="elapsedSeconds"> Wall-clock time elapsed in seconds since the job began executing. </param>
-        internal AgentOptimizationJobProgress(int candidatesCompleted, double bestScore, double elapsedSeconds)
+        /// <param name="elapsedSecondsInternal"> Wall-clock time elapsed in seconds since the job began executing. </param>
+        internal AgentOptimizationJobProgress(int candidatesCompleted, double bestScore, double elapsedSecondsInternal)
         {
             CandidatesCompleted = candidatesCompleted;
             BestScore = bestScore;
@@ -31,7 +31,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="bestScore"> Best score observed so far across all candidates. </param>
         /// <param name="elapsedSeconds"> Wall-clock time elapsed in seconds since the job began executing. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentOptimizationJobProgress(int candidatesCompleted, double bestScore, double elapsedSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentOptimizationJobProgress(int candidatesCompleted, double bestScore, double elapsedSecondsInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CandidatesCompleted = candidatesCompleted;
             BestScore = bestScore;

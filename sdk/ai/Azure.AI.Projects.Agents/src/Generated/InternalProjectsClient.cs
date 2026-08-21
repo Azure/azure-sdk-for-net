@@ -6,6 +6,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 
 namespace Azure.AI.Projects.Agents
@@ -24,6 +25,8 @@ namespace Azure.AI.Projects.Agents
         };
         private readonly string _apiVersion;
         private AgentAdministrationClient _cachedAgentAdministrationClient;
+        [Experimental("AAIP001")]
+        private AgentEndpointConversations _cachedAgentEndpointConversations;
         private AgentToolboxes _cachedAgentToolboxes;
         private AgentSessionFiles _cachedAgentSessionFiles;
 
@@ -80,6 +83,13 @@ namespace Azure.AI.Projects.Agents
         public virtual AgentAdministrationClient GetAgentAdministrationClient()
         {
             return Volatile.Read(ref _cachedAgentAdministrationClient) ?? Interlocked.CompareExchange(ref _cachedAgentAdministrationClient, new AgentAdministrationClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentAdministrationClient;
+        }
+
+        /// <summary> Initializes a new instance of AgentEndpointConversations. </summary>
+        [Experimental("AAIP001")]
+        public virtual AgentEndpointConversations GetAgentEndpointConversationsClient()
+        {
+            return Volatile.Read(ref _cachedAgentEndpointConversations) ?? Interlocked.CompareExchange(ref _cachedAgentEndpointConversations, new AgentEndpointConversations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentEndpointConversations;
         }
 
         /// <summary> Initializes a new instance of AgentToolboxes. </summary>

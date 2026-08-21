@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
@@ -16,10 +15,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AzureAISearchTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResponsesAzureAISearchTool"/>. </summary>
         /// <param name="azureAISearch"> The azure ai search index resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureAISearch"/> is null. </exception>
-        public AzureAISearchTool(AzureAISearchToolOptions azureAISearch) : base("azure_ai_search")
+        public ResponsesAzureAISearchTool(AzureAISearchToolOptions azureAISearch) : base("azure_ai_search")
         {
             Argument.AssertNotNull(azureAISearch, nameof(azureAISearch));
 
@@ -34,7 +33,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="azureAISearch"> The azure ai search index resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureAISearchTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, AzureAISearchToolOptions azureAISearch, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal ResponsesAzureAISearchTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, AzureAISearchToolOptions azureAISearch, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Name = name;
             Description = description;

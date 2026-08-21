@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 
 namespace Azure.AI.Projects.Agents;
@@ -23,11 +24,13 @@ public static partial class ClientConnectionProviderExtensions
         public AgentAdministrationClient GetProjectAgentsClient(Uri endpoint = null, AgentAdministrationClientOptions options = null)
         {
             ClientConnection pipelineConnection = connectionProvider.GetConnection("Internal.AgentsPipelinePassthrough");
+            ClientConnection credentialConnection = connectionProvider.GetConnection("Internal.AgentsTokenProvider");
             ClientPipeline smuggledPipeline = pipelineConnection.Credential as ClientPipeline;
+            AuthenticationTokenProvider tokenProvider = credentialConnection.Credential as AuthenticationTokenProvider;
             options ??= new();
             // If the option without endpoint were provided, make sure, we still set it.
             endpoint ??= new(pipelineConnection.Locator);
-            return new AgentAdministrationClient(new ClientDiagnostics(options, true), smuggledPipeline, endpoint, options.Version);
+            return new AgentAdministrationClient(new ClientDiagnostics(options, true), smuggledPipeline, endpoint, options.Version, tokenProvider);
         }
     }
 }

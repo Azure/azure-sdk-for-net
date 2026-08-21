@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ServiceLinker;
+using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.ResourceManager.ServiceLinker.Models
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> Target service's firewall rules. to allow connections from source service. </summary>
     public partial class LinkerFirewallRules : IJsonModel<LinkerFirewallRules>

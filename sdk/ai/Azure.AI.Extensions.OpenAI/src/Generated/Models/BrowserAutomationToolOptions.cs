@@ -18,7 +18,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolOptions"/>. </summary>
         /// <param name="connection"> The project connection parameters associated with the Browser Automation Tool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connection"/> is null. </exception>
-        public BrowserAutomationToolOptions(BrowserAutomationToolConnectionOptions connection)
+        public BrowserAutomationToolOptions(ResponsesBrowserAutomationToolConnectionParameters connection)
         {
             Argument.AssertNotNull(connection, nameof(connection));
 
@@ -28,7 +28,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolOptions"/>. </summary>
         /// <param name="connection"> The project connection parameters associated with the Browser Automation Tool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BrowserAutomationToolOptions(BrowserAutomationToolConnectionOptions connection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BrowserAutomationToolOptions(ResponsesBrowserAutomationToolConnectionParameters connection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Connection = connection;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

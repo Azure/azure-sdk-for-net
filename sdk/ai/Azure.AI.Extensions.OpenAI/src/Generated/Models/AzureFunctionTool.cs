@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
@@ -16,10 +15,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AzureFunctionTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResponsesAzureFunctionTool"/>. </summary>
         /// <param name="azureFunction"> The Azure Function Tool definition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureFunction"/> is null. </exception>
-        public AzureFunctionTool(AzureFunctionDefinition azureFunction) : base("azure_function")
+        public ResponsesAzureFunctionTool(ResponsesAzureFunctionDefinition azureFunction) : base("azure_function")
         {
             Argument.AssertNotNull(azureFunction, nameof(azureFunction));
 
@@ -32,7 +31,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="azureFunction"> The Azure Function Tool definition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFunctionTool(ResponseToolKind @type, IDictionary<string, ToolConfig> toolConfigs, AzureFunctionDefinition azureFunction, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal ResponsesAzureFunctionTool(ResponseToolKind @type, IDictionary<string, ToolConfig> toolConfigs, ResponsesAzureFunctionDefinition azureFunction, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             ToolConfigs = toolConfigs;
             AzureFunction = azureFunction;
