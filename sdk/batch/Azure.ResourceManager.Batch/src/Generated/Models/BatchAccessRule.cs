@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Initializes a new instance of <see cref="BatchAccessRule"/>. </summary>
         /// <param name="name"> Name of the access rule. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Properties of the access rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal BatchAccessRule(string name, BatchAccessRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Name of the access rule. </summary>
         public string Name { get; set; }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Properties of the access rule. </summary>
         public BatchAccessRuleProperties Properties { get; set; }
     }
 }

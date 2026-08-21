@@ -144,7 +144,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             string projectConnectionId = default;
             string indexName = default;
-            ResponsesAzureAISearchQueryKind? queryType = default;
+            AzureAISearchQueryKind? queryType = default;
             int? topK = default;
             string filter = default;
             string indexAssetId = default;
@@ -167,7 +167,7 @@ namespace Azure.AI.Extensions.OpenAI
                     {
                         continue;
                     }
-                    queryType = new ResponsesAzureAISearchQueryKind(prop.Value.GetString());
+                    queryType = new AzureAISearchQueryKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("top_k"u8))

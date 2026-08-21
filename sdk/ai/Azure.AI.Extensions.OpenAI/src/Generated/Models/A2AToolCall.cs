@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> An A2A (Agent-to-Agent) tool call. </summary>
     [Experimental("AAIP001")]
-    public partial class A2AToolCall : AgentResponseItem
+    public partial class A2AToolCall : ResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

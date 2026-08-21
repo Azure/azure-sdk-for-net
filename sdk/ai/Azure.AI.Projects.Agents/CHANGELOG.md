@@ -27,6 +27,7 @@
 - Fixed generation of the persisted voice conversation item base constructor.
 
 ### Other Changes
+- Updated the `OpenAI` package dependency to `2.12.0`.
 
 - Regenerated the SDK from the unified Foundry v1 Agents and voice data-plane contract.
 

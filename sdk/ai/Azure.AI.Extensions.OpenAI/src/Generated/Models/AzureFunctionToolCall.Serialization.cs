@@ -11,16 +11,11 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> An Azure Function tool call. </summary>
-    public partial class AzureFunctionToolCall : AgentResponseItem, IJsonModel<AzureFunctionToolCall>
+    public partial class AzureFunctionToolCall : ResponseItem, IJsonModel<AzureFunctionToolCall>
     {
-        /// <summary> Initializes a new instance of <see cref="AzureFunctionToolCall"/> for deserialization. </summary>
-        internal AzureFunctionToolCall()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureFunctionToolCall>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -108,7 +103,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureFunctionToolCall>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

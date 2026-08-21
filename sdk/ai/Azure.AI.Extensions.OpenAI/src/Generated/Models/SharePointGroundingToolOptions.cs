@@ -18,7 +18,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="SharePointGroundingToolOptions"/>. </summary>
         public SharePointGroundingToolOptions()
         {
-            ProjectConnections = new ChangeTrackingList<ResponsesToolProjectConnection>();
+            ProjectConnections = new ChangeTrackingList<ToolProjectConnection>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SharePointGroundingToolOptions"/>. </summary>
@@ -37,6 +37,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </summary>
-        public IList<ResponsesToolProjectConnection> ProjectConnections { get; }
+        public IList<ToolProjectConnection> ProjectConnections { get; }
     }
 }

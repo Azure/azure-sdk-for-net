@@ -46,6 +46,7 @@ namespace Extensions.Plugin
             }
 
             generator.AddVisitor(new ExperimentalAttributeVisitor());
+            generator.AddVisitor(new OpenAIExperimentalVisitor());
         }
     }
 }

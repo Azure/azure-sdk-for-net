@@ -11,16 +11,11 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Request from the service for the user to perform OAuth consent. </summary>
-    public partial class OAuthConsentRequestResponseItem : AgentResponseItem, IJsonModel<OAuthConsentRequestResponseItem>
+    public partial class OAuthConsentRequestResponseItem : ResponseItem, IJsonModel<OAuthConsentRequestResponseItem>
     {
-        /// <summary> Initializes a new instance of <see cref="OAuthConsentRequestResponseItem"/> for deserialization. </summary>
-        internal OAuthConsentRequestResponseItem()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OAuthConsentRequestResponseItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -78,7 +73,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("consent_link"u8);
-            writer.WriteStringValue(InternalConsentLink);
+            writer.WriteStringValue(ConsentLink.AbsoluteUri);
             writer.WritePropertyName("server_label"u8);
             writer.WriteStringValue(ServerLabel);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -104,7 +99,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OAuthConsentRequestResponseItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -158,7 +153,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("consent_link"u8))
                 {
-                    internalConsentLink = prop.Value.GetString();
+                    consentLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("server_label"u8))

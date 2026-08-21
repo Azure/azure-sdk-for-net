@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A Bing custom search tool call. </summary>
     [Experimental("AAIP001")]
-    public partial class BingCustomSearchToolCall : AgentResponseItem
+    public partial class BingCustomSearchToolCall : ResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -116,18 +116,54 @@ namespace Azure.ResourceManager.Fabric.Models
 {
     public static partial class ArmFabricModelFactory
     {
+        public static Azure.ResourceManager.Fabric.Models.CapacityOverageProperties CapacityOverageProperties(Azure.ResourceManager.Fabric.Models.CapacityOverageState? state = default(Azure.ResourceManager.Fabric.Models.CapacityOverageState?), int? thresholdCapacityUnitHours = default(int?)) { throw null; }
         public static Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuota FabricCapacitiesQuota(Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuotaName name = null, string unit = null, long currentValue = (long)0, long limit = (long)0) { throw null; }
         public static Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuotaName FabricCapacitiesQuotaName(string value = null, string localizedValue = null) { throw null; }
         public static Azure.ResourceManager.Fabric.Models.FabricCapacityAdministration FabricCapacityAdministration(System.Collections.Generic.IEnumerable<string> members = null) { throw null; }
         public static Azure.ResourceManager.Fabric.FabricCapacityData FabricCapacityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Fabric.Models.FabricCapacityProperties properties = null, Azure.ResourceManager.Fabric.Models.FabricSku sku = null) { throw null; }
         public static Azure.ResourceManager.Fabric.Models.FabricCapacityPatch FabricCapacityPatch(Azure.ResourceManager.Fabric.Models.FabricSku sku = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IEnumerable<string> fabricCapacityUpdateAdministrationMembers = null) { throw null; }
-        public static Azure.ResourceManager.Fabric.Models.FabricCapacityProperties FabricCapacityProperties(Azure.ResourceManager.Fabric.Models.FabricProvisioningState? provisioningState = default(Azure.ResourceManager.Fabric.Models.FabricProvisioningState?), Azure.ResourceManager.Fabric.Models.FabricResourceState? state = default(Azure.ResourceManager.Fabric.Models.FabricResourceState?), System.Collections.Generic.IEnumerable<string> administrationMembers = null) { throw null; }
-        public static Azure.ResourceManager.Fabric.Models.FabricCapacityUpdateProperties FabricCapacityUpdateProperties(System.Collections.Generic.IEnumerable<string> administrationMembers = null) { throw null; }
+        public static Azure.ResourceManager.Fabric.Models.FabricCapacityPatch FabricCapacityPatchWithProperties(Azure.ResourceManager.Fabric.Models.FabricSku sku = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Fabric.Models.FabricCapacityUpdateProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Fabric.Models.FabricCapacityProperties FabricCapacityProperties(Azure.ResourceManager.Fabric.Models.FabricProvisioningState? provisioningState = default(Azure.ResourceManager.Fabric.Models.FabricProvisioningState?), Azure.ResourceManager.Fabric.Models.FabricResourceState? state = default(Azure.ResourceManager.Fabric.Models.FabricResourceState?), Azure.ResourceManager.Fabric.Models.CapacityOverageProperties overage = null, System.Collections.Generic.IEnumerable<string> administrationMembers = null) { throw null; }
+        public static Azure.ResourceManager.Fabric.Models.FabricCapacityProperties FabricCapacityProperties(Azure.ResourceManager.Fabric.Models.FabricProvisioningState? provisioningState, Azure.ResourceManager.Fabric.Models.FabricResourceState? state, System.Collections.Generic.IEnumerable<string> administrationMembers) { throw null; }
+        public static Azure.ResourceManager.Fabric.Models.FabricCapacityUpdateProperties FabricCapacityUpdateProperties(Azure.ResourceManager.Fabric.Models.CapacityOverageProperties overage = null, System.Collections.Generic.IEnumerable<string> administrationMembers = null) { throw null; }
+        public static Azure.ResourceManager.Fabric.Models.FabricCapacityUpdateProperties FabricCapacityUpdateProperties(System.Collections.Generic.IEnumerable<string> administrationMembers) { throw null; }
         public static Azure.ResourceManager.Fabric.Models.FabricNameAvailabilityContent FabricNameAvailabilityContent(string name = null, string resourceType = null) { throw null; }
         public static Azure.ResourceManager.Fabric.Models.FabricNameAvailabilityResult FabricNameAvailabilityResult(bool? isNameAvailable = default(bool?), Azure.ResourceManager.Fabric.Models.FabricNameUnavailableReason? reason = default(Azure.ResourceManager.Fabric.Models.FabricNameUnavailableReason?), string message = null) { throw null; }
         public static Azure.ResourceManager.Fabric.Models.FabricSku FabricSku(string name = null, Azure.ResourceManager.Fabric.Models.FabricSkuTier tier = default(Azure.ResourceManager.Fabric.Models.FabricSkuTier)) { throw null; }
         public static Azure.ResourceManager.Fabric.Models.FabricSkuDetailsForExistingCapacity FabricSkuDetailsForExistingCapacity(string resourceType = null, Azure.ResourceManager.Fabric.Models.FabricSku sku = null) { throw null; }
         public static Azure.ResourceManager.Fabric.Models.FabricSkuDetailsForNewCapacity FabricSkuDetailsForNewCapacity(string resourceType = null, string name = null, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> locations = null) { throw null; }
+    }
+    public partial class CapacityOverageProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.CapacityOverageProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.CapacityOverageProperties>
+    {
+        public CapacityOverageProperties() { }
+        public Azure.ResourceManager.Fabric.Models.CapacityOverageState? State { get { throw null; } set { } }
+        public int? ThresholdCapacityUnitHours { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Fabric.Models.CapacityOverageProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Fabric.Models.CapacityOverageProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Fabric.Models.CapacityOverageProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.CapacityOverageProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.CapacityOverageProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Fabric.Models.CapacityOverageProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.CapacityOverageProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.CapacityOverageProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.CapacityOverageProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CapacityOverageState : System.IEquatable<Azure.ResourceManager.Fabric.Models.CapacityOverageState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CapacityOverageState(string value) { throw null; }
+        public static Azure.ResourceManager.Fabric.Models.CapacityOverageState Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Fabric.Models.CapacityOverageState Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Fabric.Models.CapacityOverageState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Fabric.Models.CapacityOverageState left, Azure.ResourceManager.Fabric.Models.CapacityOverageState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Fabric.Models.CapacityOverageState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Fabric.Models.CapacityOverageState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Fabric.Models.CapacityOverageState left, Azure.ResourceManager.Fabric.Models.CapacityOverageState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class FabricCapacitiesQuota : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuota>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuota>
     {
@@ -180,6 +216,7 @@ namespace Azure.ResourceManager.Fabric.Models
         public FabricCapacityPatch() { }
         public System.Collections.Generic.IList<string> AdministrationMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> FabricCapacityUpdateAdministrationMembers { get { throw null; } }
+        public Azure.ResourceManager.Fabric.Models.FabricCapacityUpdateProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.Fabric.Models.FabricSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual Azure.ResourceManager.Fabric.Models.FabricCapacityPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -196,6 +233,7 @@ namespace Azure.ResourceManager.Fabric.Models
     {
         public FabricCapacityProperties(Azure.ResourceManager.Fabric.Models.FabricCapacityAdministration administration) { }
         public System.Collections.Generic.IList<string> AdministrationMembers { get { throw null; } set { } }
+        public Azure.ResourceManager.Fabric.Models.CapacityOverageProperties Overage { get { throw null; } set { } }
         public Azure.ResourceManager.Fabric.Models.FabricProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Fabric.Models.FabricResourceState? State { get { throw null; } }
         protected virtual Azure.ResourceManager.Fabric.Models.FabricCapacityProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -212,6 +250,7 @@ namespace Azure.ResourceManager.Fabric.Models
     {
         public FabricCapacityUpdateProperties() { }
         public System.Collections.Generic.IList<string> AdministrationMembers { get { throw null; } set { } }
+        public Azure.ResourceManager.Fabric.Models.CapacityOverageProperties Overage { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Fabric.Models.FabricCapacityUpdateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Fabric.Models.FabricCapacityUpdateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

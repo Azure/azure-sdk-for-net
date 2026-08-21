@@ -11,16 +11,11 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A memory search tool call. </summary>
-    public partial class MemorySearchToolCall : AgentResponseItem, IJsonModel<MemorySearchToolCall>
+    public partial class MemorySearchToolCall : ResponseItem, IJsonModel<MemorySearchToolCall>
     {
-        /// <summary> Initializes a new instance of <see cref="MemorySearchToolCall"/> for deserialization. </summary>
-        internal MemorySearchToolCall()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MemorySearchToolCall>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -112,7 +107,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MemorySearchToolCall>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

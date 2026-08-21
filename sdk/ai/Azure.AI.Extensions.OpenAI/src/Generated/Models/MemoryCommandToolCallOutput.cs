@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The output of a memory command tool call. </summary>
     [Experimental("AAIP001")]
-    public partial class MemoryCommandToolCallOutput : AgentResponseItem
+    public partial class MemoryCommandToolCallOutput : ResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

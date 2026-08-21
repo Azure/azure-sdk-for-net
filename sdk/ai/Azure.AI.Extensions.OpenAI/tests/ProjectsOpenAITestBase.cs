@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -73,6 +73,17 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
         return GetConfiguredOptions(options, instrument);
     }
 
+    protected ProjectResponsesClientOptions CreateTestProjectResponsesClientOptions(Uri endpoint = null, bool instrument = true)
+    {
+        ProjectResponsesClientOptions options = new()
+        {
+            Endpoint = endpoint,
+            RetryPolicy = new ClientRetryPolicy(maxRetries: 0),
+            NetworkTimeout = TimeSpan.FromMinutes(2),
+        };
+        return GetConfiguredOptions(options, instrument);
+    }
+
     private T GetConfiguredOptions<T>(T options, bool instrument)
         where T : ClientPipelineOptions
     {
@@ -113,7 +124,7 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
 
     protected ProjectResponsesClient GetTestProjectResponsesClient(bool endpointInConstructor = true, bool endpointInOptions = false, string defaultAgentName = null, string defaultModelName = null, string defaultConversationId = null)
     {
-        ProjectResponsesClientOptions clientOptions = CreateTestOpenAIClientOptions<ProjectResponsesClientOptions>(
+        ProjectResponsesClientOptions clientOptions = CreateTestProjectResponsesClientOptions(
             endpoint: endpointInOptions ? new Uri($"{TestEnvironment.FOUNDRY_PROJECT_ENDPOINT}/openai/v1") : null);
 
         AgentReference defaultAgent = null;

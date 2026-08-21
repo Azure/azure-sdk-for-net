@@ -44,7 +44,7 @@ namespace Azure.AI.Extensions.OpenAI
         public string IndexName { get; set; }
 
         /// <summary> Type of query in an AIIndexResource attached to this agent. </summary>
-        public ResponsesAzureAISearchQueryKind? QueryType { get; set; }
+        public AzureAISearchQueryKind? QueryType { get; set; }
 
         /// <summary> Number of documents to retrieve from search and present to the model. </summary>
         public int? TopK { get; set; }

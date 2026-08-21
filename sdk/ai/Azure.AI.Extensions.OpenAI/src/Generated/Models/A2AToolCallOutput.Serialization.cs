@@ -11,16 +11,11 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The output of an A2A (Agent-to-Agent) tool call. </summary>
-    public partial class A2AToolCallOutput : AgentResponseItem, IJsonModel<A2AToolCallOutput>
+    public partial class A2AToolCallOutput : ResponseItem, IJsonModel<A2AToolCallOutput>
     {
-        /// <summary> Initializes a new instance of <see cref="A2AToolCallOutput"/> for deserialization. </summary>
-        internal A2AToolCallOutput()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<A2AToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -118,7 +113,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<A2AToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

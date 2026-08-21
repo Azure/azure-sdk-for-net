@@ -9,7 +9,8 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> An Azure AI Search tool call. </summary>
-    public partial class AzureAISearchToolCall : AgentResponseItem
+    [Experimental("AAIP002")]
+    public partial class AzureAISearchToolCall : ResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

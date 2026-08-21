@@ -76,12 +76,12 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         ProjectOpenAIClient openAIClientWithoutApp = new(
             projectEndpoint: new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT),
             tokenProvider: new MockCredential(),
-            options: WithExtraPolicy(new ProjectResponsesClientOptions()));
+            options: WithExtraPolicy(new ProjectOpenAIClientOptions()));
 
         ProjectOpenAIClient openAIClientWithApp = new(
             projectEndpoint: new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT),
             tokenProvider: new MockCredential(),
-            options: WithExtraPolicy(new ProjectResponsesClientOptions()
+            options: WithExtraPolicy(new ProjectOpenAIClientOptions()
             {
                 UserAgentApplicationId = "MyOtherApplication",
             }));
@@ -193,7 +193,8 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
             oaiClient = GetTestProjectOpenAIClient().GetProjectResponsesClientForModel(TestEnvironment.FOUNDRY_MODEL_NAME);
         }
         BinaryData options = BinaryData.FromObjectAsJson(
-        new {
+        new
+        {
             model = TestEnvironment.FOUNDRY_MODEL_NAME,
             input = new[]
             {
@@ -228,6 +229,7 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         {
             result = await oaiClient.CompactResponseAsync(newOptionsContent, "application/json");
         }
+
         ParseAndValidateCompactedResponse(result);
     }
 
@@ -284,7 +286,7 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         }
         CreateResponseOptions options = new()
         {
-            InputItems = {ResponseItem.CreateUserMessageItem("Hello, tell me a joke.")},
+            InputItems = { ResponseItem.CreateUserMessageItem("Hello, tell me a joke.") },
             StoredOutputEnabled = storeResponse
         };
         ResponseResult result = await oaiClient.CreateResponseAsync(options);

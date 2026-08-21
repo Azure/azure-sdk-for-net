@@ -30,6 +30,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Project connection auth security details. </summary>
-        public ResponsesOpenApiProjectConnectionSecurityScheme SecurityScheme { get; set; }
+        public OpenApiProjectConnectionSecurityScheme SecurityScheme { get; set; }
     }
 }

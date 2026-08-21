@@ -11,16 +11,11 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The AgentWorkflowPreviewActionResponseItem. </summary>
-    public partial class AgentWorkflowPreviewActionResponseItem : AgentResponseItem, IJsonModel<AgentWorkflowPreviewActionResponseItem>
+    public partial class AgentWorkflowPreviewActionResponseItem : ResponseItem, IJsonModel<AgentWorkflowPreviewActionResponseItem>
     {
-        /// <summary> Initializes a new instance of <see cref="AgentWorkflowPreviewActionResponseItem"/> for deserialization. </summary>
-        internal AgentWorkflowPreviewActionResponseItem()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AgentWorkflowPreviewActionResponseItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -116,7 +111,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AgentWorkflowPreviewActionResponseItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

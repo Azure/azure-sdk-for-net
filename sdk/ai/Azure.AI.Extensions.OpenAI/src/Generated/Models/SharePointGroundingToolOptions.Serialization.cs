@@ -74,7 +74,7 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 writer.WritePropertyName("project_connections"u8);
                 writer.WriteStartArray();
-                foreach (ResponsesToolProjectConnection item in ProjectConnections)
+                foreach (ToolProjectConnection item in ProjectConnections)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -122,7 +122,7 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            IList<ResponsesToolProjectConnection> projectConnections = default;
+            IList<ToolProjectConnection> projectConnections = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -132,10 +132,10 @@ namespace Azure.AI.Extensions.OpenAI
                     {
                         continue;
                     }
-                    List<ResponsesToolProjectConnection> array = new List<ResponsesToolProjectConnection>();
+                    List<ToolProjectConnection> array = new List<ToolProjectConnection>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResponsesToolProjectConnection.DeserializeResponsesToolProjectConnection(item, options));
+                        array.Add(ToolProjectConnection.DeserializeToolProjectConnection(item, options));
                     }
                     projectConnections = array;
                     continue;

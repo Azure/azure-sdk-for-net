@@ -38,7 +38,7 @@ namespace Extensions.Plugin.Visitors
 
         private bool ImplementsExperimrental(TypeProvider theType)
         {
-            foreach(CSharpType theInterface in theType.Implements)
+            foreach (CSharpType theInterface in theType.Implements)
             {
                 if (IsListed(theInterface.FullyQualifiedName))
                 {
@@ -48,7 +48,7 @@ namespace Extensions.Plugin.Visitors
                 {
                     foreach (CSharpType generic in theInterface.Arguments)
                     {
-                        if(IsListed(generic.FullyQualifiedName))
+                        if (IsListed(generic.FullyQualifiedName))
                         {
                             return true;
                         }
@@ -183,7 +183,7 @@ namespace Extensions.Plugin.Visitors
                 .Where(x => string.Equals(x.Type.Name, "ExperimentalAttribute") && x.Arguments.Count == 1 && x.Arguments[0] is LiteralExpression)
                 .Select(x => (x.Arguments[0] as LiteralExpression).Literal.ToString())
                 .Where(x => string.Equals(x, DiagnosticId)).Any();
-         }
+        }
 
         /// <inheritdoc />
         protected override TypeProvider VisitType(TypeProvider type)

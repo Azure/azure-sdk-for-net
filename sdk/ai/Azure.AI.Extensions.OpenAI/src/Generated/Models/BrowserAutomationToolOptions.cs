@@ -35,6 +35,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The project connection parameters associated with the Browser Automation Tool. </summary>
-        public ResponsesBrowserAutomationToolConnectionParameters Connection { get; set; }
+        public BrowserAutomationToolConnectionOptions Connection { get; set; }
     }
 }

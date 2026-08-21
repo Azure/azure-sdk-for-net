@@ -540,6 +540,12 @@ namespace Azure.AI.Projects
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.PagedRedTeam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(PagedRedTeam))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.PagedRedTeam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.PagedResultWithNextLinkRoutine is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(PagedResultWithNextLinkRoutine))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.PagedResultWithNextLinkRoutine is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.PagedResultWithNextLinkRoutineRun is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(PagedResultWithNextLinkRoutineRun))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.PagedResultWithNextLinkRoutineRun is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.PagedSchedule is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(PagedSchedule))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.PagedSchedule is experimental and may change in future versions.

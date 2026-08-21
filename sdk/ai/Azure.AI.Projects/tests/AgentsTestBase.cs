@@ -21,6 +21,7 @@ using OpenAI.VectorStores;
 namespace Azure.AI.Projects.Tests;
 #pragma warning disable OPENAICUA001
 #pragma warning disable AAIP001
+#pragma warning disable AAIP002
 
 public class AgentsTestBase : ProjectsClientTestBase
 {
@@ -337,7 +338,7 @@ public class AgentsTestBase : ProjectsClientTestBase
             IndexName = "sample_index",
             TopK = 5,
             Filter = "category eq 'sleeping bag'",
-            QueryType = AzureAISearchQueryType.Simple
+            QueryType = AzureAISearchQueryKind.Simple
         };
         return index;
     }
@@ -353,7 +354,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         return tool;
     }
 
-    private OpenAPITool GetOpenAPITool(AIProjectClient projectClient, bool withConnection)
+    private global::Azure.AI.Extensions.OpenAI.OpenApiTool GetOpenAPITool(AIProjectClient projectClient, bool withConnection)
     {
         Azure.AI.Projects.Agents.OpenApiAuthenticationDetails auth;
         string filePath;
@@ -366,47 +367,47 @@ public class AgentsTestBase : ProjectsClientTestBase
         }
         else
         {
-            auth = new OpenAPIAnonymousAuthenticationDetails();
+            auth = new global::Azure.AI.Extensions.OpenAI.OpenApiAnonymousAuthenticationDetails();
             filePath = GetAgentTestFile(name: "weather_openapi.json");
         }
-        OpenApiFunctionDefinition functionDefinition = new OpenApiFunctionDefinition(
+        global::Azure.AI.Extensions.OpenAI.OpenApiFunctionDefinition functionDefinition = new global::Azure.AI.Extensions.OpenAI.OpenApiFunctionDefinition(
             name: withConnection ? "tripadvisor" : "get_weather",
-            specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+            specification: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
             authentication: auth
         );
         functionDefinition.Description = withConnection ? "Trip Advisor API to get travel information." : "Retrieve weather information for a location.";
         return new(functionDefinition);
     }
 
-    private SharepointPreviewTool GetSharepointTool(AIProjectClient projectClient)
+    private SharePointPreviewTool GetSharepointTool(AIProjectClient projectClient)
     {
         Azure.AI.Projects.Agents.SharePointGroundingToolOptions sharepointToolOption = new()
         {
-            ProjectConnections = { new ToolProjectConnection(projectConnectionId: TestEnvironment.SHAREPOINT_CONNECTION_ID) }
+            ProjectConnections = { new global::Azure.AI.Extensions.OpenAI.ToolProjectConnection(projectConnectionId: TestEnvironment.SHAREPOINT_CONNECTION_ID) }
         };
-        return new SharepointPreviewTool(sharepointToolOption);
+        return new global::Azure.AI.Extensions.OpenAI.SharePointPreviewTool(sharepointToolOption);
     }
 
-    private MicrosoftFabricPreviewTool GetMicrosoftFabricAgentTool()
+    private global::Azure.AI.Extensions.OpenAI.MicrosoftFabricPreviewTool GetMicrosoftFabricAgentTool()
     {
-        FabricDataAgentToolOptions fabricToolOption = new()
+        global::Azure.AI.Extensions.OpenAI.FabricDataAgentToolOptions fabricToolOption = new()
         {
-            ProjectConnections = { new ToolProjectConnection(projectConnectionId: TestEnvironment.FABRIC_CONNECTION_ID) }
+            ProjectConnections = { new global::Azure.AI.Extensions.OpenAI.ToolProjectConnection(projectConnectionId: TestEnvironment.FABRIC_CONNECTION_ID) }
         };
         return new(fabricToolOption);
     }
 
-    private FabricIQPreviewTool GetFabricIQAgentTool()
+    private global::Azure.AI.Extensions.OpenAI.FabricIQPreviewTool GetFabricIQAgentTool()
     {
-        FabricIQPreviewTool fabricIQTool = new(projectConnectionId: TestEnvironment.FABRIC_IQ_CONNECTION_ID)
+        global::Azure.AI.Extensions.OpenAI.FabricIQPreviewTool fabricIQTool = new(projectConnectionId: TestEnvironment.FABRIC_IQ_CONNECTION_ID)
         {
             RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
         };
         return fabricIQTool;
     }
-    private A2APreviewTool GetA2ATool(bool useRemoteA2AConnection)
+    private global::Azure.AI.Extensions.OpenAI.A2APreviewTool GetA2ATool(bool useRemoteA2AConnection)
     {
-        A2APreviewTool a2aTool = new()
+        global::Azure.AI.Extensions.OpenAI.A2APreviewTool a2aTool = new()
         {
             ProjectConnectionId = useRemoteA2AConnection ? TestEnvironment.REMOTE_A2A_CONNECTION_ID : TestEnvironment.A2A_CONNECTION_ID
         };
@@ -417,9 +418,9 @@ public class AgentsTestBase : ProjectsClientTestBase
         return a2aTool;
     }
 
-    private AzureFunctionTool GetFunctionTool()
+    private global::Azure.AI.Extensions.OpenAI.AzureFunctionTool GetFunctionTool()
     {
-        AzureFunctionDefinitionFunction functionDefinition = new(
+        global::Azure.AI.Extensions.OpenAI.AzureFunctionDefinitionFunction functionDefinition = new(
             name: "foo",
             parameters: BinaryData.FromObjectAsJson(
                 new
@@ -440,13 +441,13 @@ public class AgentsTestBase : ProjectsClientTestBase
         {
             Description = "Get answers from the foo bot.",
         };
-        return new AzureFunctionTool(
-            new AzureFunctionDefinition(
+        return new global::Azure.AI.Extensions.OpenAI.AzureFunctionTool(
+            new global::Azure.AI.Extensions.OpenAI.AzureFunctionDefinition(
                 function: functionDefinition,
-                inputBinding: new AzureFunctionBinding(
-                    new AzureFunctionStorageQueue(queueServiceEndpoint: TestEnvironment.STORAGE_QUEUE_URI, queueName: "azure-function-foo-input")),
-                outputBinding: new AzureFunctionBinding(
-                    new AzureFunctionStorageQueue(queueServiceEndpoint: TestEnvironment.STORAGE_QUEUE_URI, queueName: "azure-function-tool-output"))
+                inputBinding: new global::Azure.AI.Extensions.OpenAI.AzureFunctionBinding(
+                    new global::Azure.AI.Extensions.OpenAI.AzureFunctionStorageQueue(queueServiceEndpoint: TestEnvironment.STORAGE_QUEUE_URI, queueName: "azure-function-foo-input")),
+                outputBinding: new global::Azure.AI.Extensions.OpenAI.AzureFunctionBinding(
+                    new global::Azure.AI.Extensions.OpenAI.AzureFunctionStorageQueue(queueServiceEndpoint: TestEnvironment.STORAGE_QUEUE_URI, queueName: "azure-function-tool-output"))
                 )
             );
     }
@@ -618,7 +619,7 @@ public class AgentsTestBase : ProjectsClientTestBase
             ToolType.AzureFunction => GetFunctionTool(),
             ToolType.MCPToolbox => await GetToolBoxAsync(projectClient, false),
             ToolType.MCPToolboxWithPreview => await GetToolBoxAsync(projectClient, true),
-            ToolType.WorkIQTool => new WorkIQPreviewTool(TestEnvironment.WORKIQ_CONNECTION_ID),
+            ToolType.WorkIQTool => new global::Azure.AI.Extensions.OpenAI.WorkIQPreviewTool(TestEnvironment.WORKIQ_CONNECTION_ID),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
         string instructions;
