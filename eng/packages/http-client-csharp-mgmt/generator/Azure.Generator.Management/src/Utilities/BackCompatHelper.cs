@@ -67,8 +67,7 @@ namespace Azure.Generator.Management.Utilities
                 MethodProvider? currentMethod = null;
                 foreach (var transformedSignature in TransformConditionalHeaderParameters(previousMethod.Signature))
                 {
-                    if (candidates.TryGetValue(transformedSignature, out var candidate)
-                        && HasMatchingSignatureDetails(transformedSignature, candidate.Signature))
+                    if (candidates.TryGetValue(transformedSignature, out var candidate))
                     {
                         currentMethod = candidate;
                         break;
@@ -164,28 +163,45 @@ namespace Azure.Generator.Management.Utilities
 
         private static IEnumerable<MethodSignature> TransformConditionalHeaderParameters(MethodSignature signature)
         {
-            var conditionalParameters = signature.Parameters
-                .Where(parameter => ConditionalHeaderProperties.ContainsKey(parameter.Name))
-                .ToArray();
-            if (conditionalParameters.Length == 0
-                || conditionalParameters.Any(parameter => parameter.IsRef || parameter.IsOut)
-                || !conditionalParameters.Any(parameter =>
-                    IsETagConditionalHeader(parameter)
-                    && parameter.Type.Equals(typeof(string))))
+            var conditionalParameters = new List<ParameterProvider>();
+            var etagParameters = new ParameterProvider[signature.Parameters.Count];
+            var hasETagParameter = false;
+            var hasModificationCondition = false;
+            for (var i = 0; i < signature.Parameters.Count; i++)
+            {
+                var parameter = signature.Parameters[i];
+                if (!ConditionalHeaderProperties.TryGetValue(parameter.Name, out var propertyName))
+                {
+                    etagParameters[i] = parameter;
+                    continue;
+                }
+
+                if (parameter.IsRef || parameter.IsOut)
+                {
+                    yield break;
+                }
+
+                conditionalParameters.Add(parameter);
+                hasModificationCondition |= propertyName is nameof(RequestConditions.IfModifiedSince) or nameof(RequestConditions.IfUnmodifiedSince);
+                if (propertyName is nameof(RequestConditions.IfMatch) or nameof(RequestConditions.IfNoneMatch)
+                    && parameter.Type.Equals(typeof(string)))
+                {
+                    etagParameters[i] = CloneParameter(parameter, type: new CSharpType(typeof(ETag), isNullable: true));
+                    hasETagParameter = true;
+                }
+                else
+                {
+                    etagParameters[i] = parameter;
+                }
+            }
+
+            if (!hasETagParameter)
             {
                 yield break;
             }
 
-            var etagParameters = signature.Parameters
-                .Select(parameter =>
-                    IsETagConditionalHeader(parameter) && parameter.Type.Equals(typeof(string))
-                        ? CloneParameter(parameter, type: new CSharpType(typeof(ETag), isNullable: true))
-                        : parameter)
-                .ToArray();
             yield return CreateSignature(etagParameters);
 
-            var hasModificationCondition = conditionalParameters.Any(parameter =>
-                ConditionalHeaderProperties[parameter.Name] is nameof(RequestConditions.IfModifiedSince) or nameof(RequestConditions.IfUnmodifiedSince));
             if (!hasModificationCondition)
             {
                 yield return CreateSignature(CreateGroupedParameters("matchConditions", typeof(MatchConditions)));
@@ -213,7 +229,7 @@ namespace Azure.Generator.Management.Utilities
                     name: name,
                     type: new CSharpType(type, isNullable: true));
                 var addedTransformedParameter = false;
-                var parameters = new List<ParameterProvider>(signature.Parameters.Count - conditionalParameters.Length + 1);
+                var parameters = new List<ParameterProvider>(signature.Parameters.Count - conditionalParameters.Count + 1);
                 foreach (var parameter in signature.Parameters)
                 {
                     if (!ConditionalHeaderProperties.ContainsKey(parameter.Name))
@@ -229,16 +245,6 @@ namespace Azure.Generator.Management.Utilities
                 return parameters;
             }
         }
-
-        private static bool HasMatchingSignatureDetails(MethodSignature previousSignature, MethodSignature currentSignature)
-            => previousSignature.Modifiers.HasFlag(MethodSignatureModifiers.Static) == currentSignature.Modifiers.HasFlag(MethodSignatureModifiers.Static)
-                && (previousSignature.ReturnType?.Equals(currentSignature.ReturnType) ?? currentSignature.ReturnType is null)
-                && previousSignature.Parameters.Count == currentSignature.Parameters.Count
-                && previousSignature.Parameters.Zip(currentSignature.Parameters).All(parameters =>
-                    parameters.First.Name == parameters.Second.Name
-                    && parameters.First.IsRef == parameters.Second.IsRef
-                    && parameters.First.IsOut == parameters.Second.IsOut
-                    && parameters.First.IsIn == parameters.Second.IsIn);
 
         private static MethodProvider BuildStringToETagOverload(
             TypeProvider enclosingType,
@@ -280,7 +286,10 @@ namespace Azure.Generator.Management.Utilities
                     var parameter = parameters[parameterIndexes[currentParameter.Name]];
                     value = parameter.Type.Equals(currentParameter.Type)
                         ? parameter
-                        : BuildETagArgument(parameter, currentParameter.Type);
+                        : new TernaryConditionalExpression(
+                            parameter.NotEqual(Null),
+                            New.Instance(typeof(ETag), parameter),
+                            new CastExpression(Null, currentParameter.Type));
 
                     if (parameter.IsRef || parameter.IsOut)
                     {
@@ -331,7 +340,10 @@ namespace Azure.Generator.Management.Utilities
                 propertyInitializers.Add(
                     new MemberExpression(null, propertyName),
                     IsETagConditionalHeader(parameter) && parameter.Type.Equals(typeof(string))
-                        ? BuildETagArgument(parameter, new CSharpType(typeof(ETag), isNullable: true))
+                        ? new TernaryConditionalExpression(
+                            parameter.NotEqual(Null),
+                            New.Instance(typeof(ETag), parameter),
+                            new CastExpression(Null, new CSharpType(typeof(ETag), isNullable: true)))
                         : parameter);
                 if (!parameter.Type.IsValueType || parameter.Type.IsNullable)
                 {
@@ -349,12 +361,6 @@ namespace Azure.Generator.Management.Utilities
                     new CastExpression(Null, currentParameter.Type),
                     conditions);
         }
-
-        private static ValueExpression BuildETagArgument(ValueExpression parameter, CSharpType type)
-            => new TernaryConditionalExpression(
-                parameter.NotEqual(Null),
-                New.Instance(typeof(ETag), parameter),
-                new CastExpression(Null, type));
 
         private static ParameterProvider CloneParameter(
             ParameterProvider parameter,
