@@ -108,12 +108,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 
         protected override Task OnProcessingEventBatchAsync(IEnumerable<EventData> events, EventProcessorHostPartition partition, CancellationToken cancellationToken)
         {
-            if (events == null || !events.Any())
-            {
-                return Task.CompletedTask;
-            }
-
-            return partition.EventProcessor.ProcessEventsAsync(partition, events);
+            return partition.EventProcessor.ProcessEventsAsync(partition, events ?? Enumerable.Empty<EventData>());
         }
 
         protected override async Task OnInitializingPartitionAsync(EventProcessorHostPartition partition, CancellationToken cancellationToken)
