@@ -83,6 +83,7 @@ jobs:
     steps:
       - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
       
+      # Baseline experiment: retain existing sparse/full-history checkout behavior.
       - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
           parameters:
