@@ -12,7 +12,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
-using OpenAI;
+using OpenAI.Conversations;
 using OpenAI.Files;
 using OpenAI.Responses;
 
@@ -30,9 +30,8 @@ public static partial class AzureAIExtensions
     [Experimental("OPENAI001")]
     internal static ResponseItem AsAgentResponseItem(this ResponseItem responseItem)
     {
-        BinaryData serializedResponseItem = ModelReaderWriter.Write(responseItem, ModelSerializationExtensions.WireOptions, OpenAIContext.Default);
-        using JsonDocument document = JsonDocument.Parse(serializedResponseItem);
-        return AgentResponseItem.DeserializeAgentResponseItem(document.RootElement, ModelSerializationExtensions.WireOptions);
+        BinaryData serializedResponseItem = ModelReaderWriter.Write(responseItem, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
+        return ModelReaderWriter.Read<ResponseItem>(serializedResponseItem, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
     }
 
     // Whether an already-materialized item still needs client-side normalization: its discriminator is one this

@@ -145,7 +145,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SharePointGroundingToolOptions(projectConnections ?? new ChangeTrackingList<ResponsesToolProjectConnection>(), additionalBinaryDataProperties);
+            return new SharePointGroundingToolOptions(projectConnections ?? new ChangeTrackingList<ToolProjectConnection>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -2078,10 +2078,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="completedAt"> The Unix timestamp (in seconds) for when the response completed. </param>
         /// <returns> A new <see cref="Agents.VoiceResponse"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceResponse VoiceResponse(string id = default, VoiceResponseObject? @object = default, VoiceResponseStatus? status = default, RealtimeResponseStatusDetails statusDetails = default, RealtimeResponseUsage usage = default, string conversationId = default, IEnumerable<VoiceResponseOutputModality> outputModalities = default, BinaryData maxOutputTokens = default, string id0 = default, IEnumerable<VoiceConversationItem> output = default, string conversationId0 = default, VoiceResponseAudio audio = default, IDictionary<string, string> metadata = default, float? temperature = default, DateTimeOffset? createdAt = default, DateTimeOffset? completedAt = default)
+        public static VoiceResponse VoiceResponse(string id = default, VoiceResponseObject? @object = default, VoiceResponseStatus? status = default, RealtimeResponseStatusDetails statusDetails = default, RealtimeResponseUsage usage = default, string conversationId = default, IEnumerable<VoiceResponseOutputModality> outputModalities = default, BinaryData maxOutputTokens = default, string id0 = default, IEnumerable<BinaryData> output = default, string conversationId0 = default, VoiceResponseAudio audio = default, IDictionary<string, string> metadata = default, float? temperature = default, DateTimeOffset? createdAt = default, DateTimeOffset? completedAt = default)
         {
             outputModalities ??= new ChangeTrackingList<VoiceResponseOutputModality>();
-            output ??= new ChangeTrackingList<VoiceConversationItem>();
+            output ??= new ChangeTrackingList<BinaryData>();
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
             return new VoiceResponse(
@@ -2104,57 +2104,44 @@ namespace Azure.AI.Projects.Agents
                 completedAt);
         }
 
-        /// <summary>
-        /// A persisted item in a voice conversation.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.VoiceMessageItem"/>, <see cref="Agents.VoiceFunctionCallItem"/>, <see cref="Agents.VoiceFunctionCallOutputItem"/>, <see cref="Agents.VoiceMcpListToolsItem"/>, <see cref="Agents.VoiceMcpCallItem"/>, <see cref="Agents.VoiceMcpApprovalRequestItem"/>, and <see cref="Agents.VoiceMcpApprovalResponseItem"/>.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
-        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
-        /// <returns> A new <see cref="Agents.VoiceConversationItem"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static VoiceConversationItem VoiceConversationItem(string @type = default, DateTimeOffset? createdAt = default, string responseId = default)
-        {
-            return new UnknownVoiceConversationItem(new RealtimeConversationItemType(@type), additionalBinaryDataProperties: null, createdAt, responseId);
-        }
-
-        /// <summary> A single item within a Realtime conversation. </summary>
-        /// <param name="type"></param>
-        /// <returns> A new <see cref="OpenAI.RealtimeConversationItem"/> instance for mocking. </returns>
-        public static RealtimeConversationItem RealtimeConversationItem(string @type = default)
-        {
-            return new RealtimeConversationItem(new RealtimeConversationItemType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A persisted message item in a voice conversation. </summary>
-        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
-        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
-        /// <returns> A new <see cref="Agents.VoiceMessageItem"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static VoiceMessageItem VoiceMessageItem(DateTimeOffset? createdAt = default, string responseId = default)
-        {
-            return new VoiceMessageItem(default, additionalBinaryDataProperties: null, createdAt, responseId, default);
-        }
-
         /// <summary> A system message item. Only `input_text` content is valid for system messages. </summary>
-        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
-        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
+        /// <param name="role"></param>
         /// <param name="id"> The unique ID of the item. This may be provided by the client or generated by the server. </param>
         /// <param name="object"> Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item. </param>
         /// <param name="status"> The status of the item. Has no effect on the conversation. </param>
         /// <param name="content"> The content of the message. </param>
+        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
+        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
         /// <returns> A new <see cref="Agents.VoiceSystemMessageItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceSystemMessageItem VoiceSystemMessageItem(DateTimeOffset? createdAt = default, string responseId = default, string id = default, VoiceSystemMessageItemObject? @object = default, VoiceSystemMessageItemStatus? status = default, IEnumerable<RealtimeConversationItemMessageSystemContent> content = default)
+        public static VoiceSystemMessageItem VoiceSystemMessageItem(string role = default, string id = default, RealtimeConversationItemMessageSystemObject? @object = default, RealtimeConversationItemMessageSystemStatus? status = default, IEnumerable<RealtimeConversationItemMessageSystemContent> content = default, DateTimeOffset? createdAt = default, string responseId = default)
         {
             content ??= new ChangeTrackingList<RealtimeConversationItemMessageSystemContent>();
 
             return new VoiceSystemMessageItem(
-                default,
+                new RealtimeConversationItemMessageType(role),
                 additionalBinaryDataProperties: null,
+                id,
+                @object,
+                status,
+                content.ToList(),
                 createdAt,
-                responseId,
+                responseId);
+        }
+
+        /// <summary> Realtime system message item. </summary>
+        /// <param name="id"> The unique ID of the item. This may be provided by the client or generated by the server. </param>
+        /// <param name="object"> Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item. </param>
+        /// <param name="status"> The status of the item. Has no effect on the conversation. </param>
+        /// <param name="content"> The content of the message. </param>
+        /// <returns> A new <see cref="OpenAI.RealtimeConversationItemMessageSystem"/> instance for mocking. </returns>
+        public static RealtimeConversationItemMessageSystem RealtimeConversationItemMessageSystem(string id = default, RealtimeConversationItemMessageSystemObject? @object = default, RealtimeConversationItemMessageSystemStatus? status = default, IEnumerable<RealtimeConversationItemMessageSystemContent> content = default)
+        {
+            content ??= new ChangeTrackingList<RealtimeConversationItemMessageSystemContent>();
+
+            return new RealtimeConversationItemMessageSystem(
                 RealtimeConversationItemMessageType.System,
+                additionalBinaryDataProperties: null,
                 id,
                 @object,
                 status,
@@ -2170,25 +2157,30 @@ namespace Azure.AI.Projects.Agents
             return new RealtimeConversationItemMessageSystemContent(@type, text, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> A user message item. `input_text`, `input_audio`, and `input_image` content are valid for user messages. </summary>
-        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
-        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
+        /// <summary>
+        /// The RealtimeConversationItemMessage.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.RealtimeConversationItemMessageSystem"/>, <see cref="OpenAI.RealtimeConversationItemMessageUser"/>, and <see cref="OpenAI.RealtimeConversationItemMessageAssistant"/>.
+        /// </summary>
+        /// <param name="role"></param>
+        /// <returns> A new <see cref="OpenAI.RealtimeConversationItemMessage"/> instance for mocking. </returns>
+        public static RealtimeConversationItemMessage RealtimeConversationItemMessage(string role = default)
+        {
+            return new UnknownRealtimeConversationItemMessage(new RealtimeConversationItemMessageType(role), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Realtime user message item. </summary>
         /// <param name="id"> The unique ID of the item. This may be provided by the client or generated by the server. </param>
         /// <param name="object"> Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item. </param>
         /// <param name="status"> The status of the item. Has no effect on the conversation. </param>
         /// <param name="content"> The content of the message. </param>
-        /// <returns> A new <see cref="Agents.VoiceUserMessageItem"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static VoiceUserMessageItem VoiceUserMessageItem(DateTimeOffset? createdAt = default, string responseId = default, string id = default, VoiceUserMessageItemObject? @object = default, VoiceUserMessageItemStatus? status = default, IEnumerable<RealtimeConversationItemMessageUserContent> content = default)
+        /// <returns> A new <see cref="OpenAI.RealtimeConversationItemMessageUser"/> instance for mocking. </returns>
+        public static RealtimeConversationItemMessageUser RealtimeConversationItemMessageUser(string id = default, RealtimeConversationItemMessageUserObject? @object = default, RealtimeConversationItemMessageUserStatus? status = default, IEnumerable<RealtimeConversationItemMessageUserContent> content = default)
         {
             content ??= new ChangeTrackingList<RealtimeConversationItemMessageUserContent>();
 
-            return new VoiceUserMessageItem(
-                default,
-                additionalBinaryDataProperties: null,
-                createdAt,
-                responseId,
+            return new RealtimeConversationItemMessageUser(
                 RealtimeConversationItemMessageType.User,
+                additionalBinaryDataProperties: null,
                 id,
                 @object,
                 status,
@@ -2215,25 +2207,19 @@ namespace Azure.AI.Projects.Agents
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> An assistant message item. Only `output_text` and `output_audio` content are valid for assistant messages. </summary>
-        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
-        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
+        /// <summary> Realtime assistant message item. </summary>
         /// <param name="id"> The unique ID of the item. This may be provided by the client or generated by the server. </param>
         /// <param name="object"> Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item. </param>
         /// <param name="status"> The status of the item. Has no effect on the conversation. </param>
         /// <param name="content"> The content of the message. </param>
-        /// <returns> A new <see cref="Agents.VoiceAssistantMessageItem"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static VoiceAssistantMessageItem VoiceAssistantMessageItem(DateTimeOffset? createdAt = default, string responseId = default, string id = default, VoiceAssistantMessageItemObject? @object = default, VoiceAssistantMessageItemStatus? status = default, IEnumerable<RealtimeConversationItemMessageAssistantContent> content = default)
+        /// <returns> A new <see cref="OpenAI.RealtimeConversationItemMessageAssistant"/> instance for mocking. </returns>
+        public static RealtimeConversationItemMessageAssistant RealtimeConversationItemMessageAssistant(string id = default, RealtimeConversationItemMessageAssistantObject? @object = default, RealtimeConversationItemMessageAssistantStatus? status = default, IEnumerable<RealtimeConversationItemMessageAssistantContent> content = default)
         {
             content ??= new ChangeTrackingList<RealtimeConversationItemMessageAssistantContent>();
 
-            return new VoiceAssistantMessageItem(
-                default,
-                additionalBinaryDataProperties: null,
-                createdAt,
-                responseId,
+            return new RealtimeConversationItemMessageAssistant(
                 RealtimeConversationItemMessageType.Assistant,
+                additionalBinaryDataProperties: null,
                 id,
                 @object,
                 status,
@@ -2251,24 +2237,96 @@ namespace Azure.AI.Projects.Agents
             return new RealtimeConversationItemMessageAssistantContent(@type, text, audio, transcript, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> A function call request item. </summary>
+        /// <summary> A user message item. `input_text`, `input_audio`, and `input_image` content are valid for user messages. </summary>
+        /// <param name="role"></param>
+        /// <param name="id"> The unique ID of the item. This may be provided by the client or generated by the server. </param>
+        /// <param name="object"> Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item. </param>
+        /// <param name="status"> The status of the item. Has no effect on the conversation. </param>
+        /// <param name="content"> The content of the message. </param>
         /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
         /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
+        /// <returns> A new <see cref="Agents.VoiceUserMessageItem"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceUserMessageItem VoiceUserMessageItem(string role = default, string id = default, RealtimeConversationItemMessageUserObject? @object = default, RealtimeConversationItemMessageUserStatus? status = default, IEnumerable<RealtimeConversationItemMessageUserContent> content = default, DateTimeOffset? createdAt = default, string responseId = default)
+        {
+            content ??= new ChangeTrackingList<RealtimeConversationItemMessageUserContent>();
+
+            return new VoiceUserMessageItem(
+                new RealtimeConversationItemMessageType(role),
+                additionalBinaryDataProperties: null,
+                id,
+                @object,
+                status,
+                content.ToList(),
+                createdAt,
+                responseId);
+        }
+
+        /// <summary> An assistant message item. Only `output_text` and `output_audio` content are valid for assistant messages. </summary>
+        /// <param name="role"></param>
+        /// <param name="id"> The unique ID of the item. This may be provided by the client or generated by the server. </param>
+        /// <param name="object"> Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item. </param>
+        /// <param name="status"> The status of the item. Has no effect on the conversation. </param>
+        /// <param name="content"> The content of the message. </param>
+        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
+        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
+        /// <returns> A new <see cref="Agents.VoiceAssistantMessageItem"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAssistantMessageItem VoiceAssistantMessageItem(string role = default, string id = default, RealtimeConversationItemMessageAssistantObject? @object = default, RealtimeConversationItemMessageAssistantStatus? status = default, IEnumerable<RealtimeConversationItemMessageAssistantContent> content = default, DateTimeOffset? createdAt = default, string responseId = default)
+        {
+            content ??= new ChangeTrackingList<RealtimeConversationItemMessageAssistantContent>();
+
+            return new VoiceAssistantMessageItem(
+                new RealtimeConversationItemMessageType(role),
+                additionalBinaryDataProperties: null,
+                id,
+                @object,
+                status,
+                content.ToList(),
+                createdAt,
+                responseId);
+        }
+
+        /// <summary> A function call request item. </summary>
+        /// <param name="type"></param>
         /// <param name="id"> The unique ID of the item. This may be provided by the client or generated by the server. </param>
         /// <param name="object"> Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item. </param>
         /// <param name="status"> The status of the item. Has no effect on the conversation. </param>
         /// <param name="callId"> The ID of the function call. </param>
         /// <param name="name"> The name of the function being called. </param>
         /// <param name="arguments"> The arguments of the function call. This is a JSON-encoded string representing the arguments passed to the function, for example `{"arg1": "value1", "arg2": 42}`. </param>
+        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
+        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
         /// <returns> A new <see cref="Agents.VoiceFunctionCallItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceFunctionCallItem VoiceFunctionCallItem(DateTimeOffset? createdAt = default, string responseId = default, string id = default, VoiceFunctionCallItemObject? @object = default, RealtimeConversationItemFunctionCallStatus? status = default, string callId = default, string name = default, string arguments = default)
+        public static VoiceFunctionCallItem VoiceFunctionCallItem(string @type = default, string id = default, RealtimeConversationItemFunctionCallObject? @object = default, RealtimeConversationItemFunctionCallStatus? status = default, string callId = default, string name = default, string arguments = default, DateTimeOffset? createdAt = default, string responseId = default)
         {
             return new VoiceFunctionCallItem(
-                default,
+                new RealtimeConversationItemType(@type),
                 additionalBinaryDataProperties: null,
+                id,
+                @object,
+                status,
+                callId,
+                name,
+                arguments,
                 createdAt,
-                responseId,
+                responseId);
+        }
+
+        /// <summary> Realtime function call item. </summary>
+        /// <param name="id"> The unique ID of the item. This may be provided by the client or generated by the server. </param>
+        /// <param name="object"> Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item. </param>
+        /// <param name="status"> The status of the item. Has no effect on the conversation. </param>
+        /// <param name="callId"> The ID of the function call. </param>
+        /// <param name="name"> The name of the function being called. </param>
+        /// <param name="arguments"> The arguments of the function call. This is a JSON-encoded string representing the arguments passed to the function, for example `{"arg1": "value1", "arg2": 42}`. </param>
+        /// <returns> A new <see cref="OpenAI.RealtimeConversationItemFunctionCall"/> instance for mocking. </returns>
+        public static RealtimeConversationItemFunctionCall RealtimeConversationItemFunctionCall(string id = default, RealtimeConversationItemFunctionCallObject? @object = default, RealtimeConversationItemFunctionCallStatus? status = default, string callId = default, string name = default, string arguments = default)
+        {
+            return new RealtimeConversationItemFunctionCall(
+                RealtimeConversationItemType.FunctionCall,
+                additionalBinaryDataProperties: null,
                 id,
                 @object,
                 status,
@@ -2277,52 +2335,63 @@ namespace Azure.AI.Projects.Agents
                 arguments);
         }
 
-        /// <summary> A function call output item. </summary>
-        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
-        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
+        /// <summary>
+        /// A single item within a Realtime conversation.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.RealtimeConversationItemFunctionCall"/>, <see cref="OpenAI.RealtimeConversationItemFunctionCallOutput"/>, <see cref="OpenAI.RealtimeMCPApprovalResponse"/>, <see cref="OpenAI.RealtimeMCPListTools"/>, <see cref="OpenAI.RealtimeMCPToolCall"/>, and <see cref="OpenAI.RealtimeMCPApprovalRequest"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="OpenAI.RealtimeConversationItem"/> instance for mocking. </returns>
+        public static RealtimeConversationItem RealtimeConversationItem(string @type = default)
+        {
+            return new UnknownRealtimeConversationItem(new RealtimeConversationItemType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Realtime function call output item. </summary>
         /// <param name="id"> The unique ID of the item. This may be provided by the client or generated by the server. </param>
         /// <param name="object"> Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item. </param>
         /// <param name="status"> The status of the item. Has no effect on the conversation. </param>
         /// <param name="callId"> The ID of the function call this output is for. </param>
         /// <param name="output"> The output of the function call, this is free text and can contain any information or simply be empty. </param>
-        /// <param name="name"> The name of the function that was called. A Foundry extension: OpenAI's function_call_output does not carry the function name, only `call_id`. </param>
-        /// <returns> A new <see cref="Agents.VoiceFunctionCallOutputItem"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static VoiceFunctionCallOutputItem VoiceFunctionCallOutputItem(DateTimeOffset? createdAt = default, string responseId = default, string id = default, VoiceFunctionCallOutputItemObject? @object = default, RealtimeConversationItemFunctionCallOutputStatus? status = default, string callId = default, string output = default, string name = default)
+        /// <returns> A new <see cref="OpenAI.RealtimeConversationItemFunctionCallOutput"/> instance for mocking. </returns>
+        public static RealtimeConversationItemFunctionCallOutput RealtimeConversationItemFunctionCallOutput(string id = default, RealtimeConversationItemFunctionCallOutputObject? @object = default, RealtimeConversationItemFunctionCallOutputStatus? status = default, string callId = default, string output = default)
         {
-            return new VoiceFunctionCallOutputItem(
-                default,
+            return new RealtimeConversationItemFunctionCallOutput(
+                RealtimeConversationItemType.FunctionCallOutput,
                 additionalBinaryDataProperties: null,
-                createdAt,
-                responseId,
                 id,
                 @object,
                 status,
                 callId,
-                output,
-                name);
+                output);
         }
 
-        /// <summary> An MCP list-tools item. </summary>
-        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
-        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
+        /// <summary> Realtime MCP approval response. </summary>
+        /// <param name="id"> The unique ID of the approval response. </param>
+        /// <param name="approvalRequestId"> The ID of the approval request being answered. </param>
+        /// <param name="approve"> Whether the request was approved. </param>
+        /// <param name="reason"></param>
+        /// <returns> A new <see cref="OpenAI.RealtimeMCPApprovalResponse"/> instance for mocking. </returns>
+        public static RealtimeMCPApprovalResponse RealtimeMCPApprovalResponse(string id = default, string approvalRequestId = default, bool approve = default, string reason = default)
+        {
+            return new RealtimeMCPApprovalResponse(
+                RealtimeConversationItemType.McpApprovalResponse,
+                additionalBinaryDataProperties: null,
+                id,
+                approvalRequestId,
+                approve,
+                reason);
+        }
+
+        /// <summary> Realtime MCP list tools. </summary>
         /// <param name="id"> The unique ID of the list. </param>
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <param name="tools"> The tools available on the server. </param>
-        /// <returns> A new <see cref="Agents.VoiceMcpListToolsItem"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static VoiceMcpListToolsItem VoiceMcpListToolsItem(DateTimeOffset? createdAt = default, string responseId = default, string id = default, string serverLabel = default, IEnumerable<VoiceMcpListToolsTool> tools = default)
+        /// <returns> A new <see cref="OpenAI.RealtimeMCPListTools"/> instance for mocking. </returns>
+        public static RealtimeMCPListTools RealtimeMCPListTools(string id = default, string serverLabel = default, IEnumerable<VoiceMcpListToolsTool> tools = default)
         {
             tools ??= new ChangeTrackingList<VoiceMcpListToolsTool>();
 
-            return new VoiceMcpListToolsItem(
-                default,
-                additionalBinaryDataProperties: null,
-                createdAt,
-                responseId,
-                id,
-                serverLabel,
-                tools.ToList());
+            return new RealtimeMCPListTools(RealtimeConversationItemType.McpListTools, additionalBinaryDataProperties: null, id, serverLabel, tools.ToList());
         }
 
         /// <summary> MCP list tools tool. </summary>
@@ -2350,9 +2419,7 @@ namespace Azure.AI.Projects.Agents
             return new VoiceMcpListToolsToolAnnotations(additionalBinaryDataProperties: null);
         }
 
-        /// <summary> An MCP call item. </summary>
-        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
-        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
+        /// <summary> Realtime MCP tool call. </summary>
         /// <param name="id"> The unique ID of the tool call. </param>
         /// <param name="serverLabel"> The label of the MCP server running the tool. </param>
         /// <param name="name"> The name of the tool that was run. </param>
@@ -2360,15 +2427,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="approvalRequestId"></param>
         /// <param name="output"></param>
         /// <param name="error"></param>
-        /// <returns> A new <see cref="Agents.VoiceMcpCallItem"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static VoiceMcpCallItem VoiceMcpCallItem(DateTimeOffset? createdAt = default, string responseId = default, string id = default, string serverLabel = default, string name = default, string arguments = default, string approvalRequestId = default, string output = default, RealtimeMCPError error = default)
+        /// <returns> A new <see cref="OpenAI.RealtimeMCPToolCall"/> instance for mocking. </returns>
+        public static RealtimeMCPToolCall RealtimeMCPToolCall(string id = default, string serverLabel = default, string name = default, string arguments = default, string approvalRequestId = default, string output = default, RealtimeMCPError error = default)
         {
-            return new VoiceMcpCallItem(
-                default,
+            return new RealtimeMCPToolCall(
+                RealtimeConversationItemType.McpCall,
                 additionalBinaryDataProperties: null,
-                createdAt,
-                responseId,
                 id,
                 serverLabel,
                 name,
@@ -2415,48 +2479,146 @@ namespace Azure.AI.Projects.Agents
             return new RealtimeMCPHTTPError(RealtimeMcpErrorType.HttpError, additionalBinaryDataProperties: null, code, message);
         }
 
-        /// <summary> An MCP approval request item. </summary>
-        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
-        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
+        /// <summary> Realtime MCP approval request. </summary>
         /// <param name="id"> The unique ID of the approval request. </param>
         /// <param name="serverLabel"> The label of the MCP server making the request. </param>
         /// <param name="name"> The name of the tool to run. </param>
         /// <param name="arguments"> A JSON string of arguments for the tool. </param>
-        /// <returns> A new <see cref="Agents.VoiceMcpApprovalRequestItem"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static VoiceMcpApprovalRequestItem VoiceMcpApprovalRequestItem(DateTimeOffset? createdAt = default, string responseId = default, string id = default, string serverLabel = default, string name = default, string arguments = default)
+        /// <returns> A new <see cref="OpenAI.RealtimeMCPApprovalRequest"/> instance for mocking. </returns>
+        public static RealtimeMCPApprovalRequest RealtimeMCPApprovalRequest(string id = default, string serverLabel = default, string name = default, string arguments = default)
         {
-            return new VoiceMcpApprovalRequestItem(
-                default,
+            return new RealtimeMCPApprovalRequest(
+                RealtimeConversationItemType.McpApprovalRequest,
                 additionalBinaryDataProperties: null,
-                createdAt,
-                responseId,
                 id,
                 serverLabel,
                 name,
                 arguments);
         }
 
-        /// <summary> An MCP approval response item (client-created). </summary>
+        /// <summary> A function call output item. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"> The unique ID of the item. This may be provided by the client or generated by the server. </param>
+        /// <param name="object"> Identifier for the API object being returned - always `realtime.item`. Optional when creating a new item. </param>
+        /// <param name="status"> The status of the item. Has no effect on the conversation. </param>
+        /// <param name="callId"> The ID of the function call this output is for. </param>
+        /// <param name="output"> The output of the function call, this is free text and can contain any information or simply be empty. </param>
         /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
         /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
+        /// <param name="name"> The name of the function that was called. A Foundry extension: OpenAI's function_call_output does not carry the function name, only `call_id`. </param>
+        /// <returns> A new <see cref="Agents.VoiceFunctionCallOutputItem"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceFunctionCallOutputItem VoiceFunctionCallOutputItem(string @type = default, string id = default, RealtimeConversationItemFunctionCallOutputObject? @object = default, RealtimeConversationItemFunctionCallOutputStatus? status = default, string callId = default, string output = default, DateTimeOffset? createdAt = default, string responseId = default, string name = default)
+        {
+            return new VoiceFunctionCallOutputItem(
+                new RealtimeConversationItemType(@type),
+                additionalBinaryDataProperties: null,
+                id,
+                @object,
+                status,
+                callId,
+                output,
+                createdAt,
+                responseId,
+                name);
+        }
+
+        /// <summary> An MCP list-tools item. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"> The unique ID of the list. </param>
+        /// <param name="serverLabel"> The label of the MCP server. </param>
+        /// <param name="tools"> The tools available on the server. </param>
+        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
+        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
+        /// <returns> A new <see cref="Agents.VoiceMcpListToolsItem"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceMcpListToolsItem VoiceMcpListToolsItem(string @type = default, string id = default, string serverLabel = default, IEnumerable<VoiceMcpListToolsTool> tools = default, DateTimeOffset? createdAt = default, string responseId = default)
+        {
+            tools ??= new ChangeTrackingList<VoiceMcpListToolsTool>();
+
+            return new VoiceMcpListToolsItem(
+                new RealtimeConversationItemType(@type),
+                additionalBinaryDataProperties: null,
+                id,
+                serverLabel,
+                tools.ToList(),
+                createdAt,
+                responseId);
+        }
+
+        /// <summary> An MCP call item. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"> The unique ID of the tool call. </param>
+        /// <param name="serverLabel"> The label of the MCP server running the tool. </param>
+        /// <param name="name"> The name of the tool that was run. </param>
+        /// <param name="arguments"> A JSON string of the arguments passed to the tool. </param>
+        /// <param name="approvalRequestId"></param>
+        /// <param name="output"></param>
+        /// <param name="error"></param>
+        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
+        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
+        /// <returns> A new <see cref="Agents.VoiceMcpCallItem"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceMcpCallItem VoiceMcpCallItem(string @type = default, string id = default, string serverLabel = default, string name = default, string arguments = default, string approvalRequestId = default, string output = default, RealtimeMCPError error = default, DateTimeOffset? createdAt = default, string responseId = default)
+        {
+            return new VoiceMcpCallItem(
+                new RealtimeConversationItemType(@type),
+                additionalBinaryDataProperties: null,
+                id,
+                serverLabel,
+                name,
+                arguments,
+                approvalRequestId,
+                output,
+                error,
+                createdAt,
+                responseId);
+        }
+
+        /// <summary> An MCP approval request item. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"> The unique ID of the approval request. </param>
+        /// <param name="serverLabel"> The label of the MCP server making the request. </param>
+        /// <param name="name"> The name of the tool to run. </param>
+        /// <param name="arguments"> A JSON string of arguments for the tool. </param>
+        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
+        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
+        /// <returns> A new <see cref="Agents.VoiceMcpApprovalRequestItem"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceMcpApprovalRequestItem VoiceMcpApprovalRequestItem(string @type = default, string id = default, string serverLabel = default, string name = default, string arguments = default, DateTimeOffset? createdAt = default, string responseId = default)
+        {
+            return new VoiceMcpApprovalRequestItem(
+                new RealtimeConversationItemType(@type),
+                additionalBinaryDataProperties: null,
+                id,
+                serverLabel,
+                name,
+                arguments,
+                createdAt,
+                responseId);
+        }
+
+        /// <summary> An MCP approval response item (client-created). </summary>
+        /// <param name="type"></param>
         /// <param name="id"> The unique ID of the approval response. </param>
         /// <param name="approvalRequestId"> The ID of the approval request being answered. </param>
         /// <param name="approve"> Whether the request was approved. </param>
         /// <param name="reason"></param>
+        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
+        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
         /// <returns> A new <see cref="Agents.VoiceMcpApprovalResponseItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceMcpApprovalResponseItem VoiceMcpApprovalResponseItem(DateTimeOffset? createdAt = default, string responseId = default, string id = default, string approvalRequestId = default, bool approve = default, string reason = default)
+        public static VoiceMcpApprovalResponseItem VoiceMcpApprovalResponseItem(string @type = default, string id = default, string approvalRequestId = default, bool approve = default, string reason = default, DateTimeOffset? createdAt = default, string responseId = default)
         {
             return new VoiceMcpApprovalResponseItem(
-                default,
+                new RealtimeConversationItemType(@type),
                 additionalBinaryDataProperties: null,
-                createdAt,
-                responseId,
                 id,
                 approvalRequestId,
                 approve,
-                reason);
+                reason,
+                createdAt,
+                responseId);
         }
 
         /// <summary> Audio configuration for a response. Follows the OpenAI Realtime GA `audio` object shape. </summary>

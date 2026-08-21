@@ -288,26 +288,35 @@ private static async Task<string> ReadPersistedConversationAsync(
             cancellationToken);
         Console.WriteLine($"Response {responseId}: {detail.Status}");
 
-        await foreach (VoiceConversationItem item in conversationsClient.GetAgentConversationResponseItemsAsync(
+        await foreach (BinaryData itemData in conversationsClient.GetAgentConversationResponseItemsAsync(
             agentName,
             conversationId,
             responseId,
             cancellationToken: cancellationToken))
         {
-            Console.WriteLine($"Response item: {item.GetType().Name}");
-            if (assistantItemId is null && item is VoiceAssistantMessageItem assistantMessage)
+            using JsonDocument itemDocument = JsonDocument.Parse(itemData);
+            JsonElement item = itemDocument.RootElement;
+            string itemType = item.TryGetProperty("type", out JsonElement type) ? type.GetString() : "unknown";
+            Console.WriteLine($"Response item: {itemType}");
+            if (assistantItemId is null
+                && item.TryGetProperty("role", out JsonElement role)
+                && role.ValueEquals("assistant")
+                && item.TryGetProperty("id", out JsonElement id))
             {
-                assistantItemId = assistantMessage.Id;
+                assistantItemId = id.GetString();
             }
         }
     }
 
-    await foreach (VoiceConversationItem item in conversationsClient.GetAgentConversationItemsAsync(
+    await foreach (BinaryData itemData in conversationsClient.GetAgentConversationItemsAsync(
         agentName,
         conversationId,
         cancellationToken: cancellationToken))
     {
-        Console.WriteLine($"Conversation item: {item.GetType().Name}");
+        using JsonDocument itemDocument = JsonDocument.Parse(itemData);
+        JsonElement item = itemDocument.RootElement;
+        string itemType = item.TryGetProperty("type", out JsonElement type) ? type.GetString() : "unknown";
+        Console.WriteLine($"Conversation item: {itemType}");
     }
     return assistantItemId;
 }

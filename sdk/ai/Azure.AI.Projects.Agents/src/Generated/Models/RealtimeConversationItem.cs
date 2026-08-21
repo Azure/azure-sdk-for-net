@@ -7,15 +7,18 @@ using System.Collections.Generic;
 
 namespace OpenAI
 {
-    /// <summary> A single item within a Realtime conversation. </summary>
-    public partial class RealtimeConversationItem
+    /// <summary>
+    /// A single item within a Realtime conversation.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RealtimeConversationItemFunctionCall"/>, <see cref="RealtimeConversationItemFunctionCallOutput"/>, <see cref="RealtimeMCPApprovalResponse"/>, <see cref="RealtimeMCPListTools"/>, <see cref="RealtimeMCPToolCall"/>, and <see cref="RealtimeMCPApprovalRequest"/>.
+    /// </summary>
+    public abstract partial class RealtimeConversationItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RealtimeConversationItem"/>. </summary>
         /// <param name="type"></param>
-        public RealtimeConversationItem(RealtimeConversationItemType @type)
+        private protected RealtimeConversationItem(RealtimeConversationItemType @type)
         {
             Type = @type;
         }

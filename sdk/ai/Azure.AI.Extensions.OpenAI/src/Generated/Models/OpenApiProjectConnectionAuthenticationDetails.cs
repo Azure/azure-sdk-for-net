@@ -13,7 +13,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="OpenApiProjectConnectionAuthenticationDetails"/>. </summary>
         /// <param name="securityScheme"> Project connection auth security details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityScheme"/> is null. </exception>
-        public OpenApiProjectConnectionAuthenticationDetails(ResponsesOpenApiProjectConnectionSecurityScheme securityScheme) : base(OpenApiAuthenticationKind.ProjectConnection)
+        public OpenApiProjectConnectionAuthenticationDetails(OpenApiProjectConnectionSecurityScheme securityScheme) : base(OpenApiAuthenticationKind.ProjectConnection)
         {
             Argument.AssertNotNull(securityScheme, nameof(securityScheme));
 
@@ -24,7 +24,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="kind"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="securityScheme"> Project connection auth security details. </param>
-        internal OpenApiProjectConnectionAuthenticationDetails(OpenApiAuthenticationKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesOpenApiProjectConnectionSecurityScheme securityScheme) : base(kind, additionalBinaryDataProperties)
+        internal OpenApiProjectConnectionAuthenticationDetails(OpenApiAuthenticationKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, OpenApiProjectConnectionSecurityScheme securityScheme) : base(kind, additionalBinaryDataProperties)
         {
             SecurityScheme = securityScheme;
         }

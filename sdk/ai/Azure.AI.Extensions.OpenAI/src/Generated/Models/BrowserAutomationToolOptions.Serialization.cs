@@ -119,13 +119,13 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            ResponsesBrowserAutomationToolConnectionParameters connection = default;
+            BrowserAutomationToolConnectionOptions connection = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("connection"u8))
                 {
-                    connection = ResponsesBrowserAutomationToolConnectionParameters.DeserializeResponsesBrowserAutomationToolConnectionParameters(prop.Value, options);
+                    connection = BrowserAutomationToolConnectionOptions.DeserializeBrowserAutomationToolConnectionOptions(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

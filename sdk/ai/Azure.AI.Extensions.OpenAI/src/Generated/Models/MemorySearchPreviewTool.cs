@@ -16,7 +16,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesMemorySearchPreviewTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MemorySearchPreviewTool"/>. </summary>
         /// <param name="memoryStoreName"> The name of the memory store to use. </param>
         /// <param name="scope">
         /// The namespace used to group and isolate memories, such as a user ID.
@@ -24,7 +24,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Use special variable `{{$userId}}` to scope memories to the current signed-in user.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="memoryStoreName"/> or <paramref name="scope"/> is null. </exception>
-        public ResponsesMemorySearchPreviewTool(string memoryStoreName, string scope) : base("memory_search_preview")
+        public MemorySearchPreviewTool(string memoryStoreName, string scope) : base("memory_search_preview")
         {
             Argument.AssertNotNull(memoryStoreName, nameof(memoryStoreName));
             Argument.AssertNotNull(scope, nameof(scope));
@@ -44,7 +44,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="searchOptions"> Options for searching the memory store. </param>
         /// <param name="updateDelayInSeconds"> Time to wait before updating memories after inactivity (seconds). Default 300. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesMemorySearchPreviewTool(ResponseToolKind @type, string memoryStoreName, string scope, ResponsesMemorySearchOptions searchOptions, int? updateDelayInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal MemorySearchPreviewTool(ResponseToolKind @type, string memoryStoreName, string scope, MemorySearchResultOptions searchOptions, int? updateDelayInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             MemoryStoreName = memoryStoreName;
             Scope = scope;

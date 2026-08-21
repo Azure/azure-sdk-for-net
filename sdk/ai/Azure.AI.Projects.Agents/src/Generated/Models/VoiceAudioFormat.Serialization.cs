@@ -7,7 +7,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Projects.Agents
 {
     /// <summary> An audio format. Follows the OpenAI Realtime session schema; `type` carries the media subtype. </summary>
     public partial class VoiceAudioFormat : IJsonModel<VoiceAudioFormat>
@@ -41,7 +41,7 @@ namespace Azure.AI.Extensions.OpenAI
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VoiceAudioFormat)} does not support writing '{options.Format}' format.");
             }

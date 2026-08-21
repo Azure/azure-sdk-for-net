@@ -98,17 +98,15 @@ namespace Azure.AI.Extensions.OpenAI
                 }
 #endif
             }
-            if (Optional.IsDefined(Strict))
+            writer.WriteEndObject();
+            if (Optional.IsDefined(IsStrict))
             {
                 writer.WritePropertyName("strict"u8);
-                writer.WriteBooleanValue(Strict.Value);
+                writer.WriteBooleanValue(IsStrict.Value);
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
-            if (Optional.IsDefined(DeferLoading))
+            else
             {
-                writer.WritePropertyName("defer_loading"u8);
-                writer.WriteBooleanValue(DeferLoading.Value);
+                writer.WriteNull("strict"u8);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -154,10 +152,8 @@ namespace Azure.AI.Extensions.OpenAI
             }
             string name = default;
             string description = default;
-            ResponsesEmptyModelParam parameters = default;
-            bool? strict = default;
-            string @type = default;
-            bool? deferLoading = default;
+            IDictionary<string, BinaryData> schema = default;
+            bool? isStrict = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -192,24 +188,10 @@ namespace Azure.AI.Extensions.OpenAI
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        strict = null;
+                        isStrict = null;
                         continue;
                     }
-                    strict = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("defer_loading"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    deferLoading = prop.Value.GetBoolean();
+                    isStrict = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -217,14 +199,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponsesFunctionToolParam(
-                name,
-                description,
-                parameters,
-                strict,
-                @type,
-                deferLoading,
-                additionalBinaryDataProperties);
+            return new StructuredOutputDefinition(name, description, schema, isStrict, additionalBinaryDataProperties);
         }
     }
 }

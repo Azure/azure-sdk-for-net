@@ -18,6 +18,7 @@ using OpenAI;
 
 namespace Azure.AI.Projects.Agents;
 
+/// <summary> The client for starting real-time voice-agent sessions. </summary>
 [Experimental("AAIP001")]
 public partial class VoiceAgentWebSocket
 {
@@ -27,7 +28,14 @@ public partial class VoiceAgentWebSocket
         [GetTokenOptions.AuthorizationUrlPropertyName] = "https://login.microsoftonline.com/common/oauth2/v2.0/authorize"
     };
 
+    private readonly Uri _endpoint;
+    private readonly string _apiVersion;
     private readonly AuthenticationTokenProvider _tokenProvider;
+
+    /// <summary> Initializes a new instance of <see cref="VoiceAgentWebSocket"/> for mocking. </summary>
+    protected VoiceAgentWebSocket()
+    {
+    }
 
     /// <summary> Raised immediately before a JSON command is sent on any session started from this client. </summary>
     public event EventHandler<BinaryData> OnSendingCommand;
@@ -40,8 +48,9 @@ public partial class VoiceAgentWebSocket
     internal void RaiseOnReceivingCommand(VoiceAgentSession session, BinaryData data) => OnReceivingCommand?.Invoke(session, data);
 
     internal VoiceAgentWebSocket(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion, AuthenticationTokenProvider tokenProvider)
-        : this(clientDiagnostics, pipeline, endpoint, apiVersion)
     {
+        _endpoint = endpoint;
+        _apiVersion = apiVersion;
         _tokenProvider = tokenProvider;
     }
 

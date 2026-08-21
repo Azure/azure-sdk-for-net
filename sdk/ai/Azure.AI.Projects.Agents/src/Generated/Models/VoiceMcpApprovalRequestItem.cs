@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> An MCP approval request item. </summary>
     [Experimental("AAIP001")]
-    public partial class VoiceMcpApprovalRequestItem : VoiceConversationItem
+    public partial class VoiceMcpApprovalRequestItem : RealtimeMCPApprovalRequest
     {
         /// <summary> Initializes a new instance of <see cref="VoiceMcpApprovalRequestItem"/>. </summary>
         /// <param name="id"> The unique ID of the approval request. </param>
@@ -19,46 +19,34 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the tool to run. </param>
         /// <param name="arguments"> A JSON string of arguments for the tool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="serverLabel"/>, <paramref name="name"/> or <paramref name="arguments"/> is null. </exception>
-        public VoiceMcpApprovalRequestItem(string id, string serverLabel, string name, string arguments)
+        public VoiceMcpApprovalRequestItem(string id, string serverLabel, string name, string arguments) : base(id, serverLabel, name, arguments)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(serverLabel, nameof(serverLabel));
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(arguments, nameof(arguments));
 
-            Id = id;
-            ServerLabel = serverLabel;
-            Name = name;
-            Arguments = arguments;
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceMcpApprovalRequestItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
-        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
         /// <param name="id"> The unique ID of the approval request. </param>
         /// <param name="serverLabel"> The label of the MCP server making the request. </param>
         /// <param name="name"> The name of the tool to run. </param>
         /// <param name="arguments"> A JSON string of arguments for the tool. </param>
-        internal VoiceMcpApprovalRequestItem(RealtimeConversationItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? createdAt, string responseId, string id, string serverLabel, string name, string arguments) : base(@type, additionalBinaryDataProperties, createdAt, responseId)
+        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
+        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
+        internal VoiceMcpApprovalRequestItem(RealtimeConversationItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, string name, string arguments, DateTimeOffset? createdAt, string responseId) : base(@type, additionalBinaryDataProperties, id, serverLabel, name, arguments)
         {
-            Id = id;
-            ServerLabel = serverLabel;
-            Name = name;
-            Arguments = arguments;
+            CreatedAt = createdAt;
+            ResponseId = responseId;
         }
 
-        /// <summary> The unique ID of the approval request. </summary>
-        public string Id { get; set; }
+        /// <summary> The Unix timestamp (in seconds) for when the item was persisted. </summary>
+        public DateTimeOffset? CreatedAt { get; }
 
-        /// <summary> The label of the MCP server making the request. </summary>
-        public string ServerLabel { get; set; }
-
-        /// <summary> The name of the tool to run. </summary>
-        public string Name { get; set; }
-
-        /// <summary> A JSON string of arguments for the tool. </summary>
-        public string Arguments { get; set; }
+        /// <summary> The id of the response that produced this item, when applicable. </summary>
+        public string ResponseId { get; }
     }
 }

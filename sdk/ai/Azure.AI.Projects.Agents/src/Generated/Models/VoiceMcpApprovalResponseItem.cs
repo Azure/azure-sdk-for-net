@@ -11,50 +11,39 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> An MCP approval response item (client-created). </summary>
     [Experimental("AAIP001")]
-    public partial class VoiceMcpApprovalResponseItem : VoiceConversationItem
+    public partial class VoiceMcpApprovalResponseItem : RealtimeMCPApprovalResponse
     {
         /// <summary> Initializes a new instance of <see cref="VoiceMcpApprovalResponseItem"/>. </summary>
         /// <param name="id"> The unique ID of the approval response. </param>
         /// <param name="approvalRequestId"> The ID of the approval request being answered. </param>
         /// <param name="approve"> Whether the request was approved. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="approvalRequestId"/> is null. </exception>
-        public VoiceMcpApprovalResponseItem(string id, string approvalRequestId, bool approve)
+        public VoiceMcpApprovalResponseItem(string id, string approvalRequestId, bool approve) : base(id, approvalRequestId, approve)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(approvalRequestId, nameof(approvalRequestId));
 
-            Id = id;
-            ApprovalRequestId = approvalRequestId;
-            Approve = approve;
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceMcpApprovalResponseItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
-        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
         /// <param name="id"> The unique ID of the approval response. </param>
         /// <param name="approvalRequestId"> The ID of the approval request being answered. </param>
         /// <param name="approve"> Whether the request was approved. </param>
         /// <param name="reason"></param>
-        internal VoiceMcpApprovalResponseItem(RealtimeConversationItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? createdAt, string responseId, string id, string approvalRequestId, bool approve, string reason) : base(@type, additionalBinaryDataProperties, createdAt, responseId)
+        /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
+        /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
+        internal VoiceMcpApprovalResponseItem(RealtimeConversationItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string approvalRequestId, bool approve, string reason, DateTimeOffset? createdAt, string responseId) : base(@type, additionalBinaryDataProperties, id, approvalRequestId, approve, reason)
         {
-            Id = id;
-            ApprovalRequestId = approvalRequestId;
-            Approve = approve;
-            Reason = reason;
+            CreatedAt = createdAt;
+            ResponseId = responseId;
         }
 
-        /// <summary> The unique ID of the approval response. </summary>
-        public string Id { get; set; }
+        /// <summary> The Unix timestamp (in seconds) for when the item was persisted. </summary>
+        public DateTimeOffset? CreatedAt { get; }
 
-        /// <summary> The ID of the approval request being answered. </summary>
-        public string ApprovalRequestId { get; set; }
-
-        /// <summary> Whether the request was approved. </summary>
-        public bool Approve { get; set; }
-
-        /// <summary> Gets or sets the Reason. </summary>
-        public string Reason { get; set; }
+        /// <summary> The id of the response that produced this item, when applicable. </summary>
+        public string ResponseId { get; }
     }
 }

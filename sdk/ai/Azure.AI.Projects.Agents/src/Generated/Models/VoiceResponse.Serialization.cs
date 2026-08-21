@@ -98,9 +98,21 @@ namespace Azure.AI.Projects.Agents
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteStartArray();
-                foreach (VoiceConversationItem item in Output)
+                foreach (BinaryData item in Output)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -179,7 +191,7 @@ namespace Azure.AI.Projects.Agents
             BinaryData maxOutputTokens = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id0 = default;
-            IList<VoiceConversationItem> output = default;
+            IList<BinaryData> output = default;
             string conversationId0 = default;
             VoiceResponseAudio audio = default;
             IDictionary<string, string> metadata = default;
@@ -268,10 +280,17 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    List<VoiceConversationItem> array = new List<VoiceConversationItem>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VoiceConversationItem.DeserializeVoiceConversationItem(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BinaryData.FromString(item.GetRawText()));
+                        }
                     }
                     output = array;
                     continue;
@@ -354,7 +373,7 @@ namespace Azure.AI.Projects.Agents
                 maxOutputTokens,
                 additionalBinaryDataProperties,
                 id0,
-                output ?? new ChangeTrackingList<VoiceConversationItem>(),
+                output ?? new ChangeTrackingList<BinaryData>(),
                 conversationId0,
                 audio,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),

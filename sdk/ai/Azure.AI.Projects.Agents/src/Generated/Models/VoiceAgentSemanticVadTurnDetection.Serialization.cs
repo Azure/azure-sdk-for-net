@@ -87,18 +87,6 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("interrupt_response"u8);
                 writer.WriteBooleanValue(InterruptResponse.Value);
             }
-            if (Optional.IsDefined(ProjectConnectionId))
-            {
-                writer.WritePropertyName("project_connection_id"u8);
-                writer.WriteStringValue(ProjectConnectionId);
-            }
-            if (Optional.IsDefined(SendCredentialsForAgentCard))
-            {
-                writer.WritePropertyName("send_credentials_for_agent_card"u8);
-                writer.WriteBooleanValue(SendCredentialsForAgentCard.Value);
-            }
-            writer.WritePropertyName("a2a_version"u8);
-            writer.WriteStringValue(A2aVersion.ToString());
         }
 
         /// <param name="reader"> The JSON reader. </param>

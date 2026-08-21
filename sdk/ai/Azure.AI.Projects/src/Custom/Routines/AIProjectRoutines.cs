@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,7 +36,7 @@ public partial class AIProjectRoutines
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual CollectionResult<RoutineRun> GetRoutineRuns(string routineName, string filter = default, int? limit = default, string after = default, MemoryStoreListOrder? order = default, CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
         return new InternalOpenAICollectionResultOfT<RoutineRun>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
@@ -48,7 +49,7 @@ public partial class AIProjectRoutines
                     after: localCollectionOptions.AfterId,
                     options: localRequestOptions),
             dataItemDeserializer: RoutineRun.DeserializeRoutineRun,
-            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [name, filter]),
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, filters: [routineName, filter]),
             cancellationToken.ToRequestOptions());
     }
 
@@ -67,7 +68,7 @@ public partial class AIProjectRoutines
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual AsyncCollectionResult<RoutineRun> GetRoutineRunsAsync(string routineName, string filter = default, int? limit = default, string after = default, MemoryStoreListOrder? order = default, CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
         return new InternalOpenAIAsyncCollectionResultOfT<RoutineRun>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
@@ -80,7 +81,7 @@ public partial class AIProjectRoutines
                     after: localCollectionOptions.AfterId,
                     options: localRequestOptions),
             dataItemDeserializer: RoutineRun.DeserializeRoutineRun,
-            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [name, filter]),
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, filters: [routineName, filter]),
             cancellationToken.ToRequestOptions());
     }
 
@@ -105,7 +106,7 @@ public partial class AIProjectRoutines
                     after: localCollectionOptions.AfterId,
                     options: localRequestOptions),
             dataItemDeserializer: ProjectsRoutine.DeserializeProjectsRoutine,
-            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before),
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after),
             cancellationToken.ToRequestOptions());
     }
 
@@ -130,7 +131,7 @@ public partial class AIProjectRoutines
                     after: localCollectionOptions.AfterId,
                     options: localRequestOptions),
             dataItemDeserializer: ProjectsRoutine.DeserializeProjectsRoutine,
-            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before),
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after),
             cancellationToken.ToRequestOptions());
     }
 

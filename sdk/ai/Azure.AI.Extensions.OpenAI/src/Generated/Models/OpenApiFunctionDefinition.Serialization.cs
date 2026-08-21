@@ -83,14 +83,25 @@ namespace Azure.AI.Extensions.OpenAI
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("spec"u8);
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(Specification);
-#else
-            using (JsonDocument document = JsonDocument.Parse(Specification))
+            writer.WriteStartObject();
+            foreach (var item in Specification)
             {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
+                writer.WritePropertyName(item.Key);
+                if (item.Value == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
+            }
+            writer.WriteEndObject();
             writer.WritePropertyName("auth"u8);
             writer.WriteObjectValue(Authentication, options);
             if (Optional.IsCollectionDefined(DefaultParameters))
@@ -165,7 +176,7 @@ namespace Azure.AI.Extensions.OpenAI
             IDictionary<string, BinaryData> specification = default;
             OpenApiAuthenticationDetails authentication = default;
             IList<string> defaultParameters = default;
-            IReadOnlyList<ResponsesOpenApiFunctionDefinitionFunction> functions = default;
+            IReadOnlyList<OpenApiFunctionDefinitionFunction> functions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -181,7 +192,19 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("spec"u8))
                 {
-                    specification = BinaryData.FromString(prop.Value.GetRawText());
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                        }
+                    }
+                    specification = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("auth"u8))
@@ -235,7 +258,7 @@ namespace Azure.AI.Extensions.OpenAI
                 specification,
                 authentication,
                 defaultParameters ?? new ChangeTrackingList<string>(),
-                functions ?? new ChangeTrackingList<ResponsesOpenApiFunctionDefinitionFunction>(),
+                functions ?? new ChangeTrackingList<OpenApiFunctionDefinitionFunction>(),
                 additionalBinaryDataProperties);
         }
     }

@@ -12,11 +12,6 @@ public readonly partial struct AgentOptimizationDatasetInputType { }
 public partial class AgentOptimizationDatasetItem { }
 public partial class AgentOptimizationEvaluatorRef { }
 public partial class AgentOptimizationInlineDatasetInput { }
-public partial class AgentOptimizationJob
-{
-	/// <summary> Error details — populated only on failure. </summary>
-	internal FoundryOpenAIError Error { get; }
-}
 public partial class AgentOptimizationJobInputs { }
 public partial class AgentOptimizationJobProgress
 {

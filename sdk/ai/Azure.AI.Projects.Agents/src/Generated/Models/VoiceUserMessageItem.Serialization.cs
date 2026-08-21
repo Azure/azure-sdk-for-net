@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -11,7 +12,7 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A user message item. `input_text`, `input_audio`, and `input_image` content are valid for user messages. </summary>
-    public partial class VoiceUserMessageItem : VoiceMessageItem, IJsonModel<VoiceUserMessageItem>
+    public partial class VoiceUserMessageItem : RealtimeConversationItemMessageUser, IJsonModel<VoiceUserMessageItem>
     {
         /// <summary> Initializes a new instance of <see cref="VoiceUserMessageItem"/> for deserialization. </summary>
         internal VoiceUserMessageItem()
@@ -20,7 +21,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override RealtimeConversationItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override RealtimeConversationItemMessage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceUserMessageItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -58,6 +59,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VoiceUserMessageItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="VoiceUserMessageItem"/> from. </param>
+        public static explicit operator VoiceUserMessageItem(ClientResult result)
+        {
+            PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeVoiceUserMessageItem(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VoiceUserMessageItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -77,28 +86,16 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(VoiceUserMessageItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Id))
+            if (options.Format != "W" && Optional.IsDefined(CreatedAt))
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                writer.WritePropertyName("created_at"u8);
+                writer.WriteNumberValue(CreatedAt.Value, "U");
             }
-            if (Optional.IsDefined(Object))
+            if (options.Format != "W" && Optional.IsDefined(ResponseId))
             {
-                writer.WritePropertyName("object"u8);
-                writer.WriteStringValue(Object.Value.ToString());
+                writer.WritePropertyName("response_id"u8);
+                writer.WriteStringValue(ResponseId);
             }
-            if (Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToSerialString());
-            }
-            writer.WritePropertyName("content"u8);
-            writer.WriteStartArray();
-            foreach (RealtimeConversationItemMessageUserContent item in Content)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -107,7 +104,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override RealtimeConversationItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override RealtimeConversationItemMessage JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceUserMessageItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -126,36 +123,16 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            RealtimeConversationItemType @type = default;
+            RealtimeConversationItemMessageType role = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string id = default;
+            RealtimeConversationItemMessageUserObject? @object = default;
+            RealtimeConversationItemMessageUserStatus? status = default;
+            IList<RealtimeConversationItemMessageUserContent> content = default;
             DateTimeOffset? createdAt = default;
             string responseId = default;
-            RealtimeConversationItemMessageType role = default;
-            string id = default;
-            VoiceUserMessageItemObject? @object = default;
-            VoiceUserMessageItemStatus? status = default;
-            IList<RealtimeConversationItemMessageUserContent> content = default;
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = new RealtimeConversationItemType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("created_at"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
-                    continue;
-                }
-                if (prop.NameEquals("response_id"u8))
-                {
-                    responseId = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("role"u8))
                 {
                     role = new RealtimeConversationItemMessageType(prop.Value.GetString());
@@ -172,7 +149,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    @object = new VoiceUserMessageItemObject(prop.Value.GetString());
+                    @object = new RealtimeConversationItemMessageUserObject(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -181,7 +158,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToVoiceUserMessageItemStatus();
+                    status = prop.Value.GetString().ToRealtimeConversationItemMessageUserStatus();
                     continue;
                 }
                 if (prop.NameEquals("content"u8))
@@ -194,21 +171,34 @@ namespace Azure.AI.Projects.Agents
                     content = array;
                     continue;
                 }
+                if (prop.NameEquals("created_at"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    continue;
+                }
+                if (prop.NameEquals("response_id"u8))
+                {
+                    responseId = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new VoiceUserMessageItem(
-                @type,
-                additionalBinaryDataProperties,
-                createdAt,
-                responseId,
                 role,
+                additionalBinaryDataProperties,
                 id,
                 @object,
                 status,
-                content);
+                content,
+                createdAt,
+                responseId);
         }
     }
 }

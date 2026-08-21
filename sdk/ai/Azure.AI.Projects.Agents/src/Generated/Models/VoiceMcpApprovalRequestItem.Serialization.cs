@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -11,7 +12,7 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> An MCP approval request item. </summary>
-    public partial class VoiceMcpApprovalRequestItem : VoiceConversationItem, IJsonModel<VoiceMcpApprovalRequestItem>
+    public partial class VoiceMcpApprovalRequestItem : RealtimeMCPApprovalRequest, IJsonModel<VoiceMcpApprovalRequestItem>
     {
         /// <summary> Initializes a new instance of <see cref="VoiceMcpApprovalRequestItem"/> for deserialization. </summary>
         internal VoiceMcpApprovalRequestItem()
@@ -58,6 +59,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VoiceMcpApprovalRequestItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="VoiceMcpApprovalRequestItem"/> from. </param>
+        public static explicit operator VoiceMcpApprovalRequestItem(ClientResult result)
+        {
+            PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeVoiceMcpApprovalRequestItem(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VoiceMcpApprovalRequestItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -77,14 +86,16 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(VoiceMcpApprovalRequestItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
-            writer.WritePropertyName("server_label"u8);
-            writer.WriteStringValue(ServerLabel);
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("arguments"u8);
-            writer.WriteStringValue(Arguments);
+            if (options.Format != "W" && Optional.IsDefined(CreatedAt))
+            {
+                writer.WritePropertyName("created_at"u8);
+                writer.WriteNumberValue(CreatedAt.Value, "U");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResponseId))
+            {
+                writer.WritePropertyName("response_id"u8);
+                writer.WriteStringValue(ResponseId);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -114,31 +125,17 @@ namespace Azure.AI.Projects.Agents
             }
             RealtimeConversationItemType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DateTimeOffset? createdAt = default;
-            string responseId = default;
             string id = default;
             string serverLabel = default;
             string name = default;
             string arguments = default;
+            DateTimeOffset? createdAt = default;
+            string responseId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new RealtimeConversationItemType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("created_at"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
-                    continue;
-                }
-                if (prop.NameEquals("response_id"u8))
-                {
-                    responseId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("id"u8))
@@ -161,6 +158,20 @@ namespace Azure.AI.Projects.Agents
                     arguments = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("created_at"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    continue;
+                }
+                if (prop.NameEquals("response_id"u8))
+                {
+                    responseId = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -169,12 +180,12 @@ namespace Azure.AI.Projects.Agents
             return new VoiceMcpApprovalRequestItem(
                 @type,
                 additionalBinaryDataProperties,
-                createdAt,
-                responseId,
                 id,
                 serverLabel,
                 name,
-                arguments);
+                arguments,
+                createdAt,
+                responseId);
         }
     }
 }

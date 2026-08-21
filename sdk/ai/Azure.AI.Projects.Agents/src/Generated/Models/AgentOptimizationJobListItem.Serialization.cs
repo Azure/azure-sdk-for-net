@@ -6,56 +6,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The template for omitting properties. </summary>
-    public partial class VoiceResponseProperties : IJsonModel<VoiceResponseProperties>
+    /// <summary> Slim job representation returned by the LIST endpoint. </summary>
+    public partial class AgentOptimizationJobListItem : IJsonModel<AgentOptimizationJobListItem>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceResponseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AgentOptimizationJobListItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentOptimizationJobListItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVoiceResponseProperties(document.RootElement, options);
+                        return DeserializeAgentOptimizationJobListItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceResponseProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentOptimizationJobListItem)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentOptimizationJobListItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceResponseProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentOptimizationJobListItem)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceResponseProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AgentOptimizationJobListItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceResponseProperties IPersistableModel<VoiceResponseProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AgentOptimizationJobListItem IPersistableModel<AgentOptimizationJobListItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceResponseProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AgentOptimizationJobListItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VoiceResponseProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AgentOptimizationJobListItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -66,62 +65,45 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentOptimizationJobListItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceResponseProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentOptimizationJobListItem)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Id))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Object))
-            {
-                writer.WritePropertyName("object"u8);
-                writer.WriteStringValue(Object.Value.ToString());
-            }
-            if (Optional.IsDefined(Status))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status.ToString());
             }
-            if (Optional.IsDefined(StatusDetails))
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
-                writer.WritePropertyName("status_details"u8);
-                writer.WriteObjectValue(StatusDetails, options);
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error, options);
             }
-            if (Optional.IsDefined(Usage))
+            if (options.Format != "W")
             {
-                writer.WritePropertyName("usage"u8);
-                writer.WriteObjectValue(Usage, options);
+                writer.WritePropertyName("created_at"u8);
+                writer.WriteNumberValue(CreatedAt, "U");
             }
-            if (Optional.IsDefined(ConversationId))
+            if (options.Format != "W")
             {
-                writer.WritePropertyName("conversation_id"u8);
-                writer.WriteStringValue(ConversationId);
+                writer.WritePropertyName("updated_at"u8);
+                writer.WriteNumberValue(UpdatedAt, "U");
             }
-            if (Optional.IsCollectionDefined(OutputModalities))
+            if (options.Format != "W" && Optional.IsDefined(Progress))
             {
-                writer.WritePropertyName("output_modalities"u8);
-                writer.WriteStartArray();
-                foreach (VoiceResponseOutputModality item in OutputModalities)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("progress"u8);
+                writer.WriteObjectValue(Progress, options);
             }
-            if (Optional.IsDefined(MaxOutputTokens))
+            if (options.Format != "W" && Optional.IsDefined(Agent))
             {
-                writer.WritePropertyName("max_output_tokens"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(MaxOutputTokens);
-#else
-                using (JsonDocument document = JsonDocument.Parse(MaxOutputTokens))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                writer.WritePropertyName("agent"u8);
+                writer.WriteObjectValue(Agent, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -142,37 +124,36 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceResponseProperties IJsonModel<VoiceResponseProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AgentOptimizationJobListItem IJsonModel<AgentOptimizationJobListItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceResponseProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AgentOptimizationJobListItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentOptimizationJobListItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceResponseProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentOptimizationJobListItem)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceResponseProperties(document.RootElement, options);
+            return DeserializeAgentOptimizationJobListItem(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VoiceResponseProperties DeserializeVoiceResponseProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static AgentOptimizationJobListItem DeserializeAgentOptimizationJobListItem(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string id = default;
-            VoiceResponseObject? @object = default;
-            VoiceResponseStatus? status = default;
-            RealtimeResponseStatusDetails statusDetails = default;
-            RealtimeResponseUsage usage = default;
-            string conversationId = default;
-            IList<VoiceResponseOutputModality> outputModalities = default;
-            BinaryData maxOutputTokens = default;
+            AgentsJobStatus status = default;
+            FoundryOpenAIError error = default;
+            DateTimeOffset createdAt = default;
+            DateTimeOffset updatedAt = default;
+            AgentOptimizationJobProgress progress = default;
+            OptimizedAgentIdentifier agent = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -181,68 +162,46 @@ namespace Azure.AI.Projects.Agents
                     id = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("object"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    @object = new VoiceResponseObject(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("status"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    status = new VoiceResponseStatus(prop.Value.GetString());
+                    status = new AgentsJobStatus(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("status_details"u8))
+                if (prop.NameEquals("error"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    statusDetails = RealtimeResponseStatusDetails.DeserializeRealtimeResponseStatusDetails(prop.Value, options);
+                    error = FoundryOpenAIError.DeserializeFoundryOpenAIError(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("usage"u8))
+                if (prop.NameEquals("created_at"u8))
+                {
+                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    continue;
+                }
+                if (prop.NameEquals("updated_at"u8))
+                {
+                    updatedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    continue;
+                }
+                if (prop.NameEquals("progress"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    usage = RealtimeResponseUsage.DeserializeRealtimeResponseUsage(prop.Value, options);
+                    progress = AgentOptimizationJobProgress.DeserializeAgentOptimizationJobProgress(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("conversation_id"u8))
-                {
-                    conversationId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("output_modalities"u8))
+                if (prop.NameEquals("agent"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<VoiceResponseOutputModality> array = new List<VoiceResponseOutputModality>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(new VoiceResponseOutputModality(item.GetString()));
-                    }
-                    outputModalities = array;
-                    continue;
-                }
-                if (prop.NameEquals("max_output_tokens"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxOutputTokens = BinaryData.FromString(prop.Value.GetRawText());
+                    agent = OptimizedAgentIdentifier.DeserializeOptimizedAgentIdentifier(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -250,15 +209,14 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VoiceResponseProperties(
+            return new AgentOptimizationJobListItem(
                 id,
-                @object,
                 status,
-                statusDetails,
-                usage,
-                conversationId,
-                outputModalities ?? new ChangeTrackingList<VoiceResponseOutputModality>(),
-                maxOutputTokens,
+                error,
+                createdAt,
+                updatedAt,
+                progress,
+                agent,
                 additionalBinaryDataProperties);
         }
     }

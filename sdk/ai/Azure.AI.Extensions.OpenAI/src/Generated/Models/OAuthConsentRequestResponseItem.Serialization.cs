@@ -122,7 +122,7 @@ namespace Azure.AI.Extensions.OpenAI
             string id = default;
             AgentReference agentReference = default;
             string responseId = default;
-            string internalConsentLink = default;
+            Uri consentLink = default;
             string serverLabel = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -171,7 +171,7 @@ namespace Azure.AI.Extensions.OpenAI
                 id,
                 agentReference,
                 responseId,
-                internalConsentLink,
+                consentLink,
                 serverLabel,
                 additionalBinaryDataProperties);
         }

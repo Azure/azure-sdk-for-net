@@ -3,72 +3,63 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary> The response data for a requested list of items. </summary>
-    internal partial class AgentsPagedResultVoiceConversationItem : IJsonModel<AgentsPagedResultVoiceConversationItem>
+    /// <summary> Definition of input parameters for the connection used by the Browser Automation Tool. </summary>
+    public partial class BrowserAutomationToolConnectionOptions : IJsonModel<BrowserAutomationToolConnectionOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="AgentsPagedResultVoiceConversationItem"/> for deserialization. </summary>
-        internal AgentsPagedResultVoiceConversationItem()
+        /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolConnectionOptions"/> for deserialization. </summary>
+        internal BrowserAutomationToolConnectionOptions()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentsPagedResultVoiceConversationItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BrowserAutomationToolConnectionOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultVoiceConversationItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BrowserAutomationToolConnectionOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAgentsPagedResultVoiceConversationItem(document.RootElement, options);
+                        return DeserializeBrowserAutomationToolConnectionOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentsPagedResultVoiceConversationItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BrowserAutomationToolConnectionOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultVoiceConversationItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BrowserAutomationToolConnectionOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AgentsPagedResultVoiceConversationItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BrowserAutomationToolConnectionOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AgentsPagedResultVoiceConversationItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BrowserAutomationToolConnectionOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentsPagedResultVoiceConversationItem IPersistableModel<AgentsPagedResultVoiceConversationItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BrowserAutomationToolConnectionOptions IPersistableModel<BrowserAutomationToolConnectionOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AgentsPagedResultVoiceConversationItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="AgentsPagedResultVoiceConversationItem"/> from. </param>
-        public static explicit operator AgentsPagedResultVoiceConversationItem(ClientResult result)
-        {
-            PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAgentsPagedResultVoiceConversationItem(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
+        string IPersistableModel<BrowserAutomationToolConnectionOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AgentsPagedResultVoiceConversationItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BrowserAutomationToolConnectionOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -79,30 +70,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultVoiceConversationItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BrowserAutomationToolConnectionOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentsPagedResultVoiceConversationItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BrowserAutomationToolConnectionOptions)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("data"u8);
-            writer.WriteStartArray();
-            foreach (VoiceConversationItem item in Data)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
-            if (Optional.IsDefined(FirstId))
-            {
-                writer.WritePropertyName("first_id"u8);
-                writer.WriteStringValue(FirstId);
-            }
-            if (Optional.IsDefined(LastId))
-            {
-                writer.WritePropertyName("last_id"u8);
-                writer.WriteStringValue(LastId);
-            }
-            writer.WritePropertyName("has_more"u8);
-            writer.WriteBooleanValue(HasMore);
+            writer.WritePropertyName("project_connection_id"u8);
+            writer.WriteStringValue(ProjectConnectionId);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,59 +96,36 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentsPagedResultVoiceConversationItem IJsonModel<AgentsPagedResultVoiceConversationItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BrowserAutomationToolConnectionOptions IJsonModel<BrowserAutomationToolConnectionOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentsPagedResultVoiceConversationItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BrowserAutomationToolConnectionOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultVoiceConversationItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BrowserAutomationToolConnectionOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentsPagedResultVoiceConversationItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BrowserAutomationToolConnectionOptions)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAgentsPagedResultVoiceConversationItem(document.RootElement, options);
+            return DeserializeBrowserAutomationToolConnectionOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AgentsPagedResultVoiceConversationItem DeserializeAgentsPagedResultVoiceConversationItem(JsonElement element, ModelReaderWriterOptions options)
+        internal static BrowserAutomationToolConnectionOptions DeserializeBrowserAutomationToolConnectionOptions(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<VoiceConversationItem> data = default;
-            string firstId = default;
-            string lastId = default;
-            bool hasMore = default;
+            string projectConnectionId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("data"u8))
+                if (prop.NameEquals("project_connection_id"u8))
                 {
-                    List<VoiceConversationItem> array = new List<VoiceConversationItem>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(VoiceConversationItem.DeserializeVoiceConversationItem(item, options));
-                    }
-                    data = array;
-                    continue;
-                }
-                if (prop.NameEquals("first_id"u8))
-                {
-                    firstId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("last_id"u8))
-                {
-                    lastId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("has_more"u8))
-                {
-                    hasMore = prop.Value.GetBoolean();
+                    projectConnectionId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -182,7 +133,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentsPagedResultVoiceConversationItem(data, firstId, lastId, hasMore, additionalBinaryDataProperties);
+            return new BrowserAutomationToolConnectionOptions(projectConnectionId, additionalBinaryDataProperties);
         }
     }
 }

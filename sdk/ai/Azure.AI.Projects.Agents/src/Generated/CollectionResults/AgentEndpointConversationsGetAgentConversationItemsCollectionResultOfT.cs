@@ -11,7 +11,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects.Agents
 {
     [Experimental("AAIP001")]
-    internal partial class AgentEndpointConversationsGetAgentConversationItemsCollectionResultOfT : CollectionResult<VoiceConversationItem>
+    internal partial class AgentEndpointConversationsGetAgentConversationItemsCollectionResultOfT : CollectionResult<BinaryData>
     {
         private readonly AgentEndpointConversations _client;
         private readonly string _agentName;
@@ -96,7 +96,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override IEnumerable<VoiceConversationItem> GetValuesFromPage(ClientResult page)
+        protected override IEnumerable<BinaryData> GetValuesFromPage(ClientResult page)
         {
             return ((AgentsPagedResultVoiceConversationItem)page).Data;
         }

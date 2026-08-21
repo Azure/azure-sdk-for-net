@@ -9,7 +9,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary></summary>
-    public readonly partial struct RealtimeConversationItemType : IEquatable<RealtimeConversationItemType>
+    internal readonly partial struct RealtimeConversationItemType : IEquatable<RealtimeConversationItemType>
     {
         private readonly string _value;
         private const string FunctionCallValue = "function_call";

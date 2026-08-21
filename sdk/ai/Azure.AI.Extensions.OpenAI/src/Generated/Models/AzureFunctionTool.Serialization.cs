@@ -129,7 +129,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             ResponseToolKind @type = "azure_function";
             IDictionary<string, ToolConfig> toolConfigs = default;
-            ResponsesAzureFunctionDefinition azureFunction = default;
+            AzureFunctionDefinition azureFunction = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -162,7 +162,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponsesAzureFunctionTool(@type, toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(), azureFunction, additionalBinaryDataProperties);
+            return new AzureFunctionTool(@type, toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(), azureFunction, additionalBinaryDataProperties);
         }
     }
 }

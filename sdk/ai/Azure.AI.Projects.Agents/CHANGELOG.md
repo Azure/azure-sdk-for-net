@@ -16,7 +16,8 @@
 
 - Renamed Agent Optimization models to the `AgentOptimization*` family and renamed `OptimizationAgentIdentifier` to `OptimizedAgentIdentifier`.
 - Agent Optimization list operations now return complete `AgentOptimizationJob` models instead of `OptimizationJobListItem` models.
-- Normalized persisted voice conversation items and function-call statuses to the corresponding OpenAI realtime models.
+- Persisted voice conversation item list operations and `VoiceResponse.Output` now return `BinaryData`.
+- Concrete voice item models now inherit the corresponding OpenAI realtime models instead of `VoiceConversationItem`.
 - Changed voice implementation values from strings to `VoiceType` and changed voice duration fields expressed in milliseconds to `TimeSpan`.
 - Removed the fixed avatar video codec setting; the service now controls the codec.
 
@@ -24,7 +25,6 @@
 
 - Fixed listing of Agent Optimization Jobs.
 - Fixed the `StopSession` and `StopSessionAsync` calls.
-- Fixed generation of the persisted voice conversation item base constructor.
 
 ### Other Changes
 - Updated the `OpenAI` package dependency to `2.12.0`.

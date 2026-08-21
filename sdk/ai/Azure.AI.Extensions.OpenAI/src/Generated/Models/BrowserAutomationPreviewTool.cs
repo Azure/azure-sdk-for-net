@@ -16,10 +16,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesBrowserAutomationPreviewTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BrowserAutomationPreviewTool"/>. </summary>
         /// <param name="browserAutomationPreview"> The Browser Automation Tool parameters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="browserAutomationPreview"/> is null. </exception>
-        public ResponsesBrowserAutomationPreviewTool(BrowserAutomationToolOptions browserAutomationPreview) : base("browser_automation_preview")
+        public BrowserAutomationPreviewTool(BrowserAutomationToolOptions browserAutomationPreview) : base("browser_automation_preview")
         {
             Argument.AssertNotNull(browserAutomationPreview, nameof(browserAutomationPreview));
 
@@ -30,7 +30,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="type"></param>
         /// <param name="browserAutomationPreview"> The Browser Automation Tool parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesBrowserAutomationPreviewTool(ResponseToolKind @type, BrowserAutomationToolOptions browserAutomationPreview, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal BrowserAutomationPreviewTool(ResponseToolKind @type, BrowserAutomationToolOptions browserAutomationPreview, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             BrowserAutomationPreview = browserAutomationPreview;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

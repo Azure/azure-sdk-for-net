@@ -129,7 +129,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             ResponseToolKind @type = "openapi";
             IDictionary<string, ToolConfig> toolConfigs = default;
-            ResponsesOpenApiFunctionDefinition functionDefinition = default;
+            OpenApiFunctionDefinition functionDefinition = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -154,7 +154,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("openapi"u8))
                 {
-                    functionDefinition = ResponsesOpenApiFunctionDefinition.DeserializeResponsesOpenApiFunctionDefinition(prop.Value, options);
+                    functionDefinition = OpenApiFunctionDefinition.DeserializeOpenApiFunctionDefinition(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -162,7 +162,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponsesOpenApiTool(@type, toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(), functionDefinition, additionalBinaryDataProperties);
+            return new OpenApiTool(@type, toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(), functionDefinition, additionalBinaryDataProperties);
         }
     }
 }

@@ -16,10 +16,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesWorkIQPreviewTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkIQPreviewTool"/>. </summary>
         /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectConnectionId"/> is null. </exception>
-        public ResponsesWorkIQPreviewTool(string projectConnectionId) : base("work_iq_preview")
+        public WorkIQPreviewTool(string projectConnectionId) : base("work_iq_preview")
         {
             Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
 
@@ -30,7 +30,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="type"></param>
         /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesWorkIQPreviewTool(ResponseToolKind @type, string projectConnectionId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal WorkIQPreviewTool(ResponseToolKind @type, string projectConnectionId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             ProjectConnectionId = projectConnectionId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

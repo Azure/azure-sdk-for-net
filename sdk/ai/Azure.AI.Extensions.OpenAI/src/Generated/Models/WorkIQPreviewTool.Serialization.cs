@@ -6,60 +6,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
+using OpenAI.Responses;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.AI.Extensions.OpenAI
 {
-    internal partial class UnknownVoiceConversationItem : VoiceConversationItem, IJsonModel<VoiceConversationItem>
+    /// <summary> A WorkIQ server-side tool. </summary>
+    public partial class WorkIQPreviewTool : ResponseTool, IJsonModel<WorkIQPreviewTool>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownVoiceConversationItem"/> for deserialization. </summary>
-        internal UnknownVoiceConversationItem()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override RealtimeConversationItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResponseTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceConversationItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkIQPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVoiceConversationItem(document.RootElement, options);
+                        return DeserializeWorkIQPreviewTool(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceConversationItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkIQPreviewTool)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceConversationItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkIQPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceConversationItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkIQPreviewTool)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceConversationItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<WorkIQPreviewTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceConversationItem IPersistableModel<VoiceConversationItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (VoiceConversationItem)PersistableModelCreateCore(data, options);
+        WorkIQPreviewTool IPersistableModel<WorkIQPreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (WorkIQPreviewTool)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceConversationItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<WorkIQPreviewTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VoiceConversationItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<WorkIQPreviewTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +66,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceConversationItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkIQPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceConversationItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkIQPreviewTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("project_connection_id"u8);
@@ -97,52 +93,42 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceConversationItem IJsonModel<VoiceConversationItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VoiceConversationItem)JsonModelCreateCore(ref reader, options);
+        WorkIQPreviewTool IJsonModel<WorkIQPreviewTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (WorkIQPreviewTool)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override RealtimeConversationItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResponseTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceConversationItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkIQPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceConversationItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkIQPreviewTool)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceConversationItem(document.RootElement, options);
+            return DeserializeWorkIQPreviewTool(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownVoiceConversationItem DeserializeUnknownVoiceConversationItem(JsonElement element, ModelReaderWriterOptions options)
+        internal static WorkIQPreviewTool DeserializeWorkIQPreviewTool(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            RealtimeConversationItemType @type = default;
+            ResponseToolKind @type = "work_iq_preview";
+            string projectConnectionId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DateTimeOffset? createdAt = default;
-            string responseId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new RealtimeConversationItemType(prop.Value.GetString());
+                    @type = new ResponseToolKind(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("created_at"u8))
+                if (prop.NameEquals("project_connection_id"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
-                    continue;
-                }
-                if (prop.NameEquals("response_id"u8))
-                {
-                    responseId = prop.Value.GetString();
+                    projectConnectionId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +136,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownVoiceConversationItem(@type, additionalBinaryDataProperties, createdAt, responseId);
+            return new WorkIQPreviewTool(@type, projectConnectionId, additionalBinaryDataProperties);
         }
     }
 }

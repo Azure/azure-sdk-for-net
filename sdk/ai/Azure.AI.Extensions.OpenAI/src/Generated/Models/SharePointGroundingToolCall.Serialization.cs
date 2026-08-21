@@ -11,13 +11,8 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A SharePoint grounding tool call. </summary>
-    public partial class SharePointGroundingToolCall : AgentResponseItem, IJsonModel<SharePointGroundingToolCall>
+    public partial class SharePointGroundingToolCall : ResponseItem, IJsonModel<SharePointGroundingToolCall>
     {
-        /// <summary> Initializes a new instance of <see cref="SharePointGroundingToolCall"/> for deserialization. </summary>
-        internal SharePointGroundingToolCall()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

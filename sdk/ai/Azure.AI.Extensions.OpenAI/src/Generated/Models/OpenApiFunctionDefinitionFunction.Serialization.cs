@@ -7,67 +7,59 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary> The response data for a requested list of items. </summary>
-    internal partial class AgentsPagedResultVoiceResponse : IJsonModel<AgentsPagedResultVoiceResponse>
+    /// <summary> The OpenApiFunctionDefinitionFunction. </summary>
+    public partial class OpenApiFunctionDefinitionFunction : IJsonModel<OpenApiFunctionDefinitionFunction>
     {
-        /// <summary> Initializes a new instance of <see cref="AgentsPagedResultVoiceResponse"/> for deserialization. </summary>
-        internal AgentsPagedResultVoiceResponse()
+        /// <summary> Initializes a new instance of <see cref="OpenApiFunctionDefinitionFunction"/> for deserialization. </summary>
+        internal OpenApiFunctionDefinitionFunction()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentsPagedResultVoiceResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual OpenApiFunctionDefinitionFunction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultVoiceResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OpenApiFunctionDefinitionFunction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAgentsPagedResultVoiceResponse(document.RootElement, options);
+                        return DeserializeOpenApiFunctionDefinitionFunction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentsPagedResultVoiceResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OpenApiFunctionDefinitionFunction)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultVoiceResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OpenApiFunctionDefinitionFunction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AgentsPagedResultVoiceResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OpenApiFunctionDefinitionFunction)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AgentsPagedResultVoiceResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<OpenApiFunctionDefinitionFunction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentsPagedResultVoiceResponse IPersistableModel<AgentsPagedResultVoiceResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        OpenApiFunctionDefinitionFunction IPersistableModel<OpenApiFunctionDefinitionFunction>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AgentsPagedResultVoiceResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="AgentsPagedResultVoiceResponse"/> from. </param>
-        public static explicit operator AgentsPagedResultVoiceResponse(ClientResult result)
-        {
-            PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAgentsPagedResultVoiceResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
+        string IPersistableModel<OpenApiFunctionDefinitionFunction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AgentsPagedResultVoiceResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OpenApiFunctionDefinitionFunction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -78,30 +70,38 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultVoiceResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OpenApiFunctionDefinitionFunction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentsPagedResultVoiceResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OpenApiFunctionDefinitionFunction)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("data"u8);
-            writer.WriteStartArray();
-            foreach (VoiceResponse item in Data)
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            if (Optional.IsDefined(Description))
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
             }
-            writer.WriteEndArray();
-            if (Optional.IsDefined(FirstId))
+            writer.WritePropertyName("parameters"u8);
+            writer.WriteStartObject();
+            foreach (var item in Parameters)
             {
-                writer.WritePropertyName("first_id"u8);
-                writer.WriteStringValue(FirstId);
+                writer.WritePropertyName(item.Key);
+                if (item.Value == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
-            if (Optional.IsDefined(LastId))
-            {
-                writer.WritePropertyName("last_id"u8);
-                writer.WriteStringValue(LastId);
-            }
-            writer.WritePropertyName("has_more"u8);
-            writer.WriteBooleanValue(HasMore);
+            writer.WriteEndObject();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -121,59 +121,60 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentsPagedResultVoiceResponse IJsonModel<AgentsPagedResultVoiceResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        OpenApiFunctionDefinitionFunction IJsonModel<OpenApiFunctionDefinitionFunction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentsPagedResultVoiceResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual OpenApiFunctionDefinitionFunction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultVoiceResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OpenApiFunctionDefinitionFunction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentsPagedResultVoiceResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OpenApiFunctionDefinitionFunction)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAgentsPagedResultVoiceResponse(document.RootElement, options);
+            return DeserializeOpenApiFunctionDefinitionFunction(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AgentsPagedResultVoiceResponse DeserializeAgentsPagedResultVoiceResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static OpenApiFunctionDefinitionFunction DeserializeOpenApiFunctionDefinitionFunction(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<VoiceResponse> data = default;
-            string firstId = default;
-            string lastId = default;
-            bool hasMore = default;
+            string name = default;
+            string description = default;
+            IDictionary<string, BinaryData> parameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("data"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    List<VoiceResponse> array = new List<VoiceResponse>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("parameters"u8))
+                {
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        array.Add(VoiceResponse.DeserializeVoiceResponse(item, options));
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                        }
                     }
-                    data = array;
-                    continue;
-                }
-                if (prop.NameEquals("first_id"u8))
-                {
-                    firstId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("last_id"u8))
-                {
-                    lastId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("has_more"u8))
-                {
-                    hasMore = prop.Value.GetBoolean();
+                    parameters = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
@@ -181,7 +182,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentsPagedResultVoiceResponse(data, firstId, lastId, hasMore, additionalBinaryDataProperties);
+            return new OpenApiFunctionDefinitionFunction(name, description, parameters, additionalBinaryDataProperties);
         }
     }
 }

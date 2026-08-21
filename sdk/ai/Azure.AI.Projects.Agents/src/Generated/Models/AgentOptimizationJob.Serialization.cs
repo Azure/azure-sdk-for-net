@@ -112,7 +112,7 @@ namespace Azure.AI.Projects.Agents
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                writer.WriteObjectValue<FoundryOpenAIError>(Error, options);
             }
             if (options.Format != "W")
             {

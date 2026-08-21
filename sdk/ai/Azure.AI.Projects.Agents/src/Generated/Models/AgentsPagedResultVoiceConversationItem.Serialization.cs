@@ -86,9 +86,21 @@ namespace Azure.AI.Projects.Agents
             }
             writer.WritePropertyName("data"u8);
             writer.WriteStartArray();
-            foreach (VoiceConversationItem item in Data)
+            foreach (BinaryData item in Data)
             {
-                writer.WriteObjectValue(item, options);
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(item);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(FirstId))
@@ -145,7 +157,7 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            IList<VoiceConversationItem> data = default;
+            IList<BinaryData> data = default;
             string firstId = default;
             string lastId = default;
             bool hasMore = default;
@@ -154,10 +166,17 @@ namespace Azure.AI.Projects.Agents
             {
                 if (prop.NameEquals("data"u8))
                 {
-                    List<VoiceConversationItem> array = new List<VoiceConversationItem>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VoiceConversationItem.DeserializeVoiceConversationItem(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BinaryData.FromString(item.GetRawText()));
+                        }
                     }
                     data = array;
                     continue;

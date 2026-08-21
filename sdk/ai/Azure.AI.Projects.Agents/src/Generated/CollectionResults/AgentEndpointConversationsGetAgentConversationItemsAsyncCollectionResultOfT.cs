@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Azure.AI.Projects.Agents
 {
     [Experimental("AAIP001")]
-    internal partial class AgentEndpointConversationsGetAgentConversationItemsAsyncCollectionResultOfT : AsyncCollectionResult<VoiceConversationItem>
+    internal partial class AgentEndpointConversationsGetAgentConversationItemsAsyncCollectionResultOfT : AsyncCollectionResult<BinaryData>
     {
         private readonly AgentEndpointConversations _client;
         private readonly string _agentName;
@@ -97,9 +97,9 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override async IAsyncEnumerable<VoiceConversationItem> GetValuesFromPageAsync(ClientResult page)
+        protected override async IAsyncEnumerable<BinaryData> GetValuesFromPageAsync(ClientResult page)
         {
-            foreach (VoiceConversationItem item in ((AgentsPagedResultVoiceConversationItem)page).Data)
+            foreach (BinaryData item in ((AgentsPagedResultVoiceConversationItem)page).Data)
             {
                 yield return item;
                 await Task.Yield();

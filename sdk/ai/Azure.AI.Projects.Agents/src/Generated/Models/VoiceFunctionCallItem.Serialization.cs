@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -11,7 +12,7 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A function call request item. </summary>
-    public partial class VoiceFunctionCallItem : VoiceConversationItem, IJsonModel<VoiceFunctionCallItem>
+    public partial class VoiceFunctionCallItem : RealtimeConversationItemFunctionCall, IJsonModel<VoiceFunctionCallItem>
     {
         /// <summary> Initializes a new instance of <see cref="VoiceFunctionCallItem"/> for deserialization. </summary>
         internal VoiceFunctionCallItem()
@@ -58,6 +59,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VoiceFunctionCallItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="VoiceFunctionCallItem"/> from. </param>
+        public static explicit operator VoiceFunctionCallItem(ClientResult result)
+        {
+            PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeVoiceFunctionCallItem(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VoiceFunctionCallItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -77,30 +86,16 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(VoiceFunctionCallItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Id))
+            if (options.Format != "W" && Optional.IsDefined(CreatedAt))
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                writer.WritePropertyName("created_at"u8);
+                writer.WriteNumberValue(CreatedAt.Value, "U");
             }
-            if (Optional.IsDefined(Object))
+            if (options.Format != "W" && Optional.IsDefined(ResponseId))
             {
-                writer.WritePropertyName("object"u8);
-                writer.WriteStringValue(Object.Value.ToString());
+                writer.WritePropertyName("response_id"u8);
+                writer.WriteStringValue(ResponseId);
             }
-            if (Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(CallId))
-            {
-                writer.WritePropertyName("call_id"u8);
-                writer.WriteStringValue(CallId);
-            }
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("arguments"u8);
-            writer.WriteStringValue(Arguments);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -130,33 +125,19 @@ namespace Azure.AI.Projects.Agents
             }
             RealtimeConversationItemType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DateTimeOffset? createdAt = default;
-            string responseId = default;
             string id = default;
-            VoiceFunctionCallItemObject? @object = default;
+            RealtimeConversationItemFunctionCallObject? @object = default;
             RealtimeConversationItemFunctionCallStatus? status = default;
             string callId = default;
             string name = default;
             string arguments = default;
+            DateTimeOffset? createdAt = default;
+            string responseId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new RealtimeConversationItemType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("created_at"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
-                    continue;
-                }
-                if (prop.NameEquals("response_id"u8))
-                {
-                    responseId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("id"u8))
@@ -170,7 +151,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    @object = new VoiceFunctionCallItemObject(prop.Value.GetString());
+                    @object = new RealtimeConversationItemFunctionCallObject(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -197,6 +178,20 @@ namespace Azure.AI.Projects.Agents
                     arguments = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("created_at"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    continue;
+                }
+                if (prop.NameEquals("response_id"u8))
+                {
+                    responseId = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -205,14 +200,14 @@ namespace Azure.AI.Projects.Agents
             return new VoiceFunctionCallItem(
                 @type,
                 additionalBinaryDataProperties,
-                createdAt,
-                responseId,
                 id,
                 @object,
                 status,
                 callId,
                 name,
-                arguments);
+                arguments,
+                createdAt,
+                responseId);
         }
     }
 }

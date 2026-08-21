@@ -71,7 +71,7 @@ public class VoiceAgentWebSocketTests
     }
 
     [Test]
-    public void DeserializesVoiceResponseBaseIdentifiers()
+    public void DeserializesVoiceResponseAndPersistedAssistantOutput()
     {
         using JsonDocument document = JsonDocument.Parse("""
             {
@@ -79,18 +79,38 @@ public class VoiceAgentWebSocketTests
               "conversation_id": "conv_123",
               "object": "realtime.response",
               "status": "completed",
-              "output_modalities": ["audio"]
+              "output_modalities": ["audio"],
+              "output": [
+                {
+                  "id": "item_123",
+                  "object": "realtime.item",
+                  "type": "message",
+                  "status": "completed",
+                  "role": "assistant",
+                  "content": [],
+                  "created_at": 1720000000,
+                  "response_id": "resp_123"
+                }
+              ]
             }
             """);
 
         VoiceResponse response = VoiceResponse.DeserializeVoiceResponse(
             document.RootElement,
             ModelReaderWriterOptions.Json);
+        VoiceAssistantMessageItem assistantMessage = ModelReaderWriter.Read<VoiceAssistantMessageItem>(
+            response.Output.Single());
+        using JsonDocument outputDocument = JsonDocument.Parse(response.Output.Single());
 
         Assert.Multiple(() =>
         {
             Assert.That(((VoiceResponseProperties)response).Id, Is.EqualTo("resp_123"));
             Assert.That(((VoiceResponseProperties)response).ConversationId, Is.EqualTo("conv_123"));
+            Assert.That(response.Output, Has.Count.EqualTo(1));
+            Assert.That(outputDocument.RootElement.GetProperty("type").GetString(), Is.EqualTo("message"));
+            Assert.That(assistantMessage, Is.InstanceOf<RealtimeConversationItemMessageAssistant>());
+            Assert.That(assistantMessage.Id, Is.EqualTo("item_123"));
+            Assert.That(assistantMessage.ResponseId, Is.EqualTo("resp_123"));
         });
     }
 

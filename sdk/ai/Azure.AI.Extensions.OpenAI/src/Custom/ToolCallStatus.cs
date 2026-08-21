@@ -3,7 +3,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Extensions.OpenAI.Internal
+namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The status of a tool call. </summary>{
     [CodeGenType("ToolCallStatus")]

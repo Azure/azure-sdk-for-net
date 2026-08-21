@@ -4,65 +4,62 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary>
-    /// Fields shared by interim-response configurations.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceAgentStaticInterimResponseConfig"/> and <see cref="VoiceAgentLlmInterimResponseConfig"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownVoiceAgentInterimResponseConfig))]
-    public abstract partial class VoiceAgentInterimResponseConfig : IJsonModel<VoiceAgentInterimResponseConfig>
+    /// <summary> The AzureFunctionDefinitionFunction. </summary>
+    public partial class AzureFunctionDefinitionFunction : IJsonModel<AzureFunctionDefinitionFunction>
     {
-        /// <summary> Initializes a new instance of <see cref="VoiceAgentInterimResponseConfig"/> for deserialization. </summary>
-        internal VoiceAgentInterimResponseConfig()
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionDefinitionFunction"/> for deserialization. </summary>
+        internal AzureFunctionDefinitionFunction()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceAgentInterimResponseConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AzureFunctionDefinitionFunction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentInterimResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureFunctionDefinitionFunction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVoiceAgentInterimResponseConfig(document.RootElement, options);
+                        return DeserializeAzureFunctionDefinitionFunction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceAgentInterimResponseConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureFunctionDefinitionFunction)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentInterimResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureFunctionDefinitionFunction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceAgentInterimResponseConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureFunctionDefinitionFunction)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceAgentInterimResponseConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AzureFunctionDefinitionFunction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceAgentInterimResponseConfig IPersistableModel<VoiceAgentInterimResponseConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AzureFunctionDefinitionFunction IPersistableModel<AzureFunctionDefinitionFunction>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceAgentInterimResponseConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AzureFunctionDefinitionFunction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VoiceAgentInterimResponseConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AzureFunctionDefinitionFunction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -73,28 +70,27 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentInterimResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureFunctionDefinitionFunction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceAgentInterimResponseConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureFunctionDefinitionFunction)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
-            if (Optional.IsCollectionDefined(Triggers))
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("triggers"u8);
-                writer.WriteStartArray();
-                foreach (VoiceAgentInterimResponseTrigger item in Triggers)
-                {
-                    writer.WriteStringValue(item.ToSerialString());
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(LatencyThresholdMs))
+            writer.WritePropertyName("parameters"u8);
+#if NET6_0_OR_GREATER
+            writer.WriteRawValue(Parameters);
+#else
+            using (JsonDocument document = JsonDocument.Parse(Parameters))
             {
-                writer.WritePropertyName("latency_threshold_ms"u8);
-                writer.WriteNumberValue(Convert.ToInt32(Math.Round(LatencyThresholdMs.Value.TotalMilliseconds)));
+                JsonSerializer.Serialize(writer, document.RootElement);
             }
+#endif
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -114,40 +110,56 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceAgentInterimResponseConfig IJsonModel<VoiceAgentInterimResponseConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AzureFunctionDefinitionFunction IJsonModel<AzureFunctionDefinitionFunction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceAgentInterimResponseConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AzureFunctionDefinitionFunction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentInterimResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureFunctionDefinitionFunction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceAgentInterimResponseConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureFunctionDefinitionFunction)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceAgentInterimResponseConfig(document.RootElement, options);
+            return DeserializeAzureFunctionDefinitionFunction(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VoiceAgentInterimResponseConfig DeserializeVoiceAgentInterimResponseConfig(JsonElement element, ModelReaderWriterOptions options)
+        internal static AzureFunctionDefinitionFunction DeserializeAzureFunctionDefinitionFunction(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
+            string name = default;
+            string description = default;
+            BinaryData parameters = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("name"u8))
                 {
-                    case "static_interim_response":
-                        return VoiceAgentStaticInterimResponseConfig.DeserializeVoiceAgentStaticInterimResponseConfig(element, options);
-                    case "llm_interim_response":
-                        return VoiceAgentLlmInterimResponseConfig.DeserializeVoiceAgentLlmInterimResponseConfig(element, options);
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("parameters"u8))
+                {
+                    parameters = BinaryData.FromString(prop.Value.GetRawText());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownVoiceAgentInterimResponseConfig.DeserializeUnknownVoiceAgentInterimResponseConfig(element, options);
+            return new AzureFunctionDefinitionFunction(name, description, parameters, additionalBinaryDataProperties);
         }
     }
 }

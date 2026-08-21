@@ -9,57 +9,57 @@ using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary> An audio format. Follows the OpenAI Realtime session schema; `type` carries the media subtype. </summary>
-    public partial class VoiceAudioFormat : IJsonModel<VoiceAudioFormat>
+    /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
+    public partial class OpenApiManagedSecurityScheme : IJsonModel<OpenApiManagedSecurityScheme>
     {
-        /// <summary> Initializes a new instance of <see cref="VoiceAudioFormat"/> for deserialization. </summary>
-        internal VoiceAudioFormat()
+        /// <summary> Initializes a new instance of <see cref="OpenApiManagedSecurityScheme"/> for deserialization. </summary>
+        internal OpenApiManagedSecurityScheme()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceAudioFormat PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual OpenApiManagedSecurityScheme PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAudioFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OpenApiManagedSecurityScheme>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVoiceAudioFormat(document.RootElement, options);
+                        return DeserializeOpenApiManagedSecurityScheme(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceAudioFormat)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OpenApiManagedSecurityScheme)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAudioFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OpenApiManagedSecurityScheme>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceAudioFormat)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OpenApiManagedSecurityScheme)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceAudioFormat>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<OpenApiManagedSecurityScheme>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceAudioFormat IPersistableModel<VoiceAudioFormat>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        OpenApiManagedSecurityScheme IPersistableModel<OpenApiManagedSecurityScheme>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceAudioFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OpenApiManagedSecurityScheme>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VoiceAudioFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OpenApiManagedSecurityScheme>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,18 +70,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAudioFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OpenApiManagedSecurityScheme>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceAudioFormat)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OpenApiManagedSecurityScheme)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
-            if (Optional.IsDefined(Rate))
-            {
-                writer.WritePropertyName("rate"u8);
-                writer.WriteNumberValue(Rate.Value);
-            }
+            writer.WritePropertyName("audience"u8);
+            writer.WriteStringValue(Audience);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -101,46 +96,36 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceAudioFormat IJsonModel<VoiceAudioFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        OpenApiManagedSecurityScheme IJsonModel<OpenApiManagedSecurityScheme>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceAudioFormat JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual OpenApiManagedSecurityScheme JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceAudioFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OpenApiManagedSecurityScheme>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceAudioFormat)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OpenApiManagedSecurityScheme)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceAudioFormat(document.RootElement, options);
+            return DeserializeOpenApiManagedSecurityScheme(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VoiceAudioFormat DeserializeVoiceAudioFormat(JsonElement element, ModelReaderWriterOptions options)
+        internal static OpenApiManagedSecurityScheme DeserializeOpenApiManagedSecurityScheme(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            VoiceAudioFormatType @type = default;
-            int? rate = default;
+            string audience = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
+                if (prop.NameEquals("audience"u8))
                 {
-                    @type = new VoiceAudioFormatType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("rate"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    rate = prop.Value.GetInt32();
+                    audience = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +133,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VoiceAudioFormat(@type, rate, additionalBinaryDataProperties);
+            return new OpenApiManagedSecurityScheme(audience, additionalBinaryDataProperties);
         }
     }
 }

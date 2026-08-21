@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 using OpenAI;
 
 namespace Azure.AI.Projects.Agents
@@ -25,7 +26,7 @@ namespace Azure.AI.Projects.Agents
         internal VoiceResponse(string id, string conversationId)
         {
             Id = id;
-            Output = new ChangeTrackingList<VoiceConversationItem>();
+            Output = new ChangeTrackingList<BinaryData>();
             ConversationId = conversationId;
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
@@ -70,7 +71,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="temperature"> The sampling temperature used for the response. </param>
         /// <param name="createdAt"> The Unix timestamp (in seconds) for when the response was created. </param>
         /// <param name="completedAt"> The Unix timestamp (in seconds) for when the response completed. </param>
-        internal VoiceResponse(string id, VoiceResponseObject? @object, VoiceResponseStatus? status, RealtimeResponseStatusDetails statusDetails, RealtimeResponseUsage usage, string conversationId, IList<VoiceResponseOutputModality> outputModalities, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id0, IList<VoiceConversationItem> output, string conversationId0, VoiceResponseAudio audio, IDictionary<string, string> metadata, float? temperature, DateTimeOffset? createdAt, DateTimeOffset? completedAt) : base(id, @object, status, statusDetails, usage, conversationId, outputModalities, maxOutputTokens, additionalBinaryDataProperties)
+        internal VoiceResponse(string id, VoiceResponseObject? @object, VoiceResponseStatus? status, RealtimeResponseStatusDetails statusDetails, RealtimeResponseUsage usage, string conversationId, IList<VoiceResponseOutputModality> outputModalities, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id0, IList<BinaryData> output, string conversationId0, VoiceResponseAudio audio, IDictionary<string, string> metadata, float? temperature, DateTimeOffset? createdAt, DateTimeOffset? completedAt) : base(id, @object, status, statusDetails, usage, conversationId, outputModalities, maxOutputTokens, additionalBinaryDataProperties)
         {
             Id = id0;
             Output = output;
@@ -82,8 +83,67 @@ namespace Azure.AI.Projects.Agents
             CompletedAt = completedAt;
         }
 
-        /// <summary> The output items produced by the response. May be omitted in list results; retrieve the full response (GET .../responses/{response_id}) or use the paged response-items route (GET .../responses/{response_id}/items) for its output items. Each item's `response_id` also links it back to this response in the conversation-level items list. </summary>
-        public IList<VoiceConversationItem> Output { get; }
+        /// <summary>
+        /// The output items produced by the response. May be omitted in list results; retrieve the full response (GET .../responses/{response_id}) or use the paged response-items route (GET .../responses/{response_id}/items) for its output items. Each item's `response_id` also links it back to this response in the conversation-level items list.
+        /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// <remarks>
+        /// Supported types:
+        /// <list type="bullet">
+        /// <item>
+        /// <description> <see cref="VoiceSystemMessageItem"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="VoiceUserMessageItem"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="VoiceAssistantMessageItem"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="VoiceFunctionCallItem"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="VoiceFunctionCallOutputItem"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="VoiceMcpListToolsItem"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="VoiceMcpCallItem"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="VoiceMcpApprovalRequestItem"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="VoiceMcpApprovalResponseItem"/>. </description>
+        /// </item>
+        /// </list>
+        /// </remarks>
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public IList<BinaryData> Output { get; }
 
         /// <summary> The audio configuration used for the response, including the voice and audio format used for output. </summary>
         public VoiceResponseAudio Audio { get; }
