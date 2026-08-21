@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using System.IO;
 using System.Linq;
 
@@ -12,7 +13,12 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ShutdownPersistence;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+
 using OpenTelemetry;
+using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 
 using Xunit;
@@ -226,6 +232,95 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             }
         }
 
+        [Fact]
+        public void LogShutdownPersistsPendingTelemetryWithoutTransmitting()
+        {
+            var options = BuildOptions(out _, out var transport);
+
+            using var serviceProvider = BuildLoggerServices(options);
+
+            serviceProvider.GetRequiredService<ILoggerFactory>()
+                .CreateLogger<PersistOnShutdownProviderTests>()
+                .LogInformation("Persist me.");
+
+            // Logs run through a separate processor from traces, so the trace tests say nothing
+            // about this path.
+            serviceProvider.GetRequiredService<LoggerProvider>().Shutdown();
+
+            Assert.Empty(transport.Requests);
+            Assert.Equal(1, CountStoredPayloads());
+        }
+
+        [Fact]
+        public void LogForceFlushPersistsWhenSwitchIsEnabled()
+        {
+            AppContext.SetSwitch(PersistOnShutdownConfig.PersistOnForceFlushSwitchName, true);
+
+            try
+            {
+                var options = BuildOptions(out _, out var transport);
+
+                using var serviceProvider = BuildLoggerServices(options);
+
+                serviceProvider.GetRequiredService<ILoggerFactory>()
+                    .CreateLogger<PersistOnShutdownProviderTests>()
+                    .LogInformation("Persist me.");
+
+                serviceProvider.GetRequiredService<LoggerProvider>().ForceFlush();
+
+                Assert.Empty(transport.Requests);
+                Assert.Equal(1, CountStoredPayloads());
+            }
+            finally
+            {
+                AppContext.SetSwitch(PersistOnShutdownConfig.PersistOnForceFlushSwitchName, false);
+            }
+        }
+
+        [Fact]
+        public void MetricShutdownPersistsPendingTelemetryWithoutTransmitting()
+        {
+            var options = BuildOptions(out var transmitter, out var transport);
+
+            var meterName = $"OTel.PersistProvider.{Guid.NewGuid():N}";
+            using var meter = new Meter(meterName);
+
+            using var meterProvider = Sdk.CreateMeterProviderBuilder()
+                .AddMeter(meterName)
+                .AddReader(new AzureMonitorPeriodicExportingMetricReader(new AzureMonitorMetricExporter(options)))
+                .Build()!;
+
+            meter.CreateCounter<long>("TestCounter").Add(1);
+
+            meterProvider.Shutdown();
+
+            Assert.Empty(transport.Requests);
+            Assert.Equal(1, CountStoredPayloads());
+        }
+
+        [Fact]
+        public void MetricForceFlushTransmits()
+        {
+            var options = BuildOptions(out var transmitter, out var transport);
+
+            var meterName = $"OTel.PersistProvider.{Guid.NewGuid():N}";
+            using var meter = new Meter(meterName);
+
+            using var meterProvider = Sdk.CreateMeterProviderBuilder()
+                .AddMeter(meterName)
+                .AddReader(new AzureMonitorPeriodicExportingMetricReader(new AzureMonitorMetricExporter(options)))
+                .Build()!;
+
+            meter.CreateCounter<long>("TestCounter").Add(1);
+
+            meterProvider.ForceFlush();
+
+            // Pins the documented limitation: MetricReader.OnCollect cannot tell a caller-initiated
+            // flush from the periodic collection, so the flush is never redirected to storage.
+            Assert.Single(transport.Requests);
+            Assert.Empty(transmitter._fileBlobProvider!.GetBlobs());
+        }
+
         /// <summary>
         /// Counts telemetry still on disk. A drain that failed or was cut short leaves the blob
         /// leased rather than deleted, and a leased blob is renamed to ".lock".
@@ -240,7 +335,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
         }
 
-        private TracerProvider BuildTracerProvider(out AzureMonitorTransmitter transmitter, out MockTransport transport, Func<MockRequest, MockResponse>? responseFactory = null)
+        private static ServiceProvider BuildLoggerServices(AzureMonitorExporterOptions options)
+        {
+            var services = new ServiceCollection();
+
+            services.AddLogging(logging => logging.AddOpenTelemetry());
+            services.AddOpenTelemetry().WithLogging(builder =>
+                builder.AddProcessor(new AzureMonitorBatchLogRecordExportProcessor(new AzureMonitorLogExporter(options))));
+
+            return services.BuildServiceProvider();
+        }
+
+        private AzureMonitorExporterOptions BuildOptions(out AzureMonitorTransmitter transmitter, out MockTransport transport, Func<MockRequest, MockResponse>? responseFactory = null)
         {
             var connectionString = $"InstrumentationKey={Guid.NewGuid()};IngestionEndpoint={TestEndpoint}";
 
@@ -258,6 +364,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // what lets this test supply a mock platform and a scratch storage directory.
             transmitter = new AzureMonitorTransmitter(options, new MockPlatform());
             TransmitterFactory.Instance.Set(connectionString, transmitter);
+
+            return options;
+        }
+
+        private TracerProvider BuildTracerProvider(out AzureMonitorTransmitter transmitter, out MockTransport transport, Func<MockRequest, MockResponse>? responseFactory = null)
+        {
+            var options = BuildOptions(out transmitter, out transport, responseFactory);
 
             return Sdk.CreateTracerProviderBuilder()
                 .AddSource(_sourceName)
