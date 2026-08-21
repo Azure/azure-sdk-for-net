@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Invocations.Voice;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -28,6 +29,7 @@ public static class InvocationsBuilderExtensions
         Action<InvocationsServerOptions>? configure = null)
         where THandler : InvocationHandler
     {
+        RejectVoiceRegistration(builder.Services);
         builder.Services.AddInvocationsServer(configure);
         builder.Services.TryAddScoped<InvocationHandler, THandler>();
 
@@ -53,6 +55,7 @@ public static class InvocationsBuilderExtensions
     {
         ArgumentNullException.ThrowIfNull(handler);
 
+        RejectVoiceRegistration(builder.Services);
         builder.Services.AddInvocationsServer(configure);
         builder.Services.TryAddSingleton<InvocationHandler>(handler);
 
@@ -80,6 +83,7 @@ public static class InvocationsBuilderExtensions
     {
         ArgumentNullException.ThrowIfNull(factory);
 
+        RejectVoiceRegistration(builder.Services);
         builder.Services.AddInvocationsServer(configure);
         builder.Services.AddScoped<InvocationHandler>(factory);
 
@@ -89,5 +93,14 @@ public static class InvocationsBuilderExtensions
         });
 
         return builder;
+    }
+
+    private static void RejectVoiceRegistration(IServiceCollection services)
+    {
+        if (services.Any(descriptor => descriptor.ServiceType == typeof(VoiceRegistrationMarker)))
+        {
+            throw new InvalidOperationException(
+                "Invocations cannot be registered after Voice because Voice already owns the Invocations endpoints.");
+        }
     }
 }

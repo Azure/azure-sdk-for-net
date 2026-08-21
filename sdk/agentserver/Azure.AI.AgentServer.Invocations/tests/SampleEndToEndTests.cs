@@ -4,7 +4,9 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -19,6 +21,7 @@ using Azure.AI.AgentServer.Invocations.Voice;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -546,6 +549,260 @@ public class SampleEndToEndTests
             CancellationToken.None);
     }
 
+    [TestCase("success", VoiceTurnOutcome.Response, 3)]
+    [TestCase("request-cancel", VoiceTurnOutcome.Cancelled, 1)]
+    [TestCase("independent-cancel", VoiceTurnOutcome.Error, 1)]
+    [TestCase("error", VoiceTurnOutcome.Error, 1)]
+    public async Task ReadMe_VoiceEchoHandler_ClassifiesTurnOutcome(
+        string scenario,
+        VoiceTurnOutcome expectedOutcome,
+        int expectedSendCount)
+    {
+        var handler = new TestableVoiceEchoHandler();
+        using var requestCancellation = new CancellationTokenSource();
+        if (scenario == "request-cancel")
+        {
+            await requestCancellation.CancelAsync();
+        }
+        var session = new RecordingVoiceSession(scenario);
+        var message = new VoiceUserMessageEvent(
+            "m_user",
+            DateTimeOffset.Parse("2026-08-13T00:00:01Z", System.Globalization.CultureInfo.InvariantCulture),
+            "in_1",
+            new[] { new VoiceInputTextPart("hello") });
+
+        Exception? exception = null;
+        try
+        {
+            await handler.InvokeUserMessageAsync(
+                session,
+                message,
+                requestCancellation.Token);
+        }
+        catch (Exception caught)
+        {
+            exception = caught;
+        }
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(session.SendCount, Is.EqualTo(expectedSendCount));
+            Assert.That(session.Turn, Is.Not.Null);
+            Assert.That(session.Turn?.CommittedResult?.Outcome, Is.EqualTo(expectedOutcome));
+            Assert.That(session.Turn?.CommitCount, Is.EqualTo(1));
+            Assert.That(session.Turn?.AttemptCount, Is.EqualTo(2),
+                "Disposal may attempt Abandoned but must not replace the committed result.");
+            if (scenario == "success")
+            {
+                Assert.That(exception, Is.Null);
+                Assert.That(session.Turn?.CommittedResult?.OutputItemCount, Is.EqualTo(1));
+                Assert.That(session.Turn?.CommittedResult?.ResponseId, Is.Not.Null.And.Not.Empty);
+            }
+            else if (scenario == "request-cancel")
+            {
+                Assert.That(exception, Is.TypeOf<OperationCanceledException>());
+                Assert.That(((OperationCanceledException)exception!).CancellationToken,
+                    Is.EqualTo(requestCancellation.Token));
+            }
+            else if (scenario == "independent-cancel")
+            {
+                Assert.That(exception, Is.TypeOf<OperationCanceledException>());
+                Assert.That(((OperationCanceledException)exception!).CancellationToken,
+                    Is.Not.EqualTo(requestCancellation.Token));
+            }
+            else
+            {
+                Assert.That(exception, Is.TypeOf<InvalidOperationException>());
+            }
+        });
+    }
+
+    [Test]
+    public async Task ReadMe_VoiceEchoHandler_CancellationDoesNotPolluteRetry()
+    {
+        var handler = new TestableVoiceEchoHandler();
+        using var cancellation = new CancellationTokenSource();
+        await cancellation.CancelAsync();
+        var cancelledSession = new RecordingVoiceSession("request-cancel");
+        var successfulSession = new RecordingVoiceSession("success");
+        var message = CreateVoiceUserMessage();
+
+        Assert.That(
+            async () => await handler.InvokeUserMessageAsync(cancelledSession, message, cancellation.Token),
+            Throws.TypeOf<OperationCanceledException>());
+        await handler.InvokeUserMessageAsync(successfulSession, message, CancellationToken.None);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(cancelledSession.Turn?.CommittedResult?.Outcome, Is.EqualTo(VoiceTurnOutcome.Cancelled));
+            Assert.That(successfulSession.Turn?.CommittedResult?.Outcome, Is.EqualTo(VoiceTurnOutcome.Response));
+            Assert.That(successfulSession.SendCount, Is.EqualTo(3));
+        });
+    }
+
+    [Test]
+    public async Task ReadMe_VoiceEchoHandler_RequestCancellationExportsCancelledTurnAndAllowsRetry()
+    {
+        using var firstRequestCancellation = new CancellationTokenSource();
+        var stoppedActivities = new ConcurrentQueue<Activity>();
+        var cancelledTurn = new TaskCompletionSource<Activity>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var cancelledConnection = new TaskCompletionSource<Activity>(TaskCreationOptions.RunContinuationsAsynchronously);
+        using var listener = new ActivityListener
+        {
+            ShouldListenTo = static source => source.Name == "Azure.AI.AgentServer.Invocations",
+            Sample = (ref ActivityCreationOptions<ActivityContext> _) =>
+                ActivitySamplingResult.AllDataAndRecorded,
+            ActivityStopped = activity =>
+            {
+                stoppedActivities.Enqueue(activity);
+                if (activity.OperationName == "invoke_agent" &&
+                    Equals(activity.GetTagItem("bridge.outcome"), "cancelled"))
+                {
+                    cancelledTurn.TrySetResult(activity);
+                }
+                if (activity.OperationName == "agentserver.connection" &&
+                    Equals(activity.GetTagItem("bridge.outcome"), "cancelled"))
+                {
+                    cancelledConnection.TrySetResult(activity);
+                }
+            },
+        };
+        ActivitySource.AddActivityListener(listener);
+
+        var requestCount = 0;
+        CancelOnSendWebSocket? cancellingSocket = null;
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.Services.AddAgentServerCore();
+        builder.Services.AddVoice<Snippets.ReadMeSnippets.VoiceEchoHandler>();
+        await using var app = builder.Build();
+        app.Use(async (context, next) =>
+        {
+            if (Interlocked.Increment(ref requestCount) == 1)
+            {
+                context.RequestAborted = firstRequestCancellation.Token;
+                var feature = context.Features.Get<IHttpWebSocketFeature>()
+                    ?? throw new InvalidOperationException("The WebSocket feature is unavailable.");
+                context.Features.Set<IHttpWebSocketFeature>(new DecoratingWebSocketFeature(
+                    feature,
+                    socket => cancellingSocket = new CancelOnSendWebSocket(
+                        socket,
+                        firstRequestCancellation,
+                        cancelOnSend: 2)));
+            }
+            await next();
+        });
+        app.UseAgentServerCore();
+        app.MapInvocationsServer();
+        await app.StartAsync();
+        var wsClient = app.GetTestServer().CreateWebSocketClient();
+
+        using (var first = await wsClient.ConnectAsync(
+            new Uri(app.GetTestServer().BaseAddress, "invocations_ws"),
+            CancellationToken.None))
+        {
+            await StartVoiceSessionAsync(first);
+            await SendVoiceUserMessageAsync(first, "m_cancel", "in_cancel", "cancel");
+            _ = await cancelledTurn.Task.WaitAsync(TimeSpan.FromSeconds(2));
+            _ = await cancelledConnection.Task.WaitAsync(TimeSpan.FromSeconds(2));
+        }
+
+        using (var retry = await wsClient.ConnectAsync(
+            new Uri(app.GetTestServer().BaseAddress, "invocations_ws"),
+            CancellationToken.None))
+        {
+            await StartVoiceSessionAsync(retry);
+            await SendVoiceUserMessageAsync(retry, "m_retry", "in_retry", "retry");
+            var responseTypes = new List<string>();
+            while (!responseTypes.Contains("response.done", StringComparer.Ordinal))
+            {
+                responseTypes.Add((await ReceiveJsonAsync(retry).WaitAsync(TimeSpan.FromSeconds(2)))
+                    .GetProperty("type").GetString()!);
+            }
+            await retry.CloseOutputAsync(
+                System.Net.WebSockets.WebSocketCloseStatus.NormalClosure,
+                "done",
+                CancellationToken.None);
+
+            var turn = stoppedActivities.Single(activity =>
+                activity.OperationName == "invoke_agent" &&
+                Equals(activity.GetTagItem("bridge.outcome"), "cancelled"));
+            var connection = stoppedActivities.Single(activity =>
+                activity.OperationName == "agentserver.connection" &&
+                Equals(activity.GetTagItem("bridge.outcome"), "cancelled"));
+            Assert.Multiple(() =>
+            {
+                Assert.That(cancellingSocket?.SendCount, Is.EqualTo(2));
+                Assert.That(cancellingSocket?.CommittedSendCount, Is.EqualTo(1));
+                Assert.That(turn.Status, Is.Not.EqualTo(ActivityStatusCode.Error));
+                Assert.That(turn.GetTagItem("error.type"), Is.Null);
+                Assert.That(connection.Status, Is.Not.EqualTo(ActivityStatusCode.Error));
+                Assert.That(responseTypes, Is.EqualTo(new[]
+                {
+                    "response.created",
+                    "response.output_text.done",
+                    "response.done",
+                }));
+            });
+        }
+    }
+
+    [TestCase("request-cancel", VoiceTurnOutcome.Cancelled)]
+    [TestCase("independent-cancel", VoiceTurnOutcome.TransportError)]
+    public async Task SampleVoice1_InitialSendCancellationUsesRequestTokenIdentityAndAllowsRetry(
+        string scenario,
+        VoiceTurnOutcome expectedOutcome)
+    {
+        var handler = new TestableVoiceSupportHandler();
+        using var requestCancellation = new CancellationTokenSource();
+        using var independentCancellation = new CancellationTokenSource();
+        var sendCancellation = scenario == "request-cancel"
+            ? requestCancellation
+            : independentCancellation;
+        var failedSession = new RecordingVoiceSession("pending-cancel", sendCancellation.Token);
+        var retrySession = new RecordingVoiceSession("success");
+        var message = CreateVoiceUserMessage();
+
+        var failedOperation = handler.InvokeUserMessageAsync(
+            failedSession,
+            message,
+            requestCancellation.Token);
+        await failedSession.SendStarted.Task.WaitAsync(TimeSpan.FromSeconds(2));
+        await sendCancellation.CancelAsync();
+
+        OperationCanceledException? exception = null;
+        try
+        {
+            await failedOperation;
+        }
+        catch (OperationCanceledException caught)
+        {
+            exception = caught;
+        }
+        await handler.InvokeUserMessageAsync(retrySession, message, CancellationToken.None);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(exception, Is.Not.Null);
+            Assert.That(failedSession.SendCount, Is.EqualTo(1));
+            Assert.That(failedSession.Turn?.CommittedResult?.Outcome, Is.EqualTo(expectedOutcome));
+            Assert.That(failedSession.Turn?.CommitCount, Is.EqualTo(1));
+            Assert.That(failedSession.Turn?.AttemptCount, Is.EqualTo(3));
+            Assert.That(retrySession.SendCount, Is.EqualTo(3));
+            Assert.That(retrySession.Turn?.CommittedResult?.Outcome, Is.EqualTo(VoiceTurnOutcome.Response));
+            Assert.That(retrySession.Turn?.CommitCount, Is.EqualTo(1));
+            Assert.That(retrySession.Turn?.AttemptCount, Is.EqualTo(3));
+            if (scenario == "request-cancel")
+            {
+                Assert.That(exception?.CancellationToken, Is.EqualTo(requestCancellation.Token));
+            }
+            else
+            {
+                Assert.That(exception?.CancellationToken, Is.Not.EqualTo(requestCancellation.Token));
+            }
+        });
+    }
+
     [Test]
     public async Task SampleVoice1_TypedRelay_ExplicitlyAcknowledgesAndReplies()
     {
@@ -813,6 +1070,194 @@ public class SampleEndToEndTests
             System.Net.WebSockets.WebSocketMessageType.Text,
             endOfMessage: true,
             CancellationToken.None);
+    }
+
+    private static VoiceUserMessageEvent CreateVoiceUserMessage() => new(
+        "m_user",
+        DateTimeOffset.Parse("2026-08-13T00:00:01Z", System.Globalization.CultureInfo.InvariantCulture),
+        "in_1",
+        new[] { new VoiceInputTextPart("hello") });
+
+    private sealed class TestableVoiceEchoHandler : Snippets.ReadMeSnippets.VoiceEchoHandler
+    {
+        public Task InvokeUserMessageAsync(
+            VoiceSession session,
+            VoiceUserMessageEvent message,
+            CancellationToken cancellationToken) =>
+            base.OnUserMessageAsync(session, message, cancellationToken);
+    }
+
+    private sealed class TestableVoiceSupportHandler : Snippets.SampleVoice1Snippets.VoiceSupportHandler
+    {
+        public TestableVoiceSupportHandler()
+            : base(NullLogger<Snippets.SampleVoice1Snippets.VoiceSupportHandler>.Instance)
+        {
+        }
+
+        public Task InvokeUserMessageAsync(
+            VoiceSession session,
+            VoiceUserMessageEvent message,
+            CancellationToken cancellationToken) =>
+            base.OnUserMessageAsync(session, message, cancellationToken);
+    }
+
+    private sealed class RecordingVoiceSession : VoiceSession
+    {
+        private readonly string _scenario;
+        private readonly CancellationToken _pendingCancellation;
+
+        public RecordingVoiceSession(
+            string scenario,
+            CancellationToken pendingCancellation = default)
+        {
+            _scenario = scenario;
+            _pendingCancellation = pendingCancellation;
+        }
+
+        public int SendCount { get; private set; }
+
+        public TaskCompletionSource SendStarted { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public RecordingVoiceTurnTrace? Turn { get; private set; }
+
+        public override VoiceTurnTrace StartTurn(VoiceTurnOrigin origin, int inputCount)
+        {
+            Turn = new RecordingVoiceTurnTrace();
+            return Turn;
+        }
+
+        public override Task SendAsync(
+            VoiceOutboundMessage message,
+            CancellationToken cancellationToken = default)
+        {
+            SendCount++;
+            return _scenario switch
+            {
+                "success" => Task.CompletedTask,
+                "pending-cancel" => WaitForCancellationAsync(),
+                "request-cancel" => Task.FromException(
+                    new OperationCanceledException(cancellationToken)),
+                "independent-cancel" => Task.FromException(
+                    new OperationCanceledException(new CancellationToken(canceled: true))),
+                _ => Task.FromException(new InvalidOperationException("injected sample failure")),
+            };
+        }
+
+        private async Task WaitForCancellationAsync()
+        {
+            SendStarted.TrySetResult();
+            await Task.Delay(Timeout.InfiniteTimeSpan, _pendingCancellation);
+        }
+    }
+
+    private sealed class RecordingVoiceTurnTrace : VoiceTurnTrace
+    {
+        private int _committed;
+
+        public int AttemptCount { get; private set; }
+
+        public int CommitCount { get; private set; }
+
+        public VoiceTurnResult? CommittedResult { get; private set; }
+
+        public override void Complete(VoiceTurnResult result)
+        {
+            AttemptCount++;
+            if (Interlocked.Exchange(ref _committed, 1) != 0)
+            {
+                return;
+            }
+
+            CommitCount++;
+            CommittedResult = result;
+        }
+    }
+
+    private sealed class DecoratingWebSocketFeature : IHttpWebSocketFeature
+    {
+        private readonly IHttpWebSocketFeature _inner;
+        private readonly Func<System.Net.WebSockets.WebSocket, System.Net.WebSockets.WebSocket> _decorate;
+
+        public DecoratingWebSocketFeature(
+            IHttpWebSocketFeature inner,
+            Func<System.Net.WebSockets.WebSocket, System.Net.WebSockets.WebSocket> decorate)
+        {
+            _inner = inner;
+            _decorate = decorate;
+        }
+
+        public bool IsWebSocketRequest => _inner.IsWebSocketRequest;
+
+        public async Task<System.Net.WebSockets.WebSocket> AcceptAsync(WebSocketAcceptContext context) =>
+            _decorate(await _inner.AcceptAsync(context));
+    }
+
+    private sealed class CancelOnSendWebSocket : System.Net.WebSockets.WebSocket
+    {
+        private readonly System.Net.WebSockets.WebSocket _inner;
+        private readonly CancellationTokenSource _requestCancellation;
+        private readonly int _cancelOnSend;
+
+        public CancelOnSendWebSocket(
+            System.Net.WebSockets.WebSocket inner,
+            CancellationTokenSource requestCancellation,
+            int cancelOnSend)
+        {
+            _inner = inner;
+            _requestCancellation = requestCancellation;
+            _cancelOnSend = cancelOnSend;
+        }
+
+        public int SendCount { get; private set; }
+
+        public int CommittedSendCount { get; private set; }
+
+        public override System.Net.WebSockets.WebSocketCloseStatus? CloseStatus => _inner.CloseStatus;
+
+        public override string? CloseStatusDescription => _inner.CloseStatusDescription;
+
+        public override System.Net.WebSockets.WebSocketState State => _inner.State;
+
+        public override string? SubProtocol => _inner.SubProtocol;
+
+        public override void Abort() => _inner.Abort();
+
+        public override Task CloseAsync(
+            System.Net.WebSockets.WebSocketCloseStatus closeStatus,
+            string? statusDescription,
+            CancellationToken cancellationToken) =>
+            _inner.CloseAsync(closeStatus, statusDescription, cancellationToken);
+
+        public override Task CloseOutputAsync(
+            System.Net.WebSockets.WebSocketCloseStatus closeStatus,
+            string? statusDescription,
+            CancellationToken cancellationToken) =>
+            _inner.CloseOutputAsync(closeStatus, statusDescription, cancellationToken);
+
+        public override Task<System.Net.WebSockets.WebSocketReceiveResult> ReceiveAsync(
+            ArraySegment<byte> buffer,
+            CancellationToken cancellationToken) =>
+            _inner.ReceiveAsync(buffer, cancellationToken);
+
+        public override Task SendAsync(
+            ArraySegment<byte> buffer,
+            System.Net.WebSockets.WebSocketMessageType messageType,
+            bool endOfMessage,
+            CancellationToken cancellationToken)
+        {
+            SendCount++;
+            if (SendCount == _cancelOnSend)
+            {
+                _requestCancellation.Cancel();
+                return Task.FromCanceled(cancellationToken);
+            }
+
+            CommittedSendCount++;
+            return _inner.SendAsync(buffer, messageType, endOfMessage, cancellationToken);
+        }
+
+        public override void Dispose() => _inner.Dispose();
     }
 
     private sealed class DelayedVoiceSupportHandler : Snippets.SampleVoice1Snippets.VoiceSupportHandler

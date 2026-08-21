@@ -3,6 +3,7 @@
 
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Invocations.Internal;
+using Azure.AI.AgentServer.Invocations.Voice;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -105,7 +106,7 @@ public static class InvocationsServerEndpointRouteBuilderExtensions
             InvocationHandler userHandler) =>
         {
             await endpointHandler.HandleAsync(httpContext, userHandler);
-        });
+        }).WithMetadata(VoiceWebSocketEndpointMetadata.Instance);
 
         group.WithTags("Invocations");
 

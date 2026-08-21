@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Invocations.Internal;
 using Microsoft.Extensions.Primitives;
@@ -11,6 +12,7 @@ namespace Azure.AI.AgentServer.Invocations.Voice;
 public class VoiceSession
 {
     private readonly InvocationsWebSocketConnection? _connection;
+    private readonly VoiceTraceContext _traceContext;
 
     /// <summary>Initializes a mockable Voice session.</summary>
     protected VoiceSession()
@@ -29,14 +31,42 @@ public class VoiceSession
         InvocationContext = invocationContext ?? throw new ArgumentNullException(nameof(invocationContext));
     }
 
-    internal VoiceSession(InvocationsWebSocketConnection connection, InvocationContext invocationContext)
+    internal VoiceSession(InvocationContext invocationContext, ActivityContext connectionContext)
+        : this(invocationContext)
+    {
+        _traceContext = new VoiceTraceContext(connectionContext, default);
+    }
+
+    internal VoiceSession(
+        InvocationsWebSocketConnection connection,
+        InvocationContext invocationContext,
+        ActivityContext connectionContext = default)
+        : this(
+            connection,
+            invocationContext,
+            new VoiceTraceContext(connectionContext, default))
+    {
+    }
+
+    internal VoiceSession(
+        InvocationsWebSocketConnection connection,
+        InvocationContext invocationContext,
+        VoiceTraceContext traceContext)
     {
         _connection = connection;
         InvocationContext = invocationContext;
+        _traceContext = traceContext;
     }
 
     /// <summary>Gets the explicit per-connection Invocations context.</summary>
     public virtual InvocationContext InvocationContext { get; }
+
+    /// <summary>Starts an application-owned target-agent decision trace.</summary>
+    /// <param name="origin">The decision origin.</param>
+    /// <param name="inputCount">The number of inputs consumed by this decision.</param>
+    /// <returns>A mockable handle that the application activates and completes explicitly.</returns>
+    public virtual VoiceTurnTrace StartTurn(VoiceTurnOrigin origin, int inputCount) =>
+        VoiceTurnTrace.Start(_traceContext, origin, inputCount);
 
     /// <summary>
     /// Encodes and sends one explicit agent-to-Bridge message. Concurrent sends are serialized;

@@ -144,7 +144,7 @@ What the SDK does for you when the registered handler derives from `InvocationWe
 - Calls `AcceptWebSocketAsync` before invoking your handler.
 - Sends an RFC 6455 protocol-level Ping frame (opcode `0x9`) every `WS_KEEPALIVE_INTERVAL` seconds when the env var is set — Kestrel does this for us via `WebSocketOptions.KeepAliveInterval`, so the connection stays alive across upstream proxy / load-balancer idle timeouts without any extra application traffic. Disabled by default.
 - Closes the connection cleanly on handler return (close code `1000` — `NormalClosure`) or maps an uncaught handler exception to close code `1011` (`InternalServerError`). Handler-initiated close codes are preserved unchanged.
-- Emits a structured close-event log line carrying `session_id`, `close_code`, and `duration_ms`. No framework-level OpenTelemetry span is created for the connection — ASP.NET Core auto-propagates the inbound W3C trace context, so any spans your handler starts are parented correctly without a per-connection wrapper.
+- Emits a structured close-event log line carrying `session_id`, `close_code`, and `duration_ms`. Raw WebSocket handlers use the ASP.NET Core request span. The typed Voice relay replaces that generic request telemetry with a semantic `agentserver.connection` span created from the inbound W3C context.
 - When the registered handler is a plain `InvocationHandler` (not an `InvocationWebSocketHandler`), an upgrade attempt receives HTTP `404 Not Found` — the WS endpoint short-circuits with "endpoint not registered" semantics so a missing handler fails fast instead of accepting and immediately closing.
 
 The session ID honours `FOUNDRY_AGENT_SESSION_ID` (matching the HTTP `POST /invocations` precedence, minus the query-param override which has no ergonomic equivalent on a long-lived WS connection), falling back to a generated UUID. Both transports on the same container therefore report the same session ID.
@@ -173,14 +173,34 @@ public class VoiceEchoHandler : VoiceHandler
         var responseId = VoiceIds.CreateResponseId();
         var itemId = VoiceIds.CreateItemId();
         var text = string.Concat(message.Content.Select(part => part.Text));
+        using var turn = session.StartTurn(VoiceTurnOrigin.User, inputCount: 1);
 
-        await session.SendAsync(
-            new VoiceResponseCreatedMessage(responseId, new[] { message.ItemId }),
-            cancellationToken);
-        await session.SendAsync(
-            new VoiceResponseOutputTextDoneMessage(responseId, itemId, $"You said: {text}"),
-            cancellationToken);
-        await session.SendAsync(new VoiceResponseDoneMessage(responseId), cancellationToken);
+        try
+        {
+            await session.SendAsync(
+                new VoiceResponseCreatedMessage(responseId, new[] { message.ItemId }),
+                cancellationToken);
+            await session.SendAsync(
+                new VoiceResponseOutputTextDoneMessage(responseId, itemId, $"You said: {text}"),
+                cancellationToken);
+            await session.SendAsync(new VoiceResponseDoneMessage(responseId), cancellationToken);
+            turn.Complete(new VoiceTurnResult(
+                VoiceTurnOutcome.Response,
+                outputItemCount: 1,
+                responseId));
+        }
+        catch (OperationCanceledException exception)
+            when (exception.CancellationToken == cancellationToken &&
+                  cancellationToken.IsCancellationRequested)
+        {
+            turn.Complete(new VoiceTurnResult(VoiceTurnOutcome.Cancelled));
+            throw;
+        }
+        catch
+        {
+            turn.Complete(new VoiceTurnResult(VoiceTurnOutcome.Error));
+            throw;
+        }
     }
 }
 ```

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Buffers;
+using System.Diagnostics;
 using System.Net.WebSockets;
 using System.Text;
 using Azure.AI.AgentServer.Invocations.Internal;
@@ -30,19 +31,27 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
             cancellationToken).ConfigureAwait(false);
     }
 
-    internal sealed override async Task<InvocationsWebSocketCloseResult?> HandleWebSocketWithOutcomeAsync(
+    internal sealed override IInvocationsWebSocketEndpointLifecycle CreateEndpointLifecycle(
+        Microsoft.AspNetCore.Http.HttpContext httpContext,
+        InvocationCorrelationBaggage correlationBaggage)
+    {
+        VoiceTracingRegistration.MarkEndpointEntered(httpContext);
+        return VoiceWebSocketLifecycle.Start(
+            this,
+            httpContext.Request.Headers,
+            correlationBaggage);
+    }
+
+    internal sealed override Task<InvocationsWebSocketCloseResult?> HandleWebSocketWithOutcomeAsync(
         WebSocket webSocket,
         InvocationContext context,
-        CancellationToken cancellationToken)
-    {
-        var connection = new InvocationsWebSocketConnection(webSocket);
-        var outcome = await HandleWebSocketConnectionAsync(
-            connection,
+        CancellationToken cancellationToken) =>
+        VoiceWebSocketLifecycle.HandleAsync(
+            this,
+            webSocket,
             context,
-            cancellationToken).ConfigureAwait(false);
-        var closeException = await connection.CloseAsync(outcome.Status, outcome.Reason).ConfigureAwait(false);
-        return outcome with { CloseException = closeException };
-    }
+            traceContext: default,
+            cancellationToken);
 
     /// <summary>Handles an explicit application start event.</summary>
     protected virtual Task OnSessionStartAsync(
@@ -115,9 +124,31 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
     internal async Task<InvocationsWebSocketCloseResult> HandleWebSocketConnectionAsync(
         InvocationsWebSocketConnection connection,
         InvocationContext context,
+        CancellationToken cancellationToken) =>
+        await HandleWebSocketConnectionAsync(
+            connection,
+            context,
+            traceContext: default,
+            cancellationToken).ConfigureAwait(false);
+
+    internal async Task<InvocationsWebSocketCloseResult> HandleWebSocketConnectionAsync(
+        InvocationsWebSocketConnection connection,
+        InvocationContext context,
+        ActivityContext connectionContext,
+        CancellationToken cancellationToken) =>
+        await HandleWebSocketConnectionAsync(
+            connection,
+            context,
+            new VoiceTraceContext(connectionContext, default),
+            cancellationToken).ConfigureAwait(false);
+
+    internal async Task<InvocationsWebSocketCloseResult> HandleWebSocketConnectionAsync(
+        InvocationsWebSocketConnection connection,
+        InvocationContext context,
+        VoiceTraceContext traceContext,
         CancellationToken cancellationToken)
     {
-        var session = new VoiceSession(connection, context);
+        var session = new VoiceSession(connection, context, traceContext);
         InvocationsWebSocketCloseResult outcome;
         try
         {
@@ -140,7 +171,11 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
                 {
                     try
                     {
-                        await DispatchAsync(session, message, cancellationToken).ConfigureAwait(false);
+                        await DispatchAsync(
+                            session,
+                            message,
+                            traceContext,
+                            cancellationToken).ConfigureAwait(false);
                     }
                     catch (OperationCanceledException exception)
                         when (exception.CancellationToken == cancellationToken &&
@@ -214,7 +249,34 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
         return outcome with { CleanupException = cleanupException };
     }
 
-    private Task DispatchAsync(
+    private async Task DispatchAsync(
+        VoiceSession session,
+        VoiceInboundMessage message,
+        VoiceTraceContext traceContext,
+        CancellationToken cancellationToken)
+    {
+        using var callbackTrace = VoiceCallbackTrace.Start(
+            traceContext,
+            message.MessageType);
+        using var callbackScope = callbackTrace.Activate();
+        try
+        {
+            await DispatchCallbackAsync(session, message, cancellationToken).ConfigureAwait(false);
+        }
+        catch (OperationCanceledException exception)
+            when (exception.CancellationToken == cancellationToken &&
+                  cancellationToken.IsCancellationRequested)
+        {
+            throw;
+        }
+        catch (Exception exception)
+        {
+            callbackTrace.RecordFailure(exception);
+            throw;
+        }
+    }
+
+    private Task DispatchCallbackAsync(
         VoiceSession session,
         VoiceInboundMessage message,
         CancellationToken cancellationToken) => message switch
