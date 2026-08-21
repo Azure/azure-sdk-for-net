@@ -95,8 +95,7 @@ steps:
         $directPackageCount = @($packageInfos | Where-Object { $_.IncludedForValidation -eq $false }).Count
         $indirectPackageCount = @($packageInfos | Where-Object { $_.IncludedForValidation -eq $true }).Count
         if ($directPackageCount -le 1 -and $indirectPackageCount -le 1) {
-          Write-Host "Runtime-weighted batching is unnecessary for $directPackageCount direct and $indirectPackageCount indirect package(s). Using count-based batching."
-          return
+          Write-Host "Runtime-weighted batching is unnecessary for $directPackageCount direct and $indirectPackageCount indirect package(s), but this diagnostic run will query Analytics."
         }
 
         try {
