@@ -130,9 +130,17 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
 
   $outputFilePath = Join-Path $RepoRoot "_dependencylist.txt"
   $sourceGraphOutputFilePath = Join-Path $RepoRoot "_dependencylist.source-graph.txt"
+  $projectGraphOutputFilePath = Join-Path $RepoRoot "_dependencylist.project-graph.txt"
+
+  $projectGraphCommand = "dotnet msbuild /m /nr:false /t:QueryRepositoryProjectGraphReverseWithProjectGraph ./eng/service.proj /p:TestDependsOnDependency=`"$TestDependsOnDependency`" /p:TestDependsIncludePackageRootDirectoryOnly=true /p:IncludeSrc=false " +
+    "/p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false" +
+    " /p:OutputProjectFilePath=`"$projectGraphOutputFilePath`""
+
+  Write-Host "Calculating dependencies using the MSBuild ProjectGraph reader."
+  Invoke-LoggedMsbuildCommand $projectGraphCommand
 
   $sourceGraphCommand = "dotnet msbuild /m /nr:false /t:QueryRepositoryProjectGraphReverse ./eng/service.proj /p:TestDependsOnDependency=`"$TestDependsOnDependency`" /p:TestDependsIncludePackageRootDirectoryOnly=true /p:IncludeSrc=false " +
-    "/p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false" +
+    "/p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false /p:EnableDefaultItems=false" +
     " /p:OutputProjectFilePath=`"$sourceGraphOutputFilePath`""
 
   Write-Host "Calculating dependencies using the repository source graph."
@@ -147,6 +155,13 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
 
   $resolvedReferenceDependencies = @(Get-Content $outputFilePath | Sort-Object -Unique)
   $sourceGraphDependencies = @(Get-Content $sourceGraphOutputFilePath | Sort-Object -Unique)
+  $projectGraphDependencies = @(Get-Content $projectGraphOutputFilePath | Sort-Object -Unique)
+  $projectGraphDifferences = @(Compare-Object $sourceGraphDependencies $projectGraphDependencies)
+  if ($projectGraphDifferences.Count -gt 0) {
+    $projectGraphDifferences | Format-Table | Out-String | Write-Host
+    throw "The MSBuild ProjectGraph dependency calculation did not match the repository source graph."
+  }
+
   $dependencyDifferences = @(Compare-Object $resolvedReferenceDependencies $sourceGraphDependencies)
   if ($dependencyDifferences.Count -gt 0) {
     $dependencyDifferences | Format-Table | Out-String | Write-Host

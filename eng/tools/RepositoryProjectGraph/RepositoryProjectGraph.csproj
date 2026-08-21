@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>RepositoryProjectGraph</AssemblyName>
+    <RootNamespace>Azure.Sdk.Tools.RepositoryProjectGraph</RootNamespace>
+    <!-- This task binds to the invoking SDK's MSBuild assemblies and does not require NuGet restore. -->
+    <RestoreProjectStyle>None</RestoreProjectStyle>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <SkipResolvePackageAssets>true</SkipResolvePackageAssets>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="RepositoryProjectGraphTask.cs" />
+    <Compile Include="RunIsolatedRepositoryProjectGraphTask.cs" />
+    <Reference Include="Microsoft.Build"
+               HintPath="$(MSBuildToolsPath)/Microsoft.Build.dll"
+               Private="false" />
+    <Reference Include="Microsoft.Build.Framework"
+               HintPath="$(MSBuildToolsPath)/Microsoft.Build.Framework.dll"
+               Private="false" />
+    <Reference Include="Microsoft.Build.Utilities.Core"
+               HintPath="$(MSBuildToolsPath)/Microsoft.Build.Utilities.Core.dll"
+               Private="false" />
+  </ItemGroup>
+</Project>

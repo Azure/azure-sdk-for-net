@@ -131,4 +131,72 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $graph.diagnostics.missingDeclaredProjects | Should -Be @("sdk/example/B/src/B.csproj")
         $graph.diagnostics.nodeMetadataConflicts[0].fields | Should -Contain "packageId"
     }
+
+    It "collects TFM-specific records with the strongly typed ProjectGraph task" {
+        $fixtureRoot = Join-Path $TestDrive "task-fixture"
+        $fixtureA = Join-Path $fixtureRoot "sdk/example/A/tests/A.Tests.csproj"
+        $fixtureB = Join-Path $fixtureRoot "sdk/example/B/src/B.csproj"
+        $driverPath = Join-Path $fixtureRoot "driver.proj"
+        $taskRecordsPath = Join-Path $fixtureRoot "task.records"
+        $taskGraphPath = Join-Path $fixtureRoot "task.json"
+        New-Item -ItemType Directory -Path (Split-Path $fixtureA -Parent), (Split-Path $fixtureB -Parent) -Force | Out-Null
+
+        @'
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <PackageId>Azure.A.Tests</PackageId>
+    <IsClientLibrary>true</IsClientLibrary>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.B" Condition="'$(TargetFramework)' == 'net8.0'" />
+    <ProjectReference Include="../../B/src/B.csproj" Condition="'$(TargetFramework)' == 'net9.0'" />
+  </ItemGroup>
+</Project>
+'@ | Set-Content $fixtureA
+        @'
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <PackageId>Azure.B</PackageId>
+    <IsClientLibrary>true</IsClientLibrary>
+    <IsShippingLibrary>true</IsShippingLibrary>
+  </PropertyGroup>
+</Project>
+'@ | Set-Content $fixtureB
+
+        $repositoryRoot = Resolve-Path (Join-Path $PSScriptRoot ".." ".." "..")
+        $taskProject = Join-Path $repositoryRoot "eng/tools/RepositoryProjectGraph/RepositoryProjectGraph.csproj"
+        $taskAssembly = Join-Path $repositoryRoot "artifacts/bin/RepositoryProjectGraph/Debug/net10.0/RepositoryProjectGraph.dll"
+        @"
+<Project>
+  <UsingTask TaskName="Azure.Sdk.Tools.RepositoryProjectGraph.RepositoryProjectGraphTask"
+             AssemblyFile="$taskAssembly" />
+  <Target Name="BuildGraph">
+    <ItemGroup>
+      <GraphProject Include="$fixtureA;$fixtureB" />
+      <GraphRoot Include="$fixtureA" />
+    </ItemGroup>
+    <RepositoryProjectGraphTask Projects="@(GraphProject)"
+                                RootProjects="@(GraphRoot)"
+                                RecordsPath="$taskRecordsPath"
+                                DegreeOfParallelism="2" />
+  </Target>
+</Project>
+"@ | Set-Content $driverPath
+
+        & dotnet build $taskProject --no-restore -v:minimal
+        $LASTEXITCODE | Should -Be 0
+        & dotnet msbuild -nologo -v:minimal -t:BuildGraph $driverPath
+        $LASTEXITCODE | Should -Be 0
+        & $scriptPath -Operation Build -GraphPath $taskGraphPath -RecordsPath $taskRecordsPath -RepoRoot $fixtureRoot
+        if ($LASTEXITCODE) { throw "Graph build failed with exit code $LASTEXITCODE" }
+
+        $taskGraph = Get-Content -Raw $taskGraphPath | ConvertFrom-Json -Depth 100
+        $taskGraph.diagnostics.isComplete | Should -BeTrue
+        ($taskGraph.nodes | Where-Object packageId -eq "Azure.A.Tests").targetFrameworks | Should -Be @("net8.0", "net9.0")
+        ($taskGraph.edges | Where-Object { $_.kind -eq "PackageReference" -and $_.fromProject -like "*/A.Tests.csproj" }).targetFrameworks | Should -Be @("net8.0")
+        ($taskGraph.edges | Where-Object { $_.kind -eq "ProjectReference" -and $_.fromProject -like "*/A.Tests.csproj" }).targetFrameworks | Should -Be @("net9.0")
+    }
 }
