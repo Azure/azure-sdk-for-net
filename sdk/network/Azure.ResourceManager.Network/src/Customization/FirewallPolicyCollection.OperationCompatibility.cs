@@ -18,13 +18,11 @@ namespace Azure.ResourceManager.Network
     public partial class FirewallPolicyCollection
     {
         /// <summary> Creates or updates the specified Firewall Policy. </summary>
-        [OverloadResolutionPriority(-1)]
         [ForwardsClientCalls]
         public virtual Task<ArmOperation<FirewallPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string firewallPolicyName, FirewallPolicyData data, CancellationToken cancellationToken = default)
             => CreateOrUpdateAsync(waitUntil, firewallPolicyName, data, afcManagedSync: default, cancellationToken);
 
         /// <summary> Creates or updates the specified Firewall Policy. </summary>
-        [OverloadResolutionPriority(-1)]
         [ForwardsClientCalls]
         public virtual ArmOperation<FirewallPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string firewallPolicyName, FirewallPolicyData data, CancellationToken cancellationToken = default)
             => CreateOrUpdate(waitUntil, firewallPolicyName, data, afcManagedSync: default, cancellationToken);
