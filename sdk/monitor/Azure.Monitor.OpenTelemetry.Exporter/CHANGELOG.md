@@ -22,9 +22,6 @@
 - Offline storage is now drained shortly after startup rather than only after the process has been running for two minutes, so telemetry persisted by a previous run is uploaded even when no single run is long-lived.
   ([#61818](https://github.com/Azure/azure-sdk-for-net/pull/61818))
 
-- Stored telemetry is now coalesced into a single request per batch and drained oldest-first, instead of one request per blob newest-first. Previously a backlog could grow faster than it drained, and the oldest telemetry expired before it was ever sent.
-  ([#61818](https://github.com/Azure/azure-sdk-for-net/pull/61818))
-
 - Telemetry is no longer dropped when the offline storage directory reaches its size cap. The oldest stored telemetry is evicted to make room.
   ([#61818](https://github.com/Azure/azure-sdk-for-net/pull/61818))
 

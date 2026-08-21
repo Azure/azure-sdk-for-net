@@ -142,16 +142,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private void DrainBlobs()
         {
-            // Snapshotted up front so deleting blobs cannot invalidate the enumeration, and reversed
-            // because the provider yields newest-first while the oldest telemetry is closest to
-            // expiring.
+            // Snapshotted up front so deleting blobs cannot invalidate the enumeration. The order the
+            // provider yields is kept: newest first, because a backlog is worth less to a customer
+            // than knowing what is happening now. A backlog too large to drain loses its oldest end,
+            // either to eviction or to the ingestion age limit.
             var blobs = new List<PersistentBlob>(_blobProvider.GetBlobs());
             if (blobs.Count == 0)
             {
                 return;
             }
-
-            blobs.Reverse();
 
             var stopwatch = Stopwatch.StartNew();
             var batch = new List<PendingBlob>(MaxBlobsPerBatch);
