@@ -26,6 +26,7 @@
         $(MSBuildProjectName) == 'Azure.AI.Inference.Tests' or
         $(MSBuildProjectName) == 'Azure.AI.Language.Conversations.Authoring.Tests' or
         $(MSBuildProjectName) == 'Azure.AI.Language.Conversations.Tests' or
+				$(MSBuildProjectName) == 'Azure.AI.Language.Documents.Tests' or
         $(MSBuildProjectName) == 'Azure.AI.Language.QuestionAnswering.Authoring.Tests' or
         $(MSBuildProjectName) == 'Azure.AI.Language.QuestionAnswering.Inference.Tests' or
         $(MSBuildProjectName) == 'Azure.AI.Language.QuestionAnswering.Tests' or
