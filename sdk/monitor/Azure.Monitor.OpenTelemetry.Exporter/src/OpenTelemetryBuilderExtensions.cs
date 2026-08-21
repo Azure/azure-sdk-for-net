@@ -98,7 +98,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 meterProviderBuilder.AddReader(new AzureMonitorPeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions)));
 
                 // Register customer SDK stats if enabled
-                CustomerSdkStatsRegistration.RegisterCustomerSdkStats(builder.Services, exporterOptions);
+                CustomerSdkStatsRegistration.RegisterCustomerSdkStats(exporterOptions);
             });
 
             // Register Manager as a singleton

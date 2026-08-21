@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
-using Microsoft.Extensions.DependencyInjection;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 
@@ -16,11 +14,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
     internal static class CustomerSdkStatsRegistration
     {
         /// <summary>
-        /// Registers customer SDK stats services if enabled via environment variables.
+        /// Starts customer SDK stats collection if enabled via environment variables.
         /// </summary>
-        /// <param name="services">Service collection</param>
         /// <param name="options">Azure Monitor exporter options</param>
-        public static void RegisterCustomerSdkStats(IServiceCollection services, AzureMonitorExporterOptions options)
+        public static void RegisterCustomerSdkStats(AzureMonitorExporterOptions options)
         {
             if (!CustomerSdkStatsHelper.IsEnabled())
             {
@@ -42,9 +39,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
                         })
                     .Build();
 
-                // Register the MeterProvider for disposal
-                services.AddSingleton(new BackgroundMeterProviderDisposer(meterProvider));
-
+                // Deliberately not registered for disposal. This runs from a
+                // ConfigureOpenTelemetryMeterProvider callback, which fires while the container is
+                // being resolved, so anything added to the collection here is invisible to the
+                // already-built provider and would never be disposed anyway. Leaving it to live for
+                // the process lifetime also keeps its final export off the exit path; the reader's
+                // own timer is what delivers these stats.
                 AzureMonitorExporterEventSource.Log.CustomerSdkStatsEnabled(exportInterval);
             }
             catch (Exception ex)
@@ -76,35 +76,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
             // BackgroundMeterProviderDisposer is what keeps the final export off the exit path.
 
             return options;
-        }
-
-        /// <summary>
-        /// Registered in place of the meter provider itself. Disposing the provider exports one last
-        /// time, and customer SDK stats have no offline storage behind them, so losing that export is
-        /// preferable to holding up container teardown for an ingestion round trip.
-        /// </summary>
-        private sealed class BackgroundMeterProviderDisposer : IDisposable
-        {
-            private readonly MeterProvider _meterProvider;
-
-            public BackgroundMeterProviderDisposer(MeterProvider meterProvider) => _meterProvider = meterProvider;
-
-            public void Dispose()
-            {
-                var meterProvider = _meterProvider;
-
-                _ = Task.Run(() =>
-                {
-                    try
-                    {
-                        meterProvider.Dispose();
-                    }
-                    catch (Exception)
-                    {
-                        // The process is going away; there is nothing useful to report.
-                    }
-                });
-            }
         }
     }
 }

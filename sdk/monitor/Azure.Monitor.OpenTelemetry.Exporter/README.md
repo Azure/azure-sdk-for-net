@@ -242,6 +242,10 @@ AppContext.SetSwitch("Azure.Monitor.OpenTelemetry.Exporter.PersistOnForceFlush",
 | `...PersistOnForceFlush` | switch | `false` | Makes `ForceFlush()` persist instead of upload |
 | `...DisablePersistOnShutdown` | switch | `false` | Restores the previous behavior: shutdown uploads and blocks |
 
+Raising the drain budget has a ceiling. `Dispose()` only ever grants the drain what is left of the
+five second grace period OpenTelemetry gives it, and `Shutdown()` does not wait on the drain at all,
+so a value above about five seconds behaves the same as five seconds.
+
 ### Choosing a value for your application
 
 **Command-line tools and other short-lived processes** care about exit latency, and there will be a

@@ -32,9 +32,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ShutdownPersistence
         /// </summary>
         /// <remarks>
         /// Zero suits a short-lived application: the telemetry is already durable on disk, so exit
-        /// costs only the file write and delivery falls to a later run. A larger value suits a
-        /// single-run CI job, where there is no later run and blocking until ingestion answers is
-        /// the only way the telemetry ever arrives.
+        /// costs only the file write and delivery falls to a later run. Raising it cannot guarantee
+        /// delivery, because <c>Shutdown()</c> does not wait on the drain at all and <c>Dispose()</c>
+        /// is capped by the five second grace period OpenTelemetry gives it. A caller that must not
+        /// exit before ingestion answers wants <see cref="DisablePersistOnShutdownSwitchName"/> with
+        /// a bounded network timeout instead.
         /// </remarks>
         internal const string DrainBudgetOverrideName = "Azure.Monitor.OpenTelemetry.Exporter.ShutdownDrainBudgetMilliseconds";
 
