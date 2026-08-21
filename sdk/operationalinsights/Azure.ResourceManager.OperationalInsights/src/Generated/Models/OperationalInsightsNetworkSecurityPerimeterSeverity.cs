@@ -15,9 +15,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public readonly partial struct OperationalInsightsNetworkSecurityPerimeterSeverity : IEquatable<OperationalInsightsNetworkSecurityPerimeterSeverity>
     {
         private readonly string _value;
-        /// <summary> The issue is a warning and does not prevent the configuration from being applied. </summary>
         private const string WarningValue = "Warning";
-        /// <summary> The issue is an error and prevents the configuration from being applied. </summary>
         private const string ErrorValue = "Error";
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsNetworkSecurityPerimeterSeverity"/>. </summary>
@@ -30,10 +28,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             _value = value;
         }
 
-        /// <summary> The issue is a warning and does not prevent the configuration from being applied. </summary>
+        /// <summary> Gets the Warning. </summary>
         public static OperationalInsightsNetworkSecurityPerimeterSeverity Warning { get; } = new OperationalInsightsNetworkSecurityPerimeterSeverity(WarningValue);
 
-        /// <summary> The issue is an error and prevents the configuration from being applied. </summary>
+        /// <summary> Gets the Error. </summary>
         public static OperationalInsightsNetworkSecurityPerimeterSeverity Error { get; } = new OperationalInsightsNetworkSecurityPerimeterSeverity(ErrorValue);
 
         /// <summary> Determines if two <see cref="OperationalInsightsNetworkSecurityPerimeterSeverity"/> values are the same. </summary>

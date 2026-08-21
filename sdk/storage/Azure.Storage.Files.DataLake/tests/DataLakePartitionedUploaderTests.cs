@@ -40,8 +40,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         };
         private static readonly string s_permissions = "permissions";
         private static readonly string s_umask = "umask";
-        private static readonly DataLakePathScheduleDeletionOptions s_scheduleDeletionOptions =
-            new DataLakePathScheduleDeletionOptions(timeToExpire: TimeSpan.FromHours(1));
         private static readonly Progress<long> s_progress = new Progress<long>();
         private static readonly UploadTransferValidationOptions s_validationNone = new UploadTransferValidationOptions
         {
@@ -83,35 +81,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(1, testPool.TotalRents);
             Assert.AreEqual(0, testPool.CurrentCount);
             AssertAppended(sink, content);
-        }
-
-        [Test]
-        public async Task UploadFlowsAbsoluteExpiry()
-        {
-            using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            TestStream content = new TestStream(_async, null, TestStream.Read(0, 10));
-            TrackingArrayPool testPool = new TrackingArrayPool();
-            AppendSink sink = new AppendSink();
-DataLakePathScheduleDeletionOptions scheduleDeletionOptions =
-    new DataLakePathScheduleDeletionOptions(expiresOn: new DateTimeOffset(2100, 1, 1, 0, 0, 0, TimeSpan.Zero));
-
-            Mock<DataLakeFileClient> clientMock = new Mock<DataLakeFileClient>(
-                MockBehavior.Strict,
-                new Uri("http://mock"),
-                new DataLakeClientOptions());
-            clientMock.SetupGet(c => c.ClientConfiguration).CallBase();
-            SetupInternalStaging(clientMock, sink, cts, scheduleDeletionOptions);
-
-            PartitionedUploader<DataLakeFileUploadOptions, PathInfo> uploader =
-                new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
-                    DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
-                    transferOptions: default,
-                    transferValidation: s_validationNone,
-                    arrayPool: testPool);
-
-            Response<PathInfo> info = await InvokeUploadAsync(uploader, content, cts, scheduleDeletionOptions);
-
-            Assert.AreEqual(s_response, info);
         }
 
         [Test]
@@ -305,8 +274,7 @@ DataLakePathScheduleDeletionOptions scheduleDeletionOptions =
         private async Task<Response<PathInfo>> InvokeUploadAsync(
             PartitionedUploader<DataLakeFileUploadOptions, PathInfo> uploader,
             Stream content,
-            CancellationTokenSource cts,
-            DataLakePathScheduleDeletionOptions scheduleDeletionOptions = null)
+            CancellationTokenSource cts)
             => await uploader.UploadInternal(
                 content,
                 expectedContentLength: default,
@@ -315,8 +283,7 @@ DataLakePathScheduleDeletionOptions scheduleDeletionOptions =
                     HttpHeaders = s_pathHttpHeaders,
                     Conditions = s_conditions,
                     Umask = s_umask,
-                    Permissions = s_permissions,
-                    ScheduleDeletionOptions = scheduleDeletionOptions ?? s_scheduleDeletionOptions
+                    Permissions = s_permissions
                 },
                 s_progress,
                 _async,
@@ -325,11 +292,8 @@ DataLakePathScheduleDeletionOptions scheduleDeletionOptions =
         private void SetupInternalStaging(
             Mock<DataLakeFileClient> clientMock,
             AppendSink sink,
-            CancellationTokenSource cts,
-            DataLakePathScheduleDeletionOptions scheduleDeletionOptions = null)
+            CancellationTokenSource cts)
         {
-            scheduleDeletionOptions ??= s_scheduleDeletionOptions;
-
             clientMock.Setup(
                 c => c.CreateInternal(
                     IsAny<PathResourceType>(),
@@ -342,8 +306,8 @@ DataLakePathScheduleDeletionOptions scheduleDeletionOptions =
                     default,
                     default,
                     default,
-                    scheduleDeletionOptions.TimeToExpire,
-                    scheduleDeletionOptions.ExpiresOn,
+                    default,
+                    default,
                     default,
                     s_conditions,
                     _async,

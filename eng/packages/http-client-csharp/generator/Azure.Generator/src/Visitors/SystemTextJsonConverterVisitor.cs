@@ -31,7 +31,7 @@ namespace Azure.Generator.Visitors
             {
                 AzureClientGenerator.Instance.AddTypeToKeep(type);
                 var serializationProvider = type.SerializationProviders[0];
-                var converter = new ConverterTypeProvider(serializationProvider, model.IsDynamicModel);
+                var converter = new ConverterTypeProvider(serializationProvider);
                 serializationProvider.Update(
                     attributes: [..serializationProvider.Attributes, new AttributeStatement(typeof(JsonConverter), TypeOf(converter.Type))],
                     nestedTypes: [..serializationProvider.NestedTypes, converter]);
@@ -43,12 +43,10 @@ namespace Azure.Generator.Visitors
         private class ConverterTypeProvider : TypeProvider
         {
             private readonly TypeProvider _serializationProvider;
-            private readonly bool _isDynamicModel;
 
-            public ConverterTypeProvider(TypeProvider serializationProvider, bool isDynamicModel)
+            public ConverterTypeProvider(TypeProvider serializationProvider)
             {
                 _serializationProvider = serializationProvider;
-                _isDynamicModel = isDynamicModel;
             }
 
             protected override string BuildRelativeFilePath() => _serializationProvider.RelativeFilePath;
@@ -106,18 +104,10 @@ namespace Azure.Generator.Visitors
                         new[]
                         {
                             UsingDeclare("document", typeof(JsonDocument), Static<JsonDocument>().Invoke(nameof(JsonDocument.ParseValue), readerParameter.AsArgument()), out var documentVariable),
-                            Return(_isDynamicModel
-                                ? Static().Invoke(
-                                    $"Deserialize{_serializationProvider.Name}",
-                                    [
-                                        documentVariable.Property(nameof(JsonDocument.RootElement)),
-                                        documentVariable.Property(nameof(JsonDocument.RootElement)).As<JsonElement>().GetUtf8Bytes(),
-                                        WireOptions
-                                    ])
-                                : Static().Invoke(
-                                    $"Deserialize{_serializationProvider.Name}",
-                                    documentVariable.Property(nameof(JsonDocument.RootElement)),
-                                    WireOptions))
+                            Return(Static().Invoke(
+                                $"Deserialize{_serializationProvider.Name}",
+                                documentVariable.Property(nameof(JsonDocument.RootElement)),
+                                WireOptions))
                         },
                     this);
             }

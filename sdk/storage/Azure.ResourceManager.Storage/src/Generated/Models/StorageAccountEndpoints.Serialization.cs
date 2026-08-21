@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Storage.Models
             Uri dfsUri = default;
             StorageAccountMicrosoftEndpoints microsoftEndpoints = default;
             StorageAccountInternetEndpoints internetEndpoints = default;
-            StorageAccountIPv6Endpoints ipv6Endpoints = default;
+            StorageAccountIPv6Endpoints iPv6Endpoints = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    ipv6Endpoints = StorageAccountIPv6Endpoints.DeserializeStorageAccountIPv6Endpoints(prop.Value, options);
+                    iPv6Endpoints = StorageAccountIPv6Endpoints.DeserializeStorageAccountIPv6Endpoints(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Storage.Models
                 dfsUri,
                 microsoftEndpoints,
                 internetEndpoints,
-                ipv6Endpoints,
+                iPv6Endpoints,
                 additionalBinaryDataProperties);
         }
     }

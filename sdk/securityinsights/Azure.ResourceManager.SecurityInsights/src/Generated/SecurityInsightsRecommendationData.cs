@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary> Id of the resource this recommendation refers to. </summary>
         [WirePath("properties.resourceId")]
-        public ResourceIdentifier ResourceId
+        public string ResourceId
         {
             get
             {

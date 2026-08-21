@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The list of IPv4 addresses that are allowed to access the workspace. </summary>
         [WirePath("properties.ipAllowlist")]
-        public IList<string> IPAllowlist
+        public IList<string> IpAllowlist
         {
             get
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     Properties = new MachineLearningWorkspacePropertiesPatch();
                 }
-                return Properties.IPAllowlist;
+                return Properties.IpAllowlist;
             }
         }
 
@@ -377,11 +377,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Gets or sets the CollectionsThroughput. </summary>
         [WirePath("properties.serviceManagedResourcesSettings.cosmosDb.collectionsThroughput")]
-        public int? ServiceManagedResourcesCosmosDBCollectionsThroughput
+        public int? ServiceManagedResourcesCosmosDbCollectionsThroughput
         {
             get
             {
-                return Properties is null ? default : Properties.ServiceManagedResourcesCosmosDBCollectionsThroughput;
+                return Properties is null ? default : Properties.ServiceManagedResourcesCosmosDbCollectionsThroughput;
             }
             set
             {
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     Properties = new MachineLearningWorkspacePropertiesPatch();
                 }
-                Properties.ServiceManagedResourcesCosmosDBCollectionsThroughput = value;
+                Properties.ServiceManagedResourcesCosmosDbCollectionsThroughput = value;
             }
         }
 

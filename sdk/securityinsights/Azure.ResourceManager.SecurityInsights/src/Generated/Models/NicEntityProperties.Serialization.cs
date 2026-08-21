@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(IPAddressEntityId))
+            if (options.Format != "W" && Optional.IsDefined(IpAddressEntityId))
             {
                 writer.WritePropertyName("ipAddressEntityId"u8);
-                writer.WriteStringValue(IPAddressEntityId);
+                writer.WriteStringValue(IpAddressEntityId);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Vlans))
             {

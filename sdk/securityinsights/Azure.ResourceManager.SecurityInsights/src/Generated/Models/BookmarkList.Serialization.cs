@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);

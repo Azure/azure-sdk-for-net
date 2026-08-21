@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 writer.WritePropertyName("dnsSettings"u8);
                 writer.WriteObjectValue(DnsSettings, options);
             }
-            if (Optional.IsCollectionDefined(IPTags))
+            if (Optional.IsCollectionDefined(IpTags))
             {
                 writer.WritePropertyName("ipTags"u8);
                 writer.WriteStartArray();
-                foreach (VirtualMachineIPTag item in IPTags)
+                foreach (VirtualMachineIpTag item in IpTags)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             int? idleTimeoutInMinutes = default;
             DeleteOptions? deleteOption = default;
             VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default;
-            IList<VirtualMachineIPTag> ipTags = default;
+            IList<VirtualMachineIpTag> ipTags = default;
             SubResource publicIPPrefix = default;
             IPVersion? publicIPAddressVersion = default;
             PublicIPAllocationMethod? publicIPAllocationMethod = default;
@@ -199,10 +199,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    List<VirtualMachineIPTag> array = new List<VirtualMachineIPTag>();
+                    List<VirtualMachineIpTag> array = new List<VirtualMachineIpTag>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineIPTag.DeserializeVirtualMachineIPTag(item, options));
+                        array.Add(VirtualMachineIpTag.DeserializeVirtualMachineIpTag(item, options));
                     }
                     ipTags = array;
                     continue;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 idleTimeoutInMinutes,
                 deleteOption,
                 dnsSettings,
-                ipTags ?? new ChangeTrackingList<VirtualMachineIPTag>(),
+                ipTags ?? new ChangeTrackingList<VirtualMachineIpTag>(),
                 publicIPPrefix,
                 publicIPAddressVersion,
                 publicIPAllocationMethod,

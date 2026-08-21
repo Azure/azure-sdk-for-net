@@ -7,7 +7,7 @@ using OpenTelemetry.Logs;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
-    internal class LogFilteringProcessor : AzureMonitorBatchLogRecordExportProcessor
+    internal class LogFilteringProcessor : BatchLogRecordExportProcessor
     {
         public LogFilteringProcessor(BaseExporter<LogRecord> exporter)
             : base(exporter)

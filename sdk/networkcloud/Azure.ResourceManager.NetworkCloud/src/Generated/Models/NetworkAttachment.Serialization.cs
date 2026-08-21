@@ -154,8 +154,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             ResourceIdentifier attachedNetworkArmId = default;
             DefaultGateway? defaultGateway = default;
             VirtualMachineIPAllocationMethod ipAllocationMethod = default;
-            string ipv4Address = default;
-            string ipv6Address = default;
+            string iPv4Address = default;
+            string iPv6Address = default;
             string macAddress = default;
             string networkAttachmentName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -182,12 +182,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (prop.NameEquals("ipv4Address"u8))
                 {
-                    ipv4Address = prop.Value.GetString();
+                    iPv4Address = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("ipv6Address"u8))
                 {
-                    ipv6Address = prop.Value.GetString();
+                    iPv6Address = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("macAddress"u8))
@@ -209,8 +209,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 attachedNetworkArmId,
                 defaultGateway,
                 ipAllocationMethod,
-                ipv4Address,
-                ipv6Address,
+                iPv4Address,
+                iPv6Address,
                 macAddress,
                 networkAttachmentName,
                 additionalBinaryDataProperties);

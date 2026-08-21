@@ -175,12 +175,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             long? timeoutInSeconds = default;
             long? syncIntervalInSeconds = default;
             OciRepositoryRef repositoryRef = default;
-            FluxLayerSelector layerSelector = default;
+            LayerSelector layerSelector = default;
             OciRepositoryVerify verify = default;
             bool? isInsecure = default;
             bool? useWorkloadIdentity = default;
             string serviceAccountName = default;
-            FluxTlsConfig tlsConfig = default;
+            TlsConfig tlsConfig = default;
             string localAuthRef = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    layerSelector = FluxLayerSelector.DeserializeFluxLayerSelector(prop.Value, options);
+                    layerSelector = LayerSelector.DeserializeLayerSelector(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("verify"u8))
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    tlsConfig = FluxTlsConfig.DeserializeFluxTlsConfig(prop.Value, options);
+                    tlsConfig = TlsConfig.DeserializeTlsConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("localAuthRef"u8))

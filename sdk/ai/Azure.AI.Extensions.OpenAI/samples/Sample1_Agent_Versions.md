@@ -58,13 +58,13 @@ await foreach (ProjectsAgentVersion oneAgentVersion in agentVersions)
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateConversation_Sync
-ConversationResource conversation
+ProjectConversation conversation
     = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateConversation_Async
-ConversationResource conversation
+ProjectConversation conversation
     = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
 ```
 

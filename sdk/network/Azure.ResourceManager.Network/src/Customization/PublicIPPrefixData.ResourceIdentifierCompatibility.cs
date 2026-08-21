@@ -3,8 +3,9 @@
 
 #nullable disable
 
-using Azure.Core;
 using Microsoft.TypeSpec.Generator.Customizations;
+
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network
 {

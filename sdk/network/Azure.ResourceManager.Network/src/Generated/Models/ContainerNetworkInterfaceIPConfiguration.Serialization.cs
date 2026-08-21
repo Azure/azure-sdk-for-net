@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            ContainerNetworkInterfaceIPConfigurationPropertiesFormat properties = default;
+            ContainerNetworkInterfaceIpConfigurationPropertiesFormat properties = default;
             string name = default;
             string @type = default;
             ETag? eTag = default;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    properties = ContainerNetworkInterfaceIPConfigurationPropertiesFormat.DeserializeContainerNetworkInterfaceIPConfigurationPropertiesFormat(prop.Value, options);
+                    properties = ContainerNetworkInterfaceIpConfigurationPropertiesFormat.DeserializeContainerNetworkInterfaceIpConfigurationPropertiesFormat(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("name"u8))

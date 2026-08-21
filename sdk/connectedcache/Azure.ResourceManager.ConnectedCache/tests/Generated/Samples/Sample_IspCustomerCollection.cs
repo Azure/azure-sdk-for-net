@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
                         ClientTenantId = "fproidkpgvpdnac",
                         IsEnterpriseManaged = true,
                         ShouldMigrate = true,
-                        ShouldResendSignupCode = true,
-                        ShouldVerifySignupCode = true,
+                        ResendSignupCode = true,
+                        VerifySignupCode = true,
                         VerifySignupPhrase = "tprjvttkgmrqlsyicnidhm",
                     },
                     AdditionalCustomerProperties = new MccCustomerAdditionalProperties

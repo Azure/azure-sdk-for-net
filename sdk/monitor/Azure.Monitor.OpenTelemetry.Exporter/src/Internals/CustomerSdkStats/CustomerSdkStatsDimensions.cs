@@ -35,19 +35,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
         /// <param name="telemetryType">The type of telemetry.</param>
         /// <param name="dropCode">The drop code (status code or error category)</param>
         /// <param name="dropReason">Optional drop reason description</param>
-        /// <param name="telemetrySuccess">Whether request or dependency telemetry succeeded</param>
         /// <returns>TagList with dropped item dimensions</returns>
-        public static TagList GetDroppedTags(TelemetryType telemetryType, string dropCode, string? dropReason = null, bool? telemetrySuccess = null)
+        public static TagList GetDroppedTags(TelemetryType telemetryType, string dropCode, string? dropReason = null)
         {
             var tags = GetBaseTags(telemetryType);
             tags.Add("dropCode", dropCode);
             if (!string.IsNullOrEmpty(dropReason))
             {
                 tags.Add("dropReason", dropReason);
-            }
-            if (telemetrySuccess.HasValue && (telemetryType == TelemetryType.Request || telemetryType == TelemetryType.Dependency))
-            {
-                tags.Add("telemetrySuccess", telemetrySuccess.Value ? "true" : "false");
             }
             return tags;
         }

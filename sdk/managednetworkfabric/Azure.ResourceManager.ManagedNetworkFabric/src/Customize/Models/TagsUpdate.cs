@@ -81,8 +81,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        // Keep the shipped new-slot virtual member instead of overriding the newly generated base member.
-        protected new virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TagsUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

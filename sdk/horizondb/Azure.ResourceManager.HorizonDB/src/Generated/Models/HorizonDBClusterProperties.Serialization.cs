@@ -236,9 +236,9 @@ namespace Azure.ResourceManager.HorizonDB.Models
             HorizonDBProvisioningState? provisioningState = default;
             HorizonDBZonePlacementPolicy? zonePlacementPolicy = default;
             HorizonDBClusterParameterGroupConnectionProperties parameterGroup = default;
-            HorizonDBClusterAuthConfig authConfig = default;
-            HorizonDBComputeModel computeModel = default;
-            HorizonDBClusterMirroring mirroring = default;
+            HorizonDbClusterAuthConfig authConfig = default;
+            HorizonDbComputeModel computeModel = default;
+            HorizonDbClusterMirroring mirroring = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    authConfig = HorizonDBClusterAuthConfig.DeserializeHorizonDBClusterAuthConfig(prop.Value, options);
+                    authConfig = HorizonDbClusterAuthConfig.DeserializeHorizonDbClusterAuthConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("computeModel"u8))
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    computeModel = HorizonDBComputeModel.DeserializeHorizonDBComputeModel(prop.Value, options);
+                    computeModel = HorizonDbComputeModel.DeserializeHorizonDbComputeModel(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("mirroring"u8))
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    mirroring = HorizonDBClusterMirroring.DeserializeHorizonDBClusterMirroring(prop.Value, options);
+                    mirroring = HorizonDbClusterMirroring.DeserializeHorizonDbClusterMirroring(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

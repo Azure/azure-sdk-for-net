@@ -7,7 +7,6 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
 using OpenAI;
@@ -19,7 +18,6 @@ namespace Azure.AI.Extensions.OpenAI;
 
 internal static partial class ResponseItemHelpers
 {
-    [Experimental("OPENAI001")]
     internal static void DeserializeItemsValue(JsonProperty property, ref IList<ResponseItem> items)
     {
         if (property.Value.ValueKind == JsonValueKind.Array)
@@ -37,7 +35,6 @@ internal static partial class ResponseItemHelpers
         }
     }
 
-    [Experimental("OPENAI001")]
     internal static void SerializeItemsValue(Utf8JsonWriter writer, IEnumerable<ResponseItem> items, ModelReaderWriterOptions options)
     {
         if (items is null)
@@ -55,7 +52,6 @@ internal static partial class ResponseItemHelpers
         }
     }
 
-    [Experimental("OPENAI001")]
     internal static BinaryContent GetItemsRequestContent(IEnumerable<ResponseItem> items)
     {
         MemoryStream memoryStream = new();
@@ -69,7 +65,6 @@ internal static partial class ResponseItemHelpers
         return BinaryContent.Create(memoryStream);
     }
 
-    [Experimental("OPENAI001")]
     internal static ResponseItem GetCopyForInput(this ResponseItem item)
     {
         BinaryData serializedItem = ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, OpenAIContext.Default);

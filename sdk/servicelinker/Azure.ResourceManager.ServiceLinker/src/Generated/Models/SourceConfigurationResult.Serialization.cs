@@ -9,63 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.ResourceManager.ServiceLinker;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> Configurations for source resource, include appSettings, connectionString and serviceBindings. </summary>
-    public partial class SourceConfigurationResult : IJsonModel<SourceConfigurationResult>
+    public partial class SourceConfigurationResult : IUtf8JsonSerializable, IJsonModel<SourceConfigurationResult>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SourceConfigurationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SourceConfigurationResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSourceConfigurationResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SourceConfigurationResult)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SourceConfigurationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SourceConfigurationResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SourceConfigurationResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SourceConfigurationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SourceConfigurationResult IPersistableModel<SourceConfigurationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SourceConfigurationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SourceConfigurationResult"/> from. </param>
-        internal static SourceConfigurationResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSourceConfigurationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SourceConfigurationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -77,30 +28,31 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SourceConfigurationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SourceConfigurationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SourceConfigurationResult)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsCollectionDefined(Configurations))
             {
                 writer.WritePropertyName("configurations"u8);
                 writer.WriteStartArray();
-                foreach (SourceConfiguration item in Configurations)
+                foreach (var item in Configurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -109,43 +61,39 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SourceConfigurationResult IJsonModel<SourceConfigurationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SourceConfigurationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SourceConfigurationResult IJsonModel<SourceConfigurationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SourceConfigurationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SourceConfigurationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SourceConfigurationResult)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSourceConfigurationResult(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SourceConfigurationResult DeserializeSourceConfigurationResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static SourceConfigurationResult DeserializeSourceConfigurationResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<SourceConfiguration> configurations = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("configurations"u8))
+                if (property.NameEquals("configurations"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SourceConfiguration> array = new List<SourceConfiguration>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(SourceConfiguration.DeserializeSourceConfiguration(item, options));
                     }
@@ -154,10 +102,42 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new SourceConfigurationResult(configurations ?? new ChangeTrackingList<SourceConfiguration>(), additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SourceConfigurationResult(configurations ?? new ChangeTrackingList<SourceConfiguration>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SourceConfigurationResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SourceConfigurationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SourceConfigurationResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SourceConfigurationResult IPersistableModel<SourceConfigurationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SourceConfigurationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeSourceConfigurationResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SourceConfigurationResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SourceConfigurationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

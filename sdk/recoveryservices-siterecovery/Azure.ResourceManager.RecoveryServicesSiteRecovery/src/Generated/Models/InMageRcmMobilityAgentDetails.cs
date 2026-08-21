@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             LastAgentReinstallType = lastAgentReinstallType;
             AgentReinstallJobId = agentReinstallJobId;
             AgentReinstallAttemptToVersion = agentReinstallAttemptToVersion;
-            OSFamilyName = osFamilyName;
+            OsFamilyName = osFamilyName;
             DistroName = distroName;
             DistroNameForWhichAgentIsInstalled = distroNameForWhichAgentIsInstalled;
             IsAgentUpgradeable = isAgentUpgradeable;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string AgentReinstallAttemptToVersion { get; }
 
         /// <summary> The OS family name. </summary>
-        public string OSFamilyName { get; }
+        public string OsFamilyName { get; }
 
         /// <summary> The distro name. </summary>
         public string DistroName { get; }

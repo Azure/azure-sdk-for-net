@@ -611,19 +611,19 @@ Several models need to be defined for different purposes:
   - `model` - the model used by Hosted Agent, for Declarative Agent, the model from definition is being used. For more information about optimizing Hosted Agents please see the [document](https://learn.microsoft.com/azure/foundry/agents/how-to/make-agent-optimizer-ready).
 
 ```C# Snippet:Sample_CreateOptimizationJob_AgentsOptimizationCandidates_Async
-AgentOptimizationJob job = new()
+OptimizationJob job = new()
 {
     Inputs = new(
-        agent: new OptimizedAgentIdentifier(agentName: agentVersion.Name)
+        agent: new OptimizationAgentIdentifier(agentName: agentVersion.Name)
         {
             AgentVersion = agentVersion.Version
         },
         trainDataset: GetDataset(0, 7),
-        evaluators: [new AgentOptimizationEvaluatorRef(name: "builtin.meteor_score")]
+        evaluators: [new OptimizationEvaluatorRef(name: "builtin.meteor_score")]
     )
     {
         ValidationDataset = GetDataset(7, 3),
-        Options = new AgentOptimizationOptions()
+        Options = new OptimizationOptions()
         {
             OptimizationModel = modelDeploymentName,
             EvalModel = modelDeploymentName,
@@ -675,14 +675,14 @@ AgentOptimizationJob job = new()
         }
     }
 };
-AgentOptimizationJob submittedJob = await jobsClient.CreateAsync(job: job, operationId: null, cancellationToken: default);
+OptimizationJob submittedJob = await jobsClient.CreateAsync(job: job, operationId: null, cancellationToken: default);
 Console.WriteLine($"Submitted optimization job: {submittedJob.Id}");
 ```
 
 After the job has completed, the optimization candidates may be listed along with the optimized parameters:
 
 ```C# Snippet:Sample_ListCandidates_AgentsOptimizationCandidates
-foreach (AgentOptimizationCandidate candidate in submittedJob.Result.Candidates)
+foreach (OptimizationCandidate candidate in submittedJob.Result.Candidates)
 {
     Console.WriteLine("======================================================");
     Console.WriteLine($"CandidateID: {candidate.CandidateId}, Candidate evaluation ID:  {candidate.EvalId}, Score: {candidate.AvgScore}.");

@@ -150,15 +150,15 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 writer.WritePropertyName("shouldMigrate"u8);
                 writer.WriteBooleanValue(ShouldMigrate.Value);
             }
-            if (Optional.IsDefined(ShouldResendSignupCode))
+            if (Optional.IsDefined(ResendSignupCode))
             {
                 writer.WritePropertyName("resendSignupCode"u8);
-                writer.WriteBooleanValue(ShouldResendSignupCode.Value);
+                writer.WriteBooleanValue(ResendSignupCode.Value);
             }
-            if (Optional.IsDefined(ShouldVerifySignupCode))
+            if (Optional.IsDefined(VerifySignupCode))
             {
                 writer.WritePropertyName("verifySignupCode"u8);
-                writer.WriteBooleanValue(ShouldVerifySignupCode.Value);
+                writer.WriteBooleanValue(VerifySignupCode.Value);
             }
             if (Optional.IsDefined(VerifySignupPhrase))
             {
@@ -222,8 +222,8 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             DateTimeOffset? lastSyncedWithAzureOn = default;
             bool? isEnterpriseManaged = default;
             bool? shouldMigrate = default;
-            bool? shouldResendSignupCode = default;
-            bool? shouldVerifySignupCode = default;
+            bool? resendSignupCode = default;
+            bool? verifySignupCode = default;
             string verifySignupPhrase = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                     {
                         continue;
                     }
-                    shouldResendSignupCode = prop.Value.GetBoolean();
+                    resendSignupCode = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("verifySignupCode"u8))
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                     {
                         continue;
                     }
-                    shouldVerifySignupCode = prop.Value.GetBoolean();
+                    verifySignupCode = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("verifySignupPhrase"u8))
@@ -375,8 +375,8 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 lastSyncedWithAzureOn,
                 isEnterpriseManaged,
                 shouldMigrate,
-                shouldResendSignupCode,
-                shouldVerifySignupCode,
+                resendSignupCode,
+                verifySignupCode,
                 verifySignupPhrase,
                 additionalBinaryDataProperties);
         }

@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             SystemData systemData = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            IPExtendedCommunityProperties properties = default;
+            IpExtendedCommunityProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    properties = IPExtendedCommunityProperties.DeserializeIPExtendedCommunityProperties(prop.Value, options);
+                    properties = IpExtendedCommunityProperties.DeserializeIpExtendedCommunityProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

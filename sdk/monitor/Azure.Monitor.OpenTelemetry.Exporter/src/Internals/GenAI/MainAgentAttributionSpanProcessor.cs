@@ -15,15 +15,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.GenAI
     /// </summary>
     internal sealed class MainAgentAttributionSpanProcessor : BaseProcessor<Activity>
     {
-        // Ordered triples: (target, primary, fallback)
-        private static readonly (string Target, string Primary, string? Fallback)[] s_attributeMappings = new[]
+        // Ordered pairs: (target, primary, fallback)
+        private static readonly (string Target, string Primary, string Fallback)[] s_attributeMappings = new[]
         {
             (MainAgentName, MainAgentName, GenAiAgentName),
             (MainAgentId, MainAgentId, GenAiAgentId),
             (MainAgentVersion, MainAgentVersion, GenAiAgentVersion),
             (MainAgentConversationId, MainAgentConversationId, GenAiConversationId),
-            (GenAiFoundryProjectId, GenAiFoundryProjectId, null),
-            (GenAiAzureAiProjectId, GenAiAzureAiProjectId, null),
         };
 
         // Ordered pairs for OnEnd self-copy: (target, source)
@@ -59,7 +57,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.GenAI
                 {
                     activity.SetTag(target, value);
                 }
-                else if (fallback != null)
+                else
                 {
                     value = parent.GetTagItem(fallback);
                     if (value != null)

@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("lastSyncTimestamp"u8);
                 writer.WriteStringValue(LastSyncedOn.Value, "O");
             }
+            if (options.Format != "W" && Optional.IsDefined(ConfidentialVmProfile))
+            {
+                writer.WritePropertyName("confidentialVmProfile"u8);
+                writer.WriteObjectValue(ConfidentialVmProfile, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,6 +139,7 @@ namespace Azure.ResourceManager.Hci.Models
             HciEdgeDeviceState? deviceState = default;
             ExtensionProfile extensionProfile = default;
             DateTimeOffset? lastSyncedOn = default;
+            ConfidentialVmProfile confidentialVmProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,12 +170,21 @@ namespace Azure.ResourceManager.Hci.Models
                     lastSyncedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (prop.NameEquals("confidentialVmProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    confidentialVmProfile = ConfidentialVmProfile.DeserializeConfidentialVmProfile(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HciEdgeDeviceReportedProperties(deviceState, extensionProfile, lastSyncedOn, additionalBinaryDataProperties);
+            return new HciEdgeDeviceReportedProperties(deviceState, extensionProfile, lastSyncedOn, confidentialVmProfile, additionalBinaryDataProperties);
         }
     }
 }

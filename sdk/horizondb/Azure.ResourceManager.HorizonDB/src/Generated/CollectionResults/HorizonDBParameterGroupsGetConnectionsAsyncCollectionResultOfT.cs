@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     yield break;
                 }
-                HorizonDBParameterGroupConnectionPropertiesListResult result = HorizonDBParameterGroupConnectionPropertiesListResult.FromResponse(response);
+                HorizonDbParameterGroupConnectionPropertiesListResult result = HorizonDbParameterGroupConnectionPropertiesListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<HorizonDBParameterGroupConnectionProperties>.FromValues((IReadOnlyList<HorizonDBParameterGroupConnectionProperties>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

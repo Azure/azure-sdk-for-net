@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sqlDbResourceId"u8);
-            writer.WriteStringValue(SqlDBResourceId);
+            writer.WriteStringValue(SqlDbResourceId);
             if (Optional.IsDefined(ReadIntent))
             {
                 writer.WritePropertyName("readIntent"u8);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             string connectionServerName = default;
             DatabaseWatcherResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ResourceIdentifier sqlDBResourceId = default;
+            ResourceIdentifier sqlDbResourceId = default;
             bool? readIntent = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                 }
                 if (prop.NameEquals("sqlDbResourceId"u8))
                 {
-                    sqlDBResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    sqlDbResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("readIntent"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                 connectionServerName,
                 provisioningState,
                 additionalBinaryDataProperties,
-                sqlDBResourceId,
+                sqlDbResourceId,
                 readIntent);
         }
     }

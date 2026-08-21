@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> NextPageToken. </summary>
         private const string NextPageTokenValue = "NextPageToken";
         /// <summary> NextPageUrl. </summary>
-        private const string NextPageUriValue = "NextPageUrl";
+        private const string NextPageUrlValue = "NextPageUrl";
         /// <summary> PersistentToken. </summary>
         private const string PersistentTokenValue = "PersistentToken";
         /// <summary> PersistentLinkHeader. </summary>
@@ -45,6 +45,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> NextPageToken. </summary>
         public static RestApiPollerRequestPagingKind NextPageToken { get; } = new RestApiPollerRequestPagingKind(NextPageTokenValue);
+
+        /// <summary> NextPageUrl. </summary>
+        public static RestApiPollerRequestPagingKind NextPageUrl { get; } = new RestApiPollerRequestPagingKind(NextPageUrlValue);
 
         /// <summary> PersistentToken. </summary>
         public static RestApiPollerRequestPagingKind PersistentToken { get; } = new RestApiPollerRequestPagingKind(PersistentTokenValue);

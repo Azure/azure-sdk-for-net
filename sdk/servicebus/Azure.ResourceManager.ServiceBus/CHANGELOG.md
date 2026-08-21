@@ -4,11 +4,11 @@
 
 ### Features Added
 
-- Added the string-valued `ServiceBusCorrelationFilter.Properties` property.
-
 ### Breaking Changes
 
-- Correlation filter application-property values now serialize as JSON strings. The previous `ApplicationProperties` property remains available as a hidden obsolete compatibility shim and converts non-string values to invariant strings.
+### Bugs Fixed
+
+### Other Changes
 
 ## 1.2.0 (2026-07-28)
 

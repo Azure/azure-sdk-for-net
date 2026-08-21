@@ -149,10 +149,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("agentReinstallAttemptToVersion"u8);
                 writer.WriteStringValue(AgentReinstallAttemptToVersion);
             }
-            if (Optional.IsDefined(OSFamilyName))
+            if (Optional.IsDefined(OsFamilyName))
             {
                 writer.WritePropertyName("osFamilyName"u8);
-                writer.WriteStringValue(OSFamilyName);
+                writer.WriteStringValue(OsFamilyName);
             }
             if (Optional.IsDefined(DistroName))
             {

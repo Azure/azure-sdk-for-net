@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.Network.Models
                     new NetworkSubResource(publicIPPrefixId, default),
                     new NetworkSubResource(gatewayLoadBalancerId, default),
                     provisioningState,
-                    new DdosFrontendIPConfigurationSettings(new NetworkSubResource(ddosCustomPolicyId, default), default),
+                    new DdosFrontendIpConfigurationSettings(new NetworkSubResource(ddosCustomPolicyId, default), default),
                     default),
                 eTag,
                 (zones ?? new ChangeTrackingList<string>()).ToList());
@@ -1007,7 +1007,7 @@ namespace Azure.ResourceManager.Network.Models
                 default,
                 name,
                 @type,
-                privateIPAddress is null && privateIPAllocationMethod is null && subnet is null && primary is null && provisioningState is null && privateIPAddressVersion is null ? default : new PrivateLinkServiceIPConfigurationProperties(
+                privateIPAddress is null && privateIPAllocationMethod is null && subnet is null && primary is null && provisioningState is null && privateIPAddressVersion is null ? default : new PrivateLinkServiceIpConfigurationProperties(
                     privateIPAddress,
                     privateIPAllocationMethod,
                     subnet,
@@ -2225,7 +2225,7 @@ namespace Azure.ResourceManager.Network.Models
                 default,
                 name,
                 @type,
-                privateIPAddress is null && privateIPAllocationMethod is null && subnetId is null && primary is null && provisioningState is null ? default : new ApplicationGatewayPrivateLinkIPConfigurationProperties(
+                privateIPAddress is null && privateIPAllocationMethod is null && subnetId is null && primary is null && provisioningState is null ? default : new ApplicationGatewayPrivateLinkIpConfigurationProperties(
                     privateIPAddress,
                     privateIPAllocationMethod,
                     new NetworkSubResource(subnetId, default),
@@ -4930,7 +4930,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                subnetId is null && virtualNetworkId is null && ipAllocationType is null && prefix is null && prefixLength is null && prefixType is null && ipamAllocationId is null && allocationTags is null ? default : new IPAllocationPropertiesFormat(
+                subnetId is null && virtualNetworkId is null && ipAllocationType is null && prefix is null && prefixLength is null && prefixType is null && ipamAllocationId is null && allocationTags is null ? default : new IpAllocationPropertiesFormat(
                     new NetworkSubResource(subnetId, default),
                     new NetworkSubResource(virtualNetworkId, default),
                     ipAllocationType,
@@ -4964,7 +4964,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                provisioningState is null && ipAddresses is null && firewalls is null && firewallPolicies is null ? default : new IPGroupPropertiesFormat(provisioningState, (ipAddresses ?? new ChangeTrackingList<string>()).ToList(), (firewalls ?? new ChangeTrackingList<WritableSubResource>()).ToList(), (firewallPolicies ?? new ChangeTrackingList<WritableSubResource>()).ToList(), default),
+                provisioningState is null && ipAddresses is null && firewalls is null && firewallPolicies is null ? default : new IpGroupPropertiesFormat(provisioningState, (ipAddresses ?? new ChangeTrackingList<string>()).ToList(), (firewalls ?? new ChangeTrackingList<WritableSubResource>()).ToList(), (firewallPolicies ?? new ChangeTrackingList<WritableSubResource>()).ToList(), default),
                 eTag);
         }
 
@@ -5675,7 +5675,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.ContainerNetworkInterfaceIPConfiguration"/> instance for mocking. </returns>
         public static ContainerNetworkInterfaceIPConfiguration ContainerNetworkInterfaceIPConfiguration(NetworkProvisioningState? provisioningState = default, string name = default, string @type = default, ETag? eTag = default)
         {
-            return new ContainerNetworkInterfaceIPConfiguration(provisioningState is null ? default : new ContainerNetworkInterfaceIPConfigurationPropertiesFormat(provisioningState, default), name, @type, eTag, default);
+            return new ContainerNetworkInterfaceIPConfiguration(provisioningState is null ? default : new ContainerNetworkInterfaceIpConfigurationPropertiesFormat(provisioningState, default), name, @type, eTag, default);
         }
 
         /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
@@ -9599,7 +9599,7 @@ namespace Azure.ResourceManager.Network.Models
                 default,
                 name,
                 @type,
-                privateIPAddress is null && privateIPAllocationMethod is null && primary is null && provisioningState is null && privateIPAddressVersion is null ? default : new VirtualNetworkApplianceIPConfigurationProperties(
+                privateIPAddress is null && privateIPAllocationMethod is null && primary is null && provisioningState is null && privateIPAddressVersion is null ? default : new VirtualNetworkApplianceIpConfigurationProperties(
                     privateIPAddress,
                     privateIPAllocationMethod,
                     primary,
@@ -9955,7 +9955,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                asn is null && cidr is null && signedMessage is null && authorizationMessage is null && customIpPrefixParent is null && childCustomIpPrefixes is null && commissionedState is null && expressRouteAdvertise is null && geo is null && noInternetAdvertise is null && prefixType is null && publicIpPrefixes is null && resourceGuid is null && failedReason is null && provisioningState is null ? default : new CustomIPPrefixPropertiesFormat(
+                asn is null && cidr is null && signedMessage is null && authorizationMessage is null && customIpPrefixParent is null && childCustomIpPrefixes is null && commissionedState is null && expressRouteAdvertise is null && geo is null && noInternetAdvertise is null && prefixType is null && publicIpPrefixes is null && resourceGuid is null && failedReason is null && provisioningState is null ? default : new CustomIpPrefixPropertiesFormat(
                     asn,
                     cidr,
                     signedMessage,
@@ -13113,7 +13113,7 @@ namespace Azure.ResourceManager.Network.Models
                 default,
                 name,
                 default,
-                privateIPAddress is null && privateIPAllocationMethod is null && subnet is null && primary is null && provisioningState is null && privateIPAddressVersion is null ? default : new PrivateLinkServiceIPConfigurationProperties(
+                privateIPAddress is null && privateIPAllocationMethod is null && subnet is null && primary is null && provisioningState is null && privateIPAddressVersion is null ? default : new PrivateLinkServiceIpConfigurationProperties(
                     privateIPAddress,
                     privateIPAllocationMethod,
                     subnet,
@@ -14093,7 +14093,7 @@ namespace Azure.ResourceManager.Network.Models
                 default,
                 name,
                 default,
-                privateIPAddress is null && privateIPAllocationMethod is null && subnetId is null && provisioningState is null ? default : new ApplicationGatewayPrivateLinkIPConfigurationProperties(
+                privateIPAddress is null && privateIPAllocationMethod is null && subnetId is null && provisioningState is null ? default : new ApplicationGatewayPrivateLinkIpConfigurationProperties(
                     privateIPAddress,
                     privateIPAllocationMethod,
                     new NetworkSubResource(subnetId, default),
@@ -14615,7 +14615,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                asn is null && cidr is null && signedMessage is null && authorizationMessage is null && commissionedState is null && expressRouteAdvertise is null && geo is null && noInternetAdvertise is null && prefixType is null && resourceGuid is null && failedReason is null && provisioningState is null ? default : new CustomIPPrefixPropertiesFormat(
+                asn is null && cidr is null && signedMessage is null && authorizationMessage is null && commissionedState is null && expressRouteAdvertise is null && geo is null && noInternetAdvertise is null && prefixType is null && resourceGuid is null && failedReason is null && provisioningState is null ? default : new CustomIpPrefixPropertiesFormat(
                     asn,
                     cidr,
                     signedMessage,
@@ -15433,7 +15433,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                subnetId is null && virtualNetworkId is null && ipAllocationType is null && prefix is null && prefixLength is null && prefixType is null && ipamAllocationId is null && allocationTags is null ? default : new IPAllocationPropertiesFormat(
+                subnetId is null && virtualNetworkId is null && ipAllocationType is null && prefix is null && prefixLength is null && prefixType is null && ipamAllocationId is null && allocationTags is null ? default : new IpAllocationPropertiesFormat(
                     new NetworkSubResource(subnetId, default),
                     new NetworkSubResource(virtualNetworkId, default),
                     ipAllocationType,
@@ -15467,7 +15467,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                provisioningState is null && ipAddresses is null && firewalls is null && firewallPolicies is null ? default : new IPGroupPropertiesFormat(provisioningState, (ipAddresses ?? new ChangeTrackingList<string>()).ToList(), (firewalls ?? new ChangeTrackingList<WritableSubResource>()).ToList(), (firewallPolicies ?? new ChangeTrackingList<WritableSubResource>()).ToList(), default),
+                provisioningState is null && ipAddresses is null && firewalls is null && firewallPolicies is null ? default : new IpGroupPropertiesFormat(provisioningState, (ipAddresses ?? new ChangeTrackingList<string>()).ToList(), (firewalls ?? new ChangeTrackingList<WritableSubResource>()).ToList(), (firewallPolicies ?? new ChangeTrackingList<WritableSubResource>()).ToList(), default),
                 etag);
         }
 
@@ -16218,7 +16218,7 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerNetworkInterfaceIPConfiguration ContainerNetworkInterfaceIPConfiguration(string name = default, string containerNetworkInterfaceIPConfigurationType = default, ETag? etag = default, NetworkProvisioningState? provisioningState = default)
         {
-            return new ContainerNetworkInterfaceIPConfiguration(provisioningState is null ? default : new ContainerNetworkInterfaceIPConfigurationPropertiesFormat(provisioningState, default), name, default, etag, default);
+            return new ContainerNetworkInterfaceIPConfiguration(provisioningState is null ? default : new ContainerNetworkInterfaceIpConfigurationPropertiesFormat(provisioningState, default), name, default, etag, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Network.NetworkSecurityPerimeterData"/>. </summary>
@@ -17127,7 +17127,7 @@ namespace Azure.ResourceManager.Network.Models
                 default,
                 name,
                 default,
-                privateIPAddress is null && privateIPAllocationMethod is null && primary is null && provisioningState is null && privateIPAddressVersion is null ? default : new VirtualNetworkApplianceIPConfigurationProperties(
+                privateIPAddress is null && privateIPAllocationMethod is null && primary is null && provisioningState is null && privateIPAddressVersion is null ? default : new VirtualNetworkApplianceIpConfigurationProperties(
                     privateIPAddress,
                     privateIPAllocationMethod,
                     primary,

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal EnrichmentIPAddressContent(string ipAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IPAddress = ipAddress;
+            IpAddress = ipAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The dotted-decimal or colon-separated string representation of the IP address. </summary>
         [WirePath("ipAddress")]
-        public string IPAddress { get; set; }
+        public string IpAddress { get; set; }
     }
 }

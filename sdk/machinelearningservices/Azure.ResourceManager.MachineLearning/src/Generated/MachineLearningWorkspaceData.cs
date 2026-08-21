@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary> The list of IPv4  addresses that are allowed to access the workspace. </summary>
         [WirePath("properties.ipAllowlist")]
-        public IList<string> IPAllowlist
+        public IList<string> IpAllowlist
         {
             get
             {
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     Properties = new WorkspaceProperties();
                 }
-                return Properties.IPAllowlist;
+                return Properties.IpAllowlist;
             }
         }
 
@@ -728,11 +728,11 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary> Gets or sets the CollectionsThroughput. </summary>
         [WirePath("properties.serviceManagedResourcesSettings.cosmosDb.collectionsThroughput")]
-        public int? ServiceManagedResourcesCosmosDBCollectionsThroughput
+        public int? ServiceManagedResourcesCosmosDbCollectionsThroughput
         {
             get
             {
-                return Properties is null ? default : Properties.ServiceManagedResourcesCosmosDBCollectionsThroughput;
+                return Properties is null ? default : Properties.ServiceManagedResourcesCosmosDbCollectionsThroughput;
             }
             set
             {
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     Properties = new WorkspaceProperties();
                 }
-                Properties.ServiceManagedResourcesCosmosDBCollectionsThroughput = value;
+                Properties.ServiceManagedResourcesCosmosDbCollectionsThroughput = value;
             }
         }
     }

@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("scaleUnits"u8);
                 writer.WriteNumberValue(ScaleUnits.Value);
             }
-            if (Optional.IsDefined(PublicIPAddressId))
+            if (Optional.IsDefined(PublicIpAddressId))
             {
                 writer.WritePropertyName("publicIpAddressId"u8);
-                writer.WriteStringValue(PublicIPAddressId);
+                writer.WriteStringValue(PublicIpAddressId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ResourceIdentifier bastionId = default;
             ManagedClusterBastionSku? sku = default;
             int? scaleUnits = default;
-            ResourceIdentifier publicIPAddressId = default;
+            ResourceIdentifier publicIpAddressId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    publicIPAddressId = new ResourceIdentifier(prop.Value.GetString());
+                    publicIpAddressId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 bastionId,
                 sku,
                 scaleUnits,
-                publicIPAddressId,
+                publicIpAddressId,
                 additionalBinaryDataProperties);
         }
     }
