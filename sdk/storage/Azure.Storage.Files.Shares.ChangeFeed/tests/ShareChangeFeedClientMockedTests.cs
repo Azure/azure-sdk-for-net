@@ -325,6 +325,69 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Assert.IsEmpty(collected);
         }
 
+        // ---------- CancellationToken is honored while enumerating ----------
+
+        /// <summary>
+        /// Enumerating <see cref="ShareChangeFeedClient.GetChangesAsync()"/> with an
+        /// already-cancelled token must throw <see cref="OperationCanceledException"/> promptly
+        /// instead of running the pageable to completion. The mock throws when the cancelled
+        /// token reaches the first internal I/O call (container discovery), proving the token
+        /// is threaded through <c>AsPages</c> rather than being replaced with <c>default</c>.
+        /// </summary>
+        [Test]
+        public void GetChangesAsync_AlreadyCancelledToken_ThrowsPromptly()
+        {
+            if (!IsAsync)
+            {
+                Assert.Ignore("WithCancellation cancellation propagation applies to the async pageable path.");
+            }
+
+            Harness h = Harness.Create(this);
+
+            // When the cancelled token reaches the first I/O (container discovery), throw.
+            h.ShareClient
+                .Setup(c => c.GetPropertiesAsync(It.Is<CancellationToken>(t => t.IsCancellationRequested)))
+                .ThrowsAsync(new OperationCanceledException());
+
+            using CancellationTokenSource cts = new CancellationTokenSource();
+            cts.Cancel();
+
+            Assert.CatchAsync<OperationCanceledException>(async () =>
+            {
+                await foreach (ShareChangeFeedEvent _ in h.Client.GetChangesAsync().WithCancellation(cts.Token))
+                { }
+            });
+        }
+
+        /// <summary>
+        /// Same guarantee for the snapshot (GetChangesBetweenSnapshots) async pageable path.
+        /// </summary>
+        [Test]
+        public void GetChangesBetweenSnapshotsAsync_AlreadyCancelledToken_ThrowsPromptly()
+        {
+            if (!IsAsync)
+            {
+                Assert.Ignore("WithCancellation cancellation propagation applies to the async pageable path.");
+            }
+
+            const string beginSnap = "2024-01-15T08:00:00.0000000Z";
+            const string endSnap = "2024-01-15T09:00:00.0000000Z";
+            Harness h = Harness.Create(this);
+
+            h.ShareClient
+                .Setup(c => c.GetPropertiesAsync(It.Is<CancellationToken>(t => t.IsCancellationRequested)))
+                .ThrowsAsync(new OperationCanceledException());
+
+            using CancellationTokenSource cts = new CancellationTokenSource();
+            cts.Cancel();
+
+            Assert.CatchAsync<OperationCanceledException>(async () =>
+            {
+                await foreach (ShareChangeFeedEvent _ in h.Client.GetChangesBetweenSnapshotsAsync(beginSnap, endSnap).WithCancellation(cts.Token))
+                { }
+            });
+        }
+
         /// <summary>
         /// Set of helpers that wires <see cref="ShareChangeFeedClient"/> together with mocked
         /// share/blob clients so end-to-end pipelines can be exercised without service traffic.
