@@ -18,24 +18,6 @@ namespace Azure.Generator.Tests.Visitors
     public class StreamingResponseVisitorTests
     {
         [Test]
-        public void WrapsAzureResponseForStreamingReturnType()
-        {
-            MockHelpers.LoadMockGenerator();
-            var response = new VariableExpression(typeof(Response), "response");
-            var expression = CreateInvocation(
-                "ArbitraryFactoryName",
-                typeof(BinaryData),
-                response);
-
-            new TestStreamingResponseVisitor().Visit(expression, CreateMethod(CreateStreamingResponseType()));
-
-            var wrappedResponse = (expression.Arguments[0] as ScopedApi)?.Original as NewInstanceExpression;
-            Assert.IsNotNull(wrappedResponse);
-            Assert.AreEqual(typeof(AzurePipelineResponse), wrappedResponse!.Type?.FrameworkType);
-            Assert.AreSame(response, wrappedResponse.Parameters[0]);
-        }
-
-        [Test]
         public void TransfersHttpMessageContentForStreamingReturnType()
         {
             MockHelpers.LoadMockGenerator();
@@ -56,8 +38,7 @@ namespace Azure.Generator.Tests.Visitors
             var wrappedResponse = (expression.Arguments[0] as ScopedApi)?.Original as NewInstanceExpression;
             Assert.IsNotNull(wrappedResponse);
             Assert.AreEqual(typeof(AzurePipelineResponse), wrappedResponse!.Type?.FrameworkType);
-            Assert.AreSame(response, wrappedResponse.Parameters[0]);
-            Assert.AreSame(message, wrappedResponse.Parameters[1]);
+            Assert.AreSame(message, wrappedResponse.Parameters[0]);
         }
 
         [Test]

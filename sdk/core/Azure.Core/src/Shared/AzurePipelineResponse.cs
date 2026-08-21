@@ -14,23 +14,15 @@ namespace Azure.Core
 {
     internal sealed class AzurePipelineResponse : PipelineResponse
     {
-        private readonly Response? _response;
         private readonly PipelineResponseHeaders _headers;
         private readonly int _status;
         private readonly string _reasonPhrase;
         private Stream? _contentStream;
 
-        internal AzurePipelineResponse(Response response)
+        internal AzurePipelineResponse(HttpMessage message)
         {
-            _response = response;
+            Response response = message.Response;
             _headers = new AzurePipelineResponseHeaders(response.Headers);
-            _status = response.Status;
-            _reasonPhrase = response.ReasonPhrase;
-        }
-
-        internal AzurePipelineResponse(Response response, HttpMessage message)
-        {
-            _headers = new AzurePipelineResponseHeaders(response.Headers, snapshot: true);
             _status = response.Status;
             _reasonPhrase = response.ReasonPhrase;
             _contentStream = message.ExtractResponseContent();
@@ -44,22 +36,12 @@ namespace Azure.Core
 
         public override Stream? ContentStream
         {
-            get => _response?.ContentStream ?? _contentStream;
-            set
-            {
-                if (_response is not null)
-                {
-                    _response.ContentStream = value;
-                }
-                else
-                {
-                    _contentStream = value;
-                }
-            }
+            get => _contentStream;
+            set => _contentStream = value;
         }
 
         public override BinaryData Content
-            => _response?.Content ?? _contentStream switch
+            => _contentStream switch
             {
                 MemoryStream content => new BinaryData(content.ToArray()),
                 null => BinaryData.Empty,
@@ -120,15 +102,8 @@ namespace Azure.Core
 
         public override void Dispose()
         {
-            if (_response is not null)
-            {
-                _response.Dispose();
-            }
-            else
-            {
-                _contentStream?.Dispose();
-                _contentStream = null;
-            }
+            _contentStream?.Dispose();
+            _contentStream = null;
         }
 
         private static void CopyTo(Stream source, Stream destination, CancellationToken cancellationToken)
@@ -149,19 +124,12 @@ namespace Azure.Core
 
         private sealed class AzurePipelineResponseHeaders : PipelineResponseHeaders
         {
-            private readonly ResponseHeaders? _headers;
-            private readonly Dictionary<string, string>? _headerValues;
-            private readonly Dictionary<string, IEnumerable<string>>? _headerValueCollections;
-            private readonly List<KeyValuePair<string, string>>? _headerList;
+            private readonly Dictionary<string, string> _headerValues;
+            private readonly Dictionary<string, IEnumerable<string>> _headerValueCollections;
+            private readonly List<KeyValuePair<string, string>> _headerList;
 
-            internal AzurePipelineResponseHeaders(ResponseHeaders headers, bool snapshot = false)
+            internal AzurePipelineResponseHeaders(ResponseHeaders headers)
             {
-                if (!snapshot)
-                {
-                    _headers = headers;
-                    return;
-                }
-
                 _headerValues = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
                 _headerValueCollections = new Dictionary<string, IEnumerable<string>>(StringComparer.OrdinalIgnoreCase);
                 _headerList = new List<KeyValuePair<string, string>>();
@@ -177,30 +145,16 @@ namespace Azure.Core
             }
 
             public override bool TryGetValue(string name, out string? value)
-                => _headers is ResponseHeaders headers
-                    ? headers.TryGetValue(name, out value)
-                    : _headerValues!.TryGetValue(name, out value);
+                => _headerValues.TryGetValue(name, out value);
 
             public override bool TryGetValues(string name, out IEnumerable<string>? values)
-                => _headers is ResponseHeaders headers
-                    ? headers.TryGetValues(name, out values)
-                    : _headerValueCollections!.TryGetValue(name, out values);
+                => _headerValueCollections.TryGetValue(name, out values);
 
             public override IEnumerator<KeyValuePair<string, string>> GetEnumerator()
             {
-                if (_headers is not null)
+                foreach (KeyValuePair<string, string> header in _headerList)
                 {
-                    foreach (HttpHeader header in _headers)
-                    {
-                        yield return new KeyValuePair<string, string>(header.Name, header.Value);
-                    }
-                }
-                else
-                {
-                    foreach (KeyValuePair<string, string> header in _headerList!)
-                    {
-                        yield return header;
-                    }
+                    yield return header;
                 }
             }
         }

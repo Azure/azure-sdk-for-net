@@ -24,10 +24,8 @@ namespace Azure.Generator.Visitors
             {
                 var arguments = expression.Arguments.ToList();
                 var response = arguments[0];
-                var message = FindHttpMessage(response);
-                arguments[0] = message is null
-                    ? New.Instance<AzurePipelineResponse>(response)
-                    : New.Instance<AzurePipelineResponse>(response, message);
+                var message = FindHttpMessage(response)!;
+                arguments[0] = New.Instance<AzurePipelineResponse>(message);
                 expression.Update(arguments: arguments);
                 return expression;
             }

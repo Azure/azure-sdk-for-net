@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Moq;
+using Moq.Protected;
 using NUnit.Framework;
 
 namespace Azure.Generator.Tests.Primitives
@@ -14,39 +16,27 @@ namespace Azure.Generator.Tests.Primitives
     public class AzurePipelineResponseTests
     {
         [Test]
-        public void DisposeDelegatesToAzureResponse()
-        {
-            var response = new Mock<Response>();
-            var pipelineResponse = new AzurePipelineResponse(response.Object);
-
-            pipelineResponse.Dispose();
-
-            response.Verify(r => r.Dispose(), Times.Once);
-        }
-
-        [Test]
-        public void DetachedResponseSurvivesHttpMessageDisposal()
+        public void ResponseSurvivesHttpMessageDisposal()
         {
             var response = new Mock<Response> { CallBase = true };
             response.SetupGet(r => r.Status).Returns(200);
             response.SetupGet(r => r.ReasonPhrase).Returns("OK");
+            response.Protected()
+                .Setup<IEnumerable<HttpHeader>>("EnumerateHeaders")
+                .Returns([new HttpHeader("x-test", "value")]);
             var networkStream = new TrackingStream([1, 2, 3]);
             response.SetupProperty(r => r.ContentStream, networkStream);
-            using var message = new HttpMessage(new Mock<Request>().Object, new Mock<ResponseClassifier>().Object)
-            {
-                Response = response.Object
-            };
-            var pipelineResponse = new AzurePipelineResponse(response.Object, message);
+            using var message = CreateMessage(response.Object);
+            using var pipelineResponse = new AzurePipelineResponse(message);
 
             message.Dispose();
 
             Assert.AreEqual(200, pipelineResponse.Status);
             Assert.AreEqual("OK", pipelineResponse.ReasonPhrase);
+            Assert.IsTrue(pipelineResponse.Headers.TryGetValue("x-test", out string? headerValue));
+            Assert.AreEqual("value", headerValue);
             Assert.AreSame(networkStream, pipelineResponse.ContentStream);
             Assert.IsFalse(networkStream.IsDisposed);
-
-            pipelineResponse.Dispose();
-            Assert.IsTrue(networkStream.IsDisposed);
         }
 
         [Test]
@@ -55,13 +45,15 @@ namespace Azure.Generator.Tests.Primitives
             var response = new Mock<Response> { CallBase = true };
             var networkStream = new TrackingStream([1, 2, 3]);
             response.SetupProperty(r => r.ContentStream, networkStream);
-            var pipelineResponse = new AzurePipelineResponse(response.Object);
+            using var message = CreateMessage(response.Object);
+            using var pipelineResponse = new AzurePipelineResponse(message);
+            message.Dispose();
 
             BinaryData content = pipelineResponse.BufferContent();
 
             Assert.IsTrue(networkStream.IsDisposed);
             Assert.AreEqual(new byte[] { 1, 2, 3 }, content.ToArray());
-            Assert.IsInstanceOf<MemoryStream>(response.Object.ContentStream);
+            Assert.IsInstanceOf<MemoryStream>(pipelineResponse.ContentStream);
         }
 
         [Test]
@@ -70,10 +62,13 @@ namespace Azure.Generator.Tests.Primitives
             var response = new Mock<Response> { CallBase = true };
             var networkStream = new TrackingStream([1, 2, 3]);
             response.SetupProperty(r => r.ContentStream, networkStream);
-            var pipelineResponse = new AzurePipelineResponse(response.Object);
+            using var message = CreateMessage(response.Object);
+            using var pipelineResponse = new AzurePipelineResponse(message);
+            message.Dispose();
             var cancellationToken = new CancellationToken(canceled: true);
 
             Assert.Throws<OperationCanceledException>(() => pipelineResponse.BufferContent(cancellationToken));
+            Assert.IsFalse(networkStream.IsDisposed);
         }
 
         [Test]
@@ -82,14 +77,38 @@ namespace Azure.Generator.Tests.Primitives
             var response = new Mock<Response> { CallBase = true };
             var networkStream = new TrackingStream([1, 2, 3]);
             response.SetupProperty(r => r.ContentStream, networkStream);
-            var pipelineResponse = new AzurePipelineResponse(response.Object);
+            using var message = CreateMessage(response.Object);
+            using var pipelineResponse = new AzurePipelineResponse(message);
+            message.Dispose();
 
             BinaryData content = await pipelineResponse.BufferContentAsync();
 
             Assert.IsTrue(networkStream.IsDisposed);
             Assert.AreEqual(new byte[] { 1, 2, 3 }, content.ToArray());
-            Assert.IsInstanceOf<MemoryStream>(response.Object.ContentStream);
+            Assert.IsInstanceOf<MemoryStream>(pipelineResponse.ContentStream);
         }
+
+        [Test]
+        public void DisposeDisposesExtractedStreamOnce()
+        {
+            var response = new Mock<Response> { CallBase = true };
+            var networkStream = new TrackingStream([1, 2, 3]);
+            response.SetupProperty(r => r.ContentStream, networkStream);
+            using var message = CreateMessage(response.Object);
+            var pipelineResponse = new AzurePipelineResponse(message);
+            message.Dispose();
+
+            pipelineResponse.Dispose();
+            pipelineResponse.Dispose();
+
+            Assert.AreEqual(1, networkStream.DisposeCount);
+        }
+
+        private static HttpMessage CreateMessage(Response response)
+            => new(new Mock<Request>().Object, new Mock<ResponseClassifier>().Object)
+            {
+                Response = response
+            };
 
         private sealed class TrackingStream : Stream
         {
@@ -100,7 +119,9 @@ namespace Azure.Generator.Tests.Primitives
                 _inner = new MemoryStream(content);
             }
 
-            public bool IsDisposed { get; private set; }
+            public bool IsDisposed => DisposeCount > 0;
+
+            public int DisposeCount { get; private set; }
 
             public override bool CanRead => _inner.CanRead;
             public override bool CanSeek => _inner.CanSeek;
@@ -131,7 +152,7 @@ namespace Azure.Generator.Tests.Primitives
             {
                 if (disposing)
                 {
-                    IsDisposed = true;
+                    DisposeCount++;
                     _inner.Dispose();
                 }
 
