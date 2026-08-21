@@ -150,6 +150,18 @@ namespace Azure.Core.TestFramework.Tests
         }
 
         [Test]
+        public void ListenerThrowsWhenStopEventHasNoMatchingScope()
+        {
+            using var listener = new ClientDiagnosticListener(s => s == "Azure.Core.Tests.Fake", asyncLocal: true);
+            using var source = new DiagnosticListener("Azure.Core.Tests.Fake");
+
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(
+                () => source.Write("FakeClient.FakeMethod.Stop", null));
+
+            StringAssert.Contains("was not started", ex.Message);
+        }
+
+        [Test]
         public async Task DirectListenerCapturesAsyncEnumerableScope()
         {
             using var listener = new ClientDiagnosticListener(s => s.StartsWith("Azure."), asyncLocal: true);
