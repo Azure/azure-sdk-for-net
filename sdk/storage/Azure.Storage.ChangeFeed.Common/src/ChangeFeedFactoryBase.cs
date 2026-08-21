@@ -173,7 +173,7 @@ namespace Azure.Storage.ChangeFeed.Common
                 changeFeedContainerExists = _containerClient.Exists(cancellationToken: cancellationToken);
 
             if (!changeFeedContainerExists)
-                throw new ArgumentException("Change Feed hasn't been enabled on this account, or is currently being enabled.");
+                throw ChangeFeedErrors.ChangeFeedNotEnabled();
 
             DateTimeOffset? lastConsumableNullable = await GetLastConsumableInternal(
                 _containerClient,
@@ -206,7 +206,8 @@ namespace Azure.Storage.ChangeFeed.Common
                     years.Dequeue();
             }
 
-            if (years.Count == 0) return ChangeFeedBase<TEvent>.Empty();
+            if (years.Count == 0)
+                return ChangeFeedBase<TEvent>.Empty();
 
             // When _includeNonFinalizedEvents is true, do not cap segment enumeration at the
             // last consumable watermark — pass the user's endTime through directly.
@@ -245,7 +246,6 @@ namespace Azure.Storage.ChangeFeed.Common
                 startTime,
                 endTime,
                 _config,
-                _includeNonFinalizedEvents,
                 disableEventTimeFilter);
         }
 

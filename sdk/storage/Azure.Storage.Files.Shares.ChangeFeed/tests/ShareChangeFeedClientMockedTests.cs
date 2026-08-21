@@ -29,7 +29,6 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
     public class ShareChangeFeedClientMockedTests : ShareChangeFeedTestBase
     {
         private const string ContainerName = "$fileschangefeed-testguid";
-        private const string ContainerNameStripped = "fileschangefeed-testguid";
 
         public ShareChangeFeedClientMockedTests(bool async, ShareClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null)
@@ -49,6 +48,26 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 : h.Client.GetLastConsumable();
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public async Task ContainerResolution_PreservesLeadingDollarSign()
+        {
+            Harness h = Harness.Create(this);
+
+            if (IsAsync)
+            {
+                await h.Client.GetLastConsumableAsync();
+            }
+            else
+            {
+                h.Client.GetLastConsumable();
+            }
+
+            // The discovered container name ($fileschangefeed-<guid>) must be used verbatim;
+            // stripping the leading $ resolves a non-existent container and fails with ContainerNotFound.
+            h.BlobServiceClient.Verify(s => s.GetBlobContainerClient(ContainerName), Times.Once);
+            h.BlobServiceClient.Verify(s => s.GetBlobContainerClient(It.Is<string>(n => !n.StartsWith("$", StringComparison.Ordinal))), Times.Never);
         }
 
         [Test]
@@ -306,6 +325,69 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Assert.IsEmpty(collected);
         }
 
+        // ---------- CancellationToken is honored while enumerating ----------
+
+        /// <summary>
+        /// Enumerating <see cref="ShareChangeFeedClient.GetChangesAsync()"/> with an
+        /// already-cancelled token must throw <see cref="OperationCanceledException"/> promptly
+        /// instead of running the pageable to completion. The mock throws when the cancelled
+        /// token reaches the first internal I/O call (container discovery), proving the token
+        /// is threaded through <c>AsPages</c> rather than being replaced with <c>default</c>.
+        /// </summary>
+        [Test]
+        public void GetChangesAsync_AlreadyCancelledToken_ThrowsPromptly()
+        {
+            if (!IsAsync)
+            {
+                Assert.Ignore("WithCancellation cancellation propagation applies to the async pageable path.");
+            }
+
+            Harness h = Harness.Create(this);
+
+            // When the cancelled token reaches the first I/O (container discovery), throw.
+            h.ShareClient
+                .Setup(c => c.GetPropertiesAsync(It.Is<CancellationToken>(t => t.IsCancellationRequested)))
+                .ThrowsAsync(new OperationCanceledException());
+
+            using CancellationTokenSource cts = new CancellationTokenSource();
+            cts.Cancel();
+
+            Assert.CatchAsync<OperationCanceledException>(async () =>
+            {
+                await foreach (ShareChangeFeedEvent _ in h.Client.GetChangesAsync().WithCancellation(cts.Token))
+                { }
+            });
+        }
+
+        /// <summary>
+        /// Same guarantee for the snapshot (GetChangesBetweenSnapshots) async pageable path.
+        /// </summary>
+        [Test]
+        public void GetChangesBetweenSnapshotsAsync_AlreadyCancelledToken_ThrowsPromptly()
+        {
+            if (!IsAsync)
+            {
+                Assert.Ignore("WithCancellation cancellation propagation applies to the async pageable path.");
+            }
+
+            const string beginSnap = "2024-01-15T08:00:00.0000000Z";
+            const string endSnap = "2024-01-15T09:00:00.0000000Z";
+            Harness h = Harness.Create(this);
+
+            h.ShareClient
+                .Setup(c => c.GetPropertiesAsync(It.Is<CancellationToken>(t => t.IsCancellationRequested)))
+                .ThrowsAsync(new OperationCanceledException());
+
+            using CancellationTokenSource cts = new CancellationTokenSource();
+            cts.Cancel();
+
+            Assert.CatchAsync<OperationCanceledException>(async () =>
+            {
+                await foreach (ShareChangeFeedEvent _ in h.Client.GetChangesBetweenSnapshotsAsync(beginSnap, endSnap).WithCancellation(cts.Token))
+                { }
+            });
+        }
+
         /// <summary>
         /// Set of helpers that wires <see cref="ShareChangeFeedClient"/> together with mocked
         /// share/blob clients so end-to-end pipelines can be exercised without service traffic.
@@ -335,7 +417,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 h.ShareClient.Setup(c => c.GetProperties(It.IsAny<CancellationToken>())).Returns(propResp);
 
                 h.Container = new Mock<BlobContainerClient>(MockBehavior.Loose);
-                h.Container.Setup(c => c.Uri).Returns(new Uri($"https://account.blob.core.windows.net/{ContainerNameStripped}"));
+                h.Container.Setup(c => c.Uri).Returns(new Uri($"https://account.blob.core.windows.net/{ContainerName}"));
                 h.Container.Setup(c => c.ExistsAsync(It.IsAny<CancellationToken>())).ReturnsAsync(Response.FromValue(true, null));
                 h.Container.Setup(c => c.Exists(It.IsAny<CancellationToken>())).Returns(Response.FromValue(true, null));
 
@@ -393,7 +475,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                     .Returns(EmptySyncPageable());
 
                 h.BlobServiceClient = new Mock<BlobServiceClient>(MockBehavior.Loose);
-                h.BlobServiceClient.Setup(s => s.GetBlobContainerClient(ContainerNameStripped)).Returns(h.Container.Object);
+                // The leading $ must be preserved: the real container is named $fileschangefeed-<guid>.
+                h.BlobServiceClient.Setup(s => s.GetBlobContainerClient(ContainerName)).Returns(h.Container.Object);
 
                 h.Client = new ShareChangeFeedClient(
                     h.BlobServiceClient.Object,

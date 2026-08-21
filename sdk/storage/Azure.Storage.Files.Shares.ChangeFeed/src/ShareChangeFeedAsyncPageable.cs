@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using Azure.Storage.Blobs;
 using Azure.Storage.ChangeFeed.Common;
 
@@ -27,7 +29,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             DateTimeOffset? startTime = default,
             DateTimeOffset? endTime = default,
             string continuation = default,
-            bool isBatched = false)
+            bool isBatched = false,
+            CancellationToken cancellationToken = default)
+            : base(cancellationToken)
         {
             _client = client;
             _maxTransferSize = maxTransferSize;
@@ -39,16 +43,22 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             _isBatched = isBatched;
         }
 
-        public override async IAsyncEnumerable<Page<ShareChangeFeedEvent>> AsPages(
+        public override IAsyncEnumerable<Page<ShareChangeFeedEvent>> AsPages(
             string continuationToken = null,
             int? pageSizeHint = null)
+            => AsPagesInternal(continuationToken, pageSizeHint, CancellationToken);
+
+        private async IAsyncEnumerable<Page<ShareChangeFeedEvent>> AsPagesInternal(
+            string continuationToken,
+            int? pageSizeHint,
+            [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             if (continuationToken != null)
                 throw new ArgumentException("Continuation not supported. Use ShareChangeFeedClient.GetChangesAsync(string) instead.");
 
             (BlobContainerClient containerClient, ChangeFeedConfiguration<ShareChangeFeedEvent> config) = await _client.ResolveContainerAsync(
                 async: true,
-                cancellationToken: default)
+                cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
             // Deserialize the outer Files-only envelope on resume so we can compare the
@@ -88,7 +98,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             ShareChangeFeedResetPointer pointer = await ResetMarkerReader.TryReadPointerAsync(
                 containerClient,
                 async: true,
-                cancellationToken: default)
+                cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
             ShareChangeFeedResetEvent resetToEmit = null;
@@ -112,7 +122,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                         containerClient,
                         pointer.LatestMarkerPath,
                         async: true,
-                        cancellationToken: default)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
                     resetToEmit = ResetMarkerReader.BuildResetEvent(pointer, perEvent);
@@ -134,14 +144,14 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 ? await factory.BuildChangeFeed(
                     innerCursor,
                     async: true,
-                    cancellationToken: default)
+                    cancellationToken: cancellationToken)
                     .ConfigureAwait(false)
                 : await factory.BuildChangeFeed(
                     _startTime,
                     _endTime,
                     continuation: null,
                     async: true,
-                    cancellationToken: default)
+                    cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
             bool resetEmitted = false;
@@ -149,9 +159,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
 
             while (changeFeed.HasNext())
             {
+                cancellationToken.ThrowIfCancellationRequested();
                 Page<ShareChangeFeedEvent> rawPage = await changeFeed.GetPage(
                     async: true,
-                    pageSize: pageSize)
+                    pageSize: pageSize,
+                    cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
                 List<ShareChangeFeedEvent> events = new List<ShareChangeFeedEvent>();

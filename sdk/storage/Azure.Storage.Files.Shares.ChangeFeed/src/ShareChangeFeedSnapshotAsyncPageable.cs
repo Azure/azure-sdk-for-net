@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using Azure.Storage.Blobs;
 using Azure.Storage.ChangeFeed.Common;
 
@@ -22,7 +24,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             long? maxTransferSize,
             ShareChangeFeedResetPolicy policy,
             string beginSnapshot,
-            string endSnapshot)
+            string endSnapshot,
+            CancellationToken cancellationToken = default)
+            : base(cancellationToken)
         {
             SnapshotInputValidator.ValidateInputStrings(beginSnapshot, endSnapshot);
             _client = client;
@@ -48,7 +52,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             ShareChangeFeedClient client,
             long? maxTransferSize,
             ShareChangeFeedResetPolicy policy,
-            string continuation)
+            string continuation,
+            CancellationToken cancellationToken = default)
+            : base(cancellationToken)
         {
             if (string.IsNullOrEmpty(continuation))
                 throw ChangeFeedErrors.NullContinuation(nameof(continuation));
@@ -70,9 +76,15 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         {
         }
 
-        public override async IAsyncEnumerable<Page<ShareChangeFeedEvent>> AsPages(
+        public override IAsyncEnumerable<Page<ShareChangeFeedEvent>> AsPages(
             string continuationToken = null,
             int? pageSizeHint = null)
+            => AsPagesInternal(continuationToken, pageSizeHint, CancellationToken);
+
+        private async IAsyncEnumerable<Page<ShareChangeFeedEvent>> AsPagesInternal(
+            string continuationToken,
+            int? pageSizeHint,
+            [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             // Prefer a token supplied directly to AsPages (the standard Azure.Core pattern)
             // over the one captured at construction by GetChangesBetweenSnapshots(string).
@@ -80,7 +92,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
 
             (BlobContainerClient containerClient, ChangeFeedConfiguration<ShareChangeFeedEvent> config) = await _client.ResolveContainerAsync(
                 async: true,
-                cancellationToken: default)
+                cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
             ShareChangeFeedSnapshotIteration iter = await ShareChangeFeedSnapshotIteration.CreateAsync(
@@ -91,7 +103,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 _endSnapshot,
                 effectiveContinuation,
                 async: true,
-                cancellationToken: default)
+                cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
             // Reset detection: read the pointer once. Range for snapshot APIs is
@@ -100,7 +112,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             ShareChangeFeedResetPointer pointer = await ResetMarkerReader.TryReadPointerAsync(
                 containerClient,
                 async: true,
-                cancellationToken: default)
+                cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
             ShareChangeFeedResetEvent resetToEmit = null;
@@ -124,7 +136,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                         containerClient,
                         pointer.LatestMarkerPath,
                         async: true,
-                        cancellationToken: default)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
                     resetToEmit = ResetMarkerReader.BuildResetEvent(pointer, perEvent);
@@ -141,8 +153,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
 
             while (iter.ChangeFeed.HasNext())
             {
+                cancellationToken.ThrowIfCancellationRequested();
                 Page<ShareChangeFeedEvent> rawPage = await iter.ChangeFeed
-                    .GetPage(async: true, pageSize: pageSize)
+                    .GetPage(async: true, pageSize: pageSize, cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
                 List<ShareChangeFeedEvent> filtered = new List<ShareChangeFeedEvent>();
