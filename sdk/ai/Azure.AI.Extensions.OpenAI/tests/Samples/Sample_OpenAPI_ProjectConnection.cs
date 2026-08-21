@@ -49,8 +49,10 @@ public class Sample_OpenAPIProjectConnection : ProjectsOpenAITestBase
             authentication: new OpenApiProjectConnectionAuthenticationDetails(new OpenApiProjectConnectionSecurityScheme(
                 projectConnectionId: tripadvisorConnection.Id
             ))
-        );
-        toolDefinition.Description = "Trip Advisor API to get travel information.";
+        )
+        {
+            Description = "Trip Advisor API to get travel information."
+        };
         OpenApiTool openapiTool = new(toolDefinition);
 
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -104,8 +106,10 @@ public class Sample_OpenAPIProjectConnection : ProjectsOpenAITestBase
             authentication: new OpenApiProjectConnectionAuthenticationDetails(new OpenApiProjectConnectionSecurityScheme(
                 projectConnectionId: tripadvisorConnection.Id
             ))
-        );
-        toolDefinition.Description = "Trip Advisor API to get travel information.";
+        )
+        {
+            Description = "Trip Advisor API to get travel information."
+        };
         OpenApiTool openapiTool = new(toolDefinition);
 
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)

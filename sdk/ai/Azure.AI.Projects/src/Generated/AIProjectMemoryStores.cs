@@ -7,11 +7,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
-using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Memory
 {
@@ -497,48 +495,6 @@ namespace Azure.AI.Projects.Memory
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Searches the specified memory store for memories relevant to the provided conversation context. </summary>
-        /// <param name="name"> The name of the memory store to search. </param>
-        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
-        /// <param name="items"> Items for which to search for relevant memories. </param>
-        /// <param name="previousSearchId"> The unique ID of the previous search request, enabling incremental memory search from where the last operation left off. </param>
-        /// <param name="options"> Memory search options. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP002")]
-        public virtual ClientResult<MemoryStoreSearchResponse> SearchMemories(string name, string scope, IEnumerable<ResponseItem> items = default, string previousSearchId = default, Projects.MemorySearchOptions options = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-
-            MemorySearchOptions spreadModel = new MemorySearchOptions(scope, items?.ToList() as IList<ResponseItem> ?? new ChangeTrackingList<ResponseItem>(), previousSearchId, options, default);
-            ClientResult result = SearchMemories(name, spreadModel, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((MemoryStoreSearchResponse)result, result.GetRawResponse());
-        }
-
-        /// <summary> Searches the specified memory store for memories relevant to the provided conversation context. </summary>
-        /// <param name="name"> The name of the memory store to search. </param>
-        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
-        /// <param name="items"> Items for which to search for relevant memories. </param>
-        /// <param name="previousSearchId"> The unique ID of the previous search request, enabling incremental memory search from where the last operation left off. </param>
-        /// <param name="options"> Memory search options. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP002")]
-        public virtual async Task<ClientResult<MemoryStoreSearchResponse>> SearchMemoriesAsync(string name, string scope, IEnumerable<ResponseItem> items = default, string previousSearchId = default, Projects.MemorySearchOptions options = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-
-            MemorySearchOptions spreadModel = new MemorySearchOptions(scope, items?.ToList() as IList<ResponseItem> ?? new ChangeTrackingList<ResponseItem>(), previousSearchId, options, default);
-            ClientResult result = await SearchMemoriesAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((MemoryStoreSearchResponse)result, result.GetRawResponse());
         }
 
         /// <summary>

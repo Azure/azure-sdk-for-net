@@ -289,11 +289,8 @@ namespace Azure.AI.Projects
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Memory.MemorySearchItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MemorySearchItem))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Memory.MemorySearchItem is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.MemorySearchOptions is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(MemorySearchOptions))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.MemorySearchOptions is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Memory.MemorySearchOptions is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(Memory.MemorySearchOptions))]
+    [ModelReaderWriterBuildable(typeof(MemorySearchOptions))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Memory.MemorySearchOptions is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Memory.MemoryStore is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MemoryStore))]

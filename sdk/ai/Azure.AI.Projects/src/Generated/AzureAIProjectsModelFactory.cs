@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects.Evaluation;
 using Azure.AI.Projects.Memory;
 using OpenAI.Responses;
@@ -833,15 +834,6 @@ namespace Azure.AI.Projects
                 isEnabled,
                 properties,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Memory search options. </summary>
-        /// <param name="maxMemories"> Maximum number of memory items to return. </param>
-        /// <returns> A new <see cref="Projects.MemorySearchOptions"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static MemorySearchOptions MemorySearchOptions(int? maxMemories = default)
-        {
-            return new MemorySearchOptions(maxMemories, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Evaluator Definition. </summary>
@@ -1805,11 +1797,11 @@ namespace Azure.AI.Projects
         /// <param name="resultOptions"> Memory search options. </param>
         /// <returns> A new <see cref="Memory.MemorySearchOptions"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static Memory.MemorySearchOptions MemorySearchOptions(string scope = default, IEnumerable<ResponseItem> items = default, string previousSearchId = default, MemorySearchOptions resultOptions = default)
+        public static MemorySearchOptions MemorySearchOptions(string scope = default, IEnumerable<ResponseItem> items = default, string previousSearchId = default, MemorySearchResultOptions resultOptions = default)
         {
             items ??= new ChangeTrackingList<ResponseItem>();
 
-            return new Memory.MemorySearchOptions(scope, items.ToList(), previousSearchId, resultOptions, additionalBinaryDataProperties: null);
+            return new MemorySearchOptions(scope, items.ToList(), previousSearchId, resultOptions, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Memory search response. </summary>
@@ -1863,9 +1855,9 @@ namespace Azure.AI.Projects
         /// <param name="content"> The content of the memory. </param>
         /// <returns> A new <see cref="Memory.UserProfileMemoryItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static UserProfileMemoryItem UserProfileMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
+        public static Memory.UserProfileMemoryItem UserProfileMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
         {
-            return new UserProfileMemoryItem(
+            return new Memory.UserProfileMemoryItem(
                 memoryId,
                 updatedAt,
                 scope,
@@ -1881,9 +1873,9 @@ namespace Azure.AI.Projects
         /// <param name="content"> The content of the memory. </param>
         /// <returns> A new <see cref="Memory.ChatSummaryMemoryItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ChatSummaryMemoryItem ChatSummaryMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
+        public static Memory.ChatSummaryMemoryItem ChatSummaryMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
         {
-            return new ChatSummaryMemoryItem(
+            return new Memory.ChatSummaryMemoryItem(
                 memoryId,
                 updatedAt,
                 scope,

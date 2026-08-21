@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Azure.AI.Projects;
+using Azure.AI.Extensions.OpenAI;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Memory
@@ -23,7 +23,7 @@ namespace Azure.AI.Projects.Memory
         /// <param name="resultOptions"> Memory search options. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         [Experimental("AAIP002")]
-        internal MemorySearchOptions(string scope, IList<ResponseItem> items, string previousSearchId, Projects.MemorySearchOptions resultOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MemorySearchOptions(string scope, IList<ResponseItem> items, string previousSearchId, MemorySearchResultOptions resultOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
             Items = items;

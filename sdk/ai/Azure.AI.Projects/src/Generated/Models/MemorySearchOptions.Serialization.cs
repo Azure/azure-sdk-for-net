@@ -6,6 +6,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects;
 using OpenAI.Responses;
 
@@ -107,7 +108,7 @@ namespace Azure.AI.Projects.Memory
             if (Optional.IsDefined(ResultOptions))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue<Projects.MemorySearchOptions>(ResultOptions, options);
+                writer.WriteObjectValue(ResultOptions, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

@@ -1445,8 +1445,10 @@ OpenApiFunctionDefinition toolDefinition = new(
     authentication: new OpenApiProjectConnectionAuthenticationDetails(new OpenApiProjectConnectionSecurityScheme(
         projectConnectionId: tripadvisorConnection.Id
     ))
-);
-toolDefinition.Description = "Trip Advisor API to get travel information.";
+)
+{
+    Description = "Trip Advisor API to get travel information."
+};
 OpenApiTool openapiTool = new(toolDefinition);
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
