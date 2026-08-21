@@ -1112,195 +1112,195 @@ value = 843F,
             {
 new TimeSeriesPoint(826F)
 {
-Timestamp = DateTimeOffset.Parse("1972-01-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1972-01-01T00:00:00Z"),
 },
 new TimeSeriesPoint(799F)
 {
-Timestamp = DateTimeOffset.Parse("1972-02-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1972-02-01T00:00:00Z"),
 },
 new TimeSeriesPoint(890F)
 {
-Timestamp = DateTimeOffset.Parse("1972-03-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1972-03-01T00:00:00Z"),
 },
 new TimeSeriesPoint(900F)
 {
-Timestamp = DateTimeOffset.Parse("1972-04-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1972-04-01T00:00:00Z"),
 },
 new TimeSeriesPoint(961F)
 {
-Timestamp = DateTimeOffset.Parse("1972-05-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1972-05-01T00:00:00Z"),
 },
 new TimeSeriesPoint(935F)
 {
-Timestamp = DateTimeOffset.Parse("1972-06-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1972-06-01T00:00:00Z"),
 },
 new TimeSeriesPoint(894F)
 {
-Timestamp = DateTimeOffset.Parse("1972-07-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1972-07-01T00:00:00Z"),
 },
 new TimeSeriesPoint(855F)
 {
-Timestamp = DateTimeOffset.Parse("1972-08-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1972-08-01T00:00:00Z"),
 },
 new TimeSeriesPoint(809F)
 {
-Timestamp = DateTimeOffset.Parse("1972-09-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1972-09-01T00:00:00Z"),
 },
 new TimeSeriesPoint(810F)
 {
-Timestamp = DateTimeOffset.Parse("1972-10-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1972-10-01T00:00:00Z"),
 },
 new TimeSeriesPoint(766F)
 {
-Timestamp = DateTimeOffset.Parse("1972-11-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1972-11-01T00:00:00Z"),
 },
 new TimeSeriesPoint(805F)
 {
-Timestamp = DateTimeOffset.Parse("1972-12-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1972-12-01T00:00:00Z"),
 },
 new TimeSeriesPoint(821F)
 {
-Timestamp = DateTimeOffset.Parse("1973-01-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1973-01-01T00:00:00Z"),
 },
 new TimeSeriesPoint(773F)
 {
-Timestamp = DateTimeOffset.Parse("1973-02-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1973-02-01T00:00:00Z"),
 },
 new TimeSeriesPoint(883F)
 {
-Timestamp = DateTimeOffset.Parse("1973-03-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1973-03-01T00:00:00Z"),
 },
 new TimeSeriesPoint(898F)
 {
-Timestamp = DateTimeOffset.Parse("1973-04-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1973-04-01T00:00:00Z"),
 },
 new TimeSeriesPoint(957F)
 {
-Timestamp = DateTimeOffset.Parse("1973-05-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1973-05-01T00:00:00Z"),
 },
 new TimeSeriesPoint(924F)
 {
-Timestamp = DateTimeOffset.Parse("1973-06-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1973-06-01T00:00:00Z"),
 },
 new TimeSeriesPoint(881F)
 {
-Timestamp = DateTimeOffset.Parse("1973-07-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1973-07-01T00:00:00Z"),
 },
 new TimeSeriesPoint(837F)
 {
-Timestamp = DateTimeOffset.Parse("1973-08-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1973-08-01T00:00:00Z"),
 },
 new TimeSeriesPoint(784F)
 {
-Timestamp = DateTimeOffset.Parse("1973-09-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1973-09-01T00:00:00Z"),
 },
 new TimeSeriesPoint(791F)
 {
-Timestamp = DateTimeOffset.Parse("1973-10-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1973-10-01T00:00:00Z"),
 },
 new TimeSeriesPoint(760F)
 {
-Timestamp = DateTimeOffset.Parse("1973-11-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1973-11-01T00:00:00Z"),
 },
 new TimeSeriesPoint(802F)
 {
-Timestamp = DateTimeOffset.Parse("1973-12-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1973-12-01T00:00:00Z"),
 },
 new TimeSeriesPoint(828F)
 {
-Timestamp = DateTimeOffset.Parse("1974-01-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1974-01-01T00:00:00Z"),
 },
 new TimeSeriesPoint(1030F)
 {
-Timestamp = DateTimeOffset.Parse("1974-02-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1974-02-01T00:00:00Z"),
 },
 new TimeSeriesPoint(889F)
 {
-Timestamp = DateTimeOffset.Parse("1974-03-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1974-03-01T00:00:00Z"),
 },
 new TimeSeriesPoint(902F)
 {
-Timestamp = DateTimeOffset.Parse("1974-04-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1974-04-01T00:00:00Z"),
 },
 new TimeSeriesPoint(969F)
 {
-Timestamp = DateTimeOffset.Parse("1974-05-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1974-05-01T00:00:00Z"),
 },
 new TimeSeriesPoint(947F)
 {
-Timestamp = DateTimeOffset.Parse("1974-06-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1974-06-01T00:00:00Z"),
 },
 new TimeSeriesPoint(908F)
 {
-Timestamp = DateTimeOffset.Parse("1974-07-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1974-07-01T00:00:00Z"),
 },
 new TimeSeriesPoint(867F)
 {
-Timestamp = DateTimeOffset.Parse("1974-08-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1974-08-01T00:00:00Z"),
 },
 new TimeSeriesPoint(815F)
 {
-Timestamp = DateTimeOffset.Parse("1974-09-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1974-09-01T00:00:00Z"),
 },
 new TimeSeriesPoint(812F)
 {
-Timestamp = DateTimeOffset.Parse("1974-10-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1974-10-01T00:00:00Z"),
 },
 new TimeSeriesPoint(773F)
 {
-Timestamp = DateTimeOffset.Parse("1974-11-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1974-11-01T00:00:00Z"),
 },
 new TimeSeriesPoint(813F)
 {
-Timestamp = DateTimeOffset.Parse("1974-12-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1974-12-01T00:00:00Z"),
 },
 new TimeSeriesPoint(834F)
 {
-Timestamp = DateTimeOffset.Parse("1975-01-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1975-01-01T00:00:00Z"),
 },
 new TimeSeriesPoint(782F)
 {
-Timestamp = DateTimeOffset.Parse("1975-02-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1975-02-01T00:00:00Z"),
 },
 new TimeSeriesPoint(892F)
 {
-Timestamp = DateTimeOffset.Parse("1975-03-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1975-03-01T00:00:00Z"),
 },
 new TimeSeriesPoint(903F)
 {
-Timestamp = DateTimeOffset.Parse("1975-04-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1975-04-01T00:00:00Z"),
 },
 new TimeSeriesPoint(966F)
 {
-Timestamp = DateTimeOffset.Parse("1975-05-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1975-05-01T00:00:00Z"),
 },
 new TimeSeriesPoint(937F)
 {
-Timestamp = DateTimeOffset.Parse("1975-06-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1975-06-01T00:00:00Z"),
 },
 new TimeSeriesPoint(896F)
 {
-Timestamp = DateTimeOffset.Parse("1975-07-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1975-07-01T00:00:00Z"),
 },
 new TimeSeriesPoint(858F)
 {
-Timestamp = DateTimeOffset.Parse("1975-08-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1975-08-01T00:00:00Z"),
 },
 new TimeSeriesPoint(817F)
 {
-Timestamp = DateTimeOffset.Parse("1975-09-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1975-09-01T00:00:00Z"),
 },
 new TimeSeriesPoint(827F)
 {
-Timestamp = DateTimeOffset.Parse("1975-10-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1975-10-01T00:00:00Z"),
 },
 new TimeSeriesPoint(797F)
 {
-Timestamp = DateTimeOffset.Parse("1975-11-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1975-11-01T00:00:00Z"),
 },
 new TimeSeriesPoint(843F)
 {
-Timestamp = DateTimeOffset.Parse("1975-12-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1975-12-01T00:00:00Z"),
 }
             })
             {
@@ -1325,195 +1325,195 @@ Timestamp = DateTimeOffset.Parse("1975-12-01T00:00:00Z"),
             {
 new TimeSeriesPoint(826F)
 {
-Timestamp = DateTimeOffset.Parse("1972-01-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1972-01-01T00:00:00Z"),
 },
 new TimeSeriesPoint(799F)
 {
-Timestamp = DateTimeOffset.Parse("1972-02-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1972-02-01T00:00:00Z"),
 },
 new TimeSeriesPoint(890F)
 {
-Timestamp = DateTimeOffset.Parse("1972-03-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1972-03-01T00:00:00Z"),
 },
 new TimeSeriesPoint(900F)
 {
-Timestamp = DateTimeOffset.Parse("1972-04-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1972-04-01T00:00:00Z"),
 },
 new TimeSeriesPoint(961F)
 {
-Timestamp = DateTimeOffset.Parse("1972-05-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1972-05-01T00:00:00Z"),
 },
 new TimeSeriesPoint(935F)
 {
-Timestamp = DateTimeOffset.Parse("1972-06-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1972-06-01T00:00:00Z"),
 },
 new TimeSeriesPoint(894F)
 {
-Timestamp = DateTimeOffset.Parse("1972-07-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1972-07-01T00:00:00Z"),
 },
 new TimeSeriesPoint(855F)
 {
-Timestamp = DateTimeOffset.Parse("1972-08-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1972-08-01T00:00:00Z"),
 },
 new TimeSeriesPoint(809F)
 {
-Timestamp = DateTimeOffset.Parse("1972-09-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1972-09-01T00:00:00Z"),
 },
 new TimeSeriesPoint(810F)
 {
-Timestamp = DateTimeOffset.Parse("1972-10-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1972-10-01T00:00:00Z"),
 },
 new TimeSeriesPoint(766F)
 {
-Timestamp = DateTimeOffset.Parse("1972-11-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1972-11-01T00:00:00Z"),
 },
 new TimeSeriesPoint(805F)
 {
-Timestamp = DateTimeOffset.Parse("1972-12-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1972-12-01T00:00:00Z"),
 },
 new TimeSeriesPoint(821F)
 {
-Timestamp = DateTimeOffset.Parse("1973-01-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1973-01-01T00:00:00Z"),
 },
 new TimeSeriesPoint(773F)
 {
-Timestamp = DateTimeOffset.Parse("1973-02-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1973-02-01T00:00:00Z"),
 },
 new TimeSeriesPoint(883F)
 {
-Timestamp = DateTimeOffset.Parse("1973-03-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1973-03-01T00:00:00Z"),
 },
 new TimeSeriesPoint(898F)
 {
-Timestamp = DateTimeOffset.Parse("1973-04-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1973-04-01T00:00:00Z"),
 },
 new TimeSeriesPoint(957F)
 {
-Timestamp = DateTimeOffset.Parse("1973-05-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1973-05-01T00:00:00Z"),
 },
 new TimeSeriesPoint(924F)
 {
-Timestamp = DateTimeOffset.Parse("1973-06-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1973-06-01T00:00:00Z"),
 },
 new TimeSeriesPoint(881F)
 {
-Timestamp = DateTimeOffset.Parse("1973-07-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1973-07-01T00:00:00Z"),
 },
 new TimeSeriesPoint(837F)
 {
-Timestamp = DateTimeOffset.Parse("1973-08-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1973-08-01T00:00:00Z"),
 },
 new TimeSeriesPoint(784F)
 {
-Timestamp = DateTimeOffset.Parse("1973-09-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1973-09-01T00:00:00Z"),
 },
 new TimeSeriesPoint(791F)
 {
-Timestamp = DateTimeOffset.Parse("1973-10-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1973-10-01T00:00:00Z"),
 },
 new TimeSeriesPoint(760F)
 {
-Timestamp = DateTimeOffset.Parse("1973-11-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1973-11-01T00:00:00Z"),
 },
 new TimeSeriesPoint(802F)
 {
-Timestamp = DateTimeOffset.Parse("1973-12-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1973-12-01T00:00:00Z"),
 },
 new TimeSeriesPoint(828F)
 {
-Timestamp = DateTimeOffset.Parse("1974-01-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1974-01-01T00:00:00Z"),
 },
 new TimeSeriesPoint(1030F)
 {
-Timestamp = DateTimeOffset.Parse("1974-02-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1974-02-01T00:00:00Z"),
 },
 new TimeSeriesPoint(889F)
 {
-Timestamp = DateTimeOffset.Parse("1974-03-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1974-03-01T00:00:00Z"),
 },
 new TimeSeriesPoint(902F)
 {
-Timestamp = DateTimeOffset.Parse("1974-04-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1974-04-01T00:00:00Z"),
 },
 new TimeSeriesPoint(969F)
 {
-Timestamp = DateTimeOffset.Parse("1974-05-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1974-05-01T00:00:00Z"),
 },
 new TimeSeriesPoint(947F)
 {
-Timestamp = DateTimeOffset.Parse("1974-06-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1974-06-01T00:00:00Z"),
 },
 new TimeSeriesPoint(908F)
 {
-Timestamp = DateTimeOffset.Parse("1974-07-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1974-07-01T00:00:00Z"),
 },
 new TimeSeriesPoint(867F)
 {
-Timestamp = DateTimeOffset.Parse("1974-08-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1974-08-01T00:00:00Z"),
 },
 new TimeSeriesPoint(815F)
 {
-Timestamp = DateTimeOffset.Parse("1974-09-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1974-09-01T00:00:00Z"),
 },
 new TimeSeriesPoint(812F)
 {
-Timestamp = DateTimeOffset.Parse("1974-10-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1974-10-01T00:00:00Z"),
 },
 new TimeSeriesPoint(773F)
 {
-Timestamp = DateTimeOffset.Parse("1974-11-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1974-11-01T00:00:00Z"),
 },
 new TimeSeriesPoint(813F)
 {
-Timestamp = DateTimeOffset.Parse("1974-12-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1974-12-01T00:00:00Z"),
 },
 new TimeSeriesPoint(834F)
 {
-Timestamp = DateTimeOffset.Parse("1975-01-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1975-01-01T00:00:00Z"),
 },
 new TimeSeriesPoint(782F)
 {
-Timestamp = DateTimeOffset.Parse("1975-02-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1975-02-01T00:00:00Z"),
 },
 new TimeSeriesPoint(892F)
 {
-Timestamp = DateTimeOffset.Parse("1975-03-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1975-03-01T00:00:00Z"),
 },
 new TimeSeriesPoint(903F)
 {
-Timestamp = DateTimeOffset.Parse("1975-04-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1975-04-01T00:00:00Z"),
 },
 new TimeSeriesPoint(966F)
 {
-Timestamp = DateTimeOffset.Parse("1975-05-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1975-05-01T00:00:00Z"),
 },
 new TimeSeriesPoint(937F)
 {
-Timestamp = DateTimeOffset.Parse("1975-06-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1975-06-01T00:00:00Z"),
 },
 new TimeSeriesPoint(896F)
 {
-Timestamp = DateTimeOffset.Parse("1975-07-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1975-07-01T00:00:00Z"),
 },
 new TimeSeriesPoint(858F)
 {
-Timestamp = DateTimeOffset.Parse("1975-08-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1975-08-01T00:00:00Z"),
 },
 new TimeSeriesPoint(817F)
 {
-Timestamp = DateTimeOffset.Parse("1975-09-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1975-09-01T00:00:00Z"),
 },
 new TimeSeriesPoint(827F)
 {
-Timestamp = DateTimeOffset.Parse("1975-10-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1975-10-01T00:00:00Z"),
 },
 new TimeSeriesPoint(797F)
 {
-Timestamp = DateTimeOffset.Parse("1975-11-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1975-11-01T00:00:00Z"),
 },
 new TimeSeriesPoint(843F)
 {
-Timestamp = DateTimeOffset.Parse("1975-12-01T00:00:00Z"),
+On = DateTimeOffset.Parse("1975-12-01T00:00:00Z"),
 }
             })
             {
@@ -4158,1031 +4158,1031 @@ value = 3233500F,
             {
 new TimeSeriesPoint(1639196F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T06:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T06:45:00Z"),
 },
 new TimeSeriesPoint(1639290F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T06:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T06:50:00Z"),
 },
 new TimeSeriesPoint(1667293F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T06:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T06:55:00Z"),
 },
 new TimeSeriesPoint(1703130F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T07:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T07:00:00Z"),
 },
 new TimeSeriesPoint(1650912F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T07:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T07:05:00Z"),
 },
 new TimeSeriesPoint(1653596F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T07:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T07:10:00Z"),
 },
 new TimeSeriesPoint(1653793F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T07:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T07:15:00Z"),
 },
 new TimeSeriesPoint(1653795F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T07:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T07:20:00Z"),
 },
 new TimeSeriesPoint(1663471F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T07:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T07:25:00Z"),
 },
 new TimeSeriesPoint(1662358F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T07:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T07:30:00Z"),
 },
 new TimeSeriesPoint(1664320F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T07:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T07:35:00Z"),
 },
 new TimeSeriesPoint(1664942F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T07:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T07:40:00Z"),
 },
 new TimeSeriesPoint(1664966F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T07:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T07:45:00Z"),
 },
 new TimeSeriesPoint(1724271F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T07:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T07:50:00Z"),
 },
 new TimeSeriesPoint(1678720F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T07:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T07:55:00Z"),
 },
 new TimeSeriesPoint(1672536F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T08:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T08:00:00Z"),
 },
 new TimeSeriesPoint(1672544F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T08:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T08:05:00Z"),
 },
 new TimeSeriesPoint(1672364F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T08:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T08:10:00Z"),
 },
 new TimeSeriesPoint(1672912F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T08:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T08:15:00Z"),
 },
 new TimeSeriesPoint(1672736F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T08:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T08:20:00Z"),
 },
 new TimeSeriesPoint(1672725F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T08:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T08:25:00Z"),
 },
 new TimeSeriesPoint(1673247F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T08:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T08:30:00Z"),
 },
 new TimeSeriesPoint(1673109F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T08:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T08:35:00Z"),
 },
 new TimeSeriesPoint(1690088F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T08:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T08:40:00Z"),
 },
 new TimeSeriesPoint(1703865F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T08:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T08:45:00Z"),
 },
 new TimeSeriesPoint(1703865F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T08:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T08:50:00Z"),
 },
 new TimeSeriesPoint(1786581F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T08:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T08:55:00Z"),
 },
 new TimeSeriesPoint(1800945F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T09:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T09:00:00Z"),
 },
 new TimeSeriesPoint(1800957F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T09:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T09:05:00Z"),
 },
 new TimeSeriesPoint(1801191F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T09:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T09:10:00Z"),
 },
 new TimeSeriesPoint(1801412F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T09:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T09:15:00Z"),
 },
 new TimeSeriesPoint(1801621F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T09:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T09:20:00Z"),
 },
 new TimeSeriesPoint(1801621F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T09:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T09:25:00Z"),
 },
 new TimeSeriesPoint(1801654F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T09:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T09:30:00Z"),
 },
 new TimeSeriesPoint(1802105F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T09:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T09:35:00Z"),
 },
 new TimeSeriesPoint(1801800F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T09:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T09:40:00Z"),
 },
 new TimeSeriesPoint(1803040F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T09:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T09:45:00Z"),
 },
 new TimeSeriesPoint(1803672F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T09:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T09:50:00Z"),
 },
 new TimeSeriesPoint(1803535F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T09:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T09:55:00Z"),
 },
 new TimeSeriesPoint(1803541F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T10:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T10:00:00Z"),
 },
 new TimeSeriesPoint(1803545F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T10:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T10:05:00Z"),
 },
 new TimeSeriesPoint(1803599F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T10:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T10:10:00Z"),
 },
 new TimeSeriesPoint(1803616F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T10:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T10:15:00Z"),
 },
 new TimeSeriesPoint(1803619F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T10:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T10:20:00Z"),
 },
 new TimeSeriesPoint(1809942F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T10:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T10:25:00Z"),
 },
 new TimeSeriesPoint(1802720F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T10:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T10:30:00Z"),
 },
 new TimeSeriesPoint(1802720F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T10:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T10:35:00Z"),
 },
 new TimeSeriesPoint(1802888F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T10:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T10:40:00Z"),
 },
 new TimeSeriesPoint(1809574F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T10:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T10:45:00Z"),
 },
 new TimeSeriesPoint(1803896F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T10:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T10:50:00Z"),
 },
 new TimeSeriesPoint(1803850F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T10:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T10:55:00Z"),
 },
 new TimeSeriesPoint(1803854F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T11:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T11:00:00Z"),
 },
 new TimeSeriesPoint(1803854F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T11:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T11:05:00Z"),
 },
 new TimeSeriesPoint(1803797F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T11:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T11:10:00Z"),
 },
 new TimeSeriesPoint(1803921F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T11:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T11:15:00Z"),
 },
 new TimeSeriesPoint(1803933F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T11:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T11:20:00Z"),
 },
 new TimeSeriesPoint(1804040F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T11:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T11:25:00Z"),
 },
 new TimeSeriesPoint(1804044F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T11:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T11:30:00Z"),
 },
 new TimeSeriesPoint(1804070F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T11:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T11:35:00Z"),
 },
 new TimeSeriesPoint(1804070F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T11:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T11:40:00Z"),
 },
 new TimeSeriesPoint(1804068F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T11:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T11:45:00Z"),
 },
 new TimeSeriesPoint(1804073F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T11:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T11:50:00Z"),
 },
 new TimeSeriesPoint(1804101F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T11:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T11:55:00Z"),
 },
 new TimeSeriesPoint(1804674F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T12:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T12:00:00Z"),
 },
 new TimeSeriesPoint(1804714F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T12:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T12:05:00Z"),
 },
 new TimeSeriesPoint(1804730F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T12:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T12:10:00Z"),
 },
 new TimeSeriesPoint(1804816F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T12:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T12:15:00Z"),
 },
 new TimeSeriesPoint(1803996F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T12:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T12:20:00Z"),
 },
 new TimeSeriesPoint(1803998F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T12:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T12:25:00Z"),
 },
 new TimeSeriesPoint(1804015F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T12:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T12:30:00Z"),
 },
 new TimeSeriesPoint(1804047F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T12:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T12:35:00Z"),
 },
 new TimeSeriesPoint(1804050F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T12:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T12:40:00Z"),
 },
 new TimeSeriesPoint(1804218F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T12:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T12:45:00Z"),
 },
 new TimeSeriesPoint(1804217F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T12:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T12:50:00Z"),
 },
 new TimeSeriesPoint(1804217F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T12:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T12:55:00Z"),
 },
 new TimeSeriesPoint(1804205F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T13:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T13:00:00Z"),
 },
 new TimeSeriesPoint(1804728F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T13:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T13:05:00Z"),
 },
 new TimeSeriesPoint(1804748F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T13:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T13:10:00Z"),
 },
 new TimeSeriesPoint(1805232F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T13:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T13:15:00Z"),
 },
 new TimeSeriesPoint(1814121F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T13:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T13:20:00Z"),
 },
 new TimeSeriesPoint(1806789F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T13:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T13:25:00Z"),
 },
 new TimeSeriesPoint(1806119F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T13:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T13:30:00Z"),
 },
 new TimeSeriesPoint(1806329F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T13:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T13:35:00Z"),
 },
 new TimeSeriesPoint(1806454F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T13:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T13:40:00Z"),
 },
 new TimeSeriesPoint(1806852F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T13:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T13:45:00Z"),
 },
 new TimeSeriesPoint(1807347F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T13:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T13:50:00Z"),
 },
 new TimeSeriesPoint(1812144F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T13:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T13:55:00Z"),
 },
 new TimeSeriesPoint(1807418F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T14:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T14:00:00Z"),
 },
 new TimeSeriesPoint(1807418F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T14:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T14:05:00Z"),
 },
 new TimeSeriesPoint(1807432F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T14:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T14:10:00Z"),
 },
 new TimeSeriesPoint(1808540F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T14:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T14:15:00Z"),
 },
 new TimeSeriesPoint(1808541F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T14:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T14:20:00Z"),
 },
 new TimeSeriesPoint(1807831F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T14:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T14:25:00Z"),
 },
 new TimeSeriesPoint(1807852F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T14:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T14:30:00Z"),
 },
 new TimeSeriesPoint(1807811F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T14:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T14:35:00Z"),
 },
 new TimeSeriesPoint(2214285F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T14:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T14:40:00Z"),
 },
 new TimeSeriesPoint(2215019F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T14:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T14:45:00Z"),
 },
 new TimeSeriesPoint(2215329F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T14:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T14:50:00Z"),
 },
 new TimeSeriesPoint(2215097F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T14:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T14:55:00Z"),
 },
 new TimeSeriesPoint(2215129F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T15:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T15:00:00Z"),
 },
 new TimeSeriesPoint(2215120F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T15:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T15:05:00Z"),
 },
 new TimeSeriesPoint(2217056F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T15:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T15:10:00Z"),
 },
 new TimeSeriesPoint(2217056F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T15:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T15:15:00Z"),
 },
 new TimeSeriesPoint(2222126F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T15:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T15:20:00Z"),
 },
 new TimeSeriesPoint(2226472F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T15:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T15:25:00Z"),
 },
 new TimeSeriesPoint(2226722F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T15:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T15:30:00Z"),
 },
 new TimeSeriesPoint(2226729F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T15:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T15:35:00Z"),
 },
 new TimeSeriesPoint(2226735F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T15:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T15:40:00Z"),
 },
 new TimeSeriesPoint(2226735F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T15:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T15:45:00Z"),
 },
 new TimeSeriesPoint(2226735F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T15:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T15:50:00Z"),
 },
 new TimeSeriesPoint(2226952F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T15:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T15:55:00Z"),
 },
 new TimeSeriesPoint(2226962F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T16:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T16:00:00Z"),
 },
 new TimeSeriesPoint(2649337F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T16:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T16:05:00Z"),
 },
 new TimeSeriesPoint(2092796F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T16:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T16:10:00Z"),
 },
 new TimeSeriesPoint(2092839F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T16:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T16:15:00Z"),
 },
 new TimeSeriesPoint(2092940F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T16:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T16:20:00Z"),
 },
 new TimeSeriesPoint(2092940F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T16:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T16:25:00Z"),
 },
 new TimeSeriesPoint(2092965F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T16:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T16:30:00Z"),
 },
 new TimeSeriesPoint(2092979F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T16:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T16:35:00Z"),
 },
 new TimeSeriesPoint(2095588F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T16:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T16:40:00Z"),
 },
 new TimeSeriesPoint(2099586F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T16:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T16:45:00Z"),
 },
 new TimeSeriesPoint(2102981F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T16:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T16:50:00Z"),
 },
 new TimeSeriesPoint(2108053F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T16:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T16:55:00Z"),
 },
 new TimeSeriesPoint(2107907F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T17:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T17:00:00Z"),
 },
 new TimeSeriesPoint(2108241F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T17:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T17:05:00Z"),
 },
 new TimeSeriesPoint(2100321F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T17:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T17:10:00Z"),
 },
 new TimeSeriesPoint(2100448F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T17:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T17:15:00Z"),
 },
 new TimeSeriesPoint(2100483F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T17:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T17:20:00Z"),
 },
 new TimeSeriesPoint(2103042F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T17:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T17:25:00Z"),
 },
 new TimeSeriesPoint(2103037F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T17:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T17:30:00Z"),
 },
 new TimeSeriesPoint(2103040F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T17:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T17:35:00Z"),
 },
 new TimeSeriesPoint(2103054F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T17:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T17:40:00Z"),
 },
 new TimeSeriesPoint(2103058F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T17:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T17:45:00Z"),
 },
 new TimeSeriesPoint(1830757F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T17:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T17:50:00Z"),
 },
 new TimeSeriesPoint(1830855F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T17:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T17:55:00Z"),
 },
 new TimeSeriesPoint(1831495F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T18:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T18:00:00Z"),
 },
 new TimeSeriesPoint(1831463F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T18:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T18:05:00Z"),
 },
 new TimeSeriesPoint(1831963F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T18:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T18:10:00Z"),
 },
 new TimeSeriesPoint(1832046F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T18:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T18:15:00Z"),
 },
 new TimeSeriesPoint(1832070F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T18:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T18:20:00Z"),
 },
 new TimeSeriesPoint(1835511F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T18:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T18:25:00Z"),
 },
 new TimeSeriesPoint(1835265F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T18:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T18:30:00Z"),
 },
 new TimeSeriesPoint(1835481F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T18:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T18:35:00Z"),
 },
 new TimeSeriesPoint(1835578F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T18:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T18:40:00Z"),
 },
 new TimeSeriesPoint(1835611F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T18:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T18:45:00Z"),
 },
 new TimeSeriesPoint(1836314F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T18:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T18:50:00Z"),
 },
 new TimeSeriesPoint(1836369F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T18:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T18:55:00Z"),
 },
 new TimeSeriesPoint(1837280F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T19:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T19:00:00Z"),
 },
 new TimeSeriesPoint(1842939F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T19:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T19:05:00Z"),
 },
 new TimeSeriesPoint(1843126F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T19:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T19:10:00Z"),
 },
 new TimeSeriesPoint(1845840F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T19:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T19:15:00Z"),
 },
 new TimeSeriesPoint(1842444F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T19:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T19:20:00Z"),
 },
 new TimeSeriesPoint(1839891F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T19:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T19:25:00Z"),
 },
 new TimeSeriesPoint(1839875F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T19:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T19:30:00Z"),
 },
 new TimeSeriesPoint(1839870F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T19:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T19:35:00Z"),
 },
 new TimeSeriesPoint(1840090F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T19:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T19:40:00Z"),
 },
 new TimeSeriesPoint(1840479F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T19:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T19:45:00Z"),
 },
 new TimeSeriesPoint(1840479F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T19:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T19:50:00Z"),
 },
 new TimeSeriesPoint(1840482F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T19:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T19:55:00Z"),
 },
 new TimeSeriesPoint(1841522F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T20:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T20:00:00Z"),
 },
 new TimeSeriesPoint(1841836F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T20:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T20:05:00Z"),
 },
 new TimeSeriesPoint(1842377F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T20:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T20:10:00Z"),
 },
 new TimeSeriesPoint(1842388F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T20:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T20:15:00Z"),
 },
 new TimeSeriesPoint(1842489F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T20:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T20:20:00Z"),
 },
 new TimeSeriesPoint(1842489F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T20:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T20:25:00Z"),
 },
 new TimeSeriesPoint(1842489F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T20:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T20:30:00Z"),
 },
 new TimeSeriesPoint(1842496F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T20:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T20:35:00Z"),
 },
 new TimeSeriesPoint(1842689F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T20:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T20:40:00Z"),
 },
 new TimeSeriesPoint(1843117F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T20:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T20:45:00Z"),
 },
 new TimeSeriesPoint(1843116F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T20:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T20:50:00Z"),
 },
 new TimeSeriesPoint(1843227F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T20:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T20:55:00Z"),
 },
 new TimeSeriesPoint(1843138F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T21:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T21:00:00Z"),
 },
 new TimeSeriesPoint(1843141F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T21:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T21:05:00Z"),
 },
 new TimeSeriesPoint(1843310F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T21:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T21:10:00Z"),
 },
 new TimeSeriesPoint(1843310F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T21:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T21:15:00Z"),
 },
 new TimeSeriesPoint(1843507F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T21:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T21:20:00Z"),
 },
 new TimeSeriesPoint(1843953F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T21:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T21:25:00Z"),
 },
 new TimeSeriesPoint(1844778F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T21:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T21:30:00Z"),
 },
 new TimeSeriesPoint(1843918F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T21:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T21:35:00Z"),
 },
 new TimeSeriesPoint(1882692F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T21:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T21:40:00Z"),
 },
 new TimeSeriesPoint(1974888F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T21:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T21:45:00Z"),
 },
 new TimeSeriesPoint(2157136F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T21:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T21:50:00Z"),
 },
 new TimeSeriesPoint(2154987F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T21:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T21:55:00Z"),
 },
 new TimeSeriesPoint(2155664F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T22:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T22:00:00Z"),
 },
 new TimeSeriesPoint(2155660F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T22:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T22:05:00Z"),
 },
 new TimeSeriesPoint(2155824F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T22:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T22:10:00Z"),
 },
 new TimeSeriesPoint(2155824F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T22:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T22:15:00Z"),
 },
 new TimeSeriesPoint(2156329F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T22:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T22:20:00Z"),
 },
 new TimeSeriesPoint(2156479F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T22:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T22:25:00Z"),
 },
 new TimeSeriesPoint(2165269F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T22:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T22:30:00Z"),
 },
 new TimeSeriesPoint(2165433F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T22:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T22:35:00Z"),
 },
 new TimeSeriesPoint(2165739F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T22:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T22:40:00Z"),
 },
 new TimeSeriesPoint(2165931F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T22:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T22:45:00Z"),
 },
 new TimeSeriesPoint(2165928F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T22:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T22:50:00Z"),
 },
 new TimeSeriesPoint(2165989F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T22:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T22:55:00Z"),
 },
 new TimeSeriesPoint(2228961F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T23:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T23:00:00Z"),
 },
 new TimeSeriesPoint(2228961F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T23:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T23:05:00Z"),
 },
 new TimeSeriesPoint(2228961F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T23:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T23:10:00Z"),
 },
 new TimeSeriesPoint(2485802F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T23:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T23:15:00Z"),
 },
 new TimeSeriesPoint(2485802F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T23:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T23:20:00Z"),
 },
 new TimeSeriesPoint(2486021F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T23:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T23:25:00Z"),
 },
 new TimeSeriesPoint(2485293F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T23:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T23:30:00Z"),
 },
 new TimeSeriesPoint(2485293F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T23:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T23:35:00Z"),
 },
 new TimeSeriesPoint(2485324F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T23:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T23:40:00Z"),
 },
 new TimeSeriesPoint(2489142F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T23:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T23:45:00Z"),
 },
 new TimeSeriesPoint(2526312F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T23:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T23:50:00Z"),
 },
 new TimeSeriesPoint(2526313F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T23:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T23:55:00Z"),
 },
 new TimeSeriesPoint(2526314F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T00:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T00:00:00Z"),
 },
 new TimeSeriesPoint(2526324F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T00:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T00:05:00Z"),
 },
 new TimeSeriesPoint(2526325F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T00:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T00:10:00Z"),
 },
 new TimeSeriesPoint(2526205F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T00:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T00:15:00Z"),
 },
 new TimeSeriesPoint(2526226F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T00:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T00:20:00Z"),
 },
 new TimeSeriesPoint(2526475F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T00:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T00:25:00Z"),
 },
 new TimeSeriesPoint(2526471F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T00:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T00:30:00Z"),
 },
 new TimeSeriesPoint(2526471F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T00:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T00:35:00Z"),
 },
 new TimeSeriesPoint(2526534F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T00:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T00:40:00Z"),
 },
 new TimeSeriesPoint(2526646F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T00:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T00:45:00Z"),
 },
 new TimeSeriesPoint(2526646F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T00:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T00:50:00Z"),
 },
 new TimeSeriesPoint(2526648F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T00:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T00:55:00Z"),
 },
 new TimeSeriesPoint(2526658F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T01:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T01:00:00Z"),
 },
 new TimeSeriesPoint(2526771F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T01:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T01:05:00Z"),
 },
 new TimeSeriesPoint(2526773F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T01:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T01:10:00Z"),
 },
 new TimeSeriesPoint(2526793F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T01:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T01:15:00Z"),
 },
 new TimeSeriesPoint(2527010F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T01:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T01:20:00Z"),
 },
 new TimeSeriesPoint(2527031F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T01:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T01:25:00Z"),
 },
 new TimeSeriesPoint(3178096F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T01:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T01:30:00Z"),
 },
 new TimeSeriesPoint(3196305F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T01:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T01:35:00Z"),
 },
 new TimeSeriesPoint(3196202F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T01:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T01:40:00Z"),
 },
 new TimeSeriesPoint(3196202F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T01:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T01:45:00Z"),
 },
 new TimeSeriesPoint(3196205F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T01:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T01:50:00Z"),
 },
 new TimeSeriesPoint(3229232F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T01:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T01:55:00Z"),
 },
 new TimeSeriesPoint(3230463F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T02:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T02:00:00Z"),
 },
 new TimeSeriesPoint(3230468F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T02:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T02:05:00Z"),
 },
 new TimeSeriesPoint(3230468F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T02:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T02:10:00Z"),
 },
 new TimeSeriesPoint(3230468F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T02:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T02:15:00Z"),
 },
 new TimeSeriesPoint(3230470F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T02:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T02:20:00Z"),
 },
 new TimeSeriesPoint(3230467F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T02:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T02:25:00Z"),
 },
 new TimeSeriesPoint(3230506F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T02:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T02:30:00Z"),
 },
 new TimeSeriesPoint(3231536F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T02:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T02:35:00Z"),
 },
 new TimeSeriesPoint(3230723F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T02:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T02:40:00Z"),
 },
 new TimeSeriesPoint(3230727F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T02:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T02:45:00Z"),
 },
 new TimeSeriesPoint(3230727F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T02:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T02:50:00Z"),
 },
 new TimeSeriesPoint(3230727F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T02:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T02:55:00Z"),
 },
 new TimeSeriesPoint(3231880F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T03:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T03:00:00Z"),
 },
 new TimeSeriesPoint(3232283F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T03:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T03:05:00Z"),
 },
 new TimeSeriesPoint(3232283F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T03:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T03:10:00Z"),
 },
 new TimeSeriesPoint(3232283F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T03:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T03:15:00Z"),
 },
 new TimeSeriesPoint(3232325F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T03:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T03:20:00Z"),
 },
 new TimeSeriesPoint(3232323F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T03:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T03:25:00Z"),
 },
 new TimeSeriesPoint(3232327F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T03:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T03:30:00Z"),
 },
 new TimeSeriesPoint(3232340F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T03:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T03:35:00Z"),
 },
 new TimeSeriesPoint(3232713F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T03:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T03:40:00Z"),
 },
 new TimeSeriesPoint(3232729F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T03:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T03:45:00Z"),
 },
 new TimeSeriesPoint(3232756F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T03:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T03:50:00Z"),
 },
 new TimeSeriesPoint(3233500F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T03:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T03:55:00Z"),
 },
 new TimeSeriesPoint(3233500F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T04:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T04:00:00Z"),
 },
 new TimeSeriesPoint(3233500F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T04:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T04:05:00Z"),
 }
             }, TimeGranularity.PerMinute)
             {
@@ -5206,1031 +5206,1031 @@ Timestamp = DateTimeOffset.Parse("2017-01-02T04:05:00Z"),
             {
 new TimeSeriesPoint(1639196F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T06:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T06:45:00Z"),
 },
 new TimeSeriesPoint(1639290F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T06:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T06:50:00Z"),
 },
 new TimeSeriesPoint(1667293F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T06:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T06:55:00Z"),
 },
 new TimeSeriesPoint(1703130F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T07:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T07:00:00Z"),
 },
 new TimeSeriesPoint(1650912F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T07:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T07:05:00Z"),
 },
 new TimeSeriesPoint(1653596F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T07:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T07:10:00Z"),
 },
 new TimeSeriesPoint(1653793F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T07:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T07:15:00Z"),
 },
 new TimeSeriesPoint(1653795F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T07:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T07:20:00Z"),
 },
 new TimeSeriesPoint(1663471F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T07:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T07:25:00Z"),
 },
 new TimeSeriesPoint(1662358F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T07:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T07:30:00Z"),
 },
 new TimeSeriesPoint(1664320F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T07:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T07:35:00Z"),
 },
 new TimeSeriesPoint(1664942F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T07:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T07:40:00Z"),
 },
 new TimeSeriesPoint(1664966F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T07:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T07:45:00Z"),
 },
 new TimeSeriesPoint(1724271F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T07:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T07:50:00Z"),
 },
 new TimeSeriesPoint(1678720F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T07:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T07:55:00Z"),
 },
 new TimeSeriesPoint(1672536F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T08:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T08:00:00Z"),
 },
 new TimeSeriesPoint(1672544F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T08:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T08:05:00Z"),
 },
 new TimeSeriesPoint(1672364F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T08:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T08:10:00Z"),
 },
 new TimeSeriesPoint(1672912F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T08:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T08:15:00Z"),
 },
 new TimeSeriesPoint(1672736F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T08:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T08:20:00Z"),
 },
 new TimeSeriesPoint(1672725F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T08:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T08:25:00Z"),
 },
 new TimeSeriesPoint(1673247F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T08:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T08:30:00Z"),
 },
 new TimeSeriesPoint(1673109F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T08:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T08:35:00Z"),
 },
 new TimeSeriesPoint(1690088F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T08:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T08:40:00Z"),
 },
 new TimeSeriesPoint(1703865F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T08:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T08:45:00Z"),
 },
 new TimeSeriesPoint(1703865F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T08:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T08:50:00Z"),
 },
 new TimeSeriesPoint(1786581F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T08:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T08:55:00Z"),
 },
 new TimeSeriesPoint(1800945F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T09:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T09:00:00Z"),
 },
 new TimeSeriesPoint(1800957F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T09:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T09:05:00Z"),
 },
 new TimeSeriesPoint(1801191F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T09:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T09:10:00Z"),
 },
 new TimeSeriesPoint(1801412F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T09:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T09:15:00Z"),
 },
 new TimeSeriesPoint(1801621F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T09:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T09:20:00Z"),
 },
 new TimeSeriesPoint(1801621F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T09:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T09:25:00Z"),
 },
 new TimeSeriesPoint(1801654F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T09:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T09:30:00Z"),
 },
 new TimeSeriesPoint(1802105F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T09:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T09:35:00Z"),
 },
 new TimeSeriesPoint(1801800F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T09:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T09:40:00Z"),
 },
 new TimeSeriesPoint(1803040F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T09:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T09:45:00Z"),
 },
 new TimeSeriesPoint(1803672F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T09:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T09:50:00Z"),
 },
 new TimeSeriesPoint(1803535F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T09:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T09:55:00Z"),
 },
 new TimeSeriesPoint(1803541F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T10:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T10:00:00Z"),
 },
 new TimeSeriesPoint(1803545F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T10:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T10:05:00Z"),
 },
 new TimeSeriesPoint(1803599F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T10:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T10:10:00Z"),
 },
 new TimeSeriesPoint(1803616F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T10:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T10:15:00Z"),
 },
 new TimeSeriesPoint(1803619F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T10:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T10:20:00Z"),
 },
 new TimeSeriesPoint(1809942F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T10:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T10:25:00Z"),
 },
 new TimeSeriesPoint(1802720F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T10:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T10:30:00Z"),
 },
 new TimeSeriesPoint(1802720F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T10:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T10:35:00Z"),
 },
 new TimeSeriesPoint(1802888F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T10:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T10:40:00Z"),
 },
 new TimeSeriesPoint(1809574F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T10:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T10:45:00Z"),
 },
 new TimeSeriesPoint(1803896F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T10:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T10:50:00Z"),
 },
 new TimeSeriesPoint(1803850F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T10:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T10:55:00Z"),
 },
 new TimeSeriesPoint(1803854F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T11:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T11:00:00Z"),
 },
 new TimeSeriesPoint(1803854F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T11:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T11:05:00Z"),
 },
 new TimeSeriesPoint(1803797F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T11:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T11:10:00Z"),
 },
 new TimeSeriesPoint(1803921F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T11:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T11:15:00Z"),
 },
 new TimeSeriesPoint(1803933F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T11:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T11:20:00Z"),
 },
 new TimeSeriesPoint(1804040F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T11:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T11:25:00Z"),
 },
 new TimeSeriesPoint(1804044F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T11:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T11:30:00Z"),
 },
 new TimeSeriesPoint(1804070F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T11:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T11:35:00Z"),
 },
 new TimeSeriesPoint(1804070F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T11:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T11:40:00Z"),
 },
 new TimeSeriesPoint(1804068F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T11:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T11:45:00Z"),
 },
 new TimeSeriesPoint(1804073F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T11:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T11:50:00Z"),
 },
 new TimeSeriesPoint(1804101F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T11:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T11:55:00Z"),
 },
 new TimeSeriesPoint(1804674F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T12:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T12:00:00Z"),
 },
 new TimeSeriesPoint(1804714F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T12:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T12:05:00Z"),
 },
 new TimeSeriesPoint(1804730F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T12:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T12:10:00Z"),
 },
 new TimeSeriesPoint(1804816F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T12:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T12:15:00Z"),
 },
 new TimeSeriesPoint(1803996F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T12:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T12:20:00Z"),
 },
 new TimeSeriesPoint(1803998F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T12:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T12:25:00Z"),
 },
 new TimeSeriesPoint(1804015F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T12:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T12:30:00Z"),
 },
 new TimeSeriesPoint(1804047F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T12:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T12:35:00Z"),
 },
 new TimeSeriesPoint(1804050F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T12:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T12:40:00Z"),
 },
 new TimeSeriesPoint(1804218F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T12:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T12:45:00Z"),
 },
 new TimeSeriesPoint(1804217F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T12:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T12:50:00Z"),
 },
 new TimeSeriesPoint(1804217F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T12:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T12:55:00Z"),
 },
 new TimeSeriesPoint(1804205F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T13:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T13:00:00Z"),
 },
 new TimeSeriesPoint(1804728F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T13:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T13:05:00Z"),
 },
 new TimeSeriesPoint(1804748F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T13:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T13:10:00Z"),
 },
 new TimeSeriesPoint(1805232F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T13:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T13:15:00Z"),
 },
 new TimeSeriesPoint(1814121F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T13:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T13:20:00Z"),
 },
 new TimeSeriesPoint(1806789F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T13:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T13:25:00Z"),
 },
 new TimeSeriesPoint(1806119F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T13:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T13:30:00Z"),
 },
 new TimeSeriesPoint(1806329F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T13:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T13:35:00Z"),
 },
 new TimeSeriesPoint(1806454F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T13:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T13:40:00Z"),
 },
 new TimeSeriesPoint(1806852F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T13:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T13:45:00Z"),
 },
 new TimeSeriesPoint(1807347F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T13:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T13:50:00Z"),
 },
 new TimeSeriesPoint(1812144F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T13:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T13:55:00Z"),
 },
 new TimeSeriesPoint(1807418F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T14:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T14:00:00Z"),
 },
 new TimeSeriesPoint(1807418F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T14:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T14:05:00Z"),
 },
 new TimeSeriesPoint(1807432F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T14:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T14:10:00Z"),
 },
 new TimeSeriesPoint(1808540F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T14:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T14:15:00Z"),
 },
 new TimeSeriesPoint(1808541F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T14:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T14:20:00Z"),
 },
 new TimeSeriesPoint(1807831F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T14:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T14:25:00Z"),
 },
 new TimeSeriesPoint(1807852F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T14:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T14:30:00Z"),
 },
 new TimeSeriesPoint(1807811F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T14:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T14:35:00Z"),
 },
 new TimeSeriesPoint(2214285F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T14:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T14:40:00Z"),
 },
 new TimeSeriesPoint(2215019F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T14:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T14:45:00Z"),
 },
 new TimeSeriesPoint(2215329F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T14:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T14:50:00Z"),
 },
 new TimeSeriesPoint(2215097F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T14:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T14:55:00Z"),
 },
 new TimeSeriesPoint(2215129F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T15:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T15:00:00Z"),
 },
 new TimeSeriesPoint(2215120F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T15:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T15:05:00Z"),
 },
 new TimeSeriesPoint(2217056F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T15:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T15:10:00Z"),
 },
 new TimeSeriesPoint(2217056F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T15:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T15:15:00Z"),
 },
 new TimeSeriesPoint(2222126F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T15:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T15:20:00Z"),
 },
 new TimeSeriesPoint(2226472F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T15:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T15:25:00Z"),
 },
 new TimeSeriesPoint(2226722F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T15:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T15:30:00Z"),
 },
 new TimeSeriesPoint(2226729F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T15:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T15:35:00Z"),
 },
 new TimeSeriesPoint(2226735F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T15:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T15:40:00Z"),
 },
 new TimeSeriesPoint(2226735F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T15:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T15:45:00Z"),
 },
 new TimeSeriesPoint(2226735F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T15:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T15:50:00Z"),
 },
 new TimeSeriesPoint(2226952F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T15:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T15:55:00Z"),
 },
 new TimeSeriesPoint(2226962F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T16:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T16:00:00Z"),
 },
 new TimeSeriesPoint(2649337F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T16:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T16:05:00Z"),
 },
 new TimeSeriesPoint(2092796F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T16:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T16:10:00Z"),
 },
 new TimeSeriesPoint(2092839F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T16:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T16:15:00Z"),
 },
 new TimeSeriesPoint(2092940F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T16:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T16:20:00Z"),
 },
 new TimeSeriesPoint(2092940F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T16:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T16:25:00Z"),
 },
 new TimeSeriesPoint(2092965F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T16:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T16:30:00Z"),
 },
 new TimeSeriesPoint(2092979F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T16:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T16:35:00Z"),
 },
 new TimeSeriesPoint(2095588F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T16:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T16:40:00Z"),
 },
 new TimeSeriesPoint(2099586F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T16:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T16:45:00Z"),
 },
 new TimeSeriesPoint(2102981F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T16:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T16:50:00Z"),
 },
 new TimeSeriesPoint(2108053F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T16:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T16:55:00Z"),
 },
 new TimeSeriesPoint(2107907F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T17:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T17:00:00Z"),
 },
 new TimeSeriesPoint(2108241F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T17:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T17:05:00Z"),
 },
 new TimeSeriesPoint(2100321F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T17:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T17:10:00Z"),
 },
 new TimeSeriesPoint(2100448F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T17:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T17:15:00Z"),
 },
 new TimeSeriesPoint(2100483F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T17:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T17:20:00Z"),
 },
 new TimeSeriesPoint(2103042F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T17:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T17:25:00Z"),
 },
 new TimeSeriesPoint(2103037F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T17:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T17:30:00Z"),
 },
 new TimeSeriesPoint(2103040F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T17:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T17:35:00Z"),
 },
 new TimeSeriesPoint(2103054F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T17:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T17:40:00Z"),
 },
 new TimeSeriesPoint(2103058F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T17:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T17:45:00Z"),
 },
 new TimeSeriesPoint(1830757F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T17:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T17:50:00Z"),
 },
 new TimeSeriesPoint(1830855F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T17:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T17:55:00Z"),
 },
 new TimeSeriesPoint(1831495F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T18:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T18:00:00Z"),
 },
 new TimeSeriesPoint(1831463F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T18:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T18:05:00Z"),
 },
 new TimeSeriesPoint(1831963F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T18:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T18:10:00Z"),
 },
 new TimeSeriesPoint(1832046F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T18:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T18:15:00Z"),
 },
 new TimeSeriesPoint(1832070F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T18:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T18:20:00Z"),
 },
 new TimeSeriesPoint(1835511F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T18:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T18:25:00Z"),
 },
 new TimeSeriesPoint(1835265F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T18:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T18:30:00Z"),
 },
 new TimeSeriesPoint(1835481F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T18:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T18:35:00Z"),
 },
 new TimeSeriesPoint(1835578F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T18:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T18:40:00Z"),
 },
 new TimeSeriesPoint(1835611F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T18:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T18:45:00Z"),
 },
 new TimeSeriesPoint(1836314F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T18:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T18:50:00Z"),
 },
 new TimeSeriesPoint(1836369F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T18:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T18:55:00Z"),
 },
 new TimeSeriesPoint(1837280F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T19:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T19:00:00Z"),
 },
 new TimeSeriesPoint(1842939F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T19:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T19:05:00Z"),
 },
 new TimeSeriesPoint(1843126F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T19:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T19:10:00Z"),
 },
 new TimeSeriesPoint(1845840F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T19:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T19:15:00Z"),
 },
 new TimeSeriesPoint(1842444F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T19:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T19:20:00Z"),
 },
 new TimeSeriesPoint(1839891F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T19:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T19:25:00Z"),
 },
 new TimeSeriesPoint(1839875F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T19:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T19:30:00Z"),
 },
 new TimeSeriesPoint(1839870F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T19:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T19:35:00Z"),
 },
 new TimeSeriesPoint(1840090F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T19:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T19:40:00Z"),
 },
 new TimeSeriesPoint(1840479F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T19:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T19:45:00Z"),
 },
 new TimeSeriesPoint(1840479F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T19:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T19:50:00Z"),
 },
 new TimeSeriesPoint(1840482F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T19:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T19:55:00Z"),
 },
 new TimeSeriesPoint(1841522F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T20:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T20:00:00Z"),
 },
 new TimeSeriesPoint(1841836F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T20:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T20:05:00Z"),
 },
 new TimeSeriesPoint(1842377F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T20:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T20:10:00Z"),
 },
 new TimeSeriesPoint(1842388F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T20:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T20:15:00Z"),
 },
 new TimeSeriesPoint(1842489F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T20:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T20:20:00Z"),
 },
 new TimeSeriesPoint(1842489F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T20:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T20:25:00Z"),
 },
 new TimeSeriesPoint(1842489F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T20:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T20:30:00Z"),
 },
 new TimeSeriesPoint(1842496F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T20:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T20:35:00Z"),
 },
 new TimeSeriesPoint(1842689F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T20:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T20:40:00Z"),
 },
 new TimeSeriesPoint(1843117F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T20:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T20:45:00Z"),
 },
 new TimeSeriesPoint(1843116F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T20:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T20:50:00Z"),
 },
 new TimeSeriesPoint(1843227F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T20:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T20:55:00Z"),
 },
 new TimeSeriesPoint(1843138F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T21:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T21:00:00Z"),
 },
 new TimeSeriesPoint(1843141F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T21:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T21:05:00Z"),
 },
 new TimeSeriesPoint(1843310F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T21:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T21:10:00Z"),
 },
 new TimeSeriesPoint(1843310F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T21:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T21:15:00Z"),
 },
 new TimeSeriesPoint(1843507F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T21:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T21:20:00Z"),
 },
 new TimeSeriesPoint(1843953F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T21:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T21:25:00Z"),
 },
 new TimeSeriesPoint(1844778F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T21:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T21:30:00Z"),
 },
 new TimeSeriesPoint(1843918F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T21:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T21:35:00Z"),
 },
 new TimeSeriesPoint(1882692F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T21:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T21:40:00Z"),
 },
 new TimeSeriesPoint(1974888F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T21:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T21:45:00Z"),
 },
 new TimeSeriesPoint(2157136F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T21:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T21:50:00Z"),
 },
 new TimeSeriesPoint(2154987F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T21:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T21:55:00Z"),
 },
 new TimeSeriesPoint(2155664F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T22:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T22:00:00Z"),
 },
 new TimeSeriesPoint(2155660F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T22:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T22:05:00Z"),
 },
 new TimeSeriesPoint(2155824F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T22:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T22:10:00Z"),
 },
 new TimeSeriesPoint(2155824F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T22:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T22:15:00Z"),
 },
 new TimeSeriesPoint(2156329F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T22:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T22:20:00Z"),
 },
 new TimeSeriesPoint(2156479F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T22:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T22:25:00Z"),
 },
 new TimeSeriesPoint(2165269F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T22:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T22:30:00Z"),
 },
 new TimeSeriesPoint(2165433F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T22:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T22:35:00Z"),
 },
 new TimeSeriesPoint(2165739F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T22:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T22:40:00Z"),
 },
 new TimeSeriesPoint(2165931F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T22:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T22:45:00Z"),
 },
 new TimeSeriesPoint(2165928F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T22:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T22:50:00Z"),
 },
 new TimeSeriesPoint(2165989F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T22:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T22:55:00Z"),
 },
 new TimeSeriesPoint(2228961F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T23:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T23:00:00Z"),
 },
 new TimeSeriesPoint(2228961F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T23:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T23:05:00Z"),
 },
 new TimeSeriesPoint(2228961F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T23:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T23:10:00Z"),
 },
 new TimeSeriesPoint(2485802F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T23:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T23:15:00Z"),
 },
 new TimeSeriesPoint(2485802F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T23:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T23:20:00Z"),
 },
 new TimeSeriesPoint(2486021F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T23:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T23:25:00Z"),
 },
 new TimeSeriesPoint(2485293F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T23:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T23:30:00Z"),
 },
 new TimeSeriesPoint(2485293F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T23:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T23:35:00Z"),
 },
 new TimeSeriesPoint(2485324F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T23:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T23:40:00Z"),
 },
 new TimeSeriesPoint(2489142F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T23:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T23:45:00Z"),
 },
 new TimeSeriesPoint(2526312F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T23:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T23:50:00Z"),
 },
 new TimeSeriesPoint(2526313F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-01T23:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-01T23:55:00Z"),
 },
 new TimeSeriesPoint(2526314F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T00:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T00:00:00Z"),
 },
 new TimeSeriesPoint(2526324F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T00:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T00:05:00Z"),
 },
 new TimeSeriesPoint(2526325F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T00:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T00:10:00Z"),
 },
 new TimeSeriesPoint(2526205F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T00:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T00:15:00Z"),
 },
 new TimeSeriesPoint(2526226F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T00:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T00:20:00Z"),
 },
 new TimeSeriesPoint(2526475F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T00:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T00:25:00Z"),
 },
 new TimeSeriesPoint(2526471F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T00:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T00:30:00Z"),
 },
 new TimeSeriesPoint(2526471F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T00:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T00:35:00Z"),
 },
 new TimeSeriesPoint(2526534F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T00:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T00:40:00Z"),
 },
 new TimeSeriesPoint(2526646F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T00:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T00:45:00Z"),
 },
 new TimeSeriesPoint(2526646F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T00:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T00:50:00Z"),
 },
 new TimeSeriesPoint(2526648F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T00:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T00:55:00Z"),
 },
 new TimeSeriesPoint(2526658F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T01:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T01:00:00Z"),
 },
 new TimeSeriesPoint(2526771F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T01:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T01:05:00Z"),
 },
 new TimeSeriesPoint(2526773F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T01:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T01:10:00Z"),
 },
 new TimeSeriesPoint(2526793F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T01:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T01:15:00Z"),
 },
 new TimeSeriesPoint(2527010F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T01:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T01:20:00Z"),
 },
 new TimeSeriesPoint(2527031F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T01:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T01:25:00Z"),
 },
 new TimeSeriesPoint(3178096F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T01:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T01:30:00Z"),
 },
 new TimeSeriesPoint(3196305F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T01:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T01:35:00Z"),
 },
 new TimeSeriesPoint(3196202F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T01:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T01:40:00Z"),
 },
 new TimeSeriesPoint(3196202F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T01:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T01:45:00Z"),
 },
 new TimeSeriesPoint(3196205F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T01:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T01:50:00Z"),
 },
 new TimeSeriesPoint(3229232F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T01:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T01:55:00Z"),
 },
 new TimeSeriesPoint(3230463F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T02:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T02:00:00Z"),
 },
 new TimeSeriesPoint(3230468F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T02:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T02:05:00Z"),
 },
 new TimeSeriesPoint(3230468F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T02:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T02:10:00Z"),
 },
 new TimeSeriesPoint(3230468F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T02:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T02:15:00Z"),
 },
 new TimeSeriesPoint(3230470F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T02:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T02:20:00Z"),
 },
 new TimeSeriesPoint(3230467F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T02:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T02:25:00Z"),
 },
 new TimeSeriesPoint(3230506F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T02:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T02:30:00Z"),
 },
 new TimeSeriesPoint(3231536F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T02:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T02:35:00Z"),
 },
 new TimeSeriesPoint(3230723F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T02:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T02:40:00Z"),
 },
 new TimeSeriesPoint(3230727F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T02:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T02:45:00Z"),
 },
 new TimeSeriesPoint(3230727F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T02:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T02:50:00Z"),
 },
 new TimeSeriesPoint(3230727F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T02:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T02:55:00Z"),
 },
 new TimeSeriesPoint(3231880F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T03:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T03:00:00Z"),
 },
 new TimeSeriesPoint(3232283F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T03:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T03:05:00Z"),
 },
 new TimeSeriesPoint(3232283F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T03:10:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T03:10:00Z"),
 },
 new TimeSeriesPoint(3232283F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T03:15:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T03:15:00Z"),
 },
 new TimeSeriesPoint(3232325F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T03:20:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T03:20:00Z"),
 },
 new TimeSeriesPoint(3232323F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T03:25:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T03:25:00Z"),
 },
 new TimeSeriesPoint(3232327F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T03:30:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T03:30:00Z"),
 },
 new TimeSeriesPoint(3232340F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T03:35:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T03:35:00Z"),
 },
 new TimeSeriesPoint(3232713F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T03:40:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T03:40:00Z"),
 },
 new TimeSeriesPoint(3232729F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T03:45:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T03:45:00Z"),
 },
 new TimeSeriesPoint(3232756F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T03:50:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T03:50:00Z"),
 },
 new TimeSeriesPoint(3233500F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T03:55:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T03:55:00Z"),
 },
 new TimeSeriesPoint(3233500F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T04:00:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T04:00:00Z"),
 },
 new TimeSeriesPoint(3233500F)
 {
-Timestamp = DateTimeOffset.Parse("2017-01-02T04:05:00Z"),
+On = DateTimeOffset.Parse("2017-01-02T04:05:00Z"),
 }
             }, TimeGranularity.PerMinute)
             {

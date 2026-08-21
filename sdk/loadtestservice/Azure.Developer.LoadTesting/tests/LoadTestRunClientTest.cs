@@ -339,7 +339,7 @@ namespace Azure.Developer.LoadTesting.Tests
                     _testRunId,
                     metricDefinitions.Value.FirstOrDefault().Name,
                     metricNamespaces.Value.FirstOrDefault().Name,
-                    testRun.StartDateTime.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ") + "/" + testRun.EndDateTime.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
+                    testRun.StartOn.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ") + "/" + testRun.EndOn.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
                 );
 
             await foreach (var page in metricsResponsePageable.AsPages())

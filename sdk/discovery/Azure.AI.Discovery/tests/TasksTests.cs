@@ -113,7 +113,7 @@ namespace Azure.AI.Discovery.Tests
                 Assert.That(task, Is.Not.Null);
                 Assert.That(task.Title, Is.EqualTo("task-for-get-test"));
                 Assert.That(task.Status, Is.Not.Null);
-                Assert.That(task.CreatedAt, Is.Not.Null);
+                Assert.That(task.CreatedOn, Is.Not.Null);
                 Assert.That(task.AssignedTo, Is.Not.Null);
             }
             finally
@@ -214,7 +214,7 @@ namespace Azure.AI.Discovery.Tests
                     created.Name,
                     new TaskComment("test-user", DiscoveryActorType.User, "Test comment")
                     {
-                        Timestamp = new DateTimeOffset(2026, 4, 8, 21, 0, 0, TimeSpan.Zero),
+                        On = new DateTimeOffset(2026, 4, 8, 21, 0, 0, TimeSpan.Zero),
                     });
 
                 Assert.That(task, Is.Not.Null);
