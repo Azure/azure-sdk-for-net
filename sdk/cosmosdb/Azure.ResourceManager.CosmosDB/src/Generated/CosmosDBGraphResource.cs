@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CosmosDBGraphData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<CosmosDBGraphResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<CosmosDBGraphResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CosmosDBGraphData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<CosmosDBGraphResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<CosmosDBGraphResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CosmosDBGraphData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<CosmosDBGraphResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<CosmosDBGraphResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CosmosDBGraphData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<CosmosDBGraphResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<CosmosDBGraphResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CosmosDBGraphData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<CosmosDBGraphResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<CosmosDBGraphResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CosmosDBGraphData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<CosmosDBGraphResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<CosmosDBGraphResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     ThroughputSettingData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<CassandraViewThroughputSettingResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<CassandraViewThroughputSettingResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     ThroughputSettingData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<CassandraViewThroughputSettingResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<CassandraViewThroughputSettingResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     ThroughputSettingData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<CassandraViewThroughputSettingResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<CassandraViewThroughputSettingResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     ThroughputSettingData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<CassandraViewThroughputSettingResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<CassandraViewThroughputSettingResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     ThroughputSettingData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<CassandraViewThroughputSettingResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<CassandraViewThroughputSettingResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -770,7 +770,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     ThroughputSettingData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<CassandraViewThroughputSettingResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<CassandraViewThroughputSettingResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

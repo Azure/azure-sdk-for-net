@@ -1328,30 +1328,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 default);
         }
 
-        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
-        /// <param name="name"> The name of the ARM resource. </param>
-        /// <param name="type"> The type of Azure resource. </param>
-        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
-        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
-        /// <param name="identity"> Identity for the resource. </param>
-        /// <param name="resourcePhysicalPartitionIds"> Array of PhysicalPartitionId objects. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourcePhysicalPartitionIds"/> is null. </exception>
-        /// <returns> A new <see cref="Models.RetrieveThroughputContent"/> instance for mocking. </returns>
-        public static RetrieveThroughputContent RetrieveThroughputContent(string id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, IEnumerable<CosmosDBPhysicalPartitionId> resourcePhysicalPartitionIds = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new RetrieveThroughputContent(
-                id,
-                name,
-                @type,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                identity,
-                default,
-                resourcePhysicalPartitionIds is null ? default : new RetrieveThroughputProperties(new RetrieveThroughputPropertiesResource((resourcePhysicalPartitionIds ?? new ChangeTrackingList<CosmosDBPhysicalPartitionId>()).ToList(), default), default));
-        }
-
         /// <param name="id"> Id of a physical partition. </param>
         /// <returns> A new <see cref="Models.CosmosDBPhysicalPartitionId"/> instance for mocking. </returns>
         public static CosmosDBPhysicalPartitionId CosmosDBPhysicalPartitionId(string id = default)
