@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal DatabricksEndpointDetail(string ipAddress, int? port, double? latency, bool? isAccessible, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IPAddress = ipAddress;
+            IpAddress = ipAddress;
             Port = port;
             Latency = latency;
             IsAccessible = isAccessible;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Databricks.Models
         }
 
         /// <summary> An IP Address that Domain Name currently resolves to. </summary>
-        public string IPAddress { get; }
+        public string IpAddress { get; }
 
         /// <summary> The port an endpoint is connected to. </summary>
         public int? Port { get; }

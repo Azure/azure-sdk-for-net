@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 writer.WritePropertyName("wafPolicy"u8);
                 writer.WriteObjectValue(WafPolicy, options);
             }
-            if (Optional.IsDefined(IPAccessRulesPolicy))
+            if (Optional.IsDefined(IpAccessRulesPolicy))
             {
                 writer.WritePropertyName("ipAccessRulesPolicy"u8);
-                writer.WriteObjectValue(IPAccessRulesPolicy, options);
+                writer.WriteObjectValue(IpAccessRulesPolicy, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

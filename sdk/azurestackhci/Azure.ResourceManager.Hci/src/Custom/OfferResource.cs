@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new Response<OfferResource> Get(string expand = default, CancellationToken cancellationToken = default)
+        public virtual new Response<OfferResource> Get(string expand, CancellationToken cancellationToken)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterOfferResource instead.");
         }
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new async Task<Response<OfferResource>> GetAsync(string expand = default, CancellationToken cancellationToken = default)
+        public virtual new async Task<Response<OfferResource>> GetAsync(string expand, CancellationToken cancellationToken)
         {
             throw new NotSupportedException("This type is obsolete. Please use HciClusterOfferResource instead.");
         }

@@ -225,8 +225,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             HybridAksPluginType? hybridAksPluginType = default;
             string interfaceName = default;
             IPAllocationType? ipAllocationType = default;
-            string ipv4ConnectedPrefix = default;
-            string ipv6ConnectedPrefix = default;
+            string iPv4ConnectedPrefix = default;
+            string iPv6ConnectedPrefix = default;
             ResourceIdentifier l3IsolationDomainId = default;
             long vlan = default;
             IReadOnlyList<ResourceIdentifier> associatedResourceIds = default;
@@ -273,12 +273,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (prop.NameEquals("ipv4ConnectedPrefix"u8))
                 {
-                    ipv4ConnectedPrefix = prop.Value.GetString();
+                    iPv4ConnectedPrefix = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("ipv6ConnectedPrefix"u8))
                 {
-                    ipv6ConnectedPrefix = prop.Value.GetString();
+                    iPv6ConnectedPrefix = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("l3IsolationDomainId"u8))
@@ -396,8 +396,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 hybridAksPluginType,
                 interfaceName,
                 ipAllocationType,
-                ipv4ConnectedPrefix,
-                ipv6ConnectedPrefix,
+                iPv4ConnectedPrefix,
+                iPv6ConnectedPrefix,
                 l3IsolationDomainId,
                 vlan,
                 associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),

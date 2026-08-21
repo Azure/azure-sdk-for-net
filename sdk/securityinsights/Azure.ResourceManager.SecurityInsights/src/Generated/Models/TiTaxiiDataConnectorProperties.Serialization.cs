@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(TaxiiLookbackOn))
+            if (Optional.IsDefined(TaxiiLookbackPeriod))
             {
                 writer.WritePropertyName("taxiiLookbackPeriod"u8);
-                writer.WriteStringValue(TaxiiLookbackOn.Value, "O");
+                writer.WriteStringValue(TaxiiLookbackPeriod.Value, "O");
             }
             if (Optional.IsDefined(PollingFrequency))
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string collectionId = default;
             string userName = default;
             string password = default;
-            DateTimeOffset? taxiiLookbackOn = default;
+            DateTimeOffset? taxiiLookbackPeriod = default;
             PollingFrequency? pollingFrequency = default;
             TiTaxiiDataConnectorDataTypes dataTypes = default;
             foreach (var prop in element.EnumerateObject())
@@ -205,10 +205,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        taxiiLookbackOn = null;
+                        taxiiLookbackPeriod = null;
                         continue;
                     }
-                    taxiiLookbackOn = prop.Value.GetDateTimeOffset("O");
+                    taxiiLookbackPeriod = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("pollingFrequency"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 collectionId,
                 userName,
                 password,
-                taxiiLookbackOn,
+                taxiiLookbackPeriod,
                 pollingFrequency,
                 dataTypes);
         }

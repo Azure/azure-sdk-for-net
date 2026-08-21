@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     yield break;
                 }
-                IPPrefixesListResult result = IPPrefixesListResult.FromResponse(response);
+                IpPrefixesListResult result = IpPrefixesListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<NetworkFabricIPPrefixData>.FromValues((IReadOnlyList<NetworkFabricIPPrefixData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

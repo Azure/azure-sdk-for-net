@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Dns.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsAaaaRecordInfo"/>. </summary>
-        /// <param name="ipv6Address"> The IPv6 address of this AAAA record. </param>
+        /// <param name="iPv6Address"> The IPv6 address of this AAAA record. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DnsAaaaRecordInfo(IPAddress ipv6Address, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DnsAaaaRecordInfo(IPAddress iPv6Address, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IPv6Address = ipv6Address;
+            IPv6Address = iPv6Address;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SignalR.Models
         public SignalRNetworkAcls()
         {
             PrivateEndpoints = new ChangeTrackingList<SignalRPrivateEndpointAcl>();
-            IPRules = new ChangeTrackingList<SignalRIPRule>();
+            IpRules = new ChangeTrackingList<SignalRIPRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SignalRNetworkAcls"/>. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SignalR.Models
             DefaultAction = defaultAction;
             PublicNetwork = publicNetwork;
             PrivateEndpoints = privateEndpoints;
-            IPRules = ipRules;
+            IpRules = ipRules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.SignalR.Models
 
         /// <summary> IP rules for filtering public traffic. </summary>
         [WirePath("ipRules")]
-        public IList<SignalRIPRule> IPRules { get; }
+        public IList<SignalRIPRule> IpRules { get; }
     }
 }

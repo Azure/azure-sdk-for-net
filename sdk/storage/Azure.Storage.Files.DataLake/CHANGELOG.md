@@ -4,8 +4,6 @@
 
 ### Features Added
 
-- Added support for scheduling file deletion with `DataLakeFileClient.Upload` and `UploadAsync`.
-
 ### Breaking Changes
 
 ### Bugs Fixed

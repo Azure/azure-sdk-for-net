@@ -284,20 +284,20 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> The IPv4 address of the BMC interface for the bare metal machine. </summary>
-        public string BmcIPv4Address
+        public string BmcIpv4Address
         {
             get
             {
-                return Properties is null ? default : Properties.BmcIPv4Address;
+                return Properties is null ? default : Properties.BmcIpv4Address;
             }
         }
 
         /// <summary> The IPv6 address of the BMC interface for the bare metal machine. </summary>
-        public string BmcIPv6Address
+        public string BmcIpv6Address
         {
             get
             {
-                return Properties is null ? default : Properties.BmcIPv6Address;
+                return Properties is null ? default : Properties.BmcIpv6Address;
             }
         }
 

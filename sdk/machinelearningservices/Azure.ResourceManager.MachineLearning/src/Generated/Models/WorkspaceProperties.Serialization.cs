@@ -205,11 +205,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("imageBuildCompute"u8);
                 writer.WriteStringValue(ImageBuildCompute);
             }
-            if (Optional.IsCollectionDefined(IPAllowlist))
+            if (Optional.IsCollectionDefined(IpAllowlist))
             {
                 writer.WritePropertyName("ipAllowlist"u8);
                 writer.WriteStartArray();
-                foreach (string item in IPAllowlist)
+                foreach (string item in IpAllowlist)
                 {
                     if (item == null)
                     {

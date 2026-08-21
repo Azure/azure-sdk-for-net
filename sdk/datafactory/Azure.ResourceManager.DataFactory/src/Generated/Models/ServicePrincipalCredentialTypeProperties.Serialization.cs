@@ -79,11 +79,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("servicePrincipalId"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalId, options);
             }
-            if (Optional.IsDefined(ServicePrincipalKey))
-            {
-                writer.WritePropertyName("servicePrincipalKey"u8);
-                writer.WriteObjectValue<DataFactoryKeyVaultSecret>(ServicePrincipalKey, options);
-            }
             if (Optional.IsDefined(Tenant))
             {
                 writer.WritePropertyName("tenant"u8);
@@ -132,7 +127,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> servicePrincipalId = default;
-            DataFactoryKeyVaultSecret servicePrincipalKey = default;
             DataFactoryElement<string> tenant = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -140,15 +134,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("servicePrincipalId"u8))
                 {
                     ReadServicePrincipalId(prop, ref servicePrincipalId);
-                    continue;
-                }
-                if (prop.NameEquals("servicePrincipalKey"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    servicePrincipalKey = ModelReaderWriter.Read<DataFactoryKeyVaultSecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tenant"u8))
@@ -165,7 +150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ServicePrincipalCredentialTypeProperties(servicePrincipalId, servicePrincipalKey, tenant, additionalBinaryDataProperties);
+            return new ServicePrincipalCredentialTypeProperties(servicePrincipalId, tenant, additionalBinaryDataProperties);
         }
     }
 }

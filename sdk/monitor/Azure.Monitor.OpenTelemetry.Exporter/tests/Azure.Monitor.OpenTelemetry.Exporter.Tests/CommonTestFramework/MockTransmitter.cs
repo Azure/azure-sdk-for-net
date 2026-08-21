@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -44,27 +43,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             throw new System.NotImplementedException();
         }
 
-        public IDisposable BeginPersistOnlyScope()
-        {
-            PersistOnlyScopeCount++;
-            return new NoopScope();
-        }
-
-        public void DrainStorage(int waitMilliseconds) => DrainStorageCallCount++;
-
-        public int PersistOnlyScopeCount { get; private set; }
-
-        public int DrainStorageCallCount { get; private set; }
-
         public void Dispose()
         {
-        }
-
-        private sealed class NoopScope : IDisposable
-        {
-            public void Dispose()
-            {
-            }
         }
     }
 }

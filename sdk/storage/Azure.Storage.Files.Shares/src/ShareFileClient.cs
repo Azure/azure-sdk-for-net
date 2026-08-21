@@ -5467,7 +5467,7 @@ namespace Azure.Storage.Files.Shares
 
                     if (async)
                     {
-                        response = await FileRestClient.UploadRangeFromUriAsync(
+                        response = await FileRestClient.UploadRangeFromUrlAsync(
                             range: range.ToString(),
                             copySource: sourceUri.AbsoluteUri,
                             contentLength: 0,
@@ -5480,7 +5480,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     else
                     {
-                        response = FileRestClient.UploadRangeFromUri(
+                        response = FileRestClient.UploadRangeFromUrl(
                             range: range.ToString(),
                             copySource: sourceUri.AbsoluteUri,
                             contentLength: 0,

@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <summary> Initializes a new instance of <see cref="SqlDBSingleDatabaseTargetProperties"/>. </summary>
         /// <param name="targetAuthenticationType"> The type of authentication to use when connecting to a target. </param>
         /// <param name="connectionServerName"> The FQDN host name of the server to use in the connection string when connecting to a target. For example, for an Azure SQL logical server in the Azure commercial cloud, the value might be 'sql-logical-server-22092780.database.windows.net'; for an Azure SQL managed instance in the Azure commercial cloud, the value might be 'sql-mi-39441134.767d5869f605.database.windows.net'. Port number and instance name must be specified separately. </param>
-        /// <param name="sqlDBResourceId"> The Azure resource ID of an Azure SQL DB database target. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionServerName"/> or <paramref name="sqlDBResourceId"/> is null. </exception>
-        public SqlDBSingleDatabaseTargetProperties(TargetAuthenticationType targetAuthenticationType, string connectionServerName, ResourceIdentifier sqlDBResourceId) : base("SqlDb", targetAuthenticationType, connectionServerName)
+        /// <param name="sqlDbResourceId"> The Azure resource ID of an Azure SQL DB database target. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionServerName"/> or <paramref name="sqlDbResourceId"/> is null. </exception>
+        public SqlDBSingleDatabaseTargetProperties(TargetAuthenticationType targetAuthenticationType, string connectionServerName, ResourceIdentifier sqlDbResourceId) : base("SqlDb", targetAuthenticationType, connectionServerName)
         {
             Argument.AssertNotNull(connectionServerName, nameof(connectionServerName));
-            Argument.AssertNotNull(sqlDBResourceId, nameof(sqlDBResourceId));
+            Argument.AssertNotNull(sqlDbResourceId, nameof(sqlDbResourceId));
 
-            SqlDBResourceId = sqlDBResourceId;
+            SqlDbResourceId = sqlDbResourceId;
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlDBSingleDatabaseTargetProperties"/>. </summary>
@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="connectionServerName"> The FQDN host name of the server to use in the connection string when connecting to a target. For example, for an Azure SQL logical server in the Azure commercial cloud, the value might be 'sql-logical-server-22092780.database.windows.net'; for an Azure SQL managed instance in the Azure commercial cloud, the value might be 'sql-mi-39441134.767d5869f605.database.windows.net'. Port number and instance name must be specified separately. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="sqlDBResourceId"> The Azure resource ID of an Azure SQL DB database target. </param>
+        /// <param name="sqlDbResourceId"> The Azure resource ID of an Azure SQL DB database target. </param>
         /// <param name="readIntent"> Set to true to monitor a high availability replica of specified target, if any. </param>
-        internal SqlDBSingleDatabaseTargetProperties(string targetType, TargetAuthenticationType targetAuthenticationType, TargetAuthenticationVaultSecret targetVault, string connectionServerName, DatabaseWatcherResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier sqlDBResourceId, bool? readIntent) : base(targetType, targetAuthenticationType, targetVault, connectionServerName, provisioningState, additionalBinaryDataProperties)
+        internal SqlDBSingleDatabaseTargetProperties(string targetType, TargetAuthenticationType targetAuthenticationType, TargetAuthenticationVaultSecret targetVault, string connectionServerName, DatabaseWatcherResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier sqlDbResourceId, bool? readIntent) : base(targetType, targetAuthenticationType, targetVault, connectionServerName, provisioningState, additionalBinaryDataProperties)
         {
-            SqlDBResourceId = sqlDBResourceId;
+            SqlDbResourceId = sqlDbResourceId;
             ReadIntent = readIntent;
         }
 
         /// <summary> The Azure resource ID of an Azure SQL DB database target. </summary>
-        public ResourceIdentifier SqlDBResourceId { get; set; }
+        public ResourceIdentifier SqlDbResourceId { get; set; }
 
         /// <summary> Set to true to monitor a high availability replica of specified target, if any. </summary>
         public bool? ReadIntent { get; set; }

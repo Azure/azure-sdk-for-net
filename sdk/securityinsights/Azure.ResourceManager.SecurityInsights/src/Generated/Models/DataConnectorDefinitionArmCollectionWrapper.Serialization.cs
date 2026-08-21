@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Encapsulate the data connector definition object. </summary>
     internal partial class DataConnectorDefinitionArmCollectionWrapper : IJsonModel<DataConnectorDefinitionArmCollectionWrapper>
     {
+        /// <summary> Initializes a new instance of <see cref="DataConnectorDefinitionArmCollectionWrapper"/> for deserialization. </summary>
+        internal DataConnectorDefinitionArmCollectionWrapper()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DataConnectorDefinitionArmCollectionWrapper PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -82,20 +87,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 throw new FormatException($"The model {nameof(DataConnectorDefinitionArmCollectionWrapper)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Value))
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (SecurityInsightsDataConnectorDefinitionData item in Value)
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (SecurityInsightsDataConnectorDefinitionData item in Value)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
+            writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -140,16 +142,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             IList<SecurityInsightsDataConnectorDefinitionData> value = default;
-            string nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<SecurityInsightsDataConnectorDefinitionData> array = new List<SecurityInsightsDataConnectorDefinitionData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
@@ -160,7 +158,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("nextLink"u8))
                 {
-                    nextLink = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -168,7 +170,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataConnectorDefinitionArmCollectionWrapper(value ?? new ChangeTrackingList<SecurityInsightsDataConnectorDefinitionData>(), nextLink, additionalBinaryDataProperties);
+            return new DataConnectorDefinitionArmCollectionWrapper(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

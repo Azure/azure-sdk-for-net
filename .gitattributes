@@ -26,7 +26,4 @@
 **/Generated/**/*.cs linguist-generated=true
 **/Generated/**/*.csproj linguist-generated=true
 
-# Keep merge=ours on its own line. gh aw compile rewrites the linguist-generated
-# line for this pattern and drops any extra attributes placed on it.
-.github/workflows/*.lock.yml linguist-generated=true
-.github/workflows/*.lock.yml merge=ours
+.github/workflows/*.lock.yml linguist-generated=true merge=ours

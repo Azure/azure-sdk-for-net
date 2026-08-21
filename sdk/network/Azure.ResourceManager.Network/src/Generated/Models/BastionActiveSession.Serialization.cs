@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetIPAddress))
+            if (options.Format != "W" && Optional.IsDefined(TargetIpAddress))
             {
                 writer.WritePropertyName("targetIpAddress"u8);
-                writer.WriteStringValue(TargetIPAddress);
+                writer.WriteStringValue(TargetIpAddress);
             }
             if (options.Format != "W" && Optional.IsDefined(Protocol))
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Network.Models
             string targetHostName = default;
             string targetResourceGroup = default;
             string userName = default;
-            string targetIPAddress = default;
+            string targetIpAddress = default;
             BastionConnectProtocol? protocol = default;
             string targetResourceId = default;
             float? sessionDurationInMins = default;
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("targetIpAddress"u8))
                 {
-                    targetIPAddress = prop.Value.GetString();
+                    targetIpAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("protocol"u8))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Network.Models
                 targetHostName,
                 targetResourceGroup,
                 userName,
-                targetIPAddress,
+                targetIpAddress,
                 protocol,
                 targetResourceId,
                 sessionDurationInMins,

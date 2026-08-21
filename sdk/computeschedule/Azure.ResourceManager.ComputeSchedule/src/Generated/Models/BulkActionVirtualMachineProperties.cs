@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             ScheduledEventsPolicy = scheduledEventsPolicy;
             StorageProfile = storageProfile;
             AdditionalCapabilities = additionalCapabilities;
-            OSProfile = osProfile;
+            OsProfile = osProfile;
             NetworkProfile = networkProfile;
             HardwareProfile = hardwareProfile;
             SecurityProfile = securityProfile;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
 
         /// <summary> Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned. </summary>
-        public VirtualMachineOSProfile OSProfile { get; set; }
+        public VirtualMachineOSProfile OsProfile { get; set; }
 
         /// <summary> Specifies the network interfaces of the virtual machine. </summary>
         public VirtualMachineNetworkProfile NetworkProfile { get; set; }

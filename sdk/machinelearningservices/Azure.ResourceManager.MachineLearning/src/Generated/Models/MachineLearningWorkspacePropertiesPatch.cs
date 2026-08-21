@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspacePropertiesPatch"/>. </summary>
         public MachineLearningWorkspacePropertiesPatch()
         {
-            IPAllowlist = new ChangeTrackingList<string>();
+            IpAllowlist = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspacePropertiesPatch"/>. </summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             FeatureStoreSettings = featureStoreSettings;
             FriendlyName = friendlyName;
             ImageBuildCompute = imageBuildCompute;
-            IPAllowlist = ipAllowlist;
+            IpAllowlist = ipAllowlist;
             ManagedNetwork = managedNetwork;
             NetworkAcls = networkAcls;
             PrimaryUserAssignedIdentity = primaryUserAssignedIdentity;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The list of IPv4 addresses that are allowed to access the workspace. </summary>
         [WirePath("ipAllowlist")]
-        public IList<string> IPAllowlist { get; } = new ChangeTrackingList<string>();
+        public IList<string> IpAllowlist { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Gets or sets the ManagedNetwork. </summary>
         [WirePath("managedNetwork")]
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Gets or sets the CollectionsThroughput. </summary>
         [WirePath("serviceManagedResourcesSettings.cosmosDb.collectionsThroughput")]
-        public int? ServiceManagedResourcesCosmosDBCollectionsThroughput
+        public int? ServiceManagedResourcesCosmosDbCollectionsThroughput
         {
             get
             {
-                return ServiceManagedResourcesSettings is null ? default : ServiceManagedResourcesSettings.CosmosDBCollectionsThroughput;
+                return ServiceManagedResourcesSettings is null ? default : ServiceManagedResourcesSettings.CosmosDbCollectionsThroughput;
             }
             set
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     ServiceManagedResourcesSettings = new ServiceManagedResourcesSettings();
                 }
-                ServiceManagedResourcesSettings.CosmosDBCollectionsThroughput = value;
+                ServiceManagedResourcesSettings.CosmosDbCollectionsThroughput = value;
             }
         }
     }

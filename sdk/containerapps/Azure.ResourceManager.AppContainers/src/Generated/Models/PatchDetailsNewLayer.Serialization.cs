@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("frameworkAndVersion"u8);
                 writer.WriteStringValue(FrameworkAndVersion);
             }
-            if (Optional.IsDefined(OSAndVersion))
+            if (Optional.IsDefined(OsAndVersion))
             {
                 writer.WritePropertyName("osAndVersion"u8);
-                writer.WriteStringValue(OSAndVersion);
+                writer.WriteStringValue(OsAndVersion);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

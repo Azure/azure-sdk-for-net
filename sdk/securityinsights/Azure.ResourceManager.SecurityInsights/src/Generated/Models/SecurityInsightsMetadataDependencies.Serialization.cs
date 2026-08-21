@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             SecurityInsightsKind? kind = default;
             string version = default;
             string name = default;
-            MetadataDependencyOperator? @operator = default;
+            ThreatIntelligenceQueryOperator? @operator = default;
             IList<SecurityInsightsMetadataDependencies> criteria = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    @operator = new MetadataDependencyOperator(prop.Value.GetString());
+                    @operator = new ThreatIntelligenceQueryOperator(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("criteria"u8))

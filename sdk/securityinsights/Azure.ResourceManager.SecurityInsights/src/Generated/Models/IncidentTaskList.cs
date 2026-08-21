@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
@@ -18,28 +19,29 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IncidentTaskList"/>. </summary>
-        internal IncidentTaskList()
+        /// <param name="value"> The IncidentTask items on this page. </param>
+        internal IncidentTaskList(IEnumerable<SecurityInsightsIncidentTaskData> value)
         {
-            Value = new ChangeTrackingList<SecurityInsightsIncidentTaskData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="IncidentTaskList"/>. </summary>
-        /// <param name="value"> List of incident tasks. </param>
+        /// <param name="value"> The IncidentTask items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IncidentTaskList(IList<SecurityInsightsIncidentTaskData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IncidentTaskList(IList<SecurityInsightsIncidentTaskData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> List of incident tasks. </summary>
+        /// <summary> The IncidentTask items on this page. </summary>
         [WirePath("value")]
         public IList<SecurityInsightsIncidentTaskData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

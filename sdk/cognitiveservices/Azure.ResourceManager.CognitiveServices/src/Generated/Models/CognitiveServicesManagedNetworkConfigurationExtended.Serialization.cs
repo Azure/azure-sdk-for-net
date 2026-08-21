@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CognitiveServicesManagedNetworkProvisionStatus status = default;
             CognitiveServicesFirewallSku? firewallSku = default;
             CognitiveServicesManagedNetworkKind? managedNetworkKind = default;
-            string firewallPublicIPAddress = default;
+            string firewallPublicIpAddress = default;
             CognitiveServicesManagedNetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IReadOnlyList<CognitiveServicesIsolationMode> changeableIsolationModes = default;
@@ -183,10 +183,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        firewallPublicIPAddress = null;
+                        firewallPublicIpAddress = null;
                         continue;
                     }
-                    firewallPublicIPAddress = prop.Value.GetString();
+                    firewallPublicIpAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 status,
                 firewallSku,
                 managedNetworkKind,
-                firewallPublicIPAddress,
+                firewallPublicIpAddress,
                 provisioningState,
                 additionalBinaryDataProperties,
                 changeableIsolationModes ?? new ChangeTrackingList<CognitiveServicesIsolationMode>());

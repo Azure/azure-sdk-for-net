@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the IpAllocation. </param>
-        internal IPAllocationData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, IPAllocationPropertiesFormat properties) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal IPAllocationData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, IpAllocationPropertiesFormat properties) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> Properties of the IpAllocation. </summary>
         [WirePath("properties")]
-        internal IPAllocationPropertiesFormat Properties { get; set; }
+        internal IpAllocationPropertiesFormat Properties { get; set; }
 
         /// <summary> The type for the IpAllocation. </summary>
         [WirePath("properties.type")]
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new IPAllocationPropertiesFormat();
+                    Properties = new IpAllocationPropertiesFormat();
                 }
                 Properties.IPAllocationType = value;
             }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new IPAllocationPropertiesFormat();
+                    Properties = new IpAllocationPropertiesFormat();
                 }
                 Properties.Prefix = value;
             }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new IPAllocationPropertiesFormat();
+                    Properties = new IpAllocationPropertiesFormat();
                 }
                 Properties.PrefixLength = value;
             }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new IPAllocationPropertiesFormat();
+                    Properties = new IpAllocationPropertiesFormat();
                 }
                 Properties.PrefixType = value;
             }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new IPAllocationPropertiesFormat();
+                    Properties = new IpAllocationPropertiesFormat();
                 }
                 Properties.IpamAllocationId = value;
             }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new IPAllocationPropertiesFormat();
+                    Properties = new IpAllocationPropertiesFormat();
                 }
                 return Properties.AllocationTags;
             }

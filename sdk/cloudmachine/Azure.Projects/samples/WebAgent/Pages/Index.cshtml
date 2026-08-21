@@ -1,0 +1,159 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<div class="row justify-content-end">
+    <p>
+        <div class="collapse col-5 me-3" id="collapseExample">
+            <div class="card card-body">
+                <form id="fileUploadForm" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="file" class="fw-normal">Upload file:</label>
+                        <input type="file" id="file" name="file" class="form-control-file" />
+                    </div>
+                </form>
+                <div id="liveAlertPlaceholder"></div>
+            </div>
+        </div>
+    </p>
+</div>
+
+<div class="container mt-5">
+    <div class="row justify-content-center mt-4">
+        <span class="text-center fs-1 col-4">Ask Your Data</span>
+    </div>
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-8">
+            <div id="chatHistory" class="border p-3 mb-3" style="height: 600px; overflow-y: scroll;">
+                @* Chat history will be appended here *@
+            </div>
+            <div class="input-group mb-3">
+                <button class="btn btn-outline-secondary" type="button" id="filebtn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M9 7C9 4.23858 11.2386 2 14 2C16.7614 2 19 4.23858 19 7V15C19 18.866 15.866 22 12 22C8.13401 22 5 18.866 5 15V9C5 8.44772 5.44772 8 6 8C6.55228 8 7 8.44772 7 9V15C7 17.7614 9.23858 20 12 20C14.7614 20 17 17.7614 17 15V7C17 5.34315 15.6569 4 14 4C12.3431 4 11 5.34315 11 7V15C11 15.5523 11.4477 16 12 16C12.5523 16 13 15.5523 13 15V9C13 8.44772 13.4477 8 14 8C14.5523 8 15 8.44772 15 9V15C15 16.6569 13.6569 18 12 18C10.3431 18 9 16.6569 9 15V7Z" fill="currentColor"></path></svg>
+                </button>
+                <input type="text" id="chatPrompt2" class="form-control" aria-label="chat" placeholder="Type your prompt here...">
+                <button class="btn btn-outline-secondary" type="button" id="sendPrompt2">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="white" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M15.1918 8.90615C15.6381 8.45983 16.3618 8.45983 16.8081 8.90615L21.9509 14.049C22.3972 14.4953 22.3972 15.2189 21.9509 15.6652C21.5046 16.1116 20.781 16.1116 20.3347 15.6652L17.1428 12.4734V22.2857C17.1428 22.9169 16.6311 23.4286 15.9999 23.4286C15.3688 23.4286 14.8571 22.9169 14.8571 22.2857V12.4734L11.6652 15.6652C11.2189 16.1116 10.4953 16.1116 10.049 15.6652C9.60265 15.2189 9.60265 14.4953 10.049 14.049L15.1918 8.90615Z" fill="white"></path></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var allowedExtensions = ['.txt', '.md', '.json'];
+
+        $('#sendPrompt2').click(function () {
+            var prompt = $('#chatPrompt2').val();
+            if (prompt.trim() === '') {
+                return;
+            }
+
+            // Clear the chat prompt textbox
+            $('#chatPrompt2').val('');
+
+            // Add the prompt to the chat history
+            $('#chatHistory').append('<p><strong>You:</strong> ' + prompt + '</p>');
+
+            // Send the prompt to the backend via AJAX
+            $.ajax({
+                url: '/chat',
+                type: 'POST',
+                contentType: 'application/json',
+                data: prompt,
+                success: function (response) {
+                    // Add the response to the chat history
+                    $('#chatHistory').append('<p><strong>Agent:</strong> ' + response + '</p>');
+                    // Scroll to the bottom of the chat history
+                    $('#chatHistory').scrollTop($('#chatHistory')[0].scrollHeight);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    // Display an error message in the chat history
+                    $('#chatHistory').append('<p><strong>Agent:</strong> Error occurred while processing your request: ' + jqXHR.responseText + '</p>');
+                    // Scroll to the bottom of the chat history
+                    $('#chatHistory').scrollTop($('#chatHistory')[0].scrollHeight);
+                }
+            });
+        });
+
+        $('#filebtn').click(function () {
+            $('#file').click();
+        });
+
+        $('#file').change(function () {
+            if ($('#file').val()) {
+                if (validateFileType()) {
+                    $('#fileUploadForm').submit();
+                } else {
+                    alert('Unsupported file type. Please select one of the supported file types: ' + allowedExtensions.slice(0, -1).join(', ') + ', and ' + allowedExtensions.slice(-1) + '.');
+                    $('#file').val(''); // Clear the file input
+                }
+            }
+        });
+
+        $('#fileUploadForm').submit(function (e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            // var formData = new FormData(this);
+            var formData = new FormData();
+            var fileInput = document.getElementById('file');
+            var file = fileInput.files[0];
+
+            // Append the file with a specific content type
+            formData.append('file', new Blob([file], { type: 'text/plain' }), file.name);
+
+            $.ajax({
+                url: '/upload', // Replace with your actual upload endpoint
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    // Handle success response
+                        appendAlert('File uploaded successfully!', 'success');
+                        const fileList = document.getElementById('fileList');
+                        const wrapper = document.createElement('li');
+                        wrapper.innerHTML = '<a class="dropdown-item" href="#">' + file.name + '</a>';
+                        fileList.append(wrapper);
+
+                        $('#file').val(''); // Clear the file input
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    // Handle error response
+                    alert('Error occurred while uploading the file: ' + jqXHR.responseText);
+                }
+            });
+        });
+        const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
+        const appendAlert = (message, type) => {
+            const wrapper = document.createElement('div');
+            wrapper.innerHTML = [
+            `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+            `   <div>${message}</div>`,
+            '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+            '</div>'
+            ].join('')
+
+            alertPlaceholder.append(wrapper)
+        }
+
+        // Add keypress event listener to chatPrompt input
+        $('#chatPrompt2').keypress(function (e) {
+            if (e.which === 13) { // Enter key pressed
+                $('#sendPrompt2').click();
+                return false; // Prevent the default form submission
+            }
+        });
+
+        // Function to validate the file type
+        function validateFileType() {
+            var fileInput = document.getElementById('file');
+            var filePath = fileInput.value;
+            var fileExtension = filePath.substring(filePath.lastIndexOf('.')).toLowerCase();
+            return allowedExtensions.includes(fileExtension);
+        }
+    });
+</script>

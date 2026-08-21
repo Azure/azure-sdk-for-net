@@ -4,6 +4,3 @@ overrides:
   - filename: '**/sdk/cognitiveservices/Azure.ResourceManager.CognitiveServices/api/*.cs'
     words:
       - hitl
-  - filename: '**/sdk/cognitiveservices/Azure.Provisioning.CognitiveServices/api/*.cs'
-    words:
-      - hitl

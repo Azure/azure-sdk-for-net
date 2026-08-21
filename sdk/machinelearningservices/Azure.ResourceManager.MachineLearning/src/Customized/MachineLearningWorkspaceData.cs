@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.MachineLearning
         [EditorBrowsable(EditorBrowsableState.Never)]
         public int? CosmosDbCollectionsThroughput
         {
-            get => ServiceManagedResourcesCosmosDBCollectionsThroughput;
-            set => ServiceManagedResourcesCosmosDBCollectionsThroughput = value;
+            get => ServiceManagedResourcesCosmosDbCollectionsThroughput;
+            set => ServiceManagedResourcesCosmosDbCollectionsThroughput = value;
         }
 
         /// <summary> Gets or sets the Encryption. </summary>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 Properties ??= new WorkspaceProperties();
                 Properties.Encryption = value is null ? null : new EncryptionProperty(
-                    cosmosDBResourceId: default,
+                    cosmosDbResourceId: default,
                     identity: value.UserAssignedIdentity is null ? null : new IdentityForCmk(value.UserAssignedIdentity.ToString(), additionalBinaryDataProperties: null),
                     keyVaultProperties: value.KeyVaultProperties is null ? null : new Azure.ResourceManager.MachineLearning.Models.KeyVaultProperties(value.KeyVaultProperties.KeyIdentifier, value.KeyVaultProperties.KeyVaultArmId)
                     {

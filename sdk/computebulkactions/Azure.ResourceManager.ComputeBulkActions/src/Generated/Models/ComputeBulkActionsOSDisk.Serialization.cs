@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 throw new FormatException($"The model {nameof(ComputeBulkActionsOSDisk)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(OSType))
+            if (Optional.IsDefined(OsType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OSType.Value.ToString());
+                writer.WriteStringValue(OsType.Value.ToString());
             }
             if (Optional.IsDefined(EncryptionSettings))
             {
