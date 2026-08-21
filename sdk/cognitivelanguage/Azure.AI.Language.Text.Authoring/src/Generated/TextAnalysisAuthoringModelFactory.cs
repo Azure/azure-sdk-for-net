@@ -357,17 +357,17 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="projectKind"> Represents the project kind. </param>
         /// <param name="targetProjectName"> The project name to be copied-into. </param>
         /// <param name="accessToken"> The access token. </param>
-        /// <param name="expiresAt"> The expiration of the access token. </param>
+        /// <param name="expiresOn"> The expiration of the access token. </param>
         /// <param name="targetResourceId"> Represents the target Azure resource ID. </param>
         /// <param name="targetResourceRegion"> Represents the target Azure resource region. </param>
         /// <returns> A new <see cref="Authoring.TextAuthoringCopyProjectDetails"/> instance for mocking. </returns>
-        public static TextAuthoringCopyProjectDetails TextAuthoringCopyProjectDetails(TextAuthoringProjectKind projectKind = default, string targetProjectName = default, string accessToken = default, DateTimeOffset expiresAt = default, string targetResourceId = default, string targetResourceRegion = default)
+        public static TextAuthoringCopyProjectDetails TextAuthoringCopyProjectDetails(TextAuthoringProjectKind projectKind = default, string targetProjectName = default, string accessToken = default, DateTimeOffset expiresOn = default, string targetResourceId = default, string targetResourceRegion = default)
         {
             return new TextAuthoringCopyProjectDetails(
                 projectKind,
                 targetProjectName,
                 accessToken,
-                expiresAt,
+                expiresOn,
                 targetResourceId,
                 targetResourceRegion,
                 additionalBinaryDataProperties: null);
