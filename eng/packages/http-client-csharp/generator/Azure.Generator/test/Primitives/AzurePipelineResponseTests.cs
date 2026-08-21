@@ -19,11 +19,19 @@ namespace Azure.Generator.Tests.Primitives
         public void ResponseSurvivesHttpMessageDisposal()
         {
             var response = new Mock<Response> { CallBase = true };
-            response.SetupGet(r => r.Status).Returns(200);
-            response.SetupGet(r => r.ReasonPhrase).Returns("OK");
+            var responseDisposed = false;
+            response.SetupGet(r => r.Status).Returns(() => responseDisposed
+                ? throw new ObjectDisposedException(nameof(Response))
+                : 200);
+            response.SetupGet(r => r.ReasonPhrase).Returns(() => responseDisposed
+                ? throw new ObjectDisposedException(nameof(Response))
+                : "OK");
             response.Protected()
                 .Setup<IEnumerable<HttpHeader>>("EnumerateHeaders")
-                .Returns([new HttpHeader("x-test", "value")]);
+                .Returns(() => responseDisposed
+                    ? throw new ObjectDisposedException(nameof(Response))
+                    : [new HttpHeader("x-test", "value")]);
+            response.Setup(r => r.Dispose()).Callback(() => responseDisposed = true);
             var networkStream = new TrackingStream([1, 2, 3]);
             response.SetupProperty(r => r.ContentStream, networkStream);
             using var message = CreateMessage(response.Object);
@@ -37,6 +45,42 @@ namespace Azure.Generator.Tests.Primitives
             Assert.AreEqual("value", headerValue);
             Assert.AreSame(networkStream, pipelineResponse.ContentStream);
             Assert.IsFalse(networkStream.IsDisposed);
+        }
+
+        [Test]
+        public void HeadersPreserveFirstValueForDuplicateNames()
+        {
+            using var message = CreateMessage(new DuplicateHeaderResponse());
+            using var pipelineResponse = new AzurePipelineResponse(message);
+
+            Assert.IsTrue(pipelineResponse.Headers.TryGetValue("x-duplicate", out string? headerValue));
+            Assert.AreEqual("response", headerValue);
+            Assert.IsTrue(pipelineResponse.Headers.TryGetValues("x-duplicate", out IEnumerable<string>? headerValues));
+            CollectionAssert.AreEqual(new[] { "response" }, headerValues);
+            CollectionAssert.AreEqual(
+                new[]
+                {
+                    new KeyValuePair<string, string>("x-duplicate", "response"),
+                    new KeyValuePair<string, string>("x-duplicate", "content")
+                },
+                pipelineResponse.Headers);
+        }
+
+        [Test]
+        public void ContentUsesExposedMemoryStreamBuffer()
+        {
+            byte[] bytes = [1, 2, 3];
+            var response = new Mock<Response> { CallBase = true };
+            response.SetupProperty(
+                r => r.ContentStream,
+                new MemoryStream(bytes, 0, bytes.Length, writable: true, publiclyVisible: true));
+            using var message = CreateMessage(response.Object);
+            using var pipelineResponse = new AzurePipelineResponse(message);
+
+            BinaryData content = pipelineResponse.Content;
+            bytes[0] = 4;
+
+            Assert.AreEqual(4, content.ToMemory().Span[0]);
         }
 
         [Test]
@@ -109,6 +153,43 @@ namespace Azure.Generator.Tests.Primitives
             {
                 Response = response
             };
+
+        private sealed class DuplicateHeaderResponse : Response
+        {
+            private int _getValuesCallCount;
+
+            public override int Status => 200;
+
+            public override string ReasonPhrase => "OK";
+
+            public override Stream? ContentStream { get; set; }
+
+            public override string ClientRequestId { get; set; } = string.Empty;
+
+            public override void Dispose()
+            {
+            }
+
+            protected override bool TryGetHeader(string name, out string value)
+            {
+                value = "response";
+                return true;
+            }
+
+            protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
+            {
+                values = _getValuesCallCount++ == 0 ? ["response"] : ["content"];
+                return true;
+            }
+
+            protected override bool ContainsHeader(string name) => true;
+
+            protected override IEnumerable<HttpHeader> EnumerateHeaders()
+            {
+                yield return new HttpHeader("x-duplicate", "response");
+                yield return new HttpHeader("x-duplicate", "content");
+            }
+        }
 
         private sealed class TrackingStream : Stream
         {

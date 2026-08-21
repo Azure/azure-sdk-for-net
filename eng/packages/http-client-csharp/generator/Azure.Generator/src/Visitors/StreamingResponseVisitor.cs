@@ -60,11 +60,9 @@ namespace Azure.Generator.Visitors
         {
             if (expression.Arguments.Count > 0
                 && IsStreamingResponseType(method.Signature.ReturnType)
-                && IsAzureResponse(expression.Arguments[0]))
+                && FindAzureResponseMessage(expression.Arguments[0]) is { } message)
             {
                 var arguments = expression.Arguments.ToList();
-                var response = arguments[0];
-                var message = FindHttpMessage(response)!;
                 arguments[0] = New.Instance<AzurePipelineResponse>(message);
                 expression.Update(arguments: arguments);
                 return expression;
@@ -84,7 +82,7 @@ namespace Azure.Generator.Visitors
                     }
                 }
                 && invocation.Arguments.Count > 0
-                && IsAzureResponse(invocation.Arguments[0]))
+                && FindAzureResponseMessage(invocation.Arguments[0]) is not null)
             {
                 response = invocation.Arguments[0];
                 return true;
@@ -100,14 +98,17 @@ namespace Azure.Generator.Visitors
                streamingType.GetGenericTypeDefinition().Equals(typeof(AsyncStreamingClientResult<>));
 #pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
-        private static bool IsAzureResponse(ValueExpression expression)
-            => expression switch
+        private static ValueExpression? FindAzureResponseMessage(ValueExpression expression)
+        {
+            CSharpType? responseType = expression switch
             {
-                ScopedApi api => IsAzureResponseType(api.Type),
-                VariableExpression variable => IsAzureResponseType(variable.Type),
-                InvokeMethodExpression invocation => IsAzureResponseType(invocation.MethodSignature?.ReturnType),
-                _ => false
+                ScopedApi api => api.Type,
+                InvokeMethodExpression invocation => invocation.MethodSignature?.ReturnType,
+                _ => null
             };
+
+            return IsAzureResponseType(responseType) ? FindHttpMessage(expression) : null;
+        }
 
         private static bool IsAzureResponseType(CSharpType? type)
             => UnwrapTask(type)?.Equals(typeof(Response)) == true;

@@ -111,6 +111,18 @@ namespace Azure.Generator.Tests.Visitors
         }
 
         [Test]
+        public void DoesNotWrapAzureResponseWithoutHttpMessage()
+        {
+            MockHelpers.LoadMockGenerator();
+            var response = new VariableExpression(typeof(Response), "response");
+            var expression = CreateInvocation("CreateSse", typeof(BinaryData), response);
+
+            new TestStreamingResponseVisitor().Visit(expression, CreateMethod(CreateStreamingResponseType()));
+
+            Assert.AreSame(response, expression.Arguments[0]);
+        }
+
+        [Test]
         public void DoesNotWrapNonAzureResponseForStreamingReturnType()
         {
             MockHelpers.LoadMockGenerator();

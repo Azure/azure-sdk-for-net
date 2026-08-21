@@ -41,12 +41,24 @@ namespace Azure.Core
         }
 
         public override BinaryData Content
-            => _contentStream switch
+        {
+            get
             {
-                MemoryStream content => new BinaryData(content.ToArray()),
-                null => BinaryData.Empty,
-                _ => throw new InvalidOperationException("The response is not buffered.")
-            };
+                if (_contentStream is null)
+                {
+                    return BinaryData.Empty;
+                }
+
+                if (_contentStream is not MemoryStream content)
+                {
+                    throw new InvalidOperationException("The response is not buffered.");
+                }
+
+                return content.TryGetBuffer(out ArraySegment<byte> segment)
+                    ? new BinaryData(segment.AsMemory())
+                    : new BinaryData(content.ToArray());
+            }
+        }
 
         public override BinaryData BufferContent(CancellationToken cancellationToken = default)
         {
@@ -135,10 +147,14 @@ namespace Azure.Core
                 _headerList = new List<KeyValuePair<string, string>>();
                 foreach (HttpHeader header in headers)
                 {
-                    _headerValues[header.Name] = header.Value;
-                    if (headers.TryGetValues(header.Name, out IEnumerable<string>? values))
+                    if (!_headerValues.ContainsKey(header.Name))
                     {
-                        _headerValueCollections[header.Name] = new List<string>(values);
+                        _headerValues.Add(header.Name, header.Value);
+                    }
+                    if (!_headerValueCollections.ContainsKey(header.Name)
+                        && headers.TryGetValues(header.Name, out IEnumerable<string>? values))
+                    {
+                        _headerValueCollections.Add(header.Name, new List<string>(values));
                     }
                     _headerList.Add(new KeyValuePair<string, string>(header.Name, header.Value));
                 }
