@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(PfxBlob))
             {
                 writer.WritePropertyName("pfxBlob"u8);
-                writer.WriteBase64StringValue(PfxBlob, "D");
+                writer.WriteBase64StringValue(PfxBlob.ToArray(), "D");
             }
             if (options.Format != "W" && Optional.IsDefined(SiteName))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(CerBlob))
             {
                 writer.WritePropertyName("cerBlob"u8);
-                writer.WriteBase64StringValue(CerBlob, "D");
+                writer.WriteBase64StringValue(CerBlob.ToArray(), "D");
             }
             if (options.Format != "W" && Optional.IsDefined(PublicKeyHash))
             {

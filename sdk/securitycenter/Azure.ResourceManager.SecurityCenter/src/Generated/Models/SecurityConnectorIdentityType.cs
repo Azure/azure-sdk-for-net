@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Resource Identity Type. </summary>
     public enum SecurityConnectorIdentityType
     {
-        /// <summary> The identity is assigned by the system. </summary>
+        /// <summary> SystemAssigned. </summary>
         SystemAssigned
     }
 }

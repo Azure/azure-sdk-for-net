@@ -80,15 +80,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("nodeId"u8);
                 writer.WriteStringValue(NodeId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
+            if (options.Format != "W" && Optional.IsDefined(PrivateIpAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
-                writer.WriteStringValue(PrivateIPAddress.ToString());
+                writer.WriteStringValue(PrivateIpAddress.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicIPAddress))
+            if (options.Format != "W" && Optional.IsDefined(PublicIpAddress))
             {
                 writer.WritePropertyName("publicIpAddress"u8);
-                writer.WriteStringValue(PublicIPAddress.ToString());
+                writer.WriteStringValue(PublicIpAddress.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(Port))
             {
@@ -148,8 +148,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string nodeId = default;
-            IPAddress privateIPAddress = default;
-            IPAddress publicIPAddress = default;
+            IPAddress privateIpAddress = default;
+            IPAddress publicIpAddress = default;
             int? port = default;
             MachineLearningNodeState? nodeState = default;
             string runId = default;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    privateIPAddress = IPAddress.Parse(prop.Value.GetString());
+                    privateIpAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("publicIpAddress"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    publicIPAddress = IPAddress.Parse(prop.Value.GetString());
+                    publicIpAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("port"u8))
@@ -214,8 +214,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             return new AmlComputeNodeInformation(
                 nodeId,
-                privateIPAddress,
-                publicIPAddress,
+                privateIpAddress,
+                publicIpAddress,
                 port,
                 nodeState,
                 runId,

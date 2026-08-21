@@ -10,9 +10,9 @@ namespace Azure.Provisioning.Search
     /// <summary> Severity of the issue. </summary>
     public enum SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity
     {
-        /// <summary> The issue is a warning and does not prevent the configuration from being applied. </summary>
+        /// <summary> Warning. </summary>
         Warning = 0,
-        /// <summary> The issue is an error and prevents the configuration from being applied. </summary>
+        /// <summary> Error. </summary>
         Error = 1
     }
 }

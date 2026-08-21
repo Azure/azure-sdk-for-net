@@ -22,9 +22,5 @@ namespace Azure.ResourceManager.Fabric.Models
                 return Properties.AdministrationMembers;
             }
         }
-
-        /// <summary> An array of administrator user identities. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public IList<string> FabricCapacityUpdateAdministrationMembers => AdministrationMembers;
     }
 }

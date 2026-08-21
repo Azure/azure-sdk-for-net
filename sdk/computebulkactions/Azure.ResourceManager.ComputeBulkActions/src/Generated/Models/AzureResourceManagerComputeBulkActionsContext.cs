@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
     [ModelReaderWriterBuildable(typeof(ComputeBulkActionsVaultSecretGroup))]
     [ModelReaderWriterBuildable(typeof(ComputeBulkActionsVirtualMachineExtension))]
     [ModelReaderWriterBuildable(typeof(ComputeBulkActionsVirtualMachineExtensionProperties))]
-    [ModelReaderWriterBuildable(typeof(ComputeBulkActionsVirtualMachineIPTag))]
+    [ModelReaderWriterBuildable(typeof(ComputeBulkActionsVirtualMachineIpTag))]
     [ModelReaderWriterBuildable(typeof(ComputeBulkActionsVirtualMachineNetworkInterfaceConfiguration))]
     [ModelReaderWriterBuildable(typeof(ComputeBulkActionsVirtualMachineNetworkInterfaceConfigurationProperties))]
     [ModelReaderWriterBuildable(typeof(ComputeBulkActionsVirtualMachineNetworkInterfaceIPConfiguration))]

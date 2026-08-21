@@ -133,11 +133,11 @@ namespace Azure.Security.KeyVault.Certificates.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPAddresses))
+            if (Optional.IsCollectionDefined(IpAddresses))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in IPAddresses)
+                foreach (string item in IpAddresses)
                 {
                     if (item == null)
                     {

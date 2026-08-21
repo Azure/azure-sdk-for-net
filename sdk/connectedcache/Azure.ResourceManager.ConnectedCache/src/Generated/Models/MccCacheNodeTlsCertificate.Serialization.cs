@@ -84,11 +84,6 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 writer.WritePropertyName("certificateFileName"u8);
                 writer.WriteStringValue(CertificateFileName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CertType))
-            {
-                writer.WritePropertyName("certType"u8);
-                writer.WriteStringValue(CertType);
-            }
             if (options.Format != "W" && Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
@@ -158,7 +153,6 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             }
             string actionRequired = default;
             string certificateFileName = default;
-            string certType = default;
             string thumbprint = default;
             DateTimeOffset? expiryOn = default;
             DateTimeOffset? notBeforeOn = default;
@@ -175,11 +169,6 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 if (prop.NameEquals("certificateFileName"u8))
                 {
                     certificateFileName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("certType"u8))
-                {
-                    certType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("thumbprint"u8))
@@ -223,7 +212,6 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             return new MccCacheNodeTlsCertificate(
                 actionRequired,
                 certificateFileName,
-                certType,
                 thumbprint,
                 expiryOn,
                 notBeforeOn,

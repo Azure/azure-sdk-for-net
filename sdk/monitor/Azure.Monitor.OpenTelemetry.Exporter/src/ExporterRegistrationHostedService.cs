@@ -71,7 +71,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 tracerProvider.AddProcessor(new CompositeProcessor<Activity>(new BaseProcessor<Activity>[]
                 {
                     new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(exporterOptions), exporterOptions),
-                    new AzureMonitorBatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions))
+                    new BatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions))
                 }));
             }
 
@@ -87,7 +87,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 BaseProcessor<LogRecord> baseProcessor = exporterOptions.EnableTraceBasedLogsSampler
                                                             ? new LogFilteringProcessor(exporter)
-                                                            : new AzureMonitorBatchLogRecordExportProcessor(exporter);
+                                                            : new BatchLogRecordExportProcessor(exporter);
 
                 loggerProvider.AddProcessor(new MainAgentAttributionLogProcessor());
 

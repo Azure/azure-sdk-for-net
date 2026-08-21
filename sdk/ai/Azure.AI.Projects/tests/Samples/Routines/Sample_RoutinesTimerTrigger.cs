@@ -38,8 +38,7 @@ public class Sample_RoutinesTimerTrigger : SamplesRoutineBase
         #endregion
         // Clean up any pre-existing routine with the same name.
         try
-        { await routinesClient.DeleteAsync(routineName); }
-        catch { }
+        { await routinesClient.DeleteAsync(routineName); } catch { }
 
         #region Snippet:Sample_CreateRoutine_RoutinesTimerTrigger_Async
         RoutineAction action = new AgentResponsesApiRoutineAction
@@ -68,7 +67,7 @@ public class Sample_RoutinesTimerTrigger : SamplesRoutineBase
         while (DateTime.UtcNow < deadline)
         {
             await Task.Delay(500);
-            await foreach (RoutineRun run in projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name))
+            await foreach (RoutineRun run in projectClient.Routines.GetRoutineRunsAsync(name: created.Name))
             {
                 Console.WriteLine($"    - run ID {run.Id}, status: {run.Status}, trigger type: {run.TriggerType}, triggered at: {run.TriggeredAt?.ToString() ?? "<Not triggered yet>"}, ended at: {run.EndedAt?.ToString() ?? "<Not ended yet>"}");
                 if (string.Equals(run.Status, "finished", StringComparison.InvariantCultureIgnoreCase) ||
@@ -161,7 +160,7 @@ public class Sample_RoutinesTimerTrigger : SamplesRoutineBase
         while (DateTime.UtcNow < deadline)
         {
             Thread.Sleep(500);
-            foreach (RoutineRun run in projectClient.Routines.GetRoutineRuns(routineName: created.Name))
+            foreach (RoutineRun run in projectClient.Routines.GetRoutineRuns(name: created.Name))
             {
                 Console.WriteLine($"    - run ID {run.Id}, status: {run.Status}, trigger type: {run.TriggerType}, triggered at: {run.TriggeredAt?.ToString() ?? "<Not triggered yet>"}, ended at: {run.EndedAt?.ToString() ?? "<Not ended yet>"}");
                 if (string.Equals(run.Status, "finished", StringComparison.InvariantCultureIgnoreCase) ||

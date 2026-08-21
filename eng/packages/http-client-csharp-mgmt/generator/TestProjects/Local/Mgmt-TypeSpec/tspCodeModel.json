@@ -10211,7 +10211,6 @@
           "kind": "property",
           "name": "extendedLocation",
           "serializedName": "extendedLocation",
-          "doc": "The extended location of the resource.",
           "type": {
             "$id": "932",
             "kind": "model",
@@ -13646,7 +13645,6 @@
           "kind": "property",
           "name": "extendedLocation",
           "serializedName": "extendedLocation",
-          "doc": "The extended location of the resource.",
           "type": {
             "$ref": "932"
           },
@@ -17399,7 +17397,6 @@
           "kind": "property",
           "name": "extendedLocation",
           "serializedName": "extendedLocation",
-          "doc": "The extended location of the resource.",
           "type": {
             "$id": "1343",
             "kind": "model",

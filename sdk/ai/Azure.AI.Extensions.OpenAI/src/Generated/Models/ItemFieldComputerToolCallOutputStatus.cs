@@ -7,7 +7,8 @@ using System.ComponentModel;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    internal readonly partial struct ItemFieldComputerToolCallOutputStatus : IEquatable<ItemFieldComputerToolCallOutputStatus>
+    /// <summary></summary>
+    public readonly partial struct ItemFieldComputerToolCallOutputStatus : IEquatable<ItemFieldComputerToolCallOutputStatus>
     {
         private readonly string _value;
         private const string InProgressValue = "in_progress";
@@ -16,8 +17,11 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ItemFieldComputerToolCallOutputStatus"/>. </summary>
         /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ItemFieldComputerToolCallOutputStatus(string value)
         {
+            Argument.AssertNotNull(value, nameof(value));
+
             _value = value;
         }
 

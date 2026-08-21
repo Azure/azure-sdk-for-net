@@ -40,14 +40,33 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
             => Helper.GetUnderlyingCredential(credential);
 
         /// <summary>
-        /// Extracts the concrete <typeparamref name="TCredential"/> from a resolved
-        /// provider. <c>AzureCredentialResolver</c> constructs single-source
-        /// credentials directly, so the provider is the concrete credential.
+        /// Extracts the underlying <typeparamref name="TCredential"/> from the
+        /// <see cref="AuthenticationTokenProvider"/> produced by the resolver
+        /// path. <c>AzureCredentialResolver</c> wraps every single-source
+        /// credential in a <see cref="DefaultAzureCredential"/> whose
+        /// <c>Sources[0]</c> is the concrete credential; providers that
+        /// already match <typeparamref name="TCredential"/> (for example,
+        /// <see cref="ChainedTokenCredential"/>) are returned directly.
         /// </summary>
         protected TCredential GetUnderlyingFromTokenProvider(AuthenticationTokenProvider provider)
         {
-            Assert.IsInstanceOf<TCredential>(provider, $"Expected {typeof(TCredential).Name} but got {provider?.GetType().Name ?? "null"}");
-            return (TCredential)provider;
+            if (provider is TCredential direct)
+            {
+                return direct;
+            }
+
+            DefaultAzureCredential dac = provider as DefaultAzureCredential;
+            Assert.IsNotNull(dac, $"Expected DefaultAzureCredential or {typeof(TCredential).Name} but got {provider?.GetType().Name ?? "null"}");
+
+            FieldInfo sourcesField = typeof(DefaultAzureCredential).GetField("_sources", BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.IsNotNull(sourcesField, "DefaultAzureCredential._sources field not found via reflection");
+
+            TokenCredential[] sources = (TokenCredential[])sourcesField.GetValue(dac);
+            Assert.AreEqual(1, sources?.Length ?? 0, $"Expected exactly one inner source on DefaultAzureCredential for {CredentialSource}");
+
+            TCredential underlying = sources[0] as TCredential;
+            Assert.IsNotNull(underlying, $"Underlying source was {sources[0]?.GetType().Name ?? "null"}, expected {typeof(TCredential).Name}");
+            return underlying;
         }
 
         /// <summary>
@@ -72,7 +91,7 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
         /// </summary>
         [Test]
         [NonParallelizable]
-        public virtual void CreatesCredentialFromConfiguration_E2E()
+        public void CreatesCredentialFromConfiguration_E2E()
         {
             using (new TestEnvVar(GetRequiredEnvVars()))
             {
@@ -94,7 +113,8 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
                 var settings = config.GetAzureClientSettings<E2ETestSettings>("MyClient");
                 Assert.IsNotNull(settings.CredentialProvider, $"CredentialProvider should be set for {CredentialSource}");
 
-                // GetAzureClientSettings returns the concrete credential type directly.
+                // GetAzureClientSettings returns the concrete credential type
+                // (wrapped in DefaultAzureCredential for single-source dispatch).
                 TCredential underlying = GetUnderlyingFromTokenProvider(settings.CredentialProvider);
                 Assert.IsNotNull(underlying, $"Underlying credential should be {typeof(TCredential).Name} for {CredentialSource}");
             }

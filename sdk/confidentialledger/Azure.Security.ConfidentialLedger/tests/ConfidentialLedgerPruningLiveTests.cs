@@ -73,8 +73,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var options = InstrumentClientOptions(
                 new ConfidentialLedgerClientOptions(ServiceVersion.V2024_12_09_Preview)
                 {
-                    CertificateEndpoint = TestEnvironment.ConfidentialLedgerPruningIdentityUrl,
-                    EnableArchivedCollectionFallback = true,
+                    CertificateEndpoint = TestEnvironment.ConfidentialLedgerPruningIdentityUrl
                 });
 
             TokenCredential credential = TestEnvironment.Credential;

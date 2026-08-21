@@ -126,15 +126,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(BmcIPv4Address))
+            if (options.Format != "W" && Optional.IsDefined(BmcIpv4Address))
             {
                 writer.WritePropertyName("bmcIpv4Address"u8);
-                writer.WriteStringValue(BmcIPv4Address);
+                writer.WriteStringValue(BmcIpv4Address);
             }
-            if (options.Format != "W" && Optional.IsDefined(BmcIPv6Address))
+            if (options.Format != "W" && Optional.IsDefined(BmcIpv6Address))
             {
                 writer.WritePropertyName("bmcIpv6Address"u8);
-                writer.WriteStringValue(BmcIPv6Address);
+                writer.WriteStringValue(BmcIpv6Address);
             }
             if (options.Format != "W" && Optional.IsDefined(CACertificate))
             {
@@ -340,8 +340,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             string serialNumber = default;
             IReadOnlyList<NetworkCloudActionState> actionStates = default;
             IReadOnlyList<ResourceIdentifier> associatedResourceIds = default;
-            string bmcIPv4Address = default;
-            string bmcIPv6Address = default;
+            string bmcIpv4Address = default;
+            string bmcIpv6Address = default;
             NetworkCloudCertificateInfo caCertificate = default;
             ResourceIdentifier clusterId = default;
             BareMetalMachineCordonStatus? cordonStatus = default;
@@ -455,12 +455,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (prop.NameEquals("bmcIpv4Address"u8))
                 {
-                    bmcIPv4Address = prop.Value.GetString();
+                    bmcIpv4Address = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("bmcIpv6Address"u8))
                 {
-                    bmcIPv6Address = prop.Value.GetString();
+                    bmcIpv6Address = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("caCertificate"u8))
@@ -701,8 +701,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 serialNumber,
                 actionStates ?? new ChangeTrackingList<NetworkCloudActionState>(),
                 associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                bmcIPv4Address,
-                bmcIPv6Address,
+                bmcIpv4Address,
+                bmcIpv6Address,
                 caCertificate,
                 clusterId,
                 cordonStatus,

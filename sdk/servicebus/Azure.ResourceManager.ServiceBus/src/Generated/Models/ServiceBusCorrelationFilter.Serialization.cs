@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 throw new FormatException($"The model {nameof(ServiceBusCorrelationFilter)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (Optional.IsCollectionDefined(ApplicationProperties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
-                foreach (var item in Properties)
+                foreach (var item in ApplicationProperties)
                 {
                     writer.WritePropertyName(item.Key);
                     if (item.Value == null)
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            IDictionary<string, string> properties = default;
+            IDictionary<string, object> applicationProperties = default;
             string correlationId = default;
             string messageId = default;
             string sendTo = default;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     {
                         continue;
                     }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
                         if (prop0.Value.ValueKind == JsonValueKind.Null)
@@ -205,10 +205,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                            dictionary.Add(prop0.Name, prop0.Value.GetObject());
                         }
                     }
-                    properties = dictionary;
+                    applicationProperties = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("correlationId"u8))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             return new ServiceBusCorrelationFilter(
-                properties ?? new ChangeTrackingDictionary<string, string>(),
+                applicationProperties ?? new ChangeTrackingDictionary<string, object>(),
                 correlationId,
                 messageId,
                 sendTo,

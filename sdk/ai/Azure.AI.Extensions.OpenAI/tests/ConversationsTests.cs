@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
 using System.ClientModel;
@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Azure.AI.Projects.Agents;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using OpenAI.Conversations;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests;
@@ -27,8 +26,8 @@ public class ConversationsTests : ProjectsOpenAITestBase
     public async Task ConversationOperationsWork()
     {
         ProjectOpenAIClient client = GetTestProjectOpenAIClient();
-        ConversationResource conversation = await client.GetProjectConversationsClient().CreateProjectConversationAsync(
-            new ConversationCreationOptions()
+        ProjectConversation conversation = await client.GetProjectConversationsClient().CreateProjectConversationAsync(
+            new ProjectConversationCreationOptions()
             {
                 Items =
                 {
@@ -39,11 +38,11 @@ public class ConversationsTests : ProjectsOpenAITestBase
                 },
             });
 
-        ConversationResource retrievedConversation = await client.GetProjectConversationsClient().GetProjectConversationAsync(conversation.Id);
+        ProjectConversation retrievedConversation = await client.GetProjectConversationsClient().GetProjectConversationAsync(conversation.Id);
         Assert.That(retrievedConversation.Id, Is.EqualTo(conversation.Id));
 
         retrievedConversation = null;
-        await foreach (ConversationResource listedConversation in client.GetProjectConversationsClient().GetProjectConversationsAsync(limit: 10))
+        await foreach (ProjectConversation listedConversation in client.GetProjectConversationsClient().GetProjectConversationsAsync(limit: 10))
         {
             if (listedConversation.Id == conversation.Id)
             {
@@ -53,36 +52,36 @@ public class ConversationsTests : ProjectsOpenAITestBase
         }
         Assert.That(retrievedConversation, Is.Not.Null);
 
-        List<ResponseItem> items = new List<ResponseItem>();
-        await foreach (ResponseItem item in client.GetProjectConversationsClient().GetProjectConversationItemsAsync(conversation.Id))
+        List<AgentResponseItem> items = [];
+        await foreach (AgentResponseItem item in client.GetProjectConversationsClient().GetProjectConversationItemsAsync(conversation.Id))
         {
             items.Add(item);
         }
 
         Assert.That(items, Has.Count.EqualTo(4));
-        Assert.That(items.First(), Is.InstanceOf<FunctionCallOutputResponseItem>());
-        Assert.That(items.Last(), Is.InstanceOf<MessageResponseItem>());
+        Assert.That(items.First().AsResponseResultItem(), Is.InstanceOf<FunctionCallOutputResponseItem>());
+        Assert.That(items.Last().AsResponseResultItem(), Is.InstanceOf<MessageResponseItem>());
 
         items.Clear();
-        await foreach (ResponseItem item in client.GetProjectConversationsClient().GetProjectConversationItemsAsync(conversation.Id, order: "asc"))
+        await foreach (AgentResponseItem item in client.GetProjectConversationsClient().GetProjectConversationItemsAsync(conversation.Id, order: "asc"))
         {
             items.Add(item);
         }
 
         Assert.That(items, Has.Count.EqualTo(4));
-        Assert.That(items.First(), Is.InstanceOf<MessageResponseItem>());
-        Assert.That(items.Last(), Is.InstanceOf<FunctionCallOutputResponseItem>());
+        Assert.That(items.First().AsResponseResultItem(), Is.InstanceOf<MessageResponseItem>());
+        Assert.That(items.Last().AsResponseResultItem(), Is.InstanceOf<FunctionCallOutputResponseItem>());
 
         items.Clear();
-        await foreach (ResponseItem item in client.GetProjectConversationsClient().GetProjectConversationItemsAsync(conversation.Id, itemKind: ResponseItemKind.Message))
+        await foreach (AgentResponseItem item in client.GetProjectConversationsClient().GetProjectConversationItemsAsync(conversation.Id, itemKind: AgentResponseItemKind.Message))
         {
             items.Add(item);
         }
 
         Assert.That(items, Has.Count.EqualTo(2));
-        Assert.That(items.All(item => item is MessageResponseItem), Is.True);
+        Assert.That(items.All(item => item.AsResponseResultItem() as MessageResponseItem is not null), Is.True);
 
-        ResponseItem retrievedItem = await client.GetProjectConversationsClient().GetProjectConversationItemAsync(conversation.Id, items.Last().Id);
+        AgentResponseItem retrievedItem = await client.GetProjectConversationsClient().GetProjectConversationItemAsync(conversation.Id, items.Last().Id);
         Assert.That(retrievedItem.Id, Is.EqualTo(items.Last().Id));
 
         await client.GetProjectConversationsClient().DeleteConversationAsync(conversation.Id);
@@ -90,7 +89,7 @@ public class ConversationsTests : ProjectsOpenAITestBase
 
         int conversationsChecked = 0;
 
-        await foreach (ConversationResource listedConversation in client.GetProjectConversationsClient().GetProjectConversationsAsync(limit: 10))
+        await foreach (ProjectConversation listedConversation in client.GetProjectConversationsClient().GetProjectConversationsAsync(limit: 10))
         {
             if (listedConversation.Id == conversation.Id)
             {
@@ -110,7 +109,7 @@ public class ConversationsTests : ProjectsOpenAITestBase
         ProjectOpenAIClient client = GetTestProjectOpenAIClient();
 
         // Create a conversation
-        ConversationResource conversation = await client.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ProjectConversation conversation = await client.GetProjectConversationsClient().CreateProjectConversationAsync();
         Assert.That(conversation?.Id, Does.StartWith("conv_"));
 
         // Create 40 messages for the conversation
@@ -143,8 +142,8 @@ public class ConversationsTests : ProjectsOpenAITestBase
         Assert.That(createdItems, Has.Count.EqualTo(20));
 
         // Test ascending order traversal
-        List<ResponseItem> ascendingItems = [];
-        await foreach (ResponseItem item in client.GetProjectConversationsClient().GetProjectConversationItemsAsync(
+        List<AgentResponseItem> ascendingItems = [];
+        await foreach (AgentResponseItem item in client.GetProjectConversationsClient().GetProjectConversationItemsAsync(
             conversation.Id,
             limit: 5,
             order: "asc"))
@@ -154,8 +153,8 @@ public class ConversationsTests : ProjectsOpenAITestBase
         Assert.That(ascendingItems, Has.Count.EqualTo(40));
 
         // Test descending order traversal
-        List<ResponseItem> descendingItems = [];
-        await foreach (ResponseItem item in client.GetProjectConversationsClient().GetProjectConversationItemsAsync(
+        List<AgentResponseItem> descendingItems = [];
+        await foreach (AgentResponseItem item in client.GetProjectConversationsClient().GetProjectConversationItemsAsync(
             conversation.Id,
             limit: 5,
             order: "desc"))
@@ -174,16 +173,16 @@ public class ConversationsTests : ProjectsOpenAITestBase
         }
 
         // Verify that we can collect all items consistently
-        List<ResponseItem> allItems = [];
-        await foreach (ResponseItem item in client.GetProjectConversationsClient().GetProjectConversationItemsAsync(conversation.Id, order: AgentListOrder.Ascending.ToString()))
+        List<AgentResponseItem> allItems = [];
+        await foreach (AgentResponseItem item in client.GetProjectConversationsClient().GetProjectConversationItemsAsync(conversation.Id, order: AgentListOrder.Ascending.ToString()))
         {
             allItems.Add(item);
         }
         Assert.That(allItems, Has.Count.EqualTo(40));
 
-        List<ResponseItem> partialItems = [];
+        List<AgentResponseItem> partialItems = [];
         int counter = 10;
-        await foreach (ResponseItem item in client.GetProjectConversationsClient().GetProjectConversationItemsAsync(conversation.Id, limit: 5, after: allItems[9].Id, before: allItems[20].Id, order: AgentListOrder.Ascending.ToString()))
+        await foreach (AgentResponseItem item in client.GetProjectConversationsClient().GetProjectConversationItemsAsync(conversation.Id, limit: 5, after: allItems[9].Id, before: allItems[20].Id, order: AgentListOrder.Ascending.ToString()))
         {
             partialItems.Add(item);
             Assert.That(item.Id, Is.EqualTo(allItems[counter].Id),
@@ -194,7 +193,7 @@ public class ConversationsTests : ProjectsOpenAITestBase
 
         partialItems = [];
         counter = 19;
-        await foreach (ResponseItem item in client.GetProjectConversationsClient().GetProjectConversationItemsAsync(conversation.Id, limit: 3, before: allItems[9].Id, after: allItems[20].Id, order: AgentListOrder.Descending.ToString()))
+        await foreach (AgentResponseItem item in client.GetProjectConversationsClient().GetProjectConversationItemsAsync(conversation.Id, limit: 3, before: allItems[9].Id, after: allItems[20].Id, order: AgentListOrder.Descending.ToString()))
         {
             partialItems.Add(item);
             Assert.That(item.Id, Is.EqualTo(allItems[counter].Id),

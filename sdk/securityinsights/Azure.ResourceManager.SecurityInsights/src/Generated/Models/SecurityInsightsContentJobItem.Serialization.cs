@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
@@ -142,7 +141,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            ResourceIdentifier resourceId = default;
+            string resourceId = default;
             SecurityInsightsContentStatus? status = default;
             DateTimeOffset? executionOn = default;
             IList<PublicationFailedError> errors = default;
@@ -151,11 +150,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (prop.NameEquals("resourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceId = new ResourceIdentifier(prop.Value.GetString());
+                    resourceId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("status"u8))

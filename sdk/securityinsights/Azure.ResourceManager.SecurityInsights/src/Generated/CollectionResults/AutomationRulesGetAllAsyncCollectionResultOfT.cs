@@ -56,8 +56,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     yield break;
                 }
                 AutomationRulesList result = AutomationRulesList.FromResponse(response);
-                string nextPageString = result.NextLink;
-                nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
+                nextPage = result.NextLink;
                 yield return Page<SecurityInsightsAutomationRuleData>.FromValues((IReadOnlyList<SecurityInsightsAutomationRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {

@@ -121,11 +121,6 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("telemetry_config"u8);
                 writer.WriteObjectValue(TelemetryConfig, options);
             }
-            if (Optional.IsDefined(SessionConfiguration))
-            {
-                writer.WritePropertyName("session_configuration"u8);
-                writer.WriteObjectValue(SessionConfiguration, options);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -163,7 +158,6 @@ namespace Azure.AI.Projects.Agents
             IList<ProtocolVersionRecord> versions = default;
             CodeConfiguration codeConfiguration = default;
             TelemetryConfig telemetryConfig = default;
-            SessionConfiguration sessionConfiguration = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -252,15 +246,6 @@ namespace Azure.AI.Projects.Agents
                     telemetryConfig = TelemetryConfig.DeserializeTelemetryConfig(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("session_configuration"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sessionConfiguration = SessionConfiguration.DeserializeSessionConfiguration(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -276,8 +261,7 @@ namespace Azure.AI.Projects.Agents
                 containerConfiguration,
                 versions ?? new ChangeTrackingList<ProtocolVersionRecord>(),
                 codeConfiguration,
-                telemetryConfig,
-                sessionConfiguration);
+                telemetryConfig);
         }
     }
 }

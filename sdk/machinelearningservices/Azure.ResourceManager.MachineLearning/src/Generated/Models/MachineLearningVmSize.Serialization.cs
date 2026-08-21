@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("gpus"u8);
                 writer.WriteNumberValue(Gpus.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSVhdSizeMB))
+            if (options.Format != "W" && Optional.IsDefined(OsVhdSizeMB))
             {
                 writer.WritePropertyName("osVhdSizeMB"u8);
-                writer.WriteNumberValue(OSVhdSizeMB.Value);
+                writer.WriteNumberValue(OsVhdSizeMB.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(MaxResourceVolumeMB))
             {

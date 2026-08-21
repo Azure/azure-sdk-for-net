@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<BinaryData> annotations = default;
             DatasetFolder folder = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            CosmosDBSqlApiCollectionDatasetTypeProperties typeProperties = default;
+            CosmosDbSqlApiCollectionDatasetTypeProperties typeProperties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("typeProperties"u8))
                 {
-                    typeProperties = CosmosDBSqlApiCollectionDatasetTypeProperties.DeserializeCosmosDBSqlApiCollectionDatasetTypeProperties(prop.Value, options);
+                    typeProperties = CosmosDbSqlApiCollectionDatasetTypeProperties.DeserializeCosmosDbSqlApiCollectionDatasetTypeProperties(prop.Value, options);
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

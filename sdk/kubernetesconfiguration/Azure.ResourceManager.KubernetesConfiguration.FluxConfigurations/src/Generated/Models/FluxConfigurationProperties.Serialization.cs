@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
-                foreach (FluxObjectStatus item in Statuses)
+                foreach (ObjectStatus item in Statuses)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -242,13 +242,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             string @namespace = default;
             FluxConfigurationSourceKindType? sourceKind = default;
             bool? isSuspended = default;
-            FluxGitRepository gitRepository = default;
-            FluxBucket bucket = default;
+            GitRepository gitRepository = default;
+            Bucket bucket = default;
             AzureBlob azureBlob = default;
             OciRepository ociRepository = default;
             IDictionary<string, Kustomization> kustomizations = default;
             IDictionary<string, string> configurationProtectedSettings = default;
-            IReadOnlyList<FluxObjectStatus> statuses = default;
+            IReadOnlyList<ObjectStatus> statuses = default;
             string repositoryPublicKey = default;
             string sourceSyncedCommitId = default;
             DateTimeOffset? sourceUpdatedOn = default;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    gitRepository = FluxGitRepository.DeserializeFluxGitRepository(prop.Value, options);
+                    gitRepository = GitRepository.DeserializeGitRepository(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("bucket"u8))
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    bucket = FluxBucket.DeserializeFluxBucket(prop.Value, options);
+                    bucket = Bucket.DeserializeBucket(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("azureBlob"u8))
@@ -370,10 +370,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    List<FluxObjectStatus> array = new List<FluxObjectStatus>();
+                    List<ObjectStatus> array = new List<ObjectStatus>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FluxObjectStatus.DeserializeFluxObjectStatus(item, options));
+                        array.Add(ObjectStatus.DeserializeObjectStatus(item, options));
                     }
                     statuses = array;
                     continue;
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 ociRepository,
                 kustomizations ?? new ChangeTrackingDictionary<string, Kustomization>(),
                 configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
-                statuses ?? new ChangeTrackingList<FluxObjectStatus>(),
+                statuses ?? new ChangeTrackingList<ObjectStatus>(),
                 repositoryPublicKey,
                 sourceSyncedCommitId,
                 sourceUpdatedOn,

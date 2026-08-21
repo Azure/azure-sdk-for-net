@@ -145,31 +145,13 @@ public class BicepList<T> :
 
     private BicepValueReference? GetItemSelf(int index) =>
         _self is not null
-            ? new BicepListValueReference(_self.Construct, GetItemPropertyName(index), _self.BicepPath?.ToArray(), index)
+            ? new BicepListValueReference(_self.Construct, $"{_self.PropertyName}[{index}]", _self.BicepPath?.ToArray(), index)
             : null;
-
-    private string GetItemPropertyName(int index) => $"{_self!.PropertyName}[{index}]";
 
     private void SetSelfForItem(BicepValue<T> item, int index)
     {
         var itemSelf = GetItemSelf(index);
         item.SetSelf(itemSelf);
-    }
-
-    private void ReindexSelfForItem(BicepValue<T> item, int index)
-    {
-        if (((IBicepValue)item).Self is BicepListValueReference self)
-        {
-            self.Index = index;
-            if (_self is not null)
-            {
-                self.PropertyName = GetItemPropertyName(index);
-            }
-        }
-        else
-        {
-            SetSelfForItem(item, index);
-        }
     }
 
     private void RemoveSelfForItem(BicepValue<T> item)
@@ -194,7 +176,11 @@ public class BicepList<T> :
         // update the _self for the inserted item and all items after it
         for (int i = index; i < _values.Count; i++)
         {
-            ReindexSelfForItem(_values[i], i);
+            var self = ((IBicepValue)_values[i]).Self as BicepListValueReference;
+            if (self is not null)
+            {
+                self.Index = i;
+            }
         }
     }
 
@@ -234,7 +220,11 @@ public class BicepList<T> :
         // update the _self for all items after the removed item
         for (int i = index; i < _values.Count; i++)
         {
-            ReindexSelfForItem(_values[i], i);
+            var self = ((IBicepValue)_values[i]).Self as BicepListValueReference;
+            if (self is not null)
+            {
+                self.Index = i;
+            }
         }
     }
 
@@ -306,8 +296,8 @@ public class BicepList<T> :
         new(expression) { _referenceFactory = referenceFactory };
     private Func<BicepExpression, T>? _referenceFactory = null;
 
-    private protected override BicepExpression CompileLiteralValue(string? format)
+    private protected override BicepExpression CompileLiteralValue()
     {
-        return BicepSyntax.Array(_values.Select(v => v.Compile(format)).ToArray());
+        return BicepSyntax.Array(_values.Select(v => v.Compile()).ToArray());
     }
 }

@@ -35,7 +35,7 @@ public class ResponsesSmokeTests : ProjectsOpenAITestBase
         ResponseItem item = ModelReaderWriter.Read<ResponseItem>(BinaryData.FromString(rawStructuredInputsItem));
         Assert.That(item, Is.Not.Null);
 
-        ResponseItem agentResponseItem = item.AsAgentResponseItem();
+        AgentResponseItem agentResponseItem = item.AsAgentResponseItem();
         Assert.That(agentResponseItem, Is.Not.Null);
 
         ResponseItem revertedResponseItem = agentResponseItem;

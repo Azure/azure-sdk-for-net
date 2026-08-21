@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IPCommunityPatchableProperties properties = default;
+            IpCommunityPatchableProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("tags"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    properties = IPCommunityPatchableProperties.DeserializeIPCommunityPatchableProperties(prop.Value, options);
+                    properties = IpCommunityPatchableProperties.DeserializeIpCommunityPatchableProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

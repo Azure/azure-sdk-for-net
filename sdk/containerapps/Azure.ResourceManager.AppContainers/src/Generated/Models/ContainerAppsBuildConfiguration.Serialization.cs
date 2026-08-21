@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 throw new FormatException($"The model {nameof(ContainerAppsBuildConfiguration)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(BaseOS))
+            if (options.Format != "W" && Optional.IsDefined(BaseOs))
             {
                 writer.WritePropertyName("baseOs"u8);
-                writer.WriteStringValue(BaseOS);
+                writer.WriteStringValue(BaseOs);
             }
             if (options.Format != "W" && Optional.IsDefined(Platform))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            string baseOS = default;
+            string baseOs = default;
             string platform = default;
             string platformVersion = default;
             IReadOnlyList<EnvironmentVariable> environmentVariables = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 if (prop.NameEquals("baseOs"u8))
                 {
-                    baseOS = prop.Value.GetString();
+                    baseOs = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("platform"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             return new ContainerAppsBuildConfiguration(
-                baseOS,
+                baseOs,
                 platform,
                 platformVersion,
                 environmentVariables ?? new ChangeTrackingList<EnvironmentVariable>(),

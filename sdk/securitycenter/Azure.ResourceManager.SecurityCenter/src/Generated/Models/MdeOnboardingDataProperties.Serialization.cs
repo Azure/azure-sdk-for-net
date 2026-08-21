@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(OnboardingPackageWindows))
             {
                 writer.WritePropertyName("onboardingPackageWindows"u8);
-                writer.WriteBase64StringValue(OnboardingPackageWindows, "D");
+                writer.WriteBase64StringValue(OnboardingPackageWindows.ToArray(), "D");
             }
             if (Optional.IsDefined(OnboardingPackageLinux))
             {
                 writer.WritePropertyName("onboardingPackageLinux"u8);
-                writer.WriteBase64StringValue(OnboardingPackageLinux, "D");
+                writer.WriteBase64StringValue(OnboardingPackageLinux.ToArray(), "D");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

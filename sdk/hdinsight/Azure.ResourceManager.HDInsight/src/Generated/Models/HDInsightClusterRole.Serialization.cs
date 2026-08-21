@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             string vmGroupName = default;
             HDInsightAutoScaleConfiguration autoScaleConfiguration = default;
             HardwareProfile hardwareProfile = default;
-            OSProfile osProfile = default;
+            OsProfile osProfile = default;
             HDInsightVirtualNetworkProfile virtualNetworkProfile = default;
             IList<HDInsightClusterDataDiskGroup> dataDisksGroups = default;
             IList<ScriptAction> scriptActions = default;
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    osProfile = OSProfile.DeserializeOSProfile(prop.Value, options);
+                    osProfile = OsProfile.DeserializeOsProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("virtualNetworkProfile"u8))

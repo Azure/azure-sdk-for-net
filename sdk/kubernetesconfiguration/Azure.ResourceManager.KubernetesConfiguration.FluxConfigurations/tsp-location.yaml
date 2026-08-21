@@ -1,5 +1,5 @@
 directory: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/fluxConfigurations
-commit: 46181f60ecd4584c5e3d4e5c761b82644e4fbe6e
+commit: 34b325f128c31e4042183dedd5ad1c1827cedaf2
 repo: Azure/azure-rest-api-specs
 cleanup: true
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

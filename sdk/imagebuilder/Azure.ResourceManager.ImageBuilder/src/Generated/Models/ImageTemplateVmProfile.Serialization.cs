@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (Optional.IsDefined(OSDiskSizeGB))
+            if (Optional.IsDefined(OsDiskSizeGB))
             {
                 writer.WritePropertyName("osDiskSizeGB"u8);
-                writer.WriteNumberValue(OSDiskSizeGB.Value);
+                writer.WriteNumberValue(OsDiskSizeGB.Value);
             }
             if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {

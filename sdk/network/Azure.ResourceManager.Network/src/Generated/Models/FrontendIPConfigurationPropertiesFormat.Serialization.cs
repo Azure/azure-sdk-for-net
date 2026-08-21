@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkSubResource publicIPPrefix = default;
             NetworkSubResource gatewayLoadBalancer = default;
             NetworkProvisioningState? provisioningState = default;
-            DdosFrontendIPConfigurationSettings ddosSettings = default;
+            DdosFrontendIpConfigurationSettings ddosSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    ddosSettings = DdosFrontendIPConfigurationSettings.DeserializeDdosFrontendIPConfigurationSettings(prop.Value, options);
+                    ddosSettings = DdosFrontendIpConfigurationSettings.DeserializeDdosFrontendIpConfigurationSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

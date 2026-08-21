@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                 writer.WritePropertyName("allocationStrategy"u8);
                 writer.WriteStringValue(AllocationStrategy.Value.ToString());
             }
-            if (Optional.IsDefined(OSType))
+            if (Optional.IsDefined(OsType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OSType.Value.ToString());
+                writer.WriteStringValue(OsType.Value.ToString());
             }
             if (Optional.IsDefined(ZoneAllocationPolicy))
             {

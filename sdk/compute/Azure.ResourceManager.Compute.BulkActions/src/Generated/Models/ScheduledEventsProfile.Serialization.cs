@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("terminateNotificationProfile"u8);
                 writer.WriteObjectValue(TerminateNotificationProfile, options);
             }
-            if (Optional.IsDefined(OSImageNotificationProfile))
+            if (Optional.IsDefined(OsImageNotificationProfile))
             {
                 writer.WritePropertyName("osImageNotificationProfile"u8);
-                writer.WriteObjectValue(OSImageNotificationProfile, options);
+                writer.WriteObjectValue(OsImageNotificationProfile, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

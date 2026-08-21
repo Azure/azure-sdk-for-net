@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
@@ -26,7 +25,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="WorkspaceManagerAssignmentItem"/>. </summary>
         /// <param name="resourceId"> The resource id of the content item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceManagerAssignmentItem(ResourceIdentifier resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceManagerAssignmentItem(string resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,6 +33,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The resource id of the content item. </summary>
         [WirePath("resourceId")]
-        public ResourceIdentifier ResourceId { get; set; }
+        public string ResourceId { get; set; }
     }
 }

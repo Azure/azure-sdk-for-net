@@ -4080,7 +4080,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     if (async)
                     {
-                        response = await PageBlobRestClient.UploadPagesFromUriAsync(
+                        response = await PageBlobRestClient.UploadPagesFromUrlAsync(
                             sourceUrl: sourceUri.AbsoluteUri,
                             sourceRange: sourceRangeString,
                             contentLength: 0,
@@ -4112,7 +4112,7 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        response = PageBlobRestClient.UploadPagesFromUri(
+                        response = PageBlobRestClient.UploadPagesFromUrl(
                             sourceUrl: sourceUri.AbsoluteUri,
                             sourceRange: sourceRangeString,
                             contentLength: 0,

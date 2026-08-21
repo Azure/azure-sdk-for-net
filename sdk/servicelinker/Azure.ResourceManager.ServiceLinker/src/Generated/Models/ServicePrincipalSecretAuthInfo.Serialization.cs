@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ServiceLinker;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> The authentication info when authType is servicePrincipal secret. </summary>
-    public partial class ServicePrincipalSecretAuthInfo : AuthBaseInfo, IJsonModel<ServicePrincipalSecretAuthInfo>
+    public partial class ServicePrincipalSecretAuthInfo : IUtf8JsonSerializable, IJsonModel<ServicePrincipalSecretAuthInfo>
     {
-        /// <summary> Initializes a new instance of <see cref="ServicePrincipalSecretAuthInfo"/> for deserialization. </summary>
-        internal ServicePrincipalSecretAuthInfo()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServicePrincipalSecretAuthInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AuthBaseInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ServicePrincipalSecretAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeServicePrincipalSecretAuthInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ServicePrincipalSecretAuthInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ServicePrincipalSecretAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ServicePrincipalSecretAuthInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ServicePrincipalSecretAuthInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ServicePrincipalSecretAuthInfo IPersistableModel<ServicePrincipalSecretAuthInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServicePrincipalSecretAuthInfo)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ServicePrincipalSecretAuthInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServicePrincipalSecretAuthInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,165 +28,107 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServicePrincipalSecretAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServicePrincipalSecretAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServicePrincipalSecretAuthInfo)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(UserName))
-            {
-                writer.WritePropertyName("userName"u8);
-                writer.WriteStringValue(UserName);
-            }
             writer.WritePropertyName("clientId"u8);
             writer.WriteStringValue(ClientId);
             writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
             writer.WritePropertyName("secret"u8);
             writer.WriteStringValue(Secret);
-            if (Optional.IsDefined(DeleteOrUpdateBehavior))
-            {
-                writer.WritePropertyName("deleteOrUpdateBehavior"u8);
-                writer.WriteStringValue(DeleteOrUpdateBehavior.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(Roles))
-            {
-                writer.WritePropertyName("roles"u8);
-                writer.WriteStartArray();
-                foreach (string item in Roles)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ServicePrincipalSecretAuthInfo IJsonModel<ServicePrincipalSecretAuthInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ServicePrincipalSecretAuthInfo)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AuthBaseInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ServicePrincipalSecretAuthInfo IJsonModel<ServicePrincipalSecretAuthInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServicePrincipalSecretAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServicePrincipalSecretAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServicePrincipalSecretAuthInfo)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeServicePrincipalSecretAuthInfo(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ServicePrincipalSecretAuthInfo DeserializeServicePrincipalSecretAuthInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static ServicePrincipalSecretAuthInfo DeserializeServicePrincipalSecretAuthInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            LinkerAuthType authType = default;
-            LinkerAuthMode? authMode = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string userName = default;
             string clientId = default;
             Guid principalId = default;
             string secret = default;
-            LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior = default;
-            IList<string> roles = default;
-            foreach (var prop in element.EnumerateObject())
+            LinkerAuthType authType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("authType"u8))
+                if (property.NameEquals("clientId"u8))
                 {
-                    authType = new LinkerAuthType(prop.Value.GetString());
+                    clientId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("authMode"u8))
+                if (property.NameEquals("principalId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    authMode = new LinkerAuthMode(prop.Value.GetString());
+                    principalId = property.Value.GetGuid();
                     continue;
                 }
-                if (prop.NameEquals("userName"u8))
+                if (property.NameEquals("secret"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        userName = null;
-                        continue;
-                    }
-                    userName = prop.Value.GetString();
+                    secret = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("clientId"u8))
+                if (property.NameEquals("authType"u8))
                 {
-                    clientId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("principalId"u8))
-                {
-                    principalId = new Guid(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("secret"u8))
-                {
-                    secret = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("deleteOrUpdateBehavior"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    deleteOrUpdateBehavior = new LinkerDeleteOrUpdateBehavior(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("roles"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    roles = array;
+                    authType = new LinkerAuthType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ServicePrincipalSecretAuthInfo(
-                authType,
-                authMode,
-                additionalBinaryDataProperties,
-                userName,
-                clientId,
-                principalId,
-                secret,
-                deleteOrUpdateBehavior,
-                roles ?? new ChangeTrackingList<string>());
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ServicePrincipalSecretAuthInfo(authType, serializedAdditionalRawData, clientId, principalId, secret);
         }
+
+        BinaryData IPersistableModel<ServicePrincipalSecretAuthInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServicePrincipalSecretAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ServicePrincipalSecretAuthInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ServicePrincipalSecretAuthInfo IPersistableModel<ServicePrincipalSecretAuthInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServicePrincipalSecretAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeServicePrincipalSecretAuthInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServicePrincipalSecretAuthInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServicePrincipalSecretAuthInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

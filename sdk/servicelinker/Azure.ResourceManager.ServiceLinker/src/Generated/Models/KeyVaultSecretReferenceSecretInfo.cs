@@ -14,24 +14,25 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     public partial class KeyVaultSecretReferenceSecretInfo : SecretBaseInfo
     {
         /// <summary> Initializes a new instance of <see cref="KeyVaultSecretReferenceSecretInfo"/>. </summary>
-        public KeyVaultSecretReferenceSecretInfo() : base(LinkerSecretType.KeyVaultSecretReference)
+        public KeyVaultSecretReferenceSecretInfo()
         {
+            SecretType = LinkerSecretType.KeyVaultSecretReference;
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultSecretReferenceSecretInfo"/>. </summary>
         /// <param name="secretType"> The secret type. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the Key Vault secret. </param>
         /// <param name="version"> Version of the Key Vault secret. </param>
-        internal KeyVaultSecretReferenceSecretInfo(LinkerSecretType secretType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string version) : base(secretType, additionalBinaryDataProperties)
+        internal KeyVaultSecretReferenceSecretInfo(LinkerSecretType secretType, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string version) : base(secretType, serializedAdditionalRawData)
         {
             Name = name;
             Version = version;
+            SecretType = secretType;
         }
 
         /// <summary> Name of the Key Vault secret. </summary>
         public string Name { get; set; }
-
         /// <summary> Version of the Key Vault secret. </summary>
         public string Version { get; set; }
     }

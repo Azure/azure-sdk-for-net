@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     yield break;
                 }
-                DBVersionListResult result = DBVersionListResult.FromResponse(response);
+                DbVersionListResult result = DbVersionListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<OracleDBVersionData>.FromValues((IReadOnlyList<OracleDBVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

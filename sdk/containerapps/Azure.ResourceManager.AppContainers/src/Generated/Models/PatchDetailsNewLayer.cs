@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             Name = name;
             FrameworkAndVersion = frameworkAndVersion;
-            OSAndVersion = osAndVersion;
+            OsAndVersion = osAndVersion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> The OS name and its version in the new run image for the target image. </summary>
         [WirePath("osAndVersion")]
-        public string OSAndVersion { get; }
+        public string OsAndVersion { get; }
     }
 }
