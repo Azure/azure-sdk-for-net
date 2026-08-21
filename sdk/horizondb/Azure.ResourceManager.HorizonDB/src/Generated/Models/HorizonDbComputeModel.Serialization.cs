@@ -14,51 +14,51 @@ using Azure.ResourceManager.HorizonDB;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> The compute model for a HorizonDB cluster. </summary>
-    public partial class HorizonDbComputeModel : IJsonModel<HorizonDbComputeModel>
+    public partial class HorizonDBComputeModel : IJsonModel<HorizonDBComputeModel>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HorizonDbComputeModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HorizonDBComputeModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbComputeModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBComputeModel>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHorizonDbComputeModel(document.RootElement, options);
+                        return DeserializeHorizonDBComputeModel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDbComputeModel)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDBComputeModel)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbComputeModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBComputeModel>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHorizonDBContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDbComputeModel)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDBComputeModel)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HorizonDbComputeModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HorizonDBComputeModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbComputeModel IPersistableModel<HorizonDbComputeModel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HorizonDBComputeModel IPersistableModel<HorizonDBComputeModel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HorizonDbComputeModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HorizonDBComputeModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HorizonDbComputeModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HorizonDBComputeModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbComputeModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBComputeModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDbComputeModel)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDBComputeModel)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Type))
             {
@@ -113,30 +113,30 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDbComputeModel IJsonModel<HorizonDbComputeModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HorizonDBComputeModel IJsonModel<HorizonDBComputeModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HorizonDbComputeModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HorizonDBComputeModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDbComputeModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBComputeModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDbComputeModel)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDBComputeModel)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHorizonDbComputeModel(document.RootElement, options);
+            return DeserializeHorizonDBComputeModel(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HorizonDbComputeModel DeserializeHorizonDbComputeModel(JsonElement element, ModelReaderWriterOptions options)
+        internal static HorizonDBComputeModel DeserializeHorizonDBComputeModel(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            HorizonDbComputeModelType? @type = default;
+            HorizonDBComputeModelType? @type = default;
             int? vCores = default;
             double? minvCores = default;
             double? maxvCores = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    @type = new HorizonDbComputeModelType(prop.Value.GetString());
+                    @type = new HorizonDBComputeModelType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("vCores"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HorizonDbComputeModel(@type, vCores, minvCores, maxvCores, additionalBinaryDataProperties);
+            return new HorizonDBComputeModel(@type, vCores, minvCores, maxvCores, additionalBinaryDataProperties);
         }
     }
 }

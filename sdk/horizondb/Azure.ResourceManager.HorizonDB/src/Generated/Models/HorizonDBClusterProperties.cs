@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="computeModel"> The compute model for the cluster. </param>
         /// <param name="mirroring"> Mirroring configuration for the HorizonDB cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBClusterProperties(string administratorLogin, string administratorLoginPassword, string version, HorizonDBClusterCreateMode? createMode, DateTimeOffset? pointInTimeUtcOn, ResourceIdentifier sourceClusterResourceId, string poolName, int? replicaCount, int? vCores, string processorType, Network network, HorizonDBClusterState? state, string fullyQualifiedDomainName, string readOnlyEndpoint, HorizonDBProvisioningState? provisioningState, HorizonDBZonePlacementPolicy? zonePlacementPolicy, HorizonDBClusterParameterGroupConnectionProperties parameterGroup, HorizonDbClusterAuthConfig authConfig, HorizonDbComputeModel computeModel, HorizonDbClusterMirroring mirroring, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBClusterProperties(string administratorLogin, string administratorLoginPassword, string version, HorizonDBClusterCreateMode? createMode, DateTimeOffset? pointInTimeUtcOn, ResourceIdentifier sourceClusterResourceId, string poolName, int? replicaCount, int? vCores, string processorType, Network network, HorizonDBClusterState? state, string fullyQualifiedDomainName, string readOnlyEndpoint, HorizonDBProvisioningState? provisioningState, HorizonDBZonePlacementPolicy? zonePlacementPolicy, HorizonDBClusterParameterGroupConnectionProperties parameterGroup, HorizonDBClusterAuthConfig authConfig, HorizonDBComputeModel computeModel, HorizonDBClusterMirroring mirroring, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
@@ -127,13 +127,13 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public HorizonDBClusterParameterGroupConnectionProperties ParameterGroup { get; set; }
 
         /// <summary> Authentication configuration for the HorizonDB cluster. </summary>
-        public HorizonDbClusterAuthConfig AuthConfig { get; set; }
+        public HorizonDBClusterAuthConfig AuthConfig { get; set; }
 
         /// <summary> The compute model for the cluster. </summary>
-        public HorizonDbComputeModel ComputeModel { get; set; }
+        public HorizonDBComputeModel ComputeModel { get; set; }
 
         /// <summary> Mirroring configuration for the HorizonDB cluster. </summary>
-        public HorizonDbClusterMirroring Mirroring { get; set; }
+        public HorizonDBClusterMirroring Mirroring { get; set; }
 
         /// <summary> The flag indicating whether public ip is requested. </summary>
         public HorizonDBPublicNetworkAccessState? PublicNetworkAccess
