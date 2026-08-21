@@ -4581,9 +4581,9 @@ namespace Azure.Storage.Blobs.Test
 
             // Arrange
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            long size = 20 * Constants.MB;
+            long size = 15;
             var data = GetRandomBuffer(size);
-            int blockSize = 4 * Constants.MB;
+            int blockSize = 4;
             var blockIds = new List<string>();
             for (int offset = 0; offset < data.Length; offset += blockSize)
             {
@@ -4596,21 +4596,19 @@ namespace Azure.Storage.Blobs.Test
             }
             await blob.CommitBlockListAsync(blockIds);
 
-            long rangeOffset = 3 * Constants.MB;
-            long rangeCount = size - rangeOffset;
+            long rangeOffset = 3;
+            long rangeCount = 7;
             HttpRange range = new HttpRange(rangeOffset, rangeCount);
 
             // Act
+            List<BlobLayoutRange> allRanges = new List<BlobLayoutRange>();
             await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync(new BlobGetLayoutOptions { Range = range }))
             {
                 // Assert
                 Assert.IsNotNull(blobLayoutInfo.Ranges);
                 Assert.IsNotEmpty(blobLayoutInfo.Ranges.Range);
 
-                // Verify range coverage is scoped to the requested range
-                Assert.AreEqual(blobLayoutInfo.Ranges.Range[0].Start, rangeOffset);
-                long rangeEnd = rangeOffset + rangeCount - 1;
-                Assert.AreEqual(blobLayoutInfo.Ranges.Range[blobLayoutInfo.Ranges.Range.Count - 1].End, rangeEnd);
+                allRanges.AddRange(blobLayoutInfo.Ranges.Range);
 
                 // Verify endpoints are returned and resolvable
                 Assert.IsNotNull(blobLayoutInfo.Endpoints);
@@ -4621,6 +4619,12 @@ namespace Azure.Storage.Blobs.Test
                     Assert.IsNotEmpty(ep.Value);
                 }
             }
+
+            // Verify range coverage is scoped to the requested range across all pages
+            Assert.IsNotEmpty(allRanges);
+            Assert.AreEqual(rangeOffset, allRanges[0].Start);
+            long rangeEnd = rangeOffset + rangeCount - 1;
+            Assert.AreEqual(rangeEnd, allRanges[allRanges.Count - 1].End);
         }
 
         [RecordedTest]
@@ -4703,7 +4707,6 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Ignore("The current test environment does not support this feature")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task GetLayoutAsync_IfTags()
@@ -4739,7 +4742,6 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Ignore("The current test environment does not support this feature")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task GetLayoutAsync_IfTagsFailed()
@@ -4943,7 +4945,6 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Ignore("The current test environment does not support this feature")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task GetLayoutAsync_Tags()
