@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Keys
     /// supports creating, retrieving, updating, deleting, purging, backing up, restoring, and listing the <see cref="KeyVaultKey"/>.
     /// The client also supports listing <see cref="DeletedKey"/> for a soft-delete enabled Azure Key Vault.
     /// </summary>
-    public class KeyClient
+    public class KeyClient : IDisposable
     {
         internal const string KeysPath = "/keys/";
         internal const string DeletedKeysPath = "/deletedkeys/";
@@ -69,11 +69,35 @@ namespace Azure.Security.KeyVault.Keys
             options ??= new KeyClientOptions();
             string apiVersion = options.GetVersionString();
 
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options,
-                    new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
+            bool enableProofOfPossession = options.EnableProofOfPossession && ChallengeBasedAuthenticationPolicy.SupportsProofOfPossession(options.Transport);
+            ChallengeBasedAuthenticationPolicy authenticationPolicy = new ChallengeBasedAuthenticationPolicy(
+                credential,
+                options.DisableChallengeResourceVerification,
+                enableProofOfPossession);
+            HttpPipeline pipeline = enableProofOfPossession
+                ? HttpPipelineBuilder.Build(
+                    options,
+                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                    perRetryPolicies: [authenticationPolicy],
+                    transportOptions: new HttpPipelineTransportOptions(),
+                    responseClassifier: null)
+                : HttpPipelineBuilder.Build(
+                    options,
+                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                    perRetryPolicies: [authenticationPolicy],
+                    responseClassifier: null);
 
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = new KeyVaultPipeline(vaultUri, apiVersion, pipeline, _clientDiagnostics);
+        }
+
+        /// <summary>
+        /// Releases the resources used by this <see cref="KeyClient"/>, including the dedicated transport created
+        /// internally when <see cref="KeyClientOptions.EnableProofOfPossession"/> is enabled. A no-op otherwise.
+        /// </summary>
+        public void Dispose()
+        {
+            (_pipeline?.HttpPipeline as IDisposable)?.Dispose();
         }
 
         /// <summary>

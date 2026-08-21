@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Administration
     /// The rest client for the KeyVault External Key Manager (EKM) service.
     /// </summary>
     [CodeGenType("KeyVaultEkmRestClient")]
-    public partial class KeyVaultEkmClient
+    public partial class KeyVaultEkmClient : IDisposable
     {
         /// <summary>
         /// Gets the vault URI.
@@ -44,9 +44,23 @@ namespace Azure.Security.KeyVault.Administration
             options ??= new KeyVaultAdministrationClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            Pipeline = HttpPipelineBuilder.Build(
-                options,
-                new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
+            bool enableProofOfPossession = options.EnableProofOfPossession && ChallengeBasedAuthenticationPolicy.SupportsProofOfPossession(options.Transport);
+            ChallengeBasedAuthenticationPolicy authenticationPolicy = new ChallengeBasedAuthenticationPolicy(
+                credential,
+                options.DisableChallengeResourceVerification,
+                enableProofOfPossession);
+            Pipeline = enableProofOfPossession
+                ? HttpPipelineBuilder.Build(
+                    options,
+                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                    perRetryPolicies: [authenticationPolicy],
+                    transportOptions: new HttpPipelineTransportOptions(),
+                    responseClassifier: null)
+                : HttpPipelineBuilder.Build(
+                    options,
+                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                    perRetryPolicies: [authenticationPolicy],
+                    responseClassifier: null);
             _endpoint = vaultUri;
             _apiVersion = options.GetVersionString();
         }
@@ -65,6 +79,17 @@ namespace Azure.Security.KeyVault.Administration
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             _apiVersion = options.GetVersionString();
             ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary>
+        /// Releases the resources used by this <see cref="KeyVaultEkmClient"/>, including the dedicated transport
+        /// created internally when
+        /// <see cref="KeyVaultAdministrationClientOptions.EnableProofOfPossession"/> is enabled. A no-op
+        /// otherwise.
+        /// </summary>
+        public void Dispose()
+        {
+            (Pipeline as IDisposable)?.Dispose();
         }
 
         /// <summary>

@@ -63,7 +63,7 @@ namespace Azure.Security.KeyVault.Secrets
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Security.KeyVault.Secrets.SecretProperties>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Security.KeyVault.Secrets.SecretProperties>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public partial class SecretClient
+    public partial class SecretClient : System.IDisposable
     {
         protected SecretClient() { }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
@@ -73,6 +73,7 @@ namespace Azure.Security.KeyVault.Secrets
         public virtual System.Uri VaultUri { get { throw null; } }
         public virtual Azure.Response<byte[]> BackupSecret(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<byte[]>> BackupSecretAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public void Dispose() { }
         public virtual Azure.Response<Azure.Security.KeyVault.Secrets.DeletedSecret> GetDeletedSecret(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Secrets.DeletedSecret>> GetDeletedSecretAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Security.KeyVault.Secrets.DeletedSecret> GetDeletedSecrets(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -112,6 +113,7 @@ namespace Azure.Security.KeyVault.Secrets
     {
         public SecretClientOptions(Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion version = Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion.V2025_07_01) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
+        public bool EnableProofOfPossession { get { throw null; } set { } }
         public Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {

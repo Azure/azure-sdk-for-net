@@ -224,7 +224,8 @@ namespace Azure.Core.TestFramework
         public HashSet<string> LegacyExcludedHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
             "Request-Id",
-            "traceparent"
+            "traceparent",
+            "x-ms-tokenboundauth"
         };
 
         /// <summary>

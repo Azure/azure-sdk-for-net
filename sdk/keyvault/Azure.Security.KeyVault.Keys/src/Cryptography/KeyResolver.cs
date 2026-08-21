@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// a byte array with a length matching one of the AES key lengths (128, 192, 256) and the
     /// content-type of the secret is application/octet-stream.
     /// </summary>
-    public class KeyResolver : IKeyEncryptionKeyResolver
+    public class KeyResolver : IKeyEncryptionKeyResolver, IDisposable
     {
         private const string OTelKeyIdKey = "az.keyvault.key.id";
         private readonly HttpPipeline  _pipeline;
@@ -56,10 +56,35 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             _apiVersion = options.GetVersionString();
 
-            _pipeline = HttpPipelineBuilder.Build(options,
-                    new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
+            bool enableProofOfPossession = options.EnableProofOfPossession && ChallengeBasedAuthenticationPolicy.SupportsProofOfPossession(options.Transport);
+            ChallengeBasedAuthenticationPolicy authenticationPolicy = new ChallengeBasedAuthenticationPolicy(
+                credential,
+                options.DisableChallengeResourceVerification,
+                enableProofOfPossession);
+            _pipeline = enableProofOfPossession
+                ? HttpPipelineBuilder.Build(
+                    options,
+                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                    perRetryPolicies: [authenticationPolicy],
+                    transportOptions: new HttpPipelineTransportOptions(),
+                    responseClassifier: null)
+                : HttpPipelineBuilder.Build(
+                    options,
+                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                    perRetryPolicies: [authenticationPolicy],
+                    responseClassifier: null);
 
             _clientDiagnostics = new ClientDiagnostics(options);
+        }
+
+        /// <summary>
+        /// Releases the resources used by this <see cref="KeyResolver"/>, including the dedicated transport
+        /// created internally when <see cref="CryptographyClientOptions.EnableProofOfPossession"/> is enabled. A
+        /// no-op otherwise.
+        /// </summary>
+        public void Dispose()
+        {
+            (_pipeline as IDisposable)?.Dispose();
         }
 
         /// <summary>

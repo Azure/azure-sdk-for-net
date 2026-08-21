@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Administration
     /// The client supports creating, listing, updating, and deleting <see cref="KeyVaultRoleAssignment"/> and <see cref="KeyVaultRoleDefinition" />.
     /// </summary>
     [CodeGenType("KeyVaultAccessControlRestClient")]
-    public partial class KeyVaultAccessControlClient
+    public partial class KeyVaultAccessControlClient : IDisposable
     {
         private readonly ClientDiagnostics _diagnostics;
 
@@ -61,8 +61,23 @@ namespace Azure.Security.KeyVault.Administration
             options ??= new KeyVaultAdministrationClientOptions();
             string apiVersion = options.GetVersionString();
 
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options,
-                    new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
+            bool enableProofOfPossession = options.EnableProofOfPossession && ChallengeBasedAuthenticationPolicy.SupportsProofOfPossession(options.Transport);
+            ChallengeBasedAuthenticationPolicy authenticationPolicy = new ChallengeBasedAuthenticationPolicy(
+                credential,
+                options.DisableChallengeResourceVerification,
+                enableProofOfPossession);
+            HttpPipeline pipeline = enableProofOfPossession
+                ? HttpPipelineBuilder.Build(
+                    options,
+                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                    perRetryPolicies: [authenticationPolicy],
+                    transportOptions: new HttpPipelineTransportOptions(),
+                    responseClassifier: null)
+                : HttpPipelineBuilder.Build(
+                    options,
+                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                    perRetryPolicies: [authenticationPolicy],
+                    responseClassifier: null);
 
             _diagnostics = new ClientDiagnostics(options, true);
             ClientDiagnostics = _diagnostics;
@@ -85,6 +100,17 @@ namespace Azure.Security.KeyVault.Administration
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             _apiVersion = options.GetVersionString();
             ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary>
+        /// Releases the resources used by this <see cref="KeyVaultAccessControlClient"/>, including the dedicated
+        /// transport created internally when
+        /// <see cref="KeyVaultAdministrationClientOptions.EnableProofOfPossession"/> is enabled. A no-op
+        /// otherwise.
+        /// </summary>
+        public void Dispose()
+        {
+            (Pipeline as IDisposable)?.Dispose();
         }
 
         /// <summary>

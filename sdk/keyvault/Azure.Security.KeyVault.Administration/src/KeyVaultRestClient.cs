@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Administration
     /// The rest client for the KeyVault service.
     /// </summary>
     [CodeGenType("KeyVaultRestClient")]
-    internal partial class KeyVaultRestClient
+    internal partial class KeyVaultRestClient : IDisposable
     {
         /// <summary> Initializes a new instance of KeyVaultRestClient. </summary>
         /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
@@ -38,8 +38,23 @@ namespace Azure.Security.KeyVault.Administration
             options ??= new KeyVaultAdministrationClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            Pipeline = HttpPipelineBuilder.Build(options,
-                    new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
+            bool enableProofOfPossession = options.EnableProofOfPossession && ChallengeBasedAuthenticationPolicy.SupportsProofOfPossession(options.Transport);
+            ChallengeBasedAuthenticationPolicy authenticationPolicy = new ChallengeBasedAuthenticationPolicy(
+                credential,
+                options.DisableChallengeResourceVerification,
+                enableProofOfPossession);
+            Pipeline = enableProofOfPossession
+                ? HttpPipelineBuilder.Build(
+                    options,
+                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                    perRetryPolicies: [authenticationPolicy],
+                    transportOptions: new HttpPipelineTransportOptions(),
+                    responseClassifier: null)
+                : HttpPipelineBuilder.Build(
+                    options,
+                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                    perRetryPolicies: [authenticationPolicy],
+                    responseClassifier: null);
             _endpoint = endpoint;
             _apiVersion = options.GetVersionString();
         }
@@ -58,6 +73,17 @@ namespace Azure.Security.KeyVault.Administration
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             _apiVersion = options.GetVersionString();
             ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary>
+        /// Releases the resources used by this <see cref="KeyVaultRestClient"/>, including the dedicated
+        /// transport created internally when
+        /// <see cref="KeyVaultAdministrationClientOptions.EnableProofOfPossession"/> is enabled. A no-op
+        /// otherwise.
+        /// </summary>
+        public void Dispose()
+        {
+            (Pipeline as IDisposable)?.Dispose();
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Azure.Security.KeyVault.Secrets
     /// invoked.
     /// </remarks>
     [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/security-keyvault-secrets")]
-    public class SecretClient
+    public class SecretClient : IDisposable
     {
         private const string OTelSecretNameKey    = "az.keyvault.secret.name";
         private const string OTelSecretVersionKey = "az.keyvault.secret.version";
@@ -37,6 +37,7 @@ namespace Azure.Security.KeyVault.Secrets
         private readonly Uri _vaultUri;
         private readonly KeyVaultSecretsClient _generated;
         private readonly ClientDiagnostics _diagnostics;
+        private readonly HttpPipeline _pipeline;
 
         /// <summary>For mocking.</summary>
         protected SecretClient() { }
@@ -56,25 +57,48 @@ namespace Azure.Security.KeyVault.Secrets
             _diagnostics = new ClientDiagnostics(options);
 
             // Build the HttpPipeline directly from the customer's SecretClientOptions
-            // (which extends ClientOptions). This is the legacy SecretClient construction
-            // path. Doing it this way picks up *everything* the customer configured —
-            // AddPolicy entries (per-call + per-retry), custom RetryPolicy / RetryOptions,
-            // Transport, Diagnostics.LoggedHeaderNames + LoggedQueryParameters,
-            // ApplicationId — automatically. None of those need explicit copy code, and
-            // future fields added to ClientOptions are picked up for free.
-            //
-            // The challenge-based auth policy is the same one the legacy SecretClient
-            // used so recordings remain byte-identical.
-            var authPolicy = new ChallengeBasedAuthenticationPolicy(
-                credential, options.DisableChallengeResourceVerification);
-
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, authPolicy);
+            // (which extends ClientOptions) so AddPolicy entries, custom RetryPolicy /
+            // RetryOptions, Transport, Diagnostics allow-lists and ApplicationId all flow
+            // through automatically. The challenge-based auth policy is the same one the
+            // legacy SecretClient used. Transport options are only passed when
+            // Proof-of-Possession (PoP) token binding is enabled: that overload builds a
+            // dedicated, updatable (and therefore disposable) transport instead of the
+            // shared default, so customers who don't opt in keep the default transport
+            // and connection-pooling behavior unchanged.
+            bool enableProofOfPossession = options.EnableProofOfPossession && ChallengeBasedAuthenticationPolicy.SupportsProofOfPossession(options.Transport);
+            ChallengeBasedAuthenticationPolicy authenticationPolicy = new ChallengeBasedAuthenticationPolicy(
+                credential,
+                options.DisableChallengeResourceVerification,
+                enableProofOfPossession);
+            HttpPipeline pipeline = enableProofOfPossession
+                ? HttpPipelineBuilder.Build(
+                    options,
+                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                    perRetryPolicies: [authenticationPolicy],
+                    transportOptions: new HttpPipelineTransportOptions(),
+                    responseClassifier: null)
+                : HttpPipelineBuilder.Build(
+                    options,
+                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                    perRetryPolicies: [authenticationPolicy],
+                    responseClassifier: null);
+            _pipeline = pipeline;
 
             _generated = new KeyVaultSecretsClient(
                 vaultUri,
                 MapApiVersion(options.Version),
                 pipeline,
                 _diagnostics);
+        }
+
+        /// <summary>
+        /// Releases the resources used by this <see cref="SecretClient"/>, including the dedicated transport
+        /// created internally when <see cref="SecretClientOptions.EnableProofOfPossession"/> is enabled. A no-op
+        /// otherwise.
+        /// </summary>
+        public void Dispose()
+        {
+            (_pipeline as IDisposable)?.Dispose();
         }
 
         /// <summary>Initializes a new instance of the <see cref="SecretClient"/> class from settings.</summary>
