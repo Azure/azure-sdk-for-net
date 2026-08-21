@@ -210,7 +210,8 @@ namespace Azure.Storage.Files.Shares
                     Owner = response.Headers.TryGetValue("x-ms-owner", out string owner) ? owner : null,
                     Group = response.Headers.TryGetValue("x-ms-group", out string group) ? group : null,
                     FileType = response.Headers.TryGetValue("x-ms-file-file-type", out string nfsFileType) ? (NfsFileType?)nfsFileType : null,
-                }
+                },
+                FileName = response.Headers.TryGetValue("x-ms-file-name", out string directoryName) ? directoryName : null
             };
         }
 
@@ -476,6 +477,7 @@ namespace Azure.Storage.Files.Shares
             const string GroupHeader = "x-ms-group";
             const string NfsFileTypeHeader = "x-ms-file-file-type";
             const string LinkCountHeader = "x-ms-link-count";
+            const string FileNameHeader = "x-ms-file-name";
 
             ShareFileProperties shareFileProperties = new ShareFileProperties
             {
@@ -514,7 +516,8 @@ namespace Azure.Storage.Files.Shares
                     Group = response.Headers.TryGetValue(GroupHeader, out string group) ? group : null,
                     FileType = response.Headers.TryGetValue(NfsFileTypeHeader, out string nfsFileType) ? (NfsFileType?)nfsFileType : null,
                     LinkCount = response.Headers.TryGetValue(LinkCountHeader, out long? linkCount) ? linkCount : null
-                }
+                },
+                FileName = response.Headers.TryGetValue(FileNameHeader, out string fileName) ? fileName : null
             };
 
             if (response.Headers.TryGetValue(Constants.HeaderNames.ContentEncoding, out string contentEncoding) && contentEncoding != null)
@@ -528,6 +531,76 @@ namespace Azure.Storage.Files.Shares
             }
 
             return shareFileProperties;
+        }
+
+        internal static ShareFileLinks ToShareFileLinks(this Response<HardLinkList> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            List<ShareFileLink> links = new List<ShareFileLink>();
+            if (response.Value?.HardLinks != null)
+            {
+                foreach (HardLink hardLink in response.Value.HardLinks)
+                {
+                    links.Add(new ShareFileLink
+                    {
+                        ParentId = hardLink.ParentId,
+                        Name = hardLink.FileName.ToFileName()
+                    });
+                }
+            }
+
+            return new ShareFileLinks
+            {
+                Properties = response.GetRawResponse().ToShareFileLinksProperties(),
+                Links = links
+            };
+        }
+
+        /// <summary>
+        /// Builds the <see cref="ShareFileProperties"/> of a Get File Links response.
+        ///
+        /// The response of Get File Links has a body, so the content properties
+        /// of the file are returned with an x-ms-content- prefix to avoid
+        /// colliding with the headers that describe the response body itself.
+        /// </summary>
+        private static ShareFileProperties ToShareFileLinksProperties(this Response response)
+        {
+            ShareFileProperties properties = response.ToShareFileProperties();
+            if (properties == null)
+            {
+                return null;
+            }
+
+            properties.ContentType = response.Headers.TryGetValue("x-ms-content-type", out string contentType) ? contentType : null;
+            properties.ContentLength = response.Headers.TryGetValue("x-ms-content-length", out long? contentLength) ? contentLength.GetValueOrDefault() : default;
+            properties.ContentHash = response.Headers.TryGetValue("x-ms-content-md5", out byte[] contentHash) ? contentHash : null;
+            properties.ContentDisposition = response.Headers.TryGetValue("x-ms-content-disposition", out string contentDisposition) ? contentDisposition : null;
+            properties.CacheControl = response.Headers.TryGetValue("x-ms-cache-control", out string cacheControl) ? cacheControl : null;
+
+            properties.ContentEncoding = response.Headers.TryGetValue("x-ms-content-encoding", out string contentEncoding) && contentEncoding != null
+                ? contentEncoding.Split(Constants.CommaChar)
+                : null;
+            properties.ContentLanguage = response.Headers.TryGetValue("x-ms-content-language", out string contentLanguage) && contentLanguage != null
+                ? contentLanguage.Split(Constants.CommaChar)
+                : null;
+
+            return properties;
+        }
+
+        /// <summary>
+        /// Decodes a <see cref="StringEncoded"/> name.
+        /// </summary>
+        private static string ToFileName(this StringEncoded name)
+        {
+            if (name?.Content == null)
+            {
+                return null;
+            }
+            return name.Encoded == true ? Uri.UnescapeDataString(name.Content) : name.Content;
         }
 
         internal static ShareFileUploadInfo ToShareFileUploadInfo(this Response response)
