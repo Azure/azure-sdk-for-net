@@ -17,6 +17,10 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         internal BlobChangeFeedEventData() { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobChangeFeedEventData"/> class
+        /// from an Avro record dictionary.
+        /// </summary>
         internal BlobChangeFeedEventData(Dictionary<string, object> record)
         {
             BlobOperationName = new BlobOperationName((string)record[Constants.ChangeFeed.EventData.Api]);

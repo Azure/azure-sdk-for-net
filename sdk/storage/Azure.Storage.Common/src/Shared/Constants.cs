@@ -465,16 +465,16 @@ namespace Azure.Storage
         }
 
         /// <summary>
-        /// ChangeFeed constant values.
+        /// ChangeFeed constant values shared by Blobs and Files Change Feed,
+        /// plus Blob-specific Avro field names.
         /// </summary>
         internal static class ChangeFeed
         {
             public const string ChangeFeedContainerName = "$blobchangefeed";
             public const string SegmentPrefix = "idx/segments/";
-            public const string InitalizationManifestPath = "/0000/";
-            public const string InitalizationSegment = "1601";
+            public const string InitializationSegment = "1601";
             public const string MetaSegmentsPath = "meta/segments.json";
-            public const long ChunkBlockDownloadSize = MB;
+            public const long ChunkBlockDownloadSize = 256 * MB;
             public const int DefaultPageSize = 5000;
             public const int LazyLoadingBlobStreamBlockSize = 3 * Constants.KB;
 
@@ -530,6 +530,92 @@ namespace Azure.Storage
                 public const string PreviousTier = "PreviousTier";
 
                 public const string BlobTagsUpdated = "blobTagsUpdated";
+            }
+        }
+
+        /// <summary>
+        /// Files ChangeFeed constant values that are unique to the Files implementation
+        /// (snapshots, container discovery header, Files Avro field names).
+        /// Path constants and download sizes shared with Blobs live in <see cref="ChangeFeed"/>.
+        /// </summary>
+        internal static class FilesChangeFeed
+        {
+            public const string SnapshotsPrefix = "idx/snapshots/";
+            public const int TimeWindowMinutes = 15;
+            public const string ChangeFeedContainerHeader = "x-ms-file-blob-container-for-xfiles-change-feed";
+
+            /// <summary>
+            /// Path (relative to the change-feed container) of the mutable pointer blob
+            /// that identifies the most recent reset marker for the share.
+            /// </summary>
+            public const string ResetLatestJsonPath = "meta/reset-latest.json";
+
+            /// <summary>
+            /// Prefix (relative to the change-feed container) under which per-event
+            /// immutable reset marker blobs are stored (<c>meta/resets/&lt;20-digit-FILETIME&gt;.json</c>).
+            /// </summary>
+            public const string ResetEventPrefix = "meta/resets/";
+
+            internal static class Event
+            {
+                public const string SchemaVersion = "SchemaVersion";
+                public const string Reason = "Reason";
+                public const string Protocol = "Protocol";
+                public const string EventTime = "EventTime";
+                public const string Id = "Id";
+                public const string Cvnt = "Cvnt";
+                public const string Data = "Data";
+            }
+
+            internal static class EventData
+            {
+                public const string FileId = "FileId";
+                public const string ParentFileId = "ParentFileId";
+                public const string NewParentFileId = "NewParentFileId";
+                public const string Etag = "Etag";
+                public const string FileName = "FileName";
+                public const string FullFilePath = "FullFilePath";
+                public const string NewFullFilePath = "NewFullFilePath";
+                public const string Identity = "Identity";
+                public const string Description = "Description";
+                public const string Initiator = "Initiator";
+                public const string IsDirectory = "IsDirectory";
+            }
+
+            internal static class EventIdentity
+            {
+                public const string EntraOID = "EntraOID";
+                public const string SID = "SID";
+            }
+
+            /// <summary>
+            /// JSON field names for the mutable pointer blob <c>meta/reset-latest.json</c>.
+            /// </summary>
+            internal static class ResetPointer
+            {
+                public const string SchemaVersion = "schemaVersion";
+                public const string LatestResetId = "latestResetId";
+                public const string LatestResetFileTime = "latestResetFileTime";
+                public const string LatestResetTimeUtc = "latestResetTimeUtc";
+                public const string LatestMarkerPath = "latestMarkerPath";
+                public const string AccountName = "accountName";
+                public const string ContainerName = "containerName";
+                public const string Reason = "reason";
+            }
+
+            /// <summary>
+            /// JSON field names for the per-event immutable reset marker blobs
+            /// <c>meta/resets/&lt;20-digit-FILETIME&gt;.json</c>.
+            /// </summary>
+            internal static class ResetMarker
+            {
+                public const string SchemaVersion = "schemaVersion";
+                public const string ResetId = "resetId";
+                public const string ResetFileTime = "resetFileTime";
+                public const string ResetTimeUtc = "resetTimeUtc";
+                public const string AccountName = "accountName";
+                public const string ContainerName = "containerName";
+                public const string Reason = "reason";
             }
         }
 
