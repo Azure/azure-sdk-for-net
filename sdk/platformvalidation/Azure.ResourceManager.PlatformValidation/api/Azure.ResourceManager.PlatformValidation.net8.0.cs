@@ -467,27 +467,6 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         public static bool operator !=(Azure.ResourceManager.PlatformValidation.Models.CatalogAudience left, Azure.ResourceManager.PlatformValidation.Models.CatalogAudience right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public sealed class CertificationPackageDiskImage
-    {
-        public CertificationPackageDiskImage(System.Uri sourceVhdUri) { }
-        public System.Uri SourceVhdUri { get { throw null; } }
-    }
-    public sealed class CertificationPackageReference
-    {
-        public CertificationPackageReference(string osType, string vmGenerationType, string architectureType, Azure.ResourceManager.PlatformValidation.Models.CertificationPackageStorageProfile storageProfile) { }
-        public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
-        public string ArchitectureType { get { throw null; } }
-        public string OsType { get { throw null; } }
-        public System.Collections.Generic.IList<string> RecommendedVmSizes { get { throw null; } }
-        public Azure.ResourceManager.PlatformValidation.Models.CertificationPackageStorageProfile StorageProfile { get { throw null; } }
-        public string VmGenerationType { get { throw null; } }
-    }
-    public sealed class CertificationPackageStorageProfile
-    {
-        public CertificationPackageStorageProfile(Azure.ResourceManager.PlatformValidation.Models.CertificationPackageDiskImage osDiskImage) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.PlatformValidation.Models.CertificationPackageDiskImage> DataDiskImages { get { throw null; } }
-        public Azure.ResourceManager.PlatformValidation.Models.CertificationPackageDiskImage OsDiskImage { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CloudValidationOverallState : System.IEquatable<Azure.ResourceManager.PlatformValidation.Models.CloudValidationOverallState>
     {
@@ -552,20 +531,6 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         Azure.ResourceManager.PlatformValidation.Models.CloudValidationUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PlatformValidation.Models.CloudValidationUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PlatformValidation.Models.CloudValidationUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PlatformValidation.Models.CloudValidationUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public sealed class ExecutionPlanConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PlatformValidation.Models.ExecutionPlanConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PlatformValidation.Models.ExecutionPlanConfiguration>
-    {
-        public const string ApiVersion = "microsoft.validate/executionPlan.v0";
-        public const string Kind = "ExecutionPlan";
-        public ExecutionPlanConfiguration(string name, Azure.ResourceManager.PlatformValidation.Models.CertificationPackageReference certificationPackageReference) { }
-        public Azure.ResourceManager.PlatformValidation.Models.CertificationPackageReference CertificationPackageReference { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.PlatformValidation.Models.ValidationStep> Steps { get { throw null; } }
-        Azure.ResourceManager.PlatformValidation.Models.ExecutionPlanConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PlatformValidation.Models.ExecutionPlanConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PlatformValidation.Models.ExecutionPlanConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.PlatformValidation.Models.ExecutionPlanConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PlatformValidation.Models.ExecutionPlanConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PlatformValidation.Models.ExecutionPlanConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PlatformValidation.Models.ExecutionPlanConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ExecutionPlanRunProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PlatformValidation.Models.ExecutionPlanRunProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PlatformValidation.Models.ExecutionPlanRunProperties>
     {
@@ -813,13 +778,6 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         Azure.ResourceManager.PlatformValidation.Models.ValidationExecutionPlanUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PlatformValidation.Models.ValidationExecutionPlanUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PlatformValidation.Models.ValidationExecutionPlanUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PlatformValidation.Models.ValidationExecutionPlanUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public sealed class ValidationStep
-    {
-        public System.BinaryData Inputs { get { throw null; } set { } }
-        public string Name { get { throw null; } }
-        public string TestRef { get { throw null; } }
-        public static Azure.ResourceManager.PlatformValidation.Models.ValidationStep Test(string name, string testRef) { throw null; }
     }
     public partial class ValidationTestCategoryProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PlatformValidation.Models.ValidationTestCategoryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PlatformValidation.Models.ValidationTestCategoryProperties>
     {
