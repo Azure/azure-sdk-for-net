@@ -134,6 +134,22 @@ namespace Azure.Core.TestFramework.Tests
         }
 
         [Test]
+        public async Task AsyncEnumerableUnsuppressesScopesDuringEnumeration()
+        {
+            InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
+            IAsyncEnumerator<int> enumerator = client.StreamSuppressibleAsync().GetAsyncEnumerator();
+
+            // The iterator body only runs on MoveNextAsync, so it observes this activity rather than
+            // the one that was current when the enumerator was created.
+            using Activity activity = new Activity("Outer").Start();
+            activity.SetCustomProperty("az.sdk.scope", bool.TrueString);
+
+            Assert.IsTrue(await enumerator.MoveNextAsync());
+            Assert.IsFalse(await enumerator.MoveNextAsync());
+            await enumerator.DisposeAsync();
+        }
+
+        [Test]
         public async Task DirectListenerCapturesAsyncEnumerableScope()
         {
             using var listener = new ClientDiagnosticListener(s => s.StartsWith("Azure."), asyncLocal: true);
@@ -333,6 +349,27 @@ namespace Azure.Core.TestFramework.Tests
                     yield return 1;
                     await Task.Yield();
                     yield return 2;
+                }
+                finally
+                {
+                    scope.Dispose();
+                }
+            }
+
+            public virtual async IAsyncEnumerable<int> StreamSuppressibleAsync(
+                [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                // Suppresses nested activities, so this scope is skipped entirely when the ambient
+                // activity is still marked with az.sdk.scope.
+                DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Core.Tests", "random", true, true, true);
+                DiagnosticScope scope = clientDiagnostics.CreateScope(
+                    $"{typeof(InvalidDiagnosticScopeTestClient).Name}.StreamSuppressible");
+                scope.Start();
+                try
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    yield return 1;
+                    await Task.Yield();
                 }
                 finally
                 {

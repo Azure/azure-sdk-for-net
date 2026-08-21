@@ -410,7 +410,7 @@ namespace Azure.Core.TestFramework
                 {
                     _methodInfo = methodInfo;
                     _diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure."), asyncLocal: true);
-                    Activity.Current?.SetCustomProperty("az.sdk.scope", null);
+                    UnsuppressCurrentActivity();
                     try
                     {
                         _enumerator = enumerable.GetAsyncEnumerator(cancellationToken);
@@ -427,6 +427,10 @@ namespace Azure.Core.TestFramework
                 public async ValueTask<bool> MoveNextAsync()
                 {
                     _moveNextStarted = true;
+
+                    // The iterator body runs lazily, so the activity that hosts its scopes is only
+                    // known here rather than when the enumerator was created.
+                    UnsuppressCurrentActivity();
                     try
                     {
                         bool movedNext = await _enumerator.MoveNextAsync();
@@ -447,6 +451,7 @@ namespace Azure.Core.TestFramework
                 public async ValueTask DisposeAsync()
                 {
                     Exception exception = null;
+                    UnsuppressCurrentActivity();
                     try
                     {
                         await _enumerator.DisposeAsync();
@@ -467,6 +472,14 @@ namespace Azure.Core.TestFramework
                             _diagnosticListener.Dispose();
                         }
                     }
+                }
+
+                private static void UnsuppressCurrentActivity()
+                {
+                    // Activities may be suppressed if they are called in scope of other activities created by
+                    // other SDK methods. Unsuppress them so all attributes and properties can be checked
+                    // regardless of the test setup.
+                    Activity.Current?.SetCustomProperty("az.sdk.scope", null);
                 }
 
                 private void CompleteValidation(Exception exception, bool skipChecks)
