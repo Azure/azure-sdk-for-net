@@ -16,6 +16,7 @@ namespace Azure.Storage.Blobs
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
         private static ResponseClassifier _pipelineMessageClassifier200202;
+        private static ResponseClassifier _pipelineMessageClassifier200204;
         private static ResponseClassifier _pipelineMessageClassifier200206;
         private static ResponseClassifier _pipelineMessageClassifier201;
         private static ResponseClassifier _pipelineMessageClassifier202;
@@ -24,6 +25,8 @@ namespace Azure.Storage.Blobs
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
         private static ResponseClassifier PipelineMessageClassifier200202 => _pipelineMessageClassifier200202 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
+
+        private static ResponseClassifier PipelineMessageClassifier200204 => _pipelineMessageClassifier200204 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 204 });
 
         private static ResponseClassifier PipelineMessageClassifier200206 => _pipelineMessageClassifier200206 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 206 });
 
@@ -932,6 +935,71 @@ namespace Azure.Storage.Blobs
                 request.Headers.SetValue("x-ms-blob-if-none-match", ifNoneMatch);
             }
             request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetLayoutRequest(string snapshot, string versionId, string marker, int? maxresults, int? timeout, string range, string leaseId, string ifTags, RequestConditions requestConditions, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendQuery("comp", "layout", true);
+            if (snapshot != null)
+            {
+                uri.AppendQuery("snapshot", snapshot, true);
+            }
+            if (versionId != null)
+            {
+                uri.AppendQuery("versionid", versionId, true);
+            }
+            if (marker != null)
+            {
+                uri.AppendQuery("marker", marker, true);
+            }
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", TypeFormatters.ConvertToString(timeout), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200204);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            if (_version != null)
+            {
+                request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (range != null)
+            {
+                request.Headers.SetValue("Range", range);
+            }
+            if (leaseId != null)
+            {
+                request.Headers.SetValue("x-ms-lease-id", leaseId);
+            }
+            if (ifTags != null)
+            {
+                request.Headers.SetValue("x-ms-if-tags", ifTags);
+            }
+            if (requestConditions != null)
+            {
+                request.Headers.Add(requestConditions, "R");
+            }
+            if (encryptionKey != null)
+            {
+                request.Headers.SetValue("x-ms-encryption-key", encryptionKey);
+            }
+            if (encryptionKeySha256 != null)
+            {
+                request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256);
+            }
+            if (encryptionAlgorithm != null)
+            {
+                request.Headers.SetValue("x-ms-encryption-algorithm", encryptionAlgorithm);
+            }
+            request.Headers.SetValue("Accept", "application/xml");
             return message;
         }
     }

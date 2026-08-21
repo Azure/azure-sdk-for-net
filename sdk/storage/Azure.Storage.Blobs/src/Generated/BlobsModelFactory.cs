@@ -112,5 +112,44 @@ namespace Azure.Storage.Blobs.Models
         {
             return new BlobAccessPolicy(policyStartsOn, policyExpiresOn, permissions);
         }
+
+        /// <summary> The ranges that make up a blob. </summary>
+        /// <param name="range"> The list of ranges. </param>
+        /// <returns> A new <see cref="Models.BlobLayoutRanges"/> instance for mocking. </returns>
+        public static BlobLayoutRanges BlobLayoutRanges(IEnumerable<BlobLayoutRange> range = default)
+        {
+            range ??= new ChangeTrackingList<BlobLayoutRange>();
+
+            return new BlobLayoutRanges(range.ToList());
+        }
+
+        /// <summary> A range of a blob, and the endpoint that serves it. </summary>
+        /// <param name="start"> The start byte offset of the range. </param>
+        /// <param name="end"> The end byte offset of the range. </param>
+        /// <param name="endpointIndex"> Index into the Endpoints array indicating which endpoint serves this range. </param>
+        /// <returns> A new <see cref="Models.BlobLayoutRange"/> instance for mocking. </returns>
+        public static BlobLayoutRange BlobLayoutRange(long start = default, long end = default, int endpointIndex = default)
+        {
+            return new BlobLayoutRange(start, end, endpointIndex);
+        }
+
+        /// <summary> The endpoints that serve the ranges of a blob. </summary>
+        /// <param name="endpoint"> The list of endpoints. </param>
+        /// <returns> A new <see cref="Models.BlobLayoutEndpoints"/> instance for mocking. </returns>
+        public static BlobLayoutEndpoints BlobLayoutEndpoints(IEnumerable<BlobLayoutEndpoint> endpoint = default)
+        {
+            endpoint ??= new ChangeTrackingList<BlobLayoutEndpoint>();
+
+            return new BlobLayoutEndpoints(endpoint.ToList());
+        }
+
+        /// <summary> An endpoint that serves ranges of a blob. </summary>
+        /// <param name="index"> The index of the endpoint, referenced by Range elements. </param>
+        /// <param name="value"> The host:port of the endpoint. </param>
+        /// <returns> A new <see cref="Models.BlobLayoutEndpoint"/> instance for mocking. </returns>
+        public static BlobLayoutEndpoint BlobLayoutEndpoint(int index = default, string value = default)
+        {
+            return new BlobLayoutEndpoint(index, value);
+        }
     }
 }
