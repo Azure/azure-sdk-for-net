@@ -12,7 +12,7 @@ using Azure.ResourceManager.HorizonDB;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> The compute model type. </summary>
-    public readonly partial struct HorizonDbComputeModelType : IEquatable<HorizonDbComputeModelType>
+    public readonly partial struct HorizonDBComputeModelType : IEquatable<HorizonDBComputeModelType>
     {
         private readonly string _value;
         /// <summary> Provisioned compute. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Serverless compute. </summary>
         private const string ServerlessValue = "Serverless";
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbComputeModelType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBComputeModelType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public HorizonDbComputeModelType(string value)
+        public HorizonDBComputeModelType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> Provisioned compute. </summary>
-        public static HorizonDbComputeModelType Provisioned { get; } = new HorizonDbComputeModelType(ProvisionedValue);
+        public static HorizonDBComputeModelType Provisioned { get; } = new HorizonDBComputeModelType(ProvisionedValue);
 
         /// <summary> Serverless compute. </summary>
-        public static HorizonDbComputeModelType Serverless { get; } = new HorizonDbComputeModelType(ServerlessValue);
+        public static HorizonDBComputeModelType Serverless { get; } = new HorizonDBComputeModelType(ServerlessValue);
 
-        /// <summary> Determines if two <see cref="HorizonDbComputeModelType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="HorizonDBComputeModelType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(HorizonDbComputeModelType left, HorizonDbComputeModelType right) => left.Equals(right);
+        public static bool operator ==(HorizonDBComputeModelType left, HorizonDBComputeModelType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="HorizonDbComputeModelType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="HorizonDBComputeModelType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(HorizonDbComputeModelType left, HorizonDbComputeModelType right) => !left.Equals(right);
+        public static bool operator !=(HorizonDBComputeModelType left, HorizonDBComputeModelType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="HorizonDbComputeModelType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HorizonDBComputeModelType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HorizonDbComputeModelType(string value) => new HorizonDbComputeModelType(value);
+        public static implicit operator HorizonDBComputeModelType(string value) => new HorizonDBComputeModelType(value);
 
-        /// <summary> Converts a string to a <see cref="HorizonDbComputeModelType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HorizonDBComputeModelType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HorizonDbComputeModelType?(string value) => value == null ? null : new HorizonDbComputeModelType(value);
+        public static implicit operator HorizonDBComputeModelType?(string value) => value == null ? null : new HorizonDBComputeModelType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is HorizonDbComputeModelType other && Equals(other);
+        public override bool Equals(object obj) => obj is HorizonDBComputeModelType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(HorizonDbComputeModelType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HorizonDBComputeModelType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

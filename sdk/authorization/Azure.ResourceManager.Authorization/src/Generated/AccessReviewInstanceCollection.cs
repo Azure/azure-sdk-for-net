@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Name, id, AccessReviewInstanceProperties.ToRequestContent(properties), context);
+                HttpMessage message = _accessReviewInstancesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, id, AccessReviewInstanceProperties.ToRequestContent(properties), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessReviewInstanceData> response = Response.FromValue(AccessReviewInstanceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Name, id, AccessReviewInstanceProperties.ToRequestContent(properties), context);
+                HttpMessage message = _accessReviewInstancesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, id, AccessReviewInstanceProperties.ToRequestContent(properties), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessReviewInstanceData> response = Response.FromValue(AccessReviewInstanceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstancesRestClient.CreateGetByIdRequest(Id.SubscriptionId, Id.Name, id, context);
+                HttpMessage message = _accessReviewInstancesRestClient.CreateGetByIdRequest(Guid.Parse(Id.SubscriptionId), Id.Name, id, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessReviewInstanceData> response = Response.FromValue(AccessReviewInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstancesRestClient.CreateGetByIdRequest(Id.SubscriptionId, Id.Name, id, context);
+                HttpMessage message = _accessReviewInstancesRestClient.CreateGetByIdRequest(Guid.Parse(Id.SubscriptionId), Id.Name, id, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessReviewInstanceData> response = Response.FromValue(AccessReviewInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Authorization
             };
             return new AsyncPageableWrapper<AccessReviewInstanceData, AccessReviewInstanceResource>(new AccessReviewInstancesGetAllAsyncCollectionResultOfT(
                 _accessReviewInstancesRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.Name,
                 filter,
                 context,
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Authorization
             };
             return new PageableWrapper<AccessReviewInstanceData, AccessReviewInstanceResource>(new AccessReviewInstancesGetAllCollectionResultOfT(
                 _accessReviewInstancesRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.Name,
                 filter,
                 context,
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstancesRestClient.CreateGetByIdRequest(Id.SubscriptionId, Id.Name, id, context);
+                HttpMessage message = _accessReviewInstancesRestClient.CreateGetByIdRequest(Guid.Parse(Id.SubscriptionId), Id.Name, id, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AccessReviewInstanceData> response = default;
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstancesRestClient.CreateGetByIdRequest(Id.SubscriptionId, Id.Name, id, context);
+                HttpMessage message = _accessReviewInstancesRestClient.CreateGetByIdRequest(Guid.Parse(Id.SubscriptionId), Id.Name, id, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AccessReviewInstanceData> response = default;
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstancesRestClient.CreateGetByIdRequest(Id.SubscriptionId, Id.Name, id, context);
+                HttpMessage message = _accessReviewInstancesRestClient.CreateGetByIdRequest(Guid.Parse(Id.SubscriptionId), Id.Name, id, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AccessReviewInstanceData> response = default;
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstancesRestClient.CreateGetByIdRequest(Id.SubscriptionId, Id.Name, id, context);
+                HttpMessage message = _accessReviewInstancesRestClient.CreateGetByIdRequest(Guid.Parse(Id.SubscriptionId), Id.Name, id, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AccessReviewInstanceData> response = default;

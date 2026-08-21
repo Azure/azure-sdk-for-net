@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IpPrefixPatchProperties properties = default;
+            IPPrefixPatchProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("tags"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    properties = IpPrefixPatchProperties.DeserializeIpPrefixPatchProperties(prop.Value, options);
+                    properties = IPPrefixPatchProperties.DeserializeIPPrefixPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Parameters to reconcile to the GitRepository source kind type. </summary>
-        public GitRepository GitRepository
+        public FluxGitRepository GitRepository
         {
             get
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Parameters to reconcile to the Bucket source kind type. </summary>
-        public Bucket Bucket
+        public FluxBucket Bucket
         {
             get
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Statuses of the Flux Kubernetes resources created by the fluxConfiguration or created by the managed objects provisioned by the fluxConfiguration. </summary>
-        public IReadOnlyList<ObjectStatus> Statuses
+        public IReadOnlyList<FluxObjectStatus> Statuses
         {
             get
             {

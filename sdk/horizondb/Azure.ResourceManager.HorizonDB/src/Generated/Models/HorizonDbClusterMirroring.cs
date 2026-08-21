@@ -13,22 +13,22 @@ using Azure.ResourceManager.HorizonDB;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> Mirroring configuration for a HorizonDB cluster. </summary>
-    public partial class HorizonDbClusterMirroring
+    public partial class HorizonDBClusterMirroring
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbClusterMirroring"/>. </summary>
-        public HorizonDbClusterMirroring()
+        /// <summary> Initializes a new instance of <see cref="HorizonDBClusterMirroring"/>. </summary>
+        public HorizonDBClusterMirroring()
         {
             DatabaseNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbClusterMirroring"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBClusterMirroring"/>. </summary>
         /// <param name="databaseNames"> The names of the databases to mirror. </param>
         /// <param name="userAssignedIdentityId"> The resource ID of the user-assigned managed identity used for mirroring. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDbClusterMirroring(IList<string> databaseNames, ResourceIdentifier userAssignedIdentityId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBClusterMirroring(IList<string> databaseNames, ResourceIdentifier userAssignedIdentityId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DatabaseNames = databaseNames;
             UserAssignedIdentityId = userAssignedIdentityId;
