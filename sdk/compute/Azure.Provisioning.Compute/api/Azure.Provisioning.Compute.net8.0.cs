@@ -200,12 +200,10 @@ namespace Azure.Provisioning.Compute
         public Azure.Provisioning.Compute.CapacityReservationUtilization UtilizationInfo { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class CapacityReservationInstanceViewWithName : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class CapacityReservationInstanceViewWithName : Azure.Provisioning.Compute.CapacityReservationInstanceView
     {
         public CapacityReservationInstanceViewWithName() { }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.InstanceViewStatus> Statuses { get { throw null; } }
-        public Azure.Provisioning.Compute.CapacityReservationUtilization UtilizationInfo { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum CapacityReservationType
@@ -449,11 +447,10 @@ namespace Azure.Provisioning.Compute
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class ComputeSubResourceDataWithColocationStatus : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class ComputeSubResourceDataWithColocationStatus : Azure.Provisioning.Compute.ComputeWriteableSubResourceData
     {
         public ComputeSubResourceDataWithColocationStatus() { }
         public Azure.Provisioning.Compute.InstanceViewStatus ColocationStatus { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ComputeWriteableSubResourceData : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -497,10 +494,9 @@ namespace Azure.Provisioning.Compute
         AzureActiveDirectory = 0,
         None = 1,
     }
-    public partial class DataDiskImageEncryption : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class DataDiskImageEncryption : Azure.Provisioning.Compute.DiskImageEncryption
     {
         public DataDiskImageEncryption() { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DiskEncryptionSetId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> Lun { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -572,13 +568,10 @@ namespace Azure.Provisioning.Compute
         public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.InstanceViewStatus> Statuses { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class DedicatedHostInstanceViewWithName : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class DedicatedHostInstanceViewWithName : Azure.Provisioning.Compute.DedicatedHostInstanceView
     {
         public DedicatedHostInstanceViewWithName() { }
-        public Azure.Provisioning.BicepValue<string> AssetId { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.DedicatedHostAllocatableVm> AvailableCapacityAllocatableVMs { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.InstanceViewStatus> Statuses { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum DedicatedHostLicenseType
@@ -762,6 +755,12 @@ namespace Azure.Provisioning.Compute
             public static readonly string V2026_03_01;
         }
     }
+    public partial class DiskImageEncryption : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DiskImageEncryption() { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DiskEncryptionSetId { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class DiskInstanceView : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DiskInstanceView() { }
@@ -820,11 +819,10 @@ namespace Azure.Provisioning.Compute
             public static readonly string V2026_03_02;
         }
     }
-    public partial class DiskRestorePointAttributes : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class DiskRestorePointAttributes : Azure.Provisioning.Compute.ComputeSubResourceData
     {
         public DiskRestorePointAttributes() { }
         public Azure.Provisioning.Compute.RestorePointEncryption Encryption { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SourceDiskRestorePointId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -1034,47 +1032,67 @@ namespace Azure.Provisioning.Compute
             public static readonly string V2025_12_03;
         }
     }
-    public partial class GalleryApplicationVersionPublishingProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class GalleryApplicationVersionPublishingProfile : Azure.Provisioning.Compute.GalleryArtifactPublishingProfileBase
     {
         public GalleryApplicationVersionPublishingProfile() { }
         public Azure.Provisioning.BicepDictionary<string> AdvancedSettings { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.GalleryApplicationCustomAction> CustomActions { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnableHealthCheck { get { throw null; } set { } }
+        public Azure.Provisioning.Compute.UserArtifactManagement ManageActions { get { throw null; } set { } }
+        public Azure.Provisioning.Compute.UserArtifactSettings Settings { get { throw null; } set { } }
+        public Azure.Provisioning.Compute.UserArtifactSource Source { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class GalleryArtifactPublishingProfileBase : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public GalleryArtifactPublishingProfileBase() { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOfLifeOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsExcludedFromLatest { get { throw null; } set { } }
-        public Azure.Provisioning.Compute.UserArtifactManagement ManageActions { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> PublishedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> ReplicaCount { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.GalleryReplicationMode> ReplicationMode { get { throw null; } set { } }
-        public Azure.Provisioning.Compute.UserArtifactSettings Settings { get { throw null; } set { } }
-        public Azure.Provisioning.Compute.UserArtifactSource Source { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.StorageAccountStrategy> StorageAccountStrategy { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.ImageStorageAccountType> StorageAccountType { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.GalleryTargetExtendedLocation> TargetExtendedLocations { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.TargetRegion> TargetRegions { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class GalleryArtifactVersionFullSource : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class GalleryArtifactSafetyProfileBase : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public GalleryArtifactSafetyProfileBase() { }
+        public Azure.Provisioning.BicepValue<bool> AllowDeletionOfReplicatedLocations { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class GalleryArtifactVersionFullSource : Azure.Provisioning.Compute.GalleryArtifactVersionSource
     {
         public GalleryArtifactVersionFullSource() { }
         public Azure.Provisioning.BicepValue<string> CommunityGalleryImageId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> VirtualMachineId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class GalleryDataDiskImage : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class GalleryArtifactVersionSource : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public GalleryArtifactVersionSource() { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class GalleryDataDiskImage : Azure.Provisioning.Compute.GalleryDiskImage
     {
         public GalleryDataDiskImage() { }
+        public Azure.Provisioning.BicepValue<int> Lun { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class GalleryDiskImage : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public GalleryDiskImage() { }
         public Azure.Provisioning.Compute.GalleryDiskImageSource GallerySource { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.HostCaching> HostCaching { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> Lun { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> SizeInGB { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class GalleryDiskImageSource : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class GalleryDiskImageSource : Azure.Provisioning.Compute.GalleryArtifactVersionSource
     {
         public GalleryDiskImageSource() { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SourceUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> StorageAccountId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -1199,24 +1217,14 @@ namespace Azure.Provisioning.Compute
         [System.Runtime.Serialization.DataMemberAttribute(Name="IpTheft")]
         IPTheft = 3,
     }
-    public partial class GalleryImageVersionPublishingProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class GalleryImageVersionPublishingProfile : Azure.Provisioning.Compute.GalleryArtifactPublishingProfileBase
     {
         public GalleryImageVersionPublishingProfile() { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOfLifeOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsExcludedFromLatest { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> PublishedOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<int> ReplicaCount { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.GalleryReplicationMode> ReplicationMode { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.StorageAccountStrategy> StorageAccountStrategy { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.ImageStorageAccountType> StorageAccountType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.GalleryTargetExtendedLocation> TargetExtendedLocations { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.TargetRegion> TargetRegions { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class GalleryImageVersionSafetyProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class GalleryImageVersionSafetyProfile : Azure.Provisioning.Compute.GalleryArtifactSafetyProfileBase
     {
         public GalleryImageVersionSafetyProfile() { }
-        public Azure.Provisioning.BicepValue<bool> AllowDeletionOfReplicatedLocations { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsBlockedDeletionBeforeEndOfLife { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsReportedForPolicyViolation { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.GalleryImageVersionPolicyViolation> PolicyViolations { get { throw null; } }
@@ -1256,13 +1264,12 @@ namespace Azure.Provisioning.Compute
             public static readonly string V2025_12_03;
         }
     }
-    public partial class GalleryInVmAccessControlProfileProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class GalleryInVmAccessControlProfileProperties : Azure.Provisioning.Compute.GalleryResourceProfilePropertiesBase
     {
         public GalleryInVmAccessControlProfileProperties() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.ComputeGalleryEndpointType> ApplicableHostEndpoint { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.SupportedOperatingSystemType> OSType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.GalleryProvisioningState> ProvisioningState { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class GalleryInVmAccessControlProfileVersion : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1338,12 +1345,9 @@ namespace Azure.Provisioning.Compute
         public Azure.Provisioning.BicepValue<string> Role { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class GalleryOSDiskImage : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class GalleryOSDiskImage : Azure.Provisioning.Compute.GalleryDiskImage
     {
         public GalleryOSDiskImage() { }
-        public Azure.Provisioning.Compute.GalleryDiskImageSource GallerySource { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.HostCaching> HostCaching { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> SizeInGB { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum GalleryProvisioningState
@@ -1385,6 +1389,12 @@ namespace Azure.Provisioning.Compute
             public static readonly string V2025_12_03;
         }
     }
+    public partial class GalleryResourceProfilePropertiesBase : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public GalleryResourceProfilePropertiesBase() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.GalleryProvisioningState> ProvisioningState { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class GalleryScript : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public GalleryScript(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -1403,17 +1413,13 @@ namespace Azure.Provisioning.Compute
             public static readonly string V2025_12_03;
         }
     }
-    public partial class GalleryScriptParameter : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class GalleryScriptParameter : Azure.Provisioning.Compute.GenericGalleryParameter
     {
         public GalleryScriptParameter() { }
-        public Azure.Provisioning.BicepValue<string> DefaultValue { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> EnumValues { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> MaxValue { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> MinValue { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.GalleryScriptParameterType> ParameterType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> Required { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum GalleryScriptParameterType
@@ -1463,19 +1469,10 @@ namespace Azure.Provisioning.Compute
         public Azure.Provisioning.BicepValue<bool> SafetyAllowDeletionOfReplicatedLocations { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class GalleryScriptVersionPublishingProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class GalleryScriptVersionPublishingProfile : Azure.Provisioning.Compute.GalleryArtifactPublishingProfileBase
     {
         public GalleryScriptVersionPublishingProfile() { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOfLifeOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsExcludedFromLatest { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> PublishedOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<int> ReplicaCount { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.GalleryReplicationMode> ReplicationMode { get { throw null; } set { } }
         public Azure.Provisioning.Compute.ScriptSource Source { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.StorageAccountStrategy> StorageAccountStrategy { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.ImageStorageAccountType> StorageAccountType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.GalleryTargetExtendedLocation> TargetExtendedLocations { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.TargetRegion> TargetRegions { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum GallerySharingPermissionType
@@ -1492,6 +1489,15 @@ namespace Azure.Provisioning.Compute
         public Azure.Provisioning.BicepValue<int> ExtendedLocationReplicaCount { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.EdgeZoneStorageAccountType> GalleryStorageAccountType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class GenericGalleryParameter : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public GenericGalleryParameter() { }
+        public Azure.Provisioning.BicepValue<string> DefaultValue { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> Required { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum HighSpeedInterconnectPlacement
@@ -1523,14 +1529,19 @@ namespace Azure.Provisioning.Compute
         V1 = 0,
         V2 = 1,
     }
-    public partial class ImageDataDisk : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class ImageDataDisk : Azure.Provisioning.Compute.ImageDisk
     {
         public ImageDataDisk() { }
+        public Azure.Provisioning.BicepValue<int> Lun { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ImageDisk : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ImageDisk() { }
         public Azure.Provisioning.BicepValue<System.Uri> BlobUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.CachingType> Caching { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DiskEncryptionSetId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> DiskSizeGB { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> Lun { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ManagedDiskId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SnapshotId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.StorageAccountType> StorageAccountType { get { throw null; } set { } }
@@ -1545,18 +1556,11 @@ namespace Azure.Provisioning.Compute
         public Azure.Provisioning.BicepValue<string> SharedGalleryImageId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class ImageOSDisk : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class ImageOSDisk : Azure.Provisioning.Compute.ImageDisk
     {
         public ImageOSDisk() { }
-        public Azure.Provisioning.BicepValue<System.Uri> BlobUri { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.CachingType> Caching { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DiskEncryptionSetId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> DiskSizeGB { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ManagedDiskId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.OperatingSystemStateType> OSState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.SupportedOperatingSystemType> OSType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SnapshotId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.StorageAccountType> StorageAccountType { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ImagePurchasePlan : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1567,12 +1571,11 @@ namespace Azure.Provisioning.Compute
         public Azure.Provisioning.BicepValue<string> Publisher { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class ImageReference : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class ImageReference : Azure.Provisioning.Compute.ComputeWriteableSubResourceData
     {
         public ImageReference() { }
         public Azure.Provisioning.BicepValue<string> CommunityGalleryImageId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ExactVersion { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Offer { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Publisher { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SharedGalleryImageUniqueId { get { throw null; } set { } }
@@ -1896,10 +1899,9 @@ namespace Azure.Provisioning.Compute
         Uniform = 0,
         Flexible = 1,
     }
-    public partial class OSDiskImageEncryption : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class OSDiskImageEncryption : Azure.Provisioning.Compute.DiskImageEncryption
     {
         public OSDiskImageEncryption() { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DiskEncryptionSetId { get { throw null; } set { } }
         public Azure.Provisioning.Compute.OSDiskImageSecurityProfile SecurityProfile { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -2804,11 +2806,10 @@ namespace Azure.Provisioning.Compute
         public Azure.Provisioning.BicepValue<string> Tag { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class VirtualMachineManagedDisk : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class VirtualMachineManagedDisk : Azure.Provisioning.Compute.ComputeWriteableSubResourceData
     {
         public VirtualMachineManagedDisk() { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DiskEncryptionSetId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
         public Azure.Provisioning.Compute.VirtualMachineDiskSecurityProfile SecurityProfile { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.StorageAccountType> StorageAccountType { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -2845,11 +2846,10 @@ namespace Azure.Provisioning.Compute
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SubnetId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class VirtualMachineNetworkInterfaceReference : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class VirtualMachineNetworkInterfaceReference : Azure.Provisioning.Compute.ComputeWriteableSubResourceData
     {
         public VirtualMachineNetworkInterfaceReference() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.ComputeDeleteOption> DeleteOption { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> Primary { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }

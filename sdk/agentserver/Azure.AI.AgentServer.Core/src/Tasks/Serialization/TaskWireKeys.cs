@@ -49,8 +49,6 @@ internal static class TaskWireKeys
 
     // Payload reserved keys
     public const string PayloadInput = "input";
-    public const string PayloadMetadata = "metadata";
-    public const string PayloadMetadataNamespacePrefix = "metadata:";
     public const string PayloadLastInputId = "last_input_id";
     public const string PayloadTurnStartedAt = "turn_started_at";
     public const string PayloadRetryAttempt = "retry_attempt";

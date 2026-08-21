@@ -1,5 +1,15 @@
 <Project>
   <!--
+    Microsoft.Azure.SignalR.Management 1.32.0 depends on Azure.Identity 1.11.4,
+    which is incompatible with the Azure.Core 1.53 dependency from
+    Microsoft.Extensions.Azure 1.14.0. Keep the extension on its previously
+    shipped dependency until the management SDK upgrades Azure.Identity.
+    Tracked in https://github.com/Azure/azure-sdk-for-net/issues/62029
+  -->
+  <ItemGroup>
+    <PackageVersion Update="Microsoft.Extensions.Azure" Version="1.13.1" />
+  </ItemGroup>
+  <!--
     xunit is only approved for legacy use. Azure SDK test projects should use NUnit.
   -->
   <ItemGroup Condition="'$(IsTestProject)' == 'true'">

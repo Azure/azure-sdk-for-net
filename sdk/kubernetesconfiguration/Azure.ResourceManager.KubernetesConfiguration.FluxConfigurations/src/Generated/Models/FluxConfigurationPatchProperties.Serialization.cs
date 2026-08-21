@@ -175,8 +175,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             }
             FluxConfigurationSourceKindType? sourceKind = default;
             bool? isSuspended = default;
-            GitRepositoryPatch gitRepository = default;
-            BucketPatch bucket = default;
+            FluxGitRepositoryPatch gitRepository = default;
+            FluxBucketPatch bucket = default;
             AzureBlobPatch azureBlob = default;
             OciRepositoryPatch ociRepository = default;
             IDictionary<string, KustomizationPatch> kustomizations = default;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    gitRepository = GitRepositoryPatch.DeserializeGitRepositoryPatch(prop.Value, options);
+                    gitRepository = FluxGitRepositoryPatch.DeserializeFluxGitRepositoryPatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("bucket"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    bucket = BucketPatch.DeserializeBucketPatch(prop.Value, options);
+                    bucket = FluxBucketPatch.DeserializeFluxBucketPatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("azureBlob"u8))

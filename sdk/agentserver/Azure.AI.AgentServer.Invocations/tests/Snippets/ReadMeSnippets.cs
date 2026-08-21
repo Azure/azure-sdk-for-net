@@ -7,6 +7,7 @@ using System.Net.Http.Json;
 using System.Net.WebSockets;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Invocations;
+using Azure.AI.AgentServer.Invocations.Voice;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -57,6 +58,23 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             Assert.That(handler, Is.Not.Null);
         }
 
+        [Test]
+        public void Voice_Startup()
+        {
+            #region Snippet:Invocations_ReadMe_Voice_Startup
+
+            VoiceServer.Run<VoiceEchoHandler>();
+
+            #endregion
+        }
+
+        [Test]
+        public void Implement_VoiceEchoHandler()
+        {
+            var handler = new VoiceEchoHandler();
+            Assert.That(handler, Is.Not.Null);
+        }
+
         #region Snippet:Invocations_ReadMe_EchoHandler
 
         public class EchoHandler : InvocationHandler
@@ -93,6 +111,40 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                         received.EndOfMessage,
                         cancellationToken);
                 }
+            }
+        }
+
+        #endregion
+
+        #region Snippet:Invocations_ReadMe_VoiceHandler
+
+        public class VoiceEchoHandler : VoiceHandler
+        {
+            protected override Task OnSessionStartAsync(
+                VoiceSession session,
+                VoiceSessionStartEvent start,
+                CancellationToken cancellationToken) => start.ProtocolVersion == "1.0"
+                    ? session.SendAsync(new VoiceSessionReadyMessage(), cancellationToken)
+                    : session.SendAsync(
+                        new VoiceSessionRejectedMessage("protocol_mismatch", retriable: false),
+                        cancellationToken);
+
+            protected override async Task OnUserMessageAsync(
+                VoiceSession session,
+                VoiceUserMessageEvent message,
+                CancellationToken cancellationToken)
+            {
+                var responseId = VoiceIds.CreateResponseId();
+                var itemId = VoiceIds.CreateItemId();
+                var text = string.Concat(message.Content.Select(part => part.Text));
+
+                await session.SendAsync(
+                    new VoiceResponseCreatedMessage(responseId, new[] { message.ItemId }),
+                    cancellationToken);
+                await session.SendAsync(
+                    new VoiceResponseOutputTextDoneMessage(responseId, itemId, $"You said: {text}"),
+                    cancellationToken);
+                await session.SendAsync(new VoiceResponseDoneMessage(responseId), cancellationToken);
             }
         }
 
