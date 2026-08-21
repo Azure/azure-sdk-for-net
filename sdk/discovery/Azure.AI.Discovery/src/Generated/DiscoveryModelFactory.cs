@@ -19,10 +19,10 @@ namespace Azure.AI.Discovery
         /// <summary> A investigation list item. </summary>
         /// <param name="name"> The investigation name. </param>
         /// <param name="projectName"> The parent project name. </param>
-        /// <param name="createdAt"> The timestamp when the resource was created. </param>
+        /// <param name="createdOn"> The timestamp when the resource was created. </param>
         /// <param name="createdBy"> The ID of the user who created this resource. </param>
         /// <param name="createdByType"> The type of user who created this resource. </param>
-        /// <param name="lastModifiedAt"> The timestamp when the resource was last updated. </param>
+        /// <param name="lastModifiedOn"> The timestamp when the resource was last updated. </param>
         /// <param name="lastModifiedBy"> The ID of the user who updated this resource. </param>
         /// <param name="lastModifiedByType"> The type of user who updated this resource. </param>
         /// <param name="status"> The status. </param>
@@ -30,17 +30,17 @@ namespace Azure.AI.Discovery
         /// <param name="tags"> The tags. </param>
         /// <param name="displayName"> The title. </param>
         /// <returns> A new <see cref="Discovery.DiscoveryInvestigation"/> instance for mocking. </returns>
-        public static DiscoveryInvestigation DiscoveryInvestigation(string name = default, string projectName = default, DateTimeOffset? createdAt = default, string createdBy = default, DiscoveryActorType? createdByType = default, DateTimeOffset? lastModifiedAt = default, string lastModifiedBy = default, DiscoveryActorType? lastModifiedByType = default, InvestigationStatus? status = default, string description = default, IEnumerable<DiscoveryTag> tags = default, string displayName = default)
+        public static DiscoveryInvestigation DiscoveryInvestigation(string name = default, string projectName = default, DateTimeOffset? createdOn = default, string createdBy = default, DiscoveryActorType? createdByType = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default, DiscoveryActorType? lastModifiedByType = default, InvestigationStatus? status = default, string description = default, IEnumerable<DiscoveryTag> tags = default, string displayName = default)
         {
             tags ??= new ChangeTrackingList<DiscoveryTag>();
 
             return new DiscoveryInvestigation(
                 name,
                 projectName,
-                createdAt,
+                createdOn,
                 createdBy,
                 createdByType,
-                lastModifiedAt,
+                lastModifiedOn,
                 lastModifiedBy,
                 lastModifiedByType,
                 status,
@@ -85,14 +85,14 @@ namespace Azure.AI.Discovery
         /// <param name="discoveryEngineStatus"> The Discovery Engine status. </param>
         /// <param name="systemPrompt"> The system prompt. </param>
         /// <param name="configuration"> The Discovery Engine configuration. </param>
-        /// <param name="createdAt"> The timestamp when the resource was created. </param>
+        /// <param name="createdOn"> The timestamp when the resource was created. </param>
         /// <param name="createdBy"> The ID of the user who created this resource. </param>
         /// <param name="createdByType"> The type of user who created this resource. </param>
-        /// <param name="lastModifiedAt"> The timestamp when the resource was last updated. </param>
+        /// <param name="lastModifiedOn"> The timestamp when the resource was last updated. </param>
         /// <param name="lastModifiedBy"> The ID of the user who updated this resource. </param>
         /// <param name="lastModifiedByType"> The type of user who updated this resource. </param>
         /// <returns> A new <see cref="Discovery.DiscoveryEngine"/> instance for mocking. </returns>
-        public static DiscoveryEngine DiscoveryEngine(DiscoveryEngineStatus discoveryEngineStatus = default, string systemPrompt = default, IDictionary<string, BinaryData> configuration = default, DateTimeOffset? createdAt = default, string createdBy = default, DiscoveryActorType? createdByType = default, DateTimeOffset? lastModifiedAt = default, string lastModifiedBy = default, DiscoveryActorType? lastModifiedByType = default)
+        public static DiscoveryEngine DiscoveryEngine(DiscoveryEngineStatus discoveryEngineStatus = default, string systemPrompt = default, IDictionary<string, BinaryData> configuration = default, DateTimeOffset? createdOn = default, string createdBy = default, DiscoveryActorType? createdByType = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default, DiscoveryActorType? lastModifiedByType = default)
         {
             configuration ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -100,10 +100,10 @@ namespace Azure.AI.Discovery
                 discoveryEngineStatus,
                 systemPrompt,
                 configuration,
-                createdAt,
+                createdOn,
                 createdBy,
                 createdByType,
-                lastModifiedAt,
+                lastModifiedOn,
                 lastModifiedBy,
                 lastModifiedByType,
                 additionalBinaryDataProperties: null);
@@ -123,33 +123,33 @@ namespace Azure.AI.Discovery
         /// <summary> Working memory entry. </summary>
         /// <param name="content"> The content of the working memory entry. </param>
         /// <param name="type"> The type of the working memory entry. </param>
-        /// <param name="createdAt"> The timestamp when the resource was created. </param>
+        /// <param name="createdOn"> The timestamp when the resource was created. </param>
         /// <returns> A new <see cref="Discovery.WorkingMemoryEntry"/> instance for mocking. </returns>
-        public static WorkingMemoryEntry WorkingMemoryEntry(string content = default, WorkingMemoryEntryType @type = default, DateTimeOffset? createdAt = default)
+        public static WorkingMemoryEntry WorkingMemoryEntry(string content = default, WorkingMemoryEntryType @type = default, DateTimeOffset? createdOn = default)
         {
-            return new WorkingMemoryEntry(content, @type, createdAt, additionalBinaryDataProperties: null);
+            return new WorkingMemoryEntry(content, @type, createdOn, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A conversation. </summary>
         /// <param name="name"> The conversation name. </param>
-        /// <param name="createdAt"> The timestamp when the resource was created. </param>
+        /// <param name="createdOn"> The timestamp when the resource was created. </param>
         /// <param name="createdBy"> The ID of the user who created this resource. </param>
         /// <param name="createdByType"> The type of user who created this resource. </param>
-        /// <param name="lastModifiedAt"> The timestamp when the resource was last updated. </param>
+        /// <param name="lastModifiedOn"> The timestamp when the resource was last updated. </param>
         /// <param name="lastModifiedBy"> The ID of the user who updated this resource. </param>
         /// <param name="lastModifiedByType"> The type of user who updated this resource. </param>
         /// <param name="displayName"> The title. </param>
         /// <param name="investigationName"> The Name of the associated Investigation. </param>
         /// <param name="projectName"> The name of the associated Project. </param>
         /// <returns> A new <see cref="Discovery.DiscoveryConversation"/> instance for mocking. </returns>
-        public static DiscoveryConversation DiscoveryConversation(string name = default, DateTimeOffset? createdAt = default, string createdBy = default, DiscoveryActorType? createdByType = default, DateTimeOffset? lastModifiedAt = default, string lastModifiedBy = default, DiscoveryActorType? lastModifiedByType = default, string displayName = default, string investigationName = default, string projectName = default)
+        public static DiscoveryConversation DiscoveryConversation(string name = default, DateTimeOffset? createdOn = default, string createdBy = default, DiscoveryActorType? createdByType = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default, DiscoveryActorType? lastModifiedByType = default, string displayName = default, string investigationName = default, string projectName = default)
         {
             return new DiscoveryConversation(
                 name,
-                createdAt,
+                createdOn,
                 createdBy,
                 createdByType,
-                lastModifiedAt,
+                lastModifiedOn,
                 lastModifiedBy,
                 lastModifiedByType,
                 displayName,
@@ -183,22 +183,22 @@ namespace Azure.AI.Discovery
         /// <summary> Run result. </summary>
         /// <param name="status"> Status of the run. </param>
         /// <param name="runtimeDetails"> Human-readable details about the run status. </param>
-        /// <param name="createdAt"> The timestamp when the resource was created. </param>
-        /// <param name="completedAt"> The time the run completed. </param>
+        /// <param name="createdOn"> The timestamp when the resource was created. </param>
+        /// <param name="completedOn"> The time the run completed. </param>
         /// <param name="createdBy"> The user that started the tool run. </param>
         /// <param name="toolReport"> Details provided by the tool (rather than the platform). </param>
         /// <param name="outputData"> Output data URIs. </param>
         /// <param name="debugInfo"> Debugging information. </param>
         /// <returns> A new <see cref="Discovery.RunResult"/> instance for mocking. </returns>
-        public static RunResult RunResult(string status = default, string runtimeDetails = default, DateTimeOffset? createdAt = default, DateTimeOffset? completedAt = default, string createdBy = default, RunResultToolReport toolReport = default, IEnumerable<OutputDataUri> outputData = default, string debugInfo = default)
+        public static RunResult RunResult(string status = default, string runtimeDetails = default, DateTimeOffset? createdOn = default, DateTimeOffset? completedOn = default, string createdBy = default, RunResultToolReport toolReport = default, IEnumerable<OutputDataUri> outputData = default, string debugInfo = default)
         {
             outputData ??= new ChangeTrackingList<OutputDataUri>();
 
             return new RunResult(
                 status,
                 runtimeDetails,
-                createdAt,
-                completedAt,
+                createdOn,
+                completedOn,
                 createdBy,
                 toolReport,
                 outputData.ToList(),
@@ -310,19 +310,19 @@ namespace Azure.AI.Discovery
         /// <param name="nodepoolId"> The nodepool the operation targets. </param>
         /// <param name="status"> Current status of the operation. </param>
         /// <param name="runtimeDetails"> Human-readable details about the run status. </param>
-        /// <param name="createdAt"> When the operation was submitted. </param>
-        /// <param name="completedAt"> When the operation completed. </param>
+        /// <param name="createdOn"> When the operation was submitted. </param>
+        /// <param name="completedOn"> When the operation completed. </param>
         /// <param name="createdBy"> The user who created the operation. </param>
         /// <returns> A new <see cref="Discovery.WorkspaceOperation"/> instance for mocking. </returns>
-        public static WorkspaceOperation WorkspaceOperation(string id = default, string nodepoolId = default, RunStatus status = default, string runtimeDetails = default, DateTimeOffset createdAt = default, DateTimeOffset? completedAt = default, string createdBy = default)
+        public static WorkspaceOperation WorkspaceOperation(string id = default, string nodepoolId = default, RunStatus status = default, string runtimeDetails = default, DateTimeOffset createdOn = default, DateTimeOffset? completedOn = default, string createdBy = default)
         {
             return new WorkspaceOperation(
                 id,
                 nodepoolId,
                 status,
                 runtimeDetails,
-                createdAt,
-                completedAt,
+                createdOn,
+                completedOn,
                 createdBy,
                 additionalBinaryDataProperties: null);
         }
@@ -390,10 +390,10 @@ namespace Azure.AI.Discovery
         /// <param name="assignedTo"> Application or user assigned to this task. </param>
         /// <param name="comments"> Comments or notes about the task. </param>
         /// <param name="status"> The current status of the task. </param>
-        /// <param name="createdAt"> The timestamp when the resource was created. </param>
+        /// <param name="createdOn"> The timestamp when the resource was created. </param>
         /// <param name="createdBy"> The ID of the user who created this resource. </param>
         /// <param name="createdByType"> Type of entity that created the resource (User, Application, System, or custom type). </param>
-        /// <param name="lastModifiedAt"> The timestamp when the resource was last updated. </param>
+        /// <param name="lastModifiedOn"> The timestamp when the resource was last updated. </param>
         /// <param name="lastModifiedBy"> The ID of the user who updated this resource. </param>
         /// <param name="lastModifiedByType"> The type of user who updated this resource. </param>
         /// <param name="executionHistory"> History of execution events for this task. </param>
@@ -401,7 +401,7 @@ namespace Azure.AI.Discovery
         /// <param name="taskResult"> Task execution result with text and storage assets. </param>
         /// <param name="storageAssetIds"> List of storage assets related to the task. </param>
         /// <returns> A new <see cref="Discovery.DiscoveryTask"/> instance for mocking. </returns>
-        public static DiscoveryTask DiscoveryTask(string name = default, string title = default, TaskPriority? priority = default, string description = default, IEnumerable<string> validationRequirements = default, string parentId = default, IEnumerable<string> dependsOn = default, IEnumerable<string> relatedTo = default, TaskAssignee assignedTo = default, IEnumerable<TaskComment> comments = default, TaskStatus? status = default, DateTimeOffset? createdAt = default, string createdBy = default, DiscoveryActorType? createdByType = default, DateTimeOffset? lastModifiedAt = default, string lastModifiedBy = default, DiscoveryActorType? lastModifiedByType = default, IEnumerable<ExecutionHistoryEntry> executionHistory = default, string investigationId = default, TaskResult taskResult = default, IEnumerable<ResourceIdentifier> storageAssetIds = default)
+        public static DiscoveryTask DiscoveryTask(string name = default, string title = default, TaskPriority? priority = default, string description = default, IEnumerable<string> validationRequirements = default, string parentId = default, IEnumerable<string> dependsOn = default, IEnumerable<string> relatedTo = default, TaskAssignee assignedTo = default, IEnumerable<TaskComment> comments = default, TaskStatus? status = default, DateTimeOffset? createdOn = default, string createdBy = default, DiscoveryActorType? createdByType = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default, DiscoveryActorType? lastModifiedByType = default, IEnumerable<ExecutionHistoryEntry> executionHistory = default, string investigationId = default, TaskResult taskResult = default, IEnumerable<ResourceIdentifier> storageAssetIds = default)
         {
             validationRequirements ??= new ChangeTrackingList<string>();
             dependsOn ??= new ChangeTrackingList<string>();
@@ -422,10 +422,10 @@ namespace Azure.AI.Discovery
                 assignedTo,
                 comments.ToList(),
                 status,
-                createdAt,
+                createdOn,
                 createdBy,
                 createdByType,
-                lastModifiedAt,
+                lastModifiedOn,
                 lastModifiedBy,
                 lastModifiedByType,
                 executionHistory.ToList(),
@@ -445,18 +445,18 @@ namespace Azure.AI.Discovery
         }
 
         /// <summary> Task comment. </summary>
-        /// <param name="timestamp"> When the comment was created. </param>
+        /// <param name="on"> When the comment was created. </param>
         /// <param name="createdBy"> ID of the user or application who created the comment. </param>
         /// <param name="createdByType"> Type of creator (User, Application, System, or custom type). </param>
         /// <param name="text"> The comment text content. </param>
         /// <returns> A new <see cref="Discovery.TaskComment"/> instance for mocking. </returns>
-        public static TaskComment TaskComment(DateTimeOffset? timestamp = default, string createdBy = default, DiscoveryActorType createdByType = default, string text = default)
+        public static TaskComment TaskComment(DateTimeOffset? @on = default, string createdBy = default, DiscoveryActorType createdByType = default, string text = default)
         {
-            return new TaskComment(timestamp, createdBy, createdByType, text, additionalBinaryDataProperties: null);
+            return new TaskComment(@on, createdBy, createdByType, text, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Execution history entry for a task. </summary>
-        /// <param name="createdAt"> Timestamp when the entry was created (ISO 8601 UTC format). </param>
+        /// <param name="createdOn"> Timestamp when the entry was created (ISO 8601 UTC format). </param>
         /// <param name="action"> The action that was performed (controlled vocabulary; semi-open). </param>
         /// <param name="createdBy"> Identifier of who created this entry (GUID for user | resourceId for application | arbitrary string for other types). </param>
         /// <param name="createdByType"> Type of entity that created this entry (User, Application, System, or custom type). </param>
@@ -465,12 +465,12 @@ namespace Azure.AI.Discovery
         /// <param name="responseMessageId"> Run or message ID for full details. </param>
         /// <param name="additionalDetails"> Freeform key-value pairs for additional details. </param>
         /// <returns> A new <see cref="Discovery.ExecutionHistoryEntry"/> instance for mocking. </returns>
-        public static ExecutionHistoryEntry ExecutionHistoryEntry(DateTimeOffset createdAt = default, string action = default, string createdBy = default, DiscoveryActorType createdByType = default, string summary = default, string responseMessageText = default, string responseMessageId = default, IDictionary<string, BinaryData> additionalDetails = default)
+        public static ExecutionHistoryEntry ExecutionHistoryEntry(DateTimeOffset createdOn = default, string action = default, string createdBy = default, DiscoveryActorType createdByType = default, string summary = default, string responseMessageText = default, string responseMessageId = default, IDictionary<string, BinaryData> additionalDetails = default)
         {
             additionalDetails ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new ExecutionHistoryEntry(
-                createdAt,
+                createdOn,
                 action,
                 createdBy,
                 createdByType,
@@ -511,17 +511,17 @@ namespace Azure.AI.Discovery
         /// <param name="status"> The status. </param>
         /// <param name="createdByApiVersion"> The API version used to create this knowledge base. </param>
         /// <param name="lastIndexingRun"> The details of the most recent indexing run. </param>
-        /// <param name="createdAt"> The timestamp when the resource was created. </param>
+        /// <param name="createdOn"> The timestamp when the resource was created. </param>
         /// <param name="createdBy"> The ID of the user who created this resource. </param>
         /// <param name="createdByType"> The type of user who created this resource. </param>
-        /// <param name="lastModifiedAt"> The timestamp when the resource was last updated. </param>
+        /// <param name="lastModifiedOn"> The timestamp when the resource was last updated. </param>
         /// <param name="lastModifiedBy"> The ID of the user who updated this resource. </param>
         /// <param name="lastModifiedByType"> The type of user who updated this resource. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="description"> The description. </param>
         /// <param name="copilotInstruction"> The copilot instruction. </param>
         /// <returns> A new <see cref="Discovery.KnowledgeBase"/> instance for mocking. </returns>
-        public static KnowledgeBase KnowledgeBase(string name = default, string id = default, string bookshelfName = default, IEnumerable<StorageAssetReference> storageAssetReferences = default, string knowledgeBaseUrl = default, DiscoveryProvisioningState? provisioningState = default, ResponseError error = default, IndexingStatus? status = default, string createdByApiVersion = default, LastIndexingRun lastIndexingRun = default, DateTimeOffset? createdAt = default, string createdBy = default, DiscoveryActorType? createdByType = default, DateTimeOffset? lastModifiedAt = default, string lastModifiedBy = default, DiscoveryActorType? lastModifiedByType = default, IEnumerable<DiscoveryTag> tags = default, string description = default, string copilotInstruction = default)
+        public static KnowledgeBase KnowledgeBase(string name = default, string id = default, string bookshelfName = default, IEnumerable<StorageAssetReference> storageAssetReferences = default, string knowledgeBaseUrl = default, DiscoveryProvisioningState? provisioningState = default, ResponseError error = default, IndexingStatus? status = default, string createdByApiVersion = default, LastIndexingRun lastIndexingRun = default, DateTimeOffset? createdOn = default, string createdBy = default, DiscoveryActorType? createdByType = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default, DiscoveryActorType? lastModifiedByType = default, IEnumerable<DiscoveryTag> tags = default, string description = default, string copilotInstruction = default)
         {
             storageAssetReferences ??= new ChangeTrackingList<StorageAssetReference>();
             tags ??= new ChangeTrackingList<DiscoveryTag>();
@@ -537,10 +537,10 @@ namespace Azure.AI.Discovery
                 status,
                 createdByApiVersion,
                 lastIndexingRun,
-                createdAt,
+                createdOn,
                 createdBy,
                 createdByType,
-                lastModifiedAt,
+                lastModifiedOn,
                 lastModifiedBy,
                 lastModifiedByType,
                 tags.ToList(),
