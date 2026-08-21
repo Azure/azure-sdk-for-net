@@ -22,7 +22,7 @@
   "scripts": {
     "clean": "rimraf ./dist ./emitter/temp && dotnet clean ./generator",
     "build:emitter": "tsc -p ./emitter/tsconfig.build.json",
-    "build:generator": "dotnet build ./generator",
+    "build:generator": "dotnet build ./generator /p:SkipEmitterPackageBuild=true",
     "build": "npm run build:emitter && npm run build:generator",
     "test:emitter": "vitest run -c ./emitter/vitest.config.ts --passWithNoTests",
     "test:generator": "dotnet test ./generator --logger \"trx;LogFileName=debug.trx\"",

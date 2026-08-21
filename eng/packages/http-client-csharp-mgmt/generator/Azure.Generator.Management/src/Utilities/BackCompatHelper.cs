@@ -101,8 +101,8 @@ namespace Azure.Generator.Management.Utilities
                 backCompatMethods.Select(method => method.Signature),
                 MethodSignature.MethodSignatureComparer);
 
-            if (originalMethodSet.FirstOrDefault()?.EnclosingType is { } enclosingType
-                && enclosingType.LastContractView?.Methods is { Count: > 0 } previousMethods)
+            var enclosingType = backCompatMethods[0].EnclosingType;
+            if (enclosingType.LastContractView?.Methods is { Count: > 0 } previousMethods)
             {
                 AddETagBackwardCompatibilityMethods(
                     enclosingType,
@@ -161,24 +161,23 @@ namespace Azure.Generator.Management.Utilities
             return lastParameter.DefaultValue is null && lastParameter.Type.Equals(typeof(CancellationToken));
         }
 
-        private static IEnumerable<MethodSignature> TransformConditionalHeaderParameters(MethodSignature signature)
+        private static IReadOnlyList<MethodSignature> TransformConditionalHeaderParameters(MethodSignature signature)
         {
             var conditionalParameters = new List<ParameterProvider>();
-            var etagParameters = new ParameterProvider[signature.Parameters.Count];
+            var etagParameters = new List<ParameterProvider>(signature.Parameters.Count);
             var hasETagParameter = false;
             var hasModificationCondition = false;
-            for (var i = 0; i < signature.Parameters.Count; i++)
+            foreach (var parameter in signature.Parameters)
             {
-                var parameter = signature.Parameters[i];
-                if (!ConditionalHeaderProperties.TryGetValue(parameter.Name, out var propertyName))
-                {
-                    etagParameters[i] = parameter;
-                    continue;
-                }
-
                 if (parameter.IsRef || parameter.IsOut)
                 {
-                    yield break;
+                    return [];
+                }
+
+                if (!ConditionalHeaderProperties.TryGetValue(parameter.Name, out var propertyName))
+                {
+                    etagParameters.Add(parameter);
+                    continue;
                 }
 
                 conditionalParameters.Add(parameter);
@@ -186,64 +185,94 @@ namespace Azure.Generator.Management.Utilities
                 if (propertyName is nameof(RequestConditions.IfMatch) or nameof(RequestConditions.IfNoneMatch)
                     && parameter.Type.Equals(typeof(string)))
                 {
-                    etagParameters[i] = CloneParameter(parameter, type: new CSharpType(typeof(ETag), isNullable: true));
+                    etagParameters.Add(CloneParameter(parameter, type: new CSharpType(typeof(ETag), isNullable: true)));
                     hasETagParameter = true;
                 }
                 else
                 {
-                    etagParameters[i] = parameter;
+                    etagParameters.Add(parameter);
                 }
             }
 
             if (!hasETagParameter)
             {
-                yield break;
+                return [];
             }
 
-            yield return CreateSignature(etagParameters);
-
-            if (!hasModificationCondition)
+            var transformedSignatures = new List<MethodSignature>(3)
             {
-                yield return CreateSignature(CreateGroupedParameters("matchConditions", typeof(MatchConditions)));
-            }
-            yield return CreateSignature(CreateGroupedParameters("requestConditions", typeof(RequestConditions)));
-
-            MethodSignature CreateSignature(IReadOnlyList<ParameterProvider> parameters)
-                => new(
+                new(
                     signature.Name,
                     signature.Description,
                     signature.Modifiers,
                     signature.ReturnType,
                     signature.ReturnDescription,
-                    parameters,
+                    etagParameters,
                     Attributes: signature.Attributes,
                     GenericArguments: signature.GenericArguments,
                     GenericParameterConstraints: signature.GenericParameterConstraints,
                     ExplicitInterface: signature.ExplicitInterface,
-                    NonDocumentComment: signature.NonDocumentComment);
+                    NonDocumentComment: signature.NonDocumentComment)
+            };
 
-            IReadOnlyList<ParameterProvider> CreateGroupedParameters(string name, Type type)
+            if (!hasModificationCondition)
             {
-                var transformedParameter = CloneParameter(
-                    conditionalParameters[0],
-                    name: name,
-                    type: new CSharpType(type, isNullable: true));
-                var addedTransformedParameter = false;
-                var parameters = new List<ParameterProvider>(signature.Parameters.Count - conditionalParameters.Count + 1);
-                foreach (var parameter in signature.Parameters)
-                {
-                    if (!ConditionalHeaderProperties.ContainsKey(parameter.Name))
-                    {
-                        parameters.Add(parameter);
-                    }
-                    else if (!addedTransformedParameter)
-                    {
-                        parameters.Add(transformedParameter);
-                        addedTransformedParameter = true;
-                    }
-                }
-                return parameters;
+                transformedSignatures.Add(new(
+                    signature.Name,
+                    signature.Description,
+                    signature.Modifiers,
+                    signature.ReturnType,
+                    signature.ReturnDescription,
+                    CreateGroupedParameters(signature, conditionalParameters, "matchConditions", typeof(MatchConditions)),
+                    Attributes: signature.Attributes,
+                    GenericArguments: signature.GenericArguments,
+                    GenericParameterConstraints: signature.GenericParameterConstraints,
+                    ExplicitInterface: signature.ExplicitInterface,
+                    NonDocumentComment: signature.NonDocumentComment));
             }
+
+            transformedSignatures.Add(new(
+                signature.Name,
+                signature.Description,
+                signature.Modifiers,
+                signature.ReturnType,
+                signature.ReturnDescription,
+                CreateGroupedParameters(signature, conditionalParameters, "requestConditions", typeof(RequestConditions)),
+                Attributes: signature.Attributes,
+                GenericArguments: signature.GenericArguments,
+                GenericParameterConstraints: signature.GenericParameterConstraints,
+                ExplicitInterface: signature.ExplicitInterface,
+                NonDocumentComment: signature.NonDocumentComment));
+
+            return transformedSignatures;
+        }
+
+        private static IReadOnlyList<ParameterProvider> CreateGroupedParameters(
+            MethodSignature signature,
+            IReadOnlyList<ParameterProvider> conditionalParameters,
+            string name,
+            Type type)
+        {
+            var transformedParameter = CloneParameter(
+                conditionalParameters[0],
+                name: name,
+                type: new CSharpType(type, isNullable: true));
+            var addedTransformedParameter = false;
+            var parameters = new List<ParameterProvider>(signature.Parameters.Count - conditionalParameters.Count + 1);
+            foreach (var parameter in signature.Parameters)
+            {
+                if (!ConditionalHeaderProperties.ContainsKey(parameter.Name))
+                {
+                    parameters.Add(parameter);
+                }
+                else if (!addedTransformedParameter)
+                {
+                    parameters.Add(transformedParameter);
+                    addedTransformedParameter = true;
+                }
+            }
+
+            return parameters;
         }
 
         private static MethodProvider BuildStringToETagOverload(
@@ -254,7 +283,7 @@ namespace Azure.Generator.Management.Utilities
             var previousSignature = previousMethod.Signature;
             var currentSignature = currentMethod.Signature;
             var currentConditionalParameter = currentSignature.Parameters.First(parameter =>
-                IsConditionsParameter(parameter) || IsETagConditionalHeader(parameter) && parameter.Type.Equals(new CSharpType(typeof(ETag), isNullable: true)));
+                IsConditionsParameter(parameter) || IsETagParameter(parameter));
             var firstConvertedParameter = 0;
             for (var i = 0; i < previousSignature.Parameters.Count; i++)
             {
@@ -391,6 +420,10 @@ namespace Azure.Generator.Management.Utilities
         private static bool IsETagConditionalHeader(ParameterProvider parameter)
             => ConditionalHeaderProperties.TryGetValue(parameter.Name, out var propertyName)
                 && propertyName is nameof(RequestConditions.IfMatch) or nameof(RequestConditions.IfNoneMatch);
+
+        private static bool IsETagParameter(ParameterProvider parameter)
+            => IsETagConditionalHeader(parameter)
+                && parameter.Type.Equals(new CSharpType(typeof(ETag), isNullable: true));
 
         private static bool IsConditionsParameter(ParameterProvider parameter)
             => parameter.Type is { IsFrameworkType: true, FrameworkType: { } type }
