@@ -104,15 +104,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
         }
 
         /// <summary>
-        /// .NET Framework has no AppContext.SetData, so there the override cannot be applied and the
-        /// DrainBudgetOverride parameter has no effect. Run these on .NET.
+        /// .NET Framework has no AppContext.SetData, and AppContext reads from the AppDomain data
+        /// store, so this is the portable way to drive the override.
         /// </summary>
         private static void SetDrainBudgetOverride(object? value)
-        {
-#if !NETFRAMEWORK
-            AppContext.SetData(PersistOnShutdownConfig.DrainBudgetOverrideName, value);
-#endif
-        }
+            => AppDomain.CurrentDomain.SetData(PersistOnShutdownConfig.DrainBudgetOverrideName, value);
 
         [IterationSetup]
         public void IterationSetup()

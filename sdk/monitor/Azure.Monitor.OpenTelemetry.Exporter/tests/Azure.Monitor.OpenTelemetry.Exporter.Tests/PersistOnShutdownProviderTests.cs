@@ -202,7 +202,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void DisposeDoesNotWaitWhenTheDrainBudgetIsZero()
         {
-            AppContext.SetData(PersistOnShutdownConfig.DrainBudgetOverrideName, 0);
+            SetDrainBudgetOverride(0);
 
             try
             {
@@ -228,7 +228,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             }
             finally
             {
-                AppContext.SetData(PersistOnShutdownConfig.DrainBudgetOverrideName, null);
+                SetDrainBudgetOverride(null);
             }
         }
 
@@ -397,7 +397,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void MetricDisposePersistsWithoutTransmittingWhenTheDrainBudgetIsZero()
         {
-            AppContext.SetData(PersistOnShutdownConfig.DrainBudgetOverrideName, 0);
+            SetDrainBudgetOverride(0);
 
             try
             {
@@ -420,7 +420,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             }
             finally
             {
-                AppContext.SetData(PersistOnShutdownConfig.DrainBudgetOverrideName, null);
+                SetDrainBudgetOverride(null);
             }
         }
 
@@ -460,6 +460,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using var activity = _activitySource.StartActivity("TestActivity", ActivityKind.Client);
             Assert.NotNull(activity);
         }
+
+        /// <summary>
+        /// .NET Framework has no AppContext.SetData, and AppDomain.SetData is what AppContext reads
+        /// from, so this is the portable way to drive the override.
+        /// </summary>
+        private static void SetDrainBudgetOverride(object? value)
+            => AppDomain.CurrentDomain.SetData(PersistOnShutdownConfig.DrainBudgetOverrideName, value);
 
         private static ServiceProvider BuildLoggerServices(AzureMonitorExporterOptions options)
         {

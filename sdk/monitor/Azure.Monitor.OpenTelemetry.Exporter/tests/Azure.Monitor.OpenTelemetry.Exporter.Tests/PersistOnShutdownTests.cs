@@ -495,10 +495,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         private sealed class DrainBudgetOverride : IDisposable
         {
             internal DrainBudgetOverride(object? value)
-                => AppContext.SetData(PersistOnShutdownConfig.DrainBudgetOverrideName, value);
+                => AppDomain.CurrentDomain.SetData(PersistOnShutdownConfig.DrainBudgetOverrideName, value);
 
             public void Dispose()
-                => AppContext.SetData(PersistOnShutdownConfig.DrainBudgetOverrideName, null);
+                => AppDomain.CurrentDomain.SetData(PersistOnShutdownConfig.DrainBudgetOverrideName, null);
         }
 
         [Theory]
