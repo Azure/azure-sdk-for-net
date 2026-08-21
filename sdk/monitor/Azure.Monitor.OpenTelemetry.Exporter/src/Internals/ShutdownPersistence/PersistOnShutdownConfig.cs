@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using System.Threading;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ShutdownPersistence
@@ -24,6 +25,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ShutdownPersistence
         /// Reverts shutdown to the legacy blocking transmission.
         /// </summary>
         internal const string DisablePersistOnShutdownSwitchName = "Azure.Monitor.OpenTelemetry.Exporter.DisablePersistOnShutdown";
+
+        /// <summary>
+        /// Overrides <see cref="DrainBudgetMilliseconds"/>. Settable through <c>AppContext.SetData</c>
+        /// or a runtimeconfig.json configProperty.
+        /// </summary>
+        /// <remarks>
+        /// Zero suits a short-lived application: the telemetry is already durable on disk, so exit
+        /// costs only the file write and delivery falls to a later run. A larger value suits a
+        /// single-run CI job, where there is no later run and blocking until ingestion answers is
+        /// the only way the telemetry ever arrives.
+        /// </remarks>
+        internal const string DrainBudgetOverrideName = "Azure.Monitor.OpenTelemetry.Exporter.ShutdownDrainBudgetMilliseconds";
 
         /// <summary>
         /// Upper bound on how long shutdown waits for the background drain. The telemetry is already
@@ -51,7 +64,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ShutdownPersistence
 
         /// <summary>
         /// Resolves how long to wait on the background drain. <see cref="Timeout.Infinite"/> is what
-        /// <c>Dispose()</c> passes, and blocking process exit on the network is the problem this
+        /// <c>Shutdown()</c> passes, and blocking process exit on the network is the problem this
         /// design exists to avoid, so it maps to "do not wait".
         /// </summary>
         internal static int ResolveDrainWait(int remainingMilliseconds)
@@ -61,7 +74,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ShutdownPersistence
                 return 0;
             }
 
-            return Math.Min(remainingMilliseconds, DrainBudgetMilliseconds);
+            return Math.Min(remainingMilliseconds, GetDrainBudgetMilliseconds());
+        }
+
+        /// <summary>
+        /// The default is retained so that long-running services keep delivering their final batch
+        /// within a graceful shutdown window. <c>Dispose()</c> passes a finite timeout, so without
+        /// an override that window is used.
+        /// </summary>
+        internal static int GetDrainBudgetMilliseconds()
+        {
+            var configured = AppContext.GetData(DrainBudgetOverrideName);
+
+            switch (configured)
+            {
+                case int milliseconds when milliseconds >= 0:
+                    return milliseconds;
+
+                case string text when int.TryParse(text, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsed) && parsed >= 0:
+                    return parsed;
+
+                default:
+                    return DrainBudgetMilliseconds;
+            }
         }
 
         private static bool IsSwitchEnabled(string switchName)

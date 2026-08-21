@@ -18,26 +18,26 @@ using OpenTelemetry.Trace;
 Measures what a short-lived application pays to shut down.
 
 BenchmarkDotNet, .NET 8.0.30, X64 RyuJIT. RunStrategy=Monitoring, IterationCount=10.
+DrainBudgetOverride of -1 means the default budget is left in place.
 
-| Method           | BlockingShutdown | IngestionResponseDelayMilliseconds | Mean         | Allocated |
-|----------------- |----------------- |----------------------------------- |-------------:|----------:|
-| DisposeProvider  | False            | 0                                  |     9.012 ms |  278.4 KB |
-| ShutdownProvider | False            | 0                                  |     2.636 ms |  36.63 KB |
-| DisposeProvider  | False            | 2000                               | 2,011.035 ms | 147.08 KB |
-| ShutdownProvider | False            | 2000                               |     3.086 ms |  36.63 KB |
-| DisposeProvider  | True             | 0                                  |     1.917 ms |  97.58 KB |
-| ShutdownProvider | True             | 0                                  |     1.702 ms |  97.34 KB |
-| DisposeProvider  | True             | 2000                               | 2,009.037 ms | 225.87 KB |
-| ShutdownProvider | True             | 2000                               | 2,009.114 ms |  97.05 KB |
+| Method          | BlockingShutdown | DrainBudgetOverride | IngestionDelayMs | Mean         | Allocated |
+|---------------- |----------------- |-------------------- |----------------- |-------------:|----------:|
+| DisposeProvider | False            | -1                  | 0                |     6.918 ms | 149.82 KB |
+| DisposeProvider | False            | -1                  | 2000             | 2,011.802 ms | 148.02 KB |
+| DisposeProvider | False            | 0                   | 0                |     2.614 ms |  36.88 KB |
+| DisposeProvider | False            | 0                   | 2000             |     2.729 ms |  36.88 KB |
+| DisposeProvider | True             | -1                  | 0                |     1.659 ms |  98.02 KB |
+| DisposeProvider | True             | -1                  | 2000             | 2,010.282 ms |  98.23 KB |
+| DisposeProvider | True             | 0                   | 0                |     1.719 ms |  97.58 KB |
+| DisposeProvider | True             | 0                   | 2000             | 2,007.451 ms |  97.29 KB |
 
-Persisting is flat at ~3 ms regardless of how long ingestion takes, which is the behaviour the
-persist-on-shutdown work exists to provide.
+Dispose() passes a finite timeout, so by default the wait rule grants the background drain up to
+DrainBudgetMilliseconds and blocks on it, and exit then tracks ingestion latency. Setting the budget
+to zero makes exit cost the file write and nothing more, at 2.7 ms whatever ingestion is doing,
+which is what a short-lived application wants. The default is retained so that a long-running
+service keeps delivering its final batch within the window Dispose() allows.
 
-That benefit is only visible through Shutdown(). Dispose() passes a 5 second timeout, so the wait
-rule grants the background drain up to DrainBudgetMilliseconds (2000) and blocks on it, at which
-point exit tracks ingestion latency exactly as the previous blocking behaviour did. Since
-Dispose() is what applications call, the default budget is the thing that decides whether any of
-this is felt.
+The budget has no effect on the blocking path, which has no drain to wait for.
 */
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
@@ -61,6 +61,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
         /// </summary>
         [Params(false, true)]
         public bool BlockingShutdown { get; set; }
+
+        /// <summary>
+        /// -1 leaves the default budget in place; 0 is what a short-lived application would set.
+        /// </summary>
+        [Params(-1, 0)]
+        public int DrainBudgetOverride { get; set; }
 
         [Params(0, 2000)]
         public int IngestionResponseDelayMilliseconds { get; set; }
@@ -93,13 +99,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
         {
             _server?.Dispose();
             AppContext.SetSwitch(PersistOnShutdownConfig.DisablePersistOnShutdownSwitchName, false);
+            SetDrainBudgetOverride(null);
             TryDeleteStorage();
+        }
+
+        /// <summary>
+        /// .NET Framework has no AppContext.SetData, so there the override cannot be applied and the
+        /// DrainBudgetOverride parameter has no effect. Run these on .NET.
+        /// </summary>
+        private static void SetDrainBudgetOverride(object? value)
+        {
+#if !NETFRAMEWORK
+            AppContext.SetData(PersistOnShutdownConfig.DrainBudgetOverrideName, value);
+#endif
         }
 
         [IterationSetup]
         public void IterationSetup()
         {
             AppContext.SetSwitch(PersistOnShutdownConfig.DisablePersistOnShutdownSwitchName, BlockingShutdown);
+            SetDrainBudgetOverride(DrainBudgetOverride < 0 ? null : (object)DrainBudgetOverride);
 
             _tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(SourceName)

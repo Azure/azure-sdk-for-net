@@ -27,6 +27,7 @@ using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
+    [Collection(nameof(PersistOnShutdownSwitchCollection))]
     public class PersistOnShutdownTests : IDisposable
     {
         private const string TestIkey = "test_ikey";
@@ -432,6 +433,58 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(PersistOnShutdownConfig.InternalTelemetryNetworkTimeout, statsbeat.Retry.NetworkTimeout);
             Assert.Equal(PersistOnShutdownConfig.InternalTelemetryNetworkTimeout, customerStats.Retry.NetworkTimeout);
             Assert.True(PersistOnShutdownConfig.InternalTelemetryNetworkTimeout < TimeSpan.FromSeconds(30));
+        }
+
+        [Fact]
+        public void DrainBudgetDefaultsToTheGracefulShutdownWindow()
+        {
+            // Unchanged by default so that a long-running service keeps delivering its final batch
+            // within the window Dispose() allows.
+            Assert.Equal(PersistOnShutdownConfig.DrainBudgetMilliseconds, PersistOnShutdownConfig.GetDrainBudgetMilliseconds());
+        }
+
+        [Theory]
+        [InlineData(0, 0)]
+        [InlineData(250, 250)]
+        [InlineData(30000, 30000)]
+        public void DrainBudgetCanBeOverriddenWithAnInteger(int configured, int expected)
+        {
+            using var scope = new DrainBudgetOverride(configured);
+
+            Assert.Equal(expected, PersistOnShutdownConfig.GetDrainBudgetMilliseconds());
+
+            // Zero is what a short-lived application wants: exit costs the file write and nothing more.
+            Assert.Equal(expected == 0 ? 0 : Math.Min(5000, expected), PersistOnShutdownConfig.ResolveDrainWait(5000));
+        }
+
+        [Fact]
+        public void DrainBudgetCanBeOverriddenWithARuntimeConfigString()
+        {
+            // runtimeconfig.json configProperties arrive as strings.
+            using var scope = new DrainBudgetOverride("0");
+
+            Assert.Equal(0, PersistOnShutdownConfig.GetDrainBudgetMilliseconds());
+            Assert.Equal(0, PersistOnShutdownConfig.ResolveDrainWait(5000));
+        }
+
+        [Theory]
+        [InlineData(-1)]
+        [InlineData("not-a-number")]
+        [InlineData(null)]
+        public void DrainBudgetIgnoresUnusableOverrides(object? configured)
+        {
+            using var scope = new DrainBudgetOverride(configured);
+
+            Assert.Equal(PersistOnShutdownConfig.DrainBudgetMilliseconds, PersistOnShutdownConfig.GetDrainBudgetMilliseconds());
+        }
+
+        private sealed class DrainBudgetOverride : IDisposable
+        {
+            internal DrainBudgetOverride(object? value)
+                => AppContext.SetData(PersistOnShutdownConfig.DrainBudgetOverrideName, value);
+
+            public void Dispose()
+                => AppContext.SetData(PersistOnShutdownConfig.DrainBudgetOverrideName, null);
         }
 
         [Theory]
