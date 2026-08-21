@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             {
                 throw new FormatException($"The model {nameof(FirewallRuleProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(StartIpAddress))
+            if (Optional.IsDefined(StartIPAddress))
             {
                 writer.WritePropertyName("startIpAddress"u8);
-                writer.WriteStringValue(StartIpAddress);
+                writer.WriteStringValue(StartIPAddress);
             }
-            if (Optional.IsDefined(EndIpAddress))
+            if (Optional.IsDefined(EndIPAddress))
             {
                 writer.WritePropertyName("endIpAddress"u8);
-                writer.WriteStringValue(EndIpAddress);
+                writer.WriteStringValue(EndIPAddress);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -131,20 +131,20 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             {
                 return null;
             }
-            string startIpAddress = default;
-            string endIpAddress = default;
+            string startIPAddress = default;
+            string endIPAddress = default;
             AzureProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("startIpAddress"u8))
                 {
-                    startIpAddress = prop.Value.GetString();
+                    startIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("endIpAddress"u8))
                 {
-                    endIpAddress = prop.Value.GetString();
+                    endIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FirewallRuleProperties(startIpAddress, endIpAddress, provisioningState, additionalBinaryDataProperties);
+            return new FirewallRuleProperties(startIPAddress, endIPAddress, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

@@ -250,13 +250,13 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                 default);
         }
 
-        /// <param name="startIpAddress"> Start IP address. </param>
-        /// <param name="endIpAddress"> End IP address. </param>
+        /// <param name="startIPAddress"> Start IP address. </param>
+        /// <param name="endIPAddress"> End IP address. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <returns> A new <see cref="Models.FirewallRuleProperties"/> instance for mocking. </returns>
-        public static FirewallRuleProperties FirewallRuleProperties(string startIpAddress = default, string endIpAddress = default, AzureProvisioningState? provisioningState = default)
+        public static FirewallRuleProperties FirewallRuleProperties(string startIPAddress = default, string endIPAddress = default, AzureProvisioningState? provisioningState = default)
         {
-            return new FirewallRuleProperties(startIpAddress, endIpAddress, provisioningState, default);
+            return new FirewallRuleProperties(startIPAddress, endIPAddress, provisioningState, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

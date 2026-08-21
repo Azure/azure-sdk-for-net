@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FirewallRuleProperties"/>. </summary>
-        /// <param name="startIpAddress"> Start IP address. </param>
-        /// <param name="endIpAddress"> End IP address. </param>
+        /// <param name="startIPAddress"> Start IP address. </param>
+        /// <param name="endIPAddress"> End IP address. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FirewallRuleProperties(string startIpAddress, string endIpAddress, AzureProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FirewallRuleProperties(string startIPAddress, string endIPAddress, AzureProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartIpAddress = startIpAddress;
-            EndIpAddress = endIpAddress;
+            StartIPAddress = startIPAddress;
+            EndIPAddress = endIPAddress;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Start IP address. </summary>
-        public string StartIpAddress { get; set; }
+        public string StartIPAddress { get; set; }
 
         /// <summary> End IP address. </summary>
-        public string EndIpAddress { get; set; }
+        public string EndIPAddress { get; set; }
 
         /// <summary> Provisioning state. </summary>
         public AzureProvisioningState? ProvisioningState { get; }
