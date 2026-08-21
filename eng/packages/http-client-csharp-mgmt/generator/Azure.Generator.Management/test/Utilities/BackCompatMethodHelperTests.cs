@@ -75,6 +75,28 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
+        [Test]
+        public void PreservesOptionalDefaultWhenCurrentETagIsRequired()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var current = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("ifMatch", $"The match condition.", new CSharpType(typeof(ETag), isNullable: true)),
+                    OptionalCancellationToken()
+                ]);
+            var previous = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("ifMatch", $"The match condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default),
+                    OptionalCancellationToken()
+                ]);
+
+            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
+        }
+
         [TestCase("etag")]
         [TestCase("condition")]
         public void DoesNotAddStringOverloadForNonConditionalETagParameter(string parameterName)

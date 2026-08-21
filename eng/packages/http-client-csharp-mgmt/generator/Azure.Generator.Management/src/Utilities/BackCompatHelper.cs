@@ -198,8 +198,9 @@ namespace Azure.Generator.Management.Utilities
                 }
             }
 
+            var removeLeadingDefaults = currentSignature.Parameters[firstConvertedParameter].DefaultValue is not null;
             var parameters = previousSignature.Parameters
-                .Select((parameter, index) => CloneParameter(parameter, removeDefault: index <= firstConvertedParameter))
+                .Select((parameter, index) => CloneParameter(parameter, removeDefault: removeLeadingDefaults && index <= firstConvertedParameter))
                 .ToArray();
             var arguments = new ValueExpression[parameters.Length];
             for (var i = 0; i < parameters.Length; i++)
