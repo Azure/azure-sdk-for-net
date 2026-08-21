@@ -7,10 +7,9 @@
 - Added `ChangeEnumerationIntervalDays` to cloud endpoint data and create-or-update content.
 - Added PATCH-based cloud endpoint update operation to support updating the new `ChangeEnumerationIntervalDays` parameter
 - Added sync-session progress, throughput, large-file, and warning details to `ServerEndpointSyncActivityStatus`.
+- Updated the default service API version to `2025-12-01`.
 
 ### Other Changes
-
-- Updated the default service API version to `2025-12-01`.
 
 ## 1.3.2 (2026-06-30)
 
