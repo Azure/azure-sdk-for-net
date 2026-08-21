@@ -769,6 +769,7 @@ namespace Azure.Storage.Blobs.Models
     {
         internal BlobGeoReplication() { }
         public System.DateTimeOffset? LastSyncedOn { get { throw null; } }
+        public System.DateTimeOffset LastSyncOn { get { throw null; } }
         public Azure.Storage.Blobs.Models.BlobGeoReplicationStatus Status { get { throw null; } }
         protected virtual Azure.Storage.Blobs.Models.BlobGeoReplication PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

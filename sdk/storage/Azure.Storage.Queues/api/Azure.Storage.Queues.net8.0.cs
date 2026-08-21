@@ -204,8 +204,10 @@ namespace Azure.Storage.Queues.Models
         internal PeekedMessage() { }
         public System.BinaryData Body { get { throw null; } }
         public long DequeueCount { get { throw null; } }
+        public System.DateTimeOffset ExpireOn { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public System.DateTimeOffset? InsertedOn { get { throw null; } }
+        public System.DateTimeOffset InsertionOn { get { throw null; } }
         public string MessageId { get { throw null; } }
         public string MessageText { get { throw null; } }
         protected virtual Azure.Storage.Queues.Models.PeekedMessage PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -351,6 +353,7 @@ namespace Azure.Storage.Queues.Models
     {
         internal QueueGeoReplication() { }
         public System.DateTimeOffset? LastSyncedOn { get { throw null; } }
+        public System.DateTimeOffset LastSyncOn { get { throw null; } }
         public Azure.Storage.Queues.Models.QueueGeoReplicationStatus Status { get { throw null; } }
         protected virtual Azure.Storage.Queues.Models.QueueGeoReplication PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -37,8 +37,8 @@ namespace Azure.Security.KeyVault.Secrets
 
             var deleted = new DeletedSecret(props)
             {
-                DeletedOn = bundle.DeletedDate,
-                ScheduledPurgeDate = bundle.ScheduledPurgeDate,
+                DeletedOn = bundle.DeletedOn,
+                ScheduledPurgeDate = bundle.ScheduledPurgeOn,
             };
             deleted.Value = bundle.Value;
             if (!string.IsNullOrEmpty(bundle.RecoveryId))
@@ -70,8 +70,8 @@ namespace Azure.Security.KeyVault.Secrets
 
             var deleted = new DeletedSecret(props)
             {
-                DeletedOn = item.DeletedDate,
-                ScheduledPurgeDate = item.ScheduledPurgeDate,
+                DeletedOn = item.DeletedOn,
+                ScheduledPurgeDate = item.ScheduledPurgeOn,
             };
             if (!string.IsNullOrEmpty(item.RecoveryId))
             {
