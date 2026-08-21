@@ -400,6 +400,7 @@ namespace Azure.Core.TestFramework
                 private readonly ClientDiagnosticListener _diagnosticListener;
                 private readonly IAsyncEnumerator<T> _enumerator;
                 private readonly MethodInfo _methodInfo;
+                private readonly object _operationToken = new object();
                 private bool _moveNextStarted;
                 private bool _validationCompleted;
 
@@ -409,7 +410,14 @@ namespace Azure.Core.TestFramework
                     CancellationToken cancellationToken)
                 {
                     _methodInfo = methodInfo;
-                    _diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure."), asyncLocal: true);
+
+                    // Bind the listener to this enumerator so interleaved streams on the same async flow do not
+                    // record, or validate, each other's scopes.
+                    _diagnosticListener = new ClientDiagnosticListener(
+                        s => s.StartsWith("Azure."),
+                        asyncLocal: true,
+                        scopeStartCallback: null,
+                        operationToken: _operationToken);
                     UnsuppressCurrentActivity();
                     try
                     {
@@ -430,6 +438,7 @@ namespace Azure.Core.TestFramework
 
                     // The iterator body runs lazily, so the activity that hosts its scopes is only
                     // known here rather than when the enumerator was created.
+                    ClientDiagnosticListener.EnterOperation(_operationToken);
                     UnsuppressCurrentActivity();
                     try
                     {
@@ -451,6 +460,7 @@ namespace Azure.Core.TestFramework
                 public async ValueTask DisposeAsync()
                 {
                     Exception exception = null;
+                    ClientDiagnosticListener.EnterOperation(_operationToken);
                     UnsuppressCurrentActivity();
                     try
                     {

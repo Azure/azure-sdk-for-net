@@ -14,6 +14,9 @@ namespace Azure.Core.Tests
     {
         private readonly Func<string, bool> _sourceNameFilter;
         private readonly AsyncLocal<bool> _collectThisStack;
+        private readonly object _operationToken;
+
+        private static readonly AsyncLocal<object> s_currentOperation = new AsyncLocal<object>();
 
         private List<IDisposable> _subscriptions = new List<IDisposable>();
         private readonly Action<ProducedDiagnosticScope> _scopeStartCallback;
@@ -26,7 +29,22 @@ namespace Azure.Core.Tests
         }
 
         public ClientDiagnosticListener(Func<string, bool> filter, bool asyncLocal = false, Action<ProducedDiagnosticScope> scopeStartCallback = default)
+            : this(filter, asyncLocal, scopeStartCallback, null)
         {
+        }
+
+        /// <summary>
+        /// Creates a listener that only collects events raised while <paramref name="operationToken"/> is the
+        /// current operation. Execution-context isolation alone is not enough for deferred operations such as
+        /// async iterators, because several of them can be created on, and interleaved within, the same flow.
+        /// </summary>
+        internal ClientDiagnosticListener(
+            Func<string, bool> filter,
+            bool asyncLocal,
+            Action<ProducedDiagnosticScope> scopeStartCallback,
+            object operationToken)
+        {
+            _operationToken = operationToken;
             if (asyncLocal)
             {
                 _collectThisStack = new AsyncLocal<bool> { Value = true };
@@ -35,6 +53,12 @@ namespace Azure.Core.Tests
             _scopeStartCallback = scopeStartCallback;
             DiagnosticListener.AllListeners.Subscribe(this);
         }
+
+        /// <summary>
+        /// Marks the calling asynchronous frame as belonging to <paramref name="operationToken"/>. The value only
+        /// flows into work started by that frame, so it does not leak back out to the caller.
+        /// </summary>
+        internal static void EnterOperation(object operationToken) => s_currentOperation.Value = operationToken;
 
         public void OnCompleted()
         {
@@ -47,6 +71,9 @@ namespace Azure.Core.Tests
         public void OnNext(KeyValuePair<string, object> value)
         {
             if (_collectThisStack?.Value == false)
+                return;
+
+            if (_operationToken != null && !ReferenceEquals(s_currentOperation.Value, _operationToken))
                 return;
 
             lock (Scopes)

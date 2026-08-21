@@ -150,6 +150,26 @@ namespace Azure.Core.TestFramework.Tests
         }
 
         [Test]
+        public async Task InterleavedAsyncEnumerablesValidateIndependently()
+        {
+            InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
+
+            IAsyncEnumerator<int> first = client.StreamValidAsync().GetAsyncEnumerator();
+            IAsyncEnumerator<int> second = client.StreamValidAsync().GetAsyncEnumerator();
+
+            // Completing the first stream must not observe the second stream's still-open scope.
+            Assert.IsTrue(await first.MoveNextAsync());
+            Assert.IsTrue(await second.MoveNextAsync());
+            Assert.IsTrue(await first.MoveNextAsync());
+            Assert.IsFalse(await first.MoveNextAsync());
+            await first.DisposeAsync();
+
+            Assert.IsTrue(await second.MoveNextAsync());
+            Assert.IsFalse(await second.MoveNextAsync());
+            await second.DisposeAsync();
+        }
+
+        [Test]
         public void ListenerThrowsWhenStopEventHasNoMatchingScope()
         {
             using var listener = new ClientDiagnosticListener(s => s == "Azure.Core.Tests.Fake", asyncLocal: true);
