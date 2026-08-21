@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="computeModel"> The compute model for the cluster. </param>
         /// <param name="mirroring"> Mirroring configuration for the HorizonDB cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBClusterPatchProperties(string administratorLoginPassword, int? vCores, HorizonDBClusterParameterGroupConnectionProperties parameterGroup, HorizonDbClusterAuthConfig authConfig, HorizonDbComputeModel computeModel, HorizonDbClusterMirroring mirroring, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBClusterPatchProperties(string administratorLoginPassword, int? vCores, HorizonDBClusterParameterGroupConnectionProperties parameterGroup, HorizonDBClusterAuthConfig authConfig, HorizonDBComputeModel computeModel, HorizonDBClusterMirroring mirroring, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdministratorLoginPassword = administratorLoginPassword;
             VCores = vCores;
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public HorizonDBClusterParameterGroupConnectionProperties ParameterGroup { get; set; }
 
         /// <summary> Authentication configuration for the HorizonDB cluster. </summary>
-        public HorizonDbClusterAuthConfig AuthConfig { get; set; }
+        public HorizonDBClusterAuthConfig AuthConfig { get; set; }
 
         /// <summary> The compute model for the cluster. </summary>
-        public HorizonDbComputeModel ComputeModel { get; set; }
+        public HorizonDBComputeModel ComputeModel { get; set; }
 
         /// <summary> Mirroring configuration for the HorizonDB cluster. </summary>
-        public HorizonDbClusterMirroring Mirroring { get; set; }
+        public HorizonDBClusterMirroring Mirroring { get; set; }
     }
 }

@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> The compute model for a HorizonDB cluster. </summary>
-    public partial class HorizonDbComputeModel
+    public partial class HorizonDBComputeModel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbComputeModel"/>. </summary>
-        public HorizonDbComputeModel()
+        /// <summary> Initializes a new instance of <see cref="HorizonDBComputeModel"/>. </summary>
+        public HorizonDBComputeModel()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDbComputeModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBComputeModel"/>. </summary>
         /// <param name="type"> The compute model type. Supported values: 'Provisioned', 'Serverless'. </param>
         /// <param name="vCores"> The fixed vCore count for Provisioned compute. </param>
         /// <param name="minvCores"> The minimum vCores for Serverless compute. Defines the lower autoscaling bound. </param>
         /// <param name="maxvCores"> The maximum vCores for Serverless compute. Defines the upper autoscaling bound. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDbComputeModel(HorizonDbComputeModelType? @type, int? vCores, double? minvCores, double? maxvCores, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBComputeModel(HorizonDBComputeModelType? @type, int? vCores, double? minvCores, double? maxvCores, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             VCores = vCores;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> The compute model type. Supported values: 'Provisioned', 'Serverless'. </summary>
-        public HorizonDbComputeModelType? Type { get; set; }
+        public HorizonDBComputeModelType? Type { get; set; }
 
         /// <summary> The fixed vCore count for Provisioned compute. </summary>
         public int? VCores { get; set; }
