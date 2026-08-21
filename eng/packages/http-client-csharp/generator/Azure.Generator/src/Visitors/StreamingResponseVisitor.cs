@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.ClientModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -46,7 +47,7 @@ namespace Azure.Generator.Visitors
             var updatedStatements = new List<MethodBodyStatement>(statements.Statements.Count + 1);
             foreach (MethodBodyStatement statement in statements.Statements)
             {
-                if (TryGetStreamingResponse(statement, out ValueExpression response)
+                if (TryGetStreamingResponse(statement, out ValueExpression? response)
                     && _processedStreamingResponses.Add(response))
                 {
                     updatedStatements.Add(new ExpressionStatement(response));
@@ -60,7 +61,7 @@ namespace Azure.Generator.Visitors
         {
             if (expression.Arguments.Count > 0
                 && IsStreamingResponseType(method.Signature.ReturnType)
-                && FindAzureResponseMessage(expression.Arguments[0]) is { } message)
+                && TryFindAzureResponseMessage(expression.Arguments[0], out ValueExpression? message))
             {
                 var arguments = expression.Arguments.ToList();
                 arguments[0] = New.Instance<AzurePipelineResponse>(message);
@@ -71,7 +72,9 @@ namespace Azure.Generator.Visitors
             return base.VisitInvokeMethodExpression(expression, method);
         }
 
-        private static bool TryGetStreamingResponse(MethodBodyStatement statement, out ValueExpression response)
+        private static bool TryGetStreamingResponse(
+            MethodBodyStatement statement,
+            [NotNullWhen(true)] out ValueExpression? response)
         {
             if (statement is ExpressionStatement
                 {
@@ -82,13 +85,13 @@ namespace Azure.Generator.Visitors
                     }
                 }
                 && invocation.Arguments.Count > 0
-                && FindAzureResponseMessage(invocation.Arguments[0]) is not null)
+                && TryFindAzureResponseMessage(invocation.Arguments[0], out _))
             {
                 response = invocation.Arguments[0];
                 return true;
             }
 
-            response = null!;
+            response = null;
             return false;
         }
 
@@ -98,7 +101,9 @@ namespace Azure.Generator.Visitors
                streamingType.GetGenericTypeDefinition().Equals(typeof(AsyncStreamingClientResult<>));
 #pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
-        private static ValueExpression? FindAzureResponseMessage(ValueExpression expression)
+        private static bool TryFindAzureResponseMessage(
+            ValueExpression expression,
+            [NotNullWhen(true)] out ValueExpression? message)
         {
             CSharpType? responseType = expression switch
             {
@@ -107,25 +112,35 @@ namespace Azure.Generator.Visitors
                 _ => null
             };
 
-            return IsAzureResponseType(responseType) ? FindHttpMessage(expression) : null;
+            if (IsAzureResponseType(responseType) && TryFindHttpMessage(expression, out message))
+            {
+                return true;
+            }
+
+            message = null;
+            return false;
         }
 
         private static bool IsAzureResponseType(CSharpType? type)
             => UnwrapTask(type)?.Equals(typeof(Response)) == true;
 
-        private static ValueExpression? FindHttpMessage(ValueExpression expression)
+        private static bool TryFindHttpMessage(
+            ValueExpression expression,
+            [NotNullWhen(true)] out ValueExpression? message)
         {
             if (expression is ScopedApi api)
             {
-                return FindHttpMessage(api.Original);
+                return TryFindHttpMessage(api.Original, out message);
             }
 
             if (expression is InvokeMethodExpression invocation)
             {
-                return invocation.Arguments.FirstOrDefault(IsHttpMessage);
+                message = invocation.Arguments.FirstOrDefault(IsHttpMessage);
+                return message is not null;
             }
 
-            return null;
+            message = null;
+            return false;
         }
 
         private static bool IsHttpMessage(ValueExpression expression)
