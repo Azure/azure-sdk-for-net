@@ -1,0 +1,80 @@
+parameters:
+  - name: Grouping
+    type: string
+  - name: ServiceDirectory
+    type: string
+  - name: SDKType
+    type: string
+
+jobs:
+  # OS-only caches restore each workload into one additive package directory.
+  - ${{ if eq(parameters.Grouping, 'os') }}:
+    - template: /eng/pipelines/templates/jobs/nuget-cache-experiment-bucket.yml
+      parameters:
+        Bucket: WindowsAll
+        CacheLabel: os-windows
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
+        SDKType: ${{ parameters.SDKType }}
+        OSName: Windows
+        SeedBuild: true
+        SeedTest: true
+    - template: /eng/pipelines/templates/jobs/nuget-cache-experiment-bucket.yml
+      parameters:
+        Bucket: LinuxAll
+        CacheLabel: os-linux
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
+        SDKType: ${{ parameters.SDKType }}
+        OSName: Linux
+        SeedAnalyze: true
+        SeedTest: true
+    - template: /eng/pipelines/templates/jobs/nuget-cache-experiment-bucket.yml
+      parameters:
+        Bucket: MacTest
+        CacheLabel: os-macos
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
+        SDKType: ${{ parameters.SDKType }}
+        OSName: macOS
+        SeedTest: true
+
+  # Class caches measure whether smaller worker downloads justify additional seeds.
+  - ${{ if eq(parameters.Grouping, 'class') }}:
+    - template: /eng/pipelines/templates/jobs/nuget-cache-experiment-bucket.yml
+      parameters:
+        Bucket: WindowsBuild
+        CacheLabel: class-windows-build
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
+        SDKType: ${{ parameters.SDKType }}
+        OSName: Windows
+        SeedBuild: true
+    - template: /eng/pipelines/templates/jobs/nuget-cache-experiment-bucket.yml
+      parameters:
+        Bucket: LinuxAnalyze
+        CacheLabel: class-linux-analyze
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
+        SDKType: ${{ parameters.SDKType }}
+        OSName: Linux
+        SeedAnalyze: true
+    - template: /eng/pipelines/templates/jobs/nuget-cache-experiment-bucket.yml
+      parameters:
+        Bucket: LinuxTest
+        CacheLabel: class-linux-test
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
+        SDKType: ${{ parameters.SDKType }}
+        OSName: Linux
+        SeedTest: true
+    - template: /eng/pipelines/templates/jobs/nuget-cache-experiment-bucket.yml
+      parameters:
+        Bucket: WindowsTest
+        CacheLabel: class-windows-test
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
+        SDKType: ${{ parameters.SDKType }}
+        OSName: Windows
+        SeedTest: true
+    - template: /eng/pipelines/templates/jobs/nuget-cache-experiment-bucket.yml
+      parameters:
+        Bucket: MacTest
+        CacheLabel: class-macos-test
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
+        SDKType: ${{ parameters.SDKType }}
+        OSName: macOS
+        SeedTest: true
