@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using NUnit.Framework;
 
 namespace Azure.Storage.Queues.Tests
