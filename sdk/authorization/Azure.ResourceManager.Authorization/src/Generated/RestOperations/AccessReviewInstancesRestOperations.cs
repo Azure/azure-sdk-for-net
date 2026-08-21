@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByIdRequest(string subscriptionId, string scheduleDefinitionId, string id, RequestContext context)
+        internal HttpMessage CreateGetByIdRequest(Guid subscriptionId, string scheduleDefinitionId, string id, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/", false);
             uri.AppendPath(scheduleDefinitionId, true);
             uri.AppendPath("/instances/", false);
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.Authorization
             return message;
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string scheduleDefinitionId, string id, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateRequest(Guid subscriptionId, string scheduleDefinitionId, string id, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/", false);
             uri.AppendPath(scheduleDefinitionId, true);
             uri.AppendPath("/instances/", false);
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.Authorization
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string subscriptionId, string scheduleDefinitionId, string filter, RequestContext context)
+        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string scheduleDefinitionId, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/", false);
             uri.AppendPath(scheduleDefinitionId, true);
             uri.AppendPath("/instances", false);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Authorization
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, string scheduleDefinitionId, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string scheduleDefinitionId, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

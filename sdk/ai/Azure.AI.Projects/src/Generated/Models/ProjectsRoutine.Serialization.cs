@@ -112,15 +112,15 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("action"u8);
                 writer.WriteObjectValue(Action, options);
             }
-            if (Optional.IsDefined(CreatedAt))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created_at"u8);
-                writer.WriteNumberValue(CreatedAt.Value, "U");
+                writer.WriteNumberValue(CreatedOn.Value, "U");
             }
-            if (Optional.IsDefined(UpdatedAt))
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated_at"u8);
-                writer.WriteNumberValue(UpdatedAt.Value, "U");
+                writer.WriteNumberValue(UpdatedOn.Value, "U");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -169,8 +169,8 @@ namespace Azure.AI.Projects
             bool isEnabled = default;
             IDictionary<string, RoutineTrigger> triggers = default;
             RoutineAction action = default;
-            DateTimeOffset? createdAt = default;
-            DateTimeOffset? updatedAt = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? updatedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -218,7 +218,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    createdOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("updated_at"u8))
@@ -227,7 +227,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    updatedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    updatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (options.Format != "W")
@@ -241,8 +241,8 @@ namespace Azure.AI.Projects
                 isEnabled,
                 triggers ?? new ChangeTrackingDictionary<string, RoutineTrigger>(),
                 action,
-                createdAt,
-                updatedAt,
+                createdOn,
+                updatedOn,
                 additionalBinaryDataProperties);
         }
     }

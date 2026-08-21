@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Network security configuration properties. </param>
         /// <returns> A new <see cref="Models.NetworkSecurityPerimeterConfiguration"/> instance for mocking. </returns>
         public static NetworkSecurityPerimeterConfiguration NetworkSecurityPerimeterConfiguration(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetworkSecurityPerimeterConfigurationProperties properties = default)
         {
@@ -254,11 +254,11 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 default);
         }
 
-        /// <param name="provisioningState"></param>
+        /// <param name="provisioningState"> Provisioning state of the network security perimeter configuration. </param>
         /// <param name="provisioningIssues"> List of provisioning issues, if any. </param>
-        /// <param name="networkSecurityPerimeter"></param>
-        /// <param name="resourceAssociation"></param>
-        /// <param name="profile"></param>
+        /// <param name="networkSecurityPerimeter"> Information about the network security perimeter (NSP). </param>
+        /// <param name="resourceAssociation"> Information about the resource association. </param>
+        /// <param name="profile"> Network security perimeter configuration profile. </param>
         /// <returns> A new <see cref="Models.NetworkSecurityPerimeterConfigurationProperties"/> instance for mocking. </returns>
         public static NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default, IEnumerable<ProvisioningIssue> provisioningIssues = default, NetworkSecurityPerimeter networkSecurityPerimeter = default, ResourceAssociation resourceAssociation = default, NetworkSecurityProfile profile = default)
         {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <param name="name"> Name of the issue. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Details of the provisioning issue. </param>
         /// <returns> A new <see cref="Models.ProvisioningIssue"/> instance for mocking. </returns>
         public static ProvisioningIssue ProvisioningIssue(string name = default, ProvisioningIssueProperties properties = default)
         {
@@ -302,14 +302,14 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <param name="name"> Name of the access rule. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Properties of the access rule. </param>
         /// <returns> A new <see cref="Models.AccessRule"/> instance for mocking. </returns>
         public static AccessRule AccessRule(string name = default, AccessRuleProperties properties = default)
         {
             return new AccessRule(name, properties, default);
         }
 
-        /// <param name="direction"></param>
+        /// <param name="direction"> Direction of the access rule. </param>
         /// <param name="addressPrefixes"> Address prefixes in the CIDR format for inbound rules. </param>
         /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
         /// <param name="networkSecurityPerimeters"> Network security perimeters for inbound rules. </param>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <param name="name"> Name of the resource association. </param>
-        /// <param name="accessMode"></param>
+        /// <param name="accessMode"> Access mode of the resource association. </param>
         /// <returns> A new <see cref="Models.ResourceAssociation"/> instance for mocking. </returns>
         public static ResourceAssociation ResourceAssociation(string name = default, ResourceAssociationAccessMode? accessMode = default)
         {

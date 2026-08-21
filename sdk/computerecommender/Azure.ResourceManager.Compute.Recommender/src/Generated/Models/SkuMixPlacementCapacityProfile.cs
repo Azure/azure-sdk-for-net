@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             Priority = priority;
             SpotPriorityProfile = spotPriorityProfile;
             AllocationStrategy = allocationStrategy;
-            OsType = osType;
+            OSType = osType;
             ZoneAllocationPolicy = zoneAllocationPolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         public SkuMixPlacementAllocationStrategy? AllocationStrategy { get; set; }
 
         /// <summary> The OS type. Required when allocationStrategy is LowestPrice because pricing varies by OS. </summary>
-        public SkuMixPlacementOSType? OsType { get; set; }
+        public SkuMixPlacementOSType? OSType { get; set; }
 
         /// <summary> Zone allocation policy. Default: BestEffortBalanced. </summary>
         public SkuMixPlacementZoneAllocationPolicy ZoneAllocationPolicy { get; set; }

@@ -299,6 +299,75 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel(id, name, ((global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>)default));"));
         }
 
+        [Test]
+        public void RebuildsDeserializeConstructorCallWithCasingOnlyDifference()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("vmwareId", InputPrimitiveType.String),
+                ]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            model.FullConstructor.Signature.Parameters[0].Update(name: "vMwareId");
+            var vmwareId = new VariableExpression(typeof(string), "vmwareId");
+            var method = new MethodProvider(
+                new MethodSignature(
+                    "DeserializeTestModel",
+                    null,
+                    MethodSignatureModifiers.Internal | MethodSignatureModifiers.Static,
+                    model.Type,
+                    null,
+                    []),
+                Return(new NewInstanceExpression(model.Type, [vmwareId])),
+                modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixConstructorCalls(modelFactory.Methods);
+
+            var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel(vmwareId, ((global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>)default));"));
+        }
+
+        [Test]
+        public void RebuildsDeserializeConstructorCallPrefersExactCasing()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("vmwareId", InputPrimitiveType.String),
+                ]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var legacyVmwareId = new VariableExpression(typeof(string), "vMwareId");
+            var vmwareId = new VariableExpression(typeof(string), "vmwareId");
+            var method = new MethodProvider(
+                new MethodSignature(
+                    "DeserializeTestModel",
+                    null,
+                    MethodSignatureModifiers.Internal | MethodSignatureModifiers.Static,
+                    model.Type,
+                    null,
+                    []),
+                Return(new NewInstanceExpression(model.Type, [legacyVmwareId, vmwareId])),
+                modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixConstructorCalls(modelFactory.Methods);
+
+            var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel(vmwareId, ((global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>)default));"));
+            Assert.That(rendered, Does.Not.Contain("TestModel(vMwareId"));
+        }
+
         private static void SetLastContractView(TypeProvider typeProvider, TypeProvider lastContractView)
         {
             typeof(TypeProvider).GetField(
