@@ -22,7 +22,7 @@ namespace Azure.Storage.Files.DataLake.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobPropertiesInternal"/>. </summary>
-        /// <param name="creationTime"> The creation time. </param>
+        /// <param name="createdOn"> The creation time. </param>
         /// <param name="lastModified"> The last modified time. </param>
         /// <param name="etag"> The entity tag. </param>
         /// <param name="contentLength"> Size in bytes. </param>
@@ -36,25 +36,25 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <param name="copyId"> The copy ID. </param>
         /// <param name="copySource"> The copy source. </param>
         /// <param name="copyProgress"> The copy progress. </param>
-        /// <param name="copyCompletionTime"> The copy completion time. </param>
+        /// <param name="copyCompletionOn"> The copy completion time. </param>
         /// <param name="copyStatusDescription"> The copy status description. </param>
         /// <param name="serverEncrypted"> Whether the server is encrypted. </param>
         /// <param name="incrementalCopy"> Whether it is an incremental copy. </param>
         /// <param name="destinationSnapshot"> The destination snapshot. </param>
-        /// <param name="deletedTime"> The deleted time. </param>
+        /// <param name="deletedOn"> The deleted time. </param>
         /// <param name="remainingRetentionDays"> The remaining retention days. </param>
         /// <param name="accessTierInferred"> Whether the access tier is inferred. </param>
         /// <param name="customerProvidedKeySha256"> The customer-provided key SHA256 hash. </param>
         /// <param name="encryptionScope"> The name of the encryption scope under which the blob is encrypted. </param>
-        /// <param name="accessTierChangeTime"> The access tier change time. </param>
+        /// <param name="accessTierChangeOn"> The access tier change time. </param>
         /// <param name="tagCount"> The tag count. </param>
         /// <param name="expiresOn"> The expiry time. </param>
         /// <param name="isSealed"> Whether the blob is sealed. </param>
         /// <param name="lastAccessedOn"> The last accessed time. </param>
-        /// <param name="deleteTime"> The delete time. </param>
-        internal BlobPropertiesInternal(DateTimeOffset? creationTime, DateTimeOffset lastModified, string etag, long? contentLength, string contentType, string contentEncoding, string contentLanguage, BinaryData contentMd5, string contentDisposition, string cacheControl, long? blobSequenceNumber, string copyId, string copySource, string copyProgress, DateTimeOffset? copyCompletionTime, string copyStatusDescription, bool? serverEncrypted, bool? incrementalCopy, string destinationSnapshot, DateTimeOffset? deletedTime, int? remainingRetentionDays, bool? accessTierInferred, string customerProvidedKeySha256, string encryptionScope, DateTimeOffset? accessTierChangeTime, int? tagCount, DateTimeOffset? expiresOn, bool? isSealed, DateTimeOffset? lastAccessedOn, DateTimeOffset? deleteTime)
+        /// <param name="deleteOn"> The delete time. </param>
+        internal BlobPropertiesInternal(DateTimeOffset? createdOn, DateTimeOffset lastModified, string etag, long? contentLength, string contentType, string contentEncoding, string contentLanguage, BinaryData contentMd5, string contentDisposition, string cacheControl, long? blobSequenceNumber, string copyId, string copySource, string copyProgress, DateTimeOffset? copyCompletionOn, string copyStatusDescription, bool? serverEncrypted, bool? incrementalCopy, string destinationSnapshot, DateTimeOffset? deletedOn, int? remainingRetentionDays, bool? accessTierInferred, string customerProvidedKeySha256, string encryptionScope, DateTimeOffset? accessTierChangeOn, int? tagCount, DateTimeOffset? expiresOn, bool? isSealed, DateTimeOffset? lastAccessedOn, DateTimeOffset? deleteOn)
         {
-            CreationTime = creationTime;
+            CreatedOn = createdOn;
             LastModified = lastModified;
             Etag = etag;
             ContentLength = contentLength;
@@ -68,26 +68,26 @@ namespace Azure.Storage.Files.DataLake.Models
             CopyId = copyId;
             CopySource = copySource;
             CopyProgress = copyProgress;
-            CopyCompletionTime = copyCompletionTime;
+            CopyCompletionOn = copyCompletionOn;
             CopyStatusDescription = copyStatusDescription;
             ServerEncrypted = serverEncrypted;
             IncrementalCopy = incrementalCopy;
             DestinationSnapshot = destinationSnapshot;
-            DeletedTime = deletedTime;
+            DeletedOn = deletedOn;
             RemainingRetentionDays = remainingRetentionDays;
             AccessTierInferred = accessTierInferred;
             CustomerProvidedKeySha256 = customerProvidedKeySha256;
             EncryptionScope = encryptionScope;
-            AccessTierChangeTime = accessTierChangeTime;
+            AccessTierChangeOn = accessTierChangeOn;
             TagCount = tagCount;
             ExpiresOn = expiresOn;
             IsSealed = isSealed;
             LastAccessedOn = lastAccessedOn;
-            DeleteTime = deleteTime;
+            DeleteOn = deleteOn;
         }
 
         /// <summary> The creation time. </summary>
-        public DateTimeOffset? CreationTime { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The last modified time. </summary>
         public DateTimeOffset LastModified { get; }
@@ -144,7 +144,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public string CopyProgress { get; }
 
         /// <summary> The copy completion time. </summary>
-        public DateTimeOffset? CopyCompletionTime { get; }
+        public DateTimeOffset? CopyCompletionOn { get; }
 
         /// <summary> The copy status description. </summary>
         public string CopyStatusDescription { get; }
@@ -159,7 +159,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public string DestinationSnapshot { get; }
 
         /// <summary> The deleted time. </summary>
-        public DateTimeOffset? DeletedTime { get; }
+        public DateTimeOffset? DeletedOn { get; }
 
         /// <summary> The remaining retention days. </summary>
         public int? RemainingRetentionDays { get; }
@@ -174,7 +174,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public string EncryptionScope { get; }
 
         /// <summary> The access tier change time. </summary>
-        public DateTimeOffset? AccessTierChangeTime { get; }
+        public DateTimeOffset? AccessTierChangeOn { get; }
 
         /// <summary> The tag count. </summary>
         public int? TagCount { get; }
@@ -189,6 +189,6 @@ namespace Azure.Storage.Files.DataLake.Models
         public DateTimeOffset? LastAccessedOn { get; }
 
         /// <summary> The delete time. </summary>
-        public DateTimeOffset? DeleteTime { get; }
+        public DateTimeOffset? DeleteOn { get; }
     }
 }

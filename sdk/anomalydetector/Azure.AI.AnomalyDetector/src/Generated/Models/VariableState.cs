@@ -25,16 +25,16 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="variable"> Variable name in variable states. </param>
         /// <param name="filledNARatio"> Proportion of missing values that need to be filled by fillNAMethod. </param>
         /// <param name="effectiveCount"> Number of effective data points before fillNAMethod is applied. </param>
-        /// <param name="firstTimestamp"> First valid time stamp with a value of input data. </param>
-        /// <param name="lastTimestamp"> Last valid time stamp with a value of input data. </param>
+        /// <param name="firstOn"> First valid time stamp with a value of input data. </param>
+        /// <param name="lastOn"> Last valid time stamp with a value of input data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VariableState(string variable, float? filledNARatio, int? effectiveCount, DateTimeOffset? firstTimestamp, DateTimeOffset? lastTimestamp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VariableState(string variable, float? filledNARatio, int? effectiveCount, DateTimeOffset? firstOn, DateTimeOffset? lastOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Variable = variable;
             FilledNARatio = filledNARatio;
             EffectiveCount = effectiveCount;
-            FirstTimestamp = firstTimestamp;
-            LastTimestamp = lastTimestamp;
+            FirstOn = firstOn;
+            LastOn = lastOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -48,9 +48,9 @@ namespace Azure.AI.AnomalyDetector
         public int? EffectiveCount { get; }
 
         /// <summary> First valid time stamp with a value of input data. </summary>
-        public DateTimeOffset? FirstTimestamp { get; }
+        public DateTimeOffset? FirstOn { get; }
 
         /// <summary> Last valid time stamp with a value of input data. </summary>
-        public DateTimeOffset? LastTimestamp { get; }
+        public DateTimeOffset? LastOn { get; }
     }
 }

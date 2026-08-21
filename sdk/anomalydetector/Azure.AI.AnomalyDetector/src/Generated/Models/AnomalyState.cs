@@ -17,28 +17,28 @@ namespace Azure.AI.AnomalyDetector
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AnomalyState"/>. </summary>
-        /// <param name="timestamp"> Time stamp for this anomaly. </param>
-        internal AnomalyState(DateTimeOffset timestamp)
+        /// <param name="on"> Time stamp for this anomaly. </param>
+        internal AnomalyState(DateTimeOffset @on)
         {
-            Timestamp = timestamp;
+            On = @on;
             Errors = new ChangeTrackingList<ErrorResponse>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyState"/>. </summary>
-        /// <param name="timestamp"> Time stamp for this anomaly. </param>
+        /// <param name="on"> Time stamp for this anomaly. </param>
         /// <param name="value"> Detailed value of this anomalous time stamp. </param>
         /// <param name="errors"> Error message for the current time stamp. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnomalyState(DateTimeOffset timestamp, AnomalyValue value, IList<ErrorResponse> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnomalyState(DateTimeOffset @on, AnomalyValue value, IList<ErrorResponse> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Timestamp = timestamp;
+            On = @on;
             Value = value;
             Errors = errors;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Time stamp for this anomaly. </summary>
-        public DateTimeOffset Timestamp { get; }
+        public DateTimeOffset On { get; }
 
         /// <summary> Detailed value of this anomalous time stamp. </summary>
         public AnomalyValue Value { get; }
