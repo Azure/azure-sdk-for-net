@@ -193,6 +193,39 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(1, CountStoredPayloads());
         }
 
+        [Fact]
+        public void DisposeDoesNotWaitWhenTheDrainBudgetIsZero()
+        {
+            AppContext.SetData(PersistOnShutdownConfig.DrainBudgetOverrideName, 0);
+
+            try
+            {
+                var tracerProvider = BuildTracerProvider(
+                    out _,
+                    out _,
+                    _ =>
+                    {
+                        System.Threading.Thread.Sleep(TimeSpan.FromSeconds(30));
+                        return new MockResponse(200);
+                    });
+
+                EmitActivity();
+
+                var stopwatch = Stopwatch.StartNew();
+                tracerProvider.Dispose();
+                stopwatch.Stop();
+
+                // What a short-lived application configures: Dispose passes a finite timeout, and a
+                // zero budget stops that window being spent waiting on the drain.
+                Assert.True(stopwatch.Elapsed < TimeSpan.FromSeconds(1), $"Dispose took {stopwatch.Elapsed}.");
+                Assert.Equal(1, CountStoredPayloads());
+            }
+            finally
+            {
+                AppContext.SetData(PersistOnShutdownConfig.DrainBudgetOverrideName, null);
+            }
+        }
+
         /// <summary>
         /// Counts telemetry still on disk. A drain that failed or was cut short leaves the blob
         /// leased rather than deleted, and a leased blob is renamed to ".lock".
