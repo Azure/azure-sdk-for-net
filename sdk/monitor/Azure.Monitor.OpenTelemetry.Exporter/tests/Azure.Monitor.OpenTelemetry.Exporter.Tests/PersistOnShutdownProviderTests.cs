@@ -299,6 +299,59 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
+        public void MetricDisposeDrainsPersistedTelemetryWithinTheBudget()
+        {
+            var options = BuildOptions(out var transmitter, out var transport);
+
+            var meterName = $"OTel.PersistProvider.{Guid.NewGuid():N}";
+            using var meter = new Meter(meterName);
+
+            var meterProvider = Sdk.CreateMeterProviderBuilder()
+                .AddMeter(meterName)
+                .AddReader(new AzureMonitorPeriodicExportingMetricReader(new AzureMonitorMetricExporter(options)))
+                .Build()!;
+
+            meter.CreateCounter<long>("TestCounter").Add(1);
+
+            // Dispose passes a finite 5000 ms rather than Timeout.Infinite, so unlike Shutdown the
+            // drain gets a budget: the collection is persisted first and then uploaded from storage.
+            meterProvider.Dispose();
+
+            Assert.Single(transport.Requests);
+            Assert.Empty(transmitter._fileBlobProvider!.GetBlobs());
+        }
+
+        [Fact]
+        public void MetricDisposePersistsWithoutTransmittingWhenTheDrainBudgetIsZero()
+        {
+            AppContext.SetData(PersistOnShutdownConfig.DrainBudgetOverrideName, 0);
+
+            try
+            {
+                var options = BuildOptions(out _, out var transport);
+
+                var meterName = $"OTel.PersistProvider.{Guid.NewGuid():N}";
+                using var meter = new Meter(meterName);
+
+                var meterProvider = Sdk.CreateMeterProviderBuilder()
+                    .AddMeter(meterName)
+                    .AddReader(new AzureMonitorPeriodicExportingMetricReader(new AzureMonitorMetricExporter(options)))
+                    .Build()!;
+
+                meter.CreateCounter<long>("TestCounter").Add(1);
+
+                meterProvider.Dispose();
+
+                Assert.Empty(transport.Requests);
+                Assert.Equal(1, CountStoredPayloads());
+            }
+            finally
+            {
+                AppContext.SetData(PersistOnShutdownConfig.DrainBudgetOverrideName, null);
+            }
+        }
+
+        [Fact]
         public void MetricForceFlushTransmits()
         {
             var options = BuildOptions(out var transmitter, out var transport);
