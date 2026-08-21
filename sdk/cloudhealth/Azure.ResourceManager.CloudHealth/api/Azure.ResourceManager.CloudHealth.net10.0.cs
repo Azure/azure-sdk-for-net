@@ -383,6 +383,42 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
 }
 namespace Azure.ResourceManager.CloudHealth.Models
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AggregationType : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.AggregationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AggregationType(string value) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.AggregationType BestOf { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.AggregationType MaxNotHealthy { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.AggregationType MinHealthy { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.AggregationType WorstOf { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CloudHealth.Models.AggregationType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.AggregationType left, Azure.ResourceManager.CloudHealth.Models.AggregationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.AggregationType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.AggregationType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.AggregationType left, Azure.ResourceManager.CloudHealth.Models.AggregationType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AggregationUnit : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.AggregationUnit>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AggregationUnit(string value) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.AggregationUnit Absolute { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.AggregationUnit Percentage { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CloudHealth.Models.AggregationUnit other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.AggregationUnit left, Azure.ResourceManager.CloudHealth.Models.AggregationUnit right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.AggregationUnit (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.AggregationUnit? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.AggregationUnit left, Azure.ResourceManager.CloudHealth.Models.AggregationUnit right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ApplicationInsightsTopologySpecification : Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleSpecification, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.ApplicationInsightsTopologySpecification>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ApplicationInsightsTopologySpecification>
     {
         public ApplicationInsightsTopologySpecification(Azure.Core.ResourceIdentifier applicationInsightsResourceId) { }
@@ -400,7 +436,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
     public static partial class ArmCloudHealthModelFactory
     {
         public static Azure.ResourceManager.CloudHealth.Models.ApplicationInsightsTopologySpecification ApplicationInsightsTopologySpecification(Azure.Core.ResourceIdentifier applicationInsightsResourceId = null) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.DependenciesSignalGroupV2 DependenciesSignalGroupV2(Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType aggregationType = default(Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType), double? degradedThreshold = default(double?), double? unhealthyThreshold = default(double?), Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationUnit? unit = default(Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationUnit?), bool? shouldIgnoreUnknown = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.DependenciesSignalGroupV2 DependenciesSignalGroupV2(Azure.ResourceManager.CloudHealth.Models.AggregationType aggregationType = default(Azure.ResourceManager.CloudHealth.Models.AggregationType), double? degradedThreshold = default(double?), double? unhealthyThreshold = default(double?), Azure.ResourceManager.CloudHealth.Models.AggregationUnit? unit = default(Azure.ResourceManager.CloudHealth.Models.AggregationUnit?), bool? shouldIgnoreUnknown = default(bool?)) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.DiscoveryError DiscoveryError(string message = null, System.Collections.Generic.IEnumerable<string> context = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleSpecification DiscoveryRuleSpecification(string kind = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.EntityAddDataAnnotationContent EntityAddDataAnnotationContent(System.Collections.Generic.IDictionary<string, string> annotationDetails = null, string description = null) { throw null; }
@@ -419,7 +455,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public static Azure.ResourceManager.CloudHealth.Models.EntitySignalGroups EntitySignalGroups(Azure.ResourceManager.CloudHealth.Models.ResourceSignals azureResource = null, Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignals azureLogAnalytics = null, Azure.ResourceManager.CloudHealth.Models.MonitorWorkspaceSignals azureMonitorWorkspace = null, Azure.ResourceManager.CloudHealth.Models.DependenciesSignalGroupV2 dependencies = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CloudHealth.Models.ExternalSignal> externalSignals = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryContent EntitySignalHistoryContent(string signalName = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), int? top = default(int?), string nextMarker = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryResult EntitySignalHistoryResult(string entityName = null, string signalName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CloudHealth.Models.SignalHistoryDataPoint> history = null, string nextMarker = null) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRuleV2 EntitySignalThresholdRuleV2(Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator signalOperator = default(Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator), double? threshold = default(double?), Azure.ResourceManager.CloudHealth.Models.EntityDynamicThresholdSensitivity? sensitivity = default(Azure.ResourceManager.CloudHealth.Models.EntityDynamicThresholdSensitivity?), Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow? lookBackWindow = default(Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow?)) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRuleV2 EntitySignalThresholdRuleV2(Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator signalOperator = default(Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator), double? threshold = default(double?), Azure.ResourceManager.CloudHealth.Models.EntityDynamicThresholdSensitivity? sensitivity = default(Azure.ResourceManager.CloudHealth.Models.EntityDynamicThresholdSensitivity?)) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.ExternalSignal ExternalSignal(string name = null, string signalDefinitionName = null, Azure.ResourceManager.CloudHealth.Models.SignalStatus status = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule evaluationRules = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.HealthModelAuthenticationSettingData HealthModelAuthenticationSettingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CloudHealth.Models.HealthModelAuthenticationSettingProperties properties = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.HealthModelAuthenticationSettingProperties HealthModelAuthenticationSettingProperties(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? provisioningState = default(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState?), string displayName = null, string authenticationKind = null) { throw null; }
@@ -427,7 +463,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public static Azure.ResourceManager.CloudHealth.HealthModelDiscoveryRuleData HealthModelDiscoveryRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleProperties properties = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.HealthModelDiscoveryRuleProperties HealthModelDiscoveryRuleProperties(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? provisioningState = default(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState?), string displayName = null, string authenticationSetting = null, Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRelationshipDiscoveryBehavior discoverRelationships = default(Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRelationshipDiscoveryBehavior), Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals = default(Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRecommendedSignalsBehavior), Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleSpecification specification = null, Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityStateSignalBehavior? addResourceHealthSignal = default(Azure.ResourceManager.CloudHealth.Models.ResourceHealthAvailabilityStateSignalBehavior?), Azure.ResourceManager.CloudHealth.Models.DiscoveryError error = null, string entityName = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.HealthModelEntityData HealthModelEntityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CloudHealth.Models.HealthModelEntityProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.HealthModelEntityProperties HealthModelEntityProperties(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? provisioningState = default(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState?), string displayName = null, Azure.ResourceManager.CloudHealth.Models.EntityCoordinates canvasPosition = null, Azure.ResourceManager.CloudHealth.Models.EntityIcon icon = null, float? healthObjective = default(float?), Azure.ResourceManager.CloudHealth.Models.EntityImpact? impact = default(Azure.ResourceManager.CloudHealth.Models.EntityImpact?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalGroups signalGroups = null, string discoveredBy = null, Azure.ResourceManager.CloudHealth.Models.EntityHealthState? healthState = default(Azure.ResourceManager.CloudHealth.Models.EntityHealthState?), Azure.ResourceManager.CloudHealth.Models.EntityAlerts alerts = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.HealthModelEntityProperties HealthModelEntityProperties(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? provisioningState = default(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState?), string displayName = null, Azure.ResourceManager.CloudHealth.Models.EntityCoordinates canvasPosition = null, Azure.ResourceManager.CloudHealth.Models.EntityIcon icon = null, float? healthObjective = default(float?), Azure.ResourceManager.CloudHealth.Models.EntityImpact? impact = default(Azure.ResourceManager.CloudHealth.Models.EntityImpact?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalGroups signalGroups = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CloudHealth.Models.SignalAggregationGroup> signalAggregationGroups = null, string discoveredBy = null, Azure.ResourceManager.CloudHealth.Models.EntityHealthState? healthState = default(Azure.ResourceManager.CloudHealth.Models.EntityHealthState?), Azure.ResourceManager.CloudHealth.Models.EntityAlerts alerts = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.HealthModelPatch HealthModelPatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.HealthModelRelationshipData HealthModelRelationshipData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CloudHealth.Models.HealthModelRelationshipProperties properties = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.HealthModelRelationshipProperties HealthModelRelationshipProperties(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? provisioningState = default(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState?), string displayName = null, string parentEntityName = null, string childEntityName = null, System.Collections.Generic.IDictionary<string, string> tags = null, string discoveredBy = null) { throw null; }
@@ -448,54 +484,20 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public static Azure.ResourceManager.CloudHealth.Models.ResourceMetricSignalDefinitionProperties ResourceMetricSignalDefinitionProperties(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? provisioningState = default(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState?), string displayName = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval? refreshInterval = default(Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval?), System.Collections.Generic.IDictionary<string, string> tags = null, string dataUnit = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule evaluationRules = null, string metricNamespace = null, string metricName = null, string timeGrain = null, Azure.ResourceManager.CloudHealth.Models.MetricAggregationType aggregationType = default(Azure.ResourceManager.CloudHealth.Models.MetricAggregationType), string dimensionFilter = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.ResourceSignal ResourceSignal(string name = null, string signalDefinitionName = null, Azure.ResourceManager.CloudHealth.Models.SignalStatus status = null, string metricNamespace = null, string metricName = null, string timeGrain = null, Azure.ResourceManager.CloudHealth.Models.MetricAggregationType? aggregationType = default(Azure.ResourceManager.CloudHealth.Models.MetricAggregationType?), string dimensionFilter = null, string displayName = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval? refreshInterval = default(Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval?), string dataUnit = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule evaluationRules = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.ResourceSignals ResourceSignals(string authenticationSetting = null, Azure.Core.ResourceIdentifier azureResourceId = null, string azureResourceKind = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CloudHealth.Models.ResourceSignal> signals = null, Azure.ResourceManager.CloudHealth.Models.ResourceHealthSignal resourceHealth = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.SignalAggregationGroup SignalAggregationGroup(string name = null, string displayName = null, Azure.ResourceManager.CloudHealth.Models.AggregationType? aggregationType = default(Azure.ResourceManager.CloudHealth.Models.AggregationType?), System.Collections.Generic.IEnumerable<string> members = null, double? degradedThreshold = default(double?), double? unhealthyThreshold = default(double?), Azure.ResourceManager.CloudHealth.Models.AggregationUnit? unit = default(Azure.ResourceManager.CloudHealth.Models.AggregationUnit?), bool? ignoreUnknown = default(bool?), Azure.ResourceManager.CloudHealth.Models.EntityHealthState? aggregatedHealthState = default(Azure.ResourceManager.CloudHealth.Models.EntityHealthState?), System.Collections.Generic.IEnumerable<string> unresolvedMembers = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.SignalConfiguration SignalConfiguration(string signalId = null, string metricNamespace = null, string metricName = null, Azure.ResourceManager.CloudHealth.Models.MetricAggregationType? aggregationType = default(Azure.ResourceManager.CloudHealth.Models.MetricAggregationType?), string unit = null, string timeGrain = null, string dimensionFilter = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule evaluationRules = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.SignalHistoryDataPoint SignalHistoryDataPoint(System.DateTimeOffset occurredOn = default(System.DateTimeOffset), double? value = default(double?), Azure.ResourceManager.CloudHealth.Models.EntityHealthState healthState = default(Azure.ResourceManager.CloudHealth.Models.EntityHealthState), string additionalContext = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.SignalInstanceProperties SignalInstanceProperties(string signalKind = null, string name = null, string signalDefinitionName = null, Azure.ResourceManager.CloudHealth.Models.SignalStatus status = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.SignalStatus SignalStatus(Azure.ResourceManager.CloudHealth.Models.EntityHealthState? healthState = default(Azure.ResourceManager.CloudHealth.Models.EntityHealthState?), double? value = default(double?), System.DateTimeOffset? reportedOn = default(System.DateTimeOffset?), string error = null, string additionalContext = null) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DependenciesAggregationType : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DependenciesAggregationType(string value) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType MaxNotHealthy { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType MinHealthy { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType WorstOf { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType left, Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType left, Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DependenciesAggregationUnit : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationUnit>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DependenciesAggregationUnit(string value) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationUnit Absolute { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationUnit Percentage { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationUnit other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationUnit left, Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationUnit right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationUnit (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationUnit? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationUnit left, Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationUnit right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class DependenciesSignalGroupV2 : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.DependenciesSignalGroupV2>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.DependenciesSignalGroupV2>
     {
-        public DependenciesSignalGroupV2(Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType aggregationType) { }
-        public Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType AggregationType { get { throw null; } set { } }
+        public DependenciesSignalGroupV2(Azure.ResourceManager.CloudHealth.Models.AggregationType aggregationType) { }
+        public Azure.ResourceManager.CloudHealth.Models.AggregationType AggregationType { get { throw null; } set { } }
         public double? DegradedThreshold { get { throw null; } set { } }
         public bool? ShouldIgnoreUnknown { get { throw null; } set { } }
         public double? UnhealthyThreshold { get { throw null; } set { } }
-        public Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationUnit? Unit { get { throw null; } set { } }
+        public Azure.ResourceManager.CloudHealth.Models.AggregationUnit? Unit { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.CloudHealth.Models.DependenciesSignalGroupV2 JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.CloudHealth.Models.DependenciesSignalGroupV2 PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -567,25 +569,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
         Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleSpecification System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleSpecification>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleSpecification>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleSpecification>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DynamicThresholdLookBackWindow : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DynamicThresholdLookBackWindow(string value) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow PT15M { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow PT1H { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow PT30M { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow PT5M { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow left, Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow left, Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class EntityAddDataAnnotationContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityAddDataAnnotationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityAddDataAnnotationContent>
     {
@@ -971,7 +954,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
     public partial class EntitySignalThresholdRuleV2 : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRuleV2>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRuleV2>
     {
         public EntitySignalThresholdRuleV2(Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator signalOperator) { }
-        public Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow? LookBackWindow { get { throw null; } set { } }
         public Azure.ResourceManager.CloudHealth.Models.EntityDynamicThresholdSensitivity? Sensitivity { get { throw null; } set { } }
         public Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator SignalOperator { get { throw null; } set { } }
         public double? Threshold { get { throw null; } set { } }
@@ -1048,6 +1030,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public Azure.ResourceManager.CloudHealth.Models.EntityIcon Icon { get { throw null; } set { } }
         public Azure.ResourceManager.CloudHealth.Models.EntityImpact? Impact { get { throw null; } set { } }
         public Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CloudHealth.Models.SignalAggregationGroup> SignalAggregationGroups { get { throw null; } }
         public Azure.ResourceManager.CloudHealth.Models.EntitySignalGroups SignalGroups { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual Azure.ResourceManager.CloudHealth.Models.HealthModelEntityProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1502,6 +1485,29 @@ namespace Azure.ResourceManager.CloudHealth.Models
         Azure.ResourceManager.CloudHealth.Models.ResourceSignals System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ResourceSignals>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ResourceSignals>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ResourceSignals>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SignalAggregationGroup : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.SignalAggregationGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.SignalAggregationGroup>
+    {
+        public SignalAggregationGroup(string name, System.Collections.Generic.IEnumerable<string> members) { }
+        public Azure.ResourceManager.CloudHealth.Models.EntityHealthState? AggregatedHealthState { get { throw null; } }
+        public Azure.ResourceManager.CloudHealth.Models.AggregationType? AggregationType { get { throw null; } set { } }
+        public double? DegradedThreshold { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public bool? IgnoreUnknown { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Members { get { throw null; } }
+        public string Name { get { throw null; } set { } }
+        public double? UnhealthyThreshold { get { throw null; } set { } }
+        public Azure.ResourceManager.CloudHealth.Models.AggregationUnit? Unit { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<string> UnresolvedMembers { get { throw null; } }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.SignalAggregationGroup JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CloudHealth.Models.SignalAggregationGroup PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CloudHealth.Models.SignalAggregationGroup System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.SignalAggregationGroup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.SignalAggregationGroup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CloudHealth.Models.SignalAggregationGroup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.SignalAggregationGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.SignalAggregationGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.SignalAggregationGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SignalConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.SignalConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.SignalConfiguration>
     {
