@@ -17,10 +17,6 @@
 - Changed the type of `NetworkCloudVirtualMachinePatch.VmImageRepositoryCredentials` from `ImageRepositoryCredentials` to `ImageRepositoryCredentialsPatch`.
 - Changed the parameter order of the `StorageApplianceProperties` constructor to `(rackId, storageApplianceSkuId, rackSlot, serialNumber, administratorCredentials)`.
 
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.4.0-beta.1 (2026-06-16)
 
 ### Features Added
