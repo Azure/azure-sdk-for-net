@@ -81,7 +81,7 @@ namespace Azure.AI.Extensions.OpenAI
             writer.WritePropertyName("memory_id"u8);
             writer.WriteStringValue(MemoryId);
             writer.WritePropertyName("updated_at"u8);
-            writer.WriteNumberValue(UpdatedAt, "U");
+            writer.WriteNumberValue(UpdatedOn, "U");
             writer.WritePropertyName("scope"u8);
             writer.WriteStringValue(Scope);
             writer.WritePropertyName("content"u8);
