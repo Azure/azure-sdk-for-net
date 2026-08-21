@@ -32,7 +32,8 @@ namespace Azure.ResourceManager.AppService.Models
     [CodeGenSuppress("AppServiceEnvironmentData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(ProvisioningState?), typeof(HostingEnvironmentStatus?), typeof(AppServiceVirtualNetworkProfile), typeof(LoadBalancingMode?), typeof(string), typeof(int?), typeof(int?), typeof(string), typeof(int?), typeof(int?), typeof(bool?), typeof(IEnumerable<AppServiceNameValuePair>), typeof(IEnumerable<string>), typeof(bool?), typeof(AppServiceEnvironmentUpgradePreference?), typeof(int?), typeof(bool?), typeof(CustomDnsSuffixConfigurationData), typeof(AseV3NetworkingConfigurationData), typeof(AppServiceEnvironmentUpgradeAvailability?), typeof(string))]
     public static partial class ArmAppServiceModelFactory
     {
-        // TODO: Remove these compatibility factory methods after https://github.com/Azure/azure-sdk-for-net/issues/61815 is fixed.
+        // Keep these wrappers until https://github.com/microsoft/typespec/issues/11667 is fixed because generated
+        // compatibility overloads make every parameter required instead of preserving the GA optional trailing parameters.
 
         /// <summary> Creates an App Service virtual network gateway using the GA parameter optionality. </summary>
         public static AppServiceVirtualNetworkGatewayData AppServiceVirtualNetworkGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vnetName, Uri vpnPackageUri, string kind = default)

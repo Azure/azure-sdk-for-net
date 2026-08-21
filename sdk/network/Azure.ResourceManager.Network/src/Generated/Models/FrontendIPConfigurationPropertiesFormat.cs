@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the frontend IP configuration resource. </param>
         /// <param name="ddosSettings"> The DDoS protection settings associated with the frontend IP configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontendIPConfigurationPropertiesFormat(IReadOnlyList<WritableSubResource> inboundNatRules, IReadOnlyList<WritableSubResource> inboundNatPools, IReadOnlyList<WritableSubResource> outboundRules, IReadOnlyList<WritableSubResource> loadBalancingRules, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, NetworkIPVersion? privateIPAddressVersion, SubnetData subnet, PublicIPAddressData publicIPAddress, NetworkSubResource publicIPPrefix, NetworkSubResource gatewayLoadBalancer, NetworkProvisioningState? provisioningState, DdosFrontendIpConfigurationSettings ddosSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontendIPConfigurationPropertiesFormat(IReadOnlyList<WritableSubResource> inboundNatRules, IReadOnlyList<WritableSubResource> inboundNatPools, IReadOnlyList<WritableSubResource> outboundRules, IReadOnlyList<WritableSubResource> loadBalancingRules, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, NetworkIPVersion? privateIPAddressVersion, SubnetData subnet, PublicIPAddressData publicIPAddress, NetworkSubResource publicIPPrefix, NetworkSubResource gatewayLoadBalancer, NetworkProvisioningState? provisioningState, DdosFrontendIPConfigurationSettings ddosSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InboundNatRules = inboundNatRules;
             InboundNatPools = inboundNatPools;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The DDoS protection settings associated with the frontend IP configuration. </summary>
         [WirePath("ddosSettings")]
-        internal DdosFrontendIpConfigurationSettings DdosSettings { get; set; }
+        internal DdosFrontendIPConfigurationSettings DdosSettings { get; set; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("publicIPPrefix.id")]
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (DdosSettings is null)
                 {
-                    DdosSettings = new DdosFrontendIpConfigurationSettings();
+                    DdosSettings = new DdosFrontendIPConfigurationSettings();
                 }
                 DdosSettings.DdosCustomPolicyId = value;
             }

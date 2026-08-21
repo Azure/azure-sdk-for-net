@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="typeProperties"> CosmosDB (SQL API) Collection dataset properties. </param>
-        internal CosmosDBSqlApiCollectionDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, CosmosDbSqlApiCollectionDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal CosmosDBSqlApiCollectionDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, CosmosDBSqlApiCollectionDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TypeProperties = typeProperties;
         }
 
         /// <summary> CosmosDB (SQL API) Collection dataset properties. </summary>
-        internal CosmosDbSqlApiCollectionDatasetTypeProperties TypeProperties { get; set; }
+        internal CosmosDBSqlApiCollectionDatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> CosmosDB (SQL API) collection name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> CollectionName
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new CosmosDbSqlApiCollectionDatasetTypeProperties();
+                    TypeProperties = new CosmosDBSqlApiCollectionDatasetTypeProperties();
                 }
                 TypeProperties.CollectionName = value;
             }
