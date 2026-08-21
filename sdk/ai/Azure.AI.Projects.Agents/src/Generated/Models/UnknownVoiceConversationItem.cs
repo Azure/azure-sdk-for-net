@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -12,11 +13,11 @@ namespace Azure.AI.Projects.Agents
     internal partial class UnknownVoiceConversationItem : VoiceConversationItem
     {
         /// <summary> Initializes a new instance of <see cref="UnknownVoiceConversationItem"/>. </summary>
-        /// <param name="type"> The type of the conversation item. </param>
+        /// <param name="type"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
         /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownVoiceConversationItem(VoiceConversationItemType @type, DateTimeOffset? createdAt, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", createdAt, responseId, additionalBinaryDataProperties)
+        internal UnknownVoiceConversationItem(RealtimeConversationItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? createdAt, string responseId) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties, createdAt, responseId)
         {
         }
     }

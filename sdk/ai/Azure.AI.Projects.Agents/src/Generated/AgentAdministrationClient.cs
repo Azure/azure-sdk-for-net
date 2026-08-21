@@ -156,13 +156,15 @@ namespace Azure.AI.Projects.Agents
         /// Generates and creates an agent from kind-specific high-level inputs.
         /// The generated definition remains fully editable through the standard agent versioning operations.
         /// </summary>
-        /// <param name="kind"> The kind of agent to generate. </param>
+        /// <param name="body"> The kind-specific inputs for generating and creating an agent. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ProjectsAgentRecord> GenerateAgent(ProjectsAgentKind kind, CancellationToken cancellationToken = default)
+        public virtual ClientResult<ProjectsAgentRecord> GenerateAgent(BinaryData body, CancellationToken cancellationToken = default)
         {
-            GenerateAgentRequest spreadModel = new GenerateAgentRequest(kind, default);
-            ClientResult result = GenerateAgent(spreadModel, cancellationToken.ToRequestOptions());
+            Argument.AssertNotNull(body, nameof(body));
+
+            ClientResult result = GenerateAgent(BinaryContent.Create(body), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((ProjectsAgentRecord)result, result.GetRawResponse());
         }
 
@@ -170,13 +172,15 @@ namespace Azure.AI.Projects.Agents
         /// Generates and creates an agent from kind-specific high-level inputs.
         /// The generated definition remains fully editable through the standard agent versioning operations.
         /// </summary>
-        /// <param name="kind"> The kind of agent to generate. </param>
+        /// <param name="body"> The kind-specific inputs for generating and creating an agent. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ProjectsAgentRecord>> GenerateAgentAsync(ProjectsAgentKind kind, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<ProjectsAgentRecord>> GenerateAgentAsync(BinaryData body, CancellationToken cancellationToken = default)
         {
-            GenerateAgentRequest spreadModel = new GenerateAgentRequest(kind, default);
-            ClientResult result = await GenerateAgentAsync(spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            Argument.AssertNotNull(body, nameof(body));
+
+            ClientResult result = await GenerateAgentAsync(BinaryContent.Create(body), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((ProjectsAgentRecord)result, result.GetRawResponse());
         }
 

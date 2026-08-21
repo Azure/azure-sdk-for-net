@@ -5,6 +5,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -18,7 +19,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceConversationItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override RealtimeConversationItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceMessageItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -85,7 +86,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceConversationItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override RealtimeConversationItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceMessageItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

@@ -27,7 +27,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="voiceLocale"> The BCP-47 locale of the voice used for the response's audio output. </param>
         /// <param name="format"> The audio format used for the response's audio output. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceResponseAudioOutput(string voice, string voiceType, string voiceLocale, RealtimeAudioFormats format, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceResponseAudioOutput(string voice, VoiceType? voiceType, string voiceLocale, RealtimeAudioFormats format, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Voice = voice;
             VoiceType = voiceType;
@@ -40,7 +40,7 @@ namespace Azure.AI.Projects.Agents
         public string Voice { get; set; }
 
         /// <summary> The extensible provider/type of the voice used for the response's audio output. </summary>
-        public string VoiceType { get; set; }
+        public VoiceType? VoiceType { get; set; }
 
         /// <summary> The BCP-47 locale of the voice used for the response's audio output. </summary>
         public string VoiceLocale { get; set; }

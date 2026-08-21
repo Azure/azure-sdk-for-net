@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VoiceInputTranscription"/>. </summary>
-        /// <param name="model"> The transcription model to use. </param>
+        /// <param name="model"> The transcription model identifier. Configure customer custom speech deployments in `custom_speech`. </param>
         public VoiceInputTranscription(VoiceInputTranscriptionModel model)
         {
             Model = model;
@@ -46,8 +46,8 @@ namespace Azure.AI.Projects.Agents
         ///   Higher values can improve transcription accuracy at the cost of latency.
         ///   Only supported with `gpt-realtime-whisper` in GA Realtime sessions.
         /// </param>
-        /// <param name="model"> The transcription model to use. </param>
-        /// <param name="customSpeech"> Optional custom speech model configuration, keyed by locale. </param>
+        /// <param name="model"> The transcription model identifier. Configure customer custom speech deployments in `custom_speech`. </param>
+        /// <param name="customSpeech"> Optional customer custom speech deployment configuration, keyed by locale. </param>
         /// <param name="phraseList"> Optional phrase hints that bias recognition toward domain terms. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal VoiceInputTranscription(string language, string prompt, VoiceAudioInputConfigTranscriptionDelay? delay, VoiceInputTranscriptionModel model, IDictionary<string, string> customSpeech, IList<string> phraseList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -84,10 +84,10 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         public VoiceAudioInputConfigTranscriptionDelay? Delay { get; set; }
 
-        /// <summary> The transcription model to use. </summary>
+        /// <summary> The transcription model identifier. Configure customer custom speech deployments in `custom_speech`. </summary>
         public VoiceInputTranscriptionModel Model { get; set; }
 
-        /// <summary> Optional custom speech model configuration, keyed by locale. </summary>
+        /// <summary> Optional customer custom speech deployment configuration, keyed by locale. </summary>
         public IDictionary<string, string> CustomSpeech { get; }
 
         /// <summary> Optional phrase hints that bias recognition toward domain terms. </summary>

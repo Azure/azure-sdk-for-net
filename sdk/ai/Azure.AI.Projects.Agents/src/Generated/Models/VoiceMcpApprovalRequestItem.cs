@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -18,7 +19,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the tool to run. </param>
         /// <param name="arguments"> A JSON string of arguments for the tool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="serverLabel"/>, <paramref name="name"/> or <paramref name="arguments"/> is null. </exception>
-        public VoiceMcpApprovalRequestItem(string id, string serverLabel, string name, string arguments) : base(VoiceConversationItemType.McpApprovalRequest)
+        public VoiceMcpApprovalRequestItem(string id, string serverLabel, string name, string arguments)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(serverLabel, nameof(serverLabel));
@@ -32,15 +33,15 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceMcpApprovalRequestItem"/>. </summary>
-        /// <param name="type"> The type of the conversation item. </param>
+        /// <param name="type"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
         /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> The unique ID of the approval request. </param>
         /// <param name="serverLabel"> The label of the MCP server making the request. </param>
         /// <param name="name"> The name of the tool to run. </param>
         /// <param name="arguments"> A JSON string of arguments for the tool. </param>
-        internal VoiceMcpApprovalRequestItem(VoiceConversationItemType @type, DateTimeOffset? createdAt, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, string name, string arguments) : base(@type, createdAt, responseId, additionalBinaryDataProperties)
+        internal VoiceMcpApprovalRequestItem(RealtimeConversationItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? createdAt, string responseId, string id, string serverLabel, string name, string arguments) : base(@type, additionalBinaryDataProperties, createdAt, responseId)
         {
             Id = id;
             ServerLabel = serverLabel;

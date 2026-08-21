@@ -6,6 +6,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -14,16 +15,11 @@ namespace Azure.AI.Projects.Agents
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceMessageItem"/>, <see cref="VoiceFunctionCallItem"/>, <see cref="VoiceFunctionCallOutputItem"/>, <see cref="VoiceMcpListToolsItem"/>, <see cref="VoiceMcpCallItem"/>, <see cref="VoiceMcpApprovalRequestItem"/>, and <see cref="VoiceMcpApprovalResponseItem"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownVoiceConversationItem))]
-    public abstract partial class VoiceConversationItem : IJsonModel<VoiceConversationItem>
+    public abstract partial class VoiceConversationItem : RealtimeConversationItem, IJsonModel<VoiceConversationItem>
     {
-        /// <summary> Initializes a new instance of <see cref="VoiceConversationItem"/> for deserialization. </summary>
-        internal VoiceConversationItem()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceConversationItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override RealtimeConversationItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceConversationItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -39,7 +35,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceConversationItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -56,7 +52,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceConversationItem IPersistableModel<VoiceConversationItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VoiceConversationItem IPersistableModel<VoiceConversationItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (VoiceConversationItem)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VoiceConversationItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -80,49 +76,33 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceConversationItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VoiceConversationItem)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
-            if (Optional.IsDefined(CreatedAt))
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(CreatedAt))
             {
                 writer.WritePropertyName("created_at"u8);
                 writer.WriteNumberValue(CreatedAt.Value, "U");
             }
-            if (Optional.IsDefined(ResponseId))
+            if (options.Format != "W" && Optional.IsDefined(ResponseId))
             {
                 writer.WritePropertyName("response_id"u8);
                 writer.WriteStringValue(ResponseId);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceConversationItem IJsonModel<VoiceConversationItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VoiceConversationItem IJsonModel<VoiceConversationItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VoiceConversationItem)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceConversationItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override RealtimeConversationItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceConversationItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

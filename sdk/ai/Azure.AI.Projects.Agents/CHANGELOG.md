@@ -7,16 +7,24 @@
 - Added distributed tracing support.
 - Added preview support for creating voice agents and retrieving their persisted conversations, responses, items, metrics, and audio.
 - Added preview real-time voice-agent sessions over WebSockets, including text and binary message exchange.
+- Added `GenerateVoiceAgentRequest` for generating editable voice-agent definitions from authoring inputs.
+- Added `A2ATool` and `A2AToolboxTool` for agent-to-agent integrations.
+- Added preview `WebIQPreviewTool` and `WebIQPreviewToolboxTool` support.
+- Added `SessionConfiguration` for configuring hosted-agent session defaults.
 
 ### Breaking Changes
 
 - Renamed Agent Optimization models to the `AgentOptimization*` family and renamed `OptimizationAgentIdentifier` to `OptimizedAgentIdentifier`.
 - Agent Optimization list operations now return complete `AgentOptimizationJob` models instead of `OptimizationJobListItem` models.
+- Normalized persisted voice conversation items and function-call statuses to the corresponding OpenAI realtime models.
+- Changed voice implementation values from strings to `VoiceType` and changed voice duration fields expressed in milliseconds to `TimeSpan`.
+- Removed the fixed avatar video codec setting; the service now controls the codec.
 
 ### Bugs Fixed
 
 - Fixed listing of Agent Optimization Jobs.
 - Fixed the `StopSession` and `StopSessionAsync` calls.
+- Fixed generation of the persisted voice conversation item base constructor.
 
 ### Other Changes
 

@@ -9,7 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary>
-    /// The input-audio transcription model. Mirrors the transcription models supported by the managed
+    /// The input-audio transcription model identifier. This is a model name, not a Foundry deployment name. Mirrors the transcription models supported by the managed
     /// voice backend, covering the OpenAI Realtime transcription models plus the Azure and MAI models.
     /// Additional values may be added over time.
     /// </summary>

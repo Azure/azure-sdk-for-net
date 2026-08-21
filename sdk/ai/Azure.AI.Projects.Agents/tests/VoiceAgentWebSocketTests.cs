@@ -44,7 +44,7 @@ public class VoiceAgentWebSocketTests
                 Output = new VoiceAudioOutputConfig
                 {
                     Voice = "en-US-AvaNeural",
-                    VoiceType = "azure-standard"
+                    VoiceType = VoiceType.AzureStandard
                 }
             },
             Store = true

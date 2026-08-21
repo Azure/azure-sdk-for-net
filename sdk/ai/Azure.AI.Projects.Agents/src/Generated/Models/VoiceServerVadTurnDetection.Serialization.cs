@@ -104,7 +104,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(SpeechDurationMs))
             {
                 writer.WritePropertyName("speech_duration_ms"u8);
-                writer.WriteNumberValue(SpeechDurationMs.Value);
+                writer.WriteNumberValue(Convert.ToInt32(Math.Round(SpeechDurationMs.Value.TotalMilliseconds)));
             }
             if (Optional.IsDefined(EndOfUtteranceDetection))
             {
@@ -147,7 +147,7 @@ namespace Azure.AI.Projects.Agents
             bool? createResponse = default;
             bool? interruptResponse = default;
             long? idleTimeoutMs = default;
-            int? speechDurationMs = default;
+            TimeSpan? speechDurationMs = default;
             VoiceEndOfUtteranceDetection endOfUtteranceDetection = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -226,7 +226,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    speechDurationMs = prop.Value.GetInt32();
+                    speechDurationMs = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
                     continue;
                 }
                 if (prop.NameEquals("end_of_utterance_detection"u8))

@@ -6,7 +6,7 @@ Set `FOUNDRY_VOICE_AGENT_NAME` to run against an existing voice agent. In that m
 
 When creating a temporary agent, set `FOUNDRY_VOICE_MODEL_TYPE` to `managed` for a service-managed model such as `gpt-realtime`. If omitted, the sample treats `FOUNDRY_MODEL_NAME` as a self-deployed Foundry model deployment.
 
-1. Create a self-deployed voice agent. Set `Store` to `true` when its conversations and audio should be available through the Foundry REST APIs.
+1. Create a managed or self-deployed voice agent. Set `Store` to `true` when its conversations and audio should be available through the Foundry REST APIs.
 
 ```C# Snippet:Sample_VoiceAgent_Create
 VoiceAgentDefinition definition = new(
@@ -31,7 +31,7 @@ VoiceAgentDefinition definition = new(
         Output = new VoiceAudioOutputConfig
         {
             Voice = "alloy",
-            VoiceType = "openai"
+            VoiceType = VoiceType.Openai
         }
     },
     Store = true

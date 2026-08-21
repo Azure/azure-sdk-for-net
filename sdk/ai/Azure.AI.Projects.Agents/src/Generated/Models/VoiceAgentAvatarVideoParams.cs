@@ -20,16 +20,14 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentAvatarVideoParams"/>. </summary>
         /// <param name="bitrate"></param>
-        /// <param name="codec"></param>
         /// <param name="crop"></param>
         /// <param name="resolution"></param>
         /// <param name="background"></param>
         /// <param name="gopSize"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceAgentAvatarVideoParams(int? bitrate, VoiceAgentAvatarVideoParamsCodec? codec, VoiceAgentAvatarVideoCrop crop, VoiceAgentAvatarVideoResolution resolution, VoiceAgentAvatarVideoBackground background, int? gopSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceAgentAvatarVideoParams(int? bitrate, VoiceAgentAvatarVideoCrop crop, VoiceAgentAvatarVideoResolution resolution, VoiceAgentAvatarVideoBackground background, int? gopSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Bitrate = bitrate;
-            Codec = codec;
             Crop = crop;
             Resolution = resolution;
             Background = background;
@@ -39,9 +37,6 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Gets or sets the Bitrate. </summary>
         public int? Bitrate { get; set; }
-
-        /// <summary> Gets or sets the Codec. </summary>
-        public VoiceAgentAvatarVideoParamsCodec? Codec { get; set; }
 
         /// <summary> Gets or sets the Crop. </summary>
         public VoiceAgentAvatarVideoCrop Crop { get; set; }

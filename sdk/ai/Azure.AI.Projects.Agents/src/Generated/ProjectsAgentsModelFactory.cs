@@ -88,8 +88,9 @@ namespace Azure.AI.Projects.Agents
         /// <param name="versions"> The protocols that the agent supports for ingress communication. </param>
         /// <param name="codeConfiguration"> Code-based deployment configuration. Provide this for code-based deployments. Mutually exclusive with container_configuration — the service validates that exactly one is set. </param>
         /// <param name="telemetryConfig"> Optional customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </param>
+        /// <param name="sessionConfiguration"> Optional session defaults (for example, the idle timeout) applied to sessions created for this agent version. </param>
         /// <returns> A new <see cref="Agents.HostedAgentDefinition"/> instance for mocking. </returns>
-        public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, string cpu = default, string memory = default, IDictionary<string, string> environmentVariables = default, ContainerConfiguration containerConfiguration = default, IEnumerable<ProtocolVersionRecord> versions = default, CodeConfiguration codeConfiguration = default, TelemetryConfig telemetryConfig = default)
+        public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, string cpu = default, string memory = default, IDictionary<string, string> environmentVariables = default, ContainerConfiguration containerConfiguration = default, IEnumerable<ProtocolVersionRecord> versions = default, CodeConfiguration codeConfiguration = default, TelemetryConfig telemetryConfig = default, SessionConfiguration sessionConfiguration = default)
         {
             environmentVariables ??= new ChangeTrackingDictionary<string, string>();
             versions ??= new ChangeTrackingList<ProtocolVersionRecord>();
@@ -104,7 +105,8 @@ namespace Azure.AI.Projects.Agents
                 containerConfiguration,
                 versions.ToList(),
                 codeConfiguration,
-                telemetryConfig);
+                telemetryConfig,
+                sessionConfiguration);
         }
 
         /// <summary> Container-based deployment configuration for a hosted agent. </summary>
@@ -214,6 +216,18 @@ namespace Azure.AI.Projects.Agents
                 protocol);
         }
 
+        /// <summary> Session defaults applied to sessions created for a hosted agent version. </summary>
+        /// <param name="idleTimeoutSeconds">
+        /// The idle duration, in seconds, before a session's sandbox is suspended. Optional — when
+        /// unset, the server default of 900 seconds is used. Must be between 300 and 3600 seconds
+        /// (inclusive).
+        /// </param>
+        /// <returns> A new <see cref="Agents.SessionConfiguration"/> instance for mocking. </returns>
+        public static SessionConfiguration SessionConfiguration(TimeSpan? idleTimeoutSeconds = default)
+        {
+            return new SessionConfiguration(idleTimeoutSeconds, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The prompt agent definition. </summary>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="model"> The model deployment to use for this agent. </param>
@@ -263,7 +277,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// A tool that can be used to generate a response.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.FabricIQPreviewTool"/>, <see cref="Agents.BingGroundingTool"/>, <see cref="Agents.MicrosoftFabricPreviewTool"/>, <see cref="Agents.SharepointPreviewTool"/>, <see cref="Agents.AzureAISearchTool"/>, <see cref="Agents.OpenAPITool"/>, <see cref="Agents.BingCustomSearchPreviewTool"/>, <see cref="Agents.BrowserAutomationPreviewTool"/>, <see cref="Agents.AzureFunctionTool"/>, <see cref="Agents.CaptureStructuredOutputsTool"/>, <see cref="Agents.A2APreviewTool"/>, <see cref="Agents.WorkIQPreviewTool"/>, <see cref="Agents.MemorySearchPreviewTool"/>, and <see cref="Agents.ToolSearchTool"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.FabricIQPreviewTool"/>, <see cref="Agents.BingGroundingTool"/>, <see cref="Agents.MicrosoftFabricPreviewTool"/>, <see cref="Agents.SharepointPreviewTool"/>, <see cref="Agents.AzureAISearchTool"/>, <see cref="Agents.OpenAPITool"/>, <see cref="Agents.BingCustomSearchPreviewTool"/>, <see cref="Agents.BrowserAutomationPreviewTool"/>, <see cref="Agents.AzureFunctionTool"/>, <see cref="Agents.CaptureStructuredOutputsTool"/>, <see cref="Agents.A2APreviewTool"/>, <see cref="Agents.A2ATool"/>, <see cref="Agents.WorkIQPreviewTool"/>, <see cref="Agents.WebIQPreviewTool"/>, <see cref="Agents.MemorySearchPreviewTool"/>, and <see cref="Agents.ToolSearchTool"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Agents.ProjectsAgentTool"/> instance for mocking. </returns>
@@ -737,6 +751,35 @@ namespace Azure.AI.Projects.Agents
                 sendCredentialsForAgentCard);
         }
 
+        /// <summary> An agent implementing the A2A protocol. </summary>
+        /// <param name="baseUrl"> Base URL of the agent. </param>
+        /// <param name="agentCardPath">
+        /// The path to the agent card relative to the `base_url`.
+        /// If not provided, defaults to  `/.well-known/agent-card.json`
+        /// </param>
+        /// <param name="projectConnectionId">
+        /// The connection ID in the project for the A2A server.
+        /// The connection stores authentication and other connection details needed to connect to the A2A server.
+        /// </param>
+        /// <param name="sendCredentialsForAgentCard">
+        /// When `true`, Foundry sends its credentials when fetching the remote
+        /// agent's Agent Card. The service defaults to `false` if a value is not
+        /// specified by the caller (anonymous fetch).
+        /// </param>
+        /// <param name="a2aVersion"> The A2A protocol version supported by the agent. </param>
+        /// <returns> A new <see cref="Agents.A2ATool"/> instance for mocking. </returns>
+        public static A2ATool A2ATool(Uri baseUrl = default, string agentCardPath = default, string projectConnectionId = default, bool? sendCredentialsForAgentCard = default, A2AProtocolVersion a2aVersion = default)
+        {
+            return new A2ATool(
+                ToolType.A2a,
+                additionalBinaryDataProperties: null,
+                baseUrl,
+                agentCardPath,
+                projectConnectionId,
+                sendCredentialsForAgentCard,
+                a2aVersion);
+        }
+
         /// <summary> A WorkIQ server-side tool. </summary>
         /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
         /// <returns> A new <see cref="Agents.WorkIQPreviewTool"/> instance for mocking. </returns>
@@ -744,6 +787,17 @@ namespace Azure.AI.Projects.Agents
         public static WorkIQPreviewTool WorkIQPreviewTool(string projectConnectionId = default)
         {
             return new WorkIQPreviewTool(ToolType.WorkIqPreview, additionalBinaryDataProperties: null, projectConnectionId);
+        }
+
+        /// <summary> A WebIQ server-side tool. </summary>
+        /// <param name="projectConnectionId"> The ID of the WebIQ project connection. </param>
+        /// <param name="serverLabel"> The label of the WebIQ MCP server to connect to. When omitted, the service defaults to connection name extracted from project_connection_id. </param>
+        /// <param name="requireApproval"> Whether the agent requires approval before executing actions. When omitted, the service defaults to "always". </param>
+        /// <returns> A new <see cref="Agents.WebIQPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static WebIQPreviewTool WebIQPreviewTool(string projectConnectionId = default, string serverLabel = default, BinaryData requireApproval = default)
+        {
+            return new WebIQPreviewTool(ToolType.WebIqPreview, additionalBinaryDataProperties: null, projectConnectionId, serverLabel, requireApproval);
         }
 
         /// <summary> A tool for integrating memories into the agent. </summary>
@@ -1083,7 +1137,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="endOfUtteranceDetection"> Semantic end-of-utterance detection configuration. Set to null to disable it. </param>
         /// <returns> A new <see cref="Agents.VoiceServerVadTurnDetection"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceServerVadTurnDetection VoiceServerVadTurnDetection(bool? autoTruncate = default, double? threshold = default, long? prefixPaddingMs = default, long? silenceDurationMs = default, bool? createResponse = default, bool? interruptResponse = default, long? idleTimeoutMs = default, int? speechDurationMs = default, VoiceEndOfUtteranceDetection endOfUtteranceDetection = default)
+        public static VoiceServerVadTurnDetection VoiceServerVadTurnDetection(bool? autoTruncate = default, double? threshold = default, long? prefixPaddingMs = default, long? silenceDurationMs = default, bool? createResponse = default, bool? interruptResponse = default, long? idleTimeoutMs = default, TimeSpan? speechDurationMs = default, VoiceEndOfUtteranceDetection endOfUtteranceDetection = default)
         {
             return new VoiceServerVadTurnDetection(
                 VoiceTurnDetectionType.ServerVad,
@@ -1256,8 +1310,8 @@ namespace Azure.AI.Projects.Agents
         ///   Higher values can improve transcription accuracy at the cost of latency.
         ///   Only supported with `gpt-realtime-whisper` in GA Realtime sessions.
         /// </param>
-        /// <param name="model"> The transcription model to use. </param>
-        /// <param name="customSpeech"> Optional custom speech model configuration, keyed by locale. </param>
+        /// <param name="model"> The transcription model identifier. Configure customer custom speech deployments in `custom_speech`. </param>
+        /// <param name="customSpeech"> Optional customer custom speech deployment configuration, keyed by locale. </param>
         /// <param name="phraseList"> Optional phrase hints that bias recognition toward domain terms. </param>
         /// <returns> A new <see cref="Agents.VoiceInputTranscription"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
@@ -1286,7 +1340,7 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="format"> The output audio format. Applies to every `voice_type` and defaults to 24 kHz PCM. </param>
         /// <param name="voice"> The voice name or identifier. Applies to `openai`, `azure-standard`, `azure-custom`, `azure-personal`, and `azure-realtime-native`. It does not apply to `avatar-voice-sync`, which derives the voice name from the avatar. </param>
-        /// <param name="voiceType"> The voice implementation. Known values are `openai`, `azure-standard`, `azure-custom`, `azure-personal`, `avatar-voice-sync`, and `azure-realtime-native`. The string is extensible so future values do not require SDK type changes. </param>
+        /// <param name="voiceType"> The voice implementation. </param>
         /// <param name="voiceLocale"> The enforced BCP-47 output locale. Applies to `azure-standard`, `azure-custom`, `azure-personal`, and `avatar-voice-sync`. </param>
         /// <param name="speed"> The numeric output speed multiplier. Applies to all known `voice_type` values and defaults to 1. </param>
         /// <param name="voiceTemperature"> The voice variation temperature. Applies to `azure-standard`, `azure-custom`, `azure-personal`, and `avatar-voice-sync`. </param>
@@ -1301,7 +1355,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="outputAudioTimestampTypes"> Timestamp kinds to include with output audio. Applies to every `voice_type`. </param>
         /// <returns> A new <see cref="Agents.VoiceAudioOutputConfig"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAudioOutputConfig VoiceAudioOutputConfig(VoiceAudioFormat format = default, string voice = default, string voiceType = default, string voiceLocale = default, float? speed = default, float? voiceTemperature = default, Uri customLexiconUrl = default, Uri customTextNormalizationUrl = default, IEnumerable<string> preferLocales = default, string style = default, string pitch = default, string volume = default, string customVoiceEndpointId = default, string personalVoiceModel = default, IEnumerable<VoiceAudioTimestampType> outputAudioTimestampTypes = default)
+        public static VoiceAudioOutputConfig VoiceAudioOutputConfig(VoiceAudioFormat format = default, string voice = default, VoiceType? voiceType = default, string voiceLocale = default, float? speed = default, float? voiceTemperature = default, Uri customLexiconUrl = default, Uri customTextNormalizationUrl = default, IEnumerable<string> preferLocales = default, string style = default, string pitch = default, string volume = default, string customVoiceEndpointId = default, string personalVoiceModel = default, IEnumerable<VoiceAudioTimestampType> outputAudioTimestampTypes = default)
         {
             preferLocales ??= new ChangeTrackingList<string>();
             outputAudioTimestampTypes ??= new ChangeTrackingList<VoiceAudioTimestampType>();
@@ -1330,7 +1384,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="latencyThresholdMs"> The latency threshold in milliseconds. </param>
         /// <param name="texts"> Candidate text values for the interim response. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentStaticInterimResponseConfig"/> instance for mocking. </returns>
-        public static VoiceAgentStaticInterimResponseConfig VoiceAgentStaticInterimResponseConfig(IEnumerable<VoiceAgentInterimResponseTrigger> triggers = default, int? latencyThresholdMs = default, IEnumerable<string> texts = default)
+        public static VoiceAgentStaticInterimResponseConfig VoiceAgentStaticInterimResponseConfig(IEnumerable<VoiceAgentInterimResponseTrigger> triggers = default, TimeSpan? latencyThresholdMs = default, IEnumerable<string> texts = default)
         {
             triggers ??= new ChangeTrackingList<VoiceAgentInterimResponseTrigger>();
             texts ??= new ChangeTrackingList<string>();
@@ -1346,7 +1400,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="triggers"> Conditions that may trigger one interim response. </param>
         /// <param name="latencyThresholdMs"> The latency threshold in milliseconds. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentInterimResponseConfig"/> instance for mocking. </returns>
-        public static VoiceAgentInterimResponseConfig VoiceAgentInterimResponseConfig(string @type = default, IEnumerable<VoiceAgentInterimResponseTrigger> triggers = default, int? latencyThresholdMs = default)
+        public static VoiceAgentInterimResponseConfig VoiceAgentInterimResponseConfig(string @type = default, IEnumerable<VoiceAgentInterimResponseTrigger> triggers = default, TimeSpan? latencyThresholdMs = default)
         {
             triggers ??= new ChangeTrackingList<VoiceAgentInterimResponseTrigger>();
 
@@ -1360,7 +1414,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="instructions"> Optional instructions for generating interim responses. </param>
         /// <param name="maxCompletionTokens"> The maximum completion-token count for an interim response. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentLlmInterimResponseConfig"/> instance for mocking. </returns>
-        public static VoiceAgentLlmInterimResponseConfig VoiceAgentLlmInterimResponseConfig(IEnumerable<VoiceAgentInterimResponseTrigger> triggers = default, int? latencyThresholdMs = default, string model = default, string instructions = default, int? maxCompletionTokens = default)
+        public static VoiceAgentLlmInterimResponseConfig VoiceAgentLlmInterimResponseConfig(IEnumerable<VoiceAgentInterimResponseTrigger> triggers = default, TimeSpan? latencyThresholdMs = default, string model = default, string instructions = default, int? maxCompletionTokens = default)
         {
             triggers ??= new ChangeTrackingList<VoiceAgentInterimResponseTrigger>();
 
@@ -1403,17 +1457,15 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Avatar video encoder and presentation settings. </summary>
         /// <param name="bitrate"></param>
-        /// <param name="codec"></param>
         /// <param name="crop"></param>
         /// <param name="resolution"></param>
         /// <param name="background"></param>
         /// <param name="gopSize"></param>
         /// <returns> A new <see cref="Agents.VoiceAgentAvatarVideoParams"/> instance for mocking. </returns>
-        public static VoiceAgentAvatarVideoParams VoiceAgentAvatarVideoParams(int? bitrate = default, VoiceAgentAvatarVideoParamsCodec? codec = default, VoiceAgentAvatarVideoCrop crop = default, VoiceAgentAvatarVideoResolution resolution = default, VoiceAgentAvatarVideoBackground background = default, int? gopSize = default)
+        public static VoiceAgentAvatarVideoParams VoiceAgentAvatarVideoParams(int? bitrate = default, VoiceAgentAvatarVideoCrop crop = default, VoiceAgentAvatarVideoResolution resolution = default, VoiceAgentAvatarVideoBackground background = default, int? gopSize = default)
         {
             return new VoiceAgentAvatarVideoParams(
                 bitrate,
-                codec,
                 crop,
                 resolution,
                 background,
@@ -1774,6 +1826,39 @@ namespace Azure.AI.Projects.Agents
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary>
+        /// The inputs for generating a voice agent. Only `kind` and `name` are always required.
+        /// The authoring service expands these inputs into a full, editable `VoiceAgentDefinition`, which is then created through `POST /agents`.
+        /// The generated `instructions` and audio/voice settings are stored as separate fields on the resulting agent
+        /// definition, so the caller can edit or override any of them afterward via standard agent versioning.
+        /// </summary>
+        /// <param name="name"> The unique name for the agent to create. Must be a non-empty DNS-like agent name. </param>
+        /// <param name="modelType"> Optional inference mode. When omitted, the authoring service uses `managed`. When supplied, use `managed` or `self_deployed`. </param>
+        /// <param name="model"> Optional model identifier. Required when `model_type` is `self_deployed`; optional when `model_type` is `managed` or omitted. The service never invents a customer deployment name. </param>
+        /// <param name="useCase"> An optional authoring use case. An empty string is accepted. </param>
+        /// <param name="goal"> An optional natural-language description of what the agent should do. When supplied, it seeds the generated instructions. </param>
+        /// <param name="description"> An optional agent description. The authoring service resolves its fallback when omitted. </param>
+        /// <param name="tools"> Optional tools carried through verbatim onto the generated agent (see `VoiceAgentTool`). </param>
+        /// <param name="draft"> (Preview) When `true`, the generated voice agent is created as a draft — an editable, unpublished version the caller can review and refine before publishing it via the standard create/version path. The service defaults to `false` if a value is not specified by the caller, in which case the agent is created and published normally. </param>
+        /// <returns> A new <see cref="Agents.GenerateVoiceAgentRequest"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static GenerateVoiceAgentRequest GenerateVoiceAgentRequest(string name = default, VoiceModelType? modelType = default, string model = default, string useCase = default, string goal = default, string description = default, IEnumerable<VoiceAgentTool> tools = default, bool? draft = default)
+        {
+            tools ??= new ChangeTrackingList<VoiceAgentTool>();
+
+            return new GenerateVoiceAgentRequest(
+                "voice",
+                name,
+                modelType,
+                model,
+                useCase,
+                goal,
+                description,
+                tools.ToList(),
+                draft,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Multipart request body for creating a new code-based agent (POST /agents). Inherits from CreateAgentVersionFromCodeContent for future extensibility. </summary>
         /// <param name="metadata"> JSON metadata including description and hosted definition. </param>
         /// <param name="code"> The code zip file (max 250 MB). </param>
@@ -2022,14 +2107,22 @@ namespace Azure.AI.Projects.Agents
         /// A persisted item in a voice conversation.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.VoiceMessageItem"/>, <see cref="Agents.VoiceFunctionCallItem"/>, <see cref="Agents.VoiceFunctionCallOutputItem"/>, <see cref="Agents.VoiceMcpListToolsItem"/>, <see cref="Agents.VoiceMcpCallItem"/>, <see cref="Agents.VoiceMcpApprovalRequestItem"/>, and <see cref="Agents.VoiceMcpApprovalResponseItem"/>.
         /// </summary>
-        /// <param name="type"> The type of the conversation item. </param>
+        /// <param name="type"></param>
         /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
         /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
         /// <returns> A new <see cref="Agents.VoiceConversationItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
         public static VoiceConversationItem VoiceConversationItem(string @type = default, DateTimeOffset? createdAt = default, string responseId = default)
         {
-            return new UnknownVoiceConversationItem(new VoiceConversationItemType(@type), createdAt, responseId, additionalBinaryDataProperties: null);
+            return new UnknownVoiceConversationItem(new RealtimeConversationItemType(@type), additionalBinaryDataProperties: null, createdAt, responseId);
+        }
+
+        /// <summary> A single item within a Realtime conversation. </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="OpenAI.RealtimeConversationItem"/> instance for mocking. </returns>
+        public static RealtimeConversationItem RealtimeConversationItem(string @type = default)
+        {
+            return new RealtimeConversationItem(new RealtimeConversationItemType(@type), additionalBinaryDataProperties: null);
         }
 
         /// <summary> A persisted message item in a voice conversation. </summary>
@@ -2039,7 +2132,7 @@ namespace Azure.AI.Projects.Agents
         [Experimental("AAIP001")]
         public static VoiceMessageItem VoiceMessageItem(DateTimeOffset? createdAt = default, string responseId = default)
         {
-            return new VoiceMessageItem(VoiceConversationItemType.Message, createdAt, responseId, additionalBinaryDataProperties: null, default);
+            return new VoiceMessageItem(default, additionalBinaryDataProperties: null, createdAt, responseId, default);
         }
 
         /// <summary> A system message item. Only `input_text` content is valid for system messages. </summary>
@@ -2056,10 +2149,10 @@ namespace Azure.AI.Projects.Agents
             content ??= new ChangeTrackingList<RealtimeConversationItemMessageSystemContent>();
 
             return new VoiceSystemMessageItem(
-                VoiceConversationItemType.Message,
+                default,
+                additionalBinaryDataProperties: null,
                 createdAt,
                 responseId,
-                additionalBinaryDataProperties: null,
                 RealtimeConversationItemMessageType.System,
                 id,
                 @object,
@@ -2090,10 +2183,10 @@ namespace Azure.AI.Projects.Agents
             content ??= new ChangeTrackingList<RealtimeConversationItemMessageUserContent>();
 
             return new VoiceUserMessageItem(
-                VoiceConversationItemType.Message,
+                default,
+                additionalBinaryDataProperties: null,
                 createdAt,
                 responseId,
-                additionalBinaryDataProperties: null,
                 RealtimeConversationItemMessageType.User,
                 id,
                 @object,
@@ -2135,10 +2228,10 @@ namespace Azure.AI.Projects.Agents
             content ??= new ChangeTrackingList<RealtimeConversationItemMessageAssistantContent>();
 
             return new VoiceAssistantMessageItem(
-                VoiceConversationItemType.Message,
+                default,
+                additionalBinaryDataProperties: null,
                 createdAt,
                 responseId,
-                additionalBinaryDataProperties: null,
                 RealtimeConversationItemMessageType.Assistant,
                 id,
                 @object,
@@ -2168,13 +2261,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="arguments"> The arguments of the function call. This is a JSON-encoded string representing the arguments passed to the function, for example `{"arg1": "value1", "arg2": 42}`. </param>
         /// <returns> A new <see cref="Agents.VoiceFunctionCallItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceFunctionCallItem VoiceFunctionCallItem(DateTimeOffset? createdAt = default, string responseId = default, string id = default, VoiceFunctionCallItemObject? @object = default, VoiceFunctionCallItemStatus? status = default, string callId = default, string name = default, string arguments = default)
+        public static VoiceFunctionCallItem VoiceFunctionCallItem(DateTimeOffset? createdAt = default, string responseId = default, string id = default, VoiceFunctionCallItemObject? @object = default, RealtimeConversationItemFunctionCallStatus? status = default, string callId = default, string name = default, string arguments = default)
         {
             return new VoiceFunctionCallItem(
-                VoiceConversationItemType.FunctionCall,
+                default,
+                additionalBinaryDataProperties: null,
                 createdAt,
                 responseId,
-                additionalBinaryDataProperties: null,
                 id,
                 @object,
                 status,
@@ -2194,13 +2287,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the function that was called. A Foundry extension: OpenAI's function_call_output does not carry the function name, only `call_id`. </param>
         /// <returns> A new <see cref="Agents.VoiceFunctionCallOutputItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceFunctionCallOutputItem VoiceFunctionCallOutputItem(DateTimeOffset? createdAt = default, string responseId = default, string id = default, VoiceFunctionCallOutputItemObject? @object = default, VoiceFunctionCallOutputItemStatus? status = default, string callId = default, string output = default, string name = default)
+        public static VoiceFunctionCallOutputItem VoiceFunctionCallOutputItem(DateTimeOffset? createdAt = default, string responseId = default, string id = default, VoiceFunctionCallOutputItemObject? @object = default, RealtimeConversationItemFunctionCallOutputStatus? status = default, string callId = default, string output = default, string name = default)
         {
             return new VoiceFunctionCallOutputItem(
-                VoiceConversationItemType.FunctionCallOutput,
+                default,
+                additionalBinaryDataProperties: null,
                 createdAt,
                 responseId,
-                additionalBinaryDataProperties: null,
                 id,
                 @object,
                 status,
@@ -2222,10 +2315,10 @@ namespace Azure.AI.Projects.Agents
             tools ??= new ChangeTrackingList<VoiceMcpListToolsTool>();
 
             return new VoiceMcpListToolsItem(
-                VoiceConversationItemType.McpListTools,
+                default,
+                additionalBinaryDataProperties: null,
                 createdAt,
                 responseId,
-                additionalBinaryDataProperties: null,
                 id,
                 serverLabel,
                 tools.ToList());
@@ -2271,10 +2364,10 @@ namespace Azure.AI.Projects.Agents
         public static VoiceMcpCallItem VoiceMcpCallItem(DateTimeOffset? createdAt = default, string responseId = default, string id = default, string serverLabel = default, string name = default, string arguments = default, string approvalRequestId = default, string output = default, RealtimeMCPError error = default)
         {
             return new VoiceMcpCallItem(
-                VoiceConversationItemType.McpCall,
+                default,
+                additionalBinaryDataProperties: null,
                 createdAt,
                 responseId,
-                additionalBinaryDataProperties: null,
                 id,
                 serverLabel,
                 name,
@@ -2333,10 +2426,10 @@ namespace Azure.AI.Projects.Agents
         public static VoiceMcpApprovalRequestItem VoiceMcpApprovalRequestItem(DateTimeOffset? createdAt = default, string responseId = default, string id = default, string serverLabel = default, string name = default, string arguments = default)
         {
             return new VoiceMcpApprovalRequestItem(
-                VoiceConversationItemType.McpApprovalRequest,
+                default,
+                additionalBinaryDataProperties: null,
                 createdAt,
                 responseId,
-                additionalBinaryDataProperties: null,
                 id,
                 serverLabel,
                 name,
@@ -2355,10 +2448,10 @@ namespace Azure.AI.Projects.Agents
         public static VoiceMcpApprovalResponseItem VoiceMcpApprovalResponseItem(DateTimeOffset? createdAt = default, string responseId = default, string id = default, string approvalRequestId = default, bool approve = default, string reason = default)
         {
             return new VoiceMcpApprovalResponseItem(
-                VoiceConversationItemType.McpApprovalResponse,
+                default,
+                additionalBinaryDataProperties: null,
                 createdAt,
                 responseId,
-                additionalBinaryDataProperties: null,
                 id,
                 approvalRequestId,
                 approve,
@@ -2381,7 +2474,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="format"> The audio format used for the response's audio output. </param>
         /// <returns> A new <see cref="Agents.VoiceResponseAudioOutput"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceResponseAudioOutput VoiceResponseAudioOutput(string voice = default, string voiceType = default, string voiceLocale = default, RealtimeAudioFormats format = default)
+        public static VoiceResponseAudioOutput VoiceResponseAudioOutput(string voice = default, VoiceType? voiceType = default, string voiceLocale = default, RealtimeAudioFormats format = default)
         {
             return new VoiceResponseAudioOutput(voice, voiceType, voiceLocale, format, additionalBinaryDataProperties: null);
         }
@@ -2561,7 +2654,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// An abstract representation of a tool stored in a toolbox.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.FabricIQPreviewToolboxTool"/>, <see cref="Agents.CodeInterpreterToolboxTool"/>, <see cref="FileSearchToolboxTool"/>, <see cref="Agents.WebSearchToolboxTool"/>, <see cref="Agents.MCPToolboxTool"/>, <see cref="Agents.AzureAISearchToolboxTool"/>, <see cref="Agents.OpenApiToolboxTool"/>, <see cref="Agents.A2APreviewToolboxTool"/>, <see cref="Agents.BrowserAutomationPreviewToolboxTool"/>, <see cref="Agents.ReminderPreviewToolboxTool"/>, <see cref="Agents.WorkIQPreviewToolboxTool"/>, <see cref="Agents.ToolboxSearchPreviewToolboxTool"/>, and <see cref="Agents.ToolSearchToolboxTool"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.FabricIQPreviewToolboxTool"/>, <see cref="Agents.CodeInterpreterToolboxTool"/>, <see cref="FileSearchToolboxTool"/>, <see cref="Agents.WebSearchToolboxTool"/>, <see cref="Agents.MCPToolboxTool"/>, <see cref="Agents.AzureAISearchToolboxTool"/>, <see cref="Agents.OpenApiToolboxTool"/>, <see cref="Agents.A2AToolboxTool"/>, <see cref="Agents.A2APreviewToolboxTool"/>, <see cref="Agents.BrowserAutomationPreviewToolboxTool"/>, <see cref="Agents.ReminderPreviewToolboxTool"/>, <see cref="Agents.WorkIQPreviewToolboxTool"/>, <see cref="Agents.WebIQPreviewToolboxTool"/>, <see cref="Agents.ToolboxSearchPreviewToolboxTool"/>, and <see cref="Agents.ToolSearchToolboxTool"/>.
         /// </summary>
         /// <param name="type"> The type of tool. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
@@ -2797,6 +2890,47 @@ namespace Azure.AI.Projects.Agents
         /// agent's Agent Card. The service defaults to `false` if a value is not
         /// specified by the caller (anonymous fetch).
         /// </param>
+        /// <param name="a2aVersion"> The A2A protocol version supported by the agent. </param>
+        /// <returns> A new <see cref="Agents.A2AToolboxTool"/> instance for mocking. </returns>
+        public static A2AToolboxTool A2AToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, Uri baseUrl = default, string agentCardPath = default, string projectConnectionId = default, bool? sendCredentialsForAgentCard = default, A2AProtocolVersion a2aVersion = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new A2AToolboxTool(
+                ToolboxToolType.A2a,
+                name,
+                description,
+                toolConfigs,
+                additionalBinaryDataProperties: null,
+                baseUrl,
+                agentCardPath,
+                projectConnectionId,
+                sendCredentialsForAgentCard,
+                a2aVersion);
+        }
+
+        /// <summary> An A2A tool stored in a toolbox. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <param name="baseUrl"> Base URL of the agent. </param>
+        /// <param name="agentCardPath">
+        /// The path to the agent card relative to the `base_url`.
+        /// If not provided, defaults to  `/.well-known/agent-card.json`
+        /// </param>
+        /// <param name="projectConnectionId">
+        /// The connection ID in the project for the A2A server.
+        /// The connection stores authentication and other connection details needed to connect to the A2A server.
+        /// </param>
+        /// <param name="sendCredentialsForAgentCard">
+        /// When `true`, Foundry sends its credentials when fetching the remote
+        /// agent's Agent Card. The service defaults to `false` if a value is not
+        /// specified by the caller (anonymous fetch).
+        /// </param>
         /// <returns> A new <see cref="Agents.A2APreviewToolboxTool"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
         public static A2APreviewToolboxTool A2APreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, Uri baseUrl = default, string agentCardPath = default, string projectConnectionId = default, bool? sendCredentialsForAgentCard = default)
@@ -2878,6 +3012,34 @@ namespace Azure.AI.Projects.Agents
                 toolConfigs,
                 additionalBinaryDataProperties: null,
                 projectConnectionId);
+        }
+
+        /// <summary> A WebIQ tool stored in a toolbox. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <param name="projectConnectionId"> The ID of the WebIQ project connection. </param>
+        /// <param name="serverLabel"> The label of the WebIQ MCP server to connect to. When omitted, the service defaults to connection name extracted from project_connection_id. </param>
+        /// <param name="requireApproval"> Whether the agent requires approval before executing actions. When omitted, the service defaults to "always". </param>
+        /// <returns> A new <see cref="Agents.WebIQPreviewToolboxTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static WebIQPreviewToolboxTool WebIQPreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, string projectConnectionId = default, string serverLabel = default, BinaryData requireApproval = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new WebIQPreviewToolboxTool(
+                ToolboxToolType.WebIqPreview,
+                name,
+                description,
+                toolConfigs,
+                additionalBinaryDataProperties: null,
+                projectConnectionId,
+                serverLabel,
+                requireApproval);
         }
 
         /// <summary> A toolbox search tool stored in a toolbox. </summary>
@@ -3463,6 +3625,7 @@ namespace Azure.AI.Projects.Agents
                 environmentVariables,
                 default,
                 versions.ToList(),
+                default,
                 default,
                 default);
         }

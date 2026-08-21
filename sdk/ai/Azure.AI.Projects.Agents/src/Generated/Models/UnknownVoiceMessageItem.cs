@@ -13,12 +13,12 @@ namespace Azure.AI.Projects.Agents
     internal partial class UnknownVoiceMessageItem : VoiceMessageItem
     {
         /// <summary> Initializes a new instance of <see cref="UnknownVoiceMessageItem"/>. </summary>
-        /// <param name="type"> The type of the conversation item. </param>
+        /// <param name="type"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
         /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="role"> The role of the message sender. </param>
-        internal UnknownVoiceMessageItem(VoiceConversationItemType @type, DateTimeOffset? createdAt, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, RealtimeConversationItemMessageType role) : base(@type != default ? @type : "unknown", createdAt, responseId, additionalBinaryDataProperties, role != default ? role : "unknown")
+        internal UnknownVoiceMessageItem(RealtimeConversationItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? createdAt, string responseId, RealtimeConversationItemMessageType role) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties, createdAt, responseId, role != default ? role : "unknown")
         {
         }
     }

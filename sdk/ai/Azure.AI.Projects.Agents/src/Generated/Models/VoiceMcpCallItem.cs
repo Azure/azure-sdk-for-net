@@ -19,7 +19,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the tool that was run. </param>
         /// <param name="arguments"> A JSON string of the arguments passed to the tool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="serverLabel"/>, <paramref name="name"/> or <paramref name="arguments"/> is null. </exception>
-        public VoiceMcpCallItem(string id, string serverLabel, string name, string arguments) : base(VoiceConversationItemType.McpCall)
+        public VoiceMcpCallItem(string id, string serverLabel, string name, string arguments)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(serverLabel, nameof(serverLabel));
@@ -33,10 +33,10 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceMcpCallItem"/>. </summary>
-        /// <param name="type"> The type of the conversation item. </param>
+        /// <param name="type"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
         /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> The unique ID of the tool call. </param>
         /// <param name="serverLabel"> The label of the MCP server running the tool. </param>
         /// <param name="name"> The name of the tool that was run. </param>
@@ -44,7 +44,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="approvalRequestId"></param>
         /// <param name="output"></param>
         /// <param name="error"></param>
-        internal VoiceMcpCallItem(VoiceConversationItemType @type, DateTimeOffset? createdAt, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, string name, string arguments, string approvalRequestId, string output, RealtimeMCPError error) : base(@type, createdAt, responseId, additionalBinaryDataProperties)
+        internal VoiceMcpCallItem(RealtimeConversationItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? createdAt, string responseId, string id, string serverLabel, string name, string arguments, string approvalRequestId, string output, RealtimeMCPError error) : base(@type, additionalBinaryDataProperties, createdAt, responseId)
         {
             Id = id;
             ServerLabel = serverLabel;

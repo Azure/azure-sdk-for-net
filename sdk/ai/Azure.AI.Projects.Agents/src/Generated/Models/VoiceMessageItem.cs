@@ -15,18 +15,18 @@ namespace Azure.AI.Projects.Agents
     {
         /// <summary> Initializes a new instance of <see cref="VoiceMessageItem"/>. </summary>
         /// <param name="role"> The role of the message sender. </param>
-        internal VoiceMessageItem(RealtimeConversationItemMessageType role) : base(VoiceConversationItemType.Message)
+        public VoiceMessageItem(RealtimeConversationItemMessageType role)
         {
             Role = role;
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceMessageItem"/>. </summary>
-        /// <param name="type"> The type of the conversation item. </param>
+        /// <param name="type"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
         /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="role"> The role of the message sender. </param>
-        internal VoiceMessageItem(VoiceConversationItemType @type, DateTimeOffset? createdAt, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, RealtimeConversationItemMessageType role) : base(@type, createdAt, responseId, additionalBinaryDataProperties)
+        internal VoiceMessageItem(RealtimeConversationItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? createdAt, string responseId, RealtimeConversationItemMessageType role) : base(@type, additionalBinaryDataProperties, createdAt, responseId)
         {
             Role = role;
         }

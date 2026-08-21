@@ -29,7 +29,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="idleTimeoutMs"></param>
         /// <param name="speechDurationMs"> Minimum speech duration required to trigger detection, in milliseconds. </param>
         /// <param name="endOfUtteranceDetection"> Semantic end-of-utterance detection configuration. Set to null to disable it. </param>
-        internal VoiceServerVadTurnDetection(VoiceTurnDetectionType @type, bool? autoTruncate, IDictionary<string, BinaryData> additionalBinaryDataProperties, double? threshold, long? prefixPaddingMs, long? silenceDurationMs, bool? createResponse, bool? interruptResponse, long? idleTimeoutMs, int? speechDurationMs, VoiceEndOfUtteranceDetection endOfUtteranceDetection) : base(@type, autoTruncate, additionalBinaryDataProperties)
+        internal VoiceServerVadTurnDetection(VoiceTurnDetectionType @type, bool? autoTruncate, IDictionary<string, BinaryData> additionalBinaryDataProperties, double? threshold, long? prefixPaddingMs, long? silenceDurationMs, bool? createResponse, bool? interruptResponse, long? idleTimeoutMs, TimeSpan? speechDurationMs, VoiceEndOfUtteranceDetection endOfUtteranceDetection) : base(@type, autoTruncate, additionalBinaryDataProperties)
         {
             Threshold = threshold;
             PrefixPaddingMs = prefixPaddingMs;
@@ -60,7 +60,7 @@ namespace Azure.AI.Projects.Agents
         public long? IdleTimeoutMs { get; set; }
 
         /// <summary> Minimum speech duration required to trigger detection, in milliseconds. </summary>
-        public int? SpeechDurationMs { get; set; }
+        public TimeSpan? SpeechDurationMs { get; set; }
 
         /// <summary> Semantic end-of-utterance detection configuration. Set to null to disable it. </summary>
         public VoiceEndOfUtteranceDetection EndOfUtteranceDetection { get; set; }

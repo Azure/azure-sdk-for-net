@@ -32,7 +32,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="VoiceAudioOutputConfig"/>. </summary>
         /// <param name="format"> The output audio format. Applies to every `voice_type` and defaults to 24 kHz PCM. </param>
         /// <param name="voice"> The voice name or identifier. Applies to `openai`, `azure-standard`, `azure-custom`, `azure-personal`, and `azure-realtime-native`. It does not apply to `avatar-voice-sync`, which derives the voice name from the avatar. </param>
-        /// <param name="voiceType"> The voice implementation. Known values are `openai`, `azure-standard`, `azure-custom`, `azure-personal`, `avatar-voice-sync`, and `azure-realtime-native`. The string is extensible so future values do not require SDK type changes. </param>
+        /// <param name="voiceType"> The voice implementation. </param>
         /// <param name="voiceLocale"> The enforced BCP-47 output locale. Applies to `azure-standard`, `azure-custom`, `azure-personal`, and `avatar-voice-sync`. </param>
         /// <param name="speed"> The numeric output speed multiplier. Applies to all known `voice_type` values and defaults to 1. </param>
         /// <param name="voiceTemperature"> The voice variation temperature. Applies to `azure-standard`, `azure-custom`, `azure-personal`, and `avatar-voice-sync`. </param>
@@ -46,7 +46,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="personalVoiceModel"> The Azure personal or avatar voice model. Applies only when `voice_type` is `azure-personal` or `avatar-voice-sync`. </param>
         /// <param name="outputAudioTimestampTypes"> Timestamp kinds to include with output audio. Applies to every `voice_type`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceAudioOutputConfig(VoiceAudioFormat format, string voice, string voiceType, string voiceLocale, float? speed, float? voiceTemperature, Uri customLexiconUrl, Uri customTextNormalizationUrl, IList<string> preferLocales, string style, string pitch, string volume, string customVoiceEndpointId, string personalVoiceModel, IList<VoiceAudioTimestampType> outputAudioTimestampTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceAudioOutputConfig(VoiceAudioFormat format, string voice, VoiceType? voiceType, string voiceLocale, float? speed, float? voiceTemperature, Uri customLexiconUrl, Uri customTextNormalizationUrl, IList<string> preferLocales, string style, string pitch, string volume, string customVoiceEndpointId, string personalVoiceModel, IList<VoiceAudioTimestampType> outputAudioTimestampTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Format = format;
             Voice = voice;
@@ -72,8 +72,8 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The voice name or identifier. Applies to `openai`, `azure-standard`, `azure-custom`, `azure-personal`, and `azure-realtime-native`. It does not apply to `avatar-voice-sync`, which derives the voice name from the avatar. </summary>
         public string Voice { get; set; }
 
-        /// <summary> The voice implementation. Known values are `openai`, `azure-standard`, `azure-custom`, `azure-personal`, `avatar-voice-sync`, and `azure-realtime-native`. The string is extensible so future values do not require SDK type changes. </summary>
-        public string VoiceType { get; set; }
+        /// <summary> The voice implementation. </summary>
+        public VoiceType? VoiceType { get; set; }
 
         /// <summary> The enforced BCP-47 output locale. Applies to `azure-standard`, `azure-custom`, `azure-personal`, and `avatar-voice-sync`. </summary>
         public string VoiceLocale { get; set; }

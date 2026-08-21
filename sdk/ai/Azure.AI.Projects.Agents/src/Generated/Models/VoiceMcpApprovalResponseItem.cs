@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -17,7 +18,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="approvalRequestId"> The ID of the approval request being answered. </param>
         /// <param name="approve"> Whether the request was approved. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="approvalRequestId"/> is null. </exception>
-        public VoiceMcpApprovalResponseItem(string id, string approvalRequestId, bool approve) : base(VoiceConversationItemType.McpApprovalResponse)
+        public VoiceMcpApprovalResponseItem(string id, string approvalRequestId, bool approve)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(approvalRequestId, nameof(approvalRequestId));
@@ -28,15 +29,15 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceMcpApprovalResponseItem"/>. </summary>
-        /// <param name="type"> The type of the conversation item. </param>
+        /// <param name="type"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
         /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> The unique ID of the approval response. </param>
         /// <param name="approvalRequestId"> The ID of the approval request being answered. </param>
         /// <param name="approve"> Whether the request was approved. </param>
         /// <param name="reason"></param>
-        internal VoiceMcpApprovalResponseItem(VoiceConversationItemType @type, DateTimeOffset? createdAt, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string approvalRequestId, bool approve, string reason) : base(@type, createdAt, responseId, additionalBinaryDataProperties)
+        internal VoiceMcpApprovalResponseItem(RealtimeConversationItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? createdAt, string responseId, string id, string approvalRequestId, bool approve, string reason) : base(@type, additionalBinaryDataProperties, createdAt, responseId)
         {
             Id = id;
             ApprovalRequestId = approvalRequestId;

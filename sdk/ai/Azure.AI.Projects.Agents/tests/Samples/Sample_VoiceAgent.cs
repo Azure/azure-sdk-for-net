@@ -78,7 +78,7 @@ public class Sample_VoiceAgent : SamplesBase
                         Output = new VoiceAudioOutputConfig
                         {
                             Voice = "alloy",
-                            VoiceType = "openai"
+                            VoiceType = VoiceType.Openai
                         }
                     },
                     Store = true

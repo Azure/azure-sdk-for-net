@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceConversationItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override RealtimeConversationItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceFunctionCallItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -109,7 +109,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceConversationItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override RealtimeConversationItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceFunctionCallItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -128,13 +128,13 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            VoiceConversationItemType @type = default;
+            RealtimeConversationItemType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DateTimeOffset? createdAt = default;
             string responseId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             VoiceFunctionCallItemObject? @object = default;
-            VoiceFunctionCallItemStatus? status = default;
+            RealtimeConversationItemFunctionCallStatus? status = default;
             string callId = default;
             string name = default;
             string arguments = default;
@@ -142,7 +142,7 @@ namespace Azure.AI.Projects.Agents
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new VoiceConversationItemType(prop.Value.GetString());
+                    @type = new RealtimeConversationItemType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("created_at"u8))
@@ -179,7 +179,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToVoiceFunctionCallItemStatus();
+                    status = prop.Value.GetString().ToRealtimeConversationItemFunctionCallStatus();
                     continue;
                 }
                 if (prop.NameEquals("call_id"u8))
@@ -204,9 +204,9 @@ namespace Azure.AI.Projects.Agents
             }
             return new VoiceFunctionCallItem(
                 @type,
+                additionalBinaryDataProperties,
                 createdAt,
                 responseId,
-                additionalBinaryDataProperties,
                 id,
                 @object,
                 status,

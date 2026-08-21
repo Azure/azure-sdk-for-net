@@ -115,7 +115,7 @@ namespace Azure.AI.Projects.Agents
             }
             string @type = "static_interim_response";
             IList<VoiceAgentInterimResponseTrigger> triggers = default;
-            int? latencyThresholdMs = default;
+            TimeSpan? latencyThresholdMs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<string> texts = default;
             foreach (var prop in element.EnumerateObject())
@@ -145,7 +145,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    latencyThresholdMs = prop.Value.GetInt32();
+                    latencyThresholdMs = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
                     continue;
                 }
                 if (prop.NameEquals("texts"u8))

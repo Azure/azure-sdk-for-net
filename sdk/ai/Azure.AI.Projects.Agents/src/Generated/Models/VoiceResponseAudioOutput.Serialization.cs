@@ -79,7 +79,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(VoiceType))
             {
                 writer.WritePropertyName("voice_type"u8);
-                writer.WriteStringValue(VoiceType);
+                writer.WriteStringValue(VoiceType.Value.ToString());
             }
             if (Optional.IsDefined(VoiceLocale))
             {
@@ -134,7 +134,7 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             string voice = default;
-            string voiceType = default;
+            VoiceType? voiceType = default;
             string voiceLocale = default;
             RealtimeAudioFormats format = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -147,7 +147,11 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("voice_type"u8))
                 {
-                    voiceType = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    voiceType = new VoiceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("voice_locale"u8))

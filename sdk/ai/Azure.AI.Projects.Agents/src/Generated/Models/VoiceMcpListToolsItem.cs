@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -17,7 +18,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <param name="tools"> The tools available on the server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverLabel"/> or <paramref name="tools"/> is null. </exception>
-        public VoiceMcpListToolsItem(string serverLabel, IEnumerable<VoiceMcpListToolsTool> tools) : base(VoiceConversationItemType.McpListTools)
+        public VoiceMcpListToolsItem(string serverLabel, IEnumerable<VoiceMcpListToolsTool> tools)
         {
             Argument.AssertNotNull(serverLabel, nameof(serverLabel));
             Argument.AssertNotNull(tools, nameof(tools));
@@ -27,14 +28,14 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceMcpListToolsItem"/>. </summary>
-        /// <param name="type"> The type of the conversation item. </param>
+        /// <param name="type"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
         /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> The unique ID of the list. </param>
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <param name="tools"> The tools available on the server. </param>
-        internal VoiceMcpListToolsItem(VoiceConversationItemType @type, DateTimeOffset? createdAt, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, IList<VoiceMcpListToolsTool> tools) : base(@type, createdAt, responseId, additionalBinaryDataProperties)
+        internal VoiceMcpListToolsItem(RealtimeConversationItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? createdAt, string responseId, string id, string serverLabel, IList<VoiceMcpListToolsTool> tools) : base(@type, additionalBinaryDataProperties, createdAt, responseId)
         {
             Id = id;
             ServerLabel = serverLabel;

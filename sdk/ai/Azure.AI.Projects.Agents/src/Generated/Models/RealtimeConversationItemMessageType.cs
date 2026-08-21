@@ -9,7 +9,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary></summary>
-    internal readonly partial struct RealtimeConversationItemMessageType : IEquatable<RealtimeConversationItemMessageType>
+    public readonly partial struct RealtimeConversationItemMessageType : IEquatable<RealtimeConversationItemMessageType>
     {
         private readonly string _value;
         private const string SystemValue = "system";

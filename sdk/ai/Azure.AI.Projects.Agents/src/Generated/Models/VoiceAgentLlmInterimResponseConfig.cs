@@ -23,7 +23,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="model"> The model used to generate interim responses. </param>
         /// <param name="instructions"> Optional instructions for generating interim responses. </param>
         /// <param name="maxCompletionTokens"> The maximum completion-token count for an interim response. </param>
-        internal VoiceAgentLlmInterimResponseConfig(string @type, IList<VoiceAgentInterimResponseTrigger> triggers, int? latencyThresholdMs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string model, string instructions, int? maxCompletionTokens) : base(@type, triggers, latencyThresholdMs, additionalBinaryDataProperties)
+        internal VoiceAgentLlmInterimResponseConfig(string @type, IList<VoiceAgentInterimResponseTrigger> triggers, TimeSpan? latencyThresholdMs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string model, string instructions, int? maxCompletionTokens) : base(@type, triggers, latencyThresholdMs, additionalBinaryDataProperties)
         {
             Model = model;
             Instructions = instructions;

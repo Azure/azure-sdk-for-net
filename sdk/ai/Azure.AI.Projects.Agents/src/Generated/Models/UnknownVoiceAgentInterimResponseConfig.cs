@@ -14,7 +14,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="triggers"> Conditions that may trigger one interim response. </param>
         /// <param name="latencyThresholdMs"> The latency threshold in milliseconds. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownVoiceAgentInterimResponseConfig(string @type, IList<VoiceAgentInterimResponseTrigger> triggers, int? latencyThresholdMs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type ?? "unknown", triggers, latencyThresholdMs, additionalBinaryDataProperties)
+        internal UnknownVoiceAgentInterimResponseConfig(string @type, IList<VoiceAgentInterimResponseTrigger> triggers, TimeSpan? latencyThresholdMs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type ?? "unknown", triggers, latencyThresholdMs, additionalBinaryDataProperties)
         {
         }
     }

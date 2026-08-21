@@ -93,7 +93,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(LatencyThresholdMs))
             {
                 writer.WritePropertyName("latency_threshold_ms"u8);
-                writer.WriteNumberValue(LatencyThresholdMs.Value);
+                writer.WriteNumberValue(Convert.ToInt32(Math.Round(LatencyThresholdMs.Value.TotalMilliseconds)));
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

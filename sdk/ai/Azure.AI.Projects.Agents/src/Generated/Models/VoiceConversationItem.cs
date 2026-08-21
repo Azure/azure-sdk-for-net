@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -13,38 +14,23 @@ namespace Azure.AI.Projects.Agents
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceMessageItem"/>, <see cref="VoiceFunctionCallItem"/>, <see cref="VoiceFunctionCallOutputItem"/>, <see cref="VoiceMcpListToolsItem"/>, <see cref="VoiceMcpCallItem"/>, <see cref="VoiceMcpApprovalRequestItem"/>, and <see cref="VoiceMcpApprovalResponseItem"/>.
     /// </summary>
     [Experimental("AAIP001")]
-    public abstract partial class VoiceConversationItem
+    public abstract partial class VoiceConversationItem : RealtimeConversationItem
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="VoiceConversationItem"/>. </summary>
-        /// <param name="type"> The type of the conversation item. </param>
-        private protected VoiceConversationItem(VoiceConversationItemType @type)
-        {
-            Type = @type;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VoiceConversationItem"/>. </summary>
-        /// <param name="type"> The type of the conversation item. </param>
+        /// <param name="type"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="createdAt"> The Unix timestamp (in seconds) for when the item was persisted. </param>
         /// <param name="responseId"> The id of the response that produced this item, when applicable. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceConversationItem(VoiceConversationItemType @type, DateTimeOffset? createdAt, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceConversationItem(RealtimeConversationItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? createdAt, string responseId) : base(@type, additionalBinaryDataProperties)
         {
-            Type = @type;
             CreatedAt = createdAt;
             ResponseId = responseId;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The type of the conversation item. </summary>
-        internal VoiceConversationItemType Type { get; set; }
-
         /// <summary> The Unix timestamp (in seconds) for when the item was persisted. </summary>
-        public DateTimeOffset? CreatedAt { get; set; }
+        public DateTimeOffset? CreatedAt { get; }
 
         /// <summary> The id of the response that produced this item, when applicable. </summary>
-        public string ResponseId { get; set; }
+        public string ResponseId { get; }
     }
 }

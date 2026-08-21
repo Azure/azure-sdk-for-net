@@ -5,7 +5,7 @@
 namespace OpenAI
 {
     /// <summary></summary>
-    public enum VoiceFunctionCallItemStatus
+    public enum RealtimeConversationItemFunctionCallStatus
     {
         /// <summary> Completed. </summary>
         Completed,

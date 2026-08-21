@@ -223,7 +223,13 @@ namespace Azure.AI.Projects.Agents
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="ToolChoiceOptions"/>. </description>
+        /// <description> "none". </description>
+        /// </item>
+        /// <item>
+        /// <description> "auto". </description>
+        /// </item>
+        /// <item>
+        /// <description> "required". </description>
         /// </item>
         /// <item>
         /// <description> <see cref="ToolChoiceFunction"/>. </description>

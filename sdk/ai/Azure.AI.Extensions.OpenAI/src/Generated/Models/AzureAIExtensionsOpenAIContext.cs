@@ -28,9 +28,7 @@ namespace Azure.AI.Extensions.OpenAI
     [ModelReaderWriterBuildable(typeof(AzureAISearchToolCallOutput))]
     [ModelReaderWriterBuildable(typeof(AzureAISearchToolIndex))]
     [ModelReaderWriterBuildable(typeof(AzureAISearchToolOptions))]
-#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.AzureFunctionToolCall is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AzureFunctionToolCall))]
-#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.AzureFunctionToolCall is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AzureFunctionToolCallOutput))]
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.BingCustomSearchOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(BingCustomSearchOptions))]

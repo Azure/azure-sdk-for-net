@@ -75,11 +75,6 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("bitrate"u8);
                 writer.WriteNumberValue(Bitrate.Value);
             }
-            if (Optional.IsDefined(Codec))
-            {
-                writer.WritePropertyName("codec"u8);
-                writer.WriteStringValue(Codec.Value.ToString());
-            }
             if (Optional.IsDefined(Crop))
             {
                 writer.WritePropertyName("crop"u8);
@@ -143,7 +138,6 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             int? bitrate = default;
-            VoiceAgentAvatarVideoParamsCodec? codec = default;
             VoiceAgentAvatarVideoCrop crop = default;
             VoiceAgentAvatarVideoResolution resolution = default;
             VoiceAgentAvatarVideoBackground background = default;
@@ -158,15 +152,6 @@ namespace Azure.AI.Projects.Agents
                         continue;
                     }
                     bitrate = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("codec"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    codec = new VoiceAgentAvatarVideoParamsCodec(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("crop"u8))
@@ -212,7 +197,6 @@ namespace Azure.AI.Projects.Agents
             }
             return new VoiceAgentAvatarVideoParams(
                 bitrate,
-                codec,
                 crop,
                 resolution,
                 background,

@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -19,7 +20,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceConversationItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override RealtimeConversationItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceMcpApprovalResponseItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -95,7 +96,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceConversationItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override RealtimeConversationItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceMcpApprovalResponseItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -114,10 +115,10 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            VoiceConversationItemType @type = default;
+            RealtimeConversationItemType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DateTimeOffset? createdAt = default;
             string responseId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string approvalRequestId = default;
             bool approve = default;
@@ -126,7 +127,7 @@ namespace Azure.AI.Projects.Agents
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new VoiceConversationItemType(prop.Value.GetString());
+                    @type = new RealtimeConversationItemType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("created_at"u8))
@@ -175,9 +176,9 @@ namespace Azure.AI.Projects.Agents
             }
             return new VoiceMcpApprovalResponseItem(
                 @type,
+                additionalBinaryDataProperties,
                 createdAt,
                 responseId,
-                additionalBinaryDataProperties,
                 id,
                 approvalRequestId,
                 approve,
