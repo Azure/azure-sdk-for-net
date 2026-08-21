@@ -8,6 +8,7 @@
 
 ### Bugs Fixed
 
+- Fixed a memory leak on the scale-only host path where `MessagingProvider` and its cached `ServiceBusClient`s were never disposed on host teardown. `AddServiceBusScaleForTrigger` now forces construction of `CleanupService`, which the DI container then disposes automatically, tearing down the cached clients and releasing their AMQP connections, CBS-refresh timers, and heartbeat timers. Previously these stayed registered on the process-wide static `TimerQueue` for the life of the process, because a scale-only host (`ConfigureWebJobsScale`) does not initialize `IExtensionConfigProvider`s — the binding path's normal route into `CleanupService`.
 - Wait for 2 secs before scaling out for ScaleMonitor to avoid aggressive scaling (matches with ScaleControlelr V2) - AB#32302750
 
 ### Other Changes
