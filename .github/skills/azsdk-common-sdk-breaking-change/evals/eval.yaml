@@ -1,4 +1,4 @@
-name: azsdk-common-sdk-breaking-change-trigger-eval
+name: azsdk-common-sdk-breaking-change-eval
 description: tests for the azsdk-common-sdk-breaking-change skill
 type: capability
 
