@@ -41,6 +41,12 @@ namespace Azure.Core.TestFramework
             Type[] parameterTypes = invocation.Method.GetParameters().Select(p => p.ParameterType).ToArray();
 
             var methodName = invocation.Method.Name;
+            if (AsyncEnumerableType.GetItemType(invocation.Method.ReturnType) is not null)
+            {
+                invocation.Proceed();
+                return;
+            }
+
             if (!methodName.EndsWith(AsyncSuffix))
             {
                 MethodInfo asyncAlternative = GetMethod(invocation, methodName + AsyncSuffix, parameterTypes);

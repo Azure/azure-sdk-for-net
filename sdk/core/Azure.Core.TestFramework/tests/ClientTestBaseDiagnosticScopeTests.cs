@@ -2,10 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Core.Tests;
 using NUnit.Framework;
 
 namespace Azure.Core.TestFramework.Tests
@@ -110,6 +115,86 @@ namespace Azure.Core.TestFramework.Tests
         {
             InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
             await client.CorrectScopeAsync();
+        }
+
+        [Test]
+        public async Task AsyncEnumerableDoesNotRequireSyncCounterpart()
+        {
+            InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
+
+            Assert.AreEqual(new[] { 1, 2 }, await client.StreamValidAsync().ToEnumerableAsync());
+        }
+
+        [Test]
+        public async Task AsyncEnumerableAllowsForwardedScope()
+        {
+            InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
+
+            Assert.AreEqual(new[] { 1 }, await client.StreamForwardedAsync().ToEnumerableAsync());
+        }
+
+        [Test]
+        public async Task DirectListenerCapturesAsyncEnumerableScope()
+        {
+            using var listener = new ClientDiagnosticListener(s => s.StartsWith("Azure."), asyncLocal: true);
+
+            await new InvalidDiagnosticScopeTestClient().StreamValidAsync().ToEnumerableAsync();
+
+            Assert.IsTrue(listener.Scopes.Single().IsCompleted);
+        }
+
+        [Test]
+        public async Task AsyncEnumerableValidationIsDeferredUntilCompletion()
+        {
+            InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
+            IAsyncEnumerator<int> enumerator = client.StreamWithoutScopeAsync().GetAsyncEnumerator();
+
+            Assert.IsTrue(await enumerator.MoveNextAsync());
+            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(
+                async () => await enumerator.MoveNextAsync());
+            StringAssert.Contains(
+                $"{typeof(InvalidDiagnosticScopeTestClient).Name}.StreamWithoutScope",
+                ex.Message);
+            await enumerator.DisposeAsync();
+        }
+
+        [Test]
+        public async Task AsyncEnumerableValidatesFailure()
+        {
+            InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
+            IAsyncEnumerator<int> enumerator = client.StreamFailureAsync().GetAsyncEnumerator();
+
+            Assert.IsTrue(await enumerator.MoveNextAsync());
+            Assert.ThrowsAsync<TestStreamingException>(async () => await enumerator.MoveNextAsync());
+            await enumerator.DisposeAsync();
+        }
+
+        [Test]
+        public async Task AsyncEnumerableValidatesCancellation()
+        {
+            InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
+            using var cancellationSource = new CancellationTokenSource();
+            IAsyncEnumerator<int> enumerator = client.StreamCancellationAsync(cancellationSource.Token)
+                .GetAsyncEnumerator();
+            Assert.IsTrue(await enumerator.MoveNextAsync());
+
+            cancellationSource.Cancel();
+
+            Assert.CatchAsync<OperationCanceledException>(async () => await enumerator.MoveNextAsync());
+            await enumerator.DisposeAsync();
+        }
+
+        [Test]
+        public async Task AsyncEnumerableValidatesDisposal()
+        {
+            var originalClient = new InvalidDiagnosticScopeTestClient();
+            InvalidDiagnosticScopeTestClient client = InstrumentClient(originalClient);
+            IAsyncEnumerator<int> enumerator = client.StreamDisposalAsync().GetAsyncEnumerator();
+            Assert.IsTrue(await enumerator.MoveNextAsync());
+
+            await enumerator.DisposeAsync();
+
+            Assert.IsTrue(originalClient.StreamDisposed);
         }
 
         public class InvalidDiagnosticScopeTestClient
@@ -237,6 +322,114 @@ namespace Azure.Core.TestFramework.Tests
                 return true;
             }
 
+            public virtual async IAsyncEnumerable<int> StreamValidAsync(
+                [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                DiagnosticScope scope = CreateScope("StreamValid");
+                scope.Start();
+                try
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    yield return 1;
+                    await Task.Yield();
+                    yield return 2;
+                }
+                finally
+                {
+                    scope.Dispose();
+                }
+            }
+
+            public virtual async IAsyncEnumerable<int> StreamWithoutScopeAsync(
+                [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                yield return 1;
+                await Task.Yield();
+            }
+
+            [ForwardsClientCalls]
+            public virtual async IAsyncEnumerable<int> StreamForwardedAsync(
+                [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                DiagnosticScope scope = CreateScope(nameof(CorrectScope));
+                scope.Start();
+                try
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    yield return 1;
+                    await Task.Yield();
+                }
+                finally
+                {
+                    scope.Dispose();
+                }
+            }
+
+            public virtual async IAsyncEnumerable<int> StreamFailureAsync(
+                [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                DiagnosticScope scope = CreateScope("StreamFailure");
+                scope.Start();
+                try
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    yield return 1;
+                    await Task.Yield();
+                    var exception = new TestStreamingException();
+                    scope.Failed(exception);
+                    throw exception;
+                }
+                finally
+                {
+                    scope.Dispose();
+                }
+            }
+
+            public virtual async IAsyncEnumerable<int> StreamCancellationAsync(
+                [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                DiagnosticScope scope = CreateScope("StreamCancellation");
+                scope.Start();
+                try
+                {
+                    yield return 1;
+                    try
+                    {
+                        await Task.Delay(Timeout.Infinite, cancellationToken);
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                }
+                finally
+                {
+                    scope.Dispose();
+                }
+            }
+
+            public bool StreamDisposed { get; private set; }
+
+            public virtual async IAsyncEnumerable<int> StreamDisposalAsync(
+                [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                DiagnosticScope scope = CreateScope("StreamDisposal");
+                scope.Start();
+                try
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    yield return 1;
+                    await Task.Yield();
+                }
+                finally
+                {
+                    StreamDisposed = true;
+                    scope.Dispose();
+                }
+            }
+
             [ForwardsClientCalls]
             public virtual Task<bool> ForwardsAsync(bool includeCoreScope = false)
             {
@@ -325,6 +518,10 @@ namespace Azure.Core.TestFramework.Tests
                     return Page<int>.FromValues(new[] { 4, 5, 6 }, null, new MockResponse(200));
                 });
             }
+        }
+
+        private sealed class TestStreamingException : Exception
+        {
         }
     }
 }

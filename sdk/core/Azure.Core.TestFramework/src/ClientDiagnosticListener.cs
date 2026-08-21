@@ -79,30 +79,40 @@ namespace Azure.Core.Tests
                 else if (value.Key.EndsWith(stopSuffix))
                 {
                     var name = value.Key.Substring(0, value.Key.Length - stopSuffix.Length);
-                    foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
+                    ProducedDiagnosticScope scope = null;
+                    string activityId = Activity.Current?.Id;
+                    if (activityId != null)
                     {
-                        if (producedDiagnosticScope.Activity.Id == Activity.Current.Id)
-                        {
-                            producedDiagnosticScope.IsCompleted = true;
-                            return;
-                        }
+                        scope = Scopes.FirstOrDefault(s => s.Activity.Id == activityId && s.Name == name);
+                    }
+
+                    scope ??= Scopes.LastOrDefault(s => !s.IsCompleted && s.Name == name);
+                    if (scope != null)
+                    {
+                        scope.IsCompleted = true;
+                        return;
                     }
                     throw new InvalidOperationException($"Event '{name}' was not started");
                 }
                 else if (value.Key.EndsWith(exceptionSuffix))
                 {
                     var name = value.Key.Substring(0, value.Key.Length - exceptionSuffix.Length);
-                    foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
+                    ProducedDiagnosticScope scope = null;
+                    string activityId = Activity.Current?.Id;
+                    if (activityId != null)
                     {
-                        if (producedDiagnosticScope.Activity.Id == Activity.Current.Id)
-                        {
-                            if (producedDiagnosticScope.IsCompleted)
-                            {
-                                throw new InvalidOperationException("Scope should not be stopped when calling Failed");
-                            }
+                        scope = Scopes.FirstOrDefault(s => s.Activity.Id == activityId && s.Name == name);
+                    }
 
-                            producedDiagnosticScope.Exception = (Exception)value.Value;
-                        }
+                    scope ??= Scopes.LastOrDefault(s => !s.IsCompleted && s.Name == name);
+                    if (scope?.IsCompleted == true)
+                    {
+                        throw new InvalidOperationException("Scope should not be stopped when calling Failed");
+                    }
+
+                    if (scope != null)
+                    {
+                        scope.Exception = (Exception)value.Value;
                     }
                 }
             }
