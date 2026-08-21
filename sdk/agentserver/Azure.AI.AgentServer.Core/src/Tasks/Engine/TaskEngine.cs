@@ -21,9 +21,10 @@ namespace Azure.AI.AgentServer.Core.Tasks.Engine;
 /// The in-process orchestrator for resilient task runs. Owns the create → persist
 /// input → lease → invoke handler → terminal lifecycle, identity convergence,
 /// one-shot auto-cleanup, input-size enforcement, and crash recovery re-invocation.
-/// Implements the public <see cref="ITaskInvoker"/>.
+/// Task runs are surfaced to callers through the typed <see cref="TaskDefinition{TInput, TOutput}"/>
+/// returned at registration.
 /// </summary>
-internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDisposable
+internal sealed partial class TaskEngine : IDisposable
 {
     private readonly ITaskStore _store;
     private readonly TaskWriteSerializer _serializer;
@@ -70,7 +71,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
 
     internal TaskWriteSerializer Serializer => _serializer;
 
-    /// <inheritdoc/>
+    /// <summary>Starts a task and awaits it to completion, returning the typed result.</summary>
     public async Task<TOutput> RunAsync<TInput, TOutput>(
         string name, TInput input, RunOptions? options = null, CancellationToken cancellationToken = default)
     {
@@ -79,7 +80,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         return await handle.Completion.WaitAsync(cancellationToken).ConfigureAwait(false);
     }
 
-    /// <inheritdoc/>
+    /// <summary>Starts a task and returns an awaitable handle once the creation round-trip succeeds.</summary>
     public async Task<TaskRun<TOutput>> StartAsync<TInput, TOutput>(
         string name, TInput input, RunOptions? options = null, CancellationToken cancellationToken = default)
     {
@@ -1271,7 +1272,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             cancellationToken).ConfigureAwait(false);
     }
 
-    /// <inheritdoc/>
+    /// <summary>Ends a multi-turn chain: cancels any in-flight turn, resolves queued callers as cancelled, and removes the record.</summary>
     public async Task DeleteAsync(string taskId, CancellationToken cancellationToken = default)
     {
         // Cancel an in-flight turn and resolve its caller as cancelled.
@@ -1566,7 +1567,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         // so shutdown/cancel/timeout still interrupt a long delay.
         => retry.Delay.GetNextDelay(null, attempt + 1);
 
-    /// <inheritdoc/>
+    /// <summary>Returns the in-flight run for a one-shot task keyed by <paramref name="taskId"/>, or null.</summary>
     public async Task<TaskRun<TOutput>?> GetActiveRunAsync<TOutput>(
         string name, string taskId, CancellationToken cancellationToken = default)
     {
@@ -1589,7 +1590,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         return recovered?.GetHandle<TOutput>();
     }
 
-    /// <inheritdoc/>
+    /// <summary>Returns the in-flight run for a multi-turn task keyed by <paramref name="taskId"/> and <paramref name="inputId"/>, or null.</summary>
     public async Task<TaskRun<TOutput>?> GetActiveRunAsync<TOutput>(
         string name, string taskId, string inputId, CancellationToken cancellationToken = default)
     {

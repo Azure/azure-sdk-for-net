@@ -58,14 +58,13 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             // (In-memory replay would lose the pre-crash buffer, defeating this sample's resilience.)
             services.AddAgentEventStreams(o => o.UseFileBackedReplay());
 
-            // AddResilientTasks records registrations into a live registry that the engine reads
-            // when a task is invoked. The provider-aware overloads were removed (the service-locator
-            // shape is being retired ahead of GA), so resolve the handler's singleton dependencies
-            // from the built container once and capture them in the plain delegate — a DI-resolved
-            // handler wrapped in the delegate. The registry is read lazily at invocation time, so
+            // AddResilientTask/AddResilientMultiTurnTask self-initialize the resilient-tasks
+            // services on first use and register the returned TaskDefinition as a keyed singleton
+            // (keyed by task name), so the handler resolves it with GetResilientTask. The provider-
+            // aware overloads were removed (the service-locator shape is being retired ahead of GA),
+            // so resolve the handler's singleton dependencies from the built container once and
+            // capture them in the plain delegate. The registry is read lazily at invocation time, so
             // registering after the provider is built is fine.
-            ResilientTaskBuilder tasks = services.AddResilientTasks();
-
             ServiceProvider provider = services.BuildServiceProvider();
             AgentEventStreamRegistry streams = provider.GetRequiredService<AgentEventStreamRegistry>();
             ResponsesClient model = provider.GetRequiredService<ResponsesClient>();
@@ -74,7 +73,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             // chain per session (TaskId = research-{sessionId}), and a POST while a turn is
             // in flight is enqueued as steering. Each turn streams a real model per sub-call
             // into the event stream keyed by that turn's invocation id (carried on the input).
-            tasks.AddMultiTurnTask<ResearchRequest, ResearchResult>(
+            services.AddResilientMultiTurnTask<ResearchRequest, ResearchResult>(
                 "research",
                 (ctx, ct) => RunResearchAsync(
                     streams,
@@ -469,8 +468,8 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 
                 var registry = request.HttpContext.RequestServices
                     .GetRequiredService<AgentEventStreamRegistry>();
-                var invoker = request.HttpContext.RequestServices
-                    .GetRequiredService<ITaskInvoker>();
+                var research = request.HttpContext.RequestServices
+                    .GetResilientTask<ResearchRequest, ResearchResult>("research");
 
                 string taskId = TaskIdForSession(context.SessionId);
                 string invId = context.InvocationId;
@@ -482,8 +481,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 
                 // Start a new turn or steer the running one. With the same TaskId, the engine
                 // transparently enqueues this input as steering while a turn is in flight.
-                _ = await invoker.StartAsync<ResearchRequest, ResearchResult>(
-                    "research",
+                _ = await research.StartAsync(
                     new ResearchRequest(
                         body.Topic,
                         invId,
@@ -554,15 +552,15 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 InvocationContext context,
                 CancellationToken cancellationToken)
             {
-                var invoker = request.HttpContext.RequestServices
-                    .GetRequiredService<ITaskInvoker>();
+                var research = request.HttpContext.RequestServices
+                    .GetResilientTask<ResearchRequest, ResearchResult>("research");
 
                 string taskId = s_taskIdByInvocation.TryGetValue(invocationId, out var mapped)
                     ? mapped
                     : TaskIdForSession(context.SessionId);
 
-                TaskRun<ResearchResult>? run = await invoker
-                    .GetActiveRunAsync<ResearchResult>("research", taskId, cancellationToken);
+                TaskRun<ResearchResult>? run = await research
+                    .GetActiveRunAsync(taskId, cancellationToken);
 
                 if (run is null)
                 {

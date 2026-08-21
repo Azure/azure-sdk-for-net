@@ -19,8 +19,8 @@ namespace Azure.AI.AgentServer.Responses.Internal.Resilience;
 /// the Responses layer never reimplements them. Mirrors the Python composition where the handler
 /// body is invoked by the selected task primitive.
 /// <para>
-/// The same body serves both a fresh invocation (launched from the endpoint via
-/// <c>ITaskInvoker.StartAsync/RunAsync</c>) and a crash-recovery re-invocation (dispatched by the
+/// The same body serves both a fresh invocation (launched from the endpoint via the resolved
+/// <c>TaskDefinition.StartAsync/RunAsync</c>) and a crash-recovery re-invocation (dispatched by the
 /// Core recovery scan with <see cref="EntryMode.Recovered"/>): recovery-vs-fresh, steered-turn, and
 /// pending-input state are read from the Core <see cref="TaskContext{TInput}"/> rather than from any
 /// bespoke Responses recovery/steering machinery.

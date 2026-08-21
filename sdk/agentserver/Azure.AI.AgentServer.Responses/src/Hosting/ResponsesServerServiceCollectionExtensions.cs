@@ -203,13 +203,18 @@ public static class ResponsesServerServiceCollectionExtensions
             return taskRootProvider;
         });
 
-        ResilientTaskBuilder taskBuilder = resilientTaskCredential is null
-            ? services.AddResilientTasks()
-            : services.AddResilientTasks(resilientTaskCredential);
-        taskBuilder.AddTask<ResponseTaskInput, ResponseTaskOutput>(
+        if (resilientTaskCredential is not null)
+        {
+            // Flat AddResilientTask/AddResilientMultiTurnTask calls self-initialize the core
+            // services on first use, but always with no credential — so when hosted storage
+            // needs one, it must be set explicitly before either flat call below.
+            services.AddResilientTasks(resilientTaskCredential);
+        }
+
+        services.AddResilientTask<ResponseTaskInput, ResponseTaskOutput>(
             ResponsesResilientTaskHandler.OneShotTaskName,
             (ctx, ct) => ResponsesResilientTaskHandler.RunTurnAsync(taskRootProvider.Require(), ctx, ct));
-        taskBuilder.AddMultiTurnTask<ResponseTaskInput, ResponseTaskOutput>(
+        services.AddResilientMultiTurnTask<ResponseTaskInput, ResponseTaskOutput>(
             ResponsesResilientTaskHandler.MultiTurnTaskName,
             (ctx, ct) => ResponsesResilientTaskHandler.RunTurnAsync(taskRootProvider.Require(), ctx, ct),
             steerable: eagerOptions.SteerableConversations);

@@ -375,27 +375,6 @@ namespace Azure.AI.AgentServer.Core.Tasks
         Resumed = 1,
         Recovered = 2,
     }
-    public partial interface IMultiTurnTask
-    {
-        System.Threading.Tasks.Task DeleteAsync(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-    }
-    public partial interface ITaskInvoker
-    {
-        System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>?> GetActiveRunAsync<TOutput>(string name, string taskId, string inputId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>?> GetActiveRunAsync<TOutput>(string name, string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        System.Threading.Tasks.Task<TOutput> RunAsync<TInput, TOutput>(string name, TInput input, Azure.AI.AgentServer.Core.Tasks.RunOptions? options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>> StartAsync<TInput, TOutput>(string name, TInput input, Azure.AI.AgentServer.Core.Tasks.RunOptions? options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-    }
-    public abstract partial class ResilientTaskBuilder
-    {
-        protected ResilientTaskBuilder() { }
-        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This overload serializes the task input using reflection-based JSON serialization, which may require runtime code generation. Use the overload that accepts a JsonTypeInfo<TInput> instead.")]
-        public abstract Azure.AI.AgentServer.Core.Tasks.ResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(string name, System.Func<Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, bool steerable = false, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null);
-        public abstract Azure.AI.AgentServer.Core.Tasks.ResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(string name, System.Func<Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, System.Text.Json.Serialization.Metadata.JsonTypeInfo<TInput> inputTypeInfo, bool steerable = false, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null);
-        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This overload serializes the task input using reflection-based JSON serialization, which may require runtime code generation. Use the overload that accepts a JsonTypeInfo<TInput> instead.")]
-        public abstract Azure.AI.AgentServer.Core.Tasks.ResilientTaskBuilder AddTask<TInput, TOutput>(string name, System.Func<Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null);
-        public abstract Azure.AI.AgentServer.Core.Tasks.ResilientTaskBuilder AddTask<TInput, TOutput>(string name, System.Func<Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, System.Text.Json.Serialization.Metadata.JsonTypeInfo<TInput> inputTypeInfo, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null);
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResilientTaskErrorCode : System.IEquatable<Azure.AI.AgentServer.Core.Tasks.ResilientTaskErrorCode>
     {
@@ -425,7 +404,17 @@ namespace Azure.AI.AgentServer.Core.Tasks
     }
     public static partial class ResilientTaskServiceCollectionExtensions
     {
-        public static Azure.AI.AgentServer.Core.Tasks.ResilientTaskBuilder AddResilientTasks(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, Azure.Core.TokenCredential? credential = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This overload serializes the task input using reflection-based JSON serialization, which may require runtime code generation. Use the overload that accepts a JsonTypeInfo<TInput> instead.")]
+        public static Azure.AI.AgentServer.Core.Tasks.TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput>(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, string name, System.Func<Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, bool steerable = false, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null) { throw null; }
+        public static Azure.AI.AgentServer.Core.Tasks.TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput>(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, string name, System.Func<Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, System.Text.Json.Serialization.Metadata.JsonTypeInfo<TInput> inputTypeInfo, bool steerable = false, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null) { throw null; }
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddResilientTasks(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, Azure.Core.TokenCredential? credential = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This overload serializes the task input using reflection-based JSON serialization, which may require runtime code generation. Use the overload that accepts a JsonTypeInfo<TInput> instead.")]
+        public static Azure.AI.AgentServer.Core.Tasks.TaskDefinition<TInput, TOutput> AddResilientTask<TInput, TOutput>(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, string name, System.Func<Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null) { throw null; }
+        public static Azure.AI.AgentServer.Core.Tasks.TaskDefinition<TInput, TOutput> AddResilientTask<TInput, TOutput>(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, string name, System.Func<Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, System.Text.Json.Serialization.Metadata.JsonTypeInfo<TInput> inputTypeInfo, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null) { throw null; }
+    }
+    public static partial class ResilientTaskServiceProviderExtensions
+    {
+        public static Azure.AI.AgentServer.Core.Tasks.TaskDefinition<TInput, TOutput> GetResilientTask<TInput, TOutput>(this System.IServiceProvider provider, string name) { throw null; }
     }
     public sealed partial class RunOptions
     {
@@ -450,6 +439,16 @@ namespace Azure.AI.AgentServer.Core.Tasks
         public virtual string TaskId { get { throw null; } }
         public virtual bool TimeoutExceeded { get { throw null; } }
         public virtual System.Threading.Tasks.Task ExitForRecoveryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public sealed partial class TaskDefinition<TInput, TOutput>
+    {
+        internal TaskDefinition() { }
+        public string Name { get { throw null; } }
+        public System.Threading.Tasks.Task DeleteAsync(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>?> GetActiveRunAsync(string taskId, string inputId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>?> GetActiveRunAsync(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<TOutput> RunAsync(TInput input, Azure.AI.AgentServer.Core.Tasks.RunOptions? options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>> StartAsync(TInput input, Azure.AI.AgentServer.Core.Tasks.RunOptions? options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public sealed partial class TaskFailureDetail
     {
