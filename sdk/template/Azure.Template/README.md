@@ -90,3 +90,5 @@ This is a template, but your SDK readme should include details on how to contrib
 <!-- LINKS -->
 [style-guide-msft]: https://learn.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
+
+<!-- codeowners skip e2e test: no-op touch to trigger a template build -->
