@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ClientModel.Primitives;
 using System.IO;
 using System.Text.Json;
@@ -39,6 +40,62 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual("920130", data.Rules[3]); // Originally number
             Assert.AreEqual("920140", data.Rules[4]); // Originally string
             Assert.AreEqual("920150", data.Rules[5]); // Originally number
+        }
+
+        [Test]
+        public void ApplicationGatewaySslCertificateSerializesLegacyBinaryDataOnce()
+        {
+            byte[] pfxContent = new byte[] { 0x30, 0x82, 0x01, 0x02, 0x00, 0xFF };
+            var applicationGateway = new ApplicationGatewayData();
+            applicationGateway.SslCertificates.Add(new ApplicationGatewaySslCertificate
+            {
+                Data = BinaryData.FromObjectAsJson(Convert.ToBase64String(pfxContent)),
+                Password = "password"
+            });
+
+            BinaryData wire = ModelReaderWriter.Write(applicationGateway, ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default);
+
+            using JsonDocument document = JsonDocument.Parse(wire);
+            string serializedData = document.RootElement
+                .GetProperty("properties")
+                .GetProperty("sslCertificates")[0]
+                .GetProperty("properties")
+                .GetProperty("data")
+                .GetString();
+            CollectionAssert.AreEqual(pfxContent, Convert.FromBase64String(serializedData));
+        }
+
+        [Test]
+        public void ApplicationGatewaySslCertificateDeserializationPreservesLegacyBinaryData()
+        {
+            BinaryData wire = BinaryData.FromString("""
+                {
+                  "properties": {
+                    "data": "AQID",
+                    "password": "password"
+                  }
+                }
+                """);
+
+            ApplicationGatewaySslCertificate certificate = ModelReaderWriter.Read<ApplicationGatewaySslCertificate>(wire, ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default);
+
+            using JsonDocument document = JsonDocument.Parse(certificate.Data);
+            Assert.AreEqual("AQID", document.RootElement.GetString());
+        }
+
+        [Test]
+        public void ApplicationGatewaySslCertificateSerializesRawBytes()
+        {
+            var certificate = new ApplicationGatewaySslCertificate
+            {
+                Data = BinaryData.FromBytes(new byte[] { 1, 2, 3 }),
+                Password = "password"
+            };
+
+            BinaryData wire = ModelReaderWriter.Write(certificate, ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default);
+
+            using JsonDocument document = JsonDocument.Parse(wire);
+            Assert.AreEqual("AQID", document.RootElement.GetProperty("properties").GetProperty("data").GetString());
         }
     }
 }
