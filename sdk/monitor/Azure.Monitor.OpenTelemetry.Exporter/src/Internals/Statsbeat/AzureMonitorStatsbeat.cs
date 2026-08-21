@@ -489,7 +489,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         public void Dispose()
         {
-            _statsbeatMeterProvider?.Dispose();
+            var meterProvider = _statsbeatMeterProvider;
+            if (meterProvider == null)
+            {
+                return;
+            }
+
+            // Disposing the meter provider exports one last time, which would put an ingestion round
+            // trip on the process exit path. Statsbeat is internal telemetry with no offline storage
+            // behind it, so losing that final export is preferable to delaying exit for it.
+            _ = Task.Run(() =>
+            {
+                try
+                {
+                    meterProvider.Dispose();
+                }
+                catch (Exception)
+                {
+                    // The process is going away; there is nothing useful to report.
+                }
+            });
         }
     }
 }
