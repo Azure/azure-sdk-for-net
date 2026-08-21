@@ -8,7 +8,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Azure.Core" />
-		<PackageReference Include="Azure.Generator" />
+		<ProjectReference Include="..\..\..\..\http-client-csharp\generator\Azure.Generator\src\Azure.Generator.csproj" />
 		<PackageReference Include="Azure.ResourceManager" />
 		<PackageReference Include="Humanizer.Core" />
 	</ItemGroup>
@@ -20,6 +20,14 @@
 	<Target Name="CheckEmitterBuild" BeforeTargets="Build">
 		<!-- Check if the folder does not exist -->
 		<Error Condition="!Exists('..\..\..\node_modules\@typespec\http-client-csharp')" Text="Emitter has not been built please run `npm ci` followed by `npm run build` from ./eng/packages/http-client-csharp folder." />
+	</Target>
+
+	<Target Name="UsePublishedAzureGeneratorVersionForPack" AfterTargets="_GetProjectReferenceVersions">
+		<ItemGroup>
+			<_ProjectReferencesWithVersions Update="@(_ProjectReferencesWithVersions)" Condition="'%(_ProjectReferencesWithVersions.Filename)' == 'Azure.Generator'">
+				<ProjectVersion>$(AzureGeneratorVersion)</ProjectVersion>
+			</_ProjectReferencesWithVersions>
+		</ItemGroup>
 	</Target>
 
 	<!-- Copy output to package dist path for local execution -->

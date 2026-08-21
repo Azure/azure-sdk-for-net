@@ -24,13 +24,17 @@ namespace Azure.Generator.Visitors
     /// <summary>
     /// Visitor that modifies service methods to group conditional request headers into <see cref="MatchConditions"/>/<see cref="RequestConditions"/> types.
     /// </summary>
-    internal class MatchConditionsHeadersVisitor : ScmLibraryVisitor
+    public class MatchConditionsHeadersVisitor : ScmLibraryVisitor
     {
         private static CSharpType ETagType => new CSharpType(typeof(ETag)).WithNullable(true);
-        private const string IfMatch = "If-Match";
-        private const string IfNoneMatch = "If-None-Match";
-        private const string IfModifiedSince = "If-Modified-Since";
-        private const string IfUnmodifiedSince = "If-Unmodified-Since";
+        /// <summary>The If-Match header name.</summary>
+        public const string IfMatch = "If-Match";
+        /// <summary>The If-None-Match header name.</summary>
+        public const string IfNoneMatch = "If-None-Match";
+        /// <summary>The If-Modified-Since header name.</summary>
+        public const string IfModifiedSince = "If-Modified-Since";
+        /// <summary>The If-Unmodified-Since header name.</summary>
+        public const string IfUnmodifiedSince = "If-Unmodified-Since";
         private readonly HashSet<ScmMethodProvider> _visited = [];
 
         private static readonly HashSet<string> _conditionalHeaders = new(StringComparer.OrdinalIgnoreCase)
@@ -54,6 +58,7 @@ namespace Azure.Generator.Visitors
             { RequestConditionHeaders.IfUnmodifiedSince, IfUnmodifiedSince }
         };
 
+        /// <inheritdoc/>
         protected override ScmMethodProvider? VisitCreateRequestMethod(
             InputServiceMethod serviceMethod,
             RestClientProvider enclosingType,
@@ -67,6 +72,7 @@ namespace Azure.Generator.Visitors
             return createRequestMethodProvider;
         }
 
+        /// <inheritdoc/>
         protected override ScmMethodProviderCollection? Visit(
             InputServiceMethod serviceMethod,
             ClientProvider enclosingType,
@@ -86,6 +92,7 @@ namespace Azure.Generator.Visitors
             return methodProviderCollection;
         }
 
+        /// <inheritdoc/>
         protected override ScmMethodProvider? VisitMethod(ScmMethodProvider method)
         {
             if (_visited.Add(method))
@@ -190,6 +197,7 @@ namespace Azure.Generator.Visitors
             return false;
         }
 
+        /// <inheritdoc/>
         protected override TypeProvider? VisitType(TypeProvider type)
         {
             // reset the collection definition if it exists so any changes are properly reflected
