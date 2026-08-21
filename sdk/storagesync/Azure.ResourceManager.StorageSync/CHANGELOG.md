@@ -9,8 +9,6 @@
 - Added sync-session progress, throughput, large-file, and warning details to `ServerEndpointSyncActivityStatus`.
 - Updated the default service API version to `2025-12-01`.
 
-### Other Changes
-
 ## 1.3.2 (2026-06-30)
 
 ### Other Changes
