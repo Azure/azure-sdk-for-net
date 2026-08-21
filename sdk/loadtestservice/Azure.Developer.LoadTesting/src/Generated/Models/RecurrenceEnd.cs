@@ -23,12 +23,12 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Initializes a new instance of <see cref="RecurrenceEnd"/>. </summary>
         /// <param name="numberOfOccurrences"> Number of occurrences after which the recurrence will end. </param>
-        /// <param name="endDateTime"> The date after which the recurrence will end. (RFC 3339 literal format). </param>
+        /// <param name="endOn"> The date after which the recurrence will end. (RFC 3339 literal format). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecurrenceEnd(int? numberOfOccurrences, DateTimeOffset? endDateTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecurrenceEnd(int? numberOfOccurrences, DateTimeOffset? endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NumberOfOccurrences = numberOfOccurrences;
-            EndDateTime = endDateTime;
+            EndOn = endOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +36,6 @@ namespace Azure.Developer.LoadTesting
         public int? NumberOfOccurrences { get; set; }
 
         /// <summary> The date after which the recurrence will end. (RFC 3339 literal format). </summary>
-        public DateTimeOffset? EndDateTime { get; set; }
+        public DateTimeOffset? EndOn { get; set; }
     }
 }
