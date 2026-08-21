@@ -97,15 +97,15 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("fileSizeBytes"u8);
                 writer.WriteNumberValue(FileSizeBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedAt))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
-                writer.WriteStringValue(CreatedAt.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedAt))
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedAt"u8);
-                writer.WriteStringValue(LastUpdatedAt.Value, "O");
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
             {
@@ -157,8 +157,8 @@ namespace Azure.Search.Documents.Indexes.Models
             string fileId = default;
             string fileName = default;
             long? fileSizeBytes = default;
-            DateTimeOffset? createdAt = default;
-            DateTimeOffset? lastUpdatedAt = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? lastUpdatedOn = default;
             string errorMessage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -188,7 +188,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    createdAt = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastUpdatedAt"u8))
@@ -197,7 +197,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    lastUpdatedAt = prop.Value.GetDateTimeOffset("O");
+                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("errorMessage"u8))
@@ -219,8 +219,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 fileId,
                 fileName,
                 fileSizeBytes,
-                createdAt,
-                lastUpdatedAt,
+                createdOn,
+                lastUpdatedOn,
                 errorMessage,
                 additionalBinaryDataProperties);
         }

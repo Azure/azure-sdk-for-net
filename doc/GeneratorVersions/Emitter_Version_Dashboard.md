@@ -1,13 +1,13 @@
 # Emitter Version Dashboard
 
-> **Auto-generated** by `Emitter_Version_Dashboard` on 2026-08-21 01:27:45 UTC.
+> **Auto-generated** by `Emitter_Version_Dashboard` on 2026-08-21 18:52:07 UTC.
 > Run that script to refresh this file after dependency version changes.
 
 ## Latest Published Version Chain
 
 ```
-@typespec/http-client-csharp (alpha.20260820.7)
-  └─ @azure-typespec/http-client-csharp (alpha.20260820.1)
+@typespec/http-client-csharp (alpha.20260821.3)
+  └─ @azure-typespec/http-client-csharp (alpha.20260821.2)
        └─ @azure-typespec/http-client-csharp-mgmt (alpha.20260820.2)
             └─ @azure-typespec/http-client-csharp-provisioning (alpha.20260820.2)
 ```
@@ -16,9 +16,9 @@
 
 | Emitter | Depends On | Dependency Version | Latest on npm | Dependency Commit |
 |---|---|---|---|---|
-| `@azure-typespec/http-client-csharp` | `@typespec/http-client-csharp` | 1.0.0-alpha.20260820.7 | 1.0.0-alpha.20260820.7 | [3e5e2a2](https://github.com/microsoft/typespec/commit/3e5e2a234636367bba93845a7bebdc7b7878b1c4) |
-| `@azure-typespec/http-client-csharp-mgmt` | `@azure-typespec/http-client-csharp` | 1.0.0-alpha.20260819.3 | 1.0.0-alpha.20260820.1 | [b77d431](https://github.com/Azure/azure-sdk-for-net/commit/b77d43115c7ebe317d6e736c77cd81ae9a735ee1) |
-| `@azure-typespec/http-client-csharp-provisioning` | `@azure-typespec/http-client-csharp-mgmt` | 1.0.0-alpha.20260812.1 | 1.0.0-alpha.20260820.2 | [ad23c92](https://github.com/Azure/azure-sdk-for-net/commit/ad23c928f50a12ca01629266a2d8d4ad3798dcad) |
+| `@azure-typespec/http-client-csharp` | `@typespec/http-client-csharp` | 1.0.0-alpha.20260821.4 | 1.0.0-alpha.20260821.3 | unknown |
+| `@azure-typespec/http-client-csharp-mgmt` | `@azure-typespec/http-client-csharp` | 1.0.0-alpha.20260819.3 | 1.0.0-alpha.20260821.2 | unknown |
+| `@azure-typespec/http-client-csharp-provisioning` | `@azure-typespec/http-client-csharp-mgmt` | 1.0.0-alpha.20260812.1 | 1.0.0-alpha.20260820.2 | unknown |
 
 ## Source Files
 
