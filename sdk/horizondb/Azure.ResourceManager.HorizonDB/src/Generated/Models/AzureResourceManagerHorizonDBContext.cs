@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.HorizonDB
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(HorizonDBAdministratorAdd))]
+    [ModelReaderWriterBuildable(typeof(HorizonDBAdministratorContent))]
+    [ModelReaderWriterBuildable(typeof(HorizonDBAdministratorContentProperties))]
     [ModelReaderWriterBuildable(typeof(HorizonDBAdministratorData))]
     [ModelReaderWriterBuildable(typeof(HorizonDbAdministratorListResult))]
     [ModelReaderWriterBuildable(typeof(HorizonDBAdministratorProperties))]
-    [ModelReaderWriterBuildable(typeof(HorizonDBAdministratorPropertiesForAdd))]
     [ModelReaderWriterBuildable(typeof(HorizonDBAdministratorResource))]
     [ModelReaderWriterBuildable(typeof(HorizonDbClusterAuthConfig))]
     [ModelReaderWriterBuildable(typeof(HorizonDBClusterData))]
