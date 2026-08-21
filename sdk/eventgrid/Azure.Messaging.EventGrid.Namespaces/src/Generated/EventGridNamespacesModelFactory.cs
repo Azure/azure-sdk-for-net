@@ -39,7 +39,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="lockToken"> The token of the lock on the event. </param>
         /// <param name="deliveryCount"> The attempt count for delivering the event. </param>
         /// <returns> A new <see cref="Namespaces.BrokerProperties"/> instance for mocking. </returns>
-        public static BrokerProperties BrokerProperties(string lockToken = default, int deliveryCount = default)
+        public static BrokerProperties BrokerProperties(string lockToken = default, int deliveryCount = 0)
         {
             return new BrokerProperties(lockToken, deliveryCount, additionalBinaryDataProperties: null);
         }
