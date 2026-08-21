@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             set
             {
                 if (RuntimeProtectionConfiguration == null)
-                    RuntimeProtectionConfiguration = new RuntimeProtectionConfiguration();
+                    RuntimeProtectionConfiguration = new RuntimeProtectionConfigurationPatch();
                 RuntimeProtectionConfiguration.EnforcementLevel = value;
             }
         }

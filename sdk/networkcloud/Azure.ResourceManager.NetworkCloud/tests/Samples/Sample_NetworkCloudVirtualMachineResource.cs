@@ -80,8 +80,10 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 ["key1"] = "myvalue1",
 ["key2"] = "myvalue2"
 },
-                VmImageRepositoryCredentials = new ImageRepositoryCredentials("myacr.azurecr.io", "myuser")
+                VmImageRepositoryCredentials = new ImageRepositoryCredentialsPatch
                 {
+                    RegistryUriString = "myacr.azurecr.io",
+                    Username = "myuser",
                     Password = "{password}",
                 },
             };
