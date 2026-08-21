@@ -117,12 +117,12 @@ namespace Azure.AI.Projects.Agents
             if (options.Format != "W")
             {
                 writer.WritePropertyName("created_at"u8);
-                writer.WriteNumberValue(CreatedAt, "U");
+                writer.WriteNumberValue(CreatedOn, "U");
             }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("updated_at"u8);
-                writer.WriteNumberValue(UpdatedAt, "U");
+                writer.WriteNumberValue(UpdatedOn, "U");
             }
             if (options.Format != "W" && Optional.IsDefined(Progress))
             {
@@ -191,8 +191,8 @@ namespace Azure.AI.Projects.Agents
             AgentOptimizationJobResult result = default;
             AgentsJobStatus status = default;
             FoundryOpenAIError error = default;
-            DateTimeOffset createdAt = default;
-            DateTimeOffset updatedAt = default;
+            DateTimeOffset createdOn = default;
+            DateTimeOffset updatedOn = default;
             AgentOptimizationJobProgress progress = default;
             IReadOnlyList<string> warnings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -237,12 +237,12 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("created_at"u8))
                 {
-                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    createdOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("updated_at"u8))
                 {
-                    updatedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    updatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("progress"u8))
@@ -286,8 +286,8 @@ namespace Azure.AI.Projects.Agents
                 result,
                 status,
                 error,
-                createdAt,
-                updatedAt,
+                createdOn,
+                updatedOn,
                 progress,
                 warnings ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
