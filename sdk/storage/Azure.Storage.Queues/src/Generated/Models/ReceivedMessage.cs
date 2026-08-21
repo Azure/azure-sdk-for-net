@@ -14,8 +14,8 @@ namespace Azure.Storage.Queues.Models
     {
         /// <summary> Initializes a new instance of <see cref="ReceivedMessage"/>. </summary>
         /// <param name="messageId"> The ID of the message. </param>
-        /// <param name="insertionTime"> The time the message was inserted into the queue. </param>
-        /// <param name="expirationTime"> The time that the message will expire and be automatically deleted. </param>
+        /// <param name="insertionOn"> The time the message was inserted into the queue. </param>
+        /// <param name="expireOn"> The time that the message will expire and be automatically deleted. </param>
         /// <param name="popReceipt">
         /// An opaque value required to delete the message. If deletion fails using this
         /// PopReceipt then the message has been dequeued by another client.
@@ -23,11 +23,11 @@ namespace Azure.Storage.Queues.Models
         /// <param name="timeNextVisible"> The time that the message will again become visible in the queue. </param>
         /// <param name="dequeueCount"> The number of times the message has been dequeued. </param>
         /// <param name="messageText"> The content of the message. </param>
-        internal ReceivedMessage(string messageId, DateTimeOffset insertionTime, DateTimeOffset expirationTime, string popReceipt, DateTimeOffset timeNextVisible, long dequeueCount, string messageText)
+        internal ReceivedMessage(string messageId, DateTimeOffset insertionOn, DateTimeOffset expireOn, string popReceipt, DateTimeOffset timeNextVisible, long dequeueCount, string messageText)
         {
             MessageId = messageId;
-            InsertionTime = insertionTime;
-            ExpirationTime = expirationTime;
+            InsertionOn = insertionOn;
+            ExpireOn = expireOn;
             PopReceipt = popReceipt;
             TimeNextVisible = timeNextVisible;
             DequeueCount = dequeueCount;
@@ -38,10 +38,10 @@ namespace Azure.Storage.Queues.Models
         public string MessageId { get; }
 
         /// <summary> The time the message was inserted into the queue. </summary>
-        public DateTimeOffset InsertionTime { get; }
+        public DateTimeOffset InsertionOn { get; }
 
         /// <summary> The time that the message will expire and be automatically deleted. </summary>
-        public DateTimeOffset ExpirationTime { get; }
+        public DateTimeOffset ExpireOn { get; }
 
         /// <summary>
         /// An opaque value required to delete the message. If deletion fails using this

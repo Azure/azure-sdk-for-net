@@ -109,10 +109,10 @@ namespace Azure.Storage.Queues.Models
             writer.WriteValue(MessageId);
             writer.WriteEndElement();
             writer.WriteStartElement("InsertionTime");
-            writer.WriteStringValue(InsertionTime, "R");
+            writer.WriteStringValue(InsertionOn, "R");
             writer.WriteEndElement();
             writer.WriteStartElement("ExpirationTime");
-            writer.WriteStringValue(ExpirationTime, "R");
+            writer.WriteStringValue(ExpireOn, "R");
             writer.WriteEndElement();
             writer.WriteStartElement("PopReceipt");
             writer.WriteValue(PopReceipt);
@@ -138,8 +138,8 @@ namespace Azure.Storage.Queues.Models
             }
 
             string messageId = default;
-            DateTimeOffset insertionTime = default;
-            DateTimeOffset expirationTime = default;
+            DateTimeOffset insertionOn = default;
+            DateTimeOffset expireOn = default;
             string popReceipt = default;
             DateTimeOffset timeNextVisible = default;
             long dequeueCount = default;
@@ -155,12 +155,12 @@ namespace Azure.Storage.Queues.Models
                 }
                 if (localName == "InsertionTime")
                 {
-                    insertionTime = child.GetDateTimeOffset("R");
+                    insertionOn = child.GetDateTimeOffset("R");
                     continue;
                 }
                 if (localName == "ExpirationTime")
                 {
-                    expirationTime = child.GetDateTimeOffset("R");
+                    expireOn = child.GetDateTimeOffset("R");
                     continue;
                 }
                 if (localName == "PopReceipt")
@@ -186,8 +186,8 @@ namespace Azure.Storage.Queues.Models
             }
             return new ReceivedMessage(
                 messageId,
-                insertionTime,
-                expirationTime,
+                insertionOn,
+                expireOn,
                 popReceipt,
                 timeNextVisible,
                 dequeueCount,

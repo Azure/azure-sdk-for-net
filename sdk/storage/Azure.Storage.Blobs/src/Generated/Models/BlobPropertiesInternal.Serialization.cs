@@ -104,10 +104,10 @@ namespace Azure.Storage.Blobs.Models
                 throw new FormatException($"The model {nameof(BlobPropertiesInternal)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(CreationTime))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WriteStartElement("Creation-Time");
-                writer.WriteStringValue(CreationTime.Value, "R");
+                writer.WriteStringValue(CreatedOn.Value, "R");
                 writer.WriteEndElement();
             }
             writer.WriteStartElement("Last-Modified");
@@ -212,10 +212,10 @@ namespace Azure.Storage.Blobs.Models
                 writer.WriteValue(CopyProgress);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(CopyCompletionTime))
+            if (Optional.IsDefined(CopyCompletionOn))
             {
                 writer.WriteStartElement("CopyCompletionTime");
-                writer.WriteStringValue(CopyCompletionTime.Value, "R");
+                writer.WriteStringValue(CopyCompletionOn.Value, "R");
                 writer.WriteEndElement();
             }
             if (Optional.IsDefined(CopyStatusDescription))
@@ -242,10 +242,10 @@ namespace Azure.Storage.Blobs.Models
                 writer.WriteValue(DestinationSnapshot);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(DeletedTime))
+            if (Optional.IsDefined(DeletedOn))
             {
                 writer.WriteStartElement("DeletedTime");
-                writer.WriteStringValue(DeletedTime.Value, "R");
+                writer.WriteStringValue(DeletedOn.Value, "R");
                 writer.WriteEndElement();
             }
             if (Optional.IsDefined(RemainingRetentionDays))
@@ -290,10 +290,10 @@ namespace Azure.Storage.Blobs.Models
                 writer.WriteValue(EncryptionScope);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(AccessTierChangeTime))
+            if (Optional.IsDefined(AccessTierChangeOn))
             {
                 writer.WriteStartElement("AccessTierChangeTime");
-                writer.WriteStringValue(AccessTierChangeTime.Value, "R");
+                writer.WriteStringValue(AccessTierChangeOn.Value, "R");
                 writer.WriteEndElement();
             }
             if (Optional.IsDefined(TagCount))
@@ -355,7 +355,7 @@ namespace Azure.Storage.Blobs.Models
                 return null;
             }
 
-            DateTimeOffset? creationTime = default;
+            DateTimeOffset? createdOn = default;
             DateTimeOffset lastModified = default;
             string eTag = default;
             long? contentLength = default;
@@ -374,12 +374,12 @@ namespace Azure.Storage.Blobs.Models
             CopyStatus? copyStatus = default;
             string copySource = default;
             string copyProgress = default;
-            DateTimeOffset? copyCompletionTime = default;
+            DateTimeOffset? copyCompletionOn = default;
             string copyStatusDescription = default;
             bool? serverEncrypted = default;
             bool? incrementalCopy = default;
             string destinationSnapshot = default;
-            DateTimeOffset? deletedTime = default;
+            DateTimeOffset? deletedOn = default;
             int? remainingRetentionDays = default;
             AccessTier? accessTier = default;
             bool? accessTierInferred = default;
@@ -387,7 +387,7 @@ namespace Azure.Storage.Blobs.Models
             AccessTier? smartAccessTier = default;
             string customerProvidedKeySha256 = default;
             string encryptionScope = default;
-            DateTimeOffset? accessTierChangeTime = default;
+            DateTimeOffset? accessTierChangeOn = default;
             int? tagCount = default;
             DateTimeOffset? expiresOn = default;
             bool? isSealed = default;
@@ -402,7 +402,7 @@ namespace Azure.Storage.Blobs.Models
                 string localName = child.Name.LocalName;
                 if (localName == "Creation-Time")
                 {
-                    creationTime = child.GetDateTimeOffset("R");
+                    createdOn = child.GetDateTimeOffset("R");
                     continue;
                 }
                 if (localName == "Last-Modified")
@@ -497,7 +497,7 @@ namespace Azure.Storage.Blobs.Models
                 }
                 if (localName == "CopyCompletionTime")
                 {
-                    copyCompletionTime = child.GetDateTimeOffset("R");
+                    copyCompletionOn = child.GetDateTimeOffset("R");
                     continue;
                 }
                 if (localName == "CopyStatusDescription")
@@ -522,7 +522,7 @@ namespace Azure.Storage.Blobs.Models
                 }
                 if (localName == "DeletedTime")
                 {
-                    deletedTime = child.GetDateTimeOffset("R");
+                    deletedOn = child.GetDateTimeOffset("R");
                     continue;
                 }
                 if (localName == "RemainingRetentionDays")
@@ -562,7 +562,7 @@ namespace Azure.Storage.Blobs.Models
                 }
                 if (localName == "AccessTierChangeTime")
                 {
-                    accessTierChangeTime = child.GetDateTimeOffset("R");
+                    accessTierChangeOn = child.GetDateTimeOffset("R");
                     continue;
                 }
                 if (localName == "TagCount")
@@ -607,7 +607,7 @@ namespace Azure.Storage.Blobs.Models
                 }
             }
             return new BlobPropertiesInternal(
-                creationTime,
+                createdOn,
                 lastModified,
                 eTag,
                 contentLength,
@@ -626,12 +626,12 @@ namespace Azure.Storage.Blobs.Models
                 copyStatus,
                 copySource,
                 copyProgress,
-                copyCompletionTime,
+                copyCompletionOn,
                 copyStatusDescription,
                 serverEncrypted,
                 incrementalCopy,
                 destinationSnapshot,
-                deletedTime,
+                deletedOn,
                 remainingRetentionDays,
                 accessTier,
                 accessTierInferred,
@@ -639,7 +639,7 @@ namespace Azure.Storage.Blobs.Models
                 smartAccessTier,
                 customerProvidedKeySha256,
                 encryptionScope,
-                accessTierChangeTime,
+                accessTierChangeOn,
                 tagCount,
                 expiresOn,
                 isSealed,
