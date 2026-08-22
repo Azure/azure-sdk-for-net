@@ -183,6 +183,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("interconnectInstanceView"u8);
                 writer.WriteObjectValue(InterconnectInstanceView, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(CapacityReservationType))
+            {
+                writer.WritePropertyName("capacityReservationType"u8);
+                writer.WriteStringValue(CapacityReservationType.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -242,6 +247,7 @@ namespace Azure.ResourceManager.Compute.Models
             string osVersion = default;
             HyperVGeneration? hyperVGeneration = default;
             InterconnectInstanceView interconnectInstanceView = default;
+            CapacityReservationType? capacityReservationType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -393,6 +399,15 @@ namespace Azure.ResourceManager.Compute.Models
                     interconnectInstanceView = InterconnectInstanceView.DeserializeInterconnectInstanceView(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("capacityReservationType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    capacityReservationType = new CapacityReservationType(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -416,6 +431,7 @@ namespace Azure.ResourceManager.Compute.Models
                 osVersion,
                 hyperVGeneration,
                 interconnectInstanceView,
+                capacityReservationType,
                 additionalBinaryDataProperties);
         }
     }

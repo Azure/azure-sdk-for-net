@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Defines the schedule for Block-type capacity reservations. Specifies the schedule during which capacity reservation is active and VM or VMSS resource can be allocated using reservation. This property is required and only supported when the capacity reservation group type is 'Block'. The scheduleProfile, start, and end fields are immutable after creation. Minimum API version: 2025-04-01. Please refer to https://aka.ms/blockcapacityreservation for more details. </summary>
+    /// <summary> Defines the schedule for Block and Future capacity reservations. Specifies the schedule during which capacity reservation is active and VM or VMSS resource can be allocated using reservation. For Block capacity reservations, the scheduleProfile, start, and end fields are immutable after creation. Please refer to https://aka.ms/blockcapacityreservation for more details. Minimum API version for Block capacity reservations: 2025-04-01. Future capacity reservations must use this property with only a start time, which can be changed until the ‘modifiableUntil’ time. Please refer to https://aka.ms/futurecapacityreservation for more details. Minimum API version for Future capacity reservations: 2026-04-01. </summary>
     public partial class ScheduleProfile : IJsonModel<ScheduleProfile>
     {
         /// <param name="data"> The data to parse. </param>
@@ -84,6 +84,16 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("end"u8);
                 writer.WriteStringValue(End);
             }
+            if (Optional.IsDefined(MinimumCommitmentDays))
+            {
+                writer.WritePropertyName("minimumCommitmentDays"u8);
+                writer.WriteNumberValue(MinimumCommitmentDays.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ModifiableUntil))
+            {
+                writer.WritePropertyName("modifiableUntil"u8);
+                writer.WriteStringValue(ModifiableUntil.Value, "O");
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -128,6 +138,8 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string start = default;
             string end = default;
+            int? minimumCommitmentDays = default;
+            DateTimeOffset? modifiableUntil = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,12 +153,30 @@ namespace Azure.ResourceManager.Compute.Models
                     end = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("minimumCommitmentDays"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minimumCommitmentDays = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("modifiableUntil"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    modifiableUntil = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ScheduleProfile(start, end, additionalBinaryDataProperties);
+            return new ScheduleProfile(start, end, minimumCommitmentDays, modifiableUntil, additionalBinaryDataProperties);
         }
     }
 }
