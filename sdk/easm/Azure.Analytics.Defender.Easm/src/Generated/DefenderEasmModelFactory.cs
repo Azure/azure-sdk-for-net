@@ -25,8 +25,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <param name="uuid"> Global UUID for the asset. </param>
-        /// <param name="createdDate"> The date this asset was first added to this workspace. </param>
-        /// <param name="updatedDate"> The date this asset was last updated for this workspace. </param>
+        /// <param name="createdOn"> The date this asset was first added to this workspace. </param>
+        /// <param name="updatedOn"> The date this asset was last updated for this workspace. </param>
         /// <param name="state"></param>
         /// <param name="externalId"> An optional customer provided identifier for this asset. </param>
         /// <param name="labels"> Customer labels assigned to this asset. </param>
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
         /// <param name="reason"></param>
         /// <returns> A new <see cref="Easm.AssetResource"/> instance for mocking. </returns>
-        public static AssetResource AssetResource(string kind = default, string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default)
+        public static AssetResource AssetResource(string kind = default, string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default)
         {
             labels ??= new ChangeTrackingList<string>();
             auditTrail ??= new ChangeTrackingList<AuditTrailItem>();
@@ -46,8 +46,8 @@ namespace Azure.Analytics.Defender.Easm
                 name,
                 displayName,
                 uuid,
-                createdDate,
-                updatedDate,
+                createdOn,
+                updatedOn,
                 state,
                 externalId,
                 labels.ToList(),
@@ -81,8 +81,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <param name="uuid"> Global UUID for the asset. </param>
-        /// <param name="createdDate"> The date this asset was first added to this workspace. </param>
-        /// <param name="updatedDate"> The date this asset was last updated for this workspace. </param>
+        /// <param name="createdOn"> The date this asset was first added to this workspace. </param>
+        /// <param name="updatedOn"> The date this asset was last updated for this workspace. </param>
         /// <param name="state"></param>
         /// <param name="externalId"> An optional customer provided identifier for this asset. </param>
         /// <param name="labels"> Customer labels assigned to this asset. </param>
@@ -92,7 +92,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="reason"></param>
         /// <param name="asset"> asset. </param>
         /// <returns> A new <see cref="Easm.AsAssetResource"/> instance for mocking. </returns>
-        public static AsAssetResource AsAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default, AsAsset asset = default)
+        public static AsAssetResource AsAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default, AsAsset asset = default)
         {
             labels ??= new ChangeTrackingList<string>();
             auditTrail ??= new ChangeTrackingList<AuditTrailItem>();
@@ -103,8 +103,8 @@ namespace Azure.Analytics.Defender.Easm
                 name,
                 displayName,
                 uuid,
-                createdDate,
-                updatedDate,
+                createdOn,
+                updatedOn,
                 state,
                 externalId,
                 labels.ToList(),
@@ -141,9 +141,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="registrantPhones"></param>
         /// <param name="adminPhones"></param>
         /// <param name="technicalPhones"></param>
-        /// <param name="detailedFromWhoisAt"></param>
+        /// <param name="detailedFromWhoisOn"></param>
         /// <returns> A new <see cref="Easm.AsAsset"/> instance for mocking. </returns>
-        public static AsAsset AsAsset(long? asn = default, IEnumerable<ObservedString> asNames = default, IEnumerable<ObservedString> orgNames = default, IEnumerable<ObservedString> orgIds = default, IEnumerable<ObservedString> countries = default, IEnumerable<ObservedString> registries = default, IEnumerable<SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, IEnumerable<ObservedLong> registrarCreatedAt = default, IEnumerable<ObservedLong> registrarUpdatedAt = default, IEnumerable<ObservedString> registrantContacts = default, IEnumerable<ObservedString> adminContacts = default, IEnumerable<ObservedString> technicalContacts = default, IEnumerable<ObservedString> registrarNames = default, IEnumerable<ObservedString> registrantNames = default, IEnumerable<ObservedString> adminNames = default, IEnumerable<ObservedString> technicalNames = default, IEnumerable<ObservedString> adminOrgs = default, IEnumerable<ObservedString> technicalOrgs = default, IEnumerable<ObservedString> registrantPhones = default, IEnumerable<ObservedString> adminPhones = default, IEnumerable<ObservedString> technicalPhones = default, DateTimeOffset? detailedFromWhoisAt = default)
+        public static AsAsset AsAsset(long? asn = default, IEnumerable<ObservedString> asNames = default, IEnumerable<ObservedString> orgNames = default, IEnumerable<ObservedString> orgIds = default, IEnumerable<ObservedString> countries = default, IEnumerable<ObservedString> registries = default, IEnumerable<SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, IEnumerable<ObservedLong> registrarCreatedAt = default, IEnumerable<ObservedLong> registrarUpdatedAt = default, IEnumerable<ObservedString> registrantContacts = default, IEnumerable<ObservedString> adminContacts = default, IEnumerable<ObservedString> technicalContacts = default, IEnumerable<ObservedString> registrarNames = default, IEnumerable<ObservedString> registrantNames = default, IEnumerable<ObservedString> adminNames = default, IEnumerable<ObservedString> technicalNames = default, IEnumerable<ObservedString> adminOrgs = default, IEnumerable<ObservedString> technicalOrgs = default, IEnumerable<ObservedString> registrantPhones = default, IEnumerable<ObservedString> adminPhones = default, IEnumerable<ObservedString> technicalPhones = default, DateTimeOffset? detailedFromWhoisOn = default)
         {
             asNames ??= new ChangeTrackingList<ObservedString>();
             orgNames ??= new ChangeTrackingList<ObservedString>();
@@ -192,7 +192,7 @@ namespace Azure.Analytics.Defender.Easm
                 registrantPhones.ToList(),
                 adminPhones.ToList(),
                 technicalPhones.ToList(),
-                detailedFromWhoisAt);
+                detailedFromWhoisOn);
         }
 
         /// <summary> The ObservedString. </summary>
@@ -280,8 +280,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <param name="uuid"> Global UUID for the asset. </param>
-        /// <param name="createdDate"> The date this asset was first added to this workspace. </param>
-        /// <param name="updatedDate"> The date this asset was last updated for this workspace. </param>
+        /// <param name="createdOn"> The date this asset was first added to this workspace. </param>
+        /// <param name="updatedOn"> The date this asset was last updated for this workspace. </param>
         /// <param name="state"></param>
         /// <param name="externalId"> An optional customer provided identifier for this asset. </param>
         /// <param name="labels"> Customer labels assigned to this asset. </param>
@@ -291,7 +291,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="reason"></param>
         /// <param name="asset"> asset. </param>
         /// <returns> A new <see cref="Easm.ContactAssetResource"/> instance for mocking. </returns>
-        public static ContactAssetResource ContactAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default, ContactAsset asset = default)
+        public static ContactAssetResource ContactAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default, ContactAsset asset = default)
         {
             labels ??= new ChangeTrackingList<string>();
             auditTrail ??= new ChangeTrackingList<AuditTrailItem>();
@@ -302,8 +302,8 @@ namespace Azure.Analytics.Defender.Easm
                 name,
                 displayName,
                 uuid,
-                createdDate,
-                updatedDate,
+                createdOn,
+                updatedOn,
                 state,
                 externalId,
                 labels.ToList(),
@@ -346,8 +346,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <param name="uuid"> Global UUID for the asset. </param>
-        /// <param name="createdDate"> The date this asset was first added to this workspace. </param>
-        /// <param name="updatedDate"> The date this asset was last updated for this workspace. </param>
+        /// <param name="createdOn"> The date this asset was first added to this workspace. </param>
+        /// <param name="updatedOn"> The date this asset was last updated for this workspace. </param>
         /// <param name="state"></param>
         /// <param name="externalId"> An optional customer provided identifier for this asset. </param>
         /// <param name="labels"> Customer labels assigned to this asset. </param>
@@ -357,7 +357,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="reason"></param>
         /// <param name="asset"> asset. </param>
         /// <returns> A new <see cref="Easm.DomainAssetResource"/> instance for mocking. </returns>
-        public static DomainAssetResource DomainAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default, DomainAsset asset = default)
+        public static DomainAssetResource DomainAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default, DomainAsset asset = default)
         {
             labels ??= new ChangeTrackingList<string>();
             auditTrail ??= new ChangeTrackingList<AuditTrailItem>();
@@ -368,8 +368,8 @@ namespace Azure.Analytics.Defender.Easm
                 name,
                 displayName,
                 uuid,
-                createdDate,
-                updatedDate,
+                createdOn,
+                updatedOn,
                 state,
                 externalId,
                 labels.ToList(),
@@ -398,7 +398,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="registrarUpdatedAt"></param>
         /// <param name="registrarExpiresAt"></param>
         /// <param name="soaRecords"></param>
-        /// <param name="detailedFromWhoisAt"></param>
+        /// <param name="detailedFromWhoisOn"></param>
         /// <param name="registrarNames"></param>
         /// <param name="sources"></param>
         /// <param name="firstSeen"></param>
@@ -414,7 +414,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="adminPhones"></param>
         /// <param name="technicalPhones"></param>
         /// <returns> A new <see cref="Easm.DomainAsset"/> instance for mocking. </returns>
-        public static DomainAsset DomainAsset(string domain = default, long? whoisId = default, IEnumerable<ObservedInteger> registrarIanaIds = default, IEnumerable<ObservedString> registrantContacts = default, IEnumerable<ObservedString> registrantOrgs = default, IEnumerable<ObservedString> adminContacts = default, IEnumerable<ObservedString> technicalContacts = default, IEnumerable<AlexaInfo> alexaInfos = default, IEnumerable<ObservedString> nameServers = default, IEnumerable<ObservedString> mailServers = default, IEnumerable<ObservedString> whoisServers = default, IEnumerable<ObservedString> domainStatuses = default, IEnumerable<ObservedLong> registrarCreatedAt = default, IEnumerable<ObservedLong> registrarUpdatedAt = default, IEnumerable<ObservedLong> registrarExpiresAt = default, IEnumerable<SoaRecord> soaRecords = default, DateTimeOffset? detailedFromWhoisAt = default, IEnumerable<ObservedString> registrarNames = default, IEnumerable<SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, IEnumerable<ObservedBoolean> parkedDomain = default, IEnumerable<ObservedString> registrantNames = default, IEnumerable<ObservedString> adminNames = default, IEnumerable<ObservedString> technicalNames = default, IEnumerable<ObservedString> adminOrgs = default, IEnumerable<ObservedString> technicalOrgs = default, IEnumerable<ObservedString> registrantPhones = default, IEnumerable<ObservedString> adminPhones = default, IEnumerable<ObservedString> technicalPhones = default)
+        public static DomainAsset DomainAsset(string domain = default, long? whoisId = default, IEnumerable<ObservedInteger> registrarIanaIds = default, IEnumerable<ObservedString> registrantContacts = default, IEnumerable<ObservedString> registrantOrgs = default, IEnumerable<ObservedString> adminContacts = default, IEnumerable<ObservedString> technicalContacts = default, IEnumerable<AlexaInfo> alexaInfos = default, IEnumerable<ObservedString> nameServers = default, IEnumerable<ObservedString> mailServers = default, IEnumerable<ObservedString> whoisServers = default, IEnumerable<ObservedString> domainStatuses = default, IEnumerable<ObservedLong> registrarCreatedAt = default, IEnumerable<ObservedLong> registrarUpdatedAt = default, IEnumerable<ObservedLong> registrarExpiresAt = default, IEnumerable<SoaRecord> soaRecords = default, DateTimeOffset? detailedFromWhoisOn = default, IEnumerable<ObservedString> registrarNames = default, IEnumerable<SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, IEnumerable<ObservedBoolean> parkedDomain = default, IEnumerable<ObservedString> registrantNames = default, IEnumerable<ObservedString> adminNames = default, IEnumerable<ObservedString> technicalNames = default, IEnumerable<ObservedString> adminOrgs = default, IEnumerable<ObservedString> technicalOrgs = default, IEnumerable<ObservedString> registrantPhones = default, IEnumerable<ObservedString> adminPhones = default, IEnumerable<ObservedString> technicalPhones = default)
         {
             registrarIanaIds ??= new ChangeTrackingList<ObservedInteger>();
             registrantContacts ??= new ChangeTrackingList<ObservedString>();
@@ -459,7 +459,7 @@ namespace Azure.Analytics.Defender.Easm
                 registrarUpdatedAt.ToList(),
                 registrarExpiresAt.ToList(),
                 soaRecords.ToList(),
-                detailedFromWhoisAt,
+                detailedFromWhoisOn,
                 registrarNames.ToList(),
                 sources.ToList(),
                 firstSeen,
@@ -568,8 +568,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <param name="uuid"> Global UUID for the asset. </param>
-        /// <param name="createdDate"> The date this asset was first added to this workspace. </param>
-        /// <param name="updatedDate"> The date this asset was last updated for this workspace. </param>
+        /// <param name="createdOn"> The date this asset was first added to this workspace. </param>
+        /// <param name="updatedOn"> The date this asset was last updated for this workspace. </param>
         /// <param name="state"></param>
         /// <param name="externalId"> An optional customer provided identifier for this asset. </param>
         /// <param name="labels"> Customer labels assigned to this asset. </param>
@@ -579,7 +579,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="reason"></param>
         /// <param name="asset"> asset. </param>
         /// <returns> A new <see cref="Easm.HostAssetResource"/> instance for mocking. </returns>
-        public static HostAssetResource HostAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default, HostAsset asset = default)
+        public static HostAssetResource HostAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default, HostAsset asset = default)
         {
             labels ??= new ChangeTrackingList<string>();
             auditTrail ??= new ChangeTrackingList<AuditTrailItem>();
@@ -590,8 +590,8 @@ namespace Azure.Analytics.Defender.Easm
                 name,
                 displayName,
                 uuid,
-                createdDate,
-                updatedDate,
+                createdOn,
+                updatedOn,
                 state,
                 externalId,
                 labels.ToList(),
@@ -858,9 +858,9 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
         /// <param name="recent"></param>
-        /// <param name="cookieExpiryDate"></param>
+        /// <param name="cookieExpiryOn"></param>
         /// <returns> A new <see cref="Easm.CookieDetails"/> instance for mocking. </returns>
-        public static CookieDetails CookieDetails(string cookieName = default, string cookieDomain = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default, DateTimeOffset? cookieExpiryDate = default)
+        public static CookieDetails CookieDetails(string cookieName = default, string cookieDomain = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, bool? recent = default, DateTimeOffset? cookieExpiryOn = default)
         {
             return new CookieDetails(
                 cookieName,
@@ -869,7 +869,7 @@ namespace Azure.Analytics.Defender.Easm
                 lastSeen,
                 count,
                 recent,
-                cookieExpiryDate,
+                cookieExpiryOn,
                 additionalBinaryDataProperties: null);
         }
 
@@ -1356,8 +1356,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <param name="uuid"> Global UUID for the asset. </param>
-        /// <param name="createdDate"> The date this asset was first added to this workspace. </param>
-        /// <param name="updatedDate"> The date this asset was last updated for this workspace. </param>
+        /// <param name="createdOn"> The date this asset was first added to this workspace. </param>
+        /// <param name="updatedOn"> The date this asset was last updated for this workspace. </param>
         /// <param name="state"></param>
         /// <param name="externalId"> An optional customer provided identifier for this asset. </param>
         /// <param name="labels"> Customer labels assigned to this asset. </param>
@@ -1367,7 +1367,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="reason"></param>
         /// <param name="asset"> asset. </param>
         /// <returns> A new <see cref="Easm.IPAddressAssetResource"/> instance for mocking. </returns>
-        public static IPAddressAssetResource IPAddressAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default, IPAddressAsset asset = default)
+        public static IPAddressAssetResource IPAddressAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default, IPAddressAsset asset = default)
         {
             labels ??= new ChangeTrackingList<string>();
             auditTrail ??= new ChangeTrackingList<AuditTrailItem>();
@@ -1378,8 +1378,8 @@ namespace Azure.Analytics.Defender.Easm
                 name,
                 displayName,
                 uuid,
-                createdDate,
-                updatedDate,
+                createdOn,
+                updatedOn,
                 state,
                 externalId,
                 labels.ToList(),
@@ -1476,10 +1476,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cidr"></param>
         /// <param name="firstSeen"></param>
         /// <param name="lastSeen"></param>
-        /// <param name="listUpdatedAt"></param>
+        /// <param name="listUpdatedOn"></param>
         /// <param name="recent"></param>
         /// <returns> A new <see cref="Easm.ReputationDetails"/> instance for mocking. </returns>
-        public static ReputationDetails ReputationDetails(string listName = default, string threatType = default, bool? trusted = default, string cidr = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, DateTimeOffset? listUpdatedAt = default, bool? recent = default)
+        public static ReputationDetails ReputationDetails(string listName = default, string threatType = default, bool? trusted = default, string cidr = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, DateTimeOffset? listUpdatedOn = default, bool? recent = default)
         {
             return new ReputationDetails(
                 listName,
@@ -1488,7 +1488,7 @@ namespace Azure.Analytics.Defender.Easm
                 cidr,
                 firstSeen,
                 lastSeen,
-                listUpdatedAt,
+                listUpdatedOn,
                 recent,
                 additionalBinaryDataProperties: null);
         }
@@ -1498,8 +1498,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <param name="uuid"> Global UUID for the asset. </param>
-        /// <param name="createdDate"> The date this asset was first added to this workspace. </param>
-        /// <param name="updatedDate"> The date this asset was last updated for this workspace. </param>
+        /// <param name="createdOn"> The date this asset was first added to this workspace. </param>
+        /// <param name="updatedOn"> The date this asset was last updated for this workspace. </param>
         /// <param name="state"></param>
         /// <param name="externalId"> An optional customer provided identifier for this asset. </param>
         /// <param name="labels"> Customer labels assigned to this asset. </param>
@@ -1509,7 +1509,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="reason"></param>
         /// <param name="asset"> asset. </param>
         /// <returns> A new <see cref="Easm.IPBlockAssetResource"/> instance for mocking. </returns>
-        public static IPBlockAssetResource IPBlockAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default, IPBlockAsset asset = default)
+        public static IPBlockAssetResource IPBlockAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default, IPBlockAsset asset = default)
         {
             labels ??= new ChangeTrackingList<string>();
             auditTrail ??= new ChangeTrackingList<AuditTrailItem>();
@@ -1520,8 +1520,8 @@ namespace Azure.Analytics.Defender.Easm
                 name,
                 displayName,
                 uuid,
-                createdDate,
-                updatedDate,
+                createdOn,
+                updatedOn,
                 state,
                 externalId,
                 labels.ToList(),
@@ -1548,7 +1548,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="startIP"></param>
         /// <param name="endIP"></param>
         /// <param name="reputations"></param>
-        /// <param name="detailedFromWhoisAt"></param>
+        /// <param name="detailedFromWhoisOn"></param>
         /// <param name="sources"></param>
         /// <param name="firstSeen"></param>
         /// <param name="lastSeen"></param>
@@ -1566,7 +1566,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="ipv4"></param>
         /// <param name="ipv6"></param>
         /// <returns> A new <see cref="Easm.IPBlockAsset"/> instance for mocking. </returns>
-        public static IPBlockAsset IPBlockAsset(string ipBlock = default, IEnumerable<ObservedLong> asns = default, IEnumerable<ObservedString> bgpPrefixes = default, IEnumerable<ObservedString> netNames = default, IEnumerable<ObservedString> registrantContacts = default, IEnumerable<ObservedString> registrantOrgs = default, IEnumerable<ObservedString> adminContacts = default, IEnumerable<ObservedString> technicalContacts = default, IEnumerable<ObservedLong> registrarCreatedAt = default, IEnumerable<ObservedLong> registrarUpdatedAt = default, IEnumerable<ObservedString> netRanges = default, string startIP = default, string endIP = default, IEnumerable<ReputationDetails> reputations = default, DateTimeOffset? detailedFromWhoisAt = default, IEnumerable<SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, IEnumerable<ObservedLocation> location = default, IEnumerable<ObservedLong> registrarExpiresAt = default, IEnumerable<ObservedString> registrantNames = default, IEnumerable<ObservedString> adminNames = default, IEnumerable<ObservedString> technicalNames = default, IEnumerable<ObservedString> adminOrgs = default, IEnumerable<ObservedString> technicalOrgs = default, IEnumerable<ObservedString> registrantPhones = default, IEnumerable<ObservedString> adminPhones = default, IEnumerable<ObservedString> technicalPhones = default, bool? ipv4 = default, bool? ipv6 = default)
+        public static IPBlockAsset IPBlockAsset(string ipBlock = default, IEnumerable<ObservedLong> asns = default, IEnumerable<ObservedString> bgpPrefixes = default, IEnumerable<ObservedString> netNames = default, IEnumerable<ObservedString> registrantContacts = default, IEnumerable<ObservedString> registrantOrgs = default, IEnumerable<ObservedString> adminContacts = default, IEnumerable<ObservedString> technicalContacts = default, IEnumerable<ObservedLong> registrarCreatedAt = default, IEnumerable<ObservedLong> registrarUpdatedAt = default, IEnumerable<ObservedString> netRanges = default, string startIP = default, string endIP = default, IEnumerable<ReputationDetails> reputations = default, DateTimeOffset? detailedFromWhoisOn = default, IEnumerable<SourceDetails> sources = default, DateTimeOffset? firstSeen = default, DateTimeOffset? lastSeen = default, long? count = default, IEnumerable<ObservedLocation> location = default, IEnumerable<ObservedLong> registrarExpiresAt = default, IEnumerable<ObservedString> registrantNames = default, IEnumerable<ObservedString> adminNames = default, IEnumerable<ObservedString> technicalNames = default, IEnumerable<ObservedString> adminOrgs = default, IEnumerable<ObservedString> technicalOrgs = default, IEnumerable<ObservedString> registrantPhones = default, IEnumerable<ObservedString> adminPhones = default, IEnumerable<ObservedString> technicalPhones = default, bool? ipv4 = default, bool? ipv6 = default)
         {
             asns ??= new ChangeTrackingList<ObservedLong>();
             bgpPrefixes ??= new ChangeTrackingList<ObservedString>();
@@ -1607,7 +1607,7 @@ namespace Azure.Analytics.Defender.Easm
                 startIP,
                 endIP,
                 reputations.ToList(),
-                detailedFromWhoisAt,
+                detailedFromWhoisOn,
                 sources.ToList(),
                 firstSeen,
                 lastSeen,
@@ -1631,8 +1631,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <param name="uuid"> Global UUID for the asset. </param>
-        /// <param name="createdDate"> The date this asset was first added to this workspace. </param>
-        /// <param name="updatedDate"> The date this asset was last updated for this workspace. </param>
+        /// <param name="createdOn"> The date this asset was first added to this workspace. </param>
+        /// <param name="updatedOn"> The date this asset was last updated for this workspace. </param>
         /// <param name="state"></param>
         /// <param name="externalId"> An optional customer provided identifier for this asset. </param>
         /// <param name="labels"> Customer labels assigned to this asset. </param>
@@ -1642,7 +1642,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="reason"></param>
         /// <param name="asset"> asset. </param>
         /// <returns> A new <see cref="Easm.PageAssetResource"/> instance for mocking. </returns>
-        public static PageAssetResource PageAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default, PageAsset asset = default)
+        public static PageAssetResource PageAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default, PageAsset asset = default)
         {
             labels ??= new ChangeTrackingList<string>();
             auditTrail ??= new ChangeTrackingList<AuditTrailItem>();
@@ -1653,8 +1653,8 @@ namespace Azure.Analytics.Defender.Easm
                 name,
                 displayName,
                 uuid,
-                createdDate,
-                updatedDate,
+                createdOn,
+                updatedOn,
                 state,
                 externalId,
                 labels.ToList(),
@@ -1917,12 +1917,12 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> The GuidPair. </summary>
         /// <param name="pageGuid"></param>
         /// <param name="crawlStateGuid"></param>
-        /// <param name="loadDate"></param>
+        /// <param name="loadOn"></param>
         /// <param name="recent"></param>
         /// <returns> A new <see cref="Easm.GuidPair"/> instance for mocking. </returns>
-        public static GuidPair GuidPair(string pageGuid = default, string crawlStateGuid = default, DateTimeOffset? loadDate = default, bool? recent = default)
+        public static GuidPair GuidPair(string pageGuid = default, string crawlStateGuid = default, DateTimeOffset? loadOn = default, bool? recent = default)
         {
-            return new GuidPair(pageGuid, crawlStateGuid, loadDate, recent, additionalBinaryDataProperties: null);
+            return new GuidPair(pageGuid, crawlStateGuid, loadOn, recent, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The SslCertAssetResource. </summary>
@@ -1930,8 +1930,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <param name="uuid"> Global UUID for the asset. </param>
-        /// <param name="createdDate"> The date this asset was first added to this workspace. </param>
-        /// <param name="updatedDate"> The date this asset was last updated for this workspace. </param>
+        /// <param name="createdOn"> The date this asset was first added to this workspace. </param>
+        /// <param name="updatedOn"> The date this asset was last updated for this workspace. </param>
         /// <param name="state"></param>
         /// <param name="externalId"> An optional customer provided identifier for this asset. </param>
         /// <param name="labels"> Customer labels assigned to this asset. </param>
@@ -1941,7 +1941,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="reason"></param>
         /// <param name="asset"> asset. </param>
         /// <returns> A new <see cref="Easm.SslCertAssetResource"/> instance for mocking. </returns>
-        public static SslCertAssetResource SslCertAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default, SslCertAsset asset = default)
+        public static SslCertAssetResource SslCertAssetResource(string id = default, string name = default, string displayName = default, Guid? uuid = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, AssetState? state = default, string externalId = default, IEnumerable<string> labels = default, bool? wildcard = default, string discoGroupName = default, IEnumerable<AuditTrailItem> auditTrail = default, string reason = default, SslCertAsset asset = default)
         {
             labels ??= new ChangeTrackingList<string>();
             auditTrail ??= new ChangeTrackingList<AuditTrailItem>();
@@ -1952,8 +1952,8 @@ namespace Azure.Analytics.Defender.Easm
                 name,
                 displayName,
                 uuid,
-                createdDate,
-                updatedDate,
+                createdOn,
+                updatedOn,
                 state,
                 externalId,
                 labels.ToList(),
@@ -2007,23 +2007,23 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> The TaskResource. </summary>
         /// <param name="id"> The unique identifier of the task. </param>
-        /// <param name="startedAt"> The time the task started. </param>
-        /// <param name="completedAt"> The time the task completed. </param>
-        /// <param name="lastPolledAt"> The last time the status of the task was updated. </param>
+        /// <param name="startedOn"> The time the task started. </param>
+        /// <param name="completedOn"> The time the task completed. </param>
+        /// <param name="lastPolledOn"> The last time the status of the task was updated. </param>
         /// <param name="state"> The state the task is in. </param>
         /// <param name="phase"> The phase the task is in. </param>
         /// <param name="reason"> The reason the task was moved into its current state, if the task wasn't completed. </param>
         /// <param name="metadata"> Attributes unique to the task.  This differs by task type. </param>
         /// <returns> A new <see cref="Easm.TaskResource"/> instance for mocking. </returns>
-        public static TaskResource TaskResource(string id = default, DateTimeOffset? startedAt = default, DateTimeOffset? completedAt = default, DateTimeOffset? lastPolledAt = default, TaskResourceState? state = default, TaskResourcePhase? phase = default, string reason = default, IDictionary<string, BinaryData> metadata = default)
+        public static TaskResource TaskResource(string id = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, DateTimeOffset? lastPolledOn = default, TaskResourceState? state = default, TaskResourcePhase? phase = default, string reason = default, IDictionary<string, BinaryData> metadata = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new TaskResource(
                 id,
-                startedAt,
-                completedAt,
-                lastPolledAt,
+                startedOn,
+                completedOn,
+                lastPolledOn,
                 state,
                 phase,
                 reason,
@@ -2093,17 +2093,17 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Result for each of the delta detail response. </summary>
         /// <param name="kind"> Shows the asset kind. </param>
         /// <param name="name"> Shows the asset name. </param>
-        /// <param name="createdAt"> Shows the date when the asset was originally created. </param>
-        /// <param name="updatedAt"> Shows the date when the asset was last updated, usually the date the we trying to pull up the results for. </param>
+        /// <param name="createdOn"> Shows the date when the asset was originally created. </param>
+        /// <param name="updatedOn"> Shows the date when the asset was last updated, usually the date the we trying to pull up the results for. </param>
         /// <param name="state"> Shows the inventory state. </param>
         /// <returns> A new <see cref="Easm.DeltaResult"/> instance for mocking. </returns>
-        public static DeltaResult DeltaResult(GlobalAssetType kind = default, string name = default, DateTimeOffset createdAt = default, DateTimeOffset updatedAt = default, GlobalInventoryState state = default)
+        public static DeltaResult DeltaResult(GlobalAssetType kind = default, string name = default, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default, GlobalInventoryState state = default)
         {
             return new DeltaResult(
                 kind,
                 name,
-                createdAt,
-                updatedAt,
+                createdOn,
+                updatedOn,
                 state,
                 additionalBinaryDataProperties: null);
         }
@@ -2160,14 +2160,14 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Date information for the delta response. </summary>
-        /// <param name="date"> The date that is being requested. </param>
+        /// <param name="on"> The date that is being requested. </param>
         /// <param name="deltas"> A list of summary counts per day. </param>
         /// <returns> A new <see cref="Easm.DeltaDateResult"/> instance for mocking. </returns>
-        public static DeltaDateResult DeltaDateResult(DateTimeOffset date = default, IEnumerable<DailyDeltaTypeResult> deltas = default)
+        public static DeltaDateResult DeltaDateResult(DateTimeOffset @on = default, IEnumerable<DailyDeltaTypeResult> deltas = default)
         {
             deltas ??= new ChangeTrackingList<DailyDeltaTypeResult>();
 
-            return new DeltaDateResult(date, deltas.ToList(), additionalBinaryDataProperties: null);
+            return new DeltaDateResult(@on, deltas.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Delta response for each day. </summary>
@@ -2197,15 +2197,15 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <param name="content"> The type of data the data connection will transfer. </param>
-        /// <param name="createdDate"> The date the data connection was created. </param>
+        /// <param name="createdOn"> The date the data connection was created. </param>
         /// <param name="frequency"> The rate at which the data connection will receive updates. </param>
         /// <param name="frequencyOffset"> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </param>
-        /// <param name="updatedDate"> The date the data connection was last updated. </param>
-        /// <param name="userUpdatedAt"> The date the data connection was last updated by user. </param>
+        /// <param name="updatedOn"> The date the data connection was last updated. </param>
+        /// <param name="userUpdatedOn"> The date the data connection was last updated by user. </param>
         /// <param name="active"> An indicator of whether the data connection is active. </param>
         /// <param name="inactiveMessage"> A message that specifies details about data connection if inactive. </param>
         /// <returns> A new <see cref="Easm.DataConnection"/> instance for mocking. </returns>
-        public static DataConnection DataConnection(string kind = default, string id = default, string name = default, string displayName = default, DataConnectionContent? content = default, DateTimeOffset? createdDate = default, DataConnectionFrequency? frequency = default, int? frequencyOffset = default, DateTimeOffset? updatedDate = default, DateTimeOffset? userUpdatedAt = default, bool? active = default, string inactiveMessage = default)
+        public static DataConnection DataConnection(string kind = default, string id = default, string name = default, string displayName = default, DataConnectionContent? content = default, DateTimeOffset? createdOn = default, DataConnectionFrequency? frequency = default, int? frequencyOffset = default, DateTimeOffset? updatedOn = default, DateTimeOffset? userUpdatedOn = default, bool? active = default, string inactiveMessage = default)
         {
             return new UnknownDataConnection(
                 kind,
@@ -2213,11 +2213,11 @@ namespace Azure.Analytics.Defender.Easm
                 name,
                 displayName,
                 content,
-                createdDate,
+                createdOn,
                 frequency,
                 frequencyOffset,
-                updatedDate,
-                userUpdatedAt,
+                updatedOn,
+                userUpdatedOn,
                 active,
                 inactiveMessage,
                 additionalBinaryDataProperties: null);
@@ -2228,16 +2228,16 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <param name="content"> The type of data the data connection will transfer. </param>
-        /// <param name="createdDate"> The date the data connection was created. </param>
+        /// <param name="createdOn"> The date the data connection was created. </param>
         /// <param name="frequency"> The rate at which the data connection will receive updates. </param>
         /// <param name="frequencyOffset"> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </param>
-        /// <param name="updatedDate"> The date the data connection was last updated. </param>
-        /// <param name="userUpdatedAt"> The date the data connection was last updated by user. </param>
+        /// <param name="updatedOn"> The date the data connection was last updated. </param>
+        /// <param name="userUpdatedOn"> The date the data connection was last updated by user. </param>
         /// <param name="active"> An indicator of whether the data connection is active. </param>
         /// <param name="inactiveMessage"> A message that specifies details about data connection if inactive. </param>
         /// <param name="properties"> properties. </param>
         /// <returns> A new <see cref="Easm.LogAnalyticsDataConnection"/> instance for mocking. </returns>
-        public static LogAnalyticsDataConnection LogAnalyticsDataConnection(string id = default, string name = default, string displayName = default, DataConnectionContent? content = default, DateTimeOffset? createdDate = default, DataConnectionFrequency? frequency = default, int? frequencyOffset = default, DateTimeOffset? updatedDate = default, DateTimeOffset? userUpdatedAt = default, bool? active = default, string inactiveMessage = default, LogAnalyticsDataConnectionProperties properties = default)
+        public static LogAnalyticsDataConnection LogAnalyticsDataConnection(string id = default, string name = default, string displayName = default, DataConnectionContent? content = default, DateTimeOffset? createdOn = default, DataConnectionFrequency? frequency = default, int? frequencyOffset = default, DateTimeOffset? updatedOn = default, DateTimeOffset? userUpdatedOn = default, bool? active = default, string inactiveMessage = default, LogAnalyticsDataConnectionProperties properties = default)
         {
             return new LogAnalyticsDataConnection(
                 "logAnalytics",
@@ -2245,11 +2245,11 @@ namespace Azure.Analytics.Defender.Easm
                 name,
                 displayName,
                 content,
-                createdDate,
+                createdOn,
                 frequency,
                 frequencyOffset,
-                updatedDate,
-                userUpdatedAt,
+                updatedOn,
+                userUpdatedOn,
                 active,
                 inactiveMessage,
                 additionalBinaryDataProperties: null,
@@ -2277,16 +2277,16 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <param name="content"> The type of data the data connection will transfer. </param>
-        /// <param name="createdDate"> The date the data connection was created. </param>
+        /// <param name="createdOn"> The date the data connection was created. </param>
         /// <param name="frequency"> The rate at which the data connection will receive updates. </param>
         /// <param name="frequencyOffset"> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </param>
-        /// <param name="updatedDate"> The date the data connection was last updated. </param>
-        /// <param name="userUpdatedAt"> The date the data connection was last updated by user. </param>
+        /// <param name="updatedOn"> The date the data connection was last updated. </param>
+        /// <param name="userUpdatedOn"> The date the data connection was last updated by user. </param>
         /// <param name="active"> An indicator of whether the data connection is active. </param>
         /// <param name="inactiveMessage"> A message that specifies details about data connection if inactive. </param>
         /// <param name="properties"> properties. </param>
         /// <returns> A new <see cref="Easm.AzureDataExplorerDataConnection"/> instance for mocking. </returns>
-        public static AzureDataExplorerDataConnection AzureDataExplorerDataConnection(string id = default, string name = default, string displayName = default, DataConnectionContent? content = default, DateTimeOffset? createdDate = default, DataConnectionFrequency? frequency = default, int? frequencyOffset = default, DateTimeOffset? updatedDate = default, DateTimeOffset? userUpdatedAt = default, bool? active = default, string inactiveMessage = default, AzureDataExplorerDataConnectionProperties properties = default)
+        public static AzureDataExplorerDataConnection AzureDataExplorerDataConnection(string id = default, string name = default, string displayName = default, DataConnectionContent? content = default, DateTimeOffset? createdOn = default, DataConnectionFrequency? frequency = default, int? frequencyOffset = default, DateTimeOffset? updatedOn = default, DateTimeOffset? userUpdatedOn = default, bool? active = default, string inactiveMessage = default, AzureDataExplorerDataConnectionProperties properties = default)
         {
             return new AzureDataExplorerDataConnection(
                 "azureDataExplorer",
@@ -2294,11 +2294,11 @@ namespace Azure.Analytics.Defender.Easm
                 name,
                 displayName,
                 content,
-                createdDate,
+                createdOn,
                 frequency,
                 frequencyOffset,
-                updatedDate,
-                userUpdatedAt,
+                updatedOn,
+                userUpdatedOn,
                 active,
                 inactiveMessage,
                 additionalBinaryDataProperties: null,
@@ -2422,10 +2422,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="names"> The list of names used for the disco group runs. </param>
         /// <param name="excludes"> The list of excludes used for the disco group runs, aka assets to exclude from the discovery algorithm. </param>
         /// <param name="latestRun"> The latest run of this disco group with some limited information, null if the group has never been run. </param>
-        /// <param name="createdDate"> The date for the disco group was created. </param>
+        /// <param name="createdOn"> The date for the disco group was created. </param>
         /// <param name="templateId"> The unique identifier for the disco template used for the disco group creation. </param>
         /// <returns> A new <see cref="Easm.DiscoveryGroup"/> instance for mocking. </returns>
-        public static DiscoveryGroup DiscoveryGroup(string id = default, string name = default, string displayName = default, string description = default, string tier = default, long? frequencyMilliseconds = default, IEnumerable<DiscoverySource> seeds = default, IEnumerable<string> names = default, IEnumerable<DiscoverySource> excludes = default, DiscoveryRunResult latestRun = default, DateTimeOffset? createdDate = default, string templateId = default)
+        public static DiscoveryGroup DiscoveryGroup(string id = default, string name = default, string displayName = default, string description = default, string tier = default, long? frequencyMilliseconds = default, IEnumerable<DiscoverySource> seeds = default, IEnumerable<string> names = default, IEnumerable<DiscoverySource> excludes = default, DiscoveryRunResult latestRun = default, DateTimeOffset? createdOn = default, string templateId = default)
         {
             seeds ??= new ChangeTrackingList<DiscoverySource>();
             names ??= new ChangeTrackingList<string>();
@@ -2442,7 +2442,7 @@ namespace Azure.Analytics.Defender.Easm
                 names.ToList(),
                 excludes.ToList(),
                 latestRun,
-                createdDate,
+                createdOn,
                 templateId,
                 additionalBinaryDataProperties: null);
         }
@@ -2457,9 +2457,9 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> The latest run of this disco group with some limited information, null if the group has never been run. </summary>
-        /// <param name="submittedDate"> The date for when the disco run was created in the system. </param>
-        /// <param name="startedDate"> The date for when the disco run was actually started by the system. </param>
-        /// <param name="completedDate"> The date for when the disco run was completed by the system. </param>
+        /// <param name="submittedOn"> The date for when the disco run was created in the system. </param>
+        /// <param name="startedOn"> The date for when the disco run was actually started by the system. </param>
+        /// <param name="completedOn"> The date for when the disco run was completed by the system. </param>
         /// <param name="tier"> The tier which will affect the algorithm used for the disco run. </param>
         /// <param name="state"> The State of the disco run. </param>
         /// <param name="totalAssetsFoundCount"> The total count of assets that were found this disco run. </param>
@@ -2467,16 +2467,16 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="excludes"> The list of excludes used for the disco run, aka assets to exclude from the discovery algorithm. </param>
         /// <param name="names"> The list of names used for the disco run. </param>
         /// <returns> A new <see cref="Easm.DiscoveryRunResult"/> instance for mocking. </returns>
-        public static DiscoveryRunResult DiscoveryRunResult(DateTimeOffset? submittedDate = default, DateTimeOffset? startedDate = default, DateTimeOffset? completedDate = default, string tier = default, DiscoRunState? state = default, long? totalAssetsFoundCount = default, IEnumerable<DiscoverySource> seeds = default, IEnumerable<DiscoverySource> excludes = default, IEnumerable<string> names = default)
+        public static DiscoveryRunResult DiscoveryRunResult(DateTimeOffset? submittedOn = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, string tier = default, DiscoRunState? state = default, long? totalAssetsFoundCount = default, IEnumerable<DiscoverySource> seeds = default, IEnumerable<DiscoverySource> excludes = default, IEnumerable<string> names = default)
         {
             seeds ??= new ChangeTrackingList<DiscoverySource>();
             excludes ??= new ChangeTrackingList<DiscoverySource>();
             names ??= new ChangeTrackingList<string>();
 
             return new DiscoveryRunResult(
-                submittedDate,
-                startedDate,
-                completedDate,
+                submittedOn,
+                startedOn,
+                completedOn,
                 tier,
                 state,
                 totalAssetsFoundCount,
@@ -2600,15 +2600,15 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> The ReportBillableAssetSnapshotResult. </summary>
-        /// <param name="date"> The date these assets were billed on. </param>
+        /// <param name="on"> The date these assets were billed on. </param>
         /// <param name="total"> The total number of billable assets for this date. </param>
         /// <param name="assetBreakdown"> The breakdown of billable asset counts for each asset type. </param>
         /// <returns> A new <see cref="Easm.ReportBillableAssetSnapshotResult"/> instance for mocking. </returns>
-        public static ReportBillableAssetSnapshotResult ReportBillableAssetSnapshotResult(DateTimeOffset? date = default, long? total = default, IEnumerable<ReportBillableAssetBreakdown> assetBreakdown = default)
+        public static ReportBillableAssetSnapshotResult ReportBillableAssetSnapshotResult(DateTimeOffset? @on = default, long? total = default, IEnumerable<ReportBillableAssetBreakdown> assetBreakdown = default)
         {
             assetBreakdown ??= new ChangeTrackingList<ReportBillableAssetBreakdown>();
 
-            return new ReportBillableAssetSnapshotResult(date, total, assetBreakdown.ToList(), additionalBinaryDataProperties: null);
+            return new ReportBillableAssetSnapshotResult(@on, total, assetBreakdown.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The breakdown of billable asset counts for each asset type. </summary>
@@ -2635,17 +2635,17 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="displayName"> The name of the metric. </param>
         /// <param name="metric"> The unique metric name. </param>
         /// <param name="labelName"> The customer label that was filtered on, if one was provided. </param>
-        /// <param name="updatedAt"> The last time this asset data was updated on this metric. </param>
+        /// <param name="updatedOn"> The last time this asset data was updated on this metric. </param>
         /// <param name="description"> A description of what the metric represents. </param>
         /// <param name="assets"> The page of assets that match the provided metric. </param>
         /// <returns> A new <see cref="Easm.ReportAssetSnapshotResult"/> instance for mocking. </returns>
-        public static ReportAssetSnapshotResult ReportAssetSnapshotResult(string displayName = default, string metric = default, string labelName = default, DateTimeOffset? updatedAt = default, string description = default, AssetPageResult assets = default)
+        public static ReportAssetSnapshotResult ReportAssetSnapshotResult(string displayName = default, string metric = default, string labelName = default, DateTimeOffset? updatedOn = default, string description = default, AssetPageResult assets = default)
         {
             return new ReportAssetSnapshotResult(
                 displayName,
                 metric,
                 labelName,
-                updatedAt,
+                updatedOn,
                 description,
                 assets,
                 additionalBinaryDataProperties: null);
@@ -2701,7 +2701,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> The collection of asset summaries. </summary>
         /// <param name="displayName"> The name of the summary response.  Depending on the request time this will either be the asset filter, risk category, or risk metric. </param>
         /// <param name="description"> The description of the summary response.  Filters don't have a description. </param>
-        /// <param name="updatedAt"> The last time risk categories or risk metrics were captured. Set to the current time for asset filter requests, which always pull the live asset data. </param>
+        /// <param name="updatedOn"> The last time risk categories or risk metrics were captured. Set to the current time for asset filter requests, which always pull the live asset data. </param>
         /// <param name="metricCategory"> If the request is for a metric category, this will contain the requested unique category name. </param>
         /// <param name="metric"> If the request is for a metric, this will contain the requested unique metric name. </param>
         /// <param name="filter"> If the request is for an asset filter, this will contain the corresponding filter. </param>
@@ -2710,14 +2710,14 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="link"> The link to the corresponding asset details. </param>
         /// <param name="children"> The corresponding child entities.  For metric categories this will contain metrics.  For filters with groupBy and segmentBy this will contain facets. </param>
         /// <returns> A new <see cref="Easm.AssetSummaryResult"/> instance for mocking. </returns>
-        public static AssetSummaryResult AssetSummaryResult(string displayName = default, string description = default, DateTimeOffset? updatedAt = default, string metricCategory = default, string metric = default, string filter = default, string labelName = default, long? count = default, string link = default, IEnumerable<AssetSummaryResult> children = default)
+        public static AssetSummaryResult AssetSummaryResult(string displayName = default, string description = default, DateTimeOffset? updatedOn = default, string metricCategory = default, string metric = default, string filter = default, string labelName = default, long? count = default, string link = default, IEnumerable<AssetSummaryResult> children = default)
         {
             children ??= new ChangeTrackingList<AssetSummaryResult>();
 
             return new AssetSummaryResult(
                 displayName,
                 description,
-                updatedAt,
+                updatedOn,
                 metricCategory,
                 metric,
                 filter,
@@ -2776,11 +2776,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="requiredAction"> The required action to address the vulnerability. </param>
         /// <param name="notes"> Any additional notes about the vulnerability. </param>
         /// <param name="dateAdded"> The date the vulnerability was added to the catalog in the format YYYY-MM-DD. </param>
-        /// <param name="dueDate"> The date the required action is due in the format YYYY-MM-DD. </param>
-        /// <param name="updatedAt"> The date the vulnerability was updated. </param>
+        /// <param name="dueOn"> The date the required action is due in the format YYYY-MM-DD. </param>
+        /// <param name="updatedOn"> The date the vulnerability was updated. </param>
         /// <param name="count"> The number of assets affected by the vulnerability. </param>
         /// <returns> A new <see cref="Easm.CisaCveResult"/> instance for mocking. </returns>
-        public static CisaCveResult CisaCveResult(string cveId = default, string vendorProject = default, string product = default, string vulnerabilityName = default, string shortDescription = default, string requiredAction = default, string notes = default, DateTimeOffset dateAdded = default, DateTimeOffset dueDate = default, DateTimeOffset updatedAt = default, long count = default)
+        public static CisaCveResult CisaCveResult(string cveId = default, string vendorProject = default, string product = default, string vulnerabilityName = default, string shortDescription = default, string requiredAction = default, string notes = default, DateTimeOffset dateAdded = default, DateTimeOffset dueOn = default, DateTimeOffset updatedOn = default, long count = default)
         {
             return new CisaCveResult(
                 cveId,
@@ -2791,8 +2791,8 @@ namespace Azure.Analytics.Defender.Easm
                 requiredAction,
                 notes,
                 dateAdded,
-                dueDate,
-                updatedAt,
+                dueOn,
+                updatedOn,
                 count,
                 additionalBinaryDataProperties: null);
         }
@@ -2806,11 +2806,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="action"> Action specifying what the policy should do. </param>
         /// <param name="updatedAssetsCount"> Number of assets in inventory that have been updated by this policy. </param>
         /// <param name="user"> The unique name of the user that created the policy user@gmail.com. </param>
-        /// <param name="createdDate"> The date this policy was created, in RFC3339 format. </param>
-        /// <param name="updatedDate"> The date this policy was last updated, in RFC3339 format. </param>
+        /// <param name="createdOn"> The date this policy was created, in RFC3339 format. </param>
+        /// <param name="updatedOn"> The date this policy was last updated, in RFC3339 format. </param>
         /// <param name="actionParameters"> Additional parameters needed to perform the policy action. </param>
         /// <returns> A new <see cref="Easm.EasmPolicy"/> instance for mocking. </returns>
-        public static EasmPolicy EasmPolicy(string id = default, string name = default, string displayName = default, string description = default, string filterName = default, PolicyAction action = default, long? updatedAssetsCount = default, string user = default, DateTimeOffset? createdDate = default, DateTimeOffset? updatedDate = default, ActionParametersContent actionParameters = default)
+        public static EasmPolicy EasmPolicy(string id = default, string name = default, string displayName = default, string description = default, string filterName = default, PolicyAction action = default, long? updatedAssetsCount = default, string user = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, ActionParametersContent actionParameters = default)
         {
             return new EasmPolicy(
                 id,
@@ -2821,8 +2821,8 @@ namespace Azure.Analytics.Defender.Easm
                 action,
                 updatedAssetsCount,
                 user,
-                createdDate,
-                updatedDate,
+                createdOn,
+                updatedOn,
                 actionParameters,
                 additionalBinaryDataProperties: null);
         }

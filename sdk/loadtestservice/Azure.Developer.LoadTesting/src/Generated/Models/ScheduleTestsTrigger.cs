@@ -33,19 +33,19 @@ namespace Azure.Developer.LoadTesting
         /// <param name="kind"> The type of the trigger. </param>
         /// <param name="state"> The current state of the trigger. </param>
         /// <param name="stateDetails"> Details of current state of the trigger. </param>
-        /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
+        /// <param name="createdOn"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
-        /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
+        /// <param name="lastModifiedOn"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="testIds"> The test id of test to be triggered by this schedule trigger. Currently only one test is supported for a trigger. </param>
-        /// <param name="startDateTime"> Start date time of the trigger in UTC timezone. (RFC 3339 literal format). </param>
+        /// <param name="startOn"> Start date time of the trigger in UTC timezone. (RFC 3339 literal format). </param>
         /// <param name="recurrenceStatus"></param>
         /// <param name="recurrence"> Recurrence details of the trigger. Null if schedule is not recurring. </param>
-        internal ScheduleTestsTrigger(string triggerId, string displayName, string description, TriggerType kind, TriggerState? state, StateDetails stateDetails, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> testIds, DateTimeOffset? startDateTime, RecurrenceStatus recurrenceStatus, LoadTestingRecurrence recurrence) : base(triggerId, displayName, description, kind, state, stateDetails, createdDateTime, createdBy, lastModifiedDateTime, lastModifiedBy, additionalBinaryDataProperties)
+        internal ScheduleTestsTrigger(string triggerId, string displayName, string description, TriggerType kind, TriggerState? state, StateDetails stateDetails, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> testIds, DateTimeOffset? startOn, RecurrenceStatus recurrenceStatus, LoadTestingRecurrence recurrence) : base(triggerId, displayName, description, kind, state, stateDetails, createdOn, createdBy, lastModifiedOn, lastModifiedBy, additionalBinaryDataProperties)
         {
             TestIds = testIds;
-            StartDateTime = startDateTime;
+            StartOn = startOn;
             RecurrenceStatus = recurrenceStatus;
             Recurrence = recurrence;
         }
@@ -54,7 +54,7 @@ namespace Azure.Developer.LoadTesting
         public IList<string> TestIds { get; }
 
         /// <summary> Start date time of the trigger in UTC timezone. (RFC 3339 literal format). </summary>
-        public DateTimeOffset? StartDateTime { get; set; }
+        public DateTimeOffset? StartOn { get; set; }
 
         /// <summary> Gets the RecurrenceStatus. </summary>
         public RecurrenceStatus RecurrenceStatus { get; }

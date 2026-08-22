@@ -79,7 +79,7 @@ namespace Azure.AI.AnomalyDetector
                 throw new FormatException($"The model {nameof(AnomalyState)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("timestamp"u8);
-            writer.WriteStringValue(Timestamp, "O");
+            writer.WriteStringValue(On, "O");
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
@@ -137,7 +137,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 return null;
             }
-            DateTimeOffset timestamp = default;
+            DateTimeOffset @on = default;
             AnomalyValue value = default;
             IList<ErrorResponse> errors = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -145,7 +145,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (prop.NameEquals("timestamp"u8))
                 {
-                    timestamp = prop.Value.GetDateTimeOffset("O");
+                    @on = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("value"u8))
@@ -176,7 +176,7 @@ namespace Azure.AI.AnomalyDetector
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AnomalyState(timestamp, value, errors ?? new ChangeTrackingList<ErrorResponse>(), additionalBinaryDataProperties);
+            return new AnomalyState(@on, value, errors ?? new ChangeTrackingList<ErrorResponse>(), additionalBinaryDataProperties);
         }
     }
 }

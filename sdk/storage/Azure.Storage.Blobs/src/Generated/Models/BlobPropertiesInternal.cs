@@ -21,7 +21,7 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobPropertiesInternal"/>. </summary>
-        /// <param name="creationTime"> The date-time the blob was created. </param>
+        /// <param name="createdOn"> The date-time the blob was created. </param>
         /// <param name="lastModified"> The date-time the blob was last modified. </param>
         /// <param name="eTag"> The blob ETag. </param>
         /// <param name="contentLength"> The content length of the blob. </param>
@@ -40,12 +40,12 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="copyStatus"> The copy status of the blob. </param>
         /// <param name="copySource"> The copy source of the blob. </param>
         /// <param name="copyProgress"> The copy progress of the blob. </param>
-        /// <param name="copyCompletionTime"> The copy completion date-time of the blob. </param>
+        /// <param name="copyCompletionOn"> The copy completion date-time of the blob. </param>
         /// <param name="copyStatusDescription"> The copy status description of the blob. </param>
         /// <param name="serverEncrypted"> Whether the blob is encrypted on the server. </param>
         /// <param name="incrementalCopy"> Whether the blob is an incremental copy. </param>
         /// <param name="destinationSnapshot"> The name of the destination snapshot. </param>
-        /// <param name="deletedTime"> The date-time the blob was deleted. </param>
+        /// <param name="deletedOn"> The date-time the blob was deleted. </param>
         /// <param name="remainingRetentionDays"> The remaining retention days of the blob. </param>
         /// <param name="accessTier"> The access tier of the blob. </param>
         /// <param name="accessTierInferred"> Whether the access tier is inferred. </param>
@@ -53,7 +53,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="smartAccessTier"> The smart access tier of the blob. </param>
         /// <param name="customerProvidedKeySha256"> The SHA-256 hash of the blob's encryption key, if provided. </param>
         /// <param name="encryptionScope"> The encryption scope of the blob. </param>
-        /// <param name="accessTierChangeTime"> The date-time that the access tier of the blob changed. </param>
+        /// <param name="accessTierChangeOn"> The date-time that the access tier of the blob changed. </param>
         /// <param name="tagCount"> The number of tags for the blob. </param>
         /// <param name="expiresOn"> The expiry time of the blob. </param>
         /// <param name="isSealed"> Whether the blob is sealed. </param>
@@ -62,9 +62,9 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="immutabilityPolicyExpiresOn"> The date-time the immutability policy of the blob expires. </param>
         /// <param name="immutabilityPolicyMode"> The immutability policy mode of the blob. </param>
         /// <param name="legalHold"> Whether the blob is under legal hold. </param>
-        internal BlobPropertiesInternal(DateTimeOffset? creationTime, DateTimeOffset lastModified, string eTag, long? contentLength, string contentType, string contentEncoding, string contentLanguage, BinaryData contentMd5, string contentDisposition, string cacheControl, long? blobSequenceNumber, BlobType? blobType, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, string copyId, CopyStatus? copyStatus, string copySource, string copyProgress, DateTimeOffset? copyCompletionTime, string copyStatusDescription, bool? serverEncrypted, bool? incrementalCopy, string destinationSnapshot, DateTimeOffset? deletedTime, int? remainingRetentionDays, AccessTier? accessTier, bool? accessTierInferred, ArchiveStatus? archiveStatus, AccessTier? smartAccessTier, string customerProvidedKeySha256, string encryptionScope, DateTimeOffset? accessTierChangeTime, int? tagCount, DateTimeOffset? expiresOn, bool? isSealed, RehydratePriority? rehydratePriority, DateTimeOffset? lastAccessedOn, DateTimeOffset? immutabilityPolicyExpiresOn, BlobImmutabilityPolicyMode? immutabilityPolicyMode, bool? legalHold)
+        internal BlobPropertiesInternal(DateTimeOffset? createdOn, DateTimeOffset lastModified, string eTag, long? contentLength, string contentType, string contentEncoding, string contentLanguage, BinaryData contentMd5, string contentDisposition, string cacheControl, long? blobSequenceNumber, BlobType? blobType, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, string copyId, CopyStatus? copyStatus, string copySource, string copyProgress, DateTimeOffset? copyCompletionOn, string copyStatusDescription, bool? serverEncrypted, bool? incrementalCopy, string destinationSnapshot, DateTimeOffset? deletedOn, int? remainingRetentionDays, AccessTier? accessTier, bool? accessTierInferred, ArchiveStatus? archiveStatus, AccessTier? smartAccessTier, string customerProvidedKeySha256, string encryptionScope, DateTimeOffset? accessTierChangeOn, int? tagCount, DateTimeOffset? expiresOn, bool? isSealed, RehydratePriority? rehydratePriority, DateTimeOffset? lastAccessedOn, DateTimeOffset? immutabilityPolicyExpiresOn, BlobImmutabilityPolicyMode? immutabilityPolicyMode, bool? legalHold)
         {
-            CreationTime = creationTime;
+            CreatedOn = createdOn;
             LastModified = lastModified;
             ETag = eTag;
             ContentLength = contentLength;
@@ -83,12 +83,12 @@ namespace Azure.Storage.Blobs.Models
             CopyStatus = copyStatus;
             CopySource = copySource;
             CopyProgress = copyProgress;
-            CopyCompletionTime = copyCompletionTime;
+            CopyCompletionOn = copyCompletionOn;
             CopyStatusDescription = copyStatusDescription;
             ServerEncrypted = serverEncrypted;
             IncrementalCopy = incrementalCopy;
             DestinationSnapshot = destinationSnapshot;
-            DeletedTime = deletedTime;
+            DeletedOn = deletedOn;
             RemainingRetentionDays = remainingRetentionDays;
             AccessTier = accessTier;
             AccessTierInferred = accessTierInferred;
@@ -96,7 +96,7 @@ namespace Azure.Storage.Blobs.Models
             SmartAccessTier = smartAccessTier;
             CustomerProvidedKeySha256 = customerProvidedKeySha256;
             EncryptionScope = encryptionScope;
-            AccessTierChangeTime = accessTierChangeTime;
+            AccessTierChangeOn = accessTierChangeOn;
             TagCount = tagCount;
             ExpiresOn = expiresOn;
             IsSealed = isSealed;
@@ -108,7 +108,7 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> The date-time the blob was created. </summary>
-        public DateTimeOffset? CreationTime { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The date-time the blob was last modified. </summary>
         public DateTimeOffset LastModified { get; }
@@ -180,7 +180,7 @@ namespace Azure.Storage.Blobs.Models
         public string CopyProgress { get; }
 
         /// <summary> The copy completion date-time of the blob. </summary>
-        public DateTimeOffset? CopyCompletionTime { get; }
+        public DateTimeOffset? CopyCompletionOn { get; }
 
         /// <summary> The copy status description of the blob. </summary>
         public string CopyStatusDescription { get; }
@@ -195,7 +195,7 @@ namespace Azure.Storage.Blobs.Models
         public string DestinationSnapshot { get; }
 
         /// <summary> The date-time the blob was deleted. </summary>
-        public DateTimeOffset? DeletedTime { get; }
+        public DateTimeOffset? DeletedOn { get; }
 
         /// <summary> The remaining retention days of the blob. </summary>
         public int? RemainingRetentionDays { get; }
@@ -219,7 +219,7 @@ namespace Azure.Storage.Blobs.Models
         public string EncryptionScope { get; }
 
         /// <summary> The date-time that the access tier of the blob changed. </summary>
-        public DateTimeOffset? AccessTierChangeTime { get; }
+        public DateTimeOffset? AccessTierChangeOn { get; }
 
         /// <summary> The number of tags for the blob. </summary>
         public int? TagCount { get; }
