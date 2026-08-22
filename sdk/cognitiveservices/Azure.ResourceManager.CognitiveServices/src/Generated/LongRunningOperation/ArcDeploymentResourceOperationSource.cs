@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary></summary>
-    internal partial class CognitiveServicesComputeResourceOperationSource : IOperationSource<CognitiveServicesComputeResource>
+    internal partial class ArcDeploymentResourceOperationSource : IOperationSource<ArcDeploymentResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal CognitiveServicesComputeResourceOperationSource(ArmClient client)
+        internal ArcDeploymentResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        CognitiveServicesComputeResource IOperationSource<CognitiveServicesComputeResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ArcDeploymentResource IOperationSource<ArcDeploymentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            CognitiveServicesComputeData data = CognitiveServicesComputeData.DeserializeCognitiveServicesComputeData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new CognitiveServicesComputeResource(_client, data);
+            ArcDeploymentData data = ArcDeploymentData.DeserializeArcDeploymentData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ArcDeploymentResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<CognitiveServicesComputeResource> IOperationSource<CognitiveServicesComputeResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ArcDeploymentResource> IOperationSource<ArcDeploymentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            CognitiveServicesComputeData data = CognitiveServicesComputeData.DeserializeCognitiveServicesComputeData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new CognitiveServicesComputeResource(_client, data);
+            ArcDeploymentData data = ArcDeploymentData.DeserializeArcDeploymentData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ArcDeploymentResource(_client, data);
         }
     }
 }
