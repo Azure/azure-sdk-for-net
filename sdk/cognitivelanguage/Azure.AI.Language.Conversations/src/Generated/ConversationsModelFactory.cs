@@ -950,26 +950,26 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary> Contains the status of the submitted job for analyzing a conversation, along with related statistics. </summary>
         /// <param name="displayName"> display name. </param>
-        /// <param name="createdDateTime"> Date and time job created. </param>
-        /// <param name="expirationDateTime"> Date and time job expires. </param>
+        /// <param name="createdOn"> Date and time job created. </param>
+        /// <param name="expireOn"> Date and time job expires. </param>
         /// <param name="jobId"> job ID. </param>
-        /// <param name="lastUpdatedDateTime"> last updated date and time. </param>
+        /// <param name="lastUpdatedOn"> last updated date and time. </param>
         /// <param name="status"> status. </param>
         /// <param name="errors"> errors. </param>
         /// <param name="nextLink"> next link. </param>
         /// <param name="actions"> Contains the state for the tasks that are being executed as part of the submitted job for analyzing a conversation. </param>
         /// <param name="statistics"> Contains the statistics for the submitted job. </param>
         /// <returns> A new <see cref="Models.AnalyzeConversationOperationState"/> instance for mocking. </returns>
-        public static AnalyzeConversationOperationState AnalyzeConversationOperationState(string displayName = default, DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = default, Guid jobId = default, DateTimeOffset lastUpdatedDateTime = default, ConversationActionState status = default, IEnumerable<ConversationError> errors = default, string nextLink = default, ConversationActions actions = default, ConversationRequestStatistics statistics = default)
+        public static AnalyzeConversationOperationState AnalyzeConversationOperationState(string displayName = default, DateTimeOffset createdOn = default, DateTimeOffset? expireOn = default, Guid jobId = default, DateTimeOffset lastUpdatedOn = default, ConversationActionState status = default, IEnumerable<ConversationError> errors = default, string nextLink = default, ConversationActions actions = default, ConversationRequestStatistics statistics = default)
         {
             errors ??= new ChangeTrackingList<ConversationError>();
 
             return new AnalyzeConversationOperationState(
                 displayName,
-                createdDateTime,
-                expirationDateTime,
+                createdOn,
+                expireOn,
                 jobId,
-                lastUpdatedDateTime,
+                lastUpdatedOn,
                 status,
                 errors.ToList(),
                 nextLink,
@@ -1002,26 +1002,26 @@ namespace Azure.AI.Language.Conversations
         /// Container for results of all tasks in the conversation job.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SummarizationOperationResult"/>, <see cref="Models.CustomSummarizationOperationResult"/>, and <see cref="Models.ConversationPiiOperationResult"/>.
         /// </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> discriminator kind. </param>
         /// <returns> A new <see cref="Models.AnalyzeConversationOperationResult"/> instance for mocking. </returns>
-        public static AnalyzeConversationOperationResult AnalyzeConversationOperationResult(DateTimeOffset lastUpdateDateTime = default, ConversationActionState status = default, string name = default, string kind = default)
+        public static AnalyzeConversationOperationResult AnalyzeConversationOperationResult(DateTimeOffset lastUpdateOn = default, ConversationActionState status = default, string name = default, string kind = default)
         {
-            return new UnknownAnalyzeConversationOperationResult(lastUpdateDateTime, status, name, new AnalyzeConversationOperationResultsKind(kind), additionalBinaryDataProperties: null);
+            return new UnknownAnalyzeConversationOperationResult(lastUpdateOn, status, name, new AnalyzeConversationOperationResultsKind(kind), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Result for the summarization task on the conversation. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="name"> task name. </param>
         /// <param name="results"> results. </param>
         /// <returns> A new <see cref="Models.SummarizationOperationResult"/> instance for mocking. </returns>
-        public static SummarizationOperationResult SummarizationOperationResult(DateTimeOffset lastUpdateDateTime = default, ConversationActionState status = default, string name = default, SummaryResult results = default)
+        public static SummarizationOperationResult SummarizationOperationResult(DateTimeOffset lastUpdateOn = default, ConversationActionState status = default, string name = default, SummaryResult results = default)
         {
             return new SummarizationOperationResult(
-                lastUpdateDateTime,
+                lastUpdateOn,
                 status,
                 name,
                 AnalyzeConversationOperationResultsKind.SummarizationOperationResults,
@@ -1118,15 +1118,15 @@ namespace Azure.AI.Language.Conversations
         }
 
         /// <summary> Result for the custom summarization task on the conversation. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="name"> task name. </param>
         /// <param name="results"> Custom Summary Result. </param>
         /// <returns> A new <see cref="Models.CustomSummarizationOperationResult"/> instance for mocking. </returns>
-        public static CustomSummarizationOperationResult CustomSummarizationOperationResult(DateTimeOffset lastUpdateDateTime = default, ConversationActionState status = default, string name = default, CustomSummaryResult results = default)
+        public static CustomSummarizationOperationResult CustomSummarizationOperationResult(DateTimeOffset lastUpdateOn = default, ConversationActionState status = default, string name = default, CustomSummaryResult results = default)
         {
             return new CustomSummarizationOperationResult(
-                lastUpdateDateTime,
+                lastUpdateOn,
                 status,
                 name,
                 AnalyzeConversationOperationResultsKind.CustomSummarizationOperationResults,
@@ -1156,15 +1156,15 @@ namespace Azure.AI.Language.Conversations
         }
 
         /// <summary> Result from the personally identifiable information detection and redaction operation performed on a list of conversations. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="name"> task name. </param>
         /// <param name="results"> results. </param>
         /// <returns> A new <see cref="Models.ConversationPiiOperationResult"/> instance for mocking. </returns>
-        public static ConversationPiiOperationResult ConversationPiiOperationResult(DateTimeOffset lastUpdateDateTime = default, ConversationActionState status = default, string name = default, ConversationPiiResults results = default)
+        public static ConversationPiiOperationResult ConversationPiiOperationResult(DateTimeOffset lastUpdateOn = default, ConversationActionState status = default, string name = default, ConversationPiiResults results = default)
         {
             return new ConversationPiiOperationResult(
-                lastUpdateDateTime,
+                lastUpdateOn,
                 status,
                 name,
                 AnalyzeConversationOperationResultsKind.PiiOperationResults,

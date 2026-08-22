@@ -87,9 +87,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteNumberValue(RemainingSeconds.Value);
             }
             writer.WritePropertyName("beginningTime"u8);
-            writer.WriteStringValue(BeginningTime, "O");
+            writer.WriteStringValue(BeginningOn, "O");
             writer.WritePropertyName("endingTime"u8);
-            writer.WriteStringValue(EndingTime, "O");
+            writer.WriteStringValue(EndingOn, "O");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,8 +134,8 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             long usedSeconds = default;
             long? remainingSeconds = default;
-            DateTimeOffset beginningTime = default;
-            DateTimeOffset endingTime = default;
+            DateTimeOffset beginningOn = default;
+            DateTimeOffset endingOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -156,12 +156,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("beginningTime"u8))
                 {
-                    beginningTime = prop.Value.GetDateTimeOffset("O");
+                    beginningOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endingTime"u8))
                 {
-                    endingTime = prop.Value.GetDateTimeOffset("O");
+                    endingOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +169,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IndexerRuntime(usedSeconds, remainingSeconds, beginningTime, endingTime, additionalBinaryDataProperties);
+            return new IndexerRuntime(usedSeconds, remainingSeconds, beginningOn, endingOn, additionalBinaryDataProperties);
         }
     }
 }

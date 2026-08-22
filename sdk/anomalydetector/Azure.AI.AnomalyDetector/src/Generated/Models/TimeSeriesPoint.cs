@@ -24,18 +24,18 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Initializes a new instance of <see cref="TimeSeriesPoint"/>. </summary>
-        /// <param name="timestamp"> Argument that indicates the time stamp of a data point (ISO8601 format). </param>
+        /// <param name="on"> Argument that indicates the time stamp of a data point (ISO8601 format). </param>
         /// <param name="value"> Measurement of that point. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TimeSeriesPoint(DateTimeOffset? timestamp, float value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TimeSeriesPoint(DateTimeOffset? @on, float value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Timestamp = timestamp;
+            On = @on;
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Argument that indicates the time stamp of a data point (ISO8601 format). </summary>
-        public DateTimeOffset? Timestamp { get; set; }
+        public DateTimeOffset? On { get; set; }
 
         /// <summary> Measurement of that point. </summary>
         public float Value { get; }

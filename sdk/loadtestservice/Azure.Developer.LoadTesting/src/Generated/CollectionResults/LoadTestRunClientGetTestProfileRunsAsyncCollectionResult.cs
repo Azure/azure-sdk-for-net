@@ -19,12 +19,12 @@ namespace Azure.Developer.LoadTesting
     {
         private readonly LoadTestRunClient _client;
         private readonly int? _maxpagesize;
-        private readonly DateTimeOffset? _minStartDateTime;
-        private readonly DateTimeOffset? _maxStartDateTime;
-        private readonly DateTimeOffset? _minEndDateTime;
-        private readonly DateTimeOffset? _maxEndDateTime;
-        private readonly DateTimeOffset? _createdDateStartTime;
-        private readonly DateTimeOffset? _createdDateEndTime;
+        private readonly DateTimeOffset? _minStartOn;
+        private readonly DateTimeOffset? _maxStartOn;
+        private readonly DateTimeOffset? _minEndOn;
+        private readonly DateTimeOffset? _maxEndOn;
+        private readonly DateTimeOffset? _createdDateStartOn;
+        private readonly DateTimeOffset? _createdDateEndOn;
         private readonly IEnumerable<string> _testProfileRunIds;
         private readonly IEnumerable<string> _testProfileIds;
         private readonly IEnumerable<string> _statuses;
@@ -34,27 +34,27 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Initializes a new instance of LoadTestRunClientGetTestProfileRunsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The LoadTestRunClient client used to send requests. </param>
         /// <param name="maxpagesize"> Maximum number of results to include in a single response. </param>
-        /// <param name="minStartDateTime"> Minimum Start DateTime(RFC 3339 literal format) of the test profile runs to filter on. </param>
-        /// <param name="maxStartDateTime"> Maximum Start DateTime(RFC 3339 literal format) of the test profile runs to filter on. </param>
-        /// <param name="minEndDateTime"> Minimum End DateTime(RFC 3339 literal format) of the test profile runs to filter on. </param>
-        /// <param name="maxEndDateTime"> Maximum End DateTime(RFC 3339 literal format) of the test profile runs to filter on. </param>
-        /// <param name="createdDateStartTime"> Start DateTime(RFC 3339 literal format) of the created time range to filter test profile runs. </param>
-        /// <param name="createdDateEndTime"> End DateTime(RFC 3339 literal format) of the created time range to filter test profile runs. </param>
+        /// <param name="minStartOn"> Minimum Start DateTime(RFC 3339 literal format) of the test profile runs to filter on. </param>
+        /// <param name="maxStartOn"> Maximum Start DateTime(RFC 3339 literal format) of the test profile runs to filter on. </param>
+        /// <param name="minEndOn"> Minimum End DateTime(RFC 3339 literal format) of the test profile runs to filter on. </param>
+        /// <param name="maxEndOn"> Maximum End DateTime(RFC 3339 literal format) of the test profile runs to filter on. </param>
+        /// <param name="createdDateStartOn"> Start DateTime(RFC 3339 literal format) of the created time range to filter test profile runs. </param>
+        /// <param name="createdDateEndOn"> End DateTime(RFC 3339 literal format) of the created time range to filter test profile runs. </param>
         /// <param name="testProfileRunIds"> Comma separated list of IDs of the test profile runs to filter. </param>
         /// <param name="testProfileIds"> Comma separated IDs of the test profiles which should be associated with the test profile runs to fetch. </param>
         /// <param name="statuses"> Comma separated list of Statuses of the test profile runs to filter. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public LoadTestRunClientGetTestProfileRunsAsyncCollectionResult(LoadTestRunClient client, int? maxpagesize, DateTimeOffset? minStartDateTime, DateTimeOffset? maxStartDateTime, DateTimeOffset? minEndDateTime, DateTimeOffset? maxEndDateTime, DateTimeOffset? createdDateStartTime, DateTimeOffset? createdDateEndTime, IEnumerable<string> testProfileRunIds, IEnumerable<string> testProfileIds, IEnumerable<string> statuses, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public LoadTestRunClientGetTestProfileRunsAsyncCollectionResult(LoadTestRunClient client, int? maxpagesize, DateTimeOffset? minStartOn, DateTimeOffset? maxStartOn, DateTimeOffset? minEndOn, DateTimeOffset? maxEndOn, DateTimeOffset? createdDateStartOn, DateTimeOffset? createdDateEndOn, IEnumerable<string> testProfileRunIds, IEnumerable<string> testProfileIds, IEnumerable<string> statuses, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _maxpagesize = maxpagesize;
-            _minStartDateTime = minStartDateTime;
-            _maxStartDateTime = maxStartDateTime;
-            _minEndDateTime = minEndDateTime;
-            _maxEndDateTime = maxEndDateTime;
-            _createdDateStartTime = createdDateStartTime;
-            _createdDateEndTime = createdDateEndTime;
+            _minStartOn = minStartOn;
+            _maxStartOn = maxStartOn;
+            _minEndOn = minEndOn;
+            _maxEndOn = maxEndOn;
+            _createdDateStartOn = createdDateStartOn;
+            _createdDateEndOn = createdDateEndOn;
             _testProfileRunIds = testProfileRunIds;
             _testProfileIds = testProfileIds;
             _statuses = statuses;
@@ -96,7 +96,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetTestProfileRunsRequest(nextLink, _maxpagesize, _minStartDateTime, _maxStartDateTime, _minEndDateTime, _maxEndDateTime, _createdDateStartTime, _createdDateEndTime, _testProfileRunIds, _testProfileIds, _statuses, _context) : _client.CreateGetTestProfileRunsRequest(_maxpagesize, _minStartDateTime, _maxStartDateTime, _minEndDateTime, _maxEndDateTime, _createdDateStartTime, _createdDateEndTime, _testProfileRunIds, _testProfileIds, _statuses, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetTestProfileRunsRequest(nextLink, _maxpagesize, _minStartOn, _maxStartOn, _minEndOn, _maxEndOn, _createdDateStartOn, _createdDateEndOn, _testProfileRunIds, _testProfileIds, _statuses, _context) : _client.CreateGetTestProfileRunsRequest(_maxpagesize, _minStartOn, _maxStartOn, _minEndOn, _maxEndOn, _createdDateStartOn, _createdDateEndOn, _testProfileRunIds, _testProfileIds, _statuses, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

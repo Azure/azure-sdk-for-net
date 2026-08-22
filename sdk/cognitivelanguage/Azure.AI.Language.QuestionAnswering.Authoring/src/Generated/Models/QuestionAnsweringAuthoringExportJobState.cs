@@ -18,34 +18,34 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringExportJobState"/>. </summary>
-        /// <param name="createdDateTime"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
+        /// <param name="createdOn"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
         /// <param name="status"> Job Status. </param>
         /// <param name="resultUrl"> URL to download the result of the Export Job. </param>
-        internal QuestionAnsweringAuthoringExportJobState(DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, JobStatus status, string resultUrl)
+        internal QuestionAnsweringAuthoringExportJobState(DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, JobStatus status, string resultUrl)
         {
-            CreatedDateTime = createdDateTime;
-            LastUpdatedDateTime = lastUpdatedDateTime;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
             Status = status;
             Errors = new ChangeTrackingList<ResponseError>();
             ResultUrl = resultUrl;
         }
 
         /// <summary> Initializes a new instance of <see cref="QuestionAnsweringAuthoringExportJobState"/>. </summary>
-        /// <param name="createdDateTime"> The creation date time of the job. </param>
-        /// <param name="expirationDateTime"> The expiration date time of the job. </param>
+        /// <param name="createdOn"> The creation date time of the job. </param>
+        /// <param name="expireOn"> The expiration date time of the job. </param>
         /// <param name="jobId"> The job ID. </param>
-        /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
+        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
         /// <param name="status"> Job Status. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="resultUrl"> URL to download the result of the Export Job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QuestionAnsweringAuthoringExportJobState(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, JobStatus status, IList<ResponseError> errors, string resultUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuestionAnsweringAuthoringExportJobState(DateTimeOffset createdOn, DateTimeOffset? expireOn, string jobId, DateTimeOffset lastUpdatedOn, JobStatus status, IList<ResponseError> errors, string resultUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            CreatedDateTime = createdDateTime;
-            ExpirationDateTime = expirationDateTime;
+            CreatedOn = createdOn;
+            ExpireOn = expireOn;
             JobId = jobId;
-            LastUpdatedDateTime = lastUpdatedDateTime;
+            LastUpdatedOn = lastUpdatedOn;
             Status = status;
             Errors = errors;
             ResultUrl = resultUrl;
@@ -53,16 +53,16 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         }
 
         /// <summary> The creation date time of the job. </summary>
-        public DateTimeOffset CreatedDateTime { get; }
+        public DateTimeOffset CreatedOn { get; }
 
         /// <summary> The expiration date time of the job. </summary>
-        public DateTimeOffset? ExpirationDateTime { get; }
+        public DateTimeOffset? ExpireOn { get; }
 
         /// <summary> The job ID. </summary>
         public string JobId { get; }
 
         /// <summary> The last date time the job was updated. </summary>
-        public DateTimeOffset LastUpdatedDateTime { get; }
+        public DateTimeOffset LastUpdatedOn { get; }
 
         /// <summary> Job Status. </summary>
         public JobStatus Status { get; }

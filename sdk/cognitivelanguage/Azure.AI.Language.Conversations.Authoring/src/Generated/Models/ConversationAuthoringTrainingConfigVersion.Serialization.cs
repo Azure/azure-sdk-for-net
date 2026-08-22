@@ -84,7 +84,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 writer.WriteStringValue(TrainingConfigVersion);
             }
             writer.WritePropertyName("modelExpirationDate"u8);
-            writer.WriteStringValue(ModelExpirationDate, "D");
+            writer.WriteStringValue(ModelExpirationOn, "D");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -128,7 +128,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 return null;
             }
             string trainingConfigVersion = default;
-            DateTimeOffset modelExpirationDate = default;
+            DateTimeOffset modelExpirationOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -139,7 +139,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
                 if (prop.NameEquals("modelExpirationDate"u8))
                 {
-                    modelExpirationDate = prop.Value.GetDateTimeOffset("D");
+                    modelExpirationOn = prop.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (options.Format != "W")
@@ -147,7 +147,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConversationAuthoringTrainingConfigVersion(trainingConfigVersion, modelExpirationDate, additionalBinaryDataProperties);
+            return new ConversationAuthoringTrainingConfigVersion(trainingConfigVersion, modelExpirationOn, additionalBinaryDataProperties);
         }
     }
 }

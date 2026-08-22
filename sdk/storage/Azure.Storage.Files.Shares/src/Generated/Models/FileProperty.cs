@@ -30,19 +30,19 @@ namespace Azure.Storage.Files.Shares.Models
         /// reflect that fact until the handle is closed or the op-lock is broken. To
         /// retrieve current property values, call Get File Properties.
         /// </param>
-        /// <param name="creationTime"> The creation time. </param>
-        /// <param name="lastAccessTime"> The last access time. </param>
-        /// <param name="lastWriteTime"> The last write time. </param>
-        /// <param name="changeTime"> The change time. </param>
+        /// <param name="createdOn"> The creation time. </param>
+        /// <param name="lastAccessOn"> The last access time. </param>
+        /// <param name="lastWriteOn"> The last write time. </param>
+        /// <param name="changeOn"> The change time. </param>
         /// <param name="lastModified"> The last modified time. </param>
         /// <param name="eTag"> The ETag of the file. </param>
-        internal FileProperty(long contentLength, DateTimeOffset? creationTime, DateTimeOffset? lastAccessTime, DateTimeOffset? lastWriteTime, DateTimeOffset? changeTime, DateTimeOffset? lastModified, string eTag)
+        internal FileProperty(long contentLength, DateTimeOffset? createdOn, DateTimeOffset? lastAccessOn, DateTimeOffset? lastWriteOn, DateTimeOffset? changeOn, DateTimeOffset? lastModified, string eTag)
         {
             ContentLength = contentLength;
-            CreationTime = creationTime;
-            LastAccessTime = lastAccessTime;
-            LastWriteTime = lastWriteTime;
-            ChangeTime = changeTime;
+            CreatedOn = createdOn;
+            LastAccessOn = lastAccessOn;
+            LastWriteOn = lastWriteOn;
+            ChangeOn = changeOn;
             LastModified = lastModified;
             ETag = eTag;
         }
@@ -56,16 +56,16 @@ namespace Azure.Storage.Files.Shares.Models
         public long ContentLength { get; }
 
         /// <summary> The creation time. </summary>
-        public DateTimeOffset? CreationTime { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The last access time. </summary>
-        public DateTimeOffset? LastAccessTime { get; }
+        public DateTimeOffset? LastAccessOn { get; }
 
         /// <summary> The last write time. </summary>
-        public DateTimeOffset? LastWriteTime { get; }
+        public DateTimeOffset? LastWriteOn { get; }
 
         /// <summary> The change time. </summary>
-        public DateTimeOffset? ChangeTime { get; }
+        public DateTimeOffset? ChangeOn { get; }
 
         /// <summary> The last modified time. </summary>
         public DateTimeOffset? LastModified { get; }

@@ -107,28 +107,28 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteStartElement("Content-Length");
             writer.WriteValue(ContentLength);
             writer.WriteEndElement();
-            if (Optional.IsDefined(CreationTime))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WriteStartElement("CreationTime");
-                writer.WriteStringValue(CreationTime.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(LastAccessTime))
+            if (Optional.IsDefined(LastAccessOn))
             {
                 writer.WriteStartElement("LastAccessTime");
-                writer.WriteStringValue(LastAccessTime.Value, "O");
+                writer.WriteStringValue(LastAccessOn.Value, "O");
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(LastWriteTime))
+            if (Optional.IsDefined(LastWriteOn))
             {
                 writer.WriteStartElement("LastWriteTime");
-                writer.WriteStringValue(LastWriteTime.Value, "O");
+                writer.WriteStringValue(LastWriteOn.Value, "O");
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(ChangeTime))
+            if (Optional.IsDefined(ChangeOn))
             {
                 writer.WriteStartElement("ChangeTime");
-                writer.WriteStringValue(ChangeTime.Value, "O");
+                writer.WriteStringValue(ChangeOn.Value, "O");
                 writer.WriteEndElement();
             }
             if (Optional.IsDefined(LastModified))
@@ -155,10 +155,10 @@ namespace Azure.Storage.Files.Shares.Models
             }
 
             long contentLength = default;
-            DateTimeOffset? creationTime = default;
-            DateTimeOffset? lastAccessTime = default;
-            DateTimeOffset? lastWriteTime = default;
-            DateTimeOffset? changeTime = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? lastAccessOn = default;
+            DateTimeOffset? lastWriteOn = default;
+            DateTimeOffset? changeOn = default;
             DateTimeOffset? lastModified = default;
             string eTag = default;
 
@@ -172,22 +172,22 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 if (localName == "CreationTime")
                 {
-                    creationTime = child.GetDateTimeOffset("O");
+                    createdOn = child.GetDateTimeOffset("O");
                     continue;
                 }
                 if (localName == "LastAccessTime")
                 {
-                    lastAccessTime = child.GetDateTimeOffset("O");
+                    lastAccessOn = child.GetDateTimeOffset("O");
                     continue;
                 }
                 if (localName == "LastWriteTime")
                 {
-                    lastWriteTime = child.GetDateTimeOffset("O");
+                    lastWriteOn = child.GetDateTimeOffset("O");
                     continue;
                 }
                 if (localName == "ChangeTime")
                 {
-                    changeTime = child.GetDateTimeOffset("O");
+                    changeOn = child.GetDateTimeOffset("O");
                     continue;
                 }
                 if (localName == "Last-Modified")
@@ -203,10 +203,10 @@ namespace Azure.Storage.Files.Shares.Models
             }
             return new FileProperty(
                 contentLength,
-                creationTime,
-                lastAccessTime,
-                lastWriteTime,
-                changeTime,
+                createdOn,
+                lastAccessOn,
+                lastWriteOn,
+                changeOn,
                 lastModified,
                 eTag);
         }
