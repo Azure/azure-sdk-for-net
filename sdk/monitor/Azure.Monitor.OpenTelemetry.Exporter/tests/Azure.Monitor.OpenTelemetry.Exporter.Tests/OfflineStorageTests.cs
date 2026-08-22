@@ -41,6 +41,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             ActivitySource.AddActivityListener(listener);
 
             HttpPipelineHelper.MinimumRetryInterval = 6000;
+
+            // These tests assert on exact storage contents, which a background drain would race.
+            TransmitFromStorageHandler.DisableEagerDrainForTesting = true;
         }
 
         [Fact]

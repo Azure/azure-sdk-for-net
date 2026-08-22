@@ -131,7 +131,7 @@ namespace Azure.AI.Extensions.OpenAI
             ResponseToolKind @type = "memory_search_preview";
             string memoryStoreName = default;
             string scope = default;
-            MemorySearchOptions searchOptions = default;
+            MemorySearchResultOptions searchOptions = default;
             int? updateDelayInSeconds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -157,7 +157,7 @@ namespace Azure.AI.Extensions.OpenAI
                     {
                         continue;
                     }
-                    searchOptions = MemorySearchOptions.DeserializeMemorySearchOptions(prop.Value, options);
+                    searchOptions = MemorySearchResultOptions.DeserializeMemorySearchResultOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("update_delay"u8))
