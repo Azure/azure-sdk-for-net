@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Quota.Mocking
 
         private ClientDiagnostics QuotaOperationClientDiagnostics => _quotaOperationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quota.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private QuotaOperation QuotaOperationRestClient => _quotaOperationRestClient ??= new QuotaOperation(QuotaOperationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private QuotaOperation QuotaOperationRestClient => _quotaOperationRestClient ??= new QuotaOperation(QuotaOperationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-01-preview");
 
         /// <summary>
         /// List the operations for the provider
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
