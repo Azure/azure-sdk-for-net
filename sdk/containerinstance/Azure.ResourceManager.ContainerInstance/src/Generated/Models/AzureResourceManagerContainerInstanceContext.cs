@@ -16,6 +16,13 @@ namespace Azure.ResourceManager.ContainerInstance
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AiAgentsGroupAccessToken))]
+    [ModelReaderWriterBuildable(typeof(AiAgentsGroupData))]
+    [ModelReaderWriterBuildable(typeof(AiAgentsGroupListResult))]
+    [ModelReaderWriterBuildable(typeof(AiAgentsGroupNetworkProfile))]
+    [ModelReaderWriterBuildable(typeof(AiAgentsGroupPatch))]
+    [ModelReaderWriterBuildable(typeof(AiAgentsGroupProperties))]
+    [ModelReaderWriterBuildable(typeof(AiAgentsGroupResource))]
     [ModelReaderWriterBuildable(typeof(ApiEntityReference))]
     [ModelReaderWriterBuildable(typeof(ApplicationGateway))]
     [ModelReaderWriterBuildable(typeof(ApplicationGatewayBackendAddressPool))]
@@ -48,7 +55,6 @@ namespace Azure.ResourceManager.ContainerInstance
     [ModelReaderWriterBuildable(typeof(ContainerGroupListResult))]
     [ModelReaderWriterBuildable(typeof(ContainerGroupLogAnalytics))]
     [ModelReaderWriterBuildable(typeof(ContainerGroupNetworkProfile))]
-    [ModelReaderWriterBuildable(typeof(ContainerGroupPatch))]
     [ModelReaderWriterBuildable(typeof(ContainerGroupPort))]
     [ModelReaderWriterBuildable(typeof(ContainerGroupProfileData))]
     [ModelReaderWriterBuildable(typeof(ContainerGroupProfileListResult))]
@@ -105,9 +111,11 @@ namespace Azure.ResourceManager.ContainerInstance
     [ModelReaderWriterBuildable(typeof(NGroupsListResult))]
     [ModelReaderWriterBuildable(typeof(NGroupUpdateProfile))]
     [ModelReaderWriterBuildable(typeof(PlacementProfile))]
+    [ModelReaderWriterBuildable(typeof(Resource))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StandbyPoolProfileDefinition))]
     [ModelReaderWriterBuildable(typeof(StorageProfile))]
+    [ModelReaderWriterBuildable(typeof(SubnetReference))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UsageListResult))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
