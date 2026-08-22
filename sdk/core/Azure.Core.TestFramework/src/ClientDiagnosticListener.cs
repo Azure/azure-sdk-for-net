@@ -19,6 +19,7 @@ namespace Azure.Core.Tests
         private static readonly AsyncLocal<object> s_currentOperation = new AsyncLocal<object>();
 
         private List<IDisposable> _subscriptions = new List<IDisposable>();
+        private readonly IDisposable _allListenersSubscription;
         private readonly Action<ProducedDiagnosticScope> _scopeStartCallback;
 
         public List<ProducedDiagnosticScope> Scopes { get; } = new List<ProducedDiagnosticScope>();
@@ -51,7 +52,7 @@ namespace Azure.Core.Tests
             }
             _sourceNameFilter = filter;
             _scopeStartCallback = scopeStartCallback;
-            DiagnosticListener.AllListeners.Subscribe(this);
+            _allListenersSubscription = DiagnosticListener.AllListeners.Subscribe(this);
         }
 
         /// <summary>
@@ -177,6 +178,10 @@ namespace Azure.Core.Tests
             {
                 subscription.Dispose();
             }
+
+            // AllListeners is a process-wide observable, so failing to release this would keep the
+            // listener and every scope it captured alive for the lifetime of the process.
+            _allListenersSubscription?.Dispose();
 
             foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
             {
