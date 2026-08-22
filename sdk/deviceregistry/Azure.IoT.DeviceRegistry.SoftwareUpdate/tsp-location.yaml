@@ -1,0 +1,6 @@
+directory: specification/deviceupdate/data-plane/sudeviceregistry
+commit: 167da049737b838c6bea8fc07c7f223971bf77f9
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json
