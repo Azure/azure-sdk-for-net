@@ -83,6 +83,11 @@ namespace Azure.Search.Documents.Indexes.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("fileParameters"u8);
             writer.WriteObjectValue(FileParameters, options);
+            if (Optional.IsDefined(CorsOptions))
+            {
+                writer.WritePropertyName("corsOptions"u8);
+                writer.WriteObjectValue(CorsOptions, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -113,10 +118,12 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             string description = default;
             KnowledgeSourceKind kind = default;
+            KnowledgeSourceResultsProcessing? resultsProcessing = default;
             ETag? eTag = default;
             SearchResourceEncryptionKey encryptionKey = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             FileKnowledgeSourceParameters fileParameters = default;
+            CorsOptions corsOptions = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -132,6 +139,15 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (prop.NameEquals("kind"u8))
                 {
                     kind = new KnowledgeSourceKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("resultsProcessing"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resultsProcessing = new KnowledgeSourceResultsProcessing(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("@odata.etag"u8))
@@ -158,6 +174,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     fileParameters = FileKnowledgeSourceParameters.DeserializeFileKnowledgeSourceParameters(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("corsOptions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    corsOptions = CorsOptions.DeserializeCorsOptions(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -167,10 +192,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 name,
                 description,
                 kind,
+                resultsProcessing,
                 eTag,
                 encryptionKey,
                 additionalBinaryDataProperties,
-                fileParameters);
+                fileParameters,
+                corsOptions);
         }
     }
 }

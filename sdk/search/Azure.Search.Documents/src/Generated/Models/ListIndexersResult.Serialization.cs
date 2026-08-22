@@ -85,11 +85,16 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (SearchIndexer item in Indexers)
+                foreach (SearchIndexer item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(OdataNextLink))
+            {
+                writer.WritePropertyName("@odata.nextLink"u8);
+                writer.WriteStringValue(OdataNextLink);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,7 +138,8 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            IReadOnlyList<SearchIndexer> indexers = default;
+            IReadOnlyList<SearchIndexer> value = default;
+            string odataNextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,7 +150,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         array.Add(SearchIndexer.DeserializeSearchIndexer(item, options));
                     }
-                    indexers = array;
+                    value = array;
+                    continue;
+                }
+                if (prop.NameEquals("@odata.nextLink"u8))
+                {
+                    odataNextLink = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -152,7 +163,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ListIndexersResult(indexers, additionalBinaryDataProperties);
+            return new ListIndexersResult(value, odataNextLink, additionalBinaryDataProperties);
         }
     }
 }
