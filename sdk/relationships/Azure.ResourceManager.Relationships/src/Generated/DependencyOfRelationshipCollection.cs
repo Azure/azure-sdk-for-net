@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.Relationships
     /// Each <see cref="DependencyOfRelationshipResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
     /// To get a <see cref="DependencyOfRelationshipCollection"/> instance call the GetDependencyOfRelationships method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class DependencyOfRelationshipCollection : ArmCollection
+    public partial class DependencyOfRelationshipCollection : ArmCollection, IEnumerable<DependencyOfRelationshipResource>, IAsyncEnumerable<DependencyOfRelationshipResource>
     {
         private readonly ClientDiagnostics _dependencyOfRelationshipsClientDiagnostics;
         private readonly DependencyOfRelationships _dependencyOfRelationshipsRestClient;
@@ -37,7 +39,7 @@ namespace Azure.ResourceManager.Relationships
         {
             TryGetApiVersion(DependencyOfRelationshipResource.ResourceType, out string dependencyOfRelationshipApiVersion);
             _dependencyOfRelationshipsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relationships", DependencyOfRelationshipResource.ResourceType.Namespace, Diagnostics);
-            _dependencyOfRelationshipsRestClient = new DependencyOfRelationships(_dependencyOfRelationshipsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dependencyOfRelationshipApiVersion ?? "2023-09-01-preview");
+            _dependencyOfRelationshipsRestClient = new DependencyOfRelationships(_dependencyOfRelationshipsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dependencyOfRelationshipApiVersion ?? "2026-03-01-preview");
         }
 
         /// <summary>
@@ -53,7 +55,7 @@ namespace Azure.ResourceManager.Relationships
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-09-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -111,7 +113,7 @@ namespace Azure.ResourceManager.Relationships
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-09-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -169,7 +171,7 @@ namespace Azure.ResourceManager.Relationships
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-09-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,7 +220,7 @@ namespace Azure.ResourceManager.Relationships
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-09-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -255,6 +257,62 @@ namespace Azure.ResourceManager.Relationships
         }
 
         /// <summary>
+        /// List DependencyOfRelationship resources by parent
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Relationships/dependencyOf. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DependencyOfRelationships_ListByParent. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DependencyOfRelationshipResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DependencyOfRelationshipResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DependencyOfRelationshipData, DependencyOfRelationshipResource>(new DependencyOfRelationshipsGetByParentAsyncCollectionResultOfT(_dependencyOfRelationshipsRestClient, Id.ToString(), context, "DependencyOfRelationshipCollection.GetAll"), data => new DependencyOfRelationshipResource(Client, data));
+        }
+
+        /// <summary>
+        /// List DependencyOfRelationship resources by parent
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Relationships/dependencyOf. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DependencyOfRelationships_ListByParent. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DependencyOfRelationshipResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DependencyOfRelationshipResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DependencyOfRelationshipData, DependencyOfRelationshipResource>(new DependencyOfRelationshipsGetByParentCollectionResultOfT(_dependencyOfRelationshipsRestClient, Id.ToString(), context, "DependencyOfRelationshipCollection.GetAll"), data => new DependencyOfRelationshipResource(Client, data));
+        }
+
+        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
@@ -267,7 +325,7 @@ namespace Azure.ResourceManager.Relationships
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-09-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,7 +382,7 @@ namespace Azure.ResourceManager.Relationships
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-09-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -381,7 +439,7 @@ namespace Azure.ResourceManager.Relationships
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-09-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -442,7 +500,7 @@ namespace Azure.ResourceManager.Relationships
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-09-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -488,6 +546,22 @@ namespace Azure.ResourceManager.Relationships
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<DependencyOfRelationshipResource> IEnumerable<DependencyOfRelationshipResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<DependencyOfRelationshipResource> IAsyncEnumerable<DependencyOfRelationshipResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }
