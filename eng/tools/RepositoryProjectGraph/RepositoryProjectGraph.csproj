@@ -14,6 +14,7 @@
   <ItemGroup>
     <Compile Include="RepositoryProjectGraphTask.cs" />
     <Compile Include="ResolveExternalPackageClosureTask.cs" />
+    <Compile Include="ResolveExternalPackageClosureWithNuGetTask.cs" />
     <Compile Include="RunIsolatedRepositoryProjectGraphTask.cs" />
     <Reference Include="Microsoft.Build"
                HintPath="$(MSBuildToolsPath)/Microsoft.Build.dll"
@@ -30,11 +31,23 @@
     <Reference Include="NuGet.Configuration"
                HintPath="$(MSBuildToolsPath)/NuGet.Configuration.dll"
                Private="false" />
+    <Reference Include="NuGet.Commands"
+               HintPath="$(MSBuildToolsPath)/NuGet.Commands.dll"
+               Private="false" />
+    <Reference Include="NuGet.DependencyResolver.Core"
+               HintPath="$(MSBuildToolsPath)/NuGet.DependencyResolver.Core.dll"
+               Private="false" />
     <Reference Include="NuGet.Frameworks"
                HintPath="$(MSBuildToolsPath)/NuGet.Frameworks.dll"
                Private="false" />
+    <Reference Include="NuGet.LibraryModel"
+               HintPath="$(MSBuildToolsPath)/NuGet.LibraryModel.dll"
+               Private="false" />
     <Reference Include="NuGet.Packaging"
                HintPath="$(MSBuildToolsPath)/NuGet.Packaging.dll"
+               Private="false" />
+    <Reference Include="NuGet.ProjectModel"
+               HintPath="$(MSBuildToolsPath)/NuGet.ProjectModel.dll"
                Private="false" />
     <Reference Include="NuGet.Protocol"
                HintPath="$(MSBuildToolsPath)/NuGet.Protocol.dll"

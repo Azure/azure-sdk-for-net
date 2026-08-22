@@ -291,6 +291,9 @@ function Build-Graph {
           restoreEquivalent = [bool]::Parse($parts[10])
           transitiveDependencyAssetFiltersApplied = [bool]::Parse($parts[11])
         }
+        if ($parts.Length -ge 13) { $packageClosureSummary['projectContextCount'] = [int]$parts[12] }
+        if ($parts.Length -ge 14) { $packageClosureSummary['restoreRequestCount'] = [int]$parts[13] }
+        if ($parts.Length -ge 15) { $packageClosureSummary['selectedPackageCount'] = [int]$parts[14] }
       }
       'Input' {
         if ($parts.Length -lt 5) { throw "Invalid input record: $line" }
