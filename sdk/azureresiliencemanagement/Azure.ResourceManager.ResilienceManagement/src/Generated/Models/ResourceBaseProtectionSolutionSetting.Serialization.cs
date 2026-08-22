@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary>
     /// Definition of recovery orchestration resource protection solution setting with recovery orchestration plan.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResourceNativeProtectionSolutionSetting"/>, <see cref="ResourceCustomProtectionSetting"/>, and <see cref="ResourceSiteRecoveryProtectionSetting"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResourceNativeProtectionSolutionSetting"/>, <see cref="ResourceCustomProtectionSetting"/>, <see cref="ResourceSiteRecoveryProtectionSetting"/>, and <see cref="ResourceCrossZoneVmRecoveryProtectionSetting"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownResourceBaseProtectionSolutionSetting))]
     public abstract partial class ResourceBaseProtectionSolutionSetting : IJsonModel<ResourceBaseProtectionSolutionSetting>
@@ -136,6 +136,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                         return ResourceCustomProtectionSetting.DeserializeResourceCustomProtectionSetting(element, options);
                     case "AzureSiteRecovery":
                         return ResourceSiteRecoveryProtectionSetting.DeserializeResourceSiteRecoveryProtectionSetting(element, options);
+                    case "CrossZoneVMRecovery":
+                        return ResourceCrossZoneVmRecoveryProtectionSetting.DeserializeResourceCrossZoneVmRecoveryProtectionSetting(element, options);
                 }
             }
             return UnknownResourceBaseProtectionSolutionSetting.DeserializeUnknownResourceBaseProtectionSolutionSetting(element, options);

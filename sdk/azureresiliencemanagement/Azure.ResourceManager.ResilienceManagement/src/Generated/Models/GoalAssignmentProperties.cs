@@ -20,29 +20,24 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GoalAssignmentProperties"/>. </summary>
-        /// <param name="goalTemplateId"> Arm id of the goal template. </param>
-        /// <param name="goalAssignmentType"> The type of goal assignment. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="goalTemplateId"/> is null. </exception>
-        public GoalAssignmentProperties(ResourceIdentifier goalTemplateId, GoalAssignmentType goalAssignmentType)
+        public GoalAssignmentProperties()
         {
-            Argument.AssertNotNull(goalTemplateId, nameof(goalTemplateId));
-
-            GoalTemplateId = goalTemplateId;
-            GoalAssignmentType = goalAssignmentType;
             ServiceLevelResources = new ChangeTrackingList<ServiceLevelTarget>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GoalAssignmentProperties"/>. </summary>
         /// <param name="goalTemplateId"> Arm id of the goal template. </param>
         /// <param name="goalAssignmentType"> The type of goal assignment. </param>
+        /// <param name="requireZonalResiliency"> Whether zonal resiliency is required for this goal assignment. </param>
         /// <param name="serviceLevelResources"> List of service level resources. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="errorDetails"> Details of any errors encountered during the operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GoalAssignmentProperties(ResourceIdentifier goalTemplateId, GoalAssignmentType goalAssignmentType, IList<ServiceLevelTarget> serviceLevelResources, ResilienceManagementProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GoalAssignmentProperties(ResourceIdentifier goalTemplateId, GoalAssignmentType? goalAssignmentType, bool? requireZonalResiliency, IList<ServiceLevelTarget> serviceLevelResources, ResilienceManagementProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GoalTemplateId = goalTemplateId;
             GoalAssignmentType = goalAssignmentType;
+            RequireZonalResiliency = requireZonalResiliency;
             ServiceLevelResources = serviceLevelResources;
             ProvisioningState = provisioningState;
             ErrorDetails = errorDetails;
@@ -53,7 +48,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public ResourceIdentifier GoalTemplateId { get; set; }
 
         /// <summary> The type of goal assignment. </summary>
-        public GoalAssignmentType GoalAssignmentType { get; set; }
+        public GoalAssignmentType? GoalAssignmentType { get; set; }
+
+        /// <summary> Whether zonal resiliency is required for this goal assignment. </summary>
+        public bool? RequireZonalResiliency { get; set; }
 
         /// <summary> List of service level resources. </summary>
         public IList<ServiceLevelTarget> ServiceLevelResources { get; }

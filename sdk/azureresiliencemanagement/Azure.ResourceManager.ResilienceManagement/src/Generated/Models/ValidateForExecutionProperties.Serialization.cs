@@ -14,13 +14,8 @@ using Azure.ResourceManager.ResilienceManagement;
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary> Additional properties for Failover. </summary>
-    internal partial class ValidateForExecutionProperties : IJsonModel<ValidateForExecutionProperties>
+    public partial class ValidateForExecutionProperties : IJsonModel<ValidateForExecutionProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="ValidateForExecutionProperties"/> for deserialization. </summary>
-        internal ValidateForExecutionProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ValidateForExecutionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -79,18 +74,26 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 throw new FormatException($"The model {nameof(ValidateForExecutionProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("sourceLocations"u8);
-            writer.WriteStartArray();
-            foreach (string item in SourceLocations)
+            if (Optional.IsDefined(OperationName))
             {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("operationName"u8);
+                writer.WriteStringValue(OperationName.Value.ToString());
             }
-            writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(SourceLocations))
+            {
+                writer.WritePropertyName("sourceLocations"u8);
+                writer.WriteStartArray();
+                foreach (string item in SourceLocations)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -133,12 +136,26 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
+            DrillRunTasks? operationName = default;
             IList<string> sourceLocations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("operationName"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    operationName = new DrillRunTasks(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("sourceLocations"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
@@ -159,7 +176,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ValidateForExecutionProperties(sourceLocations, additionalBinaryDataProperties);
+            return new ValidateForExecutionProperties(operationName, sourceLocations ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }
