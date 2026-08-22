@@ -1,7 +1,21 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0 (Unreleased)
 
+### Features Added
+
+- Updated the client library to target the `2025-06-01` Azure Attestation service API version.
+- Added `AttestationClientOptions.ServiceVersion.V2025_06_01`, which is now the default service version. `V2020_10_01` remains available for callers that need to continue targeting the previous service API version.
+
+### Bugs Fixed
+
+- Fixed `GetPolicyManagementCertificates` failing to deserialize the service response.
+- Fixed `GetPolicy` throwing instead of returning a null policy when the requested attestation type has no policy configured.
+- Fixed `AddPolicyManagementCertificate` and `RemovePolicyManagementCertificate` sending a malformed request body, which caused the service to return `InvalidParameter`.
+
+### Other Changes
+
+- Migrated the code generation from AutoRest/Swagger to TypeSpec. The public API surface is preserved.
 
 ## 1.0.0 (2021-05-11)
 

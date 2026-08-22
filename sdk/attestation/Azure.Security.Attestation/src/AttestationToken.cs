@@ -3,17 +3,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
-using Azure.Core;
+using System.ComponentModel;
+using System.Linq;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
-using System.Threading;
-using System.Linq;
-using System.ComponentModel;
-using Azure.Core.Pipeline;
+using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Security.Attestation
 {
@@ -155,7 +155,8 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// An array of <see cref="X509Certificate"/> which represent a certificate chain used to sign the token.  <seealso href="https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.6">RFC 7515 section 4.1.6</seealso> for details.
         /// </summary>
-        public X509Certificate2[] X509CertificateChain {
+        public X509Certificate2[] X509CertificateChain
+        {
             get
             {
                 List<X509Certificate2> certificates = new List<X509Certificate2>();
@@ -388,7 +389,7 @@ namespace Azure.Security.Attestation
                         if (desiredKeyId == Header.JsonWebKey.Kid)
                         {
                             candidateCertificates.Add(new AttestationSigner(
-                                ConvertBase64CertificateArrayToCertificateChain(Header.JsonWebKey.X5C),
+                                ConvertBase64CertificateArrayToCertificateChain(Header.JsonWebKey.X5c),
                                 desiredKeyId));
                         }
                     }
@@ -418,7 +419,7 @@ namespace Azure.Security.Attestation
                     }
                     if (Header.JsonWebKey != null)
                     {
-                        candidateCertificates.Add(new AttestationSigner(ConvertBase64CertificateArrayToCertificateChain(Header.JsonWebKey.X5C), null));
+                        candidateCertificates.Add(new AttestationSigner(ConvertBase64CertificateArrayToCertificateChain(Header.JsonWebKey.X5c), null));
                     }
                 }
             }
@@ -526,7 +527,7 @@ namespace Azure.Security.Attestation
                 }
             }
 
-            if (Payload.NotBeforeTime.HasValue && (options?.ValidateNotBeforeTime?? true))
+            if (Payload.NotBeforeTime.HasValue && (options?.ValidateNotBeforeTime ?? true))
             {
                 if (DateTimeOffset.Now.CompareTo(NotBeforeTime.Value) < 0)
                 {
@@ -559,12 +560,22 @@ namespace Azure.Security.Attestation
         /// Retrieves the body of the AttestationToken as the specified type.
         /// </summary>
         /// <typeparam name="T">Underlying type for the token body.</typeparam>
-        /// <returns>Returns the body of the attestation token.</returns>
+        /// <returns>Returns the body of the attestation token, or null if the token has an empty body.</returns>
+        /// <remarks>
+        /// The attestation service uses a token with an empty body to represent the absence of a value, for
+        /// instance when an attestation type has no policy configured. Such a token has nothing to deserialize,
+        /// so null is returned rather than surfacing a deserialization failure to the caller.
+        /// </remarks>
         public virtual T GetBody<T>()
-            where T: class
+            where T : class
         {
             lock (_statelock)
             {
+                if (TokenBodyBytes.Length == 0)
+                {
+                    return null;
+                }
+
                 if (_deserializedBody == null || _deserializedBody.GetType() != typeof(T))
                 {
                     _deserializedBody = JsonSerializer.Deserialize<T>(TokenBodyBytes.ToArray(), _serializerOptions);
