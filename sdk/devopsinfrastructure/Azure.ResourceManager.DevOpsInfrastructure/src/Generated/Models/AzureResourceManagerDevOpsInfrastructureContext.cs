@@ -73,6 +73,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
     [ModelReaderWriterBuildable(typeof(UnknownDevOpsPoolAgentProfile))]
     [ModelReaderWriterBuildable(typeof(UnknownResourcePredictionsProfile))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(VmSize))]
     public partial class AzureResourceManagerDevOpsInfrastructureContext : ModelReaderWriterContext
     {
     }

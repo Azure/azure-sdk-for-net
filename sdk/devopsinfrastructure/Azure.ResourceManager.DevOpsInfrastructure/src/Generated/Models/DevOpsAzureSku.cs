@@ -12,7 +12,7 @@ using Azure.ResourceManager.DevOpsInfrastructure;
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
     /// <summary> The Azure SKU of the machines in the pool. </summary>
-    internal partial class DevOpsAzureSku
+    public partial class DevOpsAzureSku
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -25,18 +25,34 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
+            VmSizes = new ChangeTrackingList<VmSize>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevOpsAzureSku"/>. </summary>
         /// <param name="name"> The Azure SKU name of the machines in the pool. </param>
+        /// <param name="windowsNvmeDrive"> The drive letter for the NVMe striped volume on Windows (e.g., 'N'). Defaults to 'N' when not specified. </param>
+        /// <param name="linuxNvmePath"> The mount path for the NVMe striped volume on Linux (e.g., '/mnt/azure_nvme_temp'). Defaults to '/mnt/azure_nvme_temp' when not specified. </param>
+        /// <param name="vmSizes"> Specifies VM sizes for instance-mix allocation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevOpsAzureSku(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevOpsAzureSku(string name, string windowsNvmeDrive, string linuxNvmePath, IList<VmSize> vmSizes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
+            WindowsNvmeDrive = windowsNvmeDrive;
+            LinuxNvmePath = linuxNvmePath;
+            VmSizes = vmSizes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Azure SKU name of the machines in the pool. </summary>
         public string Name { get; set; }
+
+        /// <summary> The drive letter for the NVMe striped volume on Windows (e.g., 'N'). Defaults to 'N' when not specified. </summary>
+        public string WindowsNvmeDrive { get; set; }
+
+        /// <summary> The mount path for the NVMe striped volume on Linux (e.g., '/mnt/azure_nvme_temp'). Defaults to '/mnt/azure_nvme_temp' when not specified. </summary>
+        public string LinuxNvmePath { get; set; }
+
+        /// <summary> Specifies VM sizes for instance-mix allocation. </summary>
+        public IList<VmSize> VmSizes { get; }
     }
 }
