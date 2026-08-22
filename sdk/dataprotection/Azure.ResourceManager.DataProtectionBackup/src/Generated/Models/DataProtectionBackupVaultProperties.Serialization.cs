@@ -100,16 +100,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("securitySettings"u8);
                 writer.WriteObjectValue(SecuritySettings, options);
             }
-            if (Optional.IsCollectionDefined(StorageSettings))
+            writer.WritePropertyName("storageSettings"u8);
+            writer.WriteStartArray();
+            foreach (DataProtectionBackupStorageSetting item in StorageSettings)
             {
-                writer.WritePropertyName("storageSettings"u8);
-                writer.WriteStartArray();
-                foreach (DataProtectionBackupStorageSetting item in StorageSettings)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
+            writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(IsVaultProtectedByResourceGuard))
             {
                 writer.WritePropertyName("isVaultProtectedByResourceGuard"u8);
@@ -259,10 +256,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (prop.NameEquals("storageSettings"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DataProtectionBackupStorageSetting> array = new List<DataProtectionBackupStorageSetting>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
@@ -353,7 +346,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 resourceMoveState,
                 resourceMoveDetails,
                 securitySettings,
-                storageSettings ?? new ChangeTrackingList<DataProtectionBackupStorageSetting>(),
+                storageSettings,
                 isVaultProtectedByResourceGuard,
                 featureSettings,
                 secureScore,
