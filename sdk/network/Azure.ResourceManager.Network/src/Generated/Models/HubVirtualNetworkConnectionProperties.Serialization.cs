@@ -104,6 +104,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("routingConfiguration"u8);
                 writer.WriteObjectValue(RoutingConfiguration, options);
             }
+            if (Optional.IsDefined(EnableOnlyIPv6Peering))
+            {
+                writer.WritePropertyName("enableOnlyIpv6Peering"u8);
+                writer.WriteStringValue(EnableOnlyIPv6Peering.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -157,6 +162,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkSubResource connectionPolicy = default;
             bool? enableInternetSecurity = default;
             RoutingConfigurationNfv routingConfiguration = default;
+            EnableOnlyIPv6PeeringState? enableOnlyIPv6Peering = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -215,6 +221,15 @@ namespace Azure.ResourceManager.Network.Models
                     routingConfiguration = RoutingConfigurationNfv.DeserializeRoutingConfigurationNfv(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("enableOnlyIpv6Peering"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableOnlyIPv6Peering = new EnableOnlyIPv6PeeringState(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("provisioningState"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -236,6 +251,7 @@ namespace Azure.ResourceManager.Network.Models
                 connectionPolicy,
                 enableInternetSecurity,
                 routingConfiguration,
+                enableOnlyIPv6Peering,
                 provisioningState,
                 additionalBinaryDataProperties);
         }

@@ -214,6 +214,52 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> The resiliency level of the ExpressRoute circuit. </summary>
+        [WirePath("properties.resiliencyLevel")]
+        public ExpressRouteCircuitResiliencyLevel? ResiliencyLevel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResiliencyLevel;
+            }
+        }
+
+        /// <summary> Account ID of customer account on partner cloud provider. </summary>
+        [WirePath("properties.partnerAccountId")]
+        public string PartnerAccountId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PartnerAccountId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPropertiesFormat();
+                }
+                Properties.PartnerAccountId = value;
+            }
+        }
+
+        /// <summary> Activation Key from partner cloud provider. </summary>
+        [WirePath("properties.activationKey")]
+        public string ActivationKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ActivationKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPropertiesFormat();
+                }
+                Properties.ActivationKey = value;
+            }
+        }
+
         /// <summary> The provisioning state of the express route circuit resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState
