@@ -1,14 +1,21 @@
 # Release History
 
-## 1.4.0-beta.2 (Unreleased)
+## 1.4.0 (2026-08-20)
 
 ### Features Added
 
+- Added `AdministrativeCredentialsPatch`, `BareMetalMachineConfigurationPatch`, `ClusterSecretArchivePatch`, `ClusterUpdateStrategyPatch`, `ImageRepositoryCredentialsPatch`, `NetworkCloudRackDefinitionPatch`, `NetworkCloudSshPublicKeyPatch`, `RuntimeProtectionConfigurationPatch`, `ServicePrincipalInformationPatch`, `StorageApplianceConfigurationPatch`, and `ValidationThresholdPatch` models to align the update/patch payloads with their corresponding patch semantics.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Changed the type of `NetworkCloudClusterPatch.AggregatorOrSingleRackDefinition` from `NetworkCloudRackDefinition` to `NetworkCloudRackDefinitionPatch`.
+- Changed the type of `NetworkCloudClusterPatch.ClusterServicePrincipal` from `ServicePrincipalInformation` to `ServicePrincipalInformationPatch`.
+- Changed the type of `NetworkCloudClusterPatch.ComputeDeploymentThreshold` from `ValidationThreshold` to `ValidationThresholdPatch`.
+- Changed the type of `NetworkCloudClusterPatch.ComputeRackDefinitions` from `IList<NetworkCloudRackDefinition>` to `IList<NetworkCloudRackDefinitionPatch>`.
+- Changed the type of `NetworkCloudClusterPatch.SecretArchive` from `ClusterSecretArchive` to `ClusterSecretArchivePatch`.
+- Changed the type of `NetworkCloudClusterPatch.UpdateStrategy` from `ClusterUpdateStrategy` to `ClusterUpdateStrategyPatch`.
+- Changed the type of `NetworkCloudVirtualMachinePatch.VmImageRepositoryCredentials` from `ImageRepositoryCredentials` to `ImageRepositoryCredentialsPatch`.
+- Changed the parameter order of the `StorageApplianceProperties` constructor to `(rackId, storageApplianceSkuId, rackSlot, serialNumber, administratorCredentials)`.
 
 ## 1.4.0-beta.1 (2026-06-16)
 

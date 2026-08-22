@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The credentials used to login to the image repository that has access to the specified image. </summary>
-        public ImageRepositoryCredentials VmImageRepositoryCredentials
+        public ImageRepositoryCredentialsPatch VmImageRepositoryCredentials
         {
             get
             {
