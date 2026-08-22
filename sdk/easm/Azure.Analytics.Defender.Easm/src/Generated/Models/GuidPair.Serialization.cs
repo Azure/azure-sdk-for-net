@@ -83,10 +83,10 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("crawlStateGuid"u8);
                 writer.WriteStringValue(CrawlStateGuid);
             }
-            if (Optional.IsDefined(LoadDate))
+            if (Optional.IsDefined(LoadOn))
             {
                 writer.WritePropertyName("loadDate"u8);
-                writer.WriteStringValue(LoadDate.Value, "O");
+                writer.WriteStringValue(LoadOn.Value, "O");
             }
             if (Optional.IsDefined(Recent))
             {
@@ -137,7 +137,7 @@ namespace Azure.Analytics.Defender.Easm
             }
             string pageGuid = default;
             string crawlStateGuid = default;
-            DateTimeOffset? loadDate = default;
+            DateTimeOffset? loadOn = default;
             bool? recent = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -158,7 +158,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    loadDate = prop.Value.GetDateTimeOffset("O");
+                    loadOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("recent"u8))
@@ -175,7 +175,7 @@ namespace Azure.Analytics.Defender.Easm
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GuidPair(pageGuid, crawlStateGuid, loadDate, recent, additionalBinaryDataProperties);
+            return new GuidPair(pageGuid, crawlStateGuid, loadOn, recent, additionalBinaryDataProperties);
         }
     }
 }

@@ -89,10 +89,10 @@ namespace Azure.AI.Discovery
             {
                 throw new FormatException($"The model {nameof(TaskComment)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Timestamp))
+            if (Optional.IsDefined(On))
             {
                 writer.WritePropertyName("timestamp"u8);
-                writer.WriteStringValue(Timestamp.Value, "O");
+                writer.WriteStringValue(On.Value, "O");
             }
             writer.WritePropertyName("createdBy"u8);
             writer.WriteStringValue(CreatedBy);
@@ -142,7 +142,7 @@ namespace Azure.AI.Discovery
             {
                 return null;
             }
-            DateTimeOffset? timestamp = default;
+            DateTimeOffset? @on = default;
             string createdBy = default;
             DiscoveryActorType createdByType = default;
             string text = default;
@@ -155,7 +155,7 @@ namespace Azure.AI.Discovery
                     {
                         continue;
                     }
-                    timestamp = prop.Value.GetDateTimeOffset("O");
+                    @on = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("createdBy"u8))
@@ -178,7 +178,7 @@ namespace Azure.AI.Discovery
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TaskComment(timestamp, createdBy, createdByType, text, additionalBinaryDataProperties);
+            return new TaskComment(@on, createdBy, createdByType, text, additionalBinaryDataProperties);
         }
     }
 }

@@ -79,7 +79,7 @@ namespace Azure.Analytics.Defender.Easm
                 throw new FormatException($"The model {nameof(DeltaDateResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("date"u8);
-            writer.WriteStringValue(Date, "O");
+            writer.WriteStringValue(On, "O");
             writer.WritePropertyName("deltas"u8);
             writer.WriteStartArray();
             foreach (DailyDeltaTypeResult item in Deltas)
@@ -129,14 +129,14 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            DateTimeOffset date = default;
+            DateTimeOffset @on = default;
             IList<DailyDeltaTypeResult> deltas = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("date"u8))
                 {
-                    date = prop.Value.GetDateTimeOffset("O");
+                    @on = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("deltas"u8))
@@ -154,7 +154,7 @@ namespace Azure.Analytics.Defender.Easm
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeltaDateResult(date, deltas, additionalBinaryDataProperties);
+            return new DeltaDateResult(@on, deltas, additionalBinaryDataProperties);
         }
     }
 }
