@@ -19,6 +19,14 @@ parameters:
   - name: SkipPrValidation
     type: boolean
     default: false
+  - name: NuGetCacheExperiment
+    displayName: NuGet cache experiment grouping
+    type: string
+    default: none
+    values:
+      - none
+      - os
+      - class
   # Switch to canary to test canary 1es branch. 1es template validation will set this parameter
   # to canary on run.
   - name: oneESTemplateTag
@@ -33,6 +41,7 @@ extends:
   parameters:
     oneESTemplateTag: ${{ parameters.oneESTemplateTag }}
     SkipPrValidation: ${{ parameters.SkipPrValidation }}
+    NuGetCacheExperiment: ${{ parameters.NuGetCacheExperiment }}
     # Short term hack to get 1es canary validation working until we can fix manual runs with 'auto'
     ${{ if and(eq(parameters.oneESTemplateTag, 'canary'), eq(parameters.Service, 'auto')) }}:
       ServiceDirectory: template
