@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         private SolutionTypes _solutionTypesRestClient;
         private ClientDiagnostics _generateAwsTemplateClientDiagnostics;
         private GenerateAwsTemplate _generateAwsTemplateRestClient;
+        private ClientDiagnostics _generateGcpTemplateClientDiagnostics;
+        private GenerateGcpTemplate _generateGcpTemplateRestClient;
 
         /// <summary> Initializes a new instance of MockableHybridConnectivitySubscriptionResource for mocking. </summary>
         protected MockableHybridConnectivitySubscriptionResource()
@@ -42,15 +44,19 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
 
         private ClientDiagnostics PublicCloudConnectorsClientDiagnostics => _publicCloudConnectorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PublicCloudConnectors PublicCloudConnectorsRestClient => _publicCloudConnectorsRestClient ??= new PublicCloudConnectors(PublicCloudConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-12-01");
+        private PublicCloudConnectors PublicCloudConnectorsRestClient => _publicCloudConnectorsRestClient ??= new PublicCloudConnectors(PublicCloudConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2027-01-01");
 
         private ClientDiagnostics SolutionTypesClientDiagnostics => _solutionTypesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SolutionTypes SolutionTypesRestClient => _solutionTypesRestClient ??= new SolutionTypes(SolutionTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-12-01");
+        private SolutionTypes SolutionTypesRestClient => _solutionTypesRestClient ??= new SolutionTypes(SolutionTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2027-01-01");
 
         private ClientDiagnostics GenerateAwsTemplateClientDiagnostics => _generateAwsTemplateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GenerateAwsTemplate GenerateAwsTemplateRestClient => _generateAwsTemplateRestClient ??= new GenerateAwsTemplate(GenerateAwsTemplateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-12-01");
+        private GenerateAwsTemplate GenerateAwsTemplateRestClient => _generateAwsTemplateRestClient ??= new GenerateAwsTemplate(GenerateAwsTemplateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2027-01-01");
+
+        private ClientDiagnostics GenerateGcpTemplateClientDiagnostics => _generateGcpTemplateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private GenerateGcpTemplate GenerateGcpTemplateRestClient => _generateGcpTemplateRestClient ??= new GenerateGcpTemplate(GenerateGcpTemplateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2027-01-01");
 
         /// <summary>
         /// List PublicCloudConnector resources by subscription ID
@@ -65,7 +71,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -93,7 +99,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +127,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -149,7 +155,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +183,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,7 +231,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -247,6 +253,102 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
                 HttpMessage message = GenerateAwsTemplateRestClient.CreatePostGenerateAwsTemplateRequest(Guid.Parse(Id.SubscriptionId), GenerateAwsTemplateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GenerateAwsTemplateResult> response = Response.FromValue(GenerateAwsTemplateResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve GCP Access Control template
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HybridConnectivity/generateGcpTemplate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateGcpTemplate_Post. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2027-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> ConnectorId and SolutionTypes and their properties to Generate GCP Access Control Template. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<GenerateGcpTemplateResult>> PostAsync(GenerateGcpTemplateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = GenerateGcpTemplateClientDiagnostics.CreateScope("MockableHybridConnectivitySubscriptionResource.Post");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GenerateGcpTemplateRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), GenerateGcpTemplateContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<GenerateGcpTemplateResult> response = Response.FromValue(GenerateGcpTemplateResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve GCP Access Control template
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HybridConnectivity/generateGcpTemplate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateGcpTemplate_Post. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2027-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> ConnectorId and SolutionTypes and their properties to Generate GCP Access Control Template. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<GenerateGcpTemplateResult> Post(GenerateGcpTemplateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = GenerateGcpTemplateClientDiagnostics.CreateScope("MockableHybridConnectivitySubscriptionResource.Post");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GenerateGcpTemplateRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), GenerateGcpTemplateContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<GenerateGcpTemplateResult> response = Response.FromValue(GenerateGcpTemplateResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
