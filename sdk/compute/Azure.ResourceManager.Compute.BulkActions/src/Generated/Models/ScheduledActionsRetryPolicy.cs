@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> Retry policy the scheduled action can pass. </summary>
-    public partial class RecurringScheduledActionsRetryPolicy
+    public partial class ScheduledActionsRetryPolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RecurringScheduledActionsRetryPolicy"/>. </summary>
-        public RecurringScheduledActionsRetryPolicy()
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionsRetryPolicy"/>. </summary>
+        public ScheduledActionsRetryPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RecurringScheduledActionsRetryPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionsRetryPolicy"/>. </summary>
         /// <param name="retryCount"> Retry count for the request. </param>
         /// <param name="retryWindowInMinutes"> Retry window in minutes for the request. </param>
         /// <param name="onFailureAction"> Action to take on failure. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecurringScheduledActionsRetryPolicy(int? retryCount, int? retryWindowInMinutes, RecurringScheduledActionsResourceOperationType? onFailureAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledActionsRetryPolicy(int? retryCount, int? retryWindowInMinutes, ScheduledActionsResourceOperationType? onFailureAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RetryCount = retryCount;
             RetryWindowInMinutes = retryWindowInMinutes;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public int? RetryWindowInMinutes { get; set; }
 
         /// <summary> Action to take on failure. </summary>
-        public RecurringScheduledActionsResourceOperationType? OnFailureAction { get; set; }
+        public ScheduledActionsResourceOperationType? OnFailureAction { get; set; }
     }
 }

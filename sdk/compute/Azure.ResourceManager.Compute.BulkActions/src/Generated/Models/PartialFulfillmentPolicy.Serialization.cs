@@ -13,52 +13,52 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Retry policy the scheduled action can pass. </summary>
-    public partial class RecurringScheduledActionsRetryPolicy : IJsonModel<RecurringScheduledActionsRetryPolicy>
+    /// <summary> Controls how partial fulfillment is handled for a BulkCreateCustom request. When enabled, Azure creates only the VMs or vCPUs it has high confidence can be successfully allocated, instead of attempting the entire request and potentially returning allocation failures. </summary>
+    public partial class PartialFulfillmentPolicy : IJsonModel<PartialFulfillmentPolicy>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RecurringScheduledActionsRetryPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PartialFulfillmentPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RecurringScheduledActionsRetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PartialFulfillmentPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRecurringScheduledActionsRetryPolicy(document.RootElement, options);
+                        return DeserializePartialFulfillmentPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecurringScheduledActionsRetryPolicy)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PartialFulfillmentPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RecurringScheduledActionsRetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PartialFulfillmentPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeBulkActionsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RecurringScheduledActionsRetryPolicy)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PartialFulfillmentPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RecurringScheduledActionsRetryPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PartialFulfillmentPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RecurringScheduledActionsRetryPolicy IPersistableModel<RecurringScheduledActionsRetryPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PartialFulfillmentPolicy IPersistableModel<PartialFulfillmentPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RecurringScheduledActionsRetryPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PartialFulfillmentPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RecurringScheduledActionsRetryPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PartialFulfillmentPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,25 +69,25 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RecurringScheduledActionsRetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PartialFulfillmentPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecurringScheduledActionsRetryPolicy)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PartialFulfillmentPolicy)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(RetryCount))
+            if (options.Format != "W" && Optional.IsDefined(FulfilledCapacity))
             {
-                writer.WritePropertyName("retryCount"u8);
-                writer.WriteNumberValue(RetryCount.Value);
+                writer.WritePropertyName("fulfilledCapacity"u8);
+                writer.WriteNumberValue(FulfilledCapacity.Value);
             }
-            if (Optional.IsDefined(RetryWindowInMinutes))
+            if (Optional.IsDefined(Mode))
             {
-                writer.WritePropertyName("retryWindowInMinutes"u8);
-                writer.WriteNumberValue(RetryWindowInMinutes.Value);
+                writer.WritePropertyName("mode"u8);
+                writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsDefined(OnFailureAction))
+            if (options.Format != "W" && Optional.IsDefined(Reason))
             {
-                writer.WritePropertyName("onFailureAction"u8);
-                writer.WriteStringValue(OnFailureAction.Value.ToString());
+                writer.WritePropertyName("reason"u8);
+                writer.WriteStringValue(Reason.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -108,60 +108,60 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RecurringScheduledActionsRetryPolicy IJsonModel<RecurringScheduledActionsRetryPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PartialFulfillmentPolicy IJsonModel<PartialFulfillmentPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RecurringScheduledActionsRetryPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PartialFulfillmentPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RecurringScheduledActionsRetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PartialFulfillmentPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecurringScheduledActionsRetryPolicy)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PartialFulfillmentPolicy)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRecurringScheduledActionsRetryPolicy(document.RootElement, options);
+            return DeserializePartialFulfillmentPolicy(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RecurringScheduledActionsRetryPolicy DeserializeRecurringScheduledActionsRetryPolicy(JsonElement element, ModelReaderWriterOptions options)
+        internal static PartialFulfillmentPolicy DeserializePartialFulfillmentPolicy(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int? retryCount = default;
-            int? retryWindowInMinutes = default;
-            RecurringScheduledActionsResourceOperationType? onFailureAction = default;
+            int? fulfilledCapacity = default;
+            PartialFulfillmentMode? mode = default;
+            PartialFulfillmentReason? reason = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("retryCount"u8))
+                if (prop.NameEquals("fulfilledCapacity"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    retryCount = prop.Value.GetInt32();
+                    fulfilledCapacity = prop.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("retryWindowInMinutes"u8))
+                if (prop.NameEquals("mode"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    retryWindowInMinutes = prop.Value.GetInt32();
+                    mode = new PartialFulfillmentMode(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("onFailureAction"u8))
+                if (prop.NameEquals("reason"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    onFailureAction = new RecurringScheduledActionsResourceOperationType(prop.Value.GetString());
+                    reason = new PartialFulfillmentReason(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RecurringScheduledActionsRetryPolicy(retryCount, retryWindowInMinutes, onFailureAction, additionalBinaryDataProperties);
+            return new PartialFulfillmentPolicy(fulfilledCapacity, mode, reason, additionalBinaryDataProperties);
         }
     }
 }
