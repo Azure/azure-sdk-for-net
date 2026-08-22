@@ -35,16 +35,16 @@ namespace Azure.IoT.DeviceUpdate
         /// An object containing more specific information than the current object about
         /// the error.
         /// </param>
-        /// <param name="occurredDateTime"> Date and time in UTC when the error occurred. </param>
+        /// <param name="occurredOn"> Date and time in UTC when the error occurred. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Error(string code, string message, string target, IList<Error> details, InnerError innererror, DateTimeOffset? occurredDateTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Error(string code, string message, string target, IList<Error> details, InnerError innererror, DateTimeOffset? occurredOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
             Target = target;
             Details = details;
             Innererror = innererror;
-            OccurredDateTime = occurredDateTime;
+            OccurredOn = occurredOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -67,6 +67,6 @@ namespace Azure.IoT.DeviceUpdate
         public InnerError Innererror { get; }
 
         /// <summary> Date and time in UTC when the error occurred. </summary>
-        public DateTimeOffset? OccurredDateTime { get; }
+        public DateTimeOffset? OccurredOn { get; }
     }
 }
