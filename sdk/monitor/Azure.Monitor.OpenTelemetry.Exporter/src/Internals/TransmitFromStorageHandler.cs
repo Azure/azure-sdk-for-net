@@ -34,6 +34,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// </summary>
         internal const int DrainPostBudgetMilliseconds = 30000;
 
+        /// <summary>
+        /// Only yields to application startup. Kept small so a process that exits in a few hundred
+        /// milliseconds still gets the drain underway.
+        /// </summary>
+        internal const int EagerDrainDelayMilliseconds = 50;
+
         private const int MaxBlobsPerBatch = 50;
 
         private const int MaxBatchBytes = 2 * 1024 * 1024;
@@ -46,6 +52,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// Set by tests that assert on storage contents and cannot tolerate a background drain.
         /// </summary>
         internal static bool DisableEagerDrainForTesting;
+
+        /// <summary>
+        /// Set by tests that assert on what shutdown persisted. Shutdown starts the drain without
+        /// waiting for it, so it would otherwise be free to lease and delete those blobs while the
+        /// assertions run.
+        /// </summary>
+        internal static bool DisableShutdownDrainForTesting;
 
         private readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
         private readonly ConnectionVars _connectionVars;
@@ -78,8 +91,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         /// <summary>
         /// Short-lived processes exit long before the first timer tick, so telemetry left behind by
-        /// previous runs is uploaded near startup instead. Jittered because parallel invocations
-        /// (for example MSBuild nodes) share one storage directory.
+        /// previous runs is uploaded near startup instead. Concurrent invocations sharing a storage
+        /// directory are separated by blob leases, not by staggering this.
         /// </summary>
         private void ScheduleEagerDrain()
         {
@@ -88,18 +101,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return;
             }
 
-            var delay = new Random().Next(200, 1200);
-
             _ = Task.Run(async () =>
             {
-                await Task.Delay(delay).ConfigureAwait(false);
+                await Task.Delay(EagerDrainDelayMilliseconds).ConfigureAwait(false);
                 Drain();
             });
         }
 
         internal void TransmitFromStorage(object? sender, ElapsedEventArgs? e) => Drain();
 
-        internal Task DrainAsync() => Task.Run(Drain);
+        internal Task DrainAsync() => DisableShutdownDrainForTesting ? Task.CompletedTask : Task.Run(Drain);
 
         internal void Drain()
         {
@@ -131,16 +142,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private void DrainBlobs()
         {
-            // Snapshotted up front so deleting blobs cannot invalidate the enumeration, and reversed
-            // because the provider yields newest-first while the oldest telemetry is closest to
-            // expiring.
+            // Snapshotted up front so deleting blobs cannot invalidate the enumeration. The order the
+            // provider yields is kept: newest first, because a backlog is worth less to a customer
+            // than knowing what is happening now. A backlog too large to drain loses its oldest end,
+            // either to eviction or to the ingestion age limit.
             var blobs = new List<PersistentBlob>(_blobProvider.GetBlobs());
             if (blobs.Count == 0)
             {
                 return;
             }
-
-            blobs.Reverse();
 
             var stopwatch = Stopwatch.StartNew();
             var batch = new List<PendingBlob>(MaxBlobsPerBatch);

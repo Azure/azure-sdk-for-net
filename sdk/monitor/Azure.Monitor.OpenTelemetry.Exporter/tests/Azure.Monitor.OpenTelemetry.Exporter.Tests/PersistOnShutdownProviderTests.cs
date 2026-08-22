@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using System.IO;
 using System.Linq;
 
@@ -12,7 +13,12 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ShutdownPersistence;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+
 using OpenTelemetry;
+using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 
 using Xunit;
@@ -44,6 +50,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         public PersistOnShutdownProviderTests()
         {
+            // Shutdown starts the drain without waiting for it, so tests asserting on what was
+            // persisted would otherwise race it. Tests that are about the drain turn this back on.
+            TransmitFromStorageHandler.DisableShutdownDrainForTesting = true;
+
             _storageRoot = Path.Combine(Path.GetTempPath(), "AzMonPersistProviderTests", Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(_storageRoot);
 
@@ -59,6 +69,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         public void Dispose()
         {
+            TransmitFromStorageHandler.DisableShutdownDrainForTesting = false;
+
             _listener.Dispose();
             _activitySource.Dispose();
 
@@ -93,6 +105,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void DisposeDoesNotLoseTelemetryWhenIngestionIsUnavailable()
         {
+            TransmitFromStorageHandler.DisableShutdownDrainForTesting = false;
+
             var tracerProvider = BuildTracerProvider(out _, out _, _ => new MockResponse(503).SetContent("Service Unavailable"));
 
             EmitActivity();
@@ -172,6 +186,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void ShutdownDoesNotBlockOnAHangingEndpoint()
         {
+            TransmitFromStorageHandler.DisableShutdownDrainForTesting = false;
+
             var tracerProvider = BuildTracerProvider(
                 out _,
                 out _,
@@ -193,6 +209,273 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(1, CountStoredPayloads());
         }
 
+        [Fact]
+        public void DisposeDoesNotWaitWhenTheDrainBudgetIsZero()
+        {
+            // The drain has to actually run, or this would pass no matter what the budget resolved to.
+            TransmitFromStorageHandler.DisableShutdownDrainForTesting = false;
+            SetDrainBudgetOverride(0);
+
+            try
+            {
+                var tracerProvider = BuildTracerProvider(
+                    out _,
+                    out _,
+                    _ =>
+                    {
+                        System.Threading.Thread.Sleep(TimeSpan.FromSeconds(30));
+                        return new MockResponse(200);
+                    });
+
+                EmitActivity();
+
+                var stopwatch = Stopwatch.StartNew();
+                tracerProvider.Dispose();
+                stopwatch.Stop();
+
+                // What a short-lived application configures: Dispose passes a finite timeout, and a
+                // zero budget stops that window being spent waiting on the drain.
+                Assert.True(stopwatch.Elapsed < TimeSpan.FromSeconds(1), $"Dispose took {stopwatch.Elapsed}.");
+                Assert.Equal(1, CountStoredPayloads());
+            }
+            finally
+            {
+                SetDrainBudgetOverride(null);
+            }
+        }
+
+        [Fact]
+        public void LogShutdownPersistsPendingTelemetryWithoutTransmitting()
+        {
+            var options = BuildOptions(out _, out var transport);
+
+            using var serviceProvider = BuildLoggerServices(options);
+
+            serviceProvider.GetRequiredService<ILoggerFactory>()
+                .CreateLogger<PersistOnShutdownProviderTests>()
+                .LogInformation("Persist me.");
+
+            // Logs run through a separate processor from traces, so the trace tests say nothing
+            // about this path.
+            serviceProvider.GetRequiredService<LoggerProvider>().Shutdown();
+
+            Assert.Empty(transport.Requests);
+            Assert.Equal(1, CountStoredPayloads());
+        }
+
+        [Fact]
+        public void LogForceFlushPersistsWhenSwitchIsEnabled()
+        {
+            AppContext.SetSwitch(PersistOnShutdownConfig.PersistOnForceFlushSwitchName, true);
+
+            try
+            {
+                var options = BuildOptions(out _, out var transport);
+
+                using var serviceProvider = BuildLoggerServices(options);
+
+                serviceProvider.GetRequiredService<ILoggerFactory>()
+                    .CreateLogger<PersistOnShutdownProviderTests>()
+                    .LogInformation("Persist me.");
+
+                serviceProvider.GetRequiredService<LoggerProvider>().ForceFlush();
+
+                Assert.Empty(transport.Requests);
+                Assert.Equal(1, CountStoredPayloads());
+            }
+            finally
+            {
+                AppContext.SetSwitch(PersistOnShutdownConfig.PersistOnForceFlushSwitchName, false);
+            }
+        }
+
+        [Fact]
+        public void MetricShutdownPersistsPendingTelemetryWithoutTransmitting()
+        {
+            var options = BuildOptions(out var transmitter, out var transport);
+
+            var meterName = $"OTel.PersistProvider.{Guid.NewGuid():N}";
+            using var meter = new Meter(meterName);
+
+            using var meterProvider = Sdk.CreateMeterProviderBuilder()
+                .AddMeter(meterName)
+                .AddReader(new AzureMonitorPeriodicExportingMetricReader(new AzureMonitorMetricExporter(options)))
+                .Build()!;
+
+            meter.CreateCounter<long>("TestCounter").Add(1);
+
+            meterProvider.Shutdown();
+
+            Assert.Empty(transport.Requests);
+            Assert.Equal(1, CountStoredPayloads());
+        }
+
+        [Fact]
+        public void LogForceFlushTransmitsByDefault()
+        {
+            var options = BuildOptions(out var transmitter, out var transport);
+
+            using var serviceProvider = BuildLoggerServices(options);
+
+            serviceProvider.GetRequiredService<ILoggerFactory>()
+                .CreateLogger<PersistOnShutdownProviderTests>()
+                .LogInformation("Deliver me.");
+
+            serviceProvider.GetRequiredService<LoggerProvider>().ForceFlush();
+
+            Assert.Single(transport.Requests);
+            Assert.Empty(transmitter._fileBlobProvider!.GetBlobs());
+        }
+
+        [Fact]
+        public void LogShutdownTransmitsWhenPersistenceIsDisabled()
+        {
+            AppContext.SetSwitch(PersistOnShutdownConfig.DisablePersistOnShutdownSwitchName, true);
+
+            try
+            {
+                var options = BuildOptions(out var transmitter, out var transport);
+
+                using var serviceProvider = BuildLoggerServices(options);
+
+                serviceProvider.GetRequiredService<ILoggerFactory>()
+                    .CreateLogger<PersistOnShutdownProviderTests>()
+                    .LogInformation("Deliver me.");
+
+                serviceProvider.GetRequiredService<LoggerProvider>().Shutdown();
+
+                Assert.Single(transport.Requests);
+                Assert.Empty(transmitter._fileBlobProvider!.GetBlobs());
+            }
+            finally
+            {
+                AppContext.SetSwitch(PersistOnShutdownConfig.DisablePersistOnShutdownSwitchName, false);
+            }
+        }
+
+        [Fact]
+        public void MetricShutdownTransmitsWhenPersistenceIsDisabled()
+        {
+            AppContext.SetSwitch(PersistOnShutdownConfig.DisablePersistOnShutdownSwitchName, true);
+
+            try
+            {
+                var options = BuildOptions(out var transmitter, out var transport);
+
+                var meterName = $"OTel.PersistProvider.{Guid.NewGuid():N}";
+                using var meter = new Meter(meterName);
+
+                using var meterProvider = Sdk.CreateMeterProviderBuilder()
+                    .AddMeter(meterName)
+                    .AddReader(new AzureMonitorPeriodicExportingMetricReader(new AzureMonitorMetricExporter(options)))
+                    .Build()!;
+
+                meter.CreateCounter<long>("TestCounter").Add(1);
+
+                meterProvider.Shutdown();
+
+                Assert.Single(transport.Requests);
+                Assert.Empty(transmitter._fileBlobProvider!.GetBlobs());
+            }
+            finally
+            {
+                AppContext.SetSwitch(PersistOnShutdownConfig.DisablePersistOnShutdownSwitchName, false);
+            }
+        }
+
+        [Fact]
+        public void MetricDisposeDrainsPersistedTelemetryWithinTheBudget()
+        {
+            TransmitFromStorageHandler.DisableShutdownDrainForTesting = false;
+
+            var options = BuildOptions(out var transmitter, out var transport);
+
+            var meterName = $"OTel.PersistProvider.{Guid.NewGuid():N}";
+            using var meter = new Meter(meterName);
+
+            var meterProvider = Sdk.CreateMeterProviderBuilder()
+                .AddMeter(meterName)
+                .AddReader(new AzureMonitorPeriodicExportingMetricReader(new AzureMonitorMetricExporter(options)))
+                .Build()!;
+
+            meter.CreateCounter<long>("TestCounter").Add(1);
+
+            // Dispose passes a finite 5000 ms rather than Timeout.Infinite, so unlike Shutdown the
+            // drain gets a budget: the collection is persisted first and then uploaded from storage.
+            meterProvider.Dispose();
+
+            Assert.Single(transport.Requests);
+            Assert.Empty(transmitter._fileBlobProvider!.GetBlobs());
+        }
+
+        [Fact]
+        public void MetricDisposeDoesNotWaitWhenTheDrainBudgetIsZero()
+        {
+            // The drain has to actually run, or this would pass no matter what the budget resolved to.
+            TransmitFromStorageHandler.DisableShutdownDrainForTesting = false;
+            SetDrainBudgetOverride(0);
+
+            try
+            {
+                // An endpoint that never answers keeps the drain from deleting what was persisted,
+                // so the count below is not racing it.
+                var options = BuildOptions(
+                    out _,
+                    out _,
+                    _ =>
+                    {
+                        System.Threading.Thread.Sleep(TimeSpan.FromSeconds(30));
+                        return new MockResponse(200);
+                    });
+
+                var meterName = $"OTel.PersistProvider.{Guid.NewGuid():N}";
+                using var meter = new Meter(meterName);
+
+                var meterProvider = Sdk.CreateMeterProviderBuilder()
+                    .AddMeter(meterName)
+                    .AddReader(new AzureMonitorPeriodicExportingMetricReader(new AzureMonitorMetricExporter(options)))
+                    .Build()!;
+
+                meter.CreateCounter<long>("TestCounter").Add(1);
+
+                var stopwatch = Stopwatch.StartNew();
+                meterProvider.Dispose();
+                stopwatch.Stop();
+
+                // The default budget would spend up to two seconds of Dispose's window waiting on a
+                // drain that cannot finish.
+                Assert.True(stopwatch.Elapsed < TimeSpan.FromSeconds(1), $"Dispose took {stopwatch.Elapsed}.");
+                Assert.Equal(1, CountStoredPayloads());
+            }
+            finally
+            {
+                SetDrainBudgetOverride(null);
+            }
+        }
+
+        [Fact]
+        public void MetricForceFlushTransmits()
+        {
+            var options = BuildOptions(out var transmitter, out var transport);
+
+            var meterName = $"OTel.PersistProvider.{Guid.NewGuid():N}";
+            using var meter = new Meter(meterName);
+
+            using var meterProvider = Sdk.CreateMeterProviderBuilder()
+                .AddMeter(meterName)
+                .AddReader(new AzureMonitorPeriodicExportingMetricReader(new AzureMonitorMetricExporter(options)))
+                .Build()!;
+
+            meter.CreateCounter<long>("TestCounter").Add(1);
+
+            meterProvider.ForceFlush();
+
+            // Pins the documented limitation: MetricReader.OnCollect cannot tell a caller-initiated
+            // flush from the periodic collection, so the flush is never redirected to storage.
+            Assert.Single(transport.Requests);
+            Assert.Empty(transmitter._fileBlobProvider!.GetBlobs());
+        }
+
         /// <summary>
         /// Counts telemetry still on disk. A drain that failed or was cut short leaves the blob
         /// leased rather than deleted, and a leased blob is renamed to ".lock".
@@ -207,7 +490,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
         }
 
-        private TracerProvider BuildTracerProvider(out AzureMonitorTransmitter transmitter, out MockTransport transport, Func<MockRequest, MockResponse>? responseFactory = null)
+        /// <summary>
+        /// .NET Framework has no AppContext.SetData, and AppDomain.SetData is what AppContext reads
+        /// from, so this is the portable way to drive the override.
+        /// </summary>
+        private static void SetDrainBudgetOverride(object? value)
+            => AppDomain.CurrentDomain.SetData(PersistOnShutdownConfig.DrainBudgetOverrideName, value);
+
+        private static ServiceProvider BuildLoggerServices(AzureMonitorExporterOptions options)
+        {
+            var services = new ServiceCollection();
+
+            services.AddLogging(logging => logging.AddOpenTelemetry());
+            services.AddOpenTelemetry().WithLogging(builder =>
+                builder.AddProcessor(new AzureMonitorBatchLogRecordExportProcessor(new AzureMonitorLogExporter(options))));
+
+            return services.BuildServiceProvider();
+        }
+
+        private AzureMonitorExporterOptions BuildOptions(out AzureMonitorTransmitter transmitter, out MockTransport transport, Func<MockRequest, MockResponse>? responseFactory = null)
         {
             var connectionString = $"InstrumentationKey={Guid.NewGuid()};IngestionEndpoint={TestEndpoint}";
 
@@ -225,6 +526,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // what lets this test supply a mock platform and a scratch storage directory.
             transmitter = new AzureMonitorTransmitter(options, new MockPlatform());
             TransmitterFactory.Instance.Set(connectionString, transmitter);
+
+            return options;
+        }
+
+        private TracerProvider BuildTracerProvider(out AzureMonitorTransmitter transmitter, out MockTransport transport, Func<MockRequest, MockResponse>? responseFactory = null)
+        {
+            var options = BuildOptions(out transmitter, out transport, responseFactory);
 
             return Sdk.CreateTracerProviderBuilder()
                 .AddSource(_sourceName)

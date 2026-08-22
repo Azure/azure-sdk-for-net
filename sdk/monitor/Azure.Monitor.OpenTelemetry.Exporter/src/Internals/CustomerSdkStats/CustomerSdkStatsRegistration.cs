@@ -3,7 +3,6 @@
 
 using System;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
-using Microsoft.Extensions.DependencyInjection;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 
@@ -15,11 +14,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
     internal static class CustomerSdkStatsRegistration
     {
         /// <summary>
-        /// Registers customer SDK stats services if enabled via environment variables.
+        /// Starts customer SDK stats collection if enabled via environment variables.
         /// </summary>
-        /// <param name="services">Service collection</param>
         /// <param name="options">Azure Monitor exporter options</param>
-        public static void RegisterCustomerSdkStats(IServiceCollection services, AzureMonitorExporterOptions options)
+        public static void RegisterCustomerSdkStats(AzureMonitorExporterOptions options)
         {
             if (!CustomerSdkStatsHelper.IsEnabled())
             {
@@ -41,9 +39,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
                         })
                     .Build();
 
-                // Register the MeterProvider for disposal
-                services.AddSingleton(meterProvider);
-
+                // Deliberately not registered for disposal. This runs from a
+                // ConfigureOpenTelemetryMeterProvider callback, which fires while the container is
+                // being resolved, so anything added to the collection here is invisible to the
+                // already-built provider and would never be disposed anyway. Leaving it to live for
+                // the process lifetime also keeps its final export off the exit path; the reader's
+                // own timer is what delivers these stats.
                 AzureMonitorExporterEventSource.Log.CustomerSdkStatsEnabled(exportInterval);
             }
             catch (Exception ex)
@@ -69,8 +70,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
                 EnableLiveMetrics = false,
             };
 
-            // Disposing this meter provider exports once more on the process exit path.
-            options.Retry.NetworkTimeout = ShutdownPersistence.PersistOnShutdownConfig.InternalTelemetryNetworkTimeout;
+            // No network timeout override: transmitters are cached per connection string and these
+            // stats share the customer's, so setting one here would either be discarded or, if this
+            // ran first, impose a five second timeout on the customer's own telemetry. Nothing
+            // disposes this provider, so it never exports on the exit path either way.
 
             return options;
         }
