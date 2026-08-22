@@ -26,6 +26,15 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         {
         }
 
+        /// <summary> Gets an object representing a <see cref="RebalanceJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RebalanceJobResource"/> object. </returns>
+        public virtual RebalanceJobResource GetRebalanceJobResource(ResourceIdentifier id)
+        {
+            RebalanceJobResource.ValidateResourceId(id);
+            return new RebalanceJobResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="StorageCacheResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StorageCacheResource"/> object. </returns>

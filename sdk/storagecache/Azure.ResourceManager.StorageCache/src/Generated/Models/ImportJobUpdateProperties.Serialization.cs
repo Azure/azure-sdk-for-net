@@ -13,7 +13,7 @@ using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary> The ImportJobUpdateProperties. </summary>
+    /// <summary> Properties for updating an import job. </summary>
     internal partial class ImportJobUpdateProperties : IJsonModel<ImportJobUpdateProperties>
     {
         /// <param name="data"> The data to parse. </param>
