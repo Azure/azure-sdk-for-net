@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.RedHatOpenShiftHcp.csproj" />
+  <Project Path="tests/Azure.ResourceManager.RedHatOpenShiftHcp.Tests.csproj" />
+</Solution>
