@@ -85,6 +85,26 @@ namespace Azure.ResourceManager.StorageMover.Models
             writer.WriteStringValue(StorageAccountResourceId);
             writer.WritePropertyName("fileShareName"u8);
             writer.WriteStringValue(FileShareName);
+            if (Optional.IsDefined(EnableCrossTenantTransfer))
+            {
+                writer.WritePropertyName("enableCrossTenantTransfer"u8);
+                writer.WriteBooleanValue(EnableCrossTenantTransfer.Value);
+            }
+            if (Optional.IsCollectionDefined(AllowedStorageAccounts))
+            {
+                writer.WritePropertyName("allowedStorageAccounts"u8);
+                writer.WriteStartArray();
+                foreach (string item in AllowedStorageAccounts)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -119,6 +139,8 @@ namespace Azure.ResourceManager.StorageMover.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier storageAccountResourceId = default;
             string fileShareName = default;
+            bool? enableCrossTenantTransfer = default;
+            IList<string> allowedStorageAccounts = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("endpointType"u8))
@@ -159,6 +181,36 @@ namespace Azure.ResourceManager.StorageMover.Models
                     fileShareName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("enableCrossTenantTransfer"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableCrossTenantTransfer = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("allowedStorageAccounts"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    allowedStorageAccounts = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -171,7 +223,9 @@ namespace Azure.ResourceManager.StorageMover.Models
                 provisioningState,
                 additionalBinaryDataProperties,
                 storageAccountResourceId,
-                fileShareName);
+                fileShareName,
+                enableCrossTenantTransfer,
+                allowedStorageAccounts ?? new ChangeTrackingList<string>());
         }
     }
 }
