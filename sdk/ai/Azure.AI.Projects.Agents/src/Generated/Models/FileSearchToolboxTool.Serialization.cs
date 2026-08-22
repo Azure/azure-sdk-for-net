@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -76,10 +77,10 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("max_num_results"u8);
                 writer.WriteNumberValue(MaxNumResults.Value);
             }
-            if (Optional.IsDefined(RankingOptionsInternal))
+            if (Optional.IsDefined(RankingOptions))
             {
                 writer.WritePropertyName("ranking_options"u8);
-                writer.WriteObjectValue(RankingOptionsInternal, options);
+                writer.WriteObjectValue<object>(RankingOptions, options);
             }
             if (Optional.IsDefined(Filters))
             {
@@ -141,7 +142,7 @@ namespace Azure.AI.Projects.Agents
             IDictionary<string, ToolConfig> toolConfigs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             long? maxNumResults = default;
-            InternalRankingOptions rankingOptionsInternal = default;
+            object rankingOptions = default;
             BinaryData filters = default;
             IList<string> vectorStoreIds = default;
             foreach (var prop in element.EnumerateObject())
@@ -170,7 +171,14 @@ namespace Azure.AI.Projects.Agents
                     Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<ToolConfig>(prop0.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default));
+                        }
                     }
                     toolConfigs = dictionary;
                     continue;
@@ -190,7 +198,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    rankingOptionsInternal = InternalRankingOptions.DeserializeInternalRankingOptions(prop.Value, options);
+                    rankingOptions = prop.Value.GetObject();
                     continue;
                 }
                 if (prop.NameEquals("filters"u8))
@@ -236,7 +244,7 @@ namespace Azure.AI.Projects.Agents
                 toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
                 additionalBinaryDataProperties,
                 maxNumResults,
-                rankingOptionsInternal,
+                rankingOptions,
                 filters,
                 vectorStoreIds ?? new ChangeTrackingList<string>());
         }

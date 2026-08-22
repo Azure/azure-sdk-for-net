@@ -92,7 +92,7 @@ public class AgentsTests : AgentsTestBase
         int agentLimit = 10;
         AsyncCollectionResult<ProjectsAgentRecord> agents = projectClient.AgentAdministrationClient.GetAgentsAsync(limit: agentLimit, order: "asc");
 
-        List<string> ids = [.. (await agents.ToEnumerableAsync()).Select(x => x.Id)];
+        List<string> ids = await agents.Select(x => x.Id).ToListAsync();
         if (ids.Count < agentLimit)
         {
             for (int i = ids.Count; i < agentLimit; i++)
@@ -736,10 +736,10 @@ public class AgentsTests : AgentsTestBase
         MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(name: MEMORY_STORE_NAME, definition: memoryDefinitions, description: "Test memory store.");
         // Create an empty scope and make sure we cannot find anything.
         string scope = MEMORY_STORE_SCOPE;
-        global::Azure.AI.Projects.Memory.MemorySearchOptions opts = new(scope)
+        MemorySearchOptions opts = new(scope)
         {
             Items = { ResponseItem.CreateUserMessageItem("Name your favorite animal") },
-            ResultOptions = new global::Azure.AI.Projects.Memory.MemorySearchResultOptions()
+            ResultOptions = new MemorySearchResultOptions()
             {
                 MaxMemories = 1,
             }
