@@ -19,7 +19,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Microsoft Azure Analysis Services management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.AnalysisServices
+dotnet add package Azure.ResourceManager.Analysis
 ```
 
 ### Prerequisites
@@ -33,6 +33,22 @@ To create an authenticated client and start interacting with Microsoft Azure res
 ## Key concepts
 
 Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html).
+
+### AnalysisServerResource
+
+Represents an Azure Analysis Services server resource. Use this to get, update, delete, suspend, or resume an individual server, and to manage firewall rules and gateway status.
+
+### AnalysisServerCollection
+
+The collection of `AnalysisServerResource` objects scoped to a resource group. Use `GetAnalysisServers()` on a `ResourceGroupResource` to obtain the collection. Supports creating, listing, and checking existence of Analysis Services servers.
+
+### AnalysisServerData
+
+The data (properties) of an Analysis Services server including SKU, location, administrator identities, backup storage URI, and current provisioning state.
+
+### Resource hierarchy
+
+`SubscriptionResource` → `ResourceGroupResource` → `AnalysisServerCollection` → `AnalysisServerResource`
 
 ## Documentation
 
