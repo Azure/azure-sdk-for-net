@@ -258,9 +258,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="isLocalAuthDisabled"> Disable Non-AAD based Auth. </param>
         /// <param name="isUnifiedSentinelBillingOnly"> An indication if the specify workspace is limited to sentinel's unified billing model only. </param>
         /// <param name="associations"> List of associations for the workspace. Indicates if the workspace is associated with any of the following experiences: MDC, Sentinel, SentinelGraph, etc. </param>
+        /// <param name="dataAuthorizationMode"> Enable Data authorization mode for the workspace. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspaceFeatures"/> instance for mocking. </returns>
-        public static OperationalInsightsWorkspaceFeatures OperationalInsightsWorkspaceFeatures(bool? isDataExportEnabled = default, bool? immediatePurgeDataOn30Days = default, bool? isLogAccessUsingOnlyResourcePermissionsEnabled = default, ResourceIdentifier clusterResourceId = default, bool? isLocalAuthDisabled = default, bool? isUnifiedSentinelBillingOnly = default, IEnumerable<string> associations = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static OperationalInsightsWorkspaceFeatures OperationalInsightsWorkspaceFeatures(bool? isDataExportEnabled = default, bool? immediatePurgeDataOn30Days = default, bool? isLogAccessUsingOnlyResourcePermissionsEnabled = default, ResourceIdentifier clusterResourceId = default, bool? isLocalAuthDisabled = default, bool? isUnifiedSentinelBillingOnly = default, IEnumerable<string> associations = default, bool? dataAuthorizationMode = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             associations ??= new ChangeTrackingList<string>();
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
@@ -273,6 +274,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 isLocalAuthDisabled,
                 isUnifiedSentinelBillingOnly,
                 (associations ?? new ChangeTrackingList<string>()).ToList(),
+                dataAuthorizationMode,
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
@@ -593,20 +595,21 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="restoredLogs"> Parameters of the restore operation that initiated this table. </param>
         /// <param name="resultStatistics"> Search job execution statistics. </param>
         /// <param name="plan"> Instruct the system how to handle and charge the logs ingested to this table. </param>
+        /// <param name="protectionLevel"> The protection level of the table. Determines the default data access isolation behavior. </param>
         /// <param name="lastPlanModifiedDate"> The timestamp that table plan was last modified (UTC). </param>
         /// <param name="schema"> Table schema. </param>
         /// <param name="provisioningState"> Table's current provisioning state. If set to 'updating', indicates a resource lock due to ongoing operation, forbidding any update to the table until the ongoing operation is concluded. </param>
         /// <param name="isRetentionInDaysAsDefault"> True - Value originates from workspace retention in days, False - Customer specific. </param>
         /// <param name="isTotalRetentionInDaysAsDefault"> True - Value originates from retention in days, False - Customer specific. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsTableData"/> instance for mocking. </returns>
-        public static OperationalInsightsTableData OperationalInsightsTableData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? retentionInDays = default, int? totalRetentionInDays = default, int? archiveRetentionInDays = default, OperationalInsightsTableSearchResults searchResults = default, OperationalInsightsTableRestoredLogs restoredLogs = default, OperationalInsightsTableResultStatistics resultStatistics = default, OperationalInsightsTablePlan? plan = default, string lastPlanModifiedDate = default, OperationalInsightsSchema schema = default, OperationalInsightsTableProvisioningState? provisioningState = default, bool? isRetentionInDaysAsDefault = default, bool? isTotalRetentionInDaysAsDefault = default)
+        public static OperationalInsightsTableData OperationalInsightsTableData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? retentionInDays = default, int? totalRetentionInDays = default, int? archiveRetentionInDays = default, OperationalInsightsTableSearchResults searchResults = default, OperationalInsightsTableRestoredLogs restoredLogs = default, OperationalInsightsTableResultStatistics resultStatistics = default, OperationalInsightsTablePlan? plan = default, TableProtectionLevelEnum? protectionLevel = default, string lastPlanModifiedDate = default, OperationalInsightsSchema schema = default, OperationalInsightsTableProvisioningState? provisioningState = default, bool? isRetentionInDaysAsDefault = default, bool? isTotalRetentionInDaysAsDefault = default)
         {
             return new OperationalInsightsTableData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                retentionInDays is null && totalRetentionInDays is null && archiveRetentionInDays is null && searchResults is null && restoredLogs is null && resultStatistics is null && plan is null && lastPlanModifiedDate is null && schema is null && provisioningState is null && isRetentionInDaysAsDefault is null && isTotalRetentionInDaysAsDefault is null ? default : new TableProperties(
+                retentionInDays is null && totalRetentionInDays is null && archiveRetentionInDays is null && searchResults is null && restoredLogs is null && resultStatistics is null && plan is null && protectionLevel is null && lastPlanModifiedDate is null && schema is null && provisioningState is null && isRetentionInDaysAsDefault is null && isTotalRetentionInDaysAsDefault is null ? default : new TableProperties(
                     retentionInDays,
                     totalRetentionInDays,
                     archiveRetentionInDays,
@@ -614,6 +617,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     restoredLogs,
                     resultStatistics,
                     plan,
+                    protectionLevel,
                     lastPlanModifiedDate,
                     schema,
                     provisioningState,
@@ -701,7 +705,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="name"> Column name. </param>
         /// <param name="columnType"> Column data type. </param>
         /// <param name="dataTypeHint"> Column data type logical hint. </param>
-        /// <param name="displayName"> Column display name. </param>
+        /// <param name="displayName"> Column display name. Can be set at creation time; after creation, updates must either match column name or set to null/empty. If not provided, defaults to column name. </param>
         /// <param name="description"> Column description. </param>
         /// <param name="isDefaultDisplay"> Is displayed by default. </param>
         /// <param name="isHidden"> Is column hidden. </param>
@@ -862,6 +866,22 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static OperationalInsightsWorkspacePurgeStatusResult OperationalInsightsWorkspacePurgeStatusResult(OperationalInsightsWorkspacePurgeState status = default)
         {
             return new OperationalInsightsWorkspacePurgeStatusResult(status, default);
+        }
+
+        /// <param name="table"> The name of the table from which to purge data lake data. Must be an Auxiliary table, or an Analytics table that is mirrored to the data lake. </param>
+        /// <param name="timeRange"> The time range over which data lake data is purged. </param>
+        /// <returns> A new <see cref="Models.WorkspacePurgeLakeDataBody"/> instance for mocking. </returns>
+        public static WorkspacePurgeLakeDataBody WorkspacePurgeLakeDataBody(string table = default, WorkspacePurgeLakeDataTimeRange timeRange = default)
+        {
+            return new WorkspacePurgeLakeDataBody(table, timeRange, default);
+        }
+
+        /// <param name="startOn"> The inclusive start of the time range, in UTC. Must fall on an hour boundary (minutes and seconds must be zero). </param>
+        /// <param name="endOn"> The exclusive end of the time range, in UTC. Must fall on an hour boundary and be earlier than the start of the current hour. </param>
+        /// <returns> A new <see cref="Models.WorkspacePurgeLakeDataTimeRange"/> instance for mocking. </returns>
+        public static WorkspacePurgeLakeDataTimeRange WorkspacePurgeLakeDataTimeRange(DateTimeOffset startOn = default, DateTimeOffset endOn = default)
+        {
+            return new WorkspacePurgeLakeDataTimeRange(startOn, endOn, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1043,8 +1063,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="summaryLogsStatusCode"> Indicates the reason for rule deactivation. </param>
         /// <param name="summaryLogsProvisioningState"> Summary rule is in provisioning state. If set to 'updating' or 'deleting', indicates a resource lock due to an ongoing operation, preventing any update to the Summary rule until the operation is complete. </param>
         /// <param name="ruleDefinition"> Rule definition parameters. </param>
+        /// <param name="identity"> The managed identity of the summary logs resource. Only user-assigned identity is supported. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsSummaryLogsData"/> instance for mocking. </returns>
-        public static OperationalInsightsSummaryLogsData OperationalInsightsSummaryLogsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OperationalInsightsSummaryLogsRuleType? summaryLogsRuleType = default, string displayName = default, string description = default, bool? isActive = default, OperationalInsightsSummaryLogsStatusCode? summaryLogsStatusCode = default, OperationalInsightsSummaryLogsProvisioningState? summaryLogsProvisioningState = default, OperationalInsightsSummaryRule ruleDefinition = default)
+        public static OperationalInsightsSummaryLogsData OperationalInsightsSummaryLogsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OperationalInsightsSummaryLogsRuleType? summaryLogsRuleType = default, string displayName = default, string description = default, bool? isActive = default, OperationalInsightsSummaryLogsStatusCode? summaryLogsStatusCode = default, OperationalInsightsSummaryLogsProvisioningState? summaryLogsProvisioningState = default, OperationalInsightsSummaryRule ruleDefinition = default, SummaryLogsIdentity identity = default)
         {
             return new OperationalInsightsSummaryLogsData(
                 id,
@@ -1060,6 +1081,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     summaryLogsProvisioningState,
                     ruleDefinition,
                     default),
+                identity,
                 default);
         }
 
@@ -1080,6 +1102,26 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 timeSelector,
                 destinationTable,
                 default);
+        }
+
+        /// <param name="principalId"> The principal ID of resource identity. </param>
+        /// <param name="tenantId"> The tenant ID of resource. </param>
+        /// <param name="type"> Type of managed service identity. </param>
+        /// <param name="userAssignedIdentities"> The list of user identities associated with the resource. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
+        /// <returns> A new <see cref="Models.SummaryLogsIdentity"/> instance for mocking. </returns>
+        public static SummaryLogsIdentity SummaryLogsIdentity(string principalId = default, string tenantId = default, SummaryLogsIdentityType @type = default, IDictionary<string, SummaryLogsUserIdentityProperties> userAssignedIdentities = default)
+        {
+            userAssignedIdentities ??= new ChangeTrackingDictionary<string, SummaryLogsUserIdentityProperties>();
+
+            return new SummaryLogsIdentity(principalId, tenantId, @type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, SummaryLogsUserIdentityProperties>(), default);
+        }
+
+        /// <param name="principalId"> The principal id of user assigned identity. </param>
+        /// <param name="clientId"> The client id of user assigned identity. </param>
+        /// <returns> A new <see cref="Models.SummaryLogsUserIdentityProperties"/> instance for mocking. </returns>
+        public static SummaryLogsUserIdentityProperties SummaryLogsUserIdentityProperties(string principalId = default, string clientId = default)
+        {
+            return new SummaryLogsUserIdentityProperties(principalId, clientId, default);
         }
 
         /// <param name="retryBinStartOn"> The time (UTC) of the bin to retry. </param>
@@ -1105,6 +1147,73 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 endTime,
                 status,
                 error is null ? default : new ErrorResponse(error, default),
+                default);
+        }
+
+        /// <param name="isDataExportEnabled"> Flag that indicate if data should be exported. </param>
+        /// <param name="immediatePurgeDataOn30Days"> Flag that describes if we want to remove the data after 30 days. </param>
+        /// <param name="isLogAccessUsingOnlyResourcePermissionsEnabled"> Flag that indicate which permission to use - resource or workspace or both. </param>
+        /// <param name="clusterResourceId"> Dedicated LA cluster resourceId that is linked to the workspaces. </param>
+        /// <param name="isLocalAuthDisabled"> Disable Non-AAD based Auth. </param>
+        /// <param name="isUnifiedSentinelBillingOnly"> An indication if the specify workspace is limited to sentinel's unified billing model only. </param>
+        /// <param name="associations"> List of associations for the workspace. Indicates if the workspace is associated with any of the following experiences: MDC, Sentinel, SentinelGraph, etc. </param>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="Models.OperationalInsightsWorkspaceFeatures"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static OperationalInsightsWorkspaceFeatures OperationalInsightsWorkspaceFeatures(bool? isDataExportEnabled = default, bool? immediatePurgeDataOn30Days = default, bool? isLogAccessUsingOnlyResourcePermissionsEnabled = default, ResourceIdentifier clusterResourceId = default, bool? isLocalAuthDisabled = default, bool? isUnifiedSentinelBillingOnly = default, IEnumerable<string> associations = default, IDictionary<string, BinaryData> additionalProperties = default)
+        {
+            return new OperationalInsightsWorkspaceFeatures(
+                isDataExportEnabled,
+                immediatePurgeDataOn30Days,
+                isLogAccessUsingOnlyResourcePermissionsEnabled,
+                clusterResourceId,
+                isLocalAuthDisabled,
+                isUnifiedSentinelBillingOnly,
+                (associations ?? new ChangeTrackingList<string>()).ToList(),
+                default,
+                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="retentionInDays"> In Analytics table: the tables analytics retention in days, between 4 and 730. Setting this property to -1 will default to the workspace retention. In Basic and Auxiliary table: read only property. </param>
+        /// <param name="totalRetentionInDays"> The table total retention in days, between 4 and 4383. Setting this property to -1 will default to retentionInDays. </param>
+        /// <param name="archiveRetentionInDays"> The tables long-term retention in days. Calculated as (totalRetentionInDays-retentionInDays). </param>
+        /// <param name="searchResults"> Parameters of the search job that initiated this table. </param>
+        /// <param name="restoredLogs"> Parameters of the restore operation that initiated this table. </param>
+        /// <param name="resultStatistics"> Search job execution statistics. </param>
+        /// <param name="plan"> Instruct the system how to handle and charge the logs ingested to this table. </param>
+        /// <param name="lastPlanModifiedDate"> The timestamp that table plan was last modified (UTC). </param>
+        /// <param name="schema"> Table schema. </param>
+        /// <param name="provisioningState"> Table's current provisioning state. If set to 'updating', indicates a resource lock due to ongoing operation, forbidding any update to the table until the ongoing operation is concluded. </param>
+        /// <param name="isRetentionInDaysAsDefault"> True - Value originates from workspace retention in days, False - Customer specific. </param>
+        /// <param name="isTotalRetentionInDaysAsDefault"> True - Value originates from retention in days, False - Customer specific. </param>
+        /// <returns> A new <see cref="OperationalInsights.OperationalInsightsTableData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static OperationalInsightsTableData OperationalInsightsTableData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? retentionInDays = default, int? totalRetentionInDays = default, int? archiveRetentionInDays = default, OperationalInsightsTableSearchResults searchResults = default, OperationalInsightsTableRestoredLogs restoredLogs = default, OperationalInsightsTableResultStatistics resultStatistics = default, OperationalInsightsTablePlan? plan = default, string lastPlanModifiedDate = default, OperationalInsightsSchema schema = default, OperationalInsightsTableProvisioningState? provisioningState = default, bool? isRetentionInDaysAsDefault = default, bool? isTotalRetentionInDaysAsDefault = default)
+        {
+            return new OperationalInsightsTableData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                retentionInDays is null && totalRetentionInDays is null && archiveRetentionInDays is null && searchResults is null && restoredLogs is null && resultStatistics is null && plan is null && lastPlanModifiedDate is null && schema is null && provisioningState is null && isRetentionInDaysAsDefault is null && isTotalRetentionInDaysAsDefault is null ? default : new TableProperties(
+                    retentionInDays,
+                    totalRetentionInDays,
+                    archiveRetentionInDays,
+                    searchResults,
+                    restoredLogs,
+                    resultStatistics,
+                    plan,
+                    default,
+                    lastPlanModifiedDate,
+                    schema,
+                    provisioningState,
+                    isRetentionInDaysAsDefault,
+                    isTotalRetentionInDaysAsDefault,
+                    default),
                 default);
         }
 
@@ -1142,6 +1251,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     restoredLogs,
                     resultStatistics,
                     plan,
+                    default,
                     lastPlanModifiedDate,
                     schema,
                     provisioningState,
@@ -1360,6 +1470,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 clusterResourceId,
                 isLocalAuthDisabled,
                 isUnifiedSentinelBillingOnly,
+                default,
                 default,
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }

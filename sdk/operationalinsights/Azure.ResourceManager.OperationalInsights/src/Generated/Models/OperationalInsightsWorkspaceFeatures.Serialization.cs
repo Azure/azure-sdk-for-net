@@ -118,6 +118,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(DataAuthorizationMode))
+            {
+                writer.WritePropertyName("dataAuthorizationMode"u8);
+                writer.WriteBooleanValue(DataAuthorizationMode.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
