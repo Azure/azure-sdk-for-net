@@ -118,6 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string healthStatus = default;
             ProtectableContainerType containerType = default;
             string protectableObjectType = default;
+            string sourceLocation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,6 +156,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectableObjectType = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("sourceLocation"u8))
+                {
+                    sourceLocation = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -167,6 +173,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 healthStatus,
                 containerType,
                 protectableObjectType,
+                sourceLocation,
                 additionalBinaryDataProperties);
         }
     }

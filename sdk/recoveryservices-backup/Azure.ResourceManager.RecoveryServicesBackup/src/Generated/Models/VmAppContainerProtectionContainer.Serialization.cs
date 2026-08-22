@@ -109,6 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string healthStatus = default;
             ProtectableContainerType containerType = default;
             string protectableObjectType = default;
+            string sourceLocation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier sourceResourceId = default;
             DateTimeOffset? lastUpdatedOn = default;
@@ -149,6 +150,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 if (prop.NameEquals("protectableObjectType"u8))
                 {
                     protectableObjectType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("sourceLocation"u8))
+                {
+                    sourceLocation = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("sourceResourceId"u8))
@@ -208,6 +214,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 healthStatus,
                 containerType,
                 protectableObjectType,
+                sourceLocation,
                 additionalBinaryDataProperties,
                 sourceResourceId,
                 lastUpdatedOn,

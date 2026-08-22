@@ -156,6 +156,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             bool? isArchiveEnabled = default;
             string policyName = default;
             int? softDeleteRetentionPeriodInDays = default;
+            string sourceLocation = default;
             string vaultId = default;
             BackupSourceSideScanInfo sourceSideScanInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -322,6 +323,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     softDeleteRetentionPeriodInDays = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("sourceLocation"u8))
+                {
+                    sourceLocation = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("vaultId"u8))
                 {
                     vaultId = prop.Value.GetString();
@@ -407,6 +413,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 isArchiveEnabled,
                 policyName,
                 softDeleteRetentionPeriodInDays,
+                sourceLocation,
                 vaultId,
                 sourceSideScanInfo,
                 additionalBinaryDataProperties,

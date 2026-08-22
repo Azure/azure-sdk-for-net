@@ -9,56 +9,57 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Database included in RP. </summary>
-    public partial class BackupDatabaseInRecoveryPoint : IJsonModel<BackupDatabaseInRecoveryPoint>
+    /// <summary> Per Disk Encryption Set Ids for Secured VM Data Disks. This will be used to provide Disk Encryption Set Id for each data disk. </summary>
+    public partial class PerDiskEncryptionSetId : IJsonModel<PerDiskEncryptionSetId>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BackupDatabaseInRecoveryPoint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PerDiskEncryptionSetId PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupDatabaseInRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PerDiskEncryptionSetId>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBackupDatabaseInRecoveryPoint(document.RootElement, options);
+                        return DeserializePerDiskEncryptionSetId(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupDatabaseInRecoveryPoint)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PerDiskEncryptionSetId)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupDatabaseInRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PerDiskEncryptionSetId>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BackupDatabaseInRecoveryPoint)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PerDiskEncryptionSetId)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BackupDatabaseInRecoveryPoint>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PerDiskEncryptionSetId>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BackupDatabaseInRecoveryPoint IPersistableModel<BackupDatabaseInRecoveryPoint>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PerDiskEncryptionSetId IPersistableModel<PerDiskEncryptionSetId>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BackupDatabaseInRecoveryPoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PerDiskEncryptionSetId>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BackupDatabaseInRecoveryPoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PerDiskEncryptionSetId>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +70,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupDatabaseInRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PerDiskEncryptionSetId>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupDatabaseInRecoveryPoint)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PerDiskEncryptionSetId)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DatasourceId))
+            if (Optional.IsDefined(Lun))
             {
-                writer.WritePropertyName("datasourceId"u8);
-                writer.WriteStringValue(DatasourceId);
+                writer.WritePropertyName("lun"u8);
+                writer.WriteNumberValue(Lun.Value);
             }
-            if (Optional.IsDefined(DatasourceName))
+            if (Optional.IsDefined(DiskEncryptionSetId))
             {
-                writer.WritePropertyName("datasourceName"u8);
-                writer.WriteStringValue(DatasourceName);
+                writer.WritePropertyName("diskEncryptionSetId"u8);
+                writer.WriteStringValue(DiskEncryptionSetId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,42 +104,50 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BackupDatabaseInRecoveryPoint IJsonModel<BackupDatabaseInRecoveryPoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PerDiskEncryptionSetId IJsonModel<PerDiskEncryptionSetId>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BackupDatabaseInRecoveryPoint JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PerDiskEncryptionSetId JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupDatabaseInRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PerDiskEncryptionSetId>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupDatabaseInRecoveryPoint)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PerDiskEncryptionSetId)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBackupDatabaseInRecoveryPoint(document.RootElement, options);
+            return DeserializePerDiskEncryptionSetId(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BackupDatabaseInRecoveryPoint DeserializeBackupDatabaseInRecoveryPoint(JsonElement element, ModelReaderWriterOptions options)
+        internal static PerDiskEncryptionSetId DeserializePerDiskEncryptionSetId(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string datasourceId = default;
-            string datasourceName = default;
+            int? lun = default;
+            ResourceIdentifier diskEncryptionSetId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("datasourceId"u8))
+                if (prop.NameEquals("lun"u8))
                 {
-                    datasourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lun = prop.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("datasourceName"u8))
+                if (prop.NameEquals("diskEncryptionSetId"u8))
                 {
-                    datasourceName = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskEncryptionSetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -146,7 +155,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BackupDatabaseInRecoveryPoint(datasourceId, datasourceName, additionalBinaryDataProperties);
+            return new PerDiskEncryptionSetId(lun, diskEncryptionSetId, additionalBinaryDataProperties);
         }
     }
 }

@@ -118,6 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string healthStatus = default;
             ProtectableContainerType containerType = default;
             string protectableObjectType = default;
+            string sourceLocation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string fabricName = default;
             GenericContainerExtendedInfo extendedInformation = default;
@@ -157,6 +158,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectableObjectType = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("sourceLocation"u8))
+                {
+                    sourceLocation = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("fabricName"u8))
                 {
                     fabricName = prop.Value.GetString();
@@ -183,6 +189,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 healthStatus,
                 containerType,
                 protectableObjectType,
+                sourceLocation,
                 additionalBinaryDataProperties,
                 fabricName,
                 extendedInformation);
