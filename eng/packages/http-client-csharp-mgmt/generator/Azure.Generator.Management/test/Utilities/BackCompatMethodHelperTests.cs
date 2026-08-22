@@ -8,6 +8,7 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
+using System.Reflection;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Mgmt.Tests.Utilities
@@ -25,6 +26,225 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                 usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
                 properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
             ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+        }
+
+        [TestCase("ifMatch")]
+        [TestCase("ifNoneMatch")]
+        public void AddsStringOverloadForConditionalETagParameter(string parameterName)
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var current = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider(parameterName, $"The condition.", new CSharpType(typeof(ETag), isNullable: true), defaultValue: Default),
+                    OptionalCancellationToken()
+                ]);
+            var previous = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider(parameterName, $"The condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default),
+                    OptionalCancellationToken()
+                ]);
+
+            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile(parameterName)));
+        }
+
+        [Test]
+        public void PreservesDefaultsAfterFirstConditionalETagParameter()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var current = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("ifMatch", $"The match condition.", new CSharpType(typeof(ETag), isNullable: true), defaultValue: Default),
+                    new ParameterProvider("ifNoneMatch", $"The non-match condition.", new CSharpType(typeof(ETag), isNullable: true), defaultValue: Default),
+                    OptionalCancellationToken()
+                ]);
+            var previous = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("ifMatch", $"The match condition.", typeof(string), defaultValue: Default),
+                    new ParameterProvider("ifNoneMatch", $"The non-match condition.", typeof(string), defaultValue: Default),
+                    OptionalCancellationToken()
+                ]);
+
+            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
+        }
+
+        [Test]
+        public void AddsStringOverloadForMatchConditionsParameter()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var current = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("matchConditions", $"The match conditions.", new CSharpType(typeof(MatchConditions), isNullable: true), defaultValue: Default),
+                    OptionalCancellationToken()
+                ]);
+            var previous = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("ifMatch", $"The match condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default),
+                    new ParameterProvider("ifNoneMatch", $"The non-match condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default),
+                    OptionalCancellationToken()
+                ]);
+
+            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
+        }
+
+        [Test]
+        public void AddsStringOverloadForRequestConditionsParameter()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var current = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("requestConditions", $"The request conditions.", new CSharpType(typeof(RequestConditions), isNullable: true), defaultValue: Default),
+                    OptionalCancellationToken()
+                ]);
+            var previous = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("ifMatch", $"The match condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default),
+                    new ParameterProvider("ifNoneMatch", $"The non-match condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default),
+                    new ParameterProvider("ifModifiedSince", $"The modification condition.", new CSharpType(typeof(DateTimeOffset), isNullable: true), defaultValue: Default),
+                    OptionalCancellationToken()
+                ]);
+
+            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
+        }
+
+        [Test]
+        public void AddsStringOverloadWhenMatchConditionHeaderAdded()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var current = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("matchConditions", $"The match conditions.", new CSharpType(typeof(MatchConditions), isNullable: true), defaultValue: Default),
+                    OptionalCancellationToken()
+                ]);
+            var previous = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("ifMatch", $"The match condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default),
+                    OptionalCancellationToken()
+                ]);
+
+            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
+        }
+
+        [Test]
+        public void AddsStringOverloadWhenModificationConditionHeaderAdded()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var current = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("requestConditions", $"The request conditions.", new CSharpType(typeof(RequestConditions), isNullable: true), defaultValue: Default),
+                    OptionalCancellationToken()
+                ]);
+            var previous = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("ifMatch", $"The match condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default),
+                    new ParameterProvider("ifNoneMatch", $"The non-match condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default),
+                    OptionalCancellationToken()
+                ]);
+
+            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
+        }
+
+        [Test]
+        public void PreservesOptionalDefaultWhenCurrentETagIsRequired()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var current = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("ifMatch", $"The match condition.", new CSharpType(typeof(ETag), isNullable: true)),
+                    OptionalCancellationToken()
+                ]);
+            var previous = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("ifMatch", $"The match condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default),
+                    OptionalCancellationToken()
+                ]);
+
+            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
+        }
+
+        [Test]
+        public void DoesNotDuplicateBaseGeneratedETagCompatibilityOverload()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var current = CreateMethod(
+                enclosingType,
+                [new ParameterProvider("ifMatch", $"The match condition.", new CSharpType(typeof(ETag), isNullable: true), defaultValue: Default)]);
+            var previous = CreateMethod(
+                enclosingType,
+                [new ParameterProvider("ifMatch", $"The match condition.", typeof(string))]);
+            var baseGenerated = CreateMethod(
+                enclosingType,
+                [new ParameterProvider("ifMatch", $"The match condition.", typeof(string))]);
+
+            var result = DecorateWithLastContract(enclosingType, [current, baseGenerated], [current], [previous]);
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
+        }
+
+        [TestCase("etag")]
+        [TestCase("condition")]
+        public void DoesNotAddStringOverloadForNonConditionalETagParameter(string parameterName)
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var current = CreateMethod(
+                enclosingType,
+                [new ParameterProvider(parameterName, $"The value.", new CSharpType(typeof(ETag), isNullable: true))]);
+            var previous = CreateMethod(
+                enclosingType,
+                [new ParameterProvider(parameterName, $"The value.", typeof(string))]);
+
+            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile(parameterName)));
+        }
+
+        [Test]
+        public void DoesNotAddStringOverloadWhenAnotherParameterTypeChanged()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var current = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("name", $"The name.", typeof(int)),
+                    new ParameterProvider("ifMatch", $"The condition.", new CSharpType(typeof(ETag), isNullable: true))
+                ]);
+            var previous = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("name", $"The name.", typeof(string)),
+                    new ParameterProvider("ifMatch", $"The condition.", typeof(string))
+                ]);
+
+            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         [Test]
@@ -214,6 +434,30 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
 
         private static bool HasForwardsClientCalls(MethodProvider method)
             => method.Signature.Attributes.Any(a => a.Type.Name == ForwardsClientCallsAttributeName);
+
+        private static IReadOnlyList<MethodProvider> DecorateWithLastContract(
+            TestTypeView enclosingType,
+            IReadOnlyList<MethodProvider> currentMethods,
+            IReadOnlyList<MethodProvider> previousMethods)
+            => DecorateWithLastContract(enclosingType, currentMethods, currentMethods, previousMethods);
+
+        private static IReadOnlyList<MethodProvider> DecorateWithLastContract(
+            TestTypeView enclosingType,
+            IReadOnlyList<MethodProvider> backCompatMethods,
+            IReadOnlyList<MethodProvider> originalMethods,
+            IReadOnlyList<MethodProvider> previousMethods)
+        {
+            var lastContractView = new TestTypeView(enclosingType.Name)
+            {
+                MethodsToBuild = previousMethods.ToArray()
+            };
+            typeof(TypeProvider).GetField(
+                    "_lastContractView",
+                    BindingFlags.NonPublic | BindingFlags.Instance)!
+                .SetValue(enclosingType, new Lazy<TypeProvider?>(() => lastContractView));
+
+            return BackCompatHelper.DecorateBackwardCompatibilityMethods(backCompatMethods, originalMethods);
+        }
 
         private static string Render(TypeProvider typeProvider)
             => new TypeProviderWriter(typeProvider).Write().Content.Replace("\r\n", "\n");
