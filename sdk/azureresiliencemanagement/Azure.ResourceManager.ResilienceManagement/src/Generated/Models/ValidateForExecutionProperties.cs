@@ -7,37 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.ResourceManager.ResilienceManagement;
 
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary> Additional properties for Failover. </summary>
-    internal partial class ValidateForExecutionProperties
+    public partial class ValidateForExecutionProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ValidateForExecutionProperties"/>. </summary>
-        /// <param name="sourceLocations"> Physiscal Source locations from where resources to be failed-over or faulted. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceLocations"/> is null. </exception>
-        public ValidateForExecutionProperties(IEnumerable<string> sourceLocations)
+        public ValidateForExecutionProperties()
         {
-            Argument.AssertNotNull(sourceLocations, nameof(sourceLocations));
-
-            SourceLocations = sourceLocations.ToList();
+            SourceLocations = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ValidateForExecutionProperties"/>. </summary>
+        /// <param name="operationName"> Operation name for which the validation is being done. This is needed to determine the set of validations to be done for the operation. </param>
         /// <param name="sourceLocations"> Physiscal Source locations from where resources to be failed-over or faulted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ValidateForExecutionProperties(IList<string> sourceLocations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ValidateForExecutionProperties(DrillRunTasks? operationName, IList<string> sourceLocations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            OperationName = operationName;
             SourceLocations = sourceLocations;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Operation name for which the validation is being done. This is needed to determine the set of validations to be done for the operation. </summary>
+        public DrillRunTasks? OperationName { get; set; }
+
         /// <summary> Physiscal Source locations from where resources to be failed-over or faulted. </summary>
-        public IList<string> SourceLocations { get; } = new ChangeTrackingList<string>();
+        public IList<string> SourceLocations { get; }
     }
 }

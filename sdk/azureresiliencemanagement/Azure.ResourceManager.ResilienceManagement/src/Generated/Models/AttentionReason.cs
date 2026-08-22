@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             RbacNeededForDrillOnDrillMonitoringResources = new ChangeTrackingList<string>();
             RbacNeededForDrillOnDrillResources = new ChangeTrackingList<string>();
             MissingRequiredResourceProviders = new ChangeTrackingList<string>();
+            RbacNeededForDrillOnHealthModel = new ChangeTrackingList<string>();
+            SliAttentionStatuses = new ChangeTrackingList<SliAttentionStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AttentionReason"/>. </summary>
@@ -51,8 +53,15 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="rbacNeededForDrillOnDrillMonitoringResources"> Permissions needed by the Drill MSI to Upload service group health data for monitoring. </param>
         /// <param name="rbacNeededForDrillOnDrillResources"> Permissions needed by the Drill MSI to read health metrics data for resources in service group. </param>
         /// <param name="missingRequiredResourceProviders"> List of required required Azure resource providers that are not registered in the subscription specified for chaos resource. </param>
+        /// <param name="monitoringSourceNotConfigured"> Neither an Azure Health Model nor an SLI is configured for the Drill. Execution is blocked until a monitoring source is configured. </param>
+        /// <param name="healthModelExists"> Whether the selected Azure Health Model still exists. </param>
+        /// <param name="discoveryRuleExists"> Whether the selected discovery rule still exists. </param>
+        /// <param name="drillRbacOnHealthModel"> Whether the Drill identity has the necessary RBAC (Reader) to read the selected Azure Health Model. </param>
+        /// <param name="rbacNeededForDrillOnHealthModel"> Permissions needed by the Drill identity to read the selected Azure Health Model. </param>
+        /// <param name="drillRbacOnSli"> Rolled-up RBAC state: NotSet if the Drill identity is missing the necessary RBAC to read any selected SLI. </param>
+        /// <param name="sliAttentionStatuses"> Per-SLI attention status for each SLI selected for Drill monitoring. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AttentionReason(ResilienceManagementRbacState? drillRbacOnChaosResource, IList<string> rbacNeededForDrillOnChaosResource, ResilienceManagementRbacState? drillRbacOnRecoveryPlan, IList<string> rbacNeededForDrillOnRecoveryPlan, RecoveryPlanState? roReadiness, ResilienceManagementRbacState? rbacOnTargetResources, ResilienceManagementRbacState? runbookFaultRbacOnTargets, ExtensionObjectState? chaosResource, IList<string> chaosResourceCreationFailureReasons, RelativeResourceCompositionState? recoveryPlanAndDrillResourcesState, RelativeResourceCompositionState? serviceGroupAndDrillResourcesState, ExtensionObjectState? drillUserMsi, ExtensionObjectState? chaosResourceUserMsi, ExtensionObjectState? includedResourceInDrill, ResilienceManagementRbacState? drillRbacOnMonitoringResources, IList<ResilienceManagementErrorDetail> drillMonitoringErrors, ExtensionObjectState? drillMonitoringResources, ResilienceManagementRbacState? monitoringRbacOnDrillResources, IList<string> rbacNeededForDrillOnDrillMonitoringResources, IList<string> rbacNeededForDrillOnDrillResources, IList<string> missingRequiredResourceProviders, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AttentionReason(ResilienceManagementRbacState? drillRbacOnChaosResource, IList<string> rbacNeededForDrillOnChaosResource, ResilienceManagementRbacState? drillRbacOnRecoveryPlan, IList<string> rbacNeededForDrillOnRecoveryPlan, RecoveryPlanState? roReadiness, ResilienceManagementRbacState? rbacOnTargetResources, ResilienceManagementRbacState? runbookFaultRbacOnTargets, ExtensionObjectState? chaosResource, IList<string> chaosResourceCreationFailureReasons, RelativeResourceCompositionState? recoveryPlanAndDrillResourcesState, RelativeResourceCompositionState? serviceGroupAndDrillResourcesState, ExtensionObjectState? drillUserMsi, ExtensionObjectState? chaosResourceUserMsi, ExtensionObjectState? includedResourceInDrill, ResilienceManagementRbacState? drillRbacOnMonitoringResources, IList<ResilienceManagementErrorDetail> drillMonitoringErrors, ExtensionObjectState? drillMonitoringResources, ResilienceManagementRbacState? monitoringRbacOnDrillResources, IList<string> rbacNeededForDrillOnDrillMonitoringResources, IList<string> rbacNeededForDrillOnDrillResources, IList<string> missingRequiredResourceProviders, bool? monitoringSourceNotConfigured, ExtensionObjectState? healthModelExists, ExtensionObjectState? discoveryRuleExists, ResilienceManagementRbacState? drillRbacOnHealthModel, IList<string> rbacNeededForDrillOnHealthModel, ResilienceManagementRbacState? drillRbacOnSli, IList<SliAttentionStatus> sliAttentionStatuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DrillRbacOnChaosResource = drillRbacOnChaosResource;
             RbacNeededForDrillOnChaosResource = rbacNeededForDrillOnChaosResource;
@@ -75,6 +84,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             RbacNeededForDrillOnDrillMonitoringResources = rbacNeededForDrillOnDrillMonitoringResources;
             RbacNeededForDrillOnDrillResources = rbacNeededForDrillOnDrillResources;
             MissingRequiredResourceProviders = missingRequiredResourceProviders;
+            MonitoringSourceNotConfigured = monitoringSourceNotConfigured;
+            HealthModelExists = healthModelExists;
+            DiscoveryRuleExists = discoveryRuleExists;
+            DrillRbacOnHealthModel = drillRbacOnHealthModel;
+            RbacNeededForDrillOnHealthModel = rbacNeededForDrillOnHealthModel;
+            DrillRbacOnSli = drillRbacOnSli;
+            SliAttentionStatuses = sliAttentionStatuses;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -140,5 +156,26 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> List of required required Azure resource providers that are not registered in the subscription specified for chaos resource. </summary>
         public IList<string> MissingRequiredResourceProviders { get; }
+
+        /// <summary> Neither an Azure Health Model nor an SLI is configured for the Drill. Execution is blocked until a monitoring source is configured. </summary>
+        public bool? MonitoringSourceNotConfigured { get; }
+
+        /// <summary> Whether the selected Azure Health Model still exists. </summary>
+        public ExtensionObjectState? HealthModelExists { get; }
+
+        /// <summary> Whether the selected discovery rule still exists. </summary>
+        public ExtensionObjectState? DiscoveryRuleExists { get; }
+
+        /// <summary> Whether the Drill identity has the necessary RBAC (Reader) to read the selected Azure Health Model. </summary>
+        public ResilienceManagementRbacState? DrillRbacOnHealthModel { get; }
+
+        /// <summary> Permissions needed by the Drill identity to read the selected Azure Health Model. </summary>
+        public IList<string> RbacNeededForDrillOnHealthModel { get; }
+
+        /// <summary> Rolled-up RBAC state: NotSet if the Drill identity is missing the necessary RBAC to read any selected SLI. </summary>
+        public ResilienceManagementRbacState? DrillRbacOnSli { get; }
+
+        /// <summary> Per-SLI attention status for each SLI selected for Drill monitoring. </summary>
+        public IList<SliAttentionStatus> SliAttentionStatuses { get; }
     }
 }
