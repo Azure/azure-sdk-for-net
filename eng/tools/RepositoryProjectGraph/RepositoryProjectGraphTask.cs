@@ -311,7 +311,15 @@ public sealed class RepositoryProjectGraphTask : Task
             project.GetPropertyValue("IsClientLibrary"),
             project.GetPropertyValue("IsGeneratorLibrary"),
             project.GetPropertyValue("IsTestProject"),
-            project.GetPropertyValue("IsShippingLibrary")));
+            project.GetPropertyValue("IsShippingLibrary"),
+            project.GetPropertyValue("CentralPackageTransitivePinningEnabled"),
+            NormalizeRecordMetadata(project.GetPropertyValue("AssetTargetFallback")),
+            NormalizeRecordMetadata(project.GetPropertyValue("PackageTargetFallback")),
+            NormalizeRecordMetadata(project.GetPropertyValue("RuntimeIdentifierGraphPath")),
+            project.GetPropertyValue("TreatWarningsAsErrors"),
+            NormalizeRecordMetadata(project.GetPropertyValue("WarningsAsErrors")),
+            NormalizeRecordMetadata(project.GetPropertyValue("NoWarn")),
+            NormalizeRecordMetadata(project.GetPropertyValue("WarningsNotAsErrors"))));
 
         var projectReferenceRecords = new HashSet<string>(StringComparer.Ordinal);
         foreach (ProjectItemInstance reference in project.GetItems("ProjectReference"))
@@ -323,7 +331,10 @@ public sealed class RepositoryProjectGraphTask : Task
                 targetFramework,
                 GetItemFullPath(project, reference),
                 reference.GetMetadataValue("ReferenceOutputAssembly"),
-                reference.GetMetadataValue("OutputItemType"));
+                reference.GetMetadataValue("OutputItemType"),
+                NormalizeAssetMetadata(reference.GetMetadataValue("PrivateAssets")),
+                NormalizeAssetMetadata(reference.GetMetadataValue("IncludeAssets")),
+                NormalizeAssetMetadata(reference.GetMetadataValue("ExcludeAssets")));
             if (projectReferenceRecords.Add(record))
             {
                 WriteRecord(writer, ref recordCount, record);
@@ -394,6 +405,11 @@ public sealed class RepositoryProjectGraphTask : Task
     }
 
     private static string NormalizeAssetMetadata(string value) => value.Replace(';', ',');
+
+    private static string NormalizeRecordMetadata(string value) => value
+        .Replace('|', '/')
+        .Replace('\r', ';')
+        .Replace('\n', ';');
 
     private static string GetPackageVersion(
         ProjectItemInstance reference,

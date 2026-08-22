@@ -168,6 +168,119 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $graph.diagnostics.nodeMetadataConflicts[0].fields | Should -Contain "packageId"
     }
 
+    It "uses a NuGet restore graph with local package and P2P contributions" {
+        $fixtureRoot = Join-Path $TestDrive "nuget-closure-fixture"
+        $feedPath = Join-Path $fixtureRoot "feed"
+        $packagesPath = Join-Path $fixtureRoot "packages"
+        $restorePath = Join-Path $fixtureRoot "restore"
+        $closureRecordsPath = Join-Path $fixtureRoot "closure.records"
+        $closureGraphPath = Join-Path $fixtureRoot "closure.json"
+        $inputRecordsPath = Join-Path $fixtureRoot "input.records"
+        $nugetConfigPath = Join-Path $fixtureRoot "NuGet.Config"
+        $driverPath = Join-Path $fixtureRoot "driver.proj"
+        New-Item -ItemType Directory -Path $feedPath -Force | Out-Null
+
+        function New-LocalPackage([string] $id, [string] $version, [string] $dependencies) {
+            $packageDirectory = Join-Path $fixtureRoot "package-$id-$version"
+            New-Item -ItemType Directory -Path (Join-Path $packageDirectory "lib/net8.0") -Force | Out-Null
+            "compile asset" | Set-Content (Join-Path $packageDirectory "lib/net8.0/$id.dll")
+            @"
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>$id</id>
+    <version>$version</version>
+    <authors>test</authors>
+    <description>Repository project graph test package.</description>
+    $dependencies
+  </metadata>
+</package>
+"@ | Set-Content (Join-Path $packageDirectory "$id.nuspec")
+            [System.IO.Compression.ZipFile]::CreateFromDirectory(
+                $packageDirectory,
+                (Join-Path $feedPath "$id.$version.nupkg"))
+        }
+
+        New-LocalPackage "Azure.B" "1.0.0" ""
+        New-LocalPackage "Azure.D" "1.0.0" ""
+        New-LocalPackage "Shared.Dependency" "1.0.0" ""
+        New-LocalPackage "Shared.Dependency" "2.0.0" '<dependencies><group targetFramework="net8.0"><dependency id="Azure.B" version="[1.0.0]" /></group></dependencies>'
+        New-LocalPackage "Other.Dependency" "1.0.0" ""
+        New-LocalPackage "Other.Dependency" "2.0.0" '<dependencies><group targetFramework="net8.0"><dependency id="Azure.D" version="[1.0.0]" /></group></dependencies>'
+        New-LocalPackage "Local.Contributor" "1.0.0" '<dependencies><group targetFramework="net8.0"><dependency id="Other.Dependency" version="[2.0.0, 3.0.0)" /></group></dependencies>'
+        New-LocalPackage "External.A" "1.0.0" '<dependencies><group targetFramework="net8.0"><dependency id="Shared.Dependency" version="[1.0.0, 3.0.0)" /></group></dependencies>'
+        New-LocalPackage "External.C" "1.0.0" '<dependencies><group targetFramework="net8.0"><dependency id="Other.Dependency" version="[1.0.0, 3.0.0)" /></group></dependencies>'
+        @"
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <packageSources>
+    <clear />
+    <add key="local" value="$feedPath" />
+  </packageSources>
+  <config>
+    <add key="globalPackagesFolder" value="$packagesPath" />
+  </config>
+</configuration>
+"@ | Set-Content $nugetConfigPath
+
+        $localProjectB = Join-Path $fixtureRoot "sdk/example/B/src/B.csproj"
+        $localProjectD = Join-Path $fixtureRoot "sdk/example/D/src/D.csproj"
+        $localContributor = Join-Path $fixtureRoot "sdk/example/Contributor/src/Local.Contributor.csproj"
+        $childProject = Join-Path $fixtureRoot "sdk/example/Child/src/Child.csproj"
+        $testProject = Join-Path $fixtureRoot "sdk/example/A/tests/A.Tests.csproj"
+        @(
+            "Node|$testProject|net8.0|A.Tests|A.Tests|$(Split-Path (Split-Path $testProject -Parent) -Parent)|true|false|true|false|false"
+            "Node|$childProject|net8.0|Child|Child|$(Split-Path (Split-Path $childProject -Parent) -Parent)|true|false|false|false|false"
+            "Node|$localProjectB|net8.0|Azure.B|Azure.B|$(Split-Path (Split-Path $localProjectB -Parent) -Parent)|true|false|false|true|false"
+            "Node|$localProjectD|net8.0|Azure.D|Azure.D|$(Split-Path (Split-Path $localProjectD -Parent) -Parent)|true|false|false|true|false"
+            "Node|$localContributor|net8.0|Local.Contributor|Local.Contributor|$(Split-Path (Split-Path $localContributor -Parent) -Parent)|true|false|false|true|false"
+            "PackageReference|$testProject|net8.0|External.A||all||1.0.0"
+            "PackageReference|$testProject|net8.0|External.C||all||1.0.0"
+            "PackageReference|$testProject|net8.0|Local.Contributor||all||1.0.0"
+            "ProjectReference|$testProject|net8.0|$childProject|||||"
+            "PackageReference|$childProject|net8.0|Shared.Dependency||all||2.0.0"
+        ) | Set-Content $inputRecordsPath
+
+        $repositoryRoot = Resolve-Path (Join-Path $PSScriptRoot ".." ".." "..")
+        $taskProject = Join-Path $repositoryRoot "eng/tools/RepositoryProjectGraph/RepositoryProjectGraph.csproj"
+        $taskAssembly = Join-Path $repositoryRoot "artifacts/bin/RepositoryProjectGraph/Debug/net10.0/RepositoryProjectGraph.dll"
+        @"
+<Project>
+  <UsingTask TaskName="Azure.Sdk.Tools.RepositoryProjectGraph.ResolveExternalPackageClosureWithNuGetTask"
+             AssemblyFile="$taskAssembly" />
+  <Target Name="Resolve">
+    <ResolveExternalPackageClosureWithNuGetTask RecordsPath="$inputRecordsPath"
+                                                OutputPath="$closureRecordsPath"
+                                                NuGetConfigPath="$nugetConfigPath"
+                                                RestoreOutputPath="$restorePath"
+                                                DegreeOfParallelism="2" />
+  </Target>
+</Project>
+"@ | Set-Content $driverPath
+
+        & dotnet build $taskProject --no-restore -v:minimal
+        $LASTEXITCODE | Should -Be 0
+        & dotnet msbuild -nologo -v:minimal -t:Resolve $driverPath
+        $LASTEXITCODE | Should -Be 0
+
+        $closureRecords = Get-Content $closureRecordsPath
+        $closureRecords | Should -Contain "TransitivePackageReference|$testProject|net8.0|Azure.B|External.A|1.0.0|External.A 1.0.0>Shared.Dependency 2.0.0>Azure.B 1.0.0"
+        $closureRecords | Should -Contain "TransitivePackageReference|$testProject|net8.0|Azure.D|External.C|1.0.0|External.C 1.0.0>Other.Dependency 2.0.0>Azure.D 1.0.0"
+        $closureRecords | Should -Contain "TransitivePackageReference|$childProject|net8.0|Azure.B|Shared.Dependency|2.0.0|Shared.Dependency 2.0.0>Azure.B 1.0.0"
+        $summary = ($closureRecords | Where-Object { $_ -like "PackageClosureSummary|*" }).Split('|')
+        $summary[1..4] | Should -Be @("3", "3", "3", "0")
+        $summary[9..11] | Should -Be @("nuget-restore-graph", "False", "True")
+        $summary[12..13] | Should -Be @("2", "2")
+        [int]$summary[14] | Should -BeGreaterThan 0
+
+        & $scriptPath -Operation Build -GraphPath $closureGraphPath -RecordsPath $inputRecordsPath -PackageRecordsPath $closureRecordsPath -RepoRoot $fixtureRoot
+        if ($LASTEXITCODE) { throw "Graph build failed with exit code $LASTEXITCODE" }
+        $closureGraph = Get-Content -Raw $closureGraphPath | ConvertFrom-Json -Depth 100
+        $closureGraph.diagnostics.packageClosure.projectContextCount | Should -Be 2
+        $closureGraph.diagnostics.packageClosure.restoreRequestCount | Should -Be 2
+        $closureGraph.diagnostics.packageClosure.selectedPackageCount | Should -BeGreaterThan 0
+    }
+
     It "collects TFM-specific records with the strongly typed ProjectGraph task" {
         $fixtureRoot = Join-Path $TestDrive "task-fixture"
         $fixtureA = Join-Path $fixtureRoot "sdk/example/A/tests/A.Tests.csproj"

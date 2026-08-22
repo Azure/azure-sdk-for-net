@@ -21,6 +21,9 @@
     <RepositoryProjectGraphPackageRecordsPath Condition="'$(RepositoryProjectGraphPackageRecordsPath)' == ''">$(RepositoryProjectGraphReaderPath).packages.records</RepositoryProjectGraphPackageRecordsPath>
     <RepositoryProjectGraphReaderDegreeOfParallelism Condition="'$(RepositoryProjectGraphReaderDegreeOfParallelism)' == ''">$([System.Environment]::ProcessorCount)</RepositoryProjectGraphReaderDegreeOfParallelism>
     <RepositoryProjectGraphPackageDegreeOfParallelism Condition="'$(RepositoryProjectGraphPackageDegreeOfParallelism)' == ''">8</RepositoryProjectGraphPackageDegreeOfParallelism>
+    <RepositoryProjectGraphPackageResolutionMode Condition="'$(RepositoryProjectGraphPackageResolutionMode)' == ''">IsolatedMetadata</RepositoryProjectGraphPackageResolutionMode>
+    <RepositoryProjectGraphNuGetRestoreDirectory Condition="'$(RepositoryProjectGraphNuGetRestoreDirectory)' == ''">$(RepoRoot)artifacts/obj/RepositoryProjectGraph/nuget-restore</RepositoryProjectGraphNuGetRestoreDirectory>
+    <RepositoryProjectGraphNuGetDegreeOfParallelism Condition="'$(RepositoryProjectGraphNuGetDegreeOfParallelism)' == ''">4</RepositoryProjectGraphNuGetDegreeOfParallelism>
     <RepositoryProjectGraphTaskProject>$(RepoRoot)eng/tools/RepositoryProjectGraph/RepositoryProjectGraph.csproj</RepositoryProjectGraphTaskProject>
     <RepositoryProjectGraphTaskAssembly>$(RepoRoot)artifacts/bin/RepositoryProjectGraph/$(Configuration)/net10.0/RepositoryProjectGraph.dll</RepositoryProjectGraphTaskAssembly>
     <OverwriteResolvedReferenceOracle Condition="'$(OverwriteResolvedReferenceOracle)' == ''">false</OverwriteResolvedReferenceOracle>
@@ -29,6 +32,8 @@
   <UsingTask TaskName="Azure.Sdk.Tools.RepositoryProjectGraph.RepositoryProjectGraphTask"
              AssemblyFile="$(RepositoryProjectGraphTaskAssembly)" />
   <UsingTask TaskName="Azure.Sdk.Tools.RepositoryProjectGraph.ResolveExternalPackageClosureTask"
+             AssemblyFile="$(RepositoryProjectGraphTaskAssembly)" />
+  <UsingTask TaskName="Azure.Sdk.Tools.RepositoryProjectGraph.ResolveExternalPackageClosureWithNuGetTask"
              AssemblyFile="$(RepositoryProjectGraphTaskAssembly)" />
   <UsingTask TaskName="Azure.Sdk.Tools.RepositoryProjectGraph.RunIsolatedRepositoryProjectGraphTask"
              AssemblyFile="$(RepositoryProjectGraphTaskAssembly)" />
@@ -252,10 +257,19 @@
                                 RecordsPath="$(RepositoryProjectGraphReaderRecordsPath)"
                                 IncludeInputs="$(IncludeRepositoryProjectGraphInputs)"
                                 DegreeOfParallelism="$(RepositoryProjectGraphReaderDegreeOfParallelism)" />
-    <ResolveExternalPackageClosureTask RecordsPath="$(RepositoryProjectGraphReaderRecordsPath)"
+    <Error Condition="'$(RepositoryProjectGraphPackageResolutionMode)' != 'IsolatedMetadata' and '$(RepositoryProjectGraphPackageResolutionMode)' != 'NuGetRestore'"
+           Text="RepositoryProjectGraphPackageResolutionMode must be IsolatedMetadata or NuGetRestore, but was '$(RepositoryProjectGraphPackageResolutionMode)'." />
+    <ResolveExternalPackageClosureTask Condition="'$(RepositoryProjectGraphPackageResolutionMode)' == 'IsolatedMetadata'"
+                                       RecordsPath="$(RepositoryProjectGraphReaderRecordsPath)"
                                        OutputPath="$(RepositoryProjectGraphPackageRecordsPath)"
                                        NuGetConfigPath="$(RepoRoot)NuGet.Config"
                                        DegreeOfParallelism="$(RepositoryProjectGraphPackageDegreeOfParallelism)" />
+    <ResolveExternalPackageClosureWithNuGetTask Condition="'$(RepositoryProjectGraphPackageResolutionMode)' == 'NuGetRestore'"
+                                                RecordsPath="$(RepositoryProjectGraphReaderRecordsPath)"
+                                                OutputPath="$(RepositoryProjectGraphPackageRecordsPath)"
+                                                NuGetConfigPath="$(RepoRoot)NuGet.Config"
+                                                RestoreOutputPath="$(RepositoryProjectGraphNuGetRestoreDirectory)"
+                                                DegreeOfParallelism="$(RepositoryProjectGraphNuGetDegreeOfParallelism)" />
   </Target>
 
   <Target Name="GenerateRepositoryProjectGraphWithProjectGraph"
