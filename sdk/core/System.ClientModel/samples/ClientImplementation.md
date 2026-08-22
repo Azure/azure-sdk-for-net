@@ -146,7 +146,8 @@ The client's convenience method converts model types to request content and from
 public virtual async Task<ClientResult<CountryRegion>> AddCountryCodeAsync(CountryRegion country)
 {
     // Validate input parameters.
-    if (country is null) throw new ArgumentNullException(nameof(country));
+    if (country is null)
+        throw new ArgumentNullException(nameof(country));
 
     // Create the request body content to pass to the protocol method.
     // The content will be written using methods defined by the model's
@@ -176,7 +177,8 @@ The client's protocol method calls a helper method to create the message and req
 public virtual async Task<ClientResult> AddCountryCodeAsync(BinaryContent country, RequestOptions? options = null)
 {
     // Validate input parameters.
-    if (country is null) throw new ArgumentNullException(nameof(country));
+    if (country is null)
+        throw new ArgumentNullException(nameof(country));
 
     // Use default RequestOptions if none were provided by the caller.
     options ??= new RequestOptions();

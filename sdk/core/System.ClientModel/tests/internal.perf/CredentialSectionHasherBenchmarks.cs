@@ -84,7 +84,8 @@ public class CredentialSectionHasherBenchmarks
     {
         public static string ComputeKey(IConfigurationSection section)
         {
-            if (section is null) return string.Empty;
+            if (section is null)
+                return string.Empty;
 
             var leaves = new SortedDictionary<string, string?>(StringComparer.OrdinalIgnoreCase);
             Collect(section, string.Empty, leaves);
