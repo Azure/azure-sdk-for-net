@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error, options);
             }
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsDefined(EntityName))
             {
                 writer.WritePropertyName("entityName"u8);
                 writer.WriteStringValue(EntityName);

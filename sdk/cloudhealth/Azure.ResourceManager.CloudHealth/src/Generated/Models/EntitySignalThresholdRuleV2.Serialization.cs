@@ -91,11 +91,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 writer.WritePropertyName("sensitivity"u8);
                 writer.WriteStringValue(Sensitivity.Value.ToString());
             }
-            if (Optional.IsDefined(LookBackWindow))
-            {
-                writer.WritePropertyName("lookBackWindow"u8);
-                writer.WriteStringValue(LookBackWindow.Value.ToString());
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -141,7 +136,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
             EntitySignalOperator signalOperator = default;
             double? threshold = default;
             EntityDynamicThresholdSensitivity? sensitivity = default;
-            DynamicThresholdLookBackWindow? lookBackWindow = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,21 +162,12 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     sensitivity = new EntityDynamicThresholdSensitivity(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("lookBackWindow"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    lookBackWindow = new DynamicThresholdLookBackWindow(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EntitySignalThresholdRuleV2(signalOperator, threshold, sensitivity, lookBackWindow, additionalBinaryDataProperties);
+            return new EntitySignalThresholdRuleV2(signalOperator, threshold, sensitivity, additionalBinaryDataProperties);
         }
     }
 }
