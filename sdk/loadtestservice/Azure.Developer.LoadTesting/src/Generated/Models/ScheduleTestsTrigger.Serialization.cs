@@ -91,10 +91,10 @@ namespace Azure.Developer.LoadTesting
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(StartDateTime))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
-                writer.WriteStringValue(StartDateTime.Value, "O");
+                writer.WriteStringValue(StartOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(RecurrenceStatus))
             {
@@ -139,13 +139,13 @@ namespace Azure.Developer.LoadTesting
             TriggerType kind = default;
             TriggerState? state = default;
             StateDetails stateDetails = default;
-            DateTimeOffset? createdDateTime = default;
+            DateTimeOffset? createdOn = default;
             string createdBy = default;
-            DateTimeOffset? lastModifiedDateTime = default;
+            DateTimeOffset? lastModifiedOn = default;
             string lastModifiedBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<string> testIds = default;
-            DateTimeOffset? startDateTime = default;
+            DateTimeOffset? startOn = default;
             RecurrenceStatus recurrenceStatus = default;
             LoadTestingRecurrence recurrence = default;
             foreach (var prop in element.EnumerateObject())
@@ -194,7 +194,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    createdDateTime = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("createdBy"u8))
@@ -208,7 +208,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    lastModifiedDateTime = prop.Value.GetDateTimeOffset("O");
+                    lastModifiedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedBy"u8))
@@ -239,7 +239,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    startDateTime = prop.Value.GetDateTimeOffset("O");
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("recurrenceStatus"u8))
@@ -272,13 +272,13 @@ namespace Azure.Developer.LoadTesting
                 kind,
                 state,
                 stateDetails,
-                createdDateTime,
+                createdOn,
                 createdBy,
-                lastModifiedDateTime,
+                lastModifiedOn,
                 lastModifiedBy,
                 additionalBinaryDataProperties,
                 testIds,
-                startDateTime,
+                startOn,
                 recurrenceStatus,
                 recurrence);
         }
