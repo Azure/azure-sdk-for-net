@@ -2073,16 +2073,18 @@ namespace Azure.AI.Projects.Agents
         /// <param name="conversationId0"> The id of the conversation this response belongs to. </param>
         /// <param name="audio"> The audio configuration used for the response, including the voice and audio format used for output. </param>
         /// <param name="metadata"> A set of key-value pairs attached to the response. </param>
+        /// <param name="outputModalities0"> The output modalities used for the response, e.g. `["text", "audio"]`. Audio output always includes a text transcript. </param>
         /// <param name="temperature"> The sampling temperature used for the response. </param>
         /// <param name="createdAt"> The Unix timestamp (in seconds) for when the response was created. </param>
         /// <param name="completedAt"> The Unix timestamp (in seconds) for when the response completed. </param>
         /// <returns> A new <see cref="Agents.VoiceResponse"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceResponse VoiceResponse(string id = default, VoiceResponseObject? @object = default, VoiceResponseStatus? status = default, RealtimeResponseStatusDetails statusDetails = default, RealtimeResponseUsage usage = default, string conversationId = default, IEnumerable<VoiceResponseOutputModality> outputModalities = default, BinaryData maxOutputTokens = default, string id0 = default, IEnumerable<BinaryData> output = default, string conversationId0 = default, VoiceResponseAudio audio = default, IDictionary<string, string> metadata = default, float? temperature = default, DateTimeOffset? createdAt = default, DateTimeOffset? completedAt = default)
+        public static VoiceResponse VoiceResponse(string id = default, VoiceResponseObject? @object = default, VoiceResponseStatus? status = default, RealtimeResponseStatusDetails statusDetails = default, RealtimeResponseUsage usage = default, string conversationId = default, IEnumerable<VoiceResponseOutputModality> outputModalities = default, BinaryData maxOutputTokens = default, string id0 = default, IEnumerable<BinaryData> output = default, string conversationId0 = default, VoiceResponseAudio audio = default, IDictionary<string, string> metadata = default, IEnumerable<VoiceResponseOutputModality> outputModalities0 = default, float? temperature = default, DateTimeOffset? createdAt = default, DateTimeOffset? completedAt = default)
         {
             outputModalities ??= new ChangeTrackingList<VoiceResponseOutputModality>();
             output ??= new ChangeTrackingList<BinaryData>();
             metadata ??= new ChangeTrackingDictionary<string, string>();
+            outputModalities0 ??= new ChangeTrackingList<VoiceResponseOutputModality>();
 
             return new VoiceResponse(
                 id,
@@ -2099,6 +2101,7 @@ namespace Azure.AI.Projects.Agents
                 conversationId,
                 audio,
                 metadata,
+                outputModalities.ToList(),
                 temperature,
                 createdAt,
                 completedAt);

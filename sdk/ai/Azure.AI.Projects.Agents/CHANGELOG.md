@@ -25,6 +25,7 @@
 
 - Fixed listing of Agent Optimization Jobs.
 - Fixed the `StopSession` and `StopSessionAsync` calls.
+- Fixed `VoiceResponse.Id`, `VoiceResponse.ConversationId`, and `VoiceResponse.OutputModalities` to correctly reflect the deserialized values instead of always returning `null` or an empty collection.
 
 ### Other Changes
 - Updated the `OpenAI` package dependency to `2.12.0`.

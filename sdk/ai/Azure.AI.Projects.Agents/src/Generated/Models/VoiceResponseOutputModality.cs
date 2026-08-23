@@ -50,7 +50,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VoiceResponseOutputModality other && Equals(other);
+        public override bool Equals(object obj) => obj is VoiceResponseOutputModality other && this.Equals(other);
 
         /// <inheritdoc/>
         public bool Equals(VoiceResponseOutputModality other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);

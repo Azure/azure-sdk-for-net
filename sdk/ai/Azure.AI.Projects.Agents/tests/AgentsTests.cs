@@ -1212,7 +1212,7 @@ public class AgentsTests : AgentsTestBase
             }
             """.Replace("\r\n", "\n")
         );
-        List <AgentOptimizationDatasetItem> items = [];
+        List<AgentOptimizationDatasetItem> items = [];
         for (int i = start; i < start + itemNumber; i++)
         {
             items.Add(new AgentOptimizationDatasetItem()

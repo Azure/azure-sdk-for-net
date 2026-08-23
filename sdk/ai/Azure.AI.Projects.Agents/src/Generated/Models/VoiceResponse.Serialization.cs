@@ -139,6 +139,16 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsCollectionDefined(OutputModalities))
+            {
+                writer.WritePropertyName("output_modalities"u8);
+                writer.WriteStartArray();
+                foreach (VoiceResponseOutputModality item in OutputModalities)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Temperature))
             {
                 writer.WritePropertyName("temperature"u8);
@@ -195,6 +205,7 @@ namespace Azure.AI.Projects.Agents
             string conversationId0 = default;
             VoiceResponseAudio audio = default;
             IDictionary<string, string> metadata = default;
+            IList<VoiceResponseOutputModality> outputModalities0 = default;
             float? temperature = default;
             DateTimeOffset? createdAt = default;
             DateTimeOffset? completedAt = default;
@@ -330,6 +341,20 @@ namespace Azure.AI.Projects.Agents
                     metadata = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("output_modalities"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<VoiceResponseOutputModality> array = new List<VoiceResponseOutputModality>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new VoiceResponseOutputModality(item.GetString()));
+                    }
+                    outputModalities0 = array;
+                    continue;
+                }
                 if (prop.NameEquals("temperature"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -377,6 +402,7 @@ namespace Azure.AI.Projects.Agents
                 conversationId0,
                 audio,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
+                outputModalities0 ?? new ChangeTrackingList<VoiceResponseOutputModality>(),
                 temperature,
                 createdAt,
                 completedAt);

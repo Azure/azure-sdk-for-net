@@ -16,6 +16,7 @@ namespace Azure.AI.Projects.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private protected string _id;
         private protected string _conversationId;
+        private protected IList<VoiceResponseOutputModality> _outputModalities;
 
         /// <summary> Initializes a new instance of <see cref="VoiceResponseProperties"/>. </summary>
         internal VoiceResponseProperties()

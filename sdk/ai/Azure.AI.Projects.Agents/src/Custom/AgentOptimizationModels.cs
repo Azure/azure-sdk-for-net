@@ -15,11 +15,11 @@ public partial class AgentOptimizationInlineDatasetInput { }
 public partial class AgentOptimizationJobInputs { }
 public partial class AgentOptimizationJobProgress
 {
-	[CodeGenMember("ElapsedSeconds")]
-	internal double ElapsedSecondsInternal { get; }
+    [CodeGenMember("ElapsedSeconds")]
+    internal double ElapsedSecondsInternal { get; }
 
-	/// <summary> Wall-clock time elapsed in seconds since the job began executing. </summary>
-	public TimeSpan ElapsedSeconds => TimeSpan.FromSeconds(ElapsedSecondsInternal);
+    /// <summary> Wall-clock time elapsed in seconds since the job began executing. </summary>
+    public TimeSpan ElapsedSeconds => TimeSpan.FromSeconds(ElapsedSecondsInternal);
 }
 public partial class AgentOptimizationJobResult { }
 public partial class AgentOptimizationOptions { }

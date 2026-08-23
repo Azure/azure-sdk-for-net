@@ -350,7 +350,7 @@ public class Sample_VoiceAgent : SamplesBase
             conversationId,
             cancellationToken: cancellationToken))
         {
-            string responseId = ((VoiceResponseProperties)response).Id;
+            string responseId = response.Id;
             VoiceResponse detail = await conversationsClient.GetAgentConversationResponseAsync(
                 agentName,
                 conversationId,

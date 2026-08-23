@@ -104,8 +104,10 @@ public class VoiceAgentWebSocketTests
 
         Assert.Multiple(() =>
         {
-            Assert.That(((VoiceResponseProperties)response).Id, Is.EqualTo("resp_123"));
-            Assert.That(((VoiceResponseProperties)response).ConversationId, Is.EqualTo("conv_123"));
+            Assert.That(response.Id, Is.EqualTo("resp_123"));
+            Assert.That(response.ConversationId, Is.EqualTo("conv_123"));
+            Assert.That(response.OutputModalities, Has.Count.EqualTo(1));
+            Assert.That(response.OutputModalities[0], Is.EqualTo(VoiceResponseOutputModality.Audio));
             Assert.That(response.Output, Has.Count.EqualTo(1));
             Assert.That(outputDocument.RootElement.GetProperty("type").GetString(), Is.EqualTo("message"));
             Assert.That(assistantMessage, Is.InstanceOf<RealtimeConversationItemMessageAssistant>());
