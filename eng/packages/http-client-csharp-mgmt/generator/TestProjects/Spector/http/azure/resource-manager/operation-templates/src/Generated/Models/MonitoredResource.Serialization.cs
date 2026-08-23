@@ -9,12 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Agents;
+using Azure.ResourceManager.OperationTemplates;
 
 namespace Azure.ResourceManager.OperationTemplates.Models
 {
-    /// <summary> The RealtimeResponseUsageInputTokenDetailsCachedTokensDetails. </summary>
-    public partial class RealtimeResponseUsageInputTokenDetailsCachedTokensDetails : IJsonModel<RealtimeResponseUsageInputTokenDetailsCachedTokensDetails>
+    /// <summary> The MonitoredResource. </summary>
+    public partial class MonitoredResource : IJsonModel<MonitoredResource>
     {
         /// <summary> Initializes a new instance of <see cref="MonitoredResource"/> for deserialization. </summary>
         internal MonitoredResource()
@@ -23,47 +23,47 @@ namespace Azure.ResourceManager.OperationTemplates.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RealtimeResponseUsageInputTokenDetailsCachedTokensDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MonitoredResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeResponseUsageInputTokenDetailsCachedTokensDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitoredResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRealtimeResponseUsageInputTokenDetailsCachedTokensDetails(document.RootElement, options);
+                        return DeserializeMonitoredResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RealtimeResponseUsageInputTokenDetailsCachedTokensDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitoredResource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeResponseUsageInputTokenDetailsCachedTokensDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitoredResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationTemplatesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RealtimeResponseUsageInputTokenDetailsCachedTokensDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitoredResource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RealtimeResponseUsageInputTokenDetailsCachedTokensDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MonitoredResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RealtimeResponseUsageInputTokenDetailsCachedTokensDetails IPersistableModel<RealtimeResponseUsageInputTokenDetailsCachedTokensDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MonitoredResource IPersistableModel<MonitoredResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RealtimeResponseUsageInputTokenDetailsCachedTokensDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MonitoredResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RealtimeResponseUsageInputTokenDetailsCachedTokensDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MonitoredResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,25 +74,17 @@ namespace Azure.ResourceManager.OperationTemplates.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeResponseUsageInputTokenDetailsCachedTokensDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitoredResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RealtimeResponseUsageInputTokenDetailsCachedTokensDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitoredResource)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(TextTokens))
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(SendingMetrics))
             {
-                writer.WritePropertyName("text_tokens"u8);
-                writer.WriteNumberValue(TextTokens.Value);
-            }
-            if (Optional.IsDefined(ImageTokens))
-            {
-                writer.WritePropertyName("image_tokens"u8);
-                writer.WriteNumberValue(ImageTokens.Value);
-            }
-            if (Optional.IsDefined(AudioTokens))
-            {
-                writer.WritePropertyName("audio_tokens"u8);
-                writer.WriteNumberValue(AudioTokens.Value);
+                writer.WritePropertyName("sendingMetrics"u8);
+                writer.WriteBooleanValue(SendingMetrics.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -113,60 +105,46 @@ namespace Azure.ResourceManager.OperationTemplates.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RealtimeResponseUsageInputTokenDetailsCachedTokensDetails IJsonModel<RealtimeResponseUsageInputTokenDetailsCachedTokensDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MonitoredResource IJsonModel<MonitoredResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RealtimeResponseUsageInputTokenDetailsCachedTokensDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MonitoredResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeResponseUsageInputTokenDetailsCachedTokensDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitoredResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RealtimeResponseUsageInputTokenDetailsCachedTokensDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitoredResource)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRealtimeResponseUsageInputTokenDetailsCachedTokensDetails(document.RootElement, options);
+            return DeserializeMonitoredResource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RealtimeResponseUsageInputTokenDetailsCachedTokensDetails DeserializeRealtimeResponseUsageInputTokenDetailsCachedTokensDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static MonitoredResource DeserializeMonitoredResource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            long? textTokens = default;
-            long? imageTokens = default;
-            long? audioTokens = default;
+            string id = default;
+            bool? sendingMetrics = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("text_tokens"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    textTokens = prop.Value.GetInt64();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("image_tokens"u8))
+                if (prop.NameEquals("sendingMetrics"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    imageTokens = prop.Value.GetInt64();
-                    continue;
-                }
-                if (prop.NameEquals("audio_tokens"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    audioTokens = prop.Value.GetInt64();
+                    sendingMetrics = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -174,7 +152,7 @@ namespace Azure.ResourceManager.OperationTemplates.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RealtimeResponseUsageInputTokenDetailsCachedTokensDetails(textTokens, imageTokens, audioTokens, additionalBinaryDataProperties);
+            return new MonitoredResource(id, sendingMetrics, additionalBinaryDataProperties);
         }
     }
 }

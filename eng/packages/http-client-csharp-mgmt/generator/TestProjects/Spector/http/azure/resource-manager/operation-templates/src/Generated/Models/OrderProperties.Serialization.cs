@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Extensions.OpenAI;
+using Azure.ResourceManager.OperationTemplates;
 
-namespace Azure.AI.Extensions.OpenAI.Internal
+namespace Azure.ResourceManager.OperationTemplates.Models
 {
     /// <summary> The OrderProperties. </summary>
     public partial class OrderProperties : IJsonModel<OrderProperties>

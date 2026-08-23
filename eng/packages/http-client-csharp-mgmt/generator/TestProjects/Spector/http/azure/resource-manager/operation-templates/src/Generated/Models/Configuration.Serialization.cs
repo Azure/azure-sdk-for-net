@@ -10,9 +10,12 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using Azure.AI.Extensions.OpenAI;
+using Azure;
+using Azure.Core;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.OperationTemplates;
 
-namespace Azure.AI.Extensions.OpenAI.Internal
+namespace Azure.ResourceManager.OperationTemplates.Models
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class Configuration : TrackedResourceData, IJsonModel<Configuration>

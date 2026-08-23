@@ -10,61 +10,81 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using OpenAI;
+using Azure;
+using Azure.Core;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.OperationTemplates;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.ResourceManager.OperationTemplates.Models
 {
-    /// <summary> An MCP call item. </summary>
-    public partial class VoiceMcpCallItem : VoiceConversationItem, IJsonModel<VoiceMcpCallItem>
+    /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
+    public partial class Order : TrackedResourceData, IJsonModel<Order>
     {
-        /// <summary> Initializes a new instance of <see cref="VoiceMcpCallItem"/> for deserialization. </summary>
-        internal VoiceMcpCallItem()
+        /// <summary> Initializes a new instance of <see cref="Order"/> for deserialization. </summary>
+        internal Order()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override RealtimeConversationItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceMcpCallItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Order>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVoiceMcpCallItem(document.RootElement, options);
+                        return DeserializeOrder(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceMcpCallItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Order)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceMcpCallItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Order>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationTemplatesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceMcpCallItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Order)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceMcpCallItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<Order>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceMcpCallItem IPersistableModel<VoiceMcpCallItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (VoiceMcpCallItem)PersistableModelCreateCore(data, options);
+        Order IPersistableModel<Order>.Create(BinaryData data, ModelReaderWriterOptions options) => (Order)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceMcpCallItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<Order>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="order"> The <see cref="Order"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(Order order)
+        {
+            if (order == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(order, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="Order"/> from. </param>
+        internal static Order FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeOrder(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VoiceMcpCallItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<Order>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,94 +95,69 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceMcpCallItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Order>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceMcpCallItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(Order)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
-            writer.WritePropertyName("server_label"u8);
-            writer.WriteStringValue(ServerLabel);
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("arguments"u8);
-            writer.WriteStringValue(Arguments);
-            if (Optional.IsDefined(ApprovalRequestId))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("approval_request_id"u8);
-                writer.WriteStringValue(ApprovalRequestId);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(Output))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("output"u8);
-                writer.WriteStringValue(Output);
-            }
-            if (Optional.IsDefined(Error))
-            {
-                writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceMcpCallItem IJsonModel<VoiceMcpCallItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VoiceMcpCallItem)JsonModelCreateCore(ref reader, options);
+        Order IJsonModel<Order>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (Order)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override RealtimeConversationItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceMcpCallItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Order>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceMcpCallItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(Order)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceMcpCallItem(document.RootElement, options);
+            return DeserializeOrder(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VoiceMcpCallItem DeserializeVoiceMcpCallItem(JsonElement element, ModelReaderWriterOptions options)
+        internal static Order DeserializeOrder(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            RealtimeConversationItemType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DateTimeOffset? createdAt = default;
-            string responseId = default;
-            string id = default;
-            string serverLabel = default;
+            ResourceIdentifier id = default;
             string name = default;
-            string arguments = default;
-            string approvalRequestId = default;
-            string output = default;
-            RealtimeMCPError error = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            OrderProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = new RealtimeConversationItemType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("created_at"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
-                    continue;
-                }
-                if (prop.NameEquals("response_id"u8))
-                {
-                    responseId = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("id"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -177,38 +172,57 @@ namespace Azure.AI.Projects.Agents
                     name = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("arguments"u8))
-                {
-                    arguments = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("approval_request_id"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        approvalRequestId = null;
-                        continue;
-                    }
-                    approvalRequestId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("output"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        output = null;
-                        continue;
-                    }
-                    output = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("error"u8))
+                if (prop.NameEquals("type"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    error = RealtimeMCPError.DeserializeRealtimeMCPError(prop.Value, options);
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerOperationTemplatesContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = OrderProperties.DeserializeOrderProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -216,17 +230,15 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VoiceMcpCallItem(
-                @type,
-                additionalBinaryDataProperties,
-                createdAt,
-                responseId,
+            return new Order(
                 id,
                 name,
-                arguments,
-                approvalRequestId,
-                output,
-                error);
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                additionalBinaryDataProperties);
         }
     }
 }

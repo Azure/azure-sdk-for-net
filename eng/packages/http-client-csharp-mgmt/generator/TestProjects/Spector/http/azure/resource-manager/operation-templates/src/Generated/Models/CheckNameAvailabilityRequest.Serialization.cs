@@ -12,59 +12,64 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.OperationTemplates;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.ResourceManager.OperationTemplates.Models
 {
-    /// <summary> Semantic end-of-utterance detection configuration. </summary>
-    public partial class VoiceEndOfUtteranceDetection : IJsonModel<VoiceEndOfUtteranceDetection>
+    /// <summary> The check availability request body. </summary>
+    public partial class CheckNameAvailabilityRequest : IJsonModel<CheckNameAvailabilityRequest>
     {
-        /// <summary> Initializes a new instance of <see cref="VoiceEndOfUtteranceDetection"/> for deserialization. </summary>
-        internal VoiceEndOfUtteranceDetection()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceEndOfUtteranceDetection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CheckNameAvailabilityRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceEndOfUtteranceDetection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVoiceEndOfUtteranceDetection(document.RootElement, options);
+                        return DeserializeCheckNameAvailabilityRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceEndOfUtteranceDetection)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CheckNameAvailabilityRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceEndOfUtteranceDetection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationTemplatesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceEndOfUtteranceDetection)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CheckNameAvailabilityRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceEndOfUtteranceDetection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CheckNameAvailabilityRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceEndOfUtteranceDetection IPersistableModel<VoiceEndOfUtteranceDetection>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CheckNameAvailabilityRequest IPersistableModel<CheckNameAvailabilityRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceEndOfUtteranceDetection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CheckNameAvailabilityRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="checkNameAvailabilityRequest"> The <see cref="CheckNameAvailabilityRequest"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CheckNameAvailabilityRequest checkNameAvailabilityRequest)
+        {
+            if (checkNameAvailabilityRequest == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(checkNameAvailabilityRequest, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VoiceEndOfUtteranceDetection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CheckNameAvailabilityRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,22 +80,20 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceEndOfUtteranceDetection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceEndOfUtteranceDetection)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CheckNameAvailabilityRequest)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("model"u8);
-            writer.WriteStringValue(Model.ToString());
-            if (Optional.IsDefined(ThresholdLevel))
+            if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("threshold_level"u8);
-                writer.WriteStringValue(ThresholdLevel.Value.ToString());
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(TimeoutMs))
+            if (Optional.IsDefined(Type))
             {
-                writer.WritePropertyName("timeout_ms"u8);
-                writer.WriteNumberValue(Convert.ToInt32(Math.Round(TimeoutMs.Value.TotalMilliseconds)));
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -111,56 +114,42 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceEndOfUtteranceDetection IJsonModel<VoiceEndOfUtteranceDetection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CheckNameAvailabilityRequest IJsonModel<CheckNameAvailabilityRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceEndOfUtteranceDetection JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CheckNameAvailabilityRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceEndOfUtteranceDetection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceEndOfUtteranceDetection)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CheckNameAvailabilityRequest)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceEndOfUtteranceDetection(document.RootElement, options);
+            return DeserializeCheckNameAvailabilityRequest(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VoiceEndOfUtteranceDetection DeserializeVoiceEndOfUtteranceDetection(JsonElement element, ModelReaderWriterOptions options)
+        internal static CheckNameAvailabilityRequest DeserializeCheckNameAvailabilityRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            VoiceEndOfUtteranceDetectionModel model = default;
-            VoiceEndOfUtteranceThresholdLevel? thresholdLevel = default;
-            TimeSpan? timeoutMs = default;
+            string name = default;
+            string @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("model"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    model = new VoiceEndOfUtteranceDetectionModel(prop.Value.GetString());
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("threshold_level"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    thresholdLevel = new VoiceEndOfUtteranceThresholdLevel(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("timeout_ms"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    timeoutMs = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
+                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -168,7 +157,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VoiceEndOfUtteranceDetection(model, thresholdLevel, timeoutMs, additionalBinaryDataProperties);
+            return new CheckNameAvailabilityRequest(name, @type, additionalBinaryDataProperties);
         }
     }
 }

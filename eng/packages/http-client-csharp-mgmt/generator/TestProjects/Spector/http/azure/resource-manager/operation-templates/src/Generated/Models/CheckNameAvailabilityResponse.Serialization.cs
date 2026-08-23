@@ -9,56 +9,65 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Agents;
+using Azure;
+using Azure.ResourceManager.CommonTypes.Models;
+using Azure.ResourceManager.OperationTemplates;
 
-namespace OpenAI
+namespace Azure.ResourceManager.OperationTemplates.Models
 {
-    /// <summary> The RealtimeResponseStatusDetails. </summary>
-    public partial class RealtimeResponseStatusDetails : IJsonModel<RealtimeResponseStatusDetails>
+    /// <summary> The check availability result. </summary>
+    public partial class CheckNameAvailabilityResponse : IJsonModel<CheckNameAvailabilityResponse>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RealtimeResponseStatusDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CheckNameAvailabilityResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeResponseStatusDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityResponse>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRealtimeResponseStatusDetails(document.RootElement, options);
+                        return DeserializeCheckNameAvailabilityResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RealtimeResponseStatusDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CheckNameAvailabilityResponse)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeResponseStatusDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityResponse>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationTemplatesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RealtimeResponseStatusDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CheckNameAvailabilityResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RealtimeResponseStatusDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CheckNameAvailabilityResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RealtimeResponseStatusDetails IPersistableModel<RealtimeResponseStatusDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CheckNameAvailabilityResponse IPersistableModel<CheckNameAvailabilityResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RealtimeResponseStatusDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CheckNameAvailabilityResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CheckNameAvailabilityResponse"/> from. </param>
+        internal static CheckNameAvailabilityResponse FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeCheckNameAvailabilityResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RealtimeResponseStatusDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CheckNameAvailabilityResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,25 +78,25 @@ namespace OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeResponseStatusDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RealtimeResponseStatusDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CheckNameAvailabilityResponse)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(NameAvailable))
             {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToSerialString());
+                writer.WritePropertyName("nameAvailable"u8);
+                writer.WriteBooleanValue(NameAvailable.Value);
             }
             if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
-                writer.WriteStringValue(Reason.Value.ToSerialString());
+                writer.WriteStringValue(Reason.Value.ToString());
             }
-            if (Optional.IsDefined(Error))
+            if (Optional.IsDefined(Message))
             {
-                writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -108,42 +117,42 @@ namespace OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RealtimeResponseStatusDetails IJsonModel<RealtimeResponseStatusDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CheckNameAvailabilityResponse IJsonModel<CheckNameAvailabilityResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RealtimeResponseStatusDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CheckNameAvailabilityResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RealtimeResponseStatusDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RealtimeResponseStatusDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CheckNameAvailabilityResponse)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRealtimeResponseStatusDetails(document.RootElement, options);
+            return DeserializeCheckNameAvailabilityResponse(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RealtimeResponseStatusDetails DeserializeRealtimeResponseStatusDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static CheckNameAvailabilityResponse DeserializeCheckNameAvailabilityResponse(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            RealtimeResponseStatusDetailsType? @type = default;
-            RealtimeResponseStatusDetailsReason? reason = default;
-            RealtimeResponseStatusDetailsError error = default;
+            bool? nameAvailable = default;
+            CheckNameAvailabilityReason? reason = default;
+            string message = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
+                if (prop.NameEquals("nameAvailable"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    @type = prop.Value.GetString().ToRealtimeResponseStatusDetailsType();
+                    nameAvailable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("reason"u8))
@@ -152,16 +161,12 @@ namespace OpenAI
                     {
                         continue;
                     }
-                    reason = prop.Value.GetString().ToRealtimeResponseStatusDetailsReason();
+                    reason = new CheckNameAvailabilityReason(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("error"u8))
+                if (prop.NameEquals("message"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    error = RealtimeResponseStatusDetailsError.DeserializeRealtimeResponseStatusDetailsError(prop.Value, options);
+                    message = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +174,7 @@ namespace OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RealtimeResponseStatusDetails(@type, reason, error, additionalBinaryDataProperties);
+            return new CheckNameAvailabilityResponse(nameAvailable, reason, message, additionalBinaryDataProperties);
         }
     }
 }

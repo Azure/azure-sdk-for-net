@@ -12,54 +12,66 @@ using System.Text.Json;
 using Azure;
 using Azure.ResourceManager.OperationTemplates;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.ResourceManager.OperationTemplates.Models
 {
-    /// <summary> The VoiceMcpListToolsToolAnnotations. </summary>
-    public partial class VoiceMcpListToolsToolAnnotations : IJsonModel<VoiceMcpListToolsToolAnnotations>
+    /// <summary> The ActionResult. </summary>
+    public partial class ActionResult : IJsonModel<ActionResult>
     {
+        /// <summary> Initializes a new instance of <see cref="ActionResult"/> for deserialization. </summary>
+        internal ActionResult()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceMcpListToolsToolAnnotations PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ActionResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceMcpListToolsToolAnnotations>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActionResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVoiceMcpListToolsToolAnnotations(document.RootElement, options);
+                        return DeserializeActionResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceMcpListToolsToolAnnotations)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActionResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceMcpListToolsToolAnnotations>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActionResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationTemplatesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceMcpListToolsToolAnnotations)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActionResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceMcpListToolsToolAnnotations>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ActionResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceMcpListToolsToolAnnotations IPersistableModel<VoiceMcpListToolsToolAnnotations>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ActionResult IPersistableModel<ActionResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceMcpListToolsToolAnnotations>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ActionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ActionResult"/> from. </param>
+        internal static ActionResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeActionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VoiceMcpListToolsToolAnnotations>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ActionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,11 +82,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceMcpListToolsToolAnnotations>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceMcpListToolsToolAnnotations)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ActionResult)} does not support writing '{format}' format.");
             }
+            writer.WritePropertyName("result"u8);
+            writer.WriteStringValue(Result);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -94,38 +108,44 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceMcpListToolsToolAnnotations IJsonModel<VoiceMcpListToolsToolAnnotations>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ActionResult IJsonModel<ActionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceMcpListToolsToolAnnotations JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ActionResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceMcpListToolsToolAnnotations>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceMcpListToolsToolAnnotations)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ActionResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceMcpListToolsToolAnnotations(document.RootElement, options);
+            return DeserializeActionResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VoiceMcpListToolsToolAnnotations DeserializeVoiceMcpListToolsToolAnnotations(JsonElement element, ModelReaderWriterOptions options)
+        internal static ActionResult DeserializeActionResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string result = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("result"u8))
+                {
+                    result = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VoiceMcpListToolsToolAnnotations(additionalBinaryDataProperties);
+            return new ActionResult(result, additionalBinaryDataProperties);
         }
     }
 }

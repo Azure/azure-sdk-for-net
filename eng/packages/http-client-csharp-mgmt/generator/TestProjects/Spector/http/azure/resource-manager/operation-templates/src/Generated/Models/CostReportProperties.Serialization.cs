@@ -11,54 +11,54 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.OperationTemplates;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.ResourceManager.OperationTemplates.Models
 {
-    /// <summary> Session defaults applied to sessions created for a hosted agent version. </summary>
-    public partial class SessionConfiguration : IJsonModel<SessionConfiguration>
+    /// <summary> The CostReportProperties. </summary>
+    public partial class CostReportProperties : IJsonModel<CostReportProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SessionConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CostReportProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CostReportProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSessionConfiguration(document.RootElement, options);
+                        return DeserializeCostReportProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SessionConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CostReportProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CostReportProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationTemplatesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SessionConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CostReportProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SessionConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CostReportProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SessionConfiguration IPersistableModel<SessionConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CostReportProperties IPersistableModel<CostReportProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SessionConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CostReportProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SessionConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CostReportProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,15 +69,20 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CostReportProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SessionConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CostReportProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IdleTimeoutSeconds))
+            if (Optional.IsDefined(DownloadUri))
             {
-                writer.WritePropertyName("idle_timeout_seconds"u8);
-                writer.WriteNumberValue(Convert.ToInt32(Math.Round(IdleTimeoutSeconds.Value.TotalSeconds)));
+                writer.WritePropertyName("downloadUrl"u8);
+                writer.WriteStringValue(DownloadUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -98,40 +103,46 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SessionConfiguration IJsonModel<SessionConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CostReportProperties IJsonModel<CostReportProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SessionConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CostReportProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SessionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CostReportProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SessionConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CostReportProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSessionConfiguration(document.RootElement, options);
+            return DeserializeCostReportProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SessionConfiguration DeserializeSessionConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        internal static CostReportProperties DeserializeCostReportProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            TimeSpan? idleTimeoutSeconds = default;
+            Uri downloadUri = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("idle_timeout_seconds"u8))
+                if (prop.NameEquals("downloadUrl"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    idleTimeoutSeconds = TimeSpan.FromSeconds(prop.Value.GetInt32());
+                    downloadUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    continue;
+                }
+                if (prop.NameEquals("provisioningState"u8))
+                {
+                    provisioningState = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +150,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SessionConfiguration(idleTimeoutSeconds, additionalBinaryDataProperties);
+            return new CostReportProperties(downloadUri, provisioningState, additionalBinaryDataProperties);
         }
     }
 }
