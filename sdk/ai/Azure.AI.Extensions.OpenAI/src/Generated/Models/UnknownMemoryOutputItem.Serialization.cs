@@ -103,7 +103,7 @@ namespace Azure.AI.Extensions.OpenAI
                 return null;
             }
             string memoryId = default;
-            DateTimeOffset updatedAt = default;
+            DateTimeOffset updatedOn = default;
             string scope = default;
             string content = default;
             MemoryItemKind kind = default;
@@ -117,7 +117,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("updated_at"u8))
                 {
-                    updatedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    updatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("scope"u8))
@@ -142,7 +142,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             return new UnknownMemoryOutputItem(
                 memoryId,
-                updatedAt,
+                updatedOn,
                 scope,
                 content,
                 kind,
