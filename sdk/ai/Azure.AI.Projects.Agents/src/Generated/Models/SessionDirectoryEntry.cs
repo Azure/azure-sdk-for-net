@@ -17,27 +17,27 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the file or directory. </param>
         /// <param name="sizeInBytes"> The size in bytes (0 for directories). </param>
         /// <param name="isDirectory"> Whether this entry is a directory. </param>
-        /// <param name="modifiedOn"> The Unix timestamp (in seconds) when the file was last modified. </param>
-        internal SessionDirectoryEntry(string name, long sizeInBytes, bool isDirectory, DateTimeOffset modifiedOn)
+        /// <param name="modifiedAt"> The Unix timestamp (in seconds) when the file was last modified. </param>
+        internal SessionDirectoryEntry(string name, long sizeInBytes, bool isDirectory, DateTimeOffset modifiedAt)
         {
             Name = name;
             SizeInBytes = sizeInBytes;
             IsDirectory = isDirectory;
-            ModifiedOn = modifiedOn;
+            ModifiedAt = modifiedAt;
         }
 
         /// <summary> Initializes a new instance of <see cref="SessionDirectoryEntry"/>. </summary>
         /// <param name="name"> The name of the file or directory. </param>
         /// <param name="sizeInBytes"> The size in bytes (0 for directories). </param>
         /// <param name="isDirectory"> Whether this entry is a directory. </param>
-        /// <param name="modifiedOn"> The Unix timestamp (in seconds) when the file was last modified. </param>
+        /// <param name="modifiedAt"> The Unix timestamp (in seconds) when the file was last modified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SessionDirectoryEntry(string name, long sizeInBytes, bool isDirectory, DateTimeOffset modifiedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SessionDirectoryEntry(string name, long sizeInBytes, bool isDirectory, DateTimeOffset modifiedAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             SizeInBytes = sizeInBytes;
             IsDirectory = isDirectory;
-            ModifiedOn = modifiedOn;
+            ModifiedAt = modifiedAt;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,6 +51,6 @@ namespace Azure.AI.Projects.Agents
         public bool IsDirectory { get; }
 
         /// <summary> The Unix timestamp (in seconds) when the file was last modified. </summary>
-        public DateTimeOffset ModifiedOn { get; }
+        public DateTimeOffset ModifiedAt { get; }
     }
 }

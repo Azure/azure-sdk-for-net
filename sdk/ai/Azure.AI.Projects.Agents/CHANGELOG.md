@@ -20,6 +20,7 @@
 - Concrete voice item models now inherit the corresponding OpenAI realtime models instead of `VoiceConversationItem`.
 - Changed voice implementation values from strings to `VoiceType` and changed voice duration fields expressed in milliseconds to `TimeSpan`.
 - Removed the fixed avatar video codec setting; the service now controls the codec.
+- Renamed timestamp properties across several models for `*At` naming consistency: `AgentOptimizationJob.CreatedOn`/`UpdatedOn`, `AgentOptimizationJobListItem.CreatedOn`/`UpdatedOn`, `AgentsSkill.CreatedOn`, `ProjectAgentSession.CreatedOn`/`LastAccessedOn`/`ExpiresOn`, `PromotionInfo.PromotedOn`, `SessionDirectoryEntry.ModifiedOn`, `SkillVersion.CreatedOn`, and `ToolboxVersion.CreatedOn` are now `CreatedAt`, `UpdatedAt`, `LastAccessedAt`, `ExpiresAt`, `PromotedAt`, and `ModifiedAt` respectively.
 
 ### Bugs Fixed
 

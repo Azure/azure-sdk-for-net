@@ -21,15 +21,15 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the skill version. </param>
         /// <param name="version"> The version identifier. Skill versions are immutable. </param>
         /// <param name="description"> A human-readable description of the skill version. </param>
-        /// <param name="createdOn"> The Unix timestamp (seconds) when the skill version was created. </param>
-        internal SkillVersion(string id, string skillId, string name, string version, string description, DateTimeOffset createdOn)
+        /// <param name="createdAt"> The Unix timestamp (seconds) when the skill version was created. </param>
+        internal SkillVersion(string id, string skillId, string name, string version, string description, DateTimeOffset createdAt)
         {
             Id = id;
             SkillId = skillId;
             Name = name;
             Version = version;
             Description = description;
-            CreatedOn = createdOn;
+            CreatedAt = createdAt;
         }
 
         /// <summary> Initializes a new instance of <see cref="SkillVersion"/>. </summary>
@@ -38,16 +38,16 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the skill version. </param>
         /// <param name="version"> The version identifier. Skill versions are immutable. </param>
         /// <param name="description"> A human-readable description of the skill version. </param>
-        /// <param name="createdOn"> The Unix timestamp (seconds) when the skill version was created. </param>
+        /// <param name="createdAt"> The Unix timestamp (seconds) when the skill version was created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SkillVersion(string id, string skillId, string name, string version, string description, DateTimeOffset createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SkillVersion(string id, string skillId, string name, string version, string description, DateTimeOffset createdAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             SkillId = skillId;
             Name = name;
             Version = version;
             Description = description;
-            CreatedOn = createdOn;
+            CreatedAt = createdAt;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -67,6 +67,6 @@ namespace Azure.AI.Projects.Agents
         public string Description { get; }
 
         /// <summary> The Unix timestamp (seconds) when the skill version was created. </summary>
-        public DateTimeOffset CreatedOn { get; }
+        public DateTimeOffset CreatedAt { get; }
     }
 }
