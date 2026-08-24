@@ -24,18 +24,18 @@ namespace Azure.AI.Projects.Agents
         /// <param name="id"> Server-assigned unique identifier. </param>
         /// <param name="status"> Current lifecycle status. </param>
         /// <param name="error"> Error details — populated only on failure. </param>
-        /// <param name="createdAt"> The timestamp when the job was created, represented in Unix time. </param>
-        /// <param name="updatedAt"> The timestamp when the job was last updated, represented in Unix time. </param>
+        /// <param name="createdOn"> The timestamp when the job was created, represented in Unix time. </param>
+        /// <param name="updatedOn"> The timestamp when the job was last updated, represented in Unix time. </param>
         /// <param name="progress"> Progress snapshot. May be present in terminal states reflecting last-known progress. </param>
         /// <param name="agent"> The agent targeted by this optimization job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentOptimizationJobListItem(string id, AgentsJobStatus status, FoundryOpenAIError error, DateTimeOffset createdAt, DateTimeOffset updatedAt, AgentOptimizationJobProgress progress, OptimizedAgentIdentifier agent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentOptimizationJobListItem(string id, AgentsJobStatus status, FoundryOpenAIError error, DateTimeOffset createdOn, DateTimeOffset updatedOn, AgentOptimizationJobProgress progress, OptimizedAgentIdentifier agent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;
             Error = error;
-            CreatedAt = createdAt;
-            UpdatedAt = updatedAt;
+            CreatedOn = createdOn;
+            UpdatedOn = updatedOn;
             Progress = progress;
             Agent = agent;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -48,10 +48,10 @@ namespace Azure.AI.Projects.Agents
         public AgentsJobStatus Status { get; }
 
         /// <summary> The timestamp when the job was created, represented in Unix time. </summary>
-        public DateTimeOffset CreatedAt { get; }
+        public DateTimeOffset CreatedOn { get; }
 
         /// <summary> The timestamp when the job was last updated, represented in Unix time. </summary>
-        public DateTimeOffset UpdatedAt { get; }
+        public DateTimeOffset UpdatedOn { get; }
 
         /// <summary> Progress snapshot. May be present in terminal states reflecting last-known progress. </summary>
         public AgentOptimizationJobProgress Progress { get; }

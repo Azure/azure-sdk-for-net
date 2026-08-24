@@ -78,17 +78,6 @@ namespace Azure.ResourceManager.Fabric.Models
             return new FabricSku(name, tier, default);
         }
 
-        /// <param name="sku"> The SKU details. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.FabricCapacityPatch"/> instance for mocking. </returns>
-        public static FabricCapacityPatch FabricCapacityPatch(FabricSku sku = default, IDictionary<string, string> tags = default, FabricCapacityUpdateProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new FabricCapacityPatch(sku, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
-        }
-
         /// <param name="overage"> The capacity overage properties of the Fabric capacity resource. </param>
         /// <param name="administrationMembers"> An array of administrator user identities. </param>
         /// <returns> A new <see cref="Models.FabricCapacityUpdateProperties"/> instance for mocking. </returns>

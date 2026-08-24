@@ -310,7 +310,7 @@ namespace Azure.Provisioning.Cdn
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<FrontDoorOriginProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<FrontDoorOriginGroup>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<FrontDoorOriginGroup>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
