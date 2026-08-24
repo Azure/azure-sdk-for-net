@@ -478,6 +478,7 @@ namespace Azure.Storage.Files.DataLake
                 Blobs.Models.SessionProvider sessionProvider = sessionOptions?.SessionProvider
                     ?? new Blobs.Models.ContainerSessionProvider(blobServiceUri, tokenCredential, blobClientOptions);
                 return BlobServiceClient.CreateSessionAuthenticationPolicy(
+                    blobServiceUri,
                     fallbackAuthPolicy,
                     sessionProvider,
                     sessionOptions);

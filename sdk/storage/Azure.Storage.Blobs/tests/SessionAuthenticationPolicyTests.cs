@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Diagnostics.Tracing;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -35,6 +36,11 @@ namespace Azure.Storage.Blobs.Tests
         private static readonly string s_accountKey = Convert.ToBase64String(new byte[32]);
         private static readonly string s_sessionKey = Convert.ToBase64String(Encoding.UTF8.GetBytes("testsessionkey1234567890ab"));
         private const string SessionToken = "test-session-token";
+
+        /// <summary>
+        /// Event id of <see cref="BlobsEventSource.SessionAuthenticationDisabledAccountNameUnavailable"/>.
+        /// </summary>
+        private const int SessionAuthenticationDisabledEventId = 1;
 
         private static Uri BlobUri => new Uri($"https://{AccountName}.blob.core.windows.net/{ContainerName}/{BlobName}");
         private static Uri ContainerUri => new Uri($"https://{AccountName}.blob.core.windows.net/{ContainerName}");
@@ -188,6 +194,7 @@ namespace Azure.Storage.Blobs.Tests
             SessionOptions sessionOptions,
             SessionProvider sessionProvider)
             => new SessionAuthenticationPolicy(
+                BlobUri,
                 mockBearer.Object,
                 sessionProvider,
                 sessionOptions);
@@ -236,6 +243,7 @@ namespace Azure.Storage.Blobs.Tests
         public void Ctor_NullBearerPolicy_Throws()
         {
             Assert.Throws<ArgumentNullException>(() => new SessionAuthenticationPolicy(
+                endpoint: BlobUri,
                 fallbackAuthPolicy: null,
                 sessionProvider: CreateProvider().Provider,
                 sessionOptions: EnabledOptions));
@@ -246,8 +254,20 @@ namespace Azure.Storage.Blobs.Tests
         {
             var mockBearer = CreateMockBearerPolicy();
             Assert.Throws<ArgumentNullException>(() => new SessionAuthenticationPolicy(
+                endpoint: BlobUri,
                 fallbackAuthPolicy: mockBearer.Object,
                 sessionProvider: null,
+                sessionOptions: EnabledOptions));
+        }
+
+        [Test]
+        public void Ctor_NullEndpoint_Throws()
+        {
+            var mockBearer = CreateMockBearerPolicy();
+            Assert.Throws<ArgumentNullException>(() => new SessionAuthenticationPolicy(
+                endpoint: null,
+                fallbackAuthPolicy: mockBearer.Object,
+                sessionProvider: CreateProvider().Provider,
                 sessionOptions: EnabledOptions));
         }
 
@@ -256,17 +276,52 @@ namespace Azure.Storage.Blobs.Tests
         {
             var mockBearer = CreateMockBearerPolicy();
             Assert.DoesNotThrow(() => new SessionAuthenticationPolicy(
+                BlobUri,
                 mockBearer.Object,
                 CreateProvider().Provider,
                 sessionOptions: null));
         }
 
         [Test]
-        public void Ctor_EnabledMode_MissingAccountName_DoesNotThrow()
+        public void Ctor_EnabledMode_MissingAccountName_DerivesFromEndpoint()
         {
             var mockBearer = CreateMockBearerPolicy();
-            // AccountName is optional; it is derived from the request URL at signing time.
+            // AccountName is optional; it is derived from the endpoint at construction time.
             Assert.DoesNotThrow(() => new SessionAuthenticationPolicy(
+                BlobUri,
+                mockBearer.Object,
+                CreateProvider().Provider,
+                new SessionOptions
+                {
+                    SessionMode = SessionMode.Enabled,
+                    AccountName = null
+                }));
+        }
+
+        [Test]
+        public void Ctor_EnabledMode_MissingAccountName_PathStyleEndpoint_DerivesFromEndpoint()
+        {
+            var mockBearer = CreateMockBearerPolicy();
+            Assert.DoesNotThrow(() => new SessionAuthenticationPolicy(
+                new Uri($"https://127.0.0.1:10000/{AccountName}/{ContainerName}/{BlobName}"),
+                mockBearer.Object,
+                CreateProvider().Provider,
+                new SessionOptions
+                {
+                    SessionMode = SessionMode.Enabled,
+                    AccountName = null
+                }));
+        }
+
+        [Test]
+        public void Ctor_EnabledMode_AccountNameNotDerivable_DoesNotThrow()
+        {
+            var mockBearer = CreateMockBearerPolicy();
+            // The account name can be determined from neither SessionOptions nor the
+            // endpoint. Session authentication is disabled for this client rather than
+            // failing construction.
+            Assert.DoesNotThrow(() => new SessionAuthenticationPolicy(
+                new Uri("https://127.0.0.1:10000/"),
                 mockBearer.Object,
                 CreateProvider().Provider,
                 new SessionOptions
@@ -281,6 +336,7 @@ namespace Azure.Storage.Blobs.Tests
         {
             var mockBearer = CreateMockBearerPolicy();
             Assert.DoesNotThrow(() => new SessionAuthenticationPolicy(
+                BlobUri,
                 mockBearer.Object,
                 CreateProvider().Provider,
                 EnabledOptions));
@@ -607,26 +663,140 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [Test]
-        public void AccountNameOmitted_CustomDomain_Throws()
+        public async Task AccountNameOmitted_CustomDomain_FallsBackToBearer()
         {
             var mockBearer = CreateMockBearerPolicy();
-            // A custom domain carries no parseable account name, so signing cannot
-            // proceed without an explicit SessionOptions.AccountName.
-            var policy = CreateSessionPolicy(
-                mockBearer,
-                new SessionOptions { SessionMode = SessionMode.Enabled },
-                CreateSessionMockResponse());
-
+            // A custom domain carries no parseable account name, so session authentication
+            // is disabled and every request uses the bearer token policy instead.
             var customDomainBlobUri = new Uri($"https://storage.mycustomdomain.com/{ContainerName}/{BlobName}");
 
-            Assert.That(
-                async () => await SendBlobGetAsync(
-                    policy,
-                    customDomainBlobUri,
-                    RequestMethod.Get,
-                    CreateBlobGetResponse(200)),
-                Throws.Exception,
-                "Signing must fail when the account name can be neither supplied nor derived.");
+            var policy = new SessionAuthenticationPolicy(
+                customDomainBlobUri,
+                mockBearer.Object,
+                CreateProvider(CreateSessionMockResponse()).Provider,
+                new SessionOptions { SessionMode = SessionMode.Enabled });
+
+            var (message, outerTransport) = await SendBlobGetAsync(
+                policy,
+                customDomainBlobUri,
+                RequestMethod.Get,
+                CreateBlobGetResponse(200));
+
+            VerifyBearerPolicyInvoked(mockBearer, Times.Once());
+            Assert.IsFalse(
+                message.Request.Headers.TryGetValue("Authorization", out string authHeader) &&
+                authHeader.StartsWith("Session "),
+                "Request must not be signed with a session token when the account name is unknown.");
+        }
+
+        [Test]
+        public async Task AccountNameOmitted_EnabledMode_UnparseableEndpoint_FallsBackToBearer()
+        {
+            var mockBearer = CreateMockBearerPolicy();
+            // Sessions are explicitly enabled, but the account name can be determined from
+            // neither SessionOptions nor the endpoint. This must degrade to bearer token
+            // authentication rather than throwing.
+            var unparseableUri = new Uri("https://test/test");
+
+            var policy = new SessionAuthenticationPolicy(
+                unparseableUri,
+                mockBearer.Object,
+                CreateProvider(CreateSessionMockResponse()).Provider,
+                new SessionOptions { SessionMode = SessionMode.Enabled });
+
+            var (message, outerTransport) = await SendBlobGetAsync(
+                policy,
+                unparseableUri,
+                RequestMethod.Get,
+                CreateBlobGetResponse(200));
+
+            VerifyBearerPolicyInvoked(mockBearer, Times.Once());
+            Assert.IsFalse(
+                message.Request.Headers.TryGetValue("Authorization", out string authHeader) &&
+                authHeader.StartsWith("Session "),
+                "Request must not be signed with a session token when the account name is unknown.");
+        }
+
+        [Test]
+        public void AccountNameNotDerivable_WritesWarningToEventSource()
+        {
+            var mockBearer = CreateMockBearerPolicy();
+
+            using var listener = new TestEventListener();
+            listener.EnableEvents(BlobsEventSource.Singleton, EventLevel.Warning);
+
+            // The listener observes the process-wide event source, so scope the assertions
+            // to an endpoint unique to this test case.
+            var unparseableUri = new Uri($"https://warning-{_async}/test");
+            _ = new SessionAuthenticationPolicy(
+                unparseableUri,
+                mockBearer.Object,
+                CreateProvider().Provider,
+                new SessionOptions { SessionMode = SessionMode.Enabled });
+
+            EventWrittenEventArgs sessionDisabledEvent = listener.SingleEventById(
+                SessionAuthenticationDisabledEventId,
+                e => e.Payload.Contains(unparseableUri.AbsoluteUri));
+            Assert.AreEqual(EventLevel.Warning, sessionDisabledEvent.Level);
+            Assert.AreEqual(
+                nameof(BlobsEventSource.SessionAuthenticationDisabledAccountNameUnavailable),
+                sessionDisabledEvent.EventName);
+        }
+
+        [Test]
+        public void AccountNameDerivable_DoesNotWriteWarningToEventSource()
+        {
+            var mockBearer = CreateMockBearerPolicy();
+
+            using var listener = new TestEventListener();
+            listener.EnableEvents(BlobsEventSource.Singleton, EventLevel.Warning);
+
+            _ = new SessionAuthenticationPolicy(
+                BlobUri,
+                mockBearer.Object,
+                CreateProvider().Provider,
+                new SessionOptions { SessionMode = SessionMode.Enabled });
+
+            Assert.IsFalse(
+                WarningWrittenFor(listener, BlobUri),
+                "No warning should be written when the account name is derived from the endpoint.");
+        }
+
+        [Test]
+        public void AccountNameNotDerivable_SessionsDisabled_DoesNotWriteWarningToEventSource()
+        {
+            var mockBearer = CreateMockBearerPolicy();
+
+            using var listener = new TestEventListener();
+            listener.EnableEvents(BlobsEventSource.Singleton, EventLevel.Warning);
+
+            var unparseableUri = new Uri($"https://no-warning-{_async}/test");
+            _ = new SessionAuthenticationPolicy(
+                unparseableUri,
+                mockBearer.Object,
+                CreateProvider().Provider,
+                new SessionOptions { SessionMode = SessionMode.Disabled });
+
+            Assert.IsFalse(
+                WarningWrittenFor(listener, unparseableUri),
+                "No warning should be written when the caller explicitly disabled sessions.");
+        }
+
+        /// <summary>
+        /// Determines whether the session-disabled warning was written for
+        /// <paramref name="endpoint"/>. The listener observes the process-wide event
+        /// source, so events must be matched on their endpoint payload.
+        /// </summary>
+        private static bool WarningWrittenFor(TestEventListener listener, Uri endpoint)
+        {
+            foreach (EventWrittenEventArgs e in listener.EventsById(SessionAuthenticationDisabledEventId))
+            {
+                if (e.Payload.Contains(endpoint.AbsoluteUri))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
         #endregion
 
