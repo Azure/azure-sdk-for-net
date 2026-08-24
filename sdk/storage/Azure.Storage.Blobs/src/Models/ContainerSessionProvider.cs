@@ -122,7 +122,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 UriQueryParamsCollection query = new UriQueryParamsCollection(uriBuilder.Query);
                 if (query.ContainsKey(Constants.UriQueryParameters.Comp)
-                    || query.ContainsKey(Constants.UriQueryParameters.RestType))
+                    || query.ContainsKey(Constants.UriQueryParameters.ResType))
                 {
                     return false;
                 }

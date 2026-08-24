@@ -242,7 +242,7 @@ namespace Azure.Storage
         internal static class UriQueryParameters
         {
             public const string Comp = "comp";
-            public const string RestType = "restype";
+            public const string ResType = "restype";
         }
 
         /// <summary>
