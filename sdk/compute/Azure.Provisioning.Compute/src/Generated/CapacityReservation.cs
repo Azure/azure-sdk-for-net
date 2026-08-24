@@ -274,7 +274,7 @@ namespace Azure.Provisioning.Compute
             _properties = DefineModelProperty<CapacityReservationProperties>(nameof(Properties), new string[] { "properties" });
             _sku = DefineModelProperty<ComputeSku>(nameof(Sku), new string[] { "sku" }, isRequired: true);
             _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" });
-            _parent = DefineResource<CapacityReservationGroup>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<CapacityReservationGroup>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
