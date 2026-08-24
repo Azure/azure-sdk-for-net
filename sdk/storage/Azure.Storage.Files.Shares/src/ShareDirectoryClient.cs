@@ -3801,6 +3801,7 @@ namespace Azure.Storage.Files.Shares
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Uri GenerateSasUri(ShareSasBuilder builder, out string stringToSign)
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(GenerateSasUri));
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
 
             // Deep copy of builder so we don't modify the user's original DataLakeSasBuilder.
@@ -3818,8 +3819,6 @@ namespace Azure.Storage.Files.Shares
 
         private void SetBuilderAndValidate(ShareSasBuilder builder)
         {
-            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(GenerateSasUri));
-
             // Assign builder's ShareName and Path, if they are null.
             builder.ShareName ??= ShareName;
             builder.FilePath ??= Path;

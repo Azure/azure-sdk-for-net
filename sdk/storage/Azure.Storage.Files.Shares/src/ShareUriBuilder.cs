@@ -109,17 +109,6 @@ namespace Azure.Storage.Files.Shares
         private string _directoryOrFilePath;
 
         /// <summary>
-        /// Gets or sets the name of a file snapshot.  The value defaults to
-        /// <see cref="string.Empty"/> if not present in the <see cref="System.Uri"/>.
-        /// </summary>
-        public string Snapshot
-        {
-            get => _snapshot;
-            set { ResetUri(); _snapshot = value; }
-        }
-        private string _snapshot;
-
-        /// <summary>
         /// Gets or sets the file ID of the file or directory.  The value
         /// defaults to <see cref="string.Empty"/> if not present in the
         /// <see cref="System.Uri"/>.
@@ -134,6 +123,17 @@ namespace Azure.Storage.Files.Shares
             set { ResetUri(); _fileId = value; }
         }
         private string _fileId;
+
+        /// <summary>
+        /// Gets or sets the name of a file snapshot.  The value defaults to
+        /// <see cref="string.Empty"/> if not present in the <see cref="System.Uri"/>.
+        /// </summary>
+        public string Snapshot
+        {
+            get => _snapshot;
+            set { ResetUri(); _snapshot = value; }
+        }
+        private string _snapshot;
 
         /// <summary>
         /// Gets or sets the Shared Access Signature query parameters, or null
@@ -183,9 +183,9 @@ namespace Azure.Storage.Files.Shares
             ShareName = "";
             DirectoryOrFilePath = "";
 
+            FileId = "";
             Snapshot = "";
             Sas = null;
-            FileId = "";
 
             // Find the share & directory/file path (if any)
             if (!string.IsNullOrEmpty(uri.AbsolutePath))
@@ -239,20 +239,20 @@ namespace Azure.Storage.Files.Shares
 
             var paramsMap = new UriQueryParamsCollection(uri.Query);
 
-            if (paramsMap.TryGetValue(Constants.File.SnapshotParameterName, out var snapshotTime))
-            {
-                Snapshot = snapshotTime;
-
-                // If we recognized the query parameter, remove it from the map
-                paramsMap.Remove(Constants.File.SnapshotParameterName);
-            }
-
             if (paramsMap.TryGetValue(Constants.File.FileIdParameterName, out var fileId))
             {
                 FileId = fileId;
 
                 // If we recognized the query parameter, remove it from the map
                 paramsMap.Remove(Constants.File.FileIdParameterName);
+            }
+
+            if (paramsMap.TryGetValue(Constants.File.SnapshotParameterName, out var snapshotTime))
+            {
+                Snapshot = snapshotTime;
+
+                // If we recognized the query parameter, remove it from the map
+                paramsMap.Remove(Constants.File.SnapshotParameterName);
             }
 
             if (paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
@@ -321,17 +321,17 @@ namespace Azure.Storage.Files.Shares
 
             // Concatenate query parameters
             var query = new StringBuilder(Query);
-            if (!string.IsNullOrWhiteSpace(Snapshot))
-            {
-                if (query.Length > 0)
-                { query.Append('&'); }
-                query.Append(Constants.File.SnapshotParameterName).Append('=').Append(Snapshot);
-            }
             if (!string.IsNullOrWhiteSpace(FileId))
             {
                 if (query.Length > 0)
                 { query.Append('&'); }
                 query.Append(Constants.File.FileIdParameterName).Append('=').Append(FileId);
+            }
+            if (!string.IsNullOrWhiteSpace(Snapshot))
+            {
+                if (query.Length > 0)
+                { query.Append('&'); }
+                query.Append(Constants.File.SnapshotParameterName).Append('=').Append(Snapshot);
             }
             var sas = Sas?.ToString();
             if (!string.IsNullOrWhiteSpace(sas))

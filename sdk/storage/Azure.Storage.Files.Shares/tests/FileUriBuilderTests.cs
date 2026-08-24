@@ -198,7 +198,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public void FileUriBuilder_FileIdAndSnapshotTest()
         {
             // Arrange
-            var uriString = "https://account.file.core.windows.net/share?sharesnapshot=2011-03-09T01:42:34.9360000Z&fileid=12384898975283830";
+            var uriString = "https://account.file.core.windows.net/share?fileid=12384898975283830&sharesnapshot=2011-03-09T01:42:34.9360000Z";
             var originalUri = new UriBuilder(uriString);
 
             // Act
@@ -258,6 +258,35 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(
                 "https://account.file.core.windows.net/share?fileid=12384898975283830",
                 newUri.AbsoluteUri);
+        }
+
+        [RecordedTest]
+        public void FileUriBuilder_SetFileIdAfterToUriTest()
+        {
+            // Arrange
+            var fileUriBuilder = new ShareUriBuilder(
+                new Uri("https://account.file.core.windows.net/share?fileid=12384898975283830"));
+
+            // Act - materialize the Uri, then change the file id.
+            Uri firstUri = fileUriBuilder.ToUri();
+            fileUriBuilder.FileId = "99999999999999999";
+            Uri secondUri = fileUriBuilder.ToUri();
+
+            // Assert - the cached Uri was reset by the setter.
+            Assert.AreEqual(
+                "https://account.file.core.windows.net/share?fileid=12384898975283830",
+                firstUri.AbsoluteUri);
+            Assert.AreEqual(
+                "https://account.file.core.windows.net/share?fileid=99999999999999999",
+                secondUri.AbsoluteUri);
+
+            // Act - clearing the file id removes it from the Uri.
+            fileUriBuilder.FileId = null;
+
+            // Assert
+            Assert.AreEqual(
+                "https://account.file.core.windows.net/share",
+                fileUriBuilder.ToUri().AbsoluteUri);
         }
 
         [RecordedTest]
