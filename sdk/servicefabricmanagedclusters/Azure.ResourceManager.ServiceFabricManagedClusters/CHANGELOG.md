@@ -6,7 +6,7 @@
 - Upgraded to API version `2026-05-01-preview`.
 - Added cluster-level and node-type fault simulation operations.
 - Added zone fault simulation models and constraints.
-- Added `ScaleInPolicy` and `ProxyAgentSettings` to `ServiceFabricManagedNodeTypeData`.
+- Added `ScaleInMode` and `ProxyAgentSettings` to `ServiceFabricManagedNodeTypeData`.
 
 ### Breaking Changes
 - Renamed `ServiceFabricManagedDataDiskType` values to match .NET naming guidelines and their wire values: `PremiumV2LRS` to `PremiumV2Lrs`, `PremiumZRS` to `PremiumZrs`, and the previous `PremiumZrs` value to `StandardSsdZrs`.

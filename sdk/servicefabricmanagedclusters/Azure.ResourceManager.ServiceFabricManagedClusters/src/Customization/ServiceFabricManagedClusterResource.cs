@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <summary> Applies the maintenance window immediately. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Task<Response> PostManagedApplyMaintenanceWindowAsync(CancellationToken cancellationToken = default)
-            => PostManagedApplyMaintenanceWindowAsync(content: default, cancellationToken);
+            => PostManagedApplyMaintenanceWindowWithContentAsync(content: default, cancellationToken);
 
         /// <summary> Applies the maintenance window immediately. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response PostManagedApplyMaintenanceWindow(CancellationToken cancellationToken = default)
-            => PostManagedApplyMaintenanceWindow(content: default, cancellationToken);
+            => PostManagedApplyMaintenanceWindowWithContent(content: default, cancellationToken);
     }
 }

@@ -440,9 +440,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </summary>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PostManagedApplyMaintenanceWindowAsync(ApplyMaintenanceWindowContent content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> PostManagedApplyMaintenanceWindowWithContentAsync(ApplyMaintenanceWindowContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _managedApplyMaintenanceWindowClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.PostManagedApplyMaintenanceWindow");
+            using DiagnosticScope scope = _managedApplyMaintenanceWindowClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.PostManagedApplyMaintenanceWindowWithContent");
             scope.Start();
             try
             {
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedApplyMaintenanceWindowRestClient.CreatePostManagedApplyMaintenanceWindowRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ApplyMaintenanceWindowContent.ToRequestContent(content), context);
+                HttpMessage message = _managedApplyMaintenanceWindowRestClient.CreatePostManagedApplyMaintenanceWindowWithContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ApplyMaintenanceWindowContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -484,9 +484,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </summary>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PostManagedApplyMaintenanceWindow(ApplyMaintenanceWindowContent content = default, CancellationToken cancellationToken = default)
+        public virtual Response PostManagedApplyMaintenanceWindowWithContent(ApplyMaintenanceWindowContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _managedApplyMaintenanceWindowClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.PostManagedApplyMaintenanceWindow");
+            using DiagnosticScope scope = _managedApplyMaintenanceWindowClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.PostManagedApplyMaintenanceWindowWithContent");
             scope.Start();
             try
             {
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedApplyMaintenanceWindowRestClient.CreatePostManagedApplyMaintenanceWindowRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ApplyMaintenanceWindowContent.ToRequestContent(content), context);
+                HttpMessage message = _managedApplyMaintenanceWindowRestClient.CreatePostManagedApplyMaintenanceWindowWithContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ApplyMaintenanceWindowContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
