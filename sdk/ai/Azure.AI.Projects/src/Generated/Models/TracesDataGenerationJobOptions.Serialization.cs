@@ -76,6 +76,11 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(TracesDataGenerationJobOptions)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(RedactPrivateContent))
+            {
+                writer.WritePropertyName("redact_private_content"u8);
+                writer.WriteBooleanValue(RedactPrivateContent.Value);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -108,6 +113,7 @@ namespace Azure.AI.Projects
             float? trainSplit = default;
             DataGenerationModelOptions modelOptions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool? redactPrivateContent = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -138,12 +144,27 @@ namespace Azure.AI.Projects
                     modelOptions = DataGenerationModelOptions.DeserializeDataGenerationModelOptions(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("redact_private_content"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    redactPrivateContent = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TracesDataGenerationJobOptions(@type, maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties);
+            return new TracesDataGenerationJobOptions(
+                @type,
+                maxSamples,
+                trainSplit,
+                modelOptions,
+                additionalBinaryDataProperties,
+                redactPrivateContent);
         }
     }
 }

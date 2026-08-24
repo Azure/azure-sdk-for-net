@@ -40,6 +40,84 @@ namespace Azure.ResourceManager.OperationTemplates
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="CostReportResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesArmClient.GetCostReportResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CostReportResource"/> object. </returns>
+        public static CostReportResource GetCostReportResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableOperationTemplatesArmClient(client).GetCostReportResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of <see cref="CostReportCollection"/> objects within the specified scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesArmClient.GetCostReports(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a collection of <see cref="CostReportResource"/> objects. </returns>
+        public static CostReportCollection GetCostReports(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableOperationTemplatesArmClient(client).GetCostReports(scope);
+        }
+
+        /// <summary>
+        /// Get a CostReport
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesArmClient.GetCostReport(ResourceIdentifier, WaitUntil, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="operationId"> The name of the CostReport. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static ArmOperation<CostReportResource> GetCostReport(this ArmClient client, ResourceIdentifier scope, WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableOperationTemplatesArmClient(client).GetCostReport(scope, waitUntil, operationId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a CostReport
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesArmClient.GetCostReportAsync(ResourceIdentifier, WaitUntil, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="operationId"> The name of the CostReport. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<ArmOperation<CostReportResource>> GetCostReportAsync(this ArmClient client, ResourceIdentifier scope, WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableOperationTemplatesArmClient(client).GetCostReportAsync(scope, waitUntil, operationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="WidgetResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -55,6 +133,24 @@ namespace Azure.ResourceManager.OperationTemplates
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableOperationTemplatesArmClient(client).GetWidgetResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MonitorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesArmClient.GetMonitorResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MonitorResource"/> object. </returns>
+        public static MonitorResource GetMonitorResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableOperationTemplatesArmClient(client).GetMonitorResource(id);
         }
 
         /// <summary>
@@ -110,6 +206,61 @@ namespace Azure.ResourceManager.OperationTemplates
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableOperationTemplatesResourceGroupResource(resourceGroupResource).GetWidget(widgetName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of Monitors in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesResourceGroupResource.GetMonitors()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of Monitors and their operations over a MonitorResource. </returns>
+        public static MonitorCollection GetMonitors(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableOperationTemplatesResourceGroupResource(resourceGroupResource).GetMonitors();
+        }
+
+        /// <summary>
+        /// Get a Monitor
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesResourceGroupResource.GetMonitorAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> The name of the Monitor. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<MonitorResource>> GetMonitorAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableOperationTemplatesResourceGroupResource(resourceGroupResource).GetMonitorAsync(monitorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Monitor
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesResourceGroupResource.GetMonitor(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="monitorName"> The name of the Monitor. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<MonitorResource> GetMonitor(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableOperationTemplatesResourceGroupResource(resourceGroupResource).GetMonitor(monitorName, cancellationToken);
         }
 
         /// <summary>
@@ -260,6 +411,116 @@ namespace Azure.ResourceManager.OperationTemplates
         internal static ArmOperation<ProductListResult> PostPagingLro(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string productName, CancellationToken cancellationToken = default)
         {
             return GetMockableOperationTemplatesResourceGroupResource(resourceGroupResource).PostPagingLro(waitUntil, productName, cancellationToken);
+        }
+
+        /// <summary>
+        /// A long-running resource action.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesResourceGroupResource.PostPagingLroWithBodyAsync(WaitUntil, string, VnetProfile, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="productName"> The name of the Product. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        internal static async Task<ArmOperation<ProductListResult>> PostPagingLroWithBodyAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string productName, VnetProfile body, CancellationToken cancellationToken = default)
+        {
+            return await GetMockableOperationTemplatesResourceGroupResource(resourceGroupResource).PostPagingLroWithBodyAsync(waitUntil, productName, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// A long-running resource action.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesResourceGroupResource.PostPagingLroWithBody(WaitUntil, string, VnetProfile, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="productName"> The name of the Product. </param>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        internal static ArmOperation<ProductListResult> PostPagingLroWithBody(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string productName, VnetProfile body, CancellationToken cancellationToken = default)
+        {
+            return GetMockableOperationTemplatesResourceGroupResource(resourceGroupResource).PostPagingLroWithBody(waitUntil, productName, body, cancellationToken);
+        }
+
+        /// <summary>
+        /// RoutedGet
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesResourceGroupResource.RoutedGetAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="name"></param>
+        /// <param name="diagnosticName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<DiagnosticInfo>> RoutedGetAsync(this ResourceGroupResource resourceGroupResource, string name, string diagnosticName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableOperationTemplatesResourceGroupResource(resourceGroupResource).RoutedGetAsync(name, diagnosticName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// RoutedGet
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesResourceGroupResource.RoutedGet(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="name"></param>
+        /// <param name="diagnosticName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<DiagnosticInfo> RoutedGet(this ResourceGroupResource resourceGroupResource, string name, string diagnosticName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableOperationTemplatesResourceGroupResource(resourceGroupResource).RoutedGet(name, diagnosticName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create a Configuration
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesResourceGroupResource.CreateOrReplaceOptionalBodyAsync(string, Configuration, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="configurationName"> The name of the Configuration. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<Configuration>> CreateOrReplaceOptionalBodyAsync(this ResourceGroupResource resourceGroupResource, string configurationName, Configuration resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableOperationTemplatesResourceGroupResource(resourceGroupResource).CreateOrReplaceOptionalBodyAsync(configurationName, resource, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create a Configuration
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableOperationTemplatesResourceGroupResource.CreateOrReplaceOptionalBody(string, Configuration, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="configurationName"> The name of the Configuration. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<Configuration> CreateOrReplaceOptionalBody(this ResourceGroupResource resourceGroupResource, string configurationName, Configuration resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableOperationTemplatesResourceGroupResource(resourceGroupResource).CreateOrReplaceOptionalBody(configurationName, resource, cancellationToken);
         }
 
         /// <summary>
