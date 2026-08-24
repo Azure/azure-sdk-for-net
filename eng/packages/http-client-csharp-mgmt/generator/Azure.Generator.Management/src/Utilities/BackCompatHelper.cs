@@ -98,6 +98,11 @@ namespace Azure.Generator.Management.Utilities
             IReadOnlyList<MethodProvider> backCompatMethods,
             IEnumerable<MethodProvider> originalMethods)
         {
+            if (backCompatMethods.Count == 0)
+            {
+                return backCompatMethods;
+            }
+
             var originalMethodSet = new HashSet<MethodProvider>(originalMethods, ReferenceEqualityComparer.Instance);
             var methods = new List<MethodProvider>(backCompatMethods);
             var existingSignatures = new HashSet<MethodSignature>(

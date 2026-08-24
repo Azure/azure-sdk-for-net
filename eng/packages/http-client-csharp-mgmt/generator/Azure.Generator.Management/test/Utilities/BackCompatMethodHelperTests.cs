@@ -423,6 +423,19 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         }
 
         [Test]
+        public void HandlesEmptyBackCompatMethods()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var previous = CreateMethod(
+                enclosingType,
+                [new ParameterProvider("ifMatch", $"The match condition.", typeof(string), defaultValue: Default)]);
+
+            var result = DecorateWithLastContract(enclosingType, [], [], [previous]);
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
+        }
+
+        [Test]
         public void EndsWithRequiredCancellationTokenDistinguishesOptionalAndRequired()
         {
             var enclosingType = new TestTypeView("TestClient");
