@@ -1,6 +1,22 @@
 # Release History
 
-## 2.0.0-beta.2 (Unreleased)
+## 2.0.0-beta.4 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 2.0.0-beta.3 (2026-08-17)
+
+### Breaking Changes
+
+- Changed `ConfidentialLedgerClientOptions.EnableArchivedCollectionFallback` to default to `false`. Callers that require `GetCurrentLedgerEntry` and `GetCurrentLedgerEntryAsync` to search ledger history after a collection-specific 404 must now explicitly opt in by setting the option to `true`.
+
+## 2.0.0-beta.2 (2026-08-13)
 
 ### Features Added
 - Added support to route retryable HTTP responses and retryable transport failures to failover ledgers for `GetLedgerEntry`, `GetLedgerEntryAsync`, `GetCurrentLedgerEntry`, and `GetCurrentLedgerEntryAsync`. No other reads or writes fail over. The primary and every failover endpoint receive independent normal retry budgets; caller cancellation never initiates failover, and the original primary failure is preserved if discovery or all failovers fail.
@@ -20,8 +36,6 @@
 - Failover requests are now validated by endpoint-specific transports against that ledger's own identity TLS certificate, fetched from the independently validated Identity Service. A certificate trusted for one ledger cannot authenticate another ledger. Custom transports remain supported.
 - `PostLedgerEntryOperation` now treats transient `406 NotAcceptable` responses from the status endpoint as `Pending` and tolerates exactly 3 consecutive `404 NotFound` HTTP responses while a transaction is replicated. The operation-specific 404 tolerance no longer multiplies with pipeline retries; normal 404 retry behavior remains unchanged for other operations.
 - Archived-collection fallback responses now preserve the complete historical ledger entry payload, including optional tags.
-
-### Other Changes
 
 ## 2.0.0-beta.1 (2026-08-05)
 

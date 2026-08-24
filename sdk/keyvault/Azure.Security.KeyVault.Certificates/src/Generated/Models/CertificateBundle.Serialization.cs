@@ -99,7 +99,7 @@ namespace Azure.Security.KeyVault.Certificates.Models
             if (options.Format != "W" && Optional.IsDefined(X509Thumbprint))
             {
                 writer.WritePropertyName("x5t"u8);
-                writer.WriteBase64StringValue(X509Thumbprint.ToArray(), "U");
+                writer.WriteBase64StringValue(X509Thumbprint, "U");
             }
             if (options.Format != "W" && Optional.IsDefined(Policy))
             {
@@ -109,7 +109,7 @@ namespace Azure.Security.KeyVault.Certificates.Models
             if (Optional.IsDefined(Cer))
             {
                 writer.WritePropertyName("cer"u8);
-                writer.WriteBase64StringValue(Cer.ToArray(), "D");
+                writer.WriteBase64StringValue(Cer, "D");
             }
             if (Optional.IsDefined(ContentType))
             {

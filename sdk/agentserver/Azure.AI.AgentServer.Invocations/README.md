@@ -149,6 +149,56 @@ What the SDK does for you when the registered handler derives from `InvocationWe
 
 The session ID honours `FOUNDRY_AGENT_SESSION_ID` (matching the HTTP `POST /invocations` precedence, minus the query-param override which has no ergonomic equivalent on a long-lived WS connection), falling back to a generated UUID. Both transports on the same container therefore report the same session ID.
 
+### Typed Voice relay
+
+`VoiceHandler` layers immutable Voice Live Bridge Protocol 1.0 messages over the existing `/invocations_ws` transport. The application explicitly sends readiness, responses, output, completion, control, and error messages.
+
+```C# Snippet:Invocations_ReadMe_VoiceHandler
+public class VoiceEchoHandler : VoiceHandler
+{
+    protected override Task OnSessionStartAsync(
+        VoiceSession session,
+        VoiceSessionStartEvent start,
+        CancellationToken cancellationToken) => start.ProtocolVersion == "1.0"
+            ? session.SendAsync(new VoiceSessionReadyMessage(), cancellationToken)
+            : session.SendAsync(
+                new VoiceSessionRejectedMessage("protocol_mismatch", retriable: false),
+                cancellationToken);
+
+    protected override async Task OnUserMessageAsync(
+        VoiceSession session,
+        VoiceUserMessageEvent message,
+        CancellationToken cancellationToken)
+    {
+        var responseId = VoiceIds.CreateResponseId();
+        var itemId = VoiceIds.CreateItemId();
+        var text = string.Concat(message.Content.Select(part => part.Text));
+
+        await session.SendAsync(
+            new VoiceResponseCreatedMessage(responseId, new[] { message.ItemId }),
+            cancellationToken);
+        await session.SendAsync(
+            new VoiceResponseOutputTextDoneMessage(responseId, itemId, $"You said: {text}"),
+            cancellationToken);
+        await session.SendAsync(new VoiceResponseDoneMessage(responseId), cancellationToken);
+    }
+}
+```
+
+```C# Snippet:Invocations_ReadMe_Voice_Startup
+VoiceServer.Run<VoiceEchoHandler>();
+```
+
+The Voice layer is deliberately a typed event relay:
+
+- It decodes one inbound text frame and dispatches one typed callback.
+- `VoiceSession.SendAsync` encodes one outbound message and serializes concurrent writes.
+- It retains no pending inputs, response state, message-ID ledger, timers, callback tasks, history, or reconnect state.
+- Callbacks are awaited in wire order. Start and track long-running model or tool work in application-owned tasks, then return so later barge-in, timeout, and cancellation events can be dispatched.
+- `OnConnectionTerminating` runs once after the session becomes unwritable and before transport close. Use it only to signal cancellation of application-owned work; do not block or send from it.
+
+See [Typed Voice relay](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/SampleVoice1_TypedRelay.md) for a full sample with application-owned response tasks and cancellation.
+
 #### WebSocket configuration
 
 | Environment variable | Default | Description |

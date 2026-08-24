@@ -31,11 +31,13 @@ namespace Azure.ResourceManager.Network.Models
             VirtualApplianceConnections = new ChangeTrackingList<WritableSubResource>();
             InboundSecurityRules = new ChangeTrackingList<WritableSubResource>();
             NvaInterfaceConfigurations = new ChangeTrackingList<NvaInterfaceConfigurationsProperties>();
+            AddressFamily = new ChangeTrackingList<NetworkIPVersion>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkVirtualAppliancePropertiesFormat"/>. </summary>
         /// <param name="nvaSku"> Network Virtual Appliance SKU. </param>
         /// <param name="addressPrefix"> Address Prefix. </param>
+        /// <param name="addressPrefixV6"> Address Prefix for Dual-Stack NVAs. </param>
         /// <param name="bootStrapConfigurationBlobs"> BootStrapConfigurationBlobs storage URLs. </param>
         /// <param name="virtualHub"> The Virtual Hub where Network Virtual Appliance is being deployed. </param>
         /// <param name="cloudInitConfigurationBlobs"> CloudInitConfigurationBlob storage URLs. </param>
@@ -54,12 +56,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="delegation"> The delegation for the Virtual Appliance. Only appliable for SaaS NVA. </param>
         /// <param name="partnerManagedResource"> The delegation for the Virtual Appliance. </param>
         /// <param name="nvaInterfaceConfigurations"> The NVA in VNet interface configurations. </param>
+        /// <param name="addressFamily"> The address families to deploy the NVA in. ["IPv4", "IPv6"] deploys a dual-stack NVA (the vHub/VNet must also be dual-stack). ["IPv4"], an empty array, or omitting the field deploys an IPv4-only NVA. The value "IPv6" may only appear in combination with "IPv4"; standalone ["IPv6"] is reserved for future use and is rejected by the service today. </param>
         /// <param name="privateIPAddress"> A Internal Load Balancer's HA port frontend IP address. Can be used to set routes &amp; UDR to load balance traffic between NVA instances. </param>
+        /// <param name="privateIPAddressV6"> An Internal Load Balancer's HA port frontend IPv6 address. Can be used to set routes &amp; UDR to load balance traffic between NVA instances. This field appears in dual-stack NVAs. </param>
+        /// <param name="migrationStatus"> The migration status of the Network Virtual Appliance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkVirtualAppliancePropertiesFormat(VirtualApplianceSkuProperties nvaSku, string addressPrefix, IList<string> bootStrapConfigurationBlobs, NetworkSubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, NetworkVirtualAppliancePropertiesFormatNetworkProfile networkProfile, IList<VirtualApplianceAdditionalNicProperties> additionalNics, IList<InternetIngressPublicIpsProperties> internetIngressPublicIPs, IReadOnlyList<WritableSubResource> virtualApplianceSites, IReadOnlyList<WritableSubResource> virtualApplianceConnections, IReadOnlyList<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, VirtualApplianceDelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource, IList<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations, string privateIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkVirtualAppliancePropertiesFormat(VirtualApplianceSkuProperties nvaSku, string addressPrefix, string addressPrefixV6, IList<string> bootStrapConfigurationBlobs, NetworkSubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, NetworkVirtualAppliancePropertiesFormatNetworkProfile networkProfile, IList<VirtualApplianceAdditionalNicProperties> additionalNics, IList<InternetIngressPublicIpsProperties> internetIngressPublicIPs, IReadOnlyList<WritableSubResource> virtualApplianceSites, IReadOnlyList<WritableSubResource> virtualApplianceConnections, IReadOnlyList<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, VirtualApplianceDelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource, IList<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations, IList<NetworkIPVersion> addressFamily, string privateIPAddress, string privateIPAddressV6, NetworkVirtualApplianceMigrationStatus migrationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NvaSku = nvaSku;
             AddressPrefix = addressPrefix;
+            AddressPrefixV6 = addressPrefixV6;
             BootStrapConfigurationBlobs = bootStrapConfigurationBlobs;
             VirtualHub = virtualHub;
             CloudInitConfigurationBlobs = cloudInitConfigurationBlobs;
@@ -78,7 +84,10 @@ namespace Azure.ResourceManager.Network.Models
             Delegation = delegation;
             PartnerManagedResource = partnerManagedResource;
             NvaInterfaceConfigurations = nvaInterfaceConfigurations;
+            AddressFamily = addressFamily;
             PrivateIPAddress = privateIPAddress;
+            PrivateIPAddressV6 = privateIPAddressV6;
+            MigrationStatus = migrationStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -89,6 +98,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Address Prefix. </summary>
         [WirePath("addressPrefix")]
         public string AddressPrefix { get; }
+
+        /// <summary> Address Prefix for Dual-Stack NVAs. </summary>
+        [WirePath("addressPrefixV6")]
+        public string AddressPrefixV6 { get; }
 
         /// <summary> BootStrapConfigurationBlobs storage URLs. </summary>
         [WirePath("bootStrapConfigurationBlobs")]
@@ -162,9 +175,21 @@ namespace Azure.ResourceManager.Network.Models
         [WirePath("nvaInterfaceConfigurations")]
         public IList<NvaInterfaceConfigurationsProperties> NvaInterfaceConfigurations { get; } = new ChangeTrackingList<NvaInterfaceConfigurationsProperties>();
 
+        /// <summary> The address families to deploy the NVA in. ["IPv4", "IPv6"] deploys a dual-stack NVA (the vHub/VNet must also be dual-stack). ["IPv4"], an empty array, or omitting the field deploys an IPv4-only NVA. The value "IPv6" may only appear in combination with "IPv4"; standalone ["IPv6"] is reserved for future use and is rejected by the service today. </summary>
+        [WirePath("addressFamily")]
+        public IList<NetworkIPVersion> AddressFamily { get; } = new ChangeTrackingList<NetworkIPVersion>();
+
         /// <summary> A Internal Load Balancer's HA port frontend IP address. Can be used to set routes &amp; UDR to load balance traffic between NVA instances. </summary>
         [WirePath("privateIpAddress")]
         public string PrivateIPAddress { get; }
+
+        /// <summary> An Internal Load Balancer's HA port frontend IPv6 address. Can be used to set routes &amp; UDR to load balance traffic between NVA instances. This field appears in dual-stack NVAs. </summary>
+        [WirePath("privateIpAddressV6")]
+        public string PrivateIPAddressV6 { get; }
+
+        /// <summary> The migration status of the Network Virtual Appliance. </summary>
+        [WirePath("migrationStatus")]
+        public NetworkVirtualApplianceMigrationStatus MigrationStatus { get; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("virtualHub.id")]

@@ -1,16 +1,23 @@
 # Release History
 
-## 7.21.0-beta.1 (Unreleased)
+## 7.21.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 7.21.0-beta.1 (2026-08-21)
 
 ### Features Added
 
 - Added `SqlFilterCount` and `CorrelationFilterCount` properties to `TopicRuntimeProperties`, exposing the total number of SQL filters and correlation filters across all of a topic's subscriptions. These are populated by `GetTopicRuntimePropertiesAsync` and `GetTopicsRuntimePropertiesAsync`.
 - Added `ServiceBusAdministrationClientOptions.ServiceVersion.V2024_05` and made it the default service version. The topic filter counts above are served by the `2024-05` service API version, so the administration client now sends `api-version=2024-05` by default.
 - Added `GetMessageSessionsAsync` overloads on `ServiceBusClient` for queues and subscriptions. The no-filter overload returns the IDs of sessions that have active messages or session state, and the `sessionStateUpdatedAfter` overload returns session IDs whose session state was updated after the specified timestamp. Implements the `com.microsoft:get-message-sessions` AMQP management operation. ([#58761](https://github.com/Azure/azure-sdk-for-net/pull/58761))
-
-### Breaking Changes
-
-### Bugs Fixed
+- Added opt-in support for non-exclusive session locking on `ServiceBusSessionReceiver`, allowing a session to be cooperatively taken over by another receiver. Set `ServiceBusSessionReceiverOptions.EnableNonExclusiveSession` to accept a session non-exclusively, then read the token from `ServiceBusSessionReceiver.SessionLockToken` and pass it as `ServiceBusSessionReceiverOptions.SessionLockToken = Guid.Parse(token)` to take that session over. `ServiceBusSessionReceiver.IsSessionExclusive` reports the mode the session was established under. Dispositions for a non-exclusive session are routed over the management link so that settlement keeps working across a takeover, which lowers settlement throughput compared to an exclusive session. This applies to `ServiceBusSessionReceiver` only; `ServiceBusSessionProcessor` continues to lock sessions exclusively. Accepting a session with `EnableNonExclusiveSession` set throws `NotSupportedException` when the endpoint declines it, either by refusing the request outright or by accepting it without assigning a lock token, which is how a caller detects whether the feature is available for a namespace. An endpoint that declines in some other way surfaces the exception its own error maps to. ([#60060](https://github.com/Azure/azure-sdk-for-net/pull/60060))
 
 ### Other Changes
 

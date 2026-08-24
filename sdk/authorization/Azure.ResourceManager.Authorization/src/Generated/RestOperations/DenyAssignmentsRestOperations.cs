@@ -214,12 +214,12 @@ namespace Azure.ResourceManager.Authorization
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string subscriptionId, string filter, RequestContext context)
+        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Authorization/denyAssignments", false);
             if (_apiVersion != null)
             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Authorization
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -262,12 +262,12 @@ namespace Azure.ResourceManager.Authorization
             return message;
         }
 
-        internal HttpMessage CreateGetForResourceGroupRequest(string subscriptionId, string resourceGroupName, string filter, RequestContext context)
+        internal HttpMessage CreateGetForResourceGroupRequest(Guid subscriptionId, string resourceGroupName, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Authorization/denyAssignments", false);
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Authorization
             return message;
         }
 
-        internal HttpMessage CreateNextGetForResourceGroupRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetForResourceGroupRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
